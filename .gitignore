@@ -1,16 +1,16 @@
 /*
- 
+
 !.gitignore
 #!.gitattributes this is optional
- 
+
 # Ignore game folder, and all default dota_addons folders
 !game
 /game/*
 !/game/dota_addons
 /game/dota_addons/*
- 
- 
- 
+
+
+
 # Ignore content folder, and all default dota_addons folders
 !content
 /content/*
