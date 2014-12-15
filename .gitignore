@@ -9,6 +9,8 @@
 /game/*
 !/game/dota_addons
 /game/dota_addons/*
+!/game/dota_addons/spelllibrary
+/game/dota_addons/spelllibrary/*
 !/game/dota_addons/spelllibrary/scripts
  
  
