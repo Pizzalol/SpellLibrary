@@ -1,0 +1,40 @@
+"enraged_wildkin_toughness_aura_datadriven"
+{
+	"BaseClass" "ability_datadriven" 
+    "AbilityBehavior" ""
+    "AbilityUnitTargetTeam" ""
+    "AbilityUnitTargetType"	""
+    "AbilityUnitDamageType"	""
+    "AbilityUnitTargetFlags" ""
+
+    "AbilityCastRange" ""
+    "AbilityDamage" ""
+    "AbilityCastRangeBuffer" ""
+    "AbilityCastPoint" ""
+    "AbilityChannelTime" ""
+    "AbilityCooldown" ""
+    "AbilityDuration" ""
+    "AbilityManaCost" ""
+    "AbilityTextureName" ""
+    "AbilityType" ""
+
+    "AbilitySpecial"
+    {
+
+    }
+
+    "precache"
+    {
+
+    }
+
+    "OnSpellStart"
+    {
+
+    }
+
+    "Modifiers"
+    {
+    
+    }
+}

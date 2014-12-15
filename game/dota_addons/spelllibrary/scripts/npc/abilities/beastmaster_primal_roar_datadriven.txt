@@ -1,0 +1,40 @@
+"beastmaster_primal_roar_datadriven"
+{
+	"BaseClass" "ability_datadriven" 
+    "AbilityBehavior" ""
+    "AbilityUnitTargetTeam" ""
+    "AbilityUnitTargetType"	""
+    "AbilityUnitDamageType"	""
+    "AbilityUnitTargetFlags" ""
+
+    "AbilityCastRange" ""
+    "AbilityDamage" ""
+    "AbilityCastRangeBuffer" ""
+    "AbilityCastPoint" ""
+    "AbilityChannelTime" ""
+    "AbilityCooldown" ""
+    "AbilityDuration" ""
+    "AbilityManaCost" ""
+    "AbilityTextureName" ""
+    "AbilityType" ""
+
+    "AbilitySpecial"
+    {
+
+    }
+
+    "precache"
+    {
+
+    }
+
+    "OnSpellStart"
+    {
+
+    }
+
+    "Modifiers"
+    {
+    
+    }
+}
