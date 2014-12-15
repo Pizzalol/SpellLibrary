@@ -1,0 +1,305 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CParticleSystemDefinition CParticleSystemDefinition_0
+{
+	int m_nInitialParticles = 0
+	float(3) m_BoundingBoxMin = ( -10.000000, -10.000000, -10.000000 )
+	float(3) m_BoundingBoxMax = ( 10.000000, 10.000000, 10.000000 )
+	int m_nSnapshotControlPoint = 0
+	string m_pszSnapshotName = ""
+	string m_pszTargetLayerID = ""
+	string m_hReferenceReplacement = ""
+	string m_pszCullReplacementName = ""
+	float m_flCullRadius = 0.000000
+	float m_flCullFillCost = 1.000000
+	int m_nCullControlPoint = 0
+	float m_flMaxRecreationTime = 0.000000
+	string m_hFallback = ""
+	int m_nFallbackMaxCount = -1
+	string m_hLowViolenceDef = ""
+	uint(4) m_ConstantColor = ( 255, 255, 255, 255 )
+	float(3) m_ConstantNormal = ( 0.000000, 0.000000, 1.000000 )
+	float m_flConstantRadius = 48.000000
+	float m_flConstantRotation = 0.000000
+	float m_flConstantRotationSpeed = 0.000000
+	float m_flConstantLifespan = 0.000000
+	int m_nConstantSequenceNumber = 6
+	int m_nConstantSequenceNumber1 = 0
+	int m_nGroupID = 0
+	float m_flMaximumTimeStep = 0.100000
+	float m_flMaximumSimTime = 0.000000
+	float m_flMinimumSimTime = 0.000000
+	float m_flMinimumTimeStep = 0.000000
+	int m_nMinimumFrames = 0
+	int m_nMinCPULevel = 0
+	int m_nMinGPULevel = 0
+	bool m_bViewModelEffect = false
+	bool m_bScreenSpaceEffect = false
+	bool m_bDrawThroughLeafSystem = true
+	float m_flMaxDrawDistance = 100000.000000
+	float m_flStartFadeDistance = 200000.000000
+	float m_flNoDrawTimeToGoToSleep = 8.000000
+	int m_nMaxParticles = 4
+	int m_nSkipRenderControlPoint = -1
+	int m_nAllowRenderControlPoint = -1
+	int m_nAggregationMinAvailableParticles = 0
+	float m_flAggregateRadius = 0.000000
+	float m_flStopSimulationAfterTime = 1000000000.000000
+	float(3) m_vControlPoint1DefaultOffsetRelativeToControlPoint0 = ( 0.000000, 0.000000, 0.000000 )
+	string m_Name = ""
+	CParticleOperatorInstance*[] m_Operators = 
+	[
+		&C_OP_BasicMovement_0,
+		&C_OP_MaxVelocity_0,
+		&C_OP_Decay_0,
+		&C_OP_SetChildControlPoints_0
+	]
+	CParticleOperatorInstance*[] m_Renderers = 
+	[
+		
+	]
+	CParticleOperatorInstance*[] m_Initializers = 
+	[
+		&C_INIT_CreateWithinSphere_0
+	]
+	CParticleOperatorInstance*[] m_Emitters = 
+	[
+		&C_OP_InstantaneousEmitter_0
+	]
+	CParticleOperatorInstance*[] m_ForceGenerators = 
+	[
+		&C_OP_AttractToControlPoint_0
+	]
+	CParticleOperatorInstance*[] m_Constraints = 
+	[
+		
+	]
+	ParticleChildrenInfo_t[] m_Children = 
+	[
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/basic_projectile/basic_projectile_explosion.vpcf"
+			bool m_bPreventNameBasedLookup = false
+			float m_flDelay = 0.000000
+			bool m_bEndCap = true
+			bool m_bDisableChild = false
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/basic_projectile/basic_projectile_trail.vpcf"
+			bool m_bPreventNameBasedLookup = false
+			float m_flDelay = 0.000000
+			bool m_bEndCap = false
+			bool m_bDisableChild = false
+		},
+		ParticleChildrenInfo_t
+		{
+			string m_ChildRef = "particles/basic_projectile/basic_projectile_launch.vpcf"
+			bool m_bPreventNameBasedLookup = false
+			float m_flDelay = 0.000000
+			bool m_bEndCap = false
+			bool m_bDisableChild = false
+		}
+	]
+	bool m_bShouldSort = false
+	bool m_bShouldBatch = false
+}
+
+C_OP_BasicMovement C_OP_BasicMovement_0
+{
+	float(3) m_Gravity = ( 0.000000, 0.000000, 0.000000 )
+	float m_fDrag = 0.000000
+	int m_nMaxConstraintPasses = 3
+	bool m_bLockULCorner = false
+	bool m_bLockURCorner = false
+	bool m_bLockLLCorner = false
+	bool m_bLockLRCorner = false
+	bool m_bDisableOperator = false
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = ""
+}
+
+C_OP_MaxVelocity C_OP_MaxVelocity_0
+{
+	float m_flMaxVelocity = 600.000000
+	int m_nOverrideCP = 2
+	int m_nOverrideCPField = 0
+	bool m_bDisableOperator = false
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = "Through the Movement Max Velocity op, projectiles get their velocity automatically via CP2 through code. IMPORTANT: It\'s best not to modify this op for custom effects!"
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	bool m_bDisableOperator = false
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	int m_nOpEndCapState = 1
+	int m_nOpScaleCP = -1
+	string m_Notes = ""
+}
+
+C_OP_SetChildControlPoints C_OP_SetChildControlPoints_0
+{
+	int m_nChildGroupID = 0
+	int m_nFirstControlPoint = 3
+	int m_nNumControlPoints = 1
+	int m_nFirstSourcePoint = 0
+	bool m_bSetOrientation = false
+	bool m_bDisableOperator = false
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = "Sets up control points for the child effects below. IMPORTANT: It\'s best not to modify this op for custom effects!"
+}
+
+C_INIT_CreateWithinSphere C_INIT_CreateWithinSphere_0
+{
+	float m_fRadiusMin = 0.000000
+	float m_fRadiusMax = 0.000000
+	float(3) m_vecDistanceBias = ( 1.000000, 1.000000, 1.000000 )
+	float(3) m_vecDistanceBiasAbs = ( 0.000000, 0.000000, 0.000000 )
+	int m_nControlPointNumber = 0
+	int m_nScaleCP = -1
+	float m_fSpeedMin = 0.000000
+	float m_fSpeedMax = 0.000000
+	float m_fSpeedRandExp = 1.000000
+	bool m_bLocalCoords = false
+	bool m_bUseHighestEndCP = false
+	float m_flEndCPGrowthTime = 0.000000
+	float(3) m_LocalCoordinateSystemSpeedMin = ( 0.000000, 0.000000, 0.000000 )
+	float(3) m_LocalCoordinateSystemSpeedMax = ( 0.000000, 0.000000, 0.000000 )
+	bool m_bRunForParentApplyKillList = true
+	bool m_bDisableOperator = false
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = ""
+}
+
+C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_0
+{
+	int m_nParticlesToEmit = 1
+	int m_nMinParticlesToEmit = -1
+	float m_flStartTime = 0.000000
+	float m_flStartTimeMax = -1.000000
+	float m_flInitFromKilledParentParticles = 0.000000
+	int m_nMaxEmittedPerFrame = -1
+	int m_nScaleControlPoint = -1
+	int m_nScaleControlPointField = 0
+	int m_nSnapshotControlPoint = -1
+	bool m_bDisableOperator = false
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = "Emits a single \"master\" particle for the projectile. IMPORTANT: It\'s best not to modify this op for custom effects!"
+}
+
+C_OP_AttractToControlPoint C_OP_AttractToControlPoint_0
+{
+	float(3) m_vecComponentScale = ( 1.000000, 1.000000, 1.000000 )
+	float m_fForceAmount = 1000000.000000
+	float m_fFalloffPower = 0.000000
+	int m_nControlPointNumber = 1
+	int m_nScaleCP = -1
+	int m_nScaleCPField = 0
+	bool m_bScaleLocal = false
+	bool m_bDisableOperator = false
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = "This Force Generator pulls the projectile effect toward its target (CP1). Though the force is set extraordinarily high, the effect\'s speed is limited by the Movement Max Velocity op. IMPORTANT: It\'s best not to modify this op for custom effects!"
+}

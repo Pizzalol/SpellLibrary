@@ -2,12 +2,14 @@
  
 !.gitignore
 #!.gitattributes this is optional
+*.bin
  
 # Ignore game folder, and all default dota_addons folders
 !game
 /game/*
 !/game/dota_addons
 /game/dota_addons/*
+!/game/dota_addons/spelllibrary
  
  
  
@@ -16,3 +18,4 @@
 /content/*
 !/content/dota_addons
 /content/dota_addons/*
+!/content/dota_addons/spelllibrary
