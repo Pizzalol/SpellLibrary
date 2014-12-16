@@ -12,21 +12,20 @@ Progress spreadsheet - https://docs.google.com/spreadsheets/d/1oNoqMW2_PZ57TEonA
 Guidelines
 ==========
 
-Lua scripts should be separated on a per hero basis
+- Lua scripts should be separated on a per hero basis
 
-Every ability should be portable (i.e. 0 dependence on each other).
+- Every ability should be portable (i.e. 0 dependence on each other).
+If the ability depends on another ability to function (Earth Spirit, Invoker, SF Requiem, etc) leave it for later.
 
-    If the ability depends on another ability to function (Earth Spirit, Invoker, SF Requiem, etc) leave it for later.
+- Don't Use Global Lua Events (related to making the spells portable). Abilities should work without any main addon scripts.
 
-Don't Use Global Lua Events (related to making the spells portable). Abilities should work without any main addon scripts.
+- Dont bother with Cast Animation, Aghs Upgrades or completely dota-hardcoded interactions
 
-Dont bother with Cast Animation, Aghs Upgrades or completely dota-hardcoded interactions
+- Keep it as much datadriven as possible (for example don't lua FindUnitsInRadius if you only need to do aoe damage, use ActOnTargets Damage instead)
 
-Keep it as much datadriven as possible (for example don't lua FindUnitsInRadius if you only need to do aoe damage, use ActOnTargets Damage instead)
+- Use default particles and sounds
 
-Use default particles and sounds
-
-If you find an ability that seems hard or impossible to rewrite, ask and document your attempts, others will help you
+- If you find an ability that seems hard or impossible to rewrite, ask and document your attempts, others will help you
 
 
 
