@@ -1,40 +1,59 @@
 "abaddon_death_coil_datadriven"
 {
-	"BaseClass" "ability_datadriven" 
-    "AbilityBehavior" ""
-    "AbilityUnitTargetTeam" ""
-    "AbilityUnitTargetType"	""
-    "AbilityUnitDamageType"	""
-    "AbilityUnitTargetFlags" ""
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+	"BaseClass"                    "ability_datadriven" 
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+    "SpellImmunityType"             "SPELL_IMMUNITY_ALLIES_YES"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+    "AbilityTextureName"            "abaddon_death_coil"
 
-    "AbilityCastRange" ""
-    "AbilityDamage" ""
-    "AbilityCastRangeBuffer" ""
-    "AbilityCastPoint" ""
-    "AbilityChannelTime" ""
-    "AbilityCooldown" ""
-    "AbilityDuration" ""
-    "AbilityManaCost" ""
-    "AbilityTextureName" ""
-    "AbilityType" ""
-
-    "AbilitySpecial"
-    {
-
-    }
-
+    // Precache
+    //-------------------------------------------------------------------------------------------------------------
     "precache"
     {
 
     }
 
-    "OnSpellStart"
-    {
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"              "800"
+    "AbilityCastPoint"              "0.452 0.452 0.452 0.452"
 
-    }
 
-    "Modifiers"
+    // Time
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"               "5.0 5.0 5.0 5.0"
+
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"               "50 60 70 80"
+
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
     {
-    
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "projectile_speed"      "1250"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "self_damage"           "75 100 125 150"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "target_damage"         "100 150 200 250"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "heal_amount"           "100 150 200 250"
+        }
     }
 }

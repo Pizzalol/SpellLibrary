@@ -1,40 +1,41 @@
 "modifier_buyback_gold_penalty_datadriven"
 {
-	"BaseClass" "ability_datadriven" 
-    "AbilityBehavior" ""
-    "AbilityUnitTargetTeam" ""
-    "AbilityUnitTargetType"	""
-    "AbilityUnitDamageType"	""
-    "AbilityUnitTargetFlags" ""
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+	"BaseClass"                    "ability_datadriven" 
+    "AbilityBehavior"               ""
+    "AbilityType"                   ""
+    "SpellImmunityType"             ""
+    "AbilityTextureName"            ""
 
-    "AbilityCastRange" ""
-    "AbilityDamage" ""
-    "AbilityCastRangeBuffer" ""
-    "AbilityCastPoint" ""
-    "AbilityChannelTime" ""
-    "AbilityCooldown" ""
-    "AbilityDuration" ""
-    "AbilityManaCost" ""
-    "AbilityTextureName" ""
-    "AbilityType" ""
-
-    "AbilitySpecial"
-    {
-
-    }
-
+    // Precache
+    //-------------------------------------------------------------------------------------------------------------
     "precache"
     {
 
     }
 
-    "OnSpellStart"
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastPoint"              ""
+    "AbilityCastRange"              ""
+
+    // Time
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"               ""
+
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"               ""
+
+    // Damage
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityDamage"                 ""
+
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
     {
 
-    }
-
-    "Modifiers"
-    {
-    
     }
 }

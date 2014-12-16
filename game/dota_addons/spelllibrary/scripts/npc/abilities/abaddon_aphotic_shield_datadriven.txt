@@ -1,40 +1,47 @@
 "abaddon_aphotic_shield_datadriven"
 {
-	"BaseClass" "ability_datadriven" 
-    "AbilityBehavior" ""
-    "AbilityUnitTargetTeam" ""
-    "AbilityUnitTargetType"	""
-    "AbilityUnitDamageType"	""
-    "AbilityUnitTargetFlags" ""
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+	"BaseClass"                    "ability_datadriven" 
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+    "SpellImmunityType"             "SPELL_IMMUNITY_ALLIES_NO"
+    "AbilityTextureName"            "abaddon_aphotic_shield"
 
-    "AbilityCastRange" ""
-    "AbilityDamage" ""
-    "AbilityCastRangeBuffer" ""
-    "AbilityCastPoint" ""
-    "AbilityChannelTime" ""
-    "AbilityCooldown" ""
-    "AbilityDuration" ""
-    "AbilityManaCost" ""
-    "AbilityTextureName" ""
-    "AbilityType" ""
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"              "500"
+    "AbilityCastPoint"              "0.452 0.452 0.452 0.452"
+        
+    // Time     
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"               "12.0 10.0 8.0 6.0"
+        
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"               "100 105 110 115"
 
+       
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
     "AbilitySpecial"
     {
-
-    }
-
-    "precache"
-    {
-
-    }
-
-    "OnSpellStart"
-    {
-
-    }
-
-    "Modifiers"
-    {
-    
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "duration"              "15.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "damage_absorb"         "110.0 140.0 170.0 200.0"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "675"
+        }
     }
 }
