@@ -1,41 +1,51 @@
 "satyr_hellcaller_shockwave_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"MaxLevel"						"1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Unit Targeting
+	//-------------------------------------------------------------------------------------------------------------		
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+	
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.5"
+	"AbilityCooldown"				"8.0"
+	"AbilityDamage"					"125"
+	"AbilityManaCost"				"100"
 
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"speed"					"1050"
+		}
+		
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius_start"			"180"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius_end"			"200"
+		}
+		
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"distance"				"980"
+		}
+	}
 }
+

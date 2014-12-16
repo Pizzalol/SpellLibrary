@@ -1,41 +1,44 @@
 "chen_test_of_faith_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"chen_test_of_faith"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"600 600 600 600"
+	"AbilityCooldown"				"24.0 24.0 24.0 24.0"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"175 175 175 175"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_min"			"50 100 150 200"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_max"			"100 200 300 400"
+		}
+	}
 }
+

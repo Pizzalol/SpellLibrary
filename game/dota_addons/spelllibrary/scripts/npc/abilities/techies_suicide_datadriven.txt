@@ -1,0 +1,63 @@
+"techies_suicide_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"techies_suicide"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"100"
+	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"180.0 170.0 160.0 150.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100 125 150 175"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"small_radius"				"200"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"big_radius"				"500"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage"					"500 650 850 1150"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"partial_damage"			"260 300 340 380"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"respawn_time_percentage"		"0.5"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"respawn_time_percentage_tooltip"		"50"
+		}
+	}
+}
+

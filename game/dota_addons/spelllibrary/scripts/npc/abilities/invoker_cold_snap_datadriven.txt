@@ -1,41 +1,64 @@
 "invoker_cold_snap_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"MaxLevel"						"1"
+	"HotKeyOverride"				"Y"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"invoker_cold_snap"
+	
+	// Unit Targeting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1000"
+	"AbilityCastPoint"				"0"
+	"AbilityCooldown"				"20"
+	"AbilityManaCost"				"100"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
-
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.15"	// Applies multiple modifiers
+		
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"3.0 3.5 4.0 4.5 5.0 5.5 6.0"
+			"levelkey"				"quaslevel"	
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"freeze_duration"		"0.4"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"freeze_cooldown"		"0.77 0.74 0.71 0.69 0.66 0.63 0.60"
+			"levelkey"				"quaslevel"	
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"freeze_damage"			"7 14 21 28 35 42 49"
+			"levelkey"				"quaslevel"	
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damage_trigger"		"10.0"
+		}
+	}
 }
+

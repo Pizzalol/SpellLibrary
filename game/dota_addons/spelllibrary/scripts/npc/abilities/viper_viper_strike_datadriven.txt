@@ -1,41 +1,75 @@
 "viper_viper_strike_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"viper_viper_strike"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"500"
+	"AbilityCastPoint"				"0.3 0.3 0.3"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"80.0 50.0 30.0"
 
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"125 175 250"
+	
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"5.1 5.1 5.1"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"60 100 145"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_movement_speed"	"-40 -60 -80"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_attack_speed"	"-40 -60 -80"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mana_cost_scepter"		"125 125 125"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"cooldown_scepter"		"12.0 12.0 12.0"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"cast_range_scepter"	"900"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"projectile_speed"	"1200"
+		}
+	}
 }
+

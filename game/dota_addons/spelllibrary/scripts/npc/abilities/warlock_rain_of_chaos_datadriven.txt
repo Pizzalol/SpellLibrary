@@ -1,41 +1,94 @@
 "warlock_rain_of_chaos_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"warlock_rain_of_chaos"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.5 0.5 0.5"
 
-    }
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"165 165 165"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"200 300 400"		
+	
+	// Cast Range
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1200"
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.5"	// Primarily about the summon
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"golem_duration"			"60 60 60"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"stun_duration"				"1.0"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"aoe"						"600"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"golem_hp_tooltip"			"900 1200 1500"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"golem_dmg_tooltip"			"75 100 125"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"golem_armor_tooltip"		"6 9 12"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"number_of_golems_scepter"	"2"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"golem_hp_tooltip_scepter"			"675 900 1125"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"golem_dmg_tooltip_scepter"	"56 75 94"
+		}
+		"10"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"hp_dmg_reduction_scepter"	"25"
+		}
+		"11"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bounty_reduction_scepter"	"50"
+		}
+	}
 }
+

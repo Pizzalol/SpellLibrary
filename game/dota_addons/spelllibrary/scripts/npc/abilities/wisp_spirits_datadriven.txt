@@ -1,41 +1,84 @@
 "wisp_spirits_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0"
 
-    }
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20.0 18.0 16.0 14.0"
+	"AbilityDuration"				"19.0 19.0 19.0 19.0"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"120 130 140 150"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"creep_damage"				"8 14 20 26"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"hero_damage"				"25 50 75 100"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"revolution_time"			"5.0 5.0 5.0 5.0"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"min_range"					"100 100 100 100"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"max_range"					"875 875 875 875"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"hero_hit_radius"			"70 70 70 70"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"explode_radius"			"300 300 300 300"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"hit_radius"				"150 150 150 150"
+		}
+		"10"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"default_radius"			"150"
+		}
+		"11"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"spirit_movement_rate"		"250 250 250 250"
+		}
+		"12"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"spirit_duration"			"19.0 19.0 19.0 19.0"
+		}
+	}
+}	
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
-}

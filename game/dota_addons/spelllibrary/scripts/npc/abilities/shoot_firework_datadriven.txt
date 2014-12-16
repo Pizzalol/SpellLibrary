@@ -1,0 +1,13 @@
+"shoot_firework_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+
+	"AbilityCastRange"				"1800"
+	"AbilityCastPoint"				"0.5"
+
+}
+
+

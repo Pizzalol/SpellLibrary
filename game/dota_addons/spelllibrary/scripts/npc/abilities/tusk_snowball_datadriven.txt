@@ -1,41 +1,84 @@
 "tusk_snowball_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"tusk_snowball"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1250"
+	"AbilityCastPoint"				"0.1 0.1 0.1 0.1"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"21 20 19 18"
 
-    }
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"75 75 75 75"
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"snowball_damage"			"80 120 160 200"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"snowball_speed_pct"			"150"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"snowball_damage_bonus"		"20 30 40 50"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"snowball_speed_bonus"		"100"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"stun_duration"				"0.5 0.75 1.0 1.25"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"snowball_windup_radius"	"100"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"snowball_duration"			"3.0"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"snowball_radius"			"200"
+		}			
+		"09"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"snowball_grow_rate"		"40"
+		}
+		"10"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"snowball_windup"			"4.0"
+		}
+	}
 }
+

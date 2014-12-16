@@ -1,41 +1,98 @@
 "beastmaster_primal_roar_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"		
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"beastmaster_primal_roar"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.5 0.5 0.5"
 
-    }
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"80.0 75.0 70.0"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"150 175 200"		
+	
+	// Cast Range
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"600"
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.6"	// Applies multiple modifiers
 
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"3.0 3.5 4.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage"					"200 250 300"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"side_damage"				"200 250 300"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage_radius"				"300"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"slow_movement_speed_pct"	"-50 -50 -50"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"slow_attack_speed_pct"		"-50 -50 -50"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"push_distance"				"300"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"push_duration"				"0.6"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"slow_duration"				"2.0 3.0 4.0"
+		}
+		"10"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cast_range_scepter"		"950 950 950"
+		}
+		"11"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"cooldown_scepter"			"45.0 45.0 45.0"
+		}
+	}
 }
+

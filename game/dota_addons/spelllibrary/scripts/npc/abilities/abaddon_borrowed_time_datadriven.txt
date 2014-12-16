@@ -1,52 +1,54 @@
 "abaddon_borrowed_time_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven"
-    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
-    "AbilityTextureName"            "abaddon_borrowed_time"
-        
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              "0.452 0.452 0.452"
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"abaddon_borrowed_time"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.452 0.452 0.452"
 
-    // Time     
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               "60.0 50.0 40.0"
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"60.0 50.0 40.0"
 
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               "0 0 0"
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0 0 0"
 
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-        "01"
-        {
-            "var_type"                  "FIELD_INTEGER"
-            "hp_threshold"              "400"
-        }
-        "02"
-        {
-            "var_type"                  "FIELD_FLOAT"
-            "duration"                  "3.0 4.0 5.0"
-        }
-        "03"
-        {
-            "var_type"                  "FIELD_FLOAT"
-            "duration_scepter"          "5.0 6.0 7.0"
-        }
-        "04"
-        {
-            "var_type"                  "FIELD_FLOAT"
-            "redirect"                  "0.35"
-        }
-        "05"
-        {
-            "var_type"                  "FIELD_FLOAT"
-            "redirect_range_tooltip_scepter"        "900"
-        }
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"hp_threshold"				"400"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"3.0 4.0 5.0"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration_scepter"			"5.0 6.0 7.0"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"redirect"					"0.35"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"redirect_range_tooltip_scepter"		"900"
+		}
+	}
 }
+

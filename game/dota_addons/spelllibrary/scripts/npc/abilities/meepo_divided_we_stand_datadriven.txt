@@ -1,41 +1,44 @@
 "meepo_divided_we_stand_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
-
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
-
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"DisplayAdditionalHeroes"	"1"
+	"LevelsBetweenUpgrades"		"7"
+	"RequiredLevel"			"3"
+		
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"tooltip_clones"		"1 2 3"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"tooltip_share_percentage"		"30"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"tooltip_share_percentage_scepter"		"100"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"respawn"		"0.1 0.2 0.3"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"tooltip_respawn"		"10 20 30"
+		}
+	}
 }
+
+

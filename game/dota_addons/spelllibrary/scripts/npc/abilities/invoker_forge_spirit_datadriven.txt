@@ -1,41 +1,58 @@
 "invoker_forge_spirit_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"MaxLevel"						"1"
+	"HotKeyOverride"				"F"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
-
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"30"
+	"AbilityManaCost"				"75"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"spirit_damage"			"29 38 47 56 65 74 83"
+			"levelkey"				"exortlevel"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"spirit_hp"				"300 400 500 600 700 800 900"
+			"levelkey"				"exortlevel"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"spirit_armor"			"0 1 2 3 4 5 6"
+			"levelkey"				"exortlevel"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"spirit_attack_range"	"300 365 430 495 560 625 690"
+			"levelkey"				"quaslevel"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"spirit_mana"			"100 150 200 250 300 350 400"
+			"levelkey"				"quaslevel"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"spirit_duration"		"20 30 40 50 60 70 80"
+			"levelkey"				"quaslevel"
+		}
+	}
 }
+

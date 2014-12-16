@@ -1,41 +1,68 @@
 "invoker_ice_wall_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"MaxLevel"						"1"
+	"HotKeyOverride"				"G"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"invoker_ice_wall"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
-
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"25"
+	"AbilityManaCost"				"175"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"3.0 4.5 6.0 7.5 9.0 10.5 12.0"
+			"levelkey"				"quaslevel"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"slow"					"-20 -40 -60 -80 -100 -120 -140"
+			"levelkey"				"quaslevel"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"slow_duration"			"2.0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damage_per_second"		"6 12 18 24 30 36 42"
+			"levelkey"				"exortlevel"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"wall_place_distance"	"200"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"num_wall_elements"		"15"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"wall_element_spacing"	"80"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"wall_element_radius"	"105"
+		}
+	}
 }
+

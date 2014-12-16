@@ -1,46 +1,46 @@
 "abaddon_frostmourne_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-    "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
-    "AbilityTextureName"            "abaddon_frostmourne"
-        
-    
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-        "01"
-        {
-            "var_type"                      "FIELD_FLOAT"
-            "debuff_duration"               "2.5"
-        }
-        "02"
-        {
-            "var_type"                      "FIELD_FLOAT"
-            "buff_duration"                 "4.5"
-        }
-        "03"
-        {
-            "var_type"                      "FIELD_INTEGER"
-            "slow_pct"                      "5 10 15 20"
-        }
-        "04"
-        {
-            "var_type"                      "FIELD_INTEGER"
-            "attack_slow_tooltip"           "5 10 15 20"
-        }
-        "05"
-        {
-             "var_type"                      "FIELD_INTEGER"
-             "move_speed_pct"                "15"
-        }
-        "06"
-        {
-            "var_type"                      "FIELD_INTEGER"
-            "attack_speed"                  "10 20 30 40"
-        }
-    }
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"debuff_duration"				"2.5"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"buff_duration"					"4.5"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"slow_pct"						"5 10 15 20"
+		}
+		"04"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"attack_slow_tooltip"			"5 10 15 20"
+		}
+		"05"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"move_speed_pct"				"15"
+		}
+		"06"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"attack_speed"					"10 20 30 40"
+		}
+	}
 }
+

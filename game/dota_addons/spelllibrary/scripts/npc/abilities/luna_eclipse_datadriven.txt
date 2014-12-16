@@ -1,41 +1,71 @@
 "luna_eclipse_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"luna_eclipse"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.6 0.6 0.6"
 
-    }
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"160.0 150.0 140.0"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"150 200 250"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"675 675 675"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"beam_interval"				"0.6 0.6 0.6"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"beams"						"4 7 10"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"hit_count"					"4 4 4"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration_tooltip"			"1.8 3.6 5.4"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"beams_scepter"				"4 8 12"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"hit_count_scepter"			"4 8 12"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration_tooltip_scepter"	"1.8 4.2 6.6"
+		}
+	}
 }
+

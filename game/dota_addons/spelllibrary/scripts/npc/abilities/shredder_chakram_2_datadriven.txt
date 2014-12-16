@@ -1,0 +1,78 @@
+"shredder_chakram_2_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"		
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"shredder_chakram_2"
+	"MaxLevel"						"3"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1200 1200 1200"
+	"AbilityCastPoint"				"0.3 0.3 0.3"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"8.0 8.0 8.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100 150 200"
+
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"speed"					"900.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"radius"				"200.0"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"pass_damage"			"100 140 180"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_per_second"		"50 75 100"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"slow"					"5"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damage_interval"		"0.5"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"break_distance"		"2000.0"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"mana_per_second"		"20.0 25.0 30.0"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"pass_slow_duration"	"0.5"
+		}
+	}
+}
+

@@ -1,0 +1,71 @@
+"phoenix_icarus_dive_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"phoenix_icarus_dive"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.2"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"36"
+	"AbilityDuration"				"2.0"
+	
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+	
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hp_cost_perc"			"15"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"dash_length"			"1400"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"dash_width"			"500"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hit_radius"			"200"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"burn_duration"			"4"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_per_second"		"10 30 50 70"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"burn_tick_interval"	"1.0"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"slow_movement_speed_pct"	"-25"
+		}
+	}
+}
+

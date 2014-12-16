@@ -1,41 +1,51 @@
 "tornado_tempest_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"MaxLevel"						"1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
-
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"far_radius"			"600"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"movespeed_slow"		"-15"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"attackspeed_slow"		"-15"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"near_radius"			"150"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"near_damage"			"45"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"far_damage"			"15"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"tick_rate"				"0.25"
+		}
+	}
 }
+

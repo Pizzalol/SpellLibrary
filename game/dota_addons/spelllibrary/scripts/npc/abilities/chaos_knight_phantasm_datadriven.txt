@@ -1,41 +1,74 @@
 "chaos_knight_phantasm_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"chaos_knight_phantasm"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.4 0.4 0.4"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"140.0 140.0 140.0"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"125 200 275"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"images_count"				"1 2 3"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"extra_phantasm_chance_pct_tooltip"			"50"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"illusion_duration"			"34"
+		}	
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"outgoing_damage"			"0 0 0"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"outgoing_damage_tooltip"			"100 100 100"
+		}	
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"incoming_damage"			"100 100 100"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"incoming_damage_tooltip"			"200 200 200"
+		}			
+		"08"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"invuln_duration"		"0.5"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"vision_radius"			"400"
+		}			
+	}
 }
+

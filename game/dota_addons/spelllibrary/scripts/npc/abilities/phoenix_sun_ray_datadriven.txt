@@ -1,0 +1,88 @@
+"phoenix_sun_ray_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"phoenix_sun_ray"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1300"
+	"AbilityCastPoint"				"0.01"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20"
+	"AbilityDuration"				"6.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"hp_cost_perc_per_second"		"6"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"base_dmg"			"15 20 25 30"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"hp_perc_dmg"		"1 2 3 4"
+		}
+		"04"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"ally_heal"			"0.5"
+		}
+		
+		"05"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"130"
+		}
+		"06"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"tick_interval"		"0.2"
+		}
+		"07"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"forward_move_speed"	"250"
+		}
+		"08"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"beam_range"		"1300"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"turn_rate_initial"			"250"
+		}
+		"10"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"turn_rate"					"20"
+		}
+		"11"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"tooltip_duration"	"6"
+		}
+	}
+}
+

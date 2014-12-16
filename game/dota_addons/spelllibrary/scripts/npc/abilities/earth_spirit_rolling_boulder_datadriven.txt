@@ -1,41 +1,86 @@
 "earth_spirit_rolling_boulder_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"3000"
+	"AbilityCastPoint"				"0.01"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"16.0 12.0 8.0 4.0"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"150"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"speed"					"800"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"rock_speed"			"1600"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"distance"				"800.0"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"rock_distance"			"1600.0"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"delay"					"0.6"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"90"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"rock_damage"			"135"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"move_slow"				"80"
+		}
+		"10"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"attack_slow"			"80"
+		}
+		"11"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"slow_duration"			"2.0"
+		}
+	}
 }
+
+

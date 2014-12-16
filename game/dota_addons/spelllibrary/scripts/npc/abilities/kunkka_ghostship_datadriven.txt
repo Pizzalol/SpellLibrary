@@ -1,0 +1,71 @@
+"kunkka_ghostship_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"kunkka_ghostship"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1000"
+	"AbilityCastPoint"				"0.4 0.4 0.4"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"60.0 50.0 40.0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"400 500 600"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"150 200 250"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"tooltip_delay"				"3.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"ghostship_distance"		"1000 1000 1000"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"ghostship_width"			"425 425 425"
+		}			
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"movespeed_bonus"			"10 10 10"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"buff_duration"				"10"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"stun_duration"				"1.4 1.4 1.4"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"ghostship_speed"			"650 650 650"
+		}
+	}
+}
+

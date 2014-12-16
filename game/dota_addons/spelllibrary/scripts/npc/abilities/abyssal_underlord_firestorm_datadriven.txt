@@ -1,41 +1,73 @@
 "abyssal_underlord_firestorm_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	
+	"AbilityCastRange"				"750"
+	"AbilityCastPoint"				"0.6"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"abyssal_underlord_firestorm"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"14.0"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100 110 120 130"
 
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"400"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"wave_duration"					"7.0"
+		}		
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"wave_count"					"6"
+		}
+		"04"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"wave_damage"					"25 40 55 70"
+		}
+		"05"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"wave_interval"					"1.0"
+		}
+		"06"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"burn_damage"					"5 10 15 20"
+		}
+		"07"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"burn_interval"					"1.0"
+		}
+		"08"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"burn_duration"					"2.0"
+		}
+		"09"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"first_wave_delay"				"0.9"
+		}
+	}
 }
+

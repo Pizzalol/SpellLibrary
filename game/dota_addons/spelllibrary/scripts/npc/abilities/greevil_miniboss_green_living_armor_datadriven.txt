@@ -1,0 +1,50 @@
+"greevil_miniboss_green_living_armor_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"	
+	
+	"AbilityCastRange"				"300"
+	"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"14.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"damage_count"		"6"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"health_regen"		"7"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"damage_block"		"40"
+		}
+		"04"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"duration"			"10.0"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cast_animation"			"9"
+		}
+	}
+}
+

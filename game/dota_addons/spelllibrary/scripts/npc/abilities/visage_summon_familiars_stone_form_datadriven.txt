@@ -1,41 +1,58 @@
 "visage_summon_familiars_stone_form_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityCastRange"				"160"
+	"AbilityCastPoint"				"0.0"
+	"MaxLevel"						"3"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"26.0"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
-
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"stun_radius"						"325"
+		}
+		"02"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"stun_delay"						"1.0"
+		}			
+		"03"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"stun_damage"						"60 100 140"
+		}
+		"04"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"stun_duration"						"1.0 1.25 1.5"
+		}
+		"05"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"stone_duration"					"8.0"
+		}
+		"06"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"hp_regen"							"50.0 68.7 87.5"
+		}
+		"07"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"max_damage_charges"				"7"
+		}
+	}
 }
+

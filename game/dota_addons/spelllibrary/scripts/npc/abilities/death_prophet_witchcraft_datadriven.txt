@@ -1,41 +1,54 @@
 "death_prophet_witchcraft_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
-
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
-
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_movement_speed"	"5 10 15 20"
+		}			
+		"02"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"carrion_swarm_mana_cost_adjust"	"-10 -15 -20 -25"
+		}
+		"03"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"carrion_swarm_cooldown_adjust"		"-1.0 -2.0 -3.0 -4.0"
+		}
+		"04"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"silence_mana_cost_adjust"			"-10 -15 -20 -25"
+		}
+		"05"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"silence_cooldown_adjust"			"-1.0 -2.0 -3.0 -4.0"
+		}
+		"06"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"exorcism_1_extra_spirits"			"3 4 5 6"
+		}
+		"07"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"exorcism_2_extra_spirits"			"3 4 5 6"
+		}
+		"08"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"exorcism_3_extra_spirits"			"3 4 5 6"
+		}
+	}
 }
+

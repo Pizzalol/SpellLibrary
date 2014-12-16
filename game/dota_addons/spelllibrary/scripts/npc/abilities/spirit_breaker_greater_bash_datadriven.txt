@@ -1,41 +1,64 @@
 "spirit_breaker_greater_bash_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"1.5 1.5 1.5 1.5"
 
-    }
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportBonus"	"40"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"chance_pct"			"17 17 17 17"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damage"				"22 28 34 40"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"1.0 1.2 1.4 1.6"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"knockback_duration"	"0.5 0.5 0.5 0.5"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"knockback_distance"	"143 152 158 162"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"knockback_height"		"50 50 50 50"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_movespeed_pct"	"15 15 15 15"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"movespeed_duration"	"3.0 3.0 3.0 3.0"
+		}
+	}
 }
+

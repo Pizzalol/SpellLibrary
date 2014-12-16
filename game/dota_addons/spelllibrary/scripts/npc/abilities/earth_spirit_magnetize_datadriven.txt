@@ -1,41 +1,77 @@
 "earth_spirit_magnetize_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"earth_spirit_magnetize"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"300"
+	"AbilityCastPoint"				"0.01"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"80.0"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100.0"
 
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"cast_radius"			"300"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_per_second"			"50 75 100"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damage_duration"			"6.0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"rock_search_radius"			"400"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"rock_explosion_radius"			"600"
+		}			
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damage_interval"			"1.0"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"rock_explosion_delay"			"8.0"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"silence_duration"			"5.0"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"slow_duration"			"2.0"
+		}
+	}
 }
+

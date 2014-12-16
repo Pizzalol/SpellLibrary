@@ -1,0 +1,64 @@
+"techies_land_mines_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"100"
+	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"19 16 13 10"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"125 150 175 205"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage"					"225 300 375 450"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"small_radius"				"200"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"big_radius"				"500"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"activation_time"			"1.75"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"max_mines"					"20"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"explode_delay"				"0.3"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"fade_time"					"2.0"
+		}		
+	}
+}
+

@@ -1,41 +1,74 @@
 "troll_warlord_whirling_axes_ranged_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"900"
+	"AbilityCastPoint"				"0.2 0.2 0.2 0.2"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20 19 18 17"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50 50 50 50"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"axe_width"					"100"
+		}
+		
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"axe_speed"					"1500.0"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"axe_range"					"945.0"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"axe_damage"				"75"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"axe_slow_duration"			"3.0 3.75 4.5 5.25"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"movement_speed"			"30"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"axe_spread"				"25"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"axe_count"					"5"
+		}
+	}
 }
+

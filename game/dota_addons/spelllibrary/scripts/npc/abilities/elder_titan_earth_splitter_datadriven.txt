@@ -1,41 +1,99 @@
 "elder_titan_earth_splitter_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"elder_titan_earth_splitter"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"2400"
+	"AbilityCastPoint"				"0.4 0.4 0.4"
 
-    }
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"100.0 100.0 100.0"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"175 175 175"
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"crack_time"				"3.14"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"crack_width"				"300"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"crack_distance"			"2400"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"slow_pct"					"30 40 50"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"slow_duration"				"3.0 4.0 5.0"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"speed"						"910"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage_pct"				"35"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"vision_width"				"500"
+		}
+		"09"
+		{	
+			"var_type"					"FIELD_FLOAT"
+			"vision_interval"			"0.22"
+		}
+		"10"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"vision_duration"			"4.0"
+		}
+		"11"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"vision_step"				"200"
+		}
+		"12"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"total_steps"				"12"
+		}
+		"13"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"slow_duration_scepter"		"4.0 5.0 6.0"
+		}
+	}
 }
+

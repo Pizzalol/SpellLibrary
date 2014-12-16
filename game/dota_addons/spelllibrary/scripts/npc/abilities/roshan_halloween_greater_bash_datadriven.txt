@@ -1,0 +1,40 @@
+"roshan_halloween_greater_bash_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"MaxLevel"						"1"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"1.5"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"chance_pct"			"25"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				".35"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"knockback_duration"	".25"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"knockback_distance"	"500"
+		}
+	}
+}
+

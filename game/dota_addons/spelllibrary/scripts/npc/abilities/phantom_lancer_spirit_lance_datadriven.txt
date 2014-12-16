@@ -1,41 +1,85 @@
 "phantom_lancer_spirit_lance_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"phantom_lancer_spirit_lance"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
 
-    }
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"7.0 7.0 7.0 7.0"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"100 150 200 250"
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"125 130 135 140"		
+	
+	// Cast Range
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"750"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"lance_speed"				"1000 1000 1000 1000"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"3.25"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"movement_speed_pct"		"-10 -20 -30 -40"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"illusion_duration"			"2.0 4.0 6.0 8.0"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"illusion_damage_out_pct"	"-80 -80 -80 -80"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"tooltip_illusion_damage"	"20 20 20 20"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"illusion_damage_in_pct"	"300 300 300 300"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"tooltip_illusion_total_damage_in_pct"	"400 400 400 400"
+		}			
+		"09"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"fake_lance_distance"		"675"
+		}
+	}	
 }
+

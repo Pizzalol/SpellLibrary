@@ -1,41 +1,91 @@
 "undying_flesh_golem_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"undying_flesh_golem"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"75.0 75.0 75.0"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100 100 100"		
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"30.0 30.0 30.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"750"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"full_power_radius"			"200"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"min_speed_slow"				"5"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"max_damage_amp"			"20 25 30"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"min_damage_amp"			"5 10 15"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"death_heal"				"6"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"death_heal_creep"			"2"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"max_damage_amp_scepter"	"30 35 40"
+		}
+		"10"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"min_damage_amp_scepter"	"15 20 25"
+		}
+		"11"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"death_heal_scepter"		"10"
+		}
+		"12"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"death_heal_creep_scepter"	"3"
+		}
+		"13"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"max_speed_slow"				"15"
+		}
+	}
 }
+

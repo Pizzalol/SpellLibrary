@@ -1,0 +1,68 @@
+"greevil_miniboss_purple_venomous_gale_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"600"
+	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"12.0"
+	
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50"
+	
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"10"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"strike_damage"			"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"tick_damage"			"30"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"tick_interval"			"2"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"movement_slow"			"-50"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"125"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"speed"					"1200"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"cast_animation"		"13"
+		}
+	}
+}
+

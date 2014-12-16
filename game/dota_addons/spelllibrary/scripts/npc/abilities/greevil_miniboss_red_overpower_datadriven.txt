@@ -1,0 +1,43 @@
+"greevil_miniboss_red_overpower_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"300"
+	"AbilityCastPoint"				"0.3"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"10.0"
+	"AbilityDuration"				"15.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"max_attacks"				"5"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"attack_speed_bonus_pct"	"300"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cast_animation"			"5"
+		}
+	}
+}
+

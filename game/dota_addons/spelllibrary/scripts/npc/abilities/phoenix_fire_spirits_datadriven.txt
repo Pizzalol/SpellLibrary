@@ -1,0 +1,76 @@
+"phoenix_fire_spirits_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"phoenix_fire_spirits"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1400"
+	"AbilityCastPoint"				"0.01 0.01 0.01 0.01"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"45 40 35 30"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"80 90 100 110"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"hp_cost_perc"		"20"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"spirit_duration"	"16.0 16.0 16.0 16.0"
+		}
+		"03"
+		{	
+			"var_type"			"FIELD_INTEGER"
+			"spirit_speed"		"900 900 900 900"
+		}
+		"04"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"175 175 175 175"
+		}
+		"05"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"duration"			"4.0"
+		}
+		"06"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"attackspeed_slow"	"-80 -100 -120 -140"
+		}
+		"07"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"dps"				"10 30 50 70"
+		}
+		"08"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"spirit_count"		"4"
+		}
+		"09"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"tick_interval"		"1.0"
+		}
+	}
+}
+

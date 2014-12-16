@@ -1,0 +1,48 @@
+"greevil_miniboss_purple_plague_ward_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"450"
+	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"10"
+	
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50"
+	
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"30.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"ward_hp_tooltip"		"200"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"ward_damage_tooltip"	"19"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"cast_animation"		"14"
+		}
+	}
+}
+

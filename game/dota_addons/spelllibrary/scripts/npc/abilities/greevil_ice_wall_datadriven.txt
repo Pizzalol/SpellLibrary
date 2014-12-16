@@ -1,41 +1,62 @@
 "greevil_ice_wall_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"MaxLevel"						"1"
+	"HotKeyOverride"				"G"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
-
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20"
+	"AbilityManaCost"				"0"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"customval_duration"	"3.0 4.0 5.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"slow"					"-40"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"customval_damage_per_second"		"13 18 23"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"wall_place_distance"	"200"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"num_wall_elements"		"15"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"wall_element_spacing"	"80"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"wall_element_radius"	"105"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"slow_duration"			"2.0"
+		}
+	}
 }
+

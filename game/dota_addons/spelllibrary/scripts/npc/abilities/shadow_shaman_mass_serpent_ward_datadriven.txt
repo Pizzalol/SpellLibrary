@@ -1,41 +1,78 @@
 "shadow_shaman_mass_serpent_ward_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"shadow_shaman_mass_serpent_ward"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"550"
+	"AbilityCastPoint"				"0.3"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"120"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"200 350 600"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"ward_count"		"10"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"full_splash_radius"	"50 75 85"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mid_splash_radius"		"75 100 110"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"min_splash_radius"		"150 200 220"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_min"			"40 55 70"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_max"			"45 60 75"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"45.0 45.0 45.0"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_min_scepter"	"85 105 125"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_max_scepter"	"90 110 130"
+		}
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	}
 }
+

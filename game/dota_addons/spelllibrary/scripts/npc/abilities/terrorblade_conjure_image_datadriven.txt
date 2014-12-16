@@ -1,0 +1,51 @@
+"terrorblade_conjure_image_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.5"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"16.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"80"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"illusion_duration"					"32.0"
+		}
+		"02"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"illusion_outgoing_damage"			"-70.0 -60.0 -50.0 -40.0"		
+		}
+		"03"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"illusion_outgoing_tooltip"			"30.0 40.0 50.0 60.0"
+		}
+		"04"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"illusion_incoming_damage"			"325.0"
+		}
+		"05"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"illusion_incoming_damage_total_tooltip"			"425.0"
+		}			
+	}
+}
+

@@ -1,41 +1,64 @@
 "storm_spirit_ball_lightning_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	
+		// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.3 0.3 0.3"
+	
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"15 15 15 15"
+	
+	/ Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"8 12 16"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
-
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"										"FIELD_INTEGER"
+			"ball_lightning_initial_mana_percentage"		"7"		
+		}
+		"02"
+		{
+			"var_type"										"FIELD_INTEGER"
+			"ball_lightning_initial_mana_base"				"15"		
+		}
+		"03"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"ball_lightning_move_speed"			"1250 1875 2500"		
+		}
+		"04"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"ball_lightning_aoe"				"125 200 275"		
+		}
+		"05"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"ball_lightning_travel_cost_base"	"12"		
+		}
+		"06"
+		{
+			"var_type"								"FIELD_FLOAT"
+			"ball_lightning_travel_cost_percent"	"0.7"		
+		}
+		"07"
+		{
+			"var_type"								"FIELD_INTEGER"
+			"ball_lightning_vision_radius"			"1000"		
+		}
+	}
 }
+

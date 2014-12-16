@@ -1,41 +1,79 @@
 "earth_spirit_boulder_smash_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+	"AbilityUnitTargetFlag"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"earth_spirit_boulder_smash"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"150"
+	"AbilityCastPoint"				"0.01"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"22.0 18.0 14.0 10.0"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"200"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"rock_search_aoe"				"200"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"rock_damage"			"125"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"stun_duration"			"0.75 1.25 1.75 2.25"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"speed"					"1200"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"silence_duration"		"3.5 4.0 4.5 5.0"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"unit_distance"			"500.0 600.0 700.0 800.0"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"rock_distance"			"2000.0"
+		}			
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"remnant_smash_radius_tooltip"			"200"
+		}			
+	}
 }
+

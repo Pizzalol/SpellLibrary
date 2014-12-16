@@ -1,0 +1,57 @@
+"greevil_cold_snap_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	
+	// Unit Targeting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1000"
+	"AbilityCastPoint"				"0.3"
+	"AbilityCooldown"				"10"
+	"AbilityManaCost"				"0"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"3.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"customval_initial_damage"	"25 30 35"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"freeze_duration"		"0.4"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"freeze_cooldown"		"0.7"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"customval_damage"		"10 15 20"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damage_trigger"		"10.0"
+		}
+	}
+}
+

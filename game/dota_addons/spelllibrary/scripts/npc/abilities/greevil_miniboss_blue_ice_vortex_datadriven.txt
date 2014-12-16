@@ -1,0 +1,48 @@
+"greevil_miniboss_blue_ice_vortex_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1500"
+	"AbilityCastPoint"				"0.3"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"12.0"
+	"AbilityDuration"				"6.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"275"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"movement_speed_pct"	"-30"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"spell_resist_pct"		"-25"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"cast_animation"		"3"
+		}
+	}
+}
+

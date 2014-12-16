@@ -1,41 +1,61 @@
 "slark_pounce_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"slark_pounce"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20.0 16.0 12.0 8.0"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"75 75 75 75"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"pounce_distance"		"700"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"pounce_speed"			"933.33"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"pounce_acceleration"	"7000.0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"pounce_radius"			"95"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"pounce_damage"			"60 120 180 240"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"leash_duration"		"3.5"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"leash_radius"			"325"
+		}
+	}
 }
+

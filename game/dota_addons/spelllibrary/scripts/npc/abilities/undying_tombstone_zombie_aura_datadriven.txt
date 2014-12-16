@@ -1,0 +1,35 @@
+"undying_tombstone_zombie_aura_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"400 600 800 1000"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"health_threshold"		"100 200 300 400"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"zombie_interval"		"3.0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_speed"			"50"
+		}
+	}
+}
+

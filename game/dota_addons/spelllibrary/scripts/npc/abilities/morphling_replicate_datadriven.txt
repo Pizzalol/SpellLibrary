@@ -1,41 +1,61 @@
 "morphling_replicate_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"700 1100 1500"
+	"AbilityCastPoint"				"0.25"
 
-    }
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"80.0 80.0 80.0"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"25 25 25"		
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"duration"						"30.0 45.0 60.0"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"illusion_damage_out_pct"		"-50 -50 -50"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"tooltip_illusion_damage_out_pct"		"50 50 50"
+		}
+		"04"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"illusion_incoming_dmg_pct_tooltip"		"100 100 100"
+		}
+		"05"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"illusion_damage_in_pct"		"0 0 0"
+		}
+		"06"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"tooltip_cast_range"			"700 1100 1500"
+		}
+	}
 }
+

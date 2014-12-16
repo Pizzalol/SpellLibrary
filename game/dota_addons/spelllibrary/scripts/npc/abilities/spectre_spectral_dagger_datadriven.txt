@@ -1,41 +1,88 @@
 "spectre_spectral_dagger_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"spectre_spectral_dagger"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"2000 2000 2000 2000"
+	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"16.0 16.0 16.0 16.0"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"130 140 150 160"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.0"	// Modifier has no support value
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"50 100 150 200"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_movespeed"		"8 12 16 20"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"dagger_path_duration"	"12.0 12.0 12.0 12.0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"hero_path_duration"	"7.0 7.0 7.0 7.0"
+		}
+		"05"	
+		{
+			"var_type"				"FIELD_FLOAT"
+			"buff_persistence"		"4.0 4.0 4.0 4.0"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"dagger_radius"			"125 125 125 125"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"path_radius"			"175 175 175 175"
+		}
+		"10"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"vision_radius"			"200"
+		}
+		"11"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"speed"					"800"
+		}
+		"12"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"dagger_grace_period"	"2.0"
+		}
+	}
 }
+

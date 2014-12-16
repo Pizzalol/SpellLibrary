@@ -1,41 +1,60 @@
 "phantom_lancer_juxtapose_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
-
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
-
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"max_illusions"			"5 7 9"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"proc_chance_pct"		"40 45 50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"illusion_proc_chance_pct"		"8"
+		}			
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"illusion_duration"			"8"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"illusion_damage_out_pct"	"-84"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"tooltip_illusion_damage"	"16"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"illusion_damage_in_pct"	"400"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"tooltip_total_illusion_damage_in_pct"	"500"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"illusion_from_illusion_duration"	"4"
+		}
+	}
 }
+

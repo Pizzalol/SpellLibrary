@@ -1,41 +1,71 @@
 "legion_commander_overwhelming_odds_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"legion_commander_overwhelming_odds"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"18.0 18.0 18.0 18.0"
 
-    }
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1000"
+	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100 100 100 100"
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"330"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"40 80 120 160"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_per_unit"		"14 16 18 20"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_per_hero"		"20 35 50 65"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"illusion_dmg_pct"		"25"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_speed_creeps"		"3"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_speed_heroes"		"9"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"7.0"
+		}
+	}
 }
+

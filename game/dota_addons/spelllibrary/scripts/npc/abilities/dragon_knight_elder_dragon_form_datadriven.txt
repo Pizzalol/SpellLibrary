@@ -1,41 +1,85 @@
 "dragon_knight_elder_dragon_form_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"dragon_knight_elder_dragon_form"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"115.0 115.0 115.0"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50 50 50"		
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.35"	// Attacks are primarily about the damage
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"60.0 60.0 60.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_movement_speed"		"25 25 25"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_attack_range"		"372 372 372"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"corrosive_breath_damage"	"20 20 20"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"corrosive_breath_duration"	"5.0 5.0 5.0"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"splash_radius"				"100 200 250"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"splash_damage_percent"		"100 75 50"
+		}
+		"09"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"frost_bonus_movement_speed"	"-30 -30 -30"
+		}
+		"10"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"frost_bonus_attack_speed"		"-20 -20 -20"
+		}
+		"11"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"frost_duration"				"3.0 3.0 3.0"
+		}
+		"12"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"frost_aoe"					"250"
+		}
+		
+	}
 }

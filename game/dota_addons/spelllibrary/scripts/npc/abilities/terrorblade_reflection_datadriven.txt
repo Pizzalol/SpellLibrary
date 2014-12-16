@@ -1,0 +1,58 @@
+"terrorblade_reflection_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"terrorblade_reflection"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"22 18 14 10"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"275"
+	"AbilityCastPoint"				"0.5"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"illusion_duration"			"2.5 3.5 4.5 5.5"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"illusion_outgoing_damage"	"-60.0 -50.0 -40.0 -30.0"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"illusion_outgoing_tooltip"	"40.0 50.0 60.0 70.0"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"move_slow"					"60"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"attack_slow_tooltip"		"60"
+		}
+	}
+}
+

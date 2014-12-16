@@ -1,41 +1,78 @@
 "enigma_black_hole_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"enigma_black_hole"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"275"
+	"AbilityCastPoint"				"0.3 0.3 0.3"
+	"AbilityChannelTime"			"4.0 4.0 4.0"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"200.0 190.0 180.0"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"275 350 425"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"pull_radius"			"400"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"pull_speed"			"40 40 40"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"far_radius"			"400"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"near_radius"			"200"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"far_damage"			"25 50 75"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"near_damage"			"50 100 150"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"tick_rate"				"0.1 0.1 0.1"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"4.0 4.0 4.0"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"vision_radius"			"800 800 800"
+		}
+	}
 }
+

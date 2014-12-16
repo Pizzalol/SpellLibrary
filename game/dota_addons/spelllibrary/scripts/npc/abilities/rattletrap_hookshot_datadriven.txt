@@ -1,41 +1,68 @@
 "rattletrap_hookshot_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"rattletrap_hookshot"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
-
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	"AbilityCastRange"				"2000 2500 3000"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"70.0 55.0 40.0"
+	
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"150 150 150"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"latch_radius"		"125 125 125"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"stun_radius"		"175 175 175"
+		}
+		"03"
+		{	
+			"var_type"			"FIELD_FLOAT"
+			"duration"			"1.0 1.5 2.0"
+		}
+		
+		"04"
+		{	
+			"var_type"			"FIELD_INTEGER"
+			"speed"				"4000 5000 6000"
+		}
+		"05"
+		{	
+			"var_type"			"FIELD_INTEGER"
+			"tooltip_range"		"2000 2500 3000"
+		}
+		"06"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"damage"			"100 200 300"
+		}
+		"07"
+		{	
+			"var_type"			"FIELD_FLOAT"
+			"cooldown_scepter"	"12.0 12.0 12.0"
+		}
+	}
 }
+

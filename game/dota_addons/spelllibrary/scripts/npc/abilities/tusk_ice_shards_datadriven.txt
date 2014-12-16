@@ -1,41 +1,76 @@
 "tusk_ice_shards_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"tusk_ice_shards"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1800"
+	"AbilityCastPoint"				"0.1 0.1 0.1 0.1"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"18.0 16.0 14.0 12.0"
 
-    }
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"120 120 120 120"
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"shard_width"				"200"
+		}
+		
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"shard_damage"				"70 140 210 280"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"shard_count"				"7"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"shard_speed"				"900.0"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"shard_duration"				"5.0"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"shard_angle_step"			"40.0"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"shard_distance"			"200"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cast_range_tooltip"			"1800"
+		}
+	}
 }
+
+

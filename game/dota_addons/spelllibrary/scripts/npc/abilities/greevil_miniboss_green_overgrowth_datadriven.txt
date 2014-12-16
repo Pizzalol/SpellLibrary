@@ -1,0 +1,43 @@
+"greevil_miniboss_green_overgrowth_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"	
+	
+	"AbilityCastRange"				"500"
+	"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"duration"						"3.0"
+		}
+		
+		"02"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"radius"						"625"
+		}				
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cast_animation"			"10"
+		}
+	}
+}
+

@@ -1,41 +1,98 @@
 "crystal_maiden_freezing_field_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"crystal_maiden_freezing_field"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityChannelTime"			"7.0 7.0 7.0"
+	"AbilityCastPoint"				"0.3 0.3 0.3"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"150 120 90"
+	"AbilityDuration"				"7.0"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"200 400 600"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.35"	// Primarily about the damage
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"radius"			"685 685 685"
+		}
+	
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"explosion_radius"	"250"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"explosion_interval"	"0.1"
+		}
+		"05"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"movespeed_slow"	"-30"
+		}
+		"06"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"attack_slow"	"-30"
+		}
+		"07"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"slow_duration"		"1.0"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"explosion_min_dist"	"195"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"explosion_max_dist"	"635"
+		}
+		"10"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"damage"			"105 170 250"
+		}
+		"11"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"damage_scepter"	"170 250 310"
+		}
+		"12"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"movespeed_slow_scepter" "-50"
+		}
+		"13"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"attack_slow_scepter"	"-50"
+		}
+	}
 }
+	

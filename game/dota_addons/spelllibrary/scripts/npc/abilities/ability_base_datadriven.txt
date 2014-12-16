@@ -1,0 +1,45 @@
+"ability_base_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NONE"
+	"OnCastbar"						"1"
+	"OnLearnbar"					"1"
+	"FightRecapLevel"				"0"
+	"AbilityTextureName"			"ability_base"
+
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"0"
+	"AbilityCastRangeBuffer"		"250"
+	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+	"AbilityChannelTime"			"0.0 0.0 0.0 0.0"
+	"AbilityCooldown"				"0.0 0.0 0.0 0.0"
+	"AbilityDuration"				"0.0 0.0 0.0 0.0"
+	"AbilitySharedCooldown"			""
+	"AbilityDamage"					"0 0 0 0"
+	"AbilityManaCost"				"0 0 0 0"
+	"AbilityModifierSupportValue"	"1.0"	// for stats tracking.
+	"AbilityModifierSupportBonus"	"0"		// for stats tracking.
+	
+	// Item Info	
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"
+	"ItemInitialCharges"			"0"
+	"ItemCombinable"				"1"
+	"ItemPermanent"					"1"
+	"ItemStackable"					"0"
+	"ItemRecipe"					"0"
+	"ItemDroppable"					"1"
+	"ItemPurchasable"				"1"
+	"ItemSellable"					"1"
+	"ItemRequiresCharges"			"0"
+	"ItemKillable"					"1"
+	"ItemDisassemblable"			"0"
+	"ItemShareability"				"ITEM_NOT_SHAREABLE"
+	"ItemDeclaresPurchase"			"0"
+}
+
+

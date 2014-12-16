@@ -1,41 +1,73 @@
 "skywrath_mage_concussive_shot_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"skywrath_mage_concussive_shot"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+	"AbilityCastRange"				"1600"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20.0 18.0 16.0 14.0"
 
-    }
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"110 110 110 110" 
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
 
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{ 
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"launch_radius"		"1600"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"slow_radius"		"200"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"speed"				"800 800 800 800"
+		}
+		"04"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"damage"			"60 120 180 240"
+		}
+		"05"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"slow_duration"		"4.0"
+		}
+		"06"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"movement_speed_pct"	"30 35 40 45"
+		}
+		"07"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"shot_vision"		"400"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"vision_duration"		"3.34"
+		}
+	}
 }
+

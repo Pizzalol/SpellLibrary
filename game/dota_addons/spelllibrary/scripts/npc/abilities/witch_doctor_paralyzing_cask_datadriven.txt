@@ -1,41 +1,81 @@
 "witch_doctor_paralyzing_cask_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"witch_doctor_paralyzing_cask"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.35 0.35 0.35 0.35"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20.0 18.0 16.0 14.0"
 
-    }
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"75 100 125 150"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"110 120 130 140"
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.5"	// Can have multiple bounces
 
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"hero_duration"			"1.0 1.0 1.0 1.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"creep_duration"		"5.0 5.0 5.0 5.0"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hero_damage"			"50 50 50 50"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bounce_range"			"575 575 575 575"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bounces"				"3 5 7 9"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"speed"					"1000"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"bounce_delay"			"0.3"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bounces_tooltip"				"2 4 6 8"
+		}
+	}
 }
+

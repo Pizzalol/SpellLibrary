@@ -1,41 +1,82 @@
 "dazzle_poison_touch_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"dazzle_poison_touch"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"600"
+	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"15 13 11 7"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100 115 130 145"
+	
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"14 20 26 32"
+	"AbilityDuration"				"10"
+	
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.35"	// Can apply multiple modifiers
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"set_time"			"3"
+		}
+		"02"
+		{	
+			"var_type"			"FIELD_INTEGER"
+			"slow_1"			"-33 -33 -33 -33"
+		}
+		"03"
+		{	
+			"var_type"			"FIELD_INTEGER"
+			"slow_2"			"-33 -33 -66 -66"
+		}
+		"04"
+		{	
+			"var_type"			"FIELD_INTEGER"
+			"slow_3"			"-33 -66 -100 -100"
+		}
+		"05"
+		{	
+			"var_type"			"FIELD_INTEGER"
+			"projectile_speed"	"1300"
+		}
+		"06"
+		{	
+			"var_type"			"FIELD_INTEGER"
+			"should_stun"		"0 0 0 1"
+		}
+		"07"
+		{	
+			"var_type"			"FIELD_FLOAT"
+			"stun_duration"		"1"
+		}
+		"08"
+		{	
+			"var_type"			"FIELD_FLOAT"
+			"duration_tooltip"		"10"
+		}
+	}
 }
+

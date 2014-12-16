@@ -1,0 +1,63 @@
+"techies_stasis_trap_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN | DOTA_ABILITY_BEHAVIOR_AOE"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"150"
+	"AbilityCastPoint"				"1.0"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20.0 16.0 13.0 10.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"80 110 140 160"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{		
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"activation_radius"			"450"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"explode_delay"			"2.0"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"stun_radius"				"450"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"stun_duration"				"2.5 3 3.5 4"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"activation_time"			"2.0"
+		}	
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"fade_time"					"2.0"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"360.0"
+		}
+	}
+}
+

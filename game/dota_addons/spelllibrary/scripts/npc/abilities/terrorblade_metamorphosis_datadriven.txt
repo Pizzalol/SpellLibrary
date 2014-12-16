@@ -1,0 +1,61 @@
+"terrorblade_metamorphosis_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0."
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"140.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50"
+
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"40 44 48 52"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"transformation_time"	"0.35"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"base_attack_time"		"1.6"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_range"			"422"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"tooltip_attack_range"			"550"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"20 40 60 80"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"speed_loss"				"25"
+		}
+	}
+}
+

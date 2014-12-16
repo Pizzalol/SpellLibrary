@@ -1,41 +1,76 @@
 "batrider_flamebreak_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"batrider_flamebreak"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1500"
+	"AbilityCastPoint"				"0.2 0.2 0.2 0.2"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"14.0"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"140"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"1.0"
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"75 150 225 300"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"explosion_radius"		"375 375 375 375"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"collision_radius"		"100 100 100 100"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"stun_duration"			"0.5 0.5 0.5 0.5"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"speed"					"900 900 900 900"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"knockback_max_distance"	"400"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"knockback_height"		"100 100 100 100"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"knockback_duration"	"0.25 0.25 0.25 0.25"
+		}
 
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	}
 }
+

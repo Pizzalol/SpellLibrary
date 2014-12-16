@@ -1,41 +1,63 @@
 "troll_warlord_berserkers_rage_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.2 0.2 0.2 0.2"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
-
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"15"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_move_speed"		"10 20 30 40"
+		}
+		"03"
+		{	
+			"var_type"				"FIELD_INTEGER"
+			"bonus_range"			"372"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"base_attack_time"		"1.55"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_hp"				"100"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"3"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bash_chance"			"10"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"bash_duration"			"0.8 1.2 1.6 2.0"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bash_damage"			"20 30 40 50"
+		}
+	}
 }
+

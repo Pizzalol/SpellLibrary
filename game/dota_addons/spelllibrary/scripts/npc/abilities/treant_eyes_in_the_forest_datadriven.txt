@@ -1,0 +1,46 @@
+"treant_eyes_in_the_forest_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
+	"MaxLevel"						"1"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"treant_eyes_in_the_forest"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"160"
+	"AbilityCastPoint"				"0.2"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"55"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"vision_aoe"		"800"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"overgrowth_aoe"		"800"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"damage"		"135"
+		}
+	}
+}
+

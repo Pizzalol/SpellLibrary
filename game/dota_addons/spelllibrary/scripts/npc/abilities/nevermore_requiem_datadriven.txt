@@ -1,41 +1,96 @@
 "nevermore_requiem_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"nevermore_requiem"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"1.67 1.67 1.67"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"120.0 110.0 100.0"
+	"AbilityDuration"				"5.0 5.0 5.0"
 
-    }
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"80 120 160"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"150 175 200"
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.5"	// Primarily about the damage
 
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"requiem_radius"	"975 1000 1025"		
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"requiem_reduction_ms"	"-25"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"requiem_slow_duration"	"5.0"
+		}
+		"04"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"requiem_reduction_damage"	"-50"
+		}
+		"05"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"requiem_reduction_tooltip"	"-50"
+		}
+		"06"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"requiem_reduction_radius"	"700 700 700"
+		}
+		"07"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"requiem_soul_conversion"	"2 2 2"
+		}
+		"08"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"requiem_line_width_start"	"75 100 125"
+		}
+		"09"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"requiem_line_width_end"	"400 425 450"
+		}
+		"10"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"requiem_line_speed"	"700 700 700"
+		}
+		"11"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"soul_death_release"	"0.5"
+		}
+				
+	}
 }
+

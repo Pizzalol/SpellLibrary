@@ -1,41 +1,87 @@
 "puck_dream_coil_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"puck_dream_coil"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"750"
+	"AbilityCastPoint"				"0.1 0.1 0.1"
 
-    }
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"85.0 85.0 85.0"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100 150 200"
+			
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.5"	// Does two modifiers 
 
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"coil_duration"				"6.0 6.0 6.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"coil_init_damage_tooltip"				"100 150 200"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"coil_break_radius"			"600 600 600"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"stun_duration"				"0.5 0.5 0.5"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"coil_stun_duration"		"1.5 2.25 3.0"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"coil_break_damage"			"100 150 200"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"coil_radius"				"375 375 375"
+		}			
+		"08"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"coil_duration_scepter"		"8"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"coil_break_damage_scepter"	"200 250 300"
+		}
+		"10"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"coil_stun_duration_scepter"		"1.5 3 4.5"
+		}
+	}
 }
+
+

@@ -1,41 +1,53 @@
 "abyssal_underlord_pit_of_malice_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	
+	"AbilityCastRange"				"750"
+	"AbilityCastPoint"				"0.6"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"abyssal_underlord_pit_of_malice"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"24.0 21.0 18.0 15.0"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100 115 130 145"
 
-    }
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"275"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"pit_duration"					"7.0"
+		}		
+		"03"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"pit_interval"					"0.5"
+		}
+		"04"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"pit_damage"					"100"
+		}
+		"05"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"ensnare_duration"				"1.0 1.5 2.0 2.5"
+		}
+	}
 }
+

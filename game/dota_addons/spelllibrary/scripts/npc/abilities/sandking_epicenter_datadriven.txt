@@ -1,41 +1,75 @@
 "sandking_epicenter_datadriven"
 {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
-	"BaseClass"                    "ability_datadriven" 
-    "AbilityBehavior"               ""
-    "AbilityType"                   ""
-    "SpellImmunityType"             ""
-    "AbilityTextureName"            ""
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"sandking_epicenter"
 
-    // Precache
-    //-------------------------------------------------------------------------------------------------------------
-    "precache"
-    {
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"140.0 120.0 100.0"
+	"AbilityDuration"				"3.0 3.0 3.0"
+	"AbilityChannelTime"			"2.0 2.0 2.0"
+	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
 
-    }
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"175 250 325"
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastPoint"              ""
-    "AbilityCastRange"              ""
-
-    // Time
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCooldown"               ""
-
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityManaCost"               ""
-
-    // Damage
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityDamage"                 ""
-
-    // Special
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilitySpecial"
-    {
-
-    }
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.2"	// Damage is the main component of spell
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_radius"	"275 325 375 425 475 525 575 650 675 700 775 825"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_pulses"	"6 8 10"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_damage"	"110 110 110"
+		}
+		"04"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_slow"	"-30 -30 -30"
+		}
+		"05"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_slow_as"	"-30"
+		}
+		"06"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_slow_duration_tooltip"	"3"
+		}
+		"07"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_pulses_scepter"	"8 10 12"
+		}
+		"08"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"epicenter_cooldown_scepter"	"120.0 100.0 80.0"
+		}
+		
+	}
 }
+

@@ -1,0 +1,58 @@
+"kunkka_x_marks_the_spot_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"kunkka_x_marks_the_spot"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"500 650 800 950"
+	"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"14 13 12 11"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"80"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"1.0 2.0 3.0 4.0"
+		}	
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"allied_duration_tooltip"	"2.0 4.0 6.0 8.0"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"tooltip_range"				"500 650 800 950"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"fow_range"				"400"
+		}	  
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"fow_duration"				"5.94"
+		}	
+	}
+}
+

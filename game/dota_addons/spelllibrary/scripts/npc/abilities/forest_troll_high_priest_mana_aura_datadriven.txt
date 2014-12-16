@@ -1,0 +1,26 @@
+"forest_troll_high_priest_mana_aura_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"MaxLevel"				"1"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mana_regen"		"2"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"900"
+		}
+	}
+}
+
+// Next free ID 5523
