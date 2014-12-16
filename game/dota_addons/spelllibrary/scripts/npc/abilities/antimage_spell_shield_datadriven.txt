@@ -1,4 +1,4 @@
-// Remake of the Antimage Spellshield
+// Remwrite of the Antimage Spellshield
 // Author: Pizzalol
 // Date: 16.12.2014.
 "antimage_spell_shield_datadriven"
@@ -22,7 +22,7 @@
 
 	"Modifiers"
 	{
-		"modifier_spell_shield"
+		"modifier_spell_shield_datadriven"
 		{
 			"Passive"	"1"
 			"IsHidden"	"1"

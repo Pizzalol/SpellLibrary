@@ -1197,6 +1197,13 @@
 
 
 	//Start of file antimage_mana_break_datadriven.txt
+	// Rewrite of the Antimage Mana Break
+	// Author: Pizzalol
+	// Date: 16.12.2014.
+	// NOTE: Sound and particle will play even on units with no mana, to fix that just run a script on the "OnOrbFire"
+	// event and check if the unit has mana, if it does then launch the particle and sound through lua
+	// NOTE2: Damages magic immune enemies and drains mana, can be fixed by checking if the target is magic immune in
+	// the script. Waiting for 6.82 parity for the new spell immunity system
 	"antimage_mana_break_datadriven"
 	{
 		// General
@@ -1205,6 +1212,15 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"		
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"antimage_mana_break"
+	
+		// Precache	
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_antimage/antimage_blade_hit_old.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+		}
 	
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -1219,6 +1235,43 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"mana_per_hit"			"28 40 52 64"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_mana_break_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"Orb"
+				{
+					"Priority"	"DOTA_ORB_PRIORITY_ABILITY"
+				}
+	
+				"OnOrbImpact"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/antimage.lua"
+						"Function"		"ManaBreak"
+						"Target"		"TARGET"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Antimage.ManaBreak"
+						"Target"		"TARGET"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_antimage/antimage_blade_hit_old.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"		"TARGET"
+					}
+				}
 			}
 		}
 	}
@@ -1288,7 +1341,7 @@
 
 
 	//Start of file antimage_spell_shield_datadriven.txt
-	// Remake of the Antimage Spellshield
+	// Remwrite of the Antimage Spellshield
 	// Author: Pizzalol
 	// Date: 16.12.2014.
 	"antimage_spell_shield_datadriven"
@@ -1312,7 +1365,7 @@
 	
 		"Modifiers"
 		{
-			"modifier_spell_shield"
+			"modifier_spell_shield_datadriven"
 			{
 				"Passive"	"1"
 				"IsHidden"	"1"
