@@ -1,9 +1,13 @@
+// Remake of the Antimage Spellshield
+// Author: Pizzalol
+// Date: 16.12.2014.
 "antimage_spell_shield_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"antimage_spell_shield"
 	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -13,6 +17,20 @@
 		{
 			"var_type"						"FIELD_INTEGER"
 			"spell_shield_resistance"		"26 34 42 50"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_spell_shield"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%spell_shield_resistance"
+			}
 		}
 	}
 }
