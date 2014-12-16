@@ -15,7 +15,7 @@ Guidelines
 - Lua scripts should be separated on a per hero basis
 
 - Every ability should be portable (i.e. 0 dependence on each other).
-If the ability depends on another ability to function (Earth Spirit, Invoker, SF Requiem, etc) leave it for later.
+  - If the ability depends on another ability to function (Earth Spirit, Invoker, SF Requiem, etc) leave it for later.
 
 - Don't Use Global Lua Events (related to making the spells portable). Abilities should work without any main addon scripts.
 
