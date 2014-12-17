@@ -1,4 +1,4 @@
-// Rewrite of the Antimage Mana Break
+// Rewrite of the Antimage Mana Break ability
 // Author: Pizzalol
 // Date: 16.12.2014.
 // NOTE: Sound and particle will play even on units with no mana, to fix that just run a script on the "OnOrbFire"
@@ -19,7 +19,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"precache"
 	{
-		"particle"	"particles/units/heroes/hero_antimage/antimage_blade_hit_old.vpcf"
+		"particle"	"particles/generic_gameplay/generic_manaburn.vpcf"
 		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 	}
 
@@ -55,7 +55,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"scripts/vscripts/heroes/antimage.lua"
+					"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/mana_break.lua"
 					"Function"		"ManaBreak"
 					"Target"		"TARGET"
 				}
@@ -68,7 +68,7 @@
 
 				"AttachEffect"
 				{
-					"EffectName"	"particles/units/heroes/hero_antimage/antimage_blade_hit_old.vpcf"
+					"EffectName"	"particles/generic_gameplay/generic_manaburn.vpcf"
 					"EffectAttachType"	"attach_hitloc"
 					"Target"		"TARGET"
 				}

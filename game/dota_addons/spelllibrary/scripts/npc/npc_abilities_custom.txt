@@ -1197,7 +1197,7 @@
 
 
 	//Start of file antimage_mana_break_datadriven.txt
-	// Rewrite of the Antimage Mana Break
+	// Rewrite of the Antimage Mana Break ability
 	// Author: Pizzalol
 	// Date: 16.12.2014.
 	// NOTE: Sound and particle will play even on units with no mana, to fix that just run a script on the "OnOrbFire"
@@ -1218,7 +1218,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_antimage/antimage_blade_hit_old.vpcf"
+			"particle"	"particles/generic_gameplay/generic_manaburn.vpcf"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 		}
 	
@@ -1254,7 +1254,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"scripts/vscripts/heroes/antimage.lua"
+						"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/mana_break.lua"
 						"Function"		"ManaBreak"
 						"Target"		"TARGET"
 					}
@@ -1267,7 +1267,7 @@
 	
 					"AttachEffect"
 					{
-						"EffectName"	"particles/units/heroes/hero_antimage/antimage_blade_hit_old.vpcf"
+						"EffectName"	"particles/generic_gameplay/generic_manaburn.vpcf"
 						"EffectAttachType"	"attach_hitloc"
 						"Target"		"TARGET"
 					}
@@ -1280,6 +1280,9 @@
 
 
 	//Start of file antimage_mana_void_datadriven.txt
+	// Rewrite of the Antimage Mana Void ability
+	// Author: Pizzalol
+	// Date: 17.12.2014.
 	"antimage_mana_void_datadriven"
 	{
 		// General
@@ -1294,6 +1297,14 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"		
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"antimage_mana_void"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -1334,6 +1345,63 @@
 				"mana_void_aoe_radius"			"500"
 			}
 		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Antimage.ManaVoidCast"
+				"Target"			"TARGET"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Antimage.ManaVoid"
+				"Target"			"TARGET"
+			}
+	
+			"AttachEffect"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
+				"EffectAttachType"	"attach_hitloc"
+	
+				"ControlPoints"
+				{
+					"00"	"0 0 0"
+					"01"	"%mana_void_aoe_radius 0 0"
+				}
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mana_void_ministun_datadriven"
+				"Target"		"TARGET"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/mana_void.lua"
+				"Function"		"ManaVoid"
+				"Target"		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_mana_void_ministun_datadriven"
+			{
+				"Duration"	"%mana_void_ministun"
+				"IsDebuff"	"1"
+				"Properties"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
 	
 	
@@ -1341,7 +1409,7 @@
 
 
 	//Start of file antimage_spell_shield_datadriven.txt
-	// Remwrite of the Antimage Spellshield
+	// Remwrite of the Antimage Spellshield ability
 	// Author: Pizzalol
 	// Date: 16.12.2014.
 	"antimage_spell_shield_datadriven"

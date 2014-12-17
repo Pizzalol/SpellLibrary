@@ -11,7 +11,7 @@
 		"Ability1" "antimage_mana_break_datadriven"
 		"Ability2" ""
 		"Ability3" "antimage_spell_shield_datadriven"
-		"Ability4" ""
+		"Ability4" "antimage_mana_void_datadriven"
 	}
 	//End of file npc_dota_hero_antimage_datadriven.txt
 }

@@ -1,3 +1,7 @@
+// Rewrite of the Antimage Mana Void ability
+// Author: Pizzalol
+// Date: 17.12.2014.
+// NOTE: Currently the ministun does not go through magic immunity
 "antimage_mana_void_datadriven"
 {
 	// General
@@ -12,6 +16,14 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"		
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"antimage_mana_void"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -50,6 +62,63 @@
 		{
 			"var_type"						"FIELD_INTEGER"
 			"mana_void_aoe_radius"			"500"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Antimage.ManaVoidCast"
+			"Target"			"TARGET"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Antimage.ManaVoid"
+			"Target"			"TARGET"
+		}
+
+		"AttachEffect"
+		{
+			"Target"			"TARGET"
+			"EffectName"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
+			"EffectAttachType"	"attach_hitloc"
+
+			"ControlPoints"
+			{
+				"00"	"0 0 0"
+				"01"	"%mana_void_aoe_radius 0 0"
+			}
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_mana_void_ministun_datadriven"
+			"Target"		"TARGET"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/mana_void.lua"
+			"Function"		"ManaVoid"
+			"Target"		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_mana_void_ministun_datadriven"
+		{
+			"Duration"	"%mana_void_ministun"
+			"IsDebuff"	"1"
+			"Properties"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }

@@ -1,4 +1,4 @@
-// Remwrite of the Antimage Spellshield
+// Remwrite of the Antimage Spellshield ability
 // Author: Pizzalol
 // Date: 16.12.2014.
 "antimage_spell_shield_datadriven"
