@@ -4,6 +4,6 @@
 
 	"Ability1" "antimage_mana_break_datadriven"
 	"Ability2" "antimage_blink_datadriven"
-	"Ability3" "antimage_spell_shield_datadriven"
+	"Ability3" "viper_corrosive_skin_datadriven"
 	"Ability4" "antimage_mana_void_datadriven"
 }

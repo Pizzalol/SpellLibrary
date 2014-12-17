@@ -1,3 +1,8 @@
+// Rewrite of the Viper Corrosive Skin ability
+// Author: Pizzalol
+// Date: 17.12.2014.
+// NOTE: Particle effect doesnt work, missing control points?
+// NOTE2: Doesnt have the 1400 range limitation
 "viper_corrosive_skin_datadriven"
 {
 	// General
@@ -6,6 +11,15 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"viper_corrosive_skin"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
+		"particle"		"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+	}
 	
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -44,6 +58,66 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"max_range_tooltip"					"1400"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_corrosive_skin_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"OnTakeDamage"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"		"modifier_corrosive_skin_debuff_datadriven"
+					"Target"			"ATTACKER"
+				}
+
+				"FireSound"
+				{
+					"EffectName"		"Hero_Viper.CorrosiveSkin"
+					"Target"			"ATTACKER"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_magic_resistance"
+			}
+		}
+
+		"modifier_corrosive_skin_debuff_datadriven"
+		{
+			"Duration"	"%duration"
+			"IsDebuff"	"1"
+
+			"ThinkInterval"	"1.0"
+
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%damage"
+				}
+			}
+
+			"AttachEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"		"TARGET"
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movement_speed"
+			}
 		}
 	}
 }
