@@ -1,9 +1,24 @@
+// Rewrite of the Antimage Blink ability
+// Author: Pizzalol
+// Date: 17.12.2014.
+// NOTE: "Blink" action block doesnt work with POINT, works with TARGET after changing the behavior.
+// Also there doesnt seem to be a way to change the blink range for the action block
 "antimage_blink_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+	"AbilityTextureName"			"antimage_blink"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+		"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+		"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -31,6 +46,42 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"min_blink_range"		"200"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/blink.lua"
+			"Function"		"Blink"
+			"Target"		"POINT"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Antimage.Blink_out"
+			"Target"		"CASTER"
+		}
+
+		"AttachEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+			"Target"		"CASTER"
+			"EffectAttachType"	"attach_hitloc"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Antimage.Blink_in"
+			"Target"		"POINT"
+		}
+
+		"AttachEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+			"Target"		"CASTER"
+			"EffectAttachType"	"follow_origin"
 		}
 	}
 }

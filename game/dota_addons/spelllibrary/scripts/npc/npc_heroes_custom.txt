@@ -6,10 +6,10 @@
 	//Start of file npc_dota_hero_antimage_datadriven.txt
 	"npc_dota_hero_antimage_datadriven"
 	{
-		"override_hero" "npc_dota_hero_antimage"
+		"override_hero" "npc_dota_hero_abaddon"
 	
 		"Ability1" "antimage_mana_break_datadriven"
-		"Ability2" ""
+		"Ability2" "antimage_blink_datadriven"
 		"Ability3" "antimage_spell_shield_datadriven"
 		"Ability4" "antimage_mana_void_datadriven"
 	}
