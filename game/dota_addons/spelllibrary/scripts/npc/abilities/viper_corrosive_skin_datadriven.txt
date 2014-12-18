@@ -3,6 +3,8 @@
 // Date: 17.12.2014.
 // NOTE: Particle effect doesnt work, missing control points?
 // NOTE2: Doesnt have the 1400 range limitation
+// NOTE3: Missing the floating damage numbers. Can be implemented in lua by running a script on every damage tick
+// and creating the particle there
 "viper_corrosive_skin_datadriven"
 {
 	// General
