@@ -3,15 +3,28 @@
 {
 
 
-	//Start of file test_dummy_datadriven.txt
+	//Start of file test_dummy_melee.txt
 	"npc_dota_hero_antimage_datadriven"
 	{
 		"override_hero" "npc_dota_hero_abaddon"
 	
-		"Ability1" "antimage_mana_break_datadriven"
+		"Ability1" "viper_poison_attack_datadriven"
 		"Ability2" "antimage_blink_datadriven"
 		"Ability3" "viper_corrosive_skin_datadriven"
 		"Ability4" "antimage_mana_void_datadriven"
 	}
-	//End of file test_dummy_datadriven.txt
+	//End of file test_dummy_melee.txt
+
+
+	//Start of file test_dummy_ranged.txt
+	"npc_dota_hero_ancient_apparition_datadriven"
+	{
+		"override_hero" "npc_dota_hero_ancient_apparition"
+	
+		"Ability1" "viper_poison_attack_datadriven"
+		"Ability2" "antimage_blink_datadriven"
+		"Ability3" "viper_corrosive_skin_datadriven"
+		"Ability4" "antimage_mana_void_datadriven"
+	}
+	//End of file test_dummy_ranged.txt
 }

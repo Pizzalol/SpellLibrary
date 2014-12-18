@@ -16,6 +16,7 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"		
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"antimage_mana_void"
+	"AOERadius"						"%mana_void_aoe_radius"
 
 	// Precache
 	//-------------------------------------------------------------------------------------------------------------

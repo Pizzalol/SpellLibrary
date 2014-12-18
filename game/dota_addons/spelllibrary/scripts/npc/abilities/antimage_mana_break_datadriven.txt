@@ -41,7 +41,7 @@
 
 	"Modifiers"
 	{
-		"modifier_mana_break_datadriven"
+		"modifier_mana_break_orb_datadriven"
 		{
 			"Passive"	"1"
 			"IsHidden"	"1"

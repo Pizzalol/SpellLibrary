@@ -1,3 +1,7 @@
+// Rewrite of the Viper Poison Attack ability
+// Author: Pizzalol
+// Date: 18.12.2014.
+// NOTE: poison_attack particles dont work/shoot south regardless of enemy position so i used the normal attack
 "viper_poison_attack_datadriven"
 {
 	// General
@@ -8,6 +12,16 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"viper_poison_attack"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
+		"particle"		"particles/units/heroes/hero_viper/viper_base_attack.vpcf"
+		//"particle"		"particles/units/heroes/hero_viper/"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -49,6 +63,80 @@
 		{
 			"var_type"						"FIELD_INTEGER"
 			"bonus_attack_speed"			"-10 -20 -30 -40"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_viper_poison_attack_orb_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"	"particles/units/heroes/hero_viper/viper_base_attack.vpcf"
+				"CastAttack"		"1"
+			}
+
+			"OnOrbFire"
+			{
+				"SpendMana"
+				{
+					"Mana"	"%AbilityManaCost"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Viper.poisonAttack.Cast"
+					"Target"		"CASTER"
+				}
+			}
+
+			"OnOrbImpact"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_viper_poison_attack_debuff_datadriven"
+					"Target"		"TARGET"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Viper.PoisonAttack.Target"
+					"Target"		"TARGET"
+				}
+
+				//"AttachEffect"
+				//{
+				//
+				//}
+			}
+		}
+
+		"modifier_viper_poison_attack_debuff_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+
+			"ThinkInterval"	"1.0"
+
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%damage"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movement_speed"
+			}
 		}
 	}
 }
