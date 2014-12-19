@@ -1,3 +1,6 @@
+// Rewrite of the Viper Viper Strike ability
+// Author: Pizzalol
+// Date: 19.12.2014.
 "viper_viper_strike_datadriven"
 {
 	// General
@@ -12,6 +15,18 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"viper_viper_strike"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_viper/viper_viper_strike.vpcf"
+		"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_beam.vpcf"
+		"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+		"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
+		"particle"		"particles/status_fx/status_effect_poison_viper.vpcf"
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -69,6 +84,137 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"projectile_speed"	"1200"
+		}
+		// These are for the dissipating attack and movement slow over time
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_movement_speed_small"	"-8 -12 -16"
+		}
+		"10"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_attack_speed_small"	"-8 -12 -16"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"AttachEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
+			"EffectAttachType"	"attach_hitloc"
+			"Target"			"CASTER"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"TrackingProjectile"
+		{
+			"Target"           "TARGET"
+		    "EffectName"       "particles/units/heroes/hero_viper/viper_viper_strike.vpcf"
+		    "Dodgeable"        "1"
+		    "ProvidesVision"   "0"
+		    "MoveSpeed"        "%projectile_speed"
+		    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Viper.viperStrike"
+			"Target"		"CASTER"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Viper.viperStrikeImpact"
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_viper_strike_debuff_datadriven"
+			"Target"		"TARGET"
+		}
+
+		// Slow Part
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_viper_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_viper_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_viper_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_viper_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_viper_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+
+	}
+
+	"Modifiers"
+	{
+		"modifier_viper_strike_debuff_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+
+			"ThinkInterval"	"1.0"
+			"OnIntervalThink"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_viper_strike_slow_datadriven"
+					"Target"		"TARGET"
+				}
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%damage"
+				}
+			}
+
+			"AttachEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+				"EffectAttachType"	"attach_hitloc"
+				"Target"			"TARGET"
+			}
+
+			"StatusEffectName"		"particles/status_fx/status_effect_poison_viper.vpcf"
+		}
+
+		"modifier_viper_strike_slow_datadriven"
+		{
+			"IsHidden"	"1"
+			"IsPurgable"	"0"
+
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%bonus_movement_speed_small"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed_small"
+			}
 		}
 	}
 }

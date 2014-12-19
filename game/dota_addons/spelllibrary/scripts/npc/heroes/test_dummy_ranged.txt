@@ -5,5 +5,5 @@
 	"Ability1" "viper_poison_attack_datadriven"
 	"Ability2" "viper_nethertoxin_datadriven"
 	"Ability3" "viper_corrosive_skin_datadriven"
-	"Ability4" "antimage_mana_void_datadriven"
+	"Ability4" "viper_viper_strike_datadriven"
 }
