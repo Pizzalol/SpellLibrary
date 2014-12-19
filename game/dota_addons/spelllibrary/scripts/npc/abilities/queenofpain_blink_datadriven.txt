@@ -1,3 +1,6 @@
+// Rewrite of the Queen of Pain Blink ability
+// Author: Pizzalol
+// Date: 19.12.2014.
 "queenofpain_blink_datadriven"
 {
 	// General
@@ -70,7 +73,7 @@
 		"FireSound"
 		{
 			"EffectName"	"Hero_QueenOfPain.Blink_in"
-			"Target"		"POINT"
+			"Target"		"CASTER"
 		}
 
 		"AttachEffect"

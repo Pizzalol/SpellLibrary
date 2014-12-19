@@ -1232,7 +1232,7 @@
 			"FireSound"
 			{
 				"EffectName"	"Hero_Antimage.Blink_in"
-				"Target"		"POINT"
+				"Target"		"CASTER"
 			}
 	
 			"AttachEffect"
@@ -23073,6 +23073,9 @@
 
 
 	//Start of file queenofpain_blink_datadriven.txt
+	// Rewrite of the Queen of Pain Blink ability
+	// Author: Pizzalol
+	// Date: 19.12.2014.
 	"queenofpain_blink_datadriven"
 	{
 		// General
@@ -23144,8 +23147,8 @@
 	
 			"FireSound"
 			{
-				"EffectName"	"Hero_QueenOfPain.ScreamOfPain"
-				"Target"		"POINT"
+				"EffectName"	"Hero_QueenOfPain.Blink_in"
+				"Target"		"CASTER"
 			}
 	
 			"AttachEffect"
@@ -23161,6 +23164,9 @@
 
 
 	//Start of file queenofpain_scream_of_pain_datadriven.txt
+	// Rewrite of the Queen of Pain Scream of Pain ability
+	// Author: Pizzalol
+	// Date: 19.12.2014.
 	"queenofpain_scream_of_pain_datadriven"
 	{
 		// General
@@ -23169,7 +23175,17 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		
+		"AbilityTextureName"			"queenofpain_scream_of_pain"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_queenofpain.vsndevts"
+			"particle"			"particles/units/heroes/hero_queenofpain/queen_scream_of_pain.vpcf"
+			"particle"			"particles/units/heroes/hero_queenofpain/queen_scream_of_pain_owner.vpcf"
+		}
+	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
@@ -23200,6 +23216,56 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"projectile_speed"		"900"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_QueenOfPain.ScreamOfPain"
+				"Target"		"CASTER"
+			}
+	
+			"AttachEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_queenofpain/queen_scream_of_pain_owner.vpcf"
+				"EffectAttachType"	"attach_origin"
+				"Target"		"CASTER"
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%area_of_effect"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				}
+	
+				"Action"
+				{
+					"TrackingProjectile"
+					{
+						"Target"           "TARGET"
+					    "EffectName"       "particles/units/heroes/hero_queenofpain/queen_scream_of_pain.vpcf"
+					    "Dodgeable"        "0"
+					    "ProvidesVision"   "0"
+					    "MoveSpeed"        "%projectile_speed"
+					    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+					}
+				}
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"Damage"
+			{
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%AbilityDamage"
 			}
 		}
 	}
@@ -23272,17 +23338,28 @@
 
 
 	//Start of file queenofpain_sonic_wave_datadriven.txt
+	// Rewrite of the Queen of Pain Sonic Wave ability
+	// Author: Pizzalol
+	// Date: 19.12.2014.
 	"queenofpain_sonic_wave_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT"				   
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT"		   
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"queenofpain_sonic_wave"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_queenofpain.vsndevts"
+			"particle"			"particles/units/heroes/hero_queenofpain/queen_sonic_wave.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -23324,7 +23401,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"350 475 600"
+				"damage"			"290 390 490"
 			}
 			"06"
 			{
@@ -23337,6 +23414,43 @@
 				"damage_scepter"	"350 530 725"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_QueenOfPain.SonicWave"
+				"Target"		"CASTER"
+			}
+	
+			"LinearProjectile"
+			{
+				"Target"      "POINT"
+			    "EffectName"  "particles/units/heroes/hero_queenofpain/queen_sonic_wave.vpcf"
+			    "MoveSpeed"   "%speed"
+			    "StartRadius"   "%starting_aoe"
+			    "StartPosition" "attach_origin"
+			    "EndRadius"     "%final_aoe"
+			    "FixedDistance" "%distance"
+			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
+			    "HasFrontalCone"    "1"
+			    "ProvidesVision" "0"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"Damage"
+			{
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_PURE"
+				"Damage"	"%damage"
+			}
+		}
+	
 	}
 	
 	//End of file queenofpain_sonic_wave_datadriven.txt
