@@ -23079,6 +23079,16 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityTextureName"			"queenofpain_blink"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_queenofpain.vsndevts"
+			"particle"			"particles/units/heroes/hero_queenofpain/queen_blink_end.vpcf"
+			"particle"			"particles/units/heroes/hero_queenofpain/queen_blink_start.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -23107,6 +23117,42 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"min_blink_range"		"200"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_queenofpain/blink.lua"
+				"Function"		"Blink"
+				"Target"		"POINT"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_QueenOfPain.Blink_out"
+				"Target"		"CASTER"
+			}
+	
+			"AttachEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_queenofpain/queen_blink_start.vpcf"
+				"Target"		"CASTER"
+				"EffectAttachType"	"attach_hitloc"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_QueenOfPain.ScreamOfPain"
+				"Target"		"POINT"
+			}
+	
+			"AttachEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_queenofpain/queen_blink_end.vpcf"
+				"Target"		"CASTER"
+				"EffectAttachType"	"follow_origin"
 			}
 		}
 	}
@@ -33009,6 +33055,7 @@
 	// Rewrite of the Viper Viper Strike ability
 	// Author: Pizzalol
 	// Date: 19.12.2014.
+	// NOTE: Particles are wonky
 	"viper_viper_strike_datadriven"
 	{
 		// General
@@ -33028,10 +33075,9 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_viper/viper_viper_strike.vpcf"
-			"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_beam.vpcf"
-			"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
-			"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
+			"particle"		"particles/units/heroes/hero_viper/viper_viper_strike.vpcf" // Wonky projectile
+			"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf" // ?
+			"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf" //- Seems to be like a "link" meaning it needs the caster #0 and target #1
 			"particle"		"particles/status_fx/status_effect_poison_viper.vpcf"
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
 		}
@@ -33111,7 +33157,7 @@
 			"AttachEffect"
 			{
 				"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
-				"EffectAttachType"	"attach_hitloc"
+				"EffectAttachType"	"attach_origin"
 				"Target"			"CASTER"
 			}
 		}
@@ -33133,6 +33179,7 @@
 				"EffectName"	"Hero_Viper.viperStrike"
 				"Target"		"CASTER"
 			}
+	
 		}
 	
 		"OnProjectileHitUnit"

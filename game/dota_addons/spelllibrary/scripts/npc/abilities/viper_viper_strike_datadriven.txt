@@ -1,6 +1,7 @@
 // Rewrite of the Viper Viper Strike ability
 // Author: Pizzalol
 // Date: 19.12.2014.
+// NOTE: Particles are wonky
 "viper_viper_strike_datadriven"
 {
 	// General
@@ -20,10 +21,9 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"precache"
 	{
-		"particle"		"particles/units/heroes/hero_viper/viper_viper_strike.vpcf"
-		"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_beam.vpcf"
-		"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
-		"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
+		"particle"		"particles/units/heroes/hero_viper/viper_viper_strike.vpcf" // Wonky projectile
+		"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf" // ?
+		"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf" //- Seems to be like a "link" meaning it needs the caster #0 and target #1
 		"particle"		"particles/status_fx/status_effect_poison_viper.vpcf"
 		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
 	}
@@ -103,7 +103,7 @@
 		"AttachEffect"
 		{
 			"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
-			"EffectAttachType"	"attach_hitloc"
+			"EffectAttachType"	"attach_origin"
 			"Target"			"CASTER"
 		}
 	}
@@ -125,6 +125,7 @@
 			"EffectName"	"Hero_Viper.viperStrike"
 			"Target"		"CASTER"
 		}
+
 	}
 
 	"OnProjectileHitUnit"
