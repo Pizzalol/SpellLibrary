@@ -1,3 +1,8 @@
+// Rewrite of the Viper Nethertoxin ability
+// Author: Pizzalol
+// Date: 19.12.2014.
+// Note: Mechanically it seems to be the same, but visually its a bit different on the UI
+// as it shows the extra damage in the UI
 "viper_nethertoxin_datadriven"
 {
 	// General
@@ -6,11 +11,13 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"viper_nethertoxin"
 	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
 	{
+		// Base Hero damage
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
@@ -25,6 +32,221 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"max_damage_tooltip"	"40 80 120 160"
+		}
+		// Hero Damage
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_hero_80"		"5 10 15 20"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_hero_60"		"10 20 30 40"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_hero_40"		"20 40 60 80"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_hero_20"		"40 80 120 160"
+		}
+		// Creep Damage
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_creep_base"		"1.25 2.5 3.75 5"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_creep_80"		"2.5 5 7.5 10"
+		}
+		"10"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_creep_60"		"5 10 15 20"
+		}
+		"11"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_creep_40"		"10 20 30 40"
+		}
+		"12"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage_creep_20"		"20 40 60 80"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_nethertoxin_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"OnAttackStart"
+			{
+				// This is done to prevent stacking of different modifiers
+				// Hero
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_nethertoxin_100_hero_datadriven"
+					"Target"		"CASTER"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_nethertoxin_80_hero_datadriven"
+					"Target"		"CASTER"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_nethertoxin_60_hero_datadriven"
+					"Target"		"CASTER"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_nethertoxin_40_hero_datadriven"
+					"Target"		"CASTER"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_nethertoxin_20_hero_datadriven"
+					"Target"		"CASTER"
+				}
+
+				// Creep
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_nethertoxin_100_creep_datadriven"
+					"Target"		"CASTER"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_nethertoxin_80_creep_datadriven"
+					"Target"		"CASTER"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_nethertoxin_60_creep_datadriven"
+					"Target"		"CASTER"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_nethertoxin_40_creep_datadriven"
+					"Target"		"CASTER"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_nethertoxin_20_creep_datadriven"
+					"Target"		"CASTER"
+				}
+
+				// Script to determine which modifier gets applied
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_viper/nethertoxin.lua"
+					"Function"		"Nethertoxin"
+					"Target"		"TARGET"
+				}
+			}
+		}
+
+		"modifier_nethertoxin_100_hero_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
+			}
+		}
+		"modifier_nethertoxin_80_hero_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_hero_80"
+			}
+		}
+		"modifier_nethertoxin_60_hero_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_hero_60"
+			}
+		}
+		"modifier_nethertoxin_40_hero_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_hero_40"
+			}
+		}
+		"modifier_nethertoxin_20_hero_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_hero_20"
+			}
+		}
+		// The upper rank of hero damage can be applied instead of a creep modifier (eg 40% creep damage is the same as 60% hero)
+		// I went with this way because it can get messy otherwise
+		"modifier_nethertoxin_100_creep_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_creep_base"
+			}
+		}
+		"modifier_nethertoxin_80_creep_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_creep_80"
+			}
+		}
+		"modifier_nethertoxin_60_creep_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_creep_60"
+			}
+		}
+		"modifier_nethertoxin_40_creep_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_creep_40"
+			}
+		}
+		"modifier_nethertoxin_20_creep_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_creep_20"
+			}
 		}
 	}
 }
