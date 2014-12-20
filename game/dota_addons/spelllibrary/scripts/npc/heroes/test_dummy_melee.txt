@@ -5,5 +5,5 @@
 	"Ability1" "viper_poison_attack_datadriven"
 	"Ability2" "antimage_blink_datadriven"
 	"Ability3" "viper_corrosive_skin_datadriven"
-	"Ability4" "antimage_mana_void_datadriven"
+	"Ability4" "queenofpain_sonic_wave_datadriven"
 }
