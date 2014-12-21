@@ -1,12 +1,27 @@
+// Rewrite of the Phantom Assassin Phantom Strike ability
+// Author: Pizzalol
+// Date: 21.12.2014.
+// NOTE: Removed target and attack limitation
+// NOTE2: Can be cast on self
+// NOTE3: Blink dagger particle is shown due to the blink action block
 "phantom_assassin_phantom_strike_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"phantom_assassin_phantom_strike"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+		"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -44,6 +59,53 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"tooltip_range"			"1000 1000 1000 1000"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"Blink"
+		{
+			"Target"	"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"		"modifier_phantom_strike_datadriven"
+			"Target"			"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"		"Hero_PhantomAssassin.Strike.Start"
+			"Target"			"CASTER"
+		}
+
+		"AttachEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"			"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"		"Hero_PhantomAssassin.Strike.End"
+			"Target"			"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_phantom_strike_datadriven"
+		{
+			"IsBuff"	"1"
+			"Duration"	"%AbilityDuration"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+			}
 		}
 	}
 }
