@@ -2,8 +2,8 @@
 {
 	"override_hero" "npc_dota_hero_ancient_apparition"
 
-	"Ability1" "viper_poison_attack_datadriven"
+	"Ability1" "phantom_assassin_stifling_dagger_datadriven"
 	"Ability2" "queenofpain_blink_datadriven"
 	"Ability3" "queenofpain_scream_of_pain_datadriven"
-	"Ability4" "queenofpain_sonic_wave_datadriven"
+	"Ability4" "phantom_assassin_coup_de_grace_datadriven"
 }

@@ -1,3 +1,8 @@
+// Rewrite of the Queen of Pain Shadow Strike ability
+// Author: Pizzalol
+// Date: 21.12.2014.
+// NOTE: Stacks with itself
+// NOTE2: Particle attach points seem to be incorrect
 "queenofpain_shadow_strike_datadriven"
 {
 	// General
@@ -10,6 +15,16 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"queenofpain_shadow_strike"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_queenofpain.vsndevts"
+		"particle"			"particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
+		"particle"			"particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf"
+		"particle"			"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -54,6 +69,199 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"cast_range_tooltip"		"450 475 500 525"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"movement_slow_small"			"-1.33 -2 -2.67 -3.33"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"TrackingProjectile"
+		{
+			"Target"           "TARGET"
+		    "EffectName"       "particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
+		    "Dodgeable"        "1"
+		    "ProvidesVision"   "0"
+		    "MoveSpeed"        "%projectile_speed"
+		    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+		}
+
+		"FireSound"
+		{
+			"EffectName"		"Hero_QueenOfPain.ShadowStrike"
+			"Target"			"CASTER"
+		}
+
+		"AttachEffect"
+		{
+			"Target"			"CASTER"
+			"EffectAttachType"	"attach_origin"
+			"EffectName"		"particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"Damage"
+		{
+			"Target"		"TARGET"
+			"Type"			"DAMAGE_TYPE_MAGICAL"
+			"Damage"		"%strike_damage"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_debuff_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_thinker_datadriven"
+			"Target"		"TARGET"
+		}
+
+		// Slow stacks(15 of them)
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		// 5
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		// 10
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+			"Target"		"TARGET"
+		}
+		// 15
+	}
+
+	"Modifiers"
+	{
+		"modifier_shadow_strike_debuff_datadriven"
+		{
+			"Duration"	"%AbilityDuration"
+			"IsDebuff"	"1"
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+			"ThinkInterval"	"3.0"
+
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%duration_damage"
+				}
+			}
+
+			"AttachEffect"
+			{
+				"Target"		"TARGET"
+				"EffectName"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
+				"EffectAttachType"	"attach_hitloc"
+			}
+		}
+
+		"modifier_shadow_strike_thinker_datadriven"
+		{
+			"IsHidden"	"1"
+			"Duration"	"%AbilityDuration"
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+			"ThinkInterval"	"1.0"
+
+			"OnIntervalThink"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_shadow_strike_slow_datadriven"
+					"Target"		"TARGET"
+				}
+			}
+		}
+
+		"modifier_shadow_strike_slow_datadriven"
+		{
+			"IsHidden"		"1"
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+			}
 		}
 	}
 }
