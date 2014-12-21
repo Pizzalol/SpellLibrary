@@ -21444,12 +21444,23 @@
 
 
 	//Start of file phantom_assassin_blur_datadriven.txt
+	// Rewrite of the Phantom Assassin Blur ability
+	// Author: Pizzalol
+	// Date: 21.12.2014.
 	"phantom_assassin_blur_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"phantom_assassin_blur"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+		}
 	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -21469,6 +21480,50 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"1600 1600 1600 1600"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_blur_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"ThinkInterval"	"0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_phantomassassin/blur.lua"
+						"Function"		"Blur"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%bonus_evasion"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_blur_enemy_datadriven"
+			{
+				"AttachEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"CASTER"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"		"MODIFIER_STATE_VALUE_DISABLED"
+				}
 			}
 		}
 	}

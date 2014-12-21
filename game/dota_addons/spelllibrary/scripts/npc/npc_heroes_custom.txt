@@ -23,7 +23,7 @@
 	
 		"Ability1" "phantom_assassin_stifling_dagger_datadriven"
 		"Ability2" "phantom_assassin_phantom_strike_datadriven"
-		"Ability3" "queenofpain_scream_of_pain_datadriven"
+		"Ability3" "phantom_assassin_blur_datadriven"
 		"Ability4" "phantom_assassin_coup_de_grace_datadriven"
 	}
 	//End of file test_dummy_ranged.txt
