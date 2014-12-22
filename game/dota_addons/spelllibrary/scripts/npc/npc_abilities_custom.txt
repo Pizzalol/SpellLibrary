@@ -33013,6 +33013,9 @@
 
 
 	//Start of file venomancer_poison_sting_datadriven.txt
+	// Rewrite of the Venomancer Poison Sting ability
+	// Author: Pizzalol
+	// Date: 22.12.2014.
 	"venomancer_poison_sting_datadriven"
 	{
 		// General
@@ -33022,6 +33025,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"venomancer_poison_sting"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -33042,6 +33046,47 @@
 				"var_type"					"FIELD_INTEGER"
 				"movement_speed"			"-11 -12 -13 -14"
 			}			
+		}
+	
+		"Modifiers"
+		{
+			"modifier_poison_sting_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnAttackLanded"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_poison_sting_debuff_datadriven"
+						"Target"		"TARGET"
+					}
+				}
+			}
+	
+			"modifier_poison_sting_debuff_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+	
+				"ThinkInterval"	"1.0"
+	
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%damage"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_speed"
+				}
+			}
 		}
 	}
 	
