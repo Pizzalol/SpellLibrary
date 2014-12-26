@@ -1,3 +1,7 @@
+// Rewrite of the Venomancer Poison Nova ability
+// Author: Pizzalol
+// Date: 26.12.2014.
+// NOTE: Doesnt travel as a "projectile" around the hero but instead acts as an instant AOE ability
 "venomancer_poison_nova_datadriven"
 {
 	// General
@@ -9,6 +13,16 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"venomancer_poison_nova"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+		"particle"			"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
+		"particle"			"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
+		"particle"			"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -69,6 +83,94 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"speed"						"500 500 500"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Venomancer.PoisonNova"
+			"Target"		"CASTER"
+		}
+
+		"AttachEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
+			"EffectAttachType"	"attach_origin"
+			"Target"		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
+			"EffectAttachType"	"attach_hitloc"
+			"Target"		"CASTER"
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"	"CASTER"
+				"Radius"	"%radius"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			}
+
+			"Action"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"		"modifier_poison_nova_debuff_datadriven"
+					"Target"			"TARGET"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_poison_nova_debuff_datadriven"
+		{
+			"IsDebuff"	"1"
+			"IsPurgable"	"0"
+
+			"Duration"		"%duration"
+			"ThinkInterval"	"1.0"
+
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_venomancer/poison_nova.lua"
+					"Function"		"PoisonNova"
+					"Target"		"TARGET"
+				}
+			}
+
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Venomancer.PoisonNovaImpact"
+					"Target"		"TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_venomancer/poison_nova.lua"
+					"Function"		"PoisonNova"
+					"Target"		"TARGET"
+				}
+			}
+
+			"AttachEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"		"TARGET"
+			}
 		}
 	}
 }

@@ -32894,6 +32894,14 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"venomancer_plague_ward"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -32927,6 +32935,79 @@
 				"var_type"				"FIELD_INTEGER"
 				"ward_damage_tooltip"	"10 19 29 38"
 			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"plague_ward_1_count"	"1 0 0 0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"plague_ward_2_count"	"0 1 0 0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"plague_ward_3_count"	"0 0 1 0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"plague_ward_4_count"	"0 0 0 1"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Venomancer.Plague_Ward"
+				"Target"			"CASTER"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_venomancer_plague_ward_1"
+				"Target"			"POINT"
+				"UnitCount"			"%plague_ward_1_count"
+				"Duration"			"%duration"
+	
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_venomancer_plague_ward_2"
+				"Target"			"POINT"
+				"UnitCount"			"%plague_ward_2_count"
+				"Duration"			"%duration"
+	
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_venomancer_plague_ward_3"
+				"Target"			"POINT"
+				"UnitCount"			"%plague_ward_3_count"
+				"Duration"			"%duration"
+	
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_venomancer_plague_ward_4"
+				"Target"			"POINT"
+				"UnitCount"			"%plague_ward_4_count"
+				"Duration"			"%duration"
+	
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+			}
 		}
 	}
 	
@@ -32934,6 +33015,10 @@
 
 
 	//Start of file venomancer_poison_nova_datadriven.txt
+	// Rewrite of the Venomancer Poison Nova ability
+	// Author: Pizzalol
+	// Date: 26.12.2014.
+	// NOTE: Doesnt travel as a "projectile" around the hero but instead acts as an instant AOE ability
 	"venomancer_poison_nova_datadriven"
 	{
 		// General
@@ -32945,6 +33030,16 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"venomancer_poison_nova"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+			"particle"			"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
+			"particle"			"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
+			"particle"			"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -33005,6 +33100,94 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed"						"500 500 500"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Venomancer.PoisonNova"
+				"Target"		"CASTER"
+			}
+	
+			"AttachEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
+				"EffectAttachType"	"attach_origin"
+				"Target"		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
+				"EffectAttachType"	"attach_hitloc"
+				"Target"		"CASTER"
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				}
+	
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_poison_nova_debuff_datadriven"
+						"Target"			"TARGET"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_poison_nova_debuff_datadriven"
+			{
+				"IsDebuff"	"1"
+				"IsPurgable"	"0"
+	
+				"Duration"		"%duration"
+				"ThinkInterval"	"1.0"
+	
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_venomancer/poison_nova.lua"
+						"Function"		"PoisonNova"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Venomancer.PoisonNovaImpact"
+						"Target"		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_venomancer/poison_nova.lua"
+						"Function"		"PoisonNova"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"AttachEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"		"TARGET"
+				}
 			}
 		}
 	}
@@ -33082,6 +33265,16 @@
 					}
 				}
 	
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%damage"
+					}
+				}
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_speed"
@@ -33094,6 +33287,10 @@
 
 
 	//Start of file venomancer_venomous_gale_datadriven.txt
+	// Rewrite of the Venomancer Venomous Gale ability
+	// Author: Pizzalol
+	// Date: 26.12.2014.
+	// NOTE: Slow stacks with itself currently
 	"venomancer_venomous_gale_datadriven"
 	{
 		// General
@@ -33104,6 +33301,15 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"venomancer_venomous_gale"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+			"particle"			"particles/units/heroes/hero_venomancer/venomancer_venomous_gale.vpcf"
+			"particle"			"particles/units/heroes/hero_venomancer/venomancer_gale_poison_debuff.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -33156,6 +33362,210 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"speed"					"1200 1200 1200 1200"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance"					"800 800 800 800"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"movement_slow_small"			"-3.33 -3.33 -3.33 -3.33"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Venomancer.VenomousGale"
+				"Target"		"CASTER"
+			}
+	
+			"LinearProjectile"
+			{
+				"Target"      "POINT"
+			    "EffectName"  "particles/units/heroes/hero_venomancer/venomancer_venomous_gale.vpcf"
+			    "MoveSpeed"   "%speed"
+			    "StartRadius"   "%radius"
+			    "StartPosition" "attach_origin"
+			    "EndRadius"     "%radius"
+			    "FixedDistance" "%distance"
+			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
+			    "HasFrontalCone"    "1"
+			    "ProvidesVision" "0"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+	
+			"Damage"
+			{
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%strike_damage"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Venomancer.VenomousGaleImpact"
+				"Target"		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_debuff_datadriven"
+				"Target"			"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_thinker_datadriven"
+				"Target"			"TARGET"
+			}
+	
+			// Decaying slow part
+	
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			// 5
+	
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			// 10
+	
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
+				"Target"			"TARGET"
+			}
+			// 15
+		}
+	
+		"Modifiers"
+		{
+			"modifier_venomous_gale_debuff_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+				"ThinkInterval"		"%tick_interval"
+	
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%tick_damage"
+					}
+				}
+	
+				"AttachEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_gale_poison_debuff.vpcf"
+					"EffectAttachType"	"attach_origin"
+					"Target"		"TARGET"
+				}
+			}
+	
+			"modifier_venomous_gale_slow_datadriven"
+			{
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow_small"
+				}
+			}
+	
+			"modifier_venomous_gale_thinker_datadriven"
+			{
+				"IsHidden"	"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Duration"		"%duration"
+	
+				"ThinkInterval"	"1.0"
+	
+				"OnIntervalThink"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_venomous_gale_slow_datadriven"
+						"Target"		"TARGET"
+					}
+				}
 			}
 		}
 	}

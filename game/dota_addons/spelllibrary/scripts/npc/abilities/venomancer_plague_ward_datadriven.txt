@@ -1,3 +1,6 @@
+// Rewrite of the Venomancer Plague Ward ability
+// Author: Pizzalol
+// Date: 26.12.2014.
 "venomancer_plague_ward_datadriven"
 {
 	// General
@@ -6,6 +9,14 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"venomancer_plague_ward"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -38,6 +49,79 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"ward_damage_tooltip"	"10 19 29 38"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"plague_ward_1_count"	"1 0 0 0"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"plague_ward_2_count"	"0 1 0 0"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"plague_ward_3_count"	"0 0 1 0"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"plague_ward_4_count"	"0 0 0 1"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Venomancer.Plague_Ward"
+			"Target"			"CASTER"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_dota_venomancer_plague_ward_1"
+			"Target"			"POINT"
+			"UnitCount"			"%plague_ward_1_count"
+			"Duration"			"%duration"
+
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_dota_venomancer_plague_ward_2"
+			"Target"			"POINT"
+			"UnitCount"			"%plague_ward_2_count"
+			"Duration"			"%duration"
+
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_dota_venomancer_plague_ward_3"
+			"Target"			"POINT"
+			"UnitCount"			"%plague_ward_3_count"
+			"Duration"			"%duration"
+
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_dota_venomancer_plague_ward_4"
+			"Target"			"POINT"
+			"UnitCount"			"%plague_ward_4_count"
+			"Duration"			"%duration"
+
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
 		}
 	}
 }

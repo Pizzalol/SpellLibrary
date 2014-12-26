@@ -2,8 +2,8 @@
 {
 	"override_hero" "npc_dota_hero_ancient_apparition"
 
-	"Ability1" "phantom_assassin_stifling_dagger_datadriven"
+	"Ability1" "venomancer_venomous_gale_datadriven"
 	"Ability2" "venomancer_poison_sting_datadriven"
-	"Ability3" "phantom_assassin_blur_datadriven"
-	"Ability4" "phantom_assassin_coup_de_grace_datadriven"
+	"Ability3" "venomancer_plague_ward_datadriven"
+	"Ability4" "venomancer_poison_nova_datadriven"
 }
