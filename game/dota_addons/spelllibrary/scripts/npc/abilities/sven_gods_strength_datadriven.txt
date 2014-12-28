@@ -1,3 +1,6 @@
+// Rewrite of the Sven Gods Strength ability
+// Author: Pizzalol
+// Date: 28.12.2014.
 "sven_gods_strength_datadriven"
 {
 	// General
@@ -7,6 +10,14 @@
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"sven_gods_strength"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
+		"particle"			"particles/units/heroes/hero_sven/sven_spell_gods_strength.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -39,6 +50,43 @@
 		{
 			"var_type"			"FIELD_INTEGER"
 			"gods_strength_damage_scepter"	"40 60 80"		
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Sven.GodsStrength"
+			"Target"		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_sven/sven_spell_gods_strength.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"		"CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_gods_strength_datadriven"
+			"Target"		"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_gods_strength_datadriven"
+		{
+			"IsBuff"		"1"
+			"IsPurgable"	"0"
+			"Duration"		"%AbilityDuration"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%gods_strength_damage"
+			}
 		}
 	}
 }

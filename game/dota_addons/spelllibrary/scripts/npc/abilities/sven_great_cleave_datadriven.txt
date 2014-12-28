@@ -1,3 +1,6 @@
+// Rewrite of the Sven Great Cleave ability
+// Author: Pizzalol
+// Date: 28.12.2014.
 "sven_great_cleave_datadriven"
 {
 	// General
@@ -5,6 +8,14 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"sven_great_cleave"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+	}
 			
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -22,5 +33,26 @@
 			"great_cleave_damage"	"20 35 50 65"
 		}
 	}
+
+	"Modifiers"
+	{
+		"modifier_great_cleave_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"OnAttackLanded"
+			{
+				"CleaveAttack"
+				{
+					"CleavePercent"		"%great_cleave_damage"
+					"CleaveRadius"		"%great_cleave_radius"
+					"CleaveEffect"		"particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+				}
+			}
+		}
+	}
+
+
 }
 
