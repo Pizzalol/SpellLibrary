@@ -2,8 +2,8 @@
 {
 	"override_hero" "npc_dota_hero_ancient_apparition"
 
-	"Ability1" "sven_storm_bolt_datadriven"
-	"Ability2" "sven_great_cleave_datadriven"
+	"Ability1" "lina_dragon_slave_datadriven"
+	"Ability2" "lina_light_strike_array_datadriven"
 	"Ability3" "sven_warcry_datadriven"
 	"Ability4" "sven_gods_strength_datadriven"
 }

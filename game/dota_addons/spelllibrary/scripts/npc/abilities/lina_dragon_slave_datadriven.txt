@@ -1,3 +1,6 @@
+// Rewrite of the Lina Dragon Slave ability
+// Author: Pizzalol
+// Date: 29.12.2014.
 "lina_dragon_slave_datadriven"
 {
 	// General
@@ -10,6 +13,14 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"lina_dragon_slave"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+		"particle"			"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -54,6 +65,42 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"dragon_slave_distance"			"1075"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"LinearProjectile"
+		{
+			"Target"      "POINT"
+		    "EffectName"  "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+		    "MoveSpeed"   "%dragon_slave_speed"
+		    "StartRadius"   "%dragon_slave_width_initial"
+		    "StartPosition" "attach_origin"
+		    "EndRadius"     "%dragon_slave_width_end"
+		    "FixedDistance" "%dragon_slave_distance"
+		    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
+		    "HasFrontalCone"    "1"
+		    "ProvidesVision" "0"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lina.DragonSlave"
+			"Target"		"CASTER"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"0"
+		"Damage"
+		{
+			"Target"	"TARGET"
+			"Type"		"DAMAGE_TYPE_MAGICAL"
+			"Damage"	"%AbilityDamage"
 		}
 	}
 }

@@ -16380,6 +16380,9 @@
 
 
 	//Start of file lina_dragon_slave_datadriven.txt
+	// Rewrite of the Lina Dragon Slave ability
+	// Author: Pizzalol
+	// Date: 29.12.2014.
 	"lina_dragon_slave_datadriven"
 	{
 		// General
@@ -16392,6 +16395,14 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"lina_dragon_slave"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"particle"			"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -16436,6 +16447,42 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"dragon_slave_distance"			"1075"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+				"Target"      "POINT"
+			    "EffectName"  "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+			    "MoveSpeed"   "%dragon_slave_speed"
+			    "StartRadius"   "%dragon_slave_width_initial"
+			    "StartPosition" "attach_origin"
+			    "EndRadius"     "%dragon_slave_width_end"
+			    "FixedDistance" "%dragon_slave_distance"
+			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
+			    "HasFrontalCone"    "1"
+			    "ProvidesVision" "0"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lina.DragonSlave"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"Damage"
+			{
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%AbilityDamage"
 			}
 		}
 	}
@@ -16599,6 +16646,17 @@
 		
 		"AbilityCastRange"				"625"
 		"AbilityCastPoint"				"0.45 0.45 0.45 0.45"
+		"AOERadius"						"%light_strike_array_aoe"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+			"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray.vpcf"
+			"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array_explosion.vpcf"
+		}
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -16633,6 +16691,83 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"light_strike_array_stun_duration"	"1.6 1.8 2.0 2.2"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Ability.PreLightStrikeArray"
+				"Target"		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray.vpcf"
+				"EffectAttachType"	"custom_origin"
+				"Target"		"POINT"
+	
+				"ControlPoints"
+	            {
+	            	"00" "0 0 0"
+	            	"01" "%light_strike_array_aoe 0 0"
+	            }
+			}
+	
+			"DelayedAction"
+			{
+				"Delay"		"%light_strike_array_delay_time"
+	
+				"Action"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+			            {
+			                "Center" "POINT"
+			                "Radius" "%light_strike_array_aoe"
+			                "Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY" 
+			                "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			            }
+	
+			            "Action"
+			            {
+			            	"Damage"
+			            	{
+			            		"Target"	"TARGET"
+			            		"Type"		"DAMAGE_TYPE_MAGICAL"
+			            		"Damage"	"%AbilityDamage"
+			            	}
+	
+			            	"ApplyModifier"
+			            	{
+			            		"ModifierName"	"modifier_light_strike_array_datadriven"
+			            		"Target"		"TARGET"
+			            	}
+			            }
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Ability.LightStrikeArray"
+						"Target"		"CASTER"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_light_strike_array_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%light_strike_array_stun_duration"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
