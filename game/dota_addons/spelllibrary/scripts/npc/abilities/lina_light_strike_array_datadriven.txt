@@ -1,7 +1,6 @@
 // Rewrite of the Lina Light Strike Array ability
 // Author: Pizzalol
 // Date: 29.12.2014.
-// NOTE: Functionality is complete, particles dont work currently
 "lina_light_strike_array_datadriven"
 {
 	// General
@@ -23,8 +22,7 @@
 	{
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
 		"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
-		"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray.vpcf"
-		"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array_explosion.vpcf"
+		"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
 	}
 	
 	// Time		
@@ -73,14 +71,15 @@
 
 		"FireEffect"
 		{
-			"EffectName"	"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray.vpcf"
-			"EffectAttachType"	"custom_origin"
-			"Target"		"POINT"
+			"EffectName"	"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+			"TargetPoint"		"POINT"
 
 			"ControlPoints"
             {
-            	"00" "0 0 0"
-            	"01" "%light_strike_array_aoe 0 0"
+            	"00"	"POINT"
+            	"01"	"%light_strike_array_aoe 0 0"
+            	"03"	"0 0 0"
             }
 		}
 
@@ -121,6 +120,20 @@
 				{
 					"EffectName"	"Ability.LightStrikeArray"
 					"Target"		"CASTER"
+				}
+
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+					"EffectAttachType"	"start_at_customorigin"
+					"TargetPoint"		"POINT"
+
+					"ControlPoints"
+		            {
+		            	"00"	"POINT"
+		            	"01"	"%light_strike_array_aoe 0 0"
+		            	"03"	"0 0 0"
+		            }
 				}
 			}
 		}

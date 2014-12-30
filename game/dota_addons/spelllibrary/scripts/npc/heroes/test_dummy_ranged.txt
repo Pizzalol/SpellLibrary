@@ -5,5 +5,5 @@
 	"Ability1" "lina_dragon_slave_datadriven"
 	"Ability2" "lina_light_strike_array_datadriven"
 	"Ability3" "sven_warcry_datadriven"
-	"Ability4" "sven_gods_strength_datadriven"
+	"Ability4" "lina_laguna_blade_datadriven"
 }

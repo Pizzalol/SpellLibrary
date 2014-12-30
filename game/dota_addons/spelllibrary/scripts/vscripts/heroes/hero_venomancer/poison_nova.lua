@@ -21,6 +21,7 @@ function PoisonNova( keys )
 	damageTable.damage = abilityDamage
 
 	-- Checking if its lethal damage
+	-- Set hp to 1
 	if targetHP <= damagePostReduction then
 		-- Adjusting it to non lethal damage
 		damageTable.damage = ((targetHP / (1 - targetMagicResist)) - 1.8)
