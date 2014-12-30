@@ -23,7 +23,7 @@
 	
 		"Ability1" "lina_dragon_slave_datadriven"
 		"Ability2" "lina_light_strike_array_datadriven"
-		"Ability3" "sven_warcry_datadriven"
+		"Ability3" "lina_fiery_soul_datadriven"
 		"Ability4" "lina_laguna_blade_datadriven"
 	}
 	//End of file test_dummy_ranged.txt

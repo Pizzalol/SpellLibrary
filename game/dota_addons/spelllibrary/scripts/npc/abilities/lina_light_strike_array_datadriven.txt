@@ -113,6 +113,12 @@
 		            		"ModifierName"	"modifier_light_strike_array_datadriven"
 		            		"Target"		"TARGET"
 		            	}
+
+		            	"DestroyTrees"
+		            	{
+		            		"Target"	"POINT"
+		            		"Radius"	"%light_strike_array_aoe"
+		            	}
 		            }
 				}
 

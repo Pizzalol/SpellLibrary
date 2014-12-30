@@ -1,9 +1,13 @@
+// Rewrite of the Lina Fiery Soul ability
+// Author: Pizzalol
+// Date: 30.12.2014.
 "lina_fiery_soul_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"lina_fiery_soul"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -27,6 +31,45 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"fiery_soul_max_stacks"		"3"
+		}
+	}
+
+
+	"Modifiers"
+	{
+		"modifier_fiery_soul_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"OnAbilityExecuted"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_lina/fiery_soul.lua"
+					"Function"		"FierySoul"
+				}
+			}
+		}
+
+		"modifier_fiery_soul_buff_stack_datadriven"
+		{
+			"Duration"	"%AbilityDuration"
+			"IsBuff"	"1"
+		}
+
+		"modifier_fiery_soul_buff_datadriven"
+		{
+			"IsHidden"		"1"
+			"Duration"		"%AbilityDuration"
+
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%fiery_soul_attack_speed_bonus"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%fiery_soul_move_speed_bonus"
+			}
 		}
 	}
 }

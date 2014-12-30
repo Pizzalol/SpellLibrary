@@ -16542,6 +16542,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"lina_fiery_soul"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -16567,12 +16568,54 @@
 				"fiery_soul_max_stacks"		"3"
 			}
 		}
+	
+	
+		"Modifiers"
+		{
+			"modifier_fiery_soul_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_lina/fiery_soul.lua"
+						"Function"		"FierySoul"
+					}
+				}
+			}
+	
+			"modifier_fiery_soul_buff_stack_datadriven"
+			{
+				"Duration"	"%AbilityDuration"
+				"IsBuff"	"1"
+			}
+	
+			"modifier_fiery_soul_buff_datadriven"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%AbilityDuration"
+				
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%fiery_soul_attack_speed_bonus"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%fiery_soul_move_speed_bonus"
+				}
+			}
+		}
 	}
 	
 	//End of file lina_fiery_soul_datadriven.txt
 
 
 	//Start of file lina_laguna_blade_datadriven.txt
+	// Rewrite of the Lina Light Strike Array ability
+	// Author: Pizzalol
+	// Date: 30.12.2014.
 	"lina_laguna_blade_datadriven"
 	{
 		// General
@@ -16687,7 +16730,6 @@
 	// Rewrite of the Lina Light Strike Array ability
 	// Author: Pizzalol
 	// Date: 29.12.2014.
-	// NOTE: Functionality is complete, particles dont work currently
 	"lina_light_strike_array_datadriven"
 	{
 		// General
@@ -16710,7 +16752,6 @@
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
 			"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
 			"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
-			"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array_explosion.vpcf"
 		}
 		
 		// Time		
