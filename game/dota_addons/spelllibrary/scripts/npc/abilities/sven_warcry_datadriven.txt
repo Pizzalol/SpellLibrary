@@ -95,17 +95,13 @@
 			"IsBuff"	"1"
 			"Duration"	"%AbilityDuration"
 
+			"EffectName"	"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
+			"EffectAttachType"	"follow_origin"
+
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%warcry_movespeed"
 				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%warcry_armor"
-			}
-
-			"AttachEffect"
-			{
-				"EffectName"	"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Target"		"TARGET"
 			}
 		}
 	}

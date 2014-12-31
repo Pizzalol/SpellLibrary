@@ -16536,6 +16536,9 @@
 
 
 	//Start of file lina_fiery_soul_datadriven.txt
+	// Rewrite of the Lina Fiery Soul ability
+	// Author: Pizzalol
+	// Date: 30.12.2014.
 	"lina_fiery_soul_datadriven"
 	{
 		// General
@@ -16597,7 +16600,7 @@
 			{
 				"IsHidden"		"1"
 				"Duration"		"%AbilityDuration"
-				
+	
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 	
 				"Properties"
@@ -16752,6 +16755,7 @@
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
 			"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
 			"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
+			"particle"			"particles/generic_gameplay/generic_stunned.vpcf"
 		}
 		
 		// Time		
@@ -16842,6 +16846,12 @@
 			            		"ModifierName"	"modifier_light_strike_array_datadriven"
 			            		"Target"		"TARGET"
 			            	}
+	
+			            	"DestroyTrees"
+			            	{
+			            		"Target"	"POINT"
+			            		"Radius"	"%light_strike_array_aoe"
+			            	}
 			            }
 					}
 	
@@ -16874,6 +16884,10 @@
 			{
 				"IsDebuff"	"1"
 				"Duration"	"%light_strike_array_stun_duration"
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"
+	
+				"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
 	
 				"States"
 				{
@@ -21836,7 +21850,7 @@
 					"Random"
 					{
 						"Chance"		"%crit_chance"
-						"PseudeoRandom"	"DOTA_PSEUDO_RANDOM_PHANTOMASSASSIN_CRIT"
+						"PseudoRandom"	"DOTA_PSEUDO_RANDOM_PHANTOMASSASSIN_CRIT"
 	
 						"OnSuccess"
 						{
@@ -21867,10 +21881,10 @@
 						"Target"		"CASTER"
 					}
 	
-					"AttachEffect"
+					"FireEffect"
 					{
 						"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
-						"EffectAttachType"	"follow_origin"
+						"EffectAttachType"	"attach_origin"
 						"Target"		"TARGET"
 					}
 	
@@ -22007,7 +22021,6 @@
 	// Rewrite of the Phantom Assassin Stifling Dagger ability
 	// Author: Pizzalol
 	// Date: 21.12.2014.
-	// NOTE: Attachment point is wrong?
 	"phantom_assassin_stifling_dagger_datadriven"
 	{
 		// General
@@ -22121,16 +22134,12 @@
 				"IsDebuff"	"1"
 				"Duration"	"%duration"
 	
+				"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_slow"
-				}
-	
-				"AttachEffect"
-				{
-					"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"			"TARGET"
 				}
 			}
 		}
@@ -23803,7 +23812,7 @@
 	// Author: Pizzalol
 	// Date: 21.12.2014.
 	// NOTE: Stacks with itself
-	// NOTE2: Particle attach points seem to be incorrect
+	// NOTE2: Particle dagger attaches to the feet
 	"queenofpain_shadow_strike_datadriven"
 	{
 		// General
@@ -24015,6 +24024,9 @@
 				"IsDebuff"	"1"
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 	
+				"EffectName"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
+				"EffectAttachType"	"attach_hitloc"
+	
 				"ThinkInterval"	"3.0"
 	
 				"OnIntervalThink"
@@ -24025,13 +24037,6 @@
 						"Type"			"DAMAGE_TYPE_MAGICAL"
 						"Damage"		"%duration_damage"
 					}
-				}
-	
-				"AttachEffect"
-				{
-					"Target"		"TARGET"
-					"EffectName"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
-					"EffectAttachType"	"attach_hitloc"
 				}
 			}
 	
@@ -29550,6 +29555,7 @@
 		{
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
 			"particle"			"particles/units/heroes/hero_sven/sven_spell_gods_strength.vpcf"
+			"particle"			"particles/status_fx/status_effect_gods_strength.vpcf"
 		}
 		
 		// Casting
@@ -29615,6 +29621,8 @@
 				"IsBuff"		"1"
 				"IsPurgable"	"0"
 				"Duration"		"%AbilityDuration"
+	
+				"StatusEffectName"	"particles/status_fx/status_effect_gods_strength.vpcf"
 	
 				"Properties"
 				{
@@ -29714,6 +29722,7 @@
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
 			"particle"			"particles/units/heroes/hero_sven/sven_spell_storm_bolt.vpcf"
 			"particle"			"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
+			"particle"			"particles/generic_gameplay/generic_stunned.vpcf"
 		}
 		
 		// Casting
@@ -29829,6 +29838,10 @@
 			{
 				"Duration"		"%bolt_stun_duration"
 				"IsDebuff"		"1"
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"
+	
+				"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
 	
 				"States"
 				{
@@ -29939,17 +29952,13 @@
 				"IsBuff"	"1"
 				"Duration"	"%AbilityDuration"
 	
+				"EffectName"	"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%warcry_movespeed"
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%warcry_armor"
-				}
-	
-				"AttachEffect"
-				{
-					"EffectName"	"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"		"TARGET"
 				}
 			}
 		}
@@ -33510,6 +33519,7 @@
 	// Author: Pizzalol
 	// Date: 26.12.2014.
 	// NOTE: Doesnt travel as a "projectile" around the hero but instead acts as an instant AOE ability
+	// NOTE2: Poison Nova launch particle doesnt work
 	"venomancer_poison_nova_datadriven"
 	{
 		// General
@@ -33602,7 +33612,7 @@
 				"Target"		"CASTER"
 			}
 	
-			"AttachEffect"
+			"FireEffect"
 			{
 				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
 				"EffectAttachType"	"attach_origin"
@@ -33612,8 +33622,13 @@
 			"FireEffect"
 			{
 				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
-				"EffectAttachType"	"attach_hitloc"
-				"Target"		"CASTER"
+				"EffectAttachType"	"start_at_customorigin"
+				"ControlPoints"
+				{
+					"00"	"CASTER"
+					"01"	"0 0 0"
+					"02"	"0 0 0"
+				}
 			}
 	
 			"ActOnTargets"
@@ -33647,6 +33662,9 @@
 				"Duration"		"%duration"
 				"ThinkInterval"	"1.0"
 	
+				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
 				"OnIntervalThink"
 				{
 					"RunScript"
@@ -33671,13 +33689,6 @@
 						"Function"		"PoisonNova"
 						"Target"		"TARGET"
 					}
-				}
-	
-				"AttachEffect"
-				{
-					"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"		"TARGET"
 				}
 			}
 		}
@@ -34012,6 +34023,9 @@
 				"Duration"	"%duration"
 				"ThinkInterval"		"%tick_interval"
 	
+				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_gale_poison_debuff.vpcf"
+				"EffectAttachType"	"attach_origin"
+	
 				"OnIntervalThink"
 				{
 					"Damage"
@@ -34020,13 +34034,6 @@
 						"Type"		"DAMAGE_TYPE_MAGICAL"
 						"Damage"	"%tick_damage"
 					}
-				}
-	
-				"AttachEffect"
-				{
-					"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_gale_poison_debuff.vpcf"
-					"EffectAttachType"	"attach_origin"
-					"Target"		"TARGET"
 				}
 			}
 	
@@ -34163,6 +34170,9 @@
 				"Duration"	"%duration"
 				"IsDebuff"	"1"
 	
+				"EffectName"	"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
 				"ThinkInterval"	"1.0"
 	
 				"OnIntervalThink"
@@ -34173,13 +34183,6 @@
 						"Type"		"DAMAGE_TYPE_MAGICAL"
 						"Damage"	"%damage"
 					}
-				}
-	
-				"AttachEffect"
-				{
-					"EffectName"	"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"		"TARGET"
 				}
 	
 				"Properties"
@@ -34455,7 +34458,6 @@
 	// Rewrite of the Viper Poison Attack ability
 	// Author: Pizzalol
 	// Date: 18.12.2014.
-	// NOTE: poison_attack particles dont work/shoot south regardless of enemy position so i used the normal attack
 	"viper_poison_attack_datadriven"
 	{
 		// General
@@ -34473,8 +34475,8 @@
 		"precache"
 		{
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
-			"particle"		"particles/units/heroes/hero_viper/viper_base_attack.vpcf"
-			//"particle"		"particles/units/heroes/hero_viper/"
+			"particle"		"particles/units/heroes/hero_viper/viper_poison_attack.vpcf"
+			"particle"		"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
 		}
 	
 		// Casting
@@ -34530,7 +34532,7 @@
 				"Orb"
 				{
 					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
-					"ProjectileName"	"particles/units/heroes/hero_viper/viper_base_attack.vpcf"
+					"ProjectileName"	"particles/units/heroes/hero_viper/viper_poison_attack.vpcf"
 					"CastAttack"		"1"
 				}
 	
@@ -34561,11 +34563,6 @@
 						"EffectName"	"Hero_Viper.PoisonAttack.Target"
 						"Target"		"TARGET"
 					}
-	
-					//"AttachEffect"
-					//{
-					//
-					//}
 				}
 			}
 	
@@ -34573,6 +34570,9 @@
 			{
 				"IsDebuff"	"1"
 				"Duration"	"%duration"
+	
+				"EffectName"	"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
 	
 				"ThinkInterval"	"1.0"
 	
@@ -34602,7 +34602,7 @@
 	// Rewrite of the Viper Viper Strike ability
 	// Author: Pizzalol
 	// Date: 19.12.2014.
-	// NOTE: Particles are wonky
+	// NOTE: Wonky projectile particle and the warmup particle probably has a wrong attach point?
 	"viper_viper_strike_datadriven"
 	{
 		// General
@@ -34701,7 +34701,7 @@
 	
 		"OnAbilityPhaseStart"
 		{
-			"AttachEffect"
+			"FireEffect"
 			{
 				"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
 				"EffectAttachType"	"attach_origin"
@@ -34743,6 +34743,13 @@
 				"Target"		"TARGET"
 			}
 	
+			// Cosmetic modifier
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_viper_strike_statuseffect_datadriven"
+				"Target"		"TARGET"
+			}
+	
 			// Slow Part
 			"ApplyModifier"
 			{
@@ -34779,6 +34786,9 @@
 				"IsDebuff"	"1"
 				"Duration"	"%duration"
 	
+				"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+				"EffectAttachType"	"attach_hitloc"			
+	
 				"ThinkInterval"	"1.0"
 				"OnIntervalThink"
 				{
@@ -34794,13 +34804,13 @@
 						"Damage"		"%damage"
 					}
 				}
+			}
 	
-				"AttachEffect"
-				{
-					"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
-					"EffectAttachType"	"attach_hitloc"
-					"Target"			"TARGET"
-				}
+			// This modifier is cosmetic only
+			"modifier_viper_strike_statuseffect_datadriven"
+			{
+				"IsHidden"	"1"
+				"Duration"	"%duration"
 	
 				"StatusEffectName"		"particles/status_fx/status_effect_poison_viper.vpcf"
 			}

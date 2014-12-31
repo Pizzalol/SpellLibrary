@@ -21,10 +21,10 @@
 	{
 		"override_hero" "npc_dota_hero_ancient_apparition"
 	
-		"Ability1" "lina_dragon_slave_datadriven"
+		"Ability1" "viper_poison_attack_datadriven"
 		"Ability2" "lina_light_strike_array_datadriven"
-		"Ability3" "lina_fiery_soul_datadriven"
-		"Ability4" "lina_laguna_blade_datadriven"
+		"Ability3" "viper_corrosive_skin_datadriven"
+		"Ability4" "viper_viper_strike_datadriven"
 	}
 	//End of file test_dummy_ranged.txt
 }

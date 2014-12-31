@@ -96,6 +96,9 @@
 			"Duration"	"%duration"
 			"IsDebuff"	"1"
 
+			"EffectName"	"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+			"EffectAttachType"	"follow_origin"
+
 			"ThinkInterval"	"1.0"
 
 			"OnIntervalThink"
@@ -106,13 +109,6 @@
 					"Type"		"DAMAGE_TYPE_MAGICAL"
 					"Damage"	"%damage"
 				}
-			}
-
-			"AttachEffect"
-			{
-				"EffectName"	"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Target"		"TARGET"
 			}
 
 			"Properties"

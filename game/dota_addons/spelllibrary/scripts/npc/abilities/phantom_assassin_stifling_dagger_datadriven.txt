@@ -1,7 +1,6 @@
 // Rewrite of the Phantom Assassin Stifling Dagger ability
 // Author: Pizzalol
 // Date: 21.12.2014.
-// NOTE: Attachment point is wrong?
 "phantom_assassin_stifling_dagger_datadriven"
 {
 	// General
@@ -115,16 +114,12 @@
 			"IsDebuff"	"1"
 			"Duration"	"%duration"
 
+			"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
+			"EffectAttachType"	"follow_origin"
+
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_slow"
-			}
-
-			"AttachEffect"
-			{
-				"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Target"			"TARGET"
 			}
 		}
 	}

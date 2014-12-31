@@ -232,6 +232,9 @@
 			"Duration"	"%duration"
 			"ThinkInterval"		"%tick_interval"
 
+			"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_gale_poison_debuff.vpcf"
+			"EffectAttachType"	"attach_origin"
+
 			"OnIntervalThink"
 			{
 				"Damage"
@@ -240,13 +243,6 @@
 					"Type"		"DAMAGE_TYPE_MAGICAL"
 					"Damage"	"%tick_damage"
 				}
-			}
-
-			"AttachEffect"
-			{
-				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_gale_poison_debuff.vpcf"
-				"EffectAttachType"	"attach_origin"
-				"Target"		"TARGET"
 			}
 		}
 

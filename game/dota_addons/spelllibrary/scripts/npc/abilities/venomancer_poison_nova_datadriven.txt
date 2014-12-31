@@ -2,6 +2,7 @@
 // Author: Pizzalol
 // Date: 26.12.2014.
 // NOTE: Doesnt travel as a "projectile" around the hero but instead acts as an instant AOE ability
+// NOTE2: Poison Nova launch particle doesnt work
 "venomancer_poison_nova_datadriven"
 {
 	// General
@@ -94,7 +95,7 @@
 			"Target"		"CASTER"
 		}
 
-		"AttachEffect"
+		"FireEffect"
 		{
 			"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
 			"EffectAttachType"	"attach_origin"
@@ -104,8 +105,13 @@
 		"FireEffect"
 		{
 			"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
-			"EffectAttachType"	"attach_hitloc"
-			"Target"		"CASTER"
+			"EffectAttachType"	"start_at_customorigin"
+			"ControlPoints"
+			{
+				"00"	"CASTER"
+				"01"	"0 0 0"
+				"02"	"0 0 0"
+			}
 		}
 
 		"ActOnTargets"
@@ -139,6 +145,9 @@
 			"Duration"		"%duration"
 			"ThinkInterval"	"1.0"
 
+			"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
+			"EffectAttachType"	"follow_origin"
+
 			"OnIntervalThink"
 			{
 				"RunScript"
@@ -163,13 +172,6 @@
 					"Function"		"PoisonNova"
 					"Target"		"TARGET"
 				}
-			}
-
-			"AttachEffect"
-			{
-				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Target"		"TARGET"
 			}
 		}
 	}

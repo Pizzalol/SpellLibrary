@@ -23,6 +23,7 @@
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
 		"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
 		"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
+		"particle"			"particles/generic_gameplay/generic_stunned.vpcf"
 	}
 	
 	// Time		
@@ -151,6 +152,10 @@
 		{
 			"IsDebuff"	"1"
 			"Duration"	"%light_strike_array_stun_duration"
+			"OverrideAnimation"	"ACT_DOTA_DISABLED"
+
+			"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"	"follow_overhead"
 
 			"States"
 			{

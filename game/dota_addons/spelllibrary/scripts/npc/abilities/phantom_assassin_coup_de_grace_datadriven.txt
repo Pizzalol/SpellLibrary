@@ -56,7 +56,7 @@
 				"Random"
 				{
 					"Chance"		"%crit_chance"
-					"PseudeoRandom"	"DOTA_PSEUDO_RANDOM_PHANTOMASSASSIN_CRIT"
+					"PseudoRandom"	"DOTA_PSEUDO_RANDOM_PHANTOMASSASSIN_CRIT"
 
 					"OnSuccess"
 					{
@@ -87,10 +87,10 @@
 					"Target"		"CASTER"
 				}
 
-				"AttachEffect"
+				"FireEffect"
 				{
 					"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
-					"EffectAttachType"	"follow_origin"
+					"EffectAttachType"	"attach_origin"
 					"Target"		"TARGET"
 				}
 

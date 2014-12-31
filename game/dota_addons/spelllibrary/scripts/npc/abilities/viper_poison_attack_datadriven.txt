@@ -1,7 +1,6 @@
 // Rewrite of the Viper Poison Attack ability
 // Author: Pizzalol
 // Date: 18.12.2014.
-// NOTE: poison_attack particles dont work/shoot south regardless of enemy position so i used the normal attack
 "viper_poison_attack_datadriven"
 {
 	// General
@@ -19,8 +18,8 @@
 	"precache"
 	{
 		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_viper.vsndevts"
-		"particle"		"particles/units/heroes/hero_viper/viper_base_attack.vpcf"
-		//"particle"		"particles/units/heroes/hero_viper/"
+		"particle"		"particles/units/heroes/hero_viper/viper_poison_attack.vpcf"
+		"particle"		"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
 	}
 
 	// Casting
@@ -76,7 +75,7 @@
 			"Orb"
 			{
 				"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
-				"ProjectileName"	"particles/units/heroes/hero_viper/viper_base_attack.vpcf"
+				"ProjectileName"	"particles/units/heroes/hero_viper/viper_poison_attack.vpcf"
 				"CastAttack"		"1"
 			}
 
@@ -107,11 +106,6 @@
 					"EffectName"	"Hero_Viper.PoisonAttack.Target"
 					"Target"		"TARGET"
 				}
-
-				//"AttachEffect"
-				//{
-				//
-				//}
 			}
 		}
 
@@ -119,6 +113,9 @@
 		{
 			"IsDebuff"	"1"
 			"Duration"	"%duration"
+
+			"EffectName"	"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+			"EffectAttachType"	"follow_origin"
 
 			"ThinkInterval"	"1.0"
 

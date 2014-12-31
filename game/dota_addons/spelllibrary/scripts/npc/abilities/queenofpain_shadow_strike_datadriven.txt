@@ -2,7 +2,7 @@
 // Author: Pizzalol
 // Date: 21.12.2014.
 // NOTE: Stacks with itself
-// NOTE2: Particle attach points seem to be incorrect
+// NOTE2: Particle dagger attaches to the feet
 "queenofpain_shadow_strike_datadriven"
 {
 	// General
@@ -214,6 +214,9 @@
 			"IsDebuff"	"1"
 			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 
+			"EffectName"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
+			"EffectAttachType"	"attach_hitloc"
+
 			"ThinkInterval"	"3.0"
 
 			"OnIntervalThink"
@@ -224,13 +227,6 @@
 					"Type"			"DAMAGE_TYPE_MAGICAL"
 					"Damage"		"%duration_damage"
 				}
-			}
-
-			"AttachEffect"
-			{
-				"Target"		"TARGET"
-				"EffectName"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
-				"EffectAttachType"	"attach_hitloc"
 			}
 		}
 

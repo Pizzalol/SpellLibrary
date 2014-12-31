@@ -22,6 +22,7 @@
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
 		"particle"			"particles/units/heroes/hero_sven/sven_spell_storm_bolt.vpcf"
 		"particle"			"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
+		"particle"			"particles/generic_gameplay/generic_stunned.vpcf"
 	}
 	
 	// Casting
@@ -137,6 +138,10 @@
 		{
 			"Duration"		"%bolt_stun_duration"
 			"IsDebuff"		"1"
+			"OverrideAnimation"	"ACT_DOTA_DISABLED"
+
+			"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"	"follow_overhead"
 
 			"States"
 			{
