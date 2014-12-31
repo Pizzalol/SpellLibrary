@@ -1,3 +1,7 @@
+// TODO:
+// NOTE0: OnUpgrade: While channeling, only damage is increased, the channeling time remains the same (should this script be made into generic function for channeling ability?)
+// NOTE1: modifier_sand_storm_vfx_datadriven: Insert sandstorm particles
+
 "sandking_sand_storm_datadriven"
 {
 	// General
@@ -46,6 +50,151 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"AbilityDuration"		"20.0 40.0 60.0 80.0"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"			"modifier_invisible"
+			"Target"				"CASTER"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"			"modifier_sand_storm_debuff_datadriven"
+			"Target"				"CASTER"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"			"modifier_sand_storm_vfx_datadriven"
+			"Target"				"CASTER"
+		}
+	}
+		
+	"OnUpgrade"
+	{
+		// TODO: While channeling, only increase damage
+	}
+	
+	"OnChannelFinish"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"			"modifier_sand_storm_debuff_datadriven"
+			"Target"				"CASTER"
+		}
+	
+		"DelayedAction"
+		{
+			"Delay"					"%sand_storm_invis_delay"
+			"Action"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_invisible"
+					"Target"		"CASTER"
+				}
+				
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_sand_storm_vfx_datadriven"
+					"Target"		"CASTER"
+				}
+			}
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_sand_storm_debuff_datadriven"
+		{
+			"IsHidden"				"0"
+			"IsPurgable"			"1"
+			"Aura"					"modifier_sand_storm_debuff_damage_datadriven"
+			"Aura_Radius"			"%sand_storm_radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Ability.SandKing_SandStorm.start"
+					"Target"		"CASTER"
+				}
+			
+				"FireSound"
+				{
+					"EffectName"	"Ability.SandKing_SandStorm.loop"
+					"Target"		"CASTER"
+				}
+			}
+			
+			"OnAbilityExecuted"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_invisible"
+					"Target"		"CASTER"
+				}
+				
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_sand_storm_debuff_damage_datadriven"
+					"Target"		"CASTER"
+				}
+			}
+		}
+		
+		"modifier_sand_storm_debuff_damage_datadriven"
+		{
+			"IsDebuff"				"1"
+			
+			"OnCreated"
+			{
+				"Damage"
+				{
+					"Damage"		"%AbilityDamage / 2"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Target"		"TARGET"
+				}
+			}
+			
+			"ThinkInterval"			"0.5"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Damage"		"%AbilityDamage / 2"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Target"		"TARGET"
+				}
+			}
+		}
+		
+		"modifier_sand_storm_vfx_datadriven"
+		{
+			"IsHidden"				"1"
+			"IsPurgable"			"1"
+			
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					// TODO: Put sandstorm effect here
+				}
+			}
 		}
 	}
 }
