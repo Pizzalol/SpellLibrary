@@ -1,6 +1,8 @@
 // TODO:
-// NOTE0: OnUpgrade: While channeling, only damage is increased, the channeling time remains the same (should this script be made into generic function for channeling ability?)
-// NOTE1: modifier_sand_storm_vfx_datadriven: Insert sandstorm particles
+// NOTE1: OnUpgrade: While channeling, only damage is increased, the channeling time remains the same
+// NOTE2: modifier_sand_storm_vfx_datadriven: Need to insert interval erupting particle and flying debris
+// NOTE3: Remove sound Ability.SandKing_SandStorm.loop at the end of ability, currently it will still play over the end of ability
+// Note4: Channeling animation needs to be fixed
 
 "sandking_sand_storm_datadriven"
 {
@@ -58,13 +60,21 @@
 	"precache"
 	{
 		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
+		"particle"					"particles/units/heroes/hero_sandking/sandking_sandstorm_cloud.vpcf"
+		"particle"					"particles/units/heroes/hero_sandking/sandking_sandstorm_start.vpcf"
 	}
-	
+		
 	"OnSpellStart"
 	{
 		"ApplyModifier"
 		{
 			"ModifierName"			"modifier_invisible"
+			"Target"				"CASTER"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"			"Ability.SandKing_SandStorm.start"
 			"Target"				"CASTER"
 		}
 		
@@ -79,8 +89,14 @@
 			"ModifierName"			"modifier_sand_storm_vfx_datadriven"
 			"Target"				"CASTER"
 		}
-	}
 		
+		"FireSound"
+		{
+			"EffectName"			"Ability.SandKing_SandStorm.loop"
+			"Target"				"CASTER"
+		}
+	}
+	
 	"OnUpgrade"
 	{
 		// TODO: While channeling, only increase damage
@@ -92,25 +108,6 @@
 		{
 			"ModifierName"			"modifier_sand_storm_debuff_datadriven"
 			"Target"				"CASTER"
-		}
-	
-		"DelayedAction"
-		{
-			"Delay"					"%sand_storm_invis_delay"
-			"Action"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_invisible"
-					"Target"		"CASTER"
-				}
-				
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_sand_storm_vfx_datadriven"
-					"Target"		"CASTER"
-				}
-			}
 		}
 	}
 	
@@ -126,34 +123,43 @@
 			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 			"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 			
-			"OnCreated"
-			{
-				"FireSound"
-				{
-					"EffectName"	"Ability.SandKing_SandStorm.start"
-					"Target"		"CASTER"
-				}
-			
-				"FireSound"
-				{
-					"EffectName"	"Ability.SandKing_SandStorm.loop"
-					"Target"		"CASTER"
-				}
-			}
-			
 			"OnAbilityExecuted"
 			{
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_invisible"
-					"Target"		"CASTER"
-				}
-				
 				"RemoveModifier"
 				{
 					"ModifierName"	"modifier_sand_storm_debuff_damage_datadriven"
 					"Target"		"CASTER"
 				}
+				
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_invisible"
+					"Target"		"CASTER"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"DelayedAction"
+				{
+					"Delay"			"%sand_storm_invis_delay"
+					"Action"
+					{
+						"RemoveModifier"
+						{
+							"ModifierName"	"modifier_invisible"
+							"Target"		"CASTER"
+						}
+						
+						"RemoveModifier"
+						{
+							"ModifierName"	"modifier_sand_storm_vfx_datadriven"
+							"Target"		"CASTER"
+						}
+					}
+				}
+				
+				// TODO: Delete loop sound effect
 			}
 		}
 		
@@ -187,12 +193,24 @@
 		{
 			"IsHidden"				"1"
 			"IsPurgable"			"1"
-			
 			"OnCreated"
 			{
 				"AttachEffect"
 				{
-					// TODO: Put sandstorm effect here
+					"EffectName"		"particles/units/heroes/hero_sandking/sandking_sandstorm_start.vpcf"
+					"EffectAttachType"	"start_at_custom_origin"
+					"Target"			"CASTER"
+				}
+				
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_sandking/sandking_sandstorm_cloud.vpcf"
+					"EffectAttachType"	"start_at_customorigin"
+					"Target"			"CASTER"
+					"ControlPoints"
+					{
+						"01"			"%sand_storm_radius 1 1"
+					}
 				}
 			}
 		}
