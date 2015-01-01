@@ -1,11 +1,24 @@
+// Rewrite of the Bounty Hunter Windwalk
+// Author: chrislotix
+// Date: 01.01.2015.
 "bounty_hunter_wind_walk_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AbilityTextureName"			"bounty_hunter_wind_walk"
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	 {
+	  "soundfile"   "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+	  "particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
+	  "particle"	"particles/generic_hero_status/status_invisibility_start.vpcf"
+	 
+	 }
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
@@ -34,6 +47,113 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"bonus_damage"				"30 60 90 120"
+		}
+	}
+	
+
+	"OnSpellStart"
+	{
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
+			"Target"	"CASTER"
+			"EffectAttachType"	"attach_origin"
+		}
+		"FireSound"
+		{
+			"Target"	"CASTER"
+			"EffectName"	"Hero_BountyHunter.WindWalk"
+		}
+
+		"ApplyModifier"
+		{
+			"Target"	"CASTER"
+			"ModifierName"	"modifier_wind_walk_fade_datadriven"
+		}
+
+		"DelayedAction"
+		{
+			"Delay"	"%fade_time"
+
+			"Action" 
+			{
+				"ApplyModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_wind_walk_datadriven"
+				}
+				"ApplyModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_invisible"
+				}
+			}  
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_wind_walk_fade_datadriven"
+		{
+			"Duration"	"%fade_time"
+			"isBuff"	"1"
+			"EffectName"	"particles/generic_hero_status/status_invisibility_start.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnAttackLanded"
+			{
+				
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"	"DAMAGE_TYPE_PHYSICAL"
+					"Damage"	"%bonus_damage"
+				}
+
+			}
+		}
+		"modifier_wind_walk_datadriven"
+		{
+			"Duration"	"%duration"
+			"isBuff"	"1"
+
+			"OnAttackLanded"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"	"DAMAGE_TYPE_PHYSICAL"
+					"Damage"	"%bonus_damage"
+				}
+				"RemoveModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_wind_walk_datadriven"
+				}
+				"RemoveModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_invisible"
+				}
+			}
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED" 
+			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"Target"
+					{
+						"Center"	"CASTER"
+						"Flags"	"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+					"ModifierName"	"modifier_invisible"
+				}
+			}
+
 		}
 	}
 }

@@ -1,3 +1,6 @@
+// Rewrite of the Bounty Hunter Shurikan Toss
+// Author: chrislotix
+// Date: 01.01.2015.
 "bounty_hunter_shuriken_toss_datadriven"
 {
 	// General
@@ -6,6 +9,17 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"bounty_hunter_shuriken_toss"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	 {
+	  "soundfile"   "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+	  "particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
+	  "particle"    "particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_impact.vpcf"
+	 
+	 }
+	
 	
 	// Unit Targeting
 	//-------------------------------------------------------------------------------------------------------------
@@ -44,6 +58,65 @@
 			"var_type"				"FIELD_INTEGER"
 			"bounce_aoe"			"900"
 		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"mini_stun"				"0.1"
+		}
 	}
+
+	"OnSpellStart"
+	{
+		"TrackingProjectile"
+		{
+		    "Target"           "TARGET"
+		    "EffectName"       "particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
+		    "Dodgeable"        "1"
+		    "ProvidesVision"   "0"
+		    //"VisionRadius"     "300"
+		    "MoveSpeed"        "%speed"
+		    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_BountyHunter.Shuriken"
+			"Target"	"CASTER"
+		}
+
+
+	}
+
+	"OnProjectileHitUnit"
+    {
+    	"FireEffect"
+    	{
+    		"EffectName"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_impact.vpcf"
+    		"Target"		"TARGET"
+    		"EffectAttachType"	"attach_hitloc"
+    	}
+
+
+        "Damage"
+        {
+        	"Type"		"DAMAGE_TYPE_MAGICAL"
+        	"Damage"	"%bonus_damage"
+        	"Target"	"TARGET"
+        }
+
+        "Stun"
+        {
+        	"Duration"	"%mini_stun"
+        	"Target"	"TARGET"        	
+        }
+
+        "FireSound"
+        {
+        	"EffectName"	"Hero_BountyHunter.Shuriken.Impact"
+        	"Target"		"TARGET"
+        }
+
+    }
+
 }
 

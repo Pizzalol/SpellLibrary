@@ -3,7 +3,18 @@
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"bounty_hunter_jinada"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	 {
+	  "soundfile"   "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+	  "particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinda_slow.vpcf"
+	  "particle"	"particles/units/heroes/hero_bounty_hunter/status_effect_bounty_hunter_jinda_slow.vpcf"
+	 
+	 }
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -34,5 +45,68 @@
 			"duration"				"3.0 3.0 3.0 3.0"
 		}
 	}
+
+	"Modifiers"
+	{
+
+		"modifier_jinada_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"%crit_multiplier"
+			}
+
+			"OnAttackLanded"
+			{
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_jinada_slow_datadriven"
+					"Target"	"TARGET"
+				}
+
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinda_slow.vpcf"
+					"EffectAttachType"	"attach_hitloc"
+					"Target"		"TARGET"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_BountyHunter.Jinada"
+					"Target"		"TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_bounty_hunter/jinada.lua"	
+					"Function"		"Jinada"
+					
+				}
+
+
+			}
+
+		}
+
+		"modifier_jinada_slow_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+			"StatusEffectName"	"particles/units/heroes/hero_bounty_hunter/status_effect_bounty_hunter_jinda_slow.vpcf"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movespeed"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attackspeed"
+			}
+		}
+
+	}
+
 }	
 
