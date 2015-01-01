@@ -1,3 +1,6 @@
+// Comment:
+// Still need a lot of fixing, wrong commit
+
 "sandking_burrowstrike_datadriven"
 {
 	// General
