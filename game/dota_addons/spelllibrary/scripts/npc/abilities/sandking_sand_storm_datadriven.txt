@@ -1,8 +1,7 @@
 // TODO:
 // NOTE1: OnUpgrade: While channeling, only damage is increased, the channeling time remains the same
 // NOTE2: modifier_sand_storm_vfx_datadriven: Need to insert interval erupting particle and flying debris
-// NOTE3: Remove sound Ability.SandKing_SandStorm.loop at the end of ability, currently it will still play over the end of ability
-// Note4: Channeling animation needs to be fixed
+// Note3: Channeling animation needs to be fixed
 
 "sandking_sand_storm_datadriven"
 {
@@ -71,7 +70,7 @@
 			"ModifierName"			"modifier_invisible"
 			"Target"				"CASTER"
 		}
-		
+			
 		"FireSound"
 		{
 			"EffectName"			"Ability.SandKing_SandStorm.start"
@@ -140,6 +139,12 @@
 			
 			"OnDestroy"
 			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_sand_king/sand_storm.lua"
+					"Function"		"sand_storm_remove_sound"
+				}
+				
 				"DelayedAction"
 				{
 					"Delay"			"%sand_storm_invis_delay"
@@ -158,8 +163,6 @@
 						}
 					}
 				}
-				
-				// TODO: Delete loop sound effect
 			}
 		}
 		
@@ -216,4 +219,3 @@
 		}
 	}
 }
-
