@@ -21774,12 +21774,9 @@
 	
 			"modifier_blur_enemy_datadriven"
 			{
-				"AttachEffect"
-				{
-					"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"			"CASTER"
-				}
+				"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
 	
 				"States"
 				{
@@ -23174,6 +23171,10 @@
 
 
 	//Start of file pudge_dismember_datadriven.txt
+	// Rewrite of the Pudge Dismember ability
+	// Author: Pizzalol
+	// Date: 01.01.2015.
+	// NOTE: Doesnt have the extra duration for non hero units
 	"pudge_dismember_datadriven"
 	{
 		// General
@@ -23188,6 +23189,14 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"pudge_dismember"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+			"particle"			"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -23214,6 +23223,92 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"strength_damage_scepter"		"1.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"Damage"
+			{
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%dismember_damage"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_dismember_datadriven"
+				"Target"		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+				"EffectAttachType"	"attach_origin"
+				"Target"		"TARGET"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Pudge.Dismember"
+				"Target"		"TARGET"
+			}
+		}
+	
+		"OnChannelInterrupted"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_dismember_datadriven"
+				"Target"		"TARGET"
+			}
+		}
+	
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_dismember_datadriven"
+				"Target"		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_dismember_datadriven"
+			{
+				"IsDebuff"	"1"
+				"ThinkInterval"	"1.0"
+	
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"
+	
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%dismember_damage"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Pudge.Dismember"
+						"Target"		"TARGET"
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+						"EffectAttachType"	"attach_origin"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -23329,7 +23424,7 @@
 					"FireEffect"
 					{
 						"EffectName"	"particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf"
-						"EffectAttachType"	"follow_origin"
+						"EffectAttachType"	"follow_overhead"
 						"Target"		"CASTER"
 					}
 				}
@@ -23351,6 +23446,14 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"pudge_meat_hook"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+			"particle"			"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -23397,6 +23500,26 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"vision_duration"	"4.0 4.0 4.0 4.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+				"Target"      	"POINT"
+			    "EffectName"  	"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+			    "MoveSpeed"   	"%hook_speed"
+			    "StartRadius"   "%hook_width"
+			    "StartPosition" "attach_attack1"
+			    "EndRadius"     "%hook_width"
+			    "FixedDistance" "%hook_distance"
+			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
+			    "HasFrontalCone"    "1"
+			    "ProvidesVision" "1"
+			    "VisionRadius"	"500"
 			}
 		}
 	}
@@ -26422,6 +26545,104 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"tooltip_range"		"350 450 550 650"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
+			"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike.vpcf"
+			"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_cracks_background.vpcf"
+			"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_cracks_center.vpcf"
+			"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_dust.vpcf"
+			"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_debris.vpcf"
+			"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
+			"particle"				"particles/generic_gameplay/generic_stunned.vpcf"
+		}
+			
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+				"EffectName"				"particles/units/heroes/hero_sandking/sandking_burrowstrike.vpcf"
+				"MoveSpeed"					"%burrow_speed"
+				"StartRadius"				"%burrow_width"
+				"EndRadius"					"%burrow_width"
+				"TargetTeams"				"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"TargetTypes"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"HasFrontalCone"			"0"
+			}
+				
+			"FireSound"
+			{
+				"EffectName"				"Ability.SandKing_BurrowStrike"
+				"Target"					"CASTER"
+			}
+		}
+			
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"					"true"
+				
+			"ApplyModifier"
+			{
+				"ModifierName"				"modifier_burrowstrike_stun_datadriven"
+				"Target"					"TARGET"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"				"modifier_burrowstrike_fly_datadriven"
+				"Target"					"TARGET"
+			}
+				
+			"DelayedAction"
+			{
+				"Delay"						"%burrow_anim_time"
+				"Action"
+				{
+					"Damage"
+					{
+						"Type"				"DAMAGE_TYPE_MAGICAL"
+						"Damage"			"%AbilityDamage"
+						"Target"			"TARGET"
+					}
+				}
+			}
+		}
+			
+		"Modifiers"
+		{
+			"modifier_burrowstrike_stun_datadriven"
+			{
+				"IsDebuff"					"1"
+				"Duration"					"%burrow_duration"
+				"OverrideAnimation"			"ACT_DOTA_DISABLED"
+				
+				"AttachEffect"
+				{
+					"EffectName"			"particles/generic_gameplay/generic_stunned.vpcf"
+					"EffectAttachType"		"follow_overhead"
+					"Target"				"TARGET"
+				}
+				
+				"States"
+				{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_burrowstrike_fly_datadriven"
+			{
+				"IsHidden"					"1"
+				"Duration"					"%burrow_anim_time / 2"
+				
+				"States"
+				{
+					"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}

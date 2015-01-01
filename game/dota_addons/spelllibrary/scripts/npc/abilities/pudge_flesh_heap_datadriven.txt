@@ -105,7 +105,7 @@
 				"FireEffect"
 				{
 					"EffectName"	"particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf"
-					"EffectAttachType"	"follow_origin"
+					"EffectAttachType"	"follow_overhead"
 					"Target"		"CASTER"
 				}
 			}

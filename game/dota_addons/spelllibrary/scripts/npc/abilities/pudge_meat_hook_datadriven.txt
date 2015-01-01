@@ -8,6 +8,14 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"pudge_meat_hook"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -54,6 +62,26 @@
 		{
 			"var_type"			"FIELD_FLOAT"
 			"vision_duration"	"4.0 4.0 4.0 4.0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"LinearProjectile"
+		{
+			"Target"      	"POINT"
+		    "EffectName"  	"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+		    "MoveSpeed"   	"%hook_speed"
+		    "StartRadius"   "%hook_width"
+		    "StartPosition" "attach_attack1"
+		    "EndRadius"     "%hook_width"
+		    "FixedDistance" "%hook_distance"
+		    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
+		    "HasFrontalCone"    "1"
+		    "ProvidesVision" "1"
+		    "VisionRadius"	"500"
 		}
 	}
 }

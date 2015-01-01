@@ -67,12 +67,9 @@
 
 		"modifier_blur_enemy_datadriven"
 		{
-			"AttachEffect"
-			{
-				"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Target"			"CASTER"
-			}
+			"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
 
 			"States"
 			{

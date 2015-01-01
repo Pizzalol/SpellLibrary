@@ -1,3 +1,7 @@
+// Rewrite of the Pudge Dismember ability
+// Author: Pizzalol
+// Date: 01.01.2015.
+// NOTE: Doesnt have the extra duration for non hero units
 "pudge_dismember_datadriven"
 {
 	// General
@@ -12,6 +16,14 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"pudge_dismember"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+		"particle"			"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -38,6 +50,92 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"strength_damage_scepter"		"1.0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"Damage"
+		{
+			"Target"	"TARGET"
+			"Type"		"DAMAGE_TYPE_MAGICAL"
+			"Damage"	"%dismember_damage"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_dismember_datadriven"
+			"Target"		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+			"EffectAttachType"	"attach_origin"
+			"Target"		"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Pudge.Dismember"
+			"Target"		"TARGET"
+		}
+	}
+
+	"OnChannelInterrupted"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_dismember_datadriven"
+			"Target"		"TARGET"
+		}
+	}
+
+	"OnChannelFinish"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_dismember_datadriven"
+			"Target"		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_dismember_datadriven"
+		{
+			"IsDebuff"	"1"
+			"ThinkInterval"	"1.0"
+
+			"OverrideAnimation"	"ACT_DOTA_DISABLED"
+
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%dismember_damage"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Pudge.Dismember"
+					"Target"		"TARGET"
+				}
+
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+					"EffectAttachType"	"attach_origin"
+					"Target"		"TARGET"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }
