@@ -6,6 +6,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"sandking_caustic_finale"
 	
 	"AbilityDuration"				"8.0 8.0 8.0 8.0"
 	"AbilityDamage"					"90 130 170 220"
@@ -28,6 +29,77 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"caustic_finale_duration"	"8.0 8.0 8.0 8.0"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
+		"particle"				"particles/units/heroes/hero_sandking/sandking_caustic_finale_debuff.vpcf"
+	}
+	
+	"Modifiers"
+	{
+		"modifier_caustic_finale_buff_datadriven"
+		{
+			"IsHidden"			"0"
+			"IsPurgable"		"0"
+			"Passive"			"1"
+			"OnAttack"
+			{
+				// Keep this in data driven but it's not optimal, else just run script
+				"ApplyModifier"
+				{
+					"ModifierName"		"modifier_caustic_finale_debuff_datadriven"
+					"Target"
+					{
+						"Center"		"TARGET"
+						"Radius"		"1"
+						"Teams"  		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+					}
+				}
+			}
+		}
+		
+		"modifier_caustic_finale_debuff_datadriven"
+		{
+			"IsDebuff"			"1"
+			"IsPurgable"		"0"
+			"Duration"			"%caustic_finale_duration"
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_sandking/sandking_caustic_finale_debuff.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"TARGET"
+				}
+			}
+			
+			"OnDeath"
+			{
+				"FireSound"
+				{
+					"EffectName"		"Ability.SandKing_CausticFinale"
+					"Target"			"UNIT"
+				}
+			
+				"Damage"
+				{
+					"Type"				"DAMAGE_TYPE_MAGICAL"
+					"Damage"			"%caustic_finale_damage"
+					"Target"
+					{
+						"Center"		"UNIT"
+						"Radius"		"%caustic_finale_radius"
+						"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+					}
+				}
+			}
 		}
 	}
 }
