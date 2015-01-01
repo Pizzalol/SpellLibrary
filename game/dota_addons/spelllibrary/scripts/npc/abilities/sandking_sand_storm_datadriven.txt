@@ -1,7 +1,6 @@
 // TODO:
 // NOTE1: OnUpgrade: While channeling, only damage is increased, the channeling time remains the same
-// NOTE2: modifier_sand_storm_vfx_datadriven: Need to insert interval erupting particle and flying debris
-// Note3: Channeling animation needs to be fixed
+// Note2: Channeling animation needs to be fixed
 
 "sandking_sand_storm_datadriven"
 {
@@ -59,18 +58,22 @@
 	"precache"
 	{
 		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
+		"particle"					"particles/units/heroes/hero_sandking/sandking_sandstorm.vpcf"
 		"particle"					"particles/units/heroes/hero_sandking/sandking_sandstorm_cloud.vpcf"
+		"particle"					"particles/units/heroes/hero_sandking/sandking_sandstorm_eruption_dust.vpcf"
+		"particle"					"particles/units/heroes/hero_sandking/sandking_sandstorm_cloud_center.vpcf"
 		"particle"					"particles/units/heroes/hero_sandking/sandking_sandstorm_start.vpcf"
+		"particle"					"particles/units/heroes/hero_sandking/sandking_sandstorm_sand.vpcf"
 	}
-		
+	
 	"OnSpellStart"
-	{
+	{			
 		"ApplyModifier"
 		{
 			"ModifierName"			"modifier_invisible"
 			"Target"				"CASTER"
 		}
-			
+		
 		"FireSound"
 		{
 			"EffectName"			"Ability.SandKing_SandStorm.start"
@@ -139,29 +142,16 @@
 			
 			"OnDestroy"
 			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_sand_storm_remove_datadriven"
+					"Target"		"CASTER"
+				}
+				
 				"RunScript"
 				{
 					"ScriptFile"	"heroes/hero_sand_king/sand_storm.lua"
 					"Function"		"sand_storm_remove_sound"
-				}
-				
-				"DelayedAction"
-				{
-					"Delay"			"%sand_storm_invis_delay"
-					"Action"
-					{
-						"RemoveModifier"
-						{
-							"ModifierName"	"modifier_invisible"
-							"Target"		"CASTER"
-						}
-						
-						"RemoveModifier"
-						{
-							"ModifierName"	"modifier_sand_storm_vfx_datadriven"
-							"Target"		"CASTER"
-						}
-					}
 				}
 			}
 		}
@@ -169,6 +159,7 @@
 		"modifier_sand_storm_debuff_damage_datadriven"
 		{
 			"IsDebuff"				"1"
+			"IsPurgable"			"1"
 			
 			"OnCreated"
 			{
@@ -195,24 +186,53 @@
 		"modifier_sand_storm_vfx_datadriven"
 		{
 			"IsHidden"				"1"
-			"IsPurgable"			"1"
+			"IsPurgable"			"0"
 			"OnCreated"
 			{
 				"AttachEffect"
 				{
 					"EffectName"		"particles/units/heroes/hero_sandking/sandking_sandstorm_start.vpcf"
-					"EffectAttachType"	"start_at_custom_origin"
+					"EffectAttachType"	"start_at_customorigin"
 					"Target"			"CASTER"
 				}
-				
+			
 				"AttachEffect"
 				{
-					"EffectName"		"particles/units/heroes/hero_sandking/sandking_sandstorm_cloud.vpcf"
+					"EffectName"		"particles/units/heroes/hero_sandking/sandking_sandstorm.vpcf"
 					"EffectAttachType"	"start_at_customorigin"
 					"Target"			"CASTER"
 					"ControlPoints"
 					{
-						"01"			"%sand_storm_radius 1 1"
+						"01"			"%sand_storm_radius %sand_storm_radius %sand_storm_radius"
+					}
+				}
+			}
+		}
+		
+		"modifier_sand_storm_remove_datadriven"
+		{
+			"IsHidden"			"1"
+			"IsPurgable"		"0"
+			"Duration"			"%sand_storm_invis_delay + 0.5"
+			
+			"OnCreated"
+			{
+				"DelayedAction"
+				{
+					"Delay"			"%sand_storm_invis_delay"
+					"Action"
+					{
+						"RemoveModifier"
+						{
+							"ModifierName"	"modifier_invisible"
+							"Target"		"CASTER"
+						}
+						
+						"RemoveModifier"
+						{
+							"ModifierName"	"modifier_sand_storm_vfx_datadriven"
+							"Target"		"CASTER"
+						}
 					}
 				}
 			}
