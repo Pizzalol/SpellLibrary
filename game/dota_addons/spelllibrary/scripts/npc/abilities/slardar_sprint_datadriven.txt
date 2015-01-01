@@ -1,10 +1,22 @@
+// Rewrite of the Slardar Sprint
+// Author: chrislotix
+// Date: 01.01.2015.
 "slardar_sprint_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-	
+	"AbilityTextureName" 	"slardar_sprint"
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	 {
+	  "soundfile"   "soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"
+	  "particle"	"particles/units/heroes/hero_slardar/slardar_sprint.vpcf"
+
+	 }
+
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"0"
@@ -14,7 +26,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCooldown"				"28"
 	
-	"AbilitySpecial"
+	"AbilitySpecial"	
 	{
 		"01"
 		{
@@ -32,5 +44,42 @@
 			"duration"					"20.0 20.0 20.0 20.0"
 		}
 	}
+
+	"OnSpellStart"
+    {
+        "ApplyModifier"
+        {
+            "Target" "CASTER"
+            "ModifierName" "modifier_sprint_datadriven"
+        }
+        "FireSound"
+        {
+        	"EffectName" "Hero_Slardar.Sprint"
+        	"Target"	 "CASTER"
+        }
+    }
+    "Modifiers"
+    {
+    	"modifier_sprint_datadriven"
+    	{
+    		"IsBuff" "1"
+    		"Duration" "%duration"
+    		"EffectName"	"particles/units/heroes/hero_slardar/slardar_sprint.vpcf"
+	    	"EffectAttachType"	"follow_origin"
+
+
+    		"Properties"
+	    	{
+	    		"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" "%bonus_damage"
+	    		"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_speed"
+	    	}
+
+	    	
+
+
+    	}
+
+    }
+
 }	
 

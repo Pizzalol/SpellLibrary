@@ -1,3 +1,6 @@
+// Rewrite of the Slardar Bash
+// Author: chrislotix
+// Date: 01.01.2015.
 "slardar_bash_datadriven"
 {
 	// General
@@ -6,7 +9,15 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-	
+	"AbilityTextureName"			"slardar_bash"
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	 {
+	  "soundfile"   "soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"
+	  "particle"	"particles/generic_gameplay/generic_stunned.vpcf"  
+	 }
+
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityModifierSupportBonus"		"25"
@@ -34,6 +45,78 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"duration_creep"		"2.0"
+		}
+	}
+	"Modifiers"
+	{
+		"modifier_bash_stun_hero_datadriven"
+		{
+			"Duration"		"%duration"
+			"IsDebuff" 		"1"
+			"OverrideAnimation"		"ACT_DOTA_DISABLED"
+
+			"EffectName" "particles/generic_gameplay/generic_stunned.vpcf"
+        	"EffectAttachType" "follow_overhead"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}			
+
+		}
+
+		"modifier_bash_stun_creep_datadriven"
+		{
+			"Duration" "%duration_creep"
+			"IsDebuff" "1"
+			"OverrideAnimation"		"ACT_DOTA_DISABLED"
+
+			"EffectName" "particles/generic_gameplay/generic_stunned.vpcf"
+        	"EffectAttachType" "follow_overhead"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			
+		}
+
+
+		"modifier_bash_stun_datadriven"		
+		{
+			"IsHidden"	"1"
+			"Passive"	"1"
+
+			"OnAttackLanded"
+			{
+				"Random"
+				{
+					"Chance"	"%chance"
+					"PseudoRandom"		"DOTA_PSEUDO_RANDOM_SLARDAR_BASH"
+
+					"OnSuccess"
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"scripts/vscripts/heroes/hero_slardar/bash.lua"	
+							"Function"		"Bash"
+							"Target"		"TARGET"	
+						}
+						"Damage"
+						{
+							"Target"	"TARGET"
+							"Type"		"DAMAGE_TYPE_PHYSICAL"
+							"Damage"	"%bonus_damage"
+						}
+						"FireSound"
+						{
+							"EffectName"	"Hero_Slardar.Bash"
+							"Target"		"TARGET"
+						}
+					}
+				}
+			} 
 		}
 	}
 }

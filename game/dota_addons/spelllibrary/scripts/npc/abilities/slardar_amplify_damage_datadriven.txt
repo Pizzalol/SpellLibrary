@@ -1,3 +1,7 @@
+// Rewrite of the Slardar Amplify Damage
+// Author: chrislotix
+// Date: 01.01.2015.
+// NOTE: cloud doesn't appear
 "slardar_amplify_damage_datadriven"
 {
 	// General
@@ -12,6 +16,14 @@
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"slardar_amplify_damage"
 
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	 {
+	  "soundfile"   "soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"
+	  "particle"	"particles/units/heroes/hero_slardar/slardar_amp_damage.vpcf"
+	  "particle"	"particles/status_fx/status_effect_slardar_amp_damage.vpcf"
+	 }
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"700"
@@ -42,6 +54,51 @@
 			"var_type"				"FIELD_FLOAT"
 			"duration"				"25.0 25.0 25.0"
 		}
+	}
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"	"TARGET"
+			"ModifierName"	"modifier_amplify_damage_datadriven"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Slardar.Amplify_Damage"
+			"Target"	"TARGET"
+		}
+	}
+	"Modifiers"
+	{
+		"modifier_amplify_damage_datadriven"
+		{
+			"Duration"	"%duration"
+			"isDebuff"	"1"			
+			"StatusEffectName" "particles/status_fx/status_effect_slardar_amp_damage.vpcf"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_slardar/slardar_amp_damage.vpcf"
+					"EffectAttachType"	"follow_point"
+					"Target"	"TARGET"
+
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_reduction"				
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
 	}
 }
 
