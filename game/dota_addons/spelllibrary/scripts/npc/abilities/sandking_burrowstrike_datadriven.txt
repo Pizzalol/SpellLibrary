@@ -1,5 +1,5 @@
 // Comment:
-// Still need a lot of fixing, wrong commit
+// NOTE1: Missing one particle somewhere...
 
 "sandking_burrowstrike_datadriven"
 {
@@ -66,50 +66,77 @@
 	{
 		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
 		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_cracks_background.vpcf"
+		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_cracks.vpcf"
 		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_cracks_center.vpcf"
+		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_cracks_background.vpcf"
 		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_dust.vpcf"
 		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_debris.vpcf"
 		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption.vpcf"
+		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption_ripple_b.vpcf"
+		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption_ripple.vpcf"
+		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption_rocks.vpcf"
+		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption_dust.vpcf"
+		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption_dirt.vpcf"
+		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_eruption_ripple_dust.vpcf"
+		"particle"				"particles/units/heroes/hero_sandking/sandking_burrowstrike_ground.vpcf"
+		// Missing one particle somewhere...
 		"particle"				"particles/generic_gameplay/generic_stunned.vpcf"
 	}
-		
+	
 	"OnSpellStart"
 	{
 		"LinearProjectile"
 		{
-			"EffectName"				"particles/units/heroes/hero_sandking/sandking_burrowstrike.vpcf"
 			"MoveSpeed"					"%burrow_speed"
 			"StartRadius"				"%burrow_width"
 			"EndRadius"					"%burrow_width"
-			"TargetTeams"				"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"TargetTeams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 			"TargetTypes"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 			"HasFrontalCone"			"0"
 		}
-			
+		
+		"ApplyModifier"
+		{
+			"ModifierName"				"modifier_burrowstrike_caster_datadriven"
+			"Target"					"CASTER"
+		}
+		
+		"FireEffect"
+		{
+			"EffectName"				"particles/units/heroes/hero_sandking/sandking_burrowstrike.vpcf"
+			"EffectAttachType"			"start_at_customorigin"
+			"Target"					"CASTER"
+			"ControlPoints"
+			{
+				"01"					"POINT"
+			}
+		}
+		
 		"FireSound"
 		{
 			"EffectName"				"Ability.SandKing_BurrowStrike"
 			"Target"					"CASTER"
 		}
 	}
-		
+	
 	"OnProjectileHitUnit"
 	{
 		"DeleteOnHit"					"true"
-			
+		
 		"ApplyModifier"
 		{
 			"ModifierName"				"modifier_burrowstrike_stun_datadriven"
 			"Target"					"TARGET"
 		}
 		
-		"ApplyModifier"
+		"Knockback"
 		{
-			"ModifierName"				"modifier_burrowstrike_fly_datadriven"
-			"Target"					"TARGET"
+			"Target"			"TARGET"
+			"Duration"			"%burrow_anim_time"
+			"Distance"			"0"
+			"Height"			"500"
 		}
-			
+		
 		"DelayedAction"
 		{
 			"Delay"						"%burrow_anim_time"
@@ -124,38 +151,48 @@
 			}
 		}
 	}
+	
+	"OnProjectileFinish"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_sand_king/burrowstrike.lua"
+			"Function"			"burrowstrike_teleport"
+			"Target"			"POINT"
+		}
 		
+		"RemoveModifier"
+		{
+			"ModifierName"		"modifier_burrowstrike_caster_datadriven"
+			"Target"			"CASTER"
+		}
+	}
+	
 	"Modifiers"
 	{
+		"modifier_burrowstrike_caster_datadriven"
+		{
+			"IsHidden"					"1"
+		
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	
 		"modifier_burrowstrike_stun_datadriven"
 		{
 			"IsDebuff"					"1"
 			"Duration"					"%burrow_duration"
 			"OverrideAnimation"			"ACT_DOTA_DISABLED"
 			
-			"AttachEffect"
-			{
-				"EffectName"			"particles/generic_gameplay/generic_stunned.vpcf"
-				"EffectAttachType"		"follow_overhead"
-				"Target"				"TARGET"
-			}
+			"EffectName"				"particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"			"follow_overhead"
 			
 			"States"
 			{
-			"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-		
-		"modifier_burrowstrike_fly_datadriven"
-		{
-			"IsHidden"					"1"
-			"Duration"					"%burrow_anim_time / 2"
-			
-			"States"
-			{
-				"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
 	}
 }
-
