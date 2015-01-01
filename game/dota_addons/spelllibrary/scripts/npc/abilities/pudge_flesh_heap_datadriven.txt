@@ -1,9 +1,20 @@
+// Rewrite of the Pudge Flesh Heap ability
+// Author: Pizzalol
+// Date: 01.01.2015.
 "pudge_flesh_heap_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"pudge_flesh_heap"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf"
+	}
 	
 
 	// Special
@@ -24,6 +35,80 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"flesh_heap_range"		"450"
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_pudge/flesh_heap.lua"
+			"Function"		"FleshHeapAdjust"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_flesh_heap_aura_datadriven"
+		{
+			"Passive"	"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_pudge/flesh_heap.lua"
+					"Function"		"FleshHeap"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%flesh_heap_magic_resist"
+			}
+
+			"Aura" 			"modifier_flesh_heap_datadriven"
+			"Aura_Radius" 	"%flesh_heap_range"
+			"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types" 	"DOTA_UNIT_TARGET_HERO"
+		}
+
+		"modifier_flesh_heap_bonus_datadriven"
+		{
+			"IsHidden"	"1"
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%flesh_heap_strength_buff_amount"
+			}
+		}
+
+		"modifier_flesh_heap_datadriven"
+		{
+			"IsHidden"	"1"
+
+			"OnDeath"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_flesh_heap_bonus_datadriven"
+					"Target"		"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_pudge/flesh_heap.lua"
+					"Function"		"StackCountIncrease"
+				}
+
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"		"CASTER"
+				}
+			}
 		}
 	}
 }
