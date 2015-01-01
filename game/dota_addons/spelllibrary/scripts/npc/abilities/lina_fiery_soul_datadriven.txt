@@ -1,6 +1,7 @@
 // Rewrite of the Lina Fiery Soul ability
 // Author: Pizzalol
 // Date: 30.12.2014.
+// NOTE: Works with items
 "lina_fiery_soul_datadriven"
 {
 	// General

@@ -142,13 +142,6 @@
 			"Target"		"TARGET"
 		}
 
-		// Cosmetic modifier
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_viper_strike_statuseffect_datadriven"
-			"Target"		"TARGET"
-		}
-
 		// Slow Part
 		"ApplyModifier"
 		{
@@ -185,8 +178,17 @@
 			"IsDebuff"	"1"
 			"Duration"	"%duration"
 
-			"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
-			"EffectAttachType"	"attach_hitloc"			
+			"StatusEffectName"		"particles/status_fx/status_effect_poison_viper.vpcf"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+					"EffectAttachType"	"attach_hitloc"	
+					"Target"			"TARGET"
+				}
+			}		
 
 			"ThinkInterval"	"1.0"
 			"OnIntervalThink"
@@ -203,15 +205,6 @@
 					"Damage"		"%damage"
 				}
 			}
-		}
-
-		// This modifier is cosmetic only
-		"modifier_viper_strike_statuseffect_datadriven"
-		{
-			"IsHidden"	"1"
-			"Duration"	"%duration"
-
-			"StatusEffectName"		"particles/status_fx/status_effect_poison_viper.vpcf"
 		}
 
 		"modifier_viper_strike_slow_datadriven"

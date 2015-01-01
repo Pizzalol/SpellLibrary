@@ -16539,6 +16539,7 @@
 	// Rewrite of the Lina Fiery Soul ability
 	// Author: Pizzalol
 	// Date: 30.12.2014.
+	// NOTE: Works with items
 	"lina_fiery_soul_datadriven"
 	{
 		// General
@@ -23319,6 +23320,10 @@
 
 
 	//Start of file pudge_rot_datadriven.txt
+	// Rewrite of the Pudge Rot ability
+	// Author: Pizzalol
+	// Date: 01.01.2015.
+	// NOTE: Doesnt have the lingering 0.5 seconds of rot debuff(it exists for the slow but not the damage part)
 	"pudge_rot_datadriven"
 	{
 		// General
@@ -23329,6 +23334,14 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"pudge_rot"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+			"particle"			"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -23356,6 +23369,117 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"rot_slow"				"-20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"rot_tick_damage"		"7 12 17 22"
+			}
+		}
+	
+		"OnToggleOn"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_rot_datadriven"
+				"Target"		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Pudge.Rot"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"OnToggleOff"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_rot_datadriven"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_pudge/rot.lua"
+				"Function"		"RotStopSound"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_rot_datadriven"
+			{
+				"IsDebuff"		"1"
+	
+				"ThinkInterval"	"%rot_tick"
+	
+				"OnIntervalThink"
+				{
+	
+					"Damage"
+					{
+						"Target"	"CASTER"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%rot_tick_damage"
+					}
+	
+					"ActOnTargets"
+					{
+						"Target"
+			            {
+			                "Center" "CASTER"
+			                "Radius" "%rot_radius"
+			                "Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY" 
+			                "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			            }
+	
+			            "Action"
+			            {
+			            	"Damage"
+			            	{
+			            		"Target"	"TARGET"
+			            		"Type"		"DAMAGE_TYPE_MAGICAL"
+			            		"Damage"	"%rot_tick_damage"
+			            	}
+			            }
+					}
+				}
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"		"CASTER"
+	
+						"ControlPoints"
+						{
+							"00"	"0 0 0"
+							"01"	"%rot_radius 0 0"
+						}
+					}
+				}
+	
+				"Aura" 			"modifier_rot_slow_datadriven"
+				"Aura_Radius" 	"%rot_radius"
+				"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+	
+			"modifier_rot_slow_datadriven"
+			{
+				"IsDebuff"	"1"			
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%rot_slow"
+				}
 			}
 		}
 	}
@@ -26338,6 +26462,12 @@
 
 
 	//Start of file sandking_sand_storm_datadriven.txt
+	// TODO:
+	// NOTE1: OnUpgrade: While channeling, only damage is increased, the channeling time remains the same
+	// NOTE2: modifier_sand_storm_vfx_datadriven: Need to insert interval erupting particle and flying debris
+	// NOTE3: Remove sound Ability.SandKing_SandStorm.loop at the end of ability, currently it will still play over the end of ability
+	// Note4: Channeling animation needs to be fixed
+	
 	"sandking_sand_storm_datadriven"
 	{
 		// General
@@ -26386,6 +26516,167 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"AbilityDuration"		"20.0 40.0 60.0 80.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
+			"particle"					"particles/units/heroes/hero_sandking/sandking_sandstorm_cloud.vpcf"
+			"particle"					"particles/units/heroes/hero_sandking/sandking_sandstorm_start.vpcf"
+		}
+			
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_invisible"
+				"Target"				"CASTER"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"			"Ability.SandKing_SandStorm.start"
+				"Target"				"CASTER"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_sand_storm_debuff_datadriven"
+				"Target"				"CASTER"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_sand_storm_vfx_datadriven"
+				"Target"				"CASTER"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"			"Ability.SandKing_SandStorm.loop"
+				"Target"				"CASTER"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			// TODO: While channeling, only increase damage
+		}
+		
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"			"modifier_sand_storm_debuff_datadriven"
+				"Target"				"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_sand_storm_debuff_datadriven"
+			{
+				"IsHidden"				"0"
+				"IsPurgable"			"1"
+				"Aura"					"modifier_sand_storm_debuff_damage_datadriven"
+				"Aura_Radius"			"%sand_storm_radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				
+				"OnAbilityExecuted"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_sand_storm_debuff_damage_datadriven"
+						"Target"		"CASTER"
+					}
+					
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target"		"CASTER"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"DelayedAction"
+					{
+						"Delay"			"%sand_storm_invis_delay"
+						"Action"
+						{
+							"RemoveModifier"
+							{
+								"ModifierName"	"modifier_invisible"
+								"Target"		"CASTER"
+							}
+							
+							"RemoveModifier"
+							{
+								"ModifierName"	"modifier_sand_storm_vfx_datadriven"
+								"Target"		"CASTER"
+							}
+						}
+					}
+					
+					// TODO: Delete loop sound effect
+				}
+			}
+			
+			"modifier_sand_storm_debuff_damage_datadriven"
+			{
+				"IsDebuff"				"1"
+				
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Damage"		"%AbilityDamage / 2"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Target"		"TARGET"
+					}
+				}
+				
+				"ThinkInterval"			"0.5"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Damage"		"%AbilityDamage / 2"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Target"		"TARGET"
+					}
+				}
+			}
+			
+			"modifier_sand_storm_vfx_datadriven"
+			{
+				"IsHidden"				"1"
+				"IsPurgable"			"1"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_sandking/sandking_sandstorm_start.vpcf"
+						"EffectAttachType"	"start_at_custom_origin"
+						"Target"			"CASTER"
+					}
+					
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_sandking/sandking_sandstorm_cloud.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"Target"			"CASTER"
+						"ControlPoints"
+						{
+							"01"			"%sand_storm_radius 1 1"
+						}
+					}
+				}
 			}
 		}
 	}
@@ -34743,13 +35034,6 @@
 				"Target"		"TARGET"
 			}
 	
-			// Cosmetic modifier
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_viper_strike_statuseffect_datadriven"
-				"Target"		"TARGET"
-			}
-	
 			// Slow Part
 			"ApplyModifier"
 			{
@@ -34786,8 +35070,17 @@
 				"IsDebuff"	"1"
 				"Duration"	"%duration"
 	
-				"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
-				"EffectAttachType"	"attach_hitloc"			
+				"StatusEffectName"		"particles/status_fx/status_effect_poison_viper.vpcf"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+						"EffectAttachType"	"attach_hitloc"	
+						"Target"			"TARGET"
+					}
+				}		
 	
 				"ThinkInterval"	"1.0"
 				"OnIntervalThink"
@@ -34804,15 +35097,6 @@
 						"Damage"		"%damage"
 					}
 				}
-			}
-	
-			// This modifier is cosmetic only
-			"modifier_viper_strike_statuseffect_datadriven"
-			{
-				"IsHidden"	"1"
-				"Duration"	"%duration"
-	
-				"StatusEffectName"		"particles/status_fx/status_effect_poison_viper.vpcf"
 			}
 	
 			"modifier_viper_strike_slow_datadriven"
