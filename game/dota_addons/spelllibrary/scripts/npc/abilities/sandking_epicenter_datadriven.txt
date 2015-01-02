@@ -73,7 +73,62 @@
 			"var_type"			"FIELD_FLOAT"
 			"epicenter_cooldown_scepter"	"120.0 100.0 80.0"
 		}
-		
+		// radius of each pulse
+		"09"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"epicenter_damage_interval"		"0.5"
+		}
+		"10"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_pulse_01_radius"		"275"
+		}
+		"11"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_pulse_02_radius"		"325"
+		}
+		"12"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_pulse_03_radius"		"375"
+		}
+		"13"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_pulse_04_radius"		"425"
+		}
+		"14"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_pulse_05_radius"		"475"
+		}
+		"15"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_pulse_06_radius"		"525"
+		}
+		"16"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_pulse_07_radius"		"575"
+		}
+		"17"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_pulse_08_radius"		"650"
+		}
+		"18"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_pulse_09_radius"		"675"
+		}
+		"19"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"epicenter_pulse_10_radius"		"700"
+		}
 	}
 	
 	// Data driven
@@ -81,23 +136,9 @@
 	"precache"
 	{
 		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
+		"particle"				"particles/generic_gameplay/generic_stunned.vpcf"
 		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter.vpcf"
-		// Below this is childen particles
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_ring.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_pulse.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_wave_1.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_wave_2.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_wave_dust.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_glow.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_cloud.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_light.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_liquid.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_glow_b1.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_glow_b2.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_gnd_hit.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_dust.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_glow_b3.vpcf"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_dust.vpcf"
+		"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell.vpcf"
 	}
 		
 		
@@ -269,6 +310,16 @@
 		{
 			"IsDebuff"			"1"
 			"Duration"			"%epicenter_slow_duration_tooltip"
+			
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+					"EffectAttachType"	"follow_overhead"
+					"Target"			"TARGET"
+				}
+			}
 		
 			"Properties"
 			{
@@ -294,7 +345,7 @@
 					"Target"
 					{
 						"Center"	"CASTER"
-						"Radius"	"275"
+						"Radius"	"%epicenter_pulse_01_radius"
 						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -324,7 +375,7 @@
 					"EffectAttachType"	"start_at_customorigin"
 					"ControlPoints"
 					{
-						"01"			"275 275 275"
+						"01"			"%epicenter_pulse_01_radius %epicenter_pulse_01_radius %epicenter_pulse_01_radius"
 					}
 				}
 			}
@@ -346,7 +397,7 @@
 					"Target"
 					{
 						"Center"	"CASTER"
-						"Radius"	"325"
+						"Radius"	"%epicenter_pulse_02_radius"
 						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -376,7 +427,7 @@
 					"EffectAttachType"	"start_at_customorigin"
 					"ControlPoints"
 					{
-						"01"			"325 325 325"
+						"01"			"%epicenter_pulse_02_radius %epicenter_pulse_02_radius %epicenter_pulse_02_radius"
 					}
 				}
 			}
@@ -398,7 +449,7 @@
 					"Target"
 					{
 						"Center"	"CASTER"
-						"Radius"	"375"
+						"Radius"	"%epicenter_pulse_03_radius"
 						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -428,7 +479,7 @@
 					"EffectAttachType"	"start_at_customorigin"
 					"ControlPoints"
 					{
-						"01"			"375 375 375"
+						"01"			"%epicenter_pulse_03_radius %epicenter_pulse_03_radius %epicenter_pulse_03_radius"
 					}
 				}
 			}
@@ -450,7 +501,7 @@
 					"Target"
 					{
 						"Center"	"CASTER"
-						"Radius"	"425"
+						"Radius"	"%epicenter_pulse_04_radius"
 						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -480,7 +531,7 @@
 					"EffectAttachType"	"start_at_customorigin"
 					"ControlPoints"
 					{
-						"01"			"425 425 425"
+						"01"			"%epicenter_pulse_04_radius %epicenter_pulse_04_radius %epicenter_pulse_04_radius"
 					}
 				}
 			}
@@ -502,7 +553,7 @@
 					"Target"
 					{
 						"Center"	"CASTER"
-						"Radius"	"475"
+						"Radius"	"%epicenter_pulse_05_radius"
 						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -532,7 +583,7 @@
 					"EffectAttachType"	"start_at_customorigin"
 					"ControlPoints"
 					{
-						"01"			"475 475 475"
+						"01"			"%epicenter_pulse_05_radius %epicenter_pulse_05_radius %epicenter_pulse_05_radius"
 					}
 				}
 			}
@@ -554,7 +605,7 @@
 					"Target"
 					{
 						"Center"	"CASTER"
-						"Radius"	"525"
+						"Radius"	"%epicenter_pulse_06_radius"
 						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -584,7 +635,7 @@
 					"EffectAttachType"	"start_at_customorigin"
 					"ControlPoints"
 					{
-						"01"			"525 525 525"
+						"01"			"%epicenter_pulse_06_radius %epicenter_pulse_06_radius %epicenter_pulse_06_radius"
 					}
 				}
 			}
@@ -606,7 +657,7 @@
 					"Target"
 					{
 						"Center"	"CASTER"
-						"Radius"	"575"
+						"Radius"	"%epicenter_pulse_07_radius"
 						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -636,7 +687,7 @@
 					"EffectAttachType"	"start_at_customorigin"
 					"ControlPoints"
 					{
-						"01"			"575 575 575"
+						"01"			"%epicenter_pulse_07_radius %epicenter_pulse_07_radius %epicenter_pulse_07_radius"
 					}
 				}
 			}
@@ -658,7 +709,7 @@
 					"Target"
 					{
 						"Center"	"CASTER"
-						"Radius"	"650"
+						"Radius"	"%epicenter_pulse_08_radius"
 						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -688,7 +739,7 @@
 					"EffectAttachType"	"start_at_customorigin"
 					"ControlPoints"
 					{
-						"01"			"650 650 650"
+						"01"			"%epicenter_pulse_08_radius %epicenter_pulse_08_radius %epicenter_pulse_08_radius"
 					}
 				}
 			}
@@ -710,7 +761,7 @@
 					"Target"
 					{
 						"Center"	"CASTER"
-						"Radius"	"675"
+						"Radius"	"%epicenter_pulse_09_radius"
 						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -740,7 +791,7 @@
 					"EffectAttachType"	"start_at_customorigin"
 					"ControlPoints"
 					{
-						"01"			"675 675 675"
+						"01"			"%epicenter_pulse_09_radius %epicenter_pulse_09_radius %epicenter_pulse_09_radius"
 					}
 				}
 			}
@@ -762,7 +813,7 @@
 					"Target"
 					{
 						"Center"	"CASTER"
-						"Radius"	"700"
+						"Radius"	"%epicenter_pulse_10_radius"
 						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -792,7 +843,7 @@
 					"EffectAttachType"	"start_at_customorigin"
 					"ControlPoints"
 					{
-						"01"			"700 700 700"
+						"01"			"%epicenter_pulse_10_radius %epicenter_pulse_10_radius %epicenter_pulse_10_radius"
 					}
 				}
 			}
