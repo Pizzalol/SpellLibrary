@@ -1,3 +1,6 @@
+// Rewrite of the Dragon Knight Dragon Tail
+// Author: chrislotix
+// Date: 02.01.2015.
 "dragon_knight_dragon_tail_datadriven"
 {
 	// General
@@ -10,6 +13,14 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"dragon_knight_dragon_tail"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
+		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -43,5 +54,34 @@
 			"dragon_cast_range"			"400"
 		}
 	}
+	"OnSpellStart"
+	{
+		"Damage"
+		{
+			"Target"	"TARGET"
+			"Type"		"DOTA_TYPE_MAGICAL"
+			"Damage"	"%AbilityDamage"
+		}
+
+		"Stun"
+		{
+			"Target"	"TARGET"
+			"Duration"	"%stun_duration"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf"
+			"Target"		"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_DragonKnight.DragonTail.Target"
+			"Target"		"TARGET"
+		}
+
+	}
+
 }
 

@@ -1,3 +1,7 @@
+// Rewrite of the Dragon Knight Breathe Fire
+// Author: chrislotix
+// Date: 02.01.2015.
+
 "dragon_knight_breathe_fire_datadriven"
 {
 	// General
