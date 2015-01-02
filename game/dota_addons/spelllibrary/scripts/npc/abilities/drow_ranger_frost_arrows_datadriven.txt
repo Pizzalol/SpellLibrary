@@ -2,11 +2,12 @@
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"drow_ranger_frost_arrows"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -46,5 +47,80 @@
 			"frost_arrows_creep_duration"	"7.0"
 		}
 	}
-}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
+		"particle"				"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
+		"particle"				"particles/generic_gameplay/generic_slowed_cold.vpcf"
+	}
+	
+	"Modifiers"
+	{
+		"modifier_frost_arrows_caster_datadriven"
+		{
+			"Passive"               		"1"
+			"IsHidden"						"1"
+			"IsPurgable"					"0"
+			
+			"Orb"
+			{
+				"Priority"					"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"			"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
+				"CastAttack"				"1"
+			}
 
+			"OnOrbFire"
+			{
+				"SpendMana"
+				{
+					"Mana"					"%AbilityManaCost"
+				}
+				"FireSound"
+				{
+					"EffectName"			"Hero_DrowRanger.FrostArrows"
+					"Target"				"CASTER"
+				}
+			}
+
+			"OnOrbImpact"
+			{
+				"ApplyModifier"
+				{
+					"Target"
+					{
+						"Center"			"TARGET"
+						"Type"				"DOTA_UNIT_TARGET_BASIC"
+					}
+					"ModifierName"			"modifier_frost_arrows_slow_datadriven"
+					"Duration"				"%frost_arrows_creep_duration"
+				}
+				
+				"ApplyModifier"
+				{
+					"Target"
+					{
+						"Center"			"TARGET"
+						"Type"				"DOTA_UNIT_TARGET_HERO"
+					}
+					"ModifierName"			"modifier_frost_arrows_slow_datadriven"
+					"Duration"				"%frost_arrows_hero_duration"
+				}
+			}
+		}
+		
+		"modifier_frost_arrows_slow_datadriven"
+		{
+			"IsHidden"						"0"
+		
+			"EffectName"					"particles/generic_gameplay/generic_slowed_cold.vpcf"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%frost_arrows_movement_speed"
+			}
+		}
+	}
+}
