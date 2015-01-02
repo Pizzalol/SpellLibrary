@@ -1,6 +1,7 @@
 // Rewrite of the Dragon Knight Dragon Tail
 // Author: chrislotix
 // Date: 02.01.2015.
+// NOTE: the particle has probably bad attach points
 "dragon_knight_dragon_tail_datadriven"
 {
 	// General
