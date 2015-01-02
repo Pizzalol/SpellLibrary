@@ -1,3 +1,7 @@
+// Rewrite of the Pudge Dismember ability
+// Author: Pizzalol
+// Date: 01.01.2015.
+// NOTE: Temporary particle
 "pudge_meat_hook_datadriven"
 {
 	// General
@@ -16,6 +20,9 @@
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
 		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
 		"particle"			"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook_hook.vpcf"
+		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
+		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf"
 	}
 	
 	// Casting
@@ -64,6 +71,11 @@
 			"var_type"			"FIELD_FLOAT"
 			"vision_duration"	"4.0 4.0 4.0 4.0"
 		}
+		"06"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"caster_duration"	"0.3 0.37 0.46 0.53"
+		}
 	}
 
 	"OnSpellStart"
@@ -87,9 +99,16 @@
 
 		"ApplyModifier"
 		{
-			"ModifierName"	"modifier_hook_test"
+			"ModifierName"	"modifier_meat_hook_caster_datadriven"
 			"Target"		"CASTER"
 		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_meat_hook_phased_datadriven"
+			"Target"		"CASTER"
+		}
+
 	}
 
 	"OnProjectileHitUnit"
@@ -101,17 +120,59 @@
 			"Function"		"MeatHook"
 			"speed"			"%hook_speed"
 		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_meat_hook_target_datadriven"
+			"Target"		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"		"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Pudge.AttackHookImpact"
+			"Target"		"TARGET"
+		}
 	}
 
 
 	"Modifiers"
 	{
-		"modifier_hook_test"
-		{	
+		"modifier_meat_hook_phased_datadriven"
+		{
+			"IsHidden"	"1"	
 			"Duration"	"0.1"
 			"States"
 			{
 				"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_meat_hook_caster_datadriven"
+		{
+			"IsHidden"	"1"
+			"Duration"	"%caster_duration"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_meat_hook_target_datadriven"
+		{
+			"IsDebuff"				"1"
+			"OverrideAnimation"		"ACT_DOTA_DISABLED"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
 	}

@@ -10,6 +10,7 @@ function MeatHook( keys )
 	local casterLocation = caster:GetAbsOrigin()
 	local targetLocation = target:GetAbsOrigin() 
 	local distance = (targetLocation - casterLocation):Length2D()
+	local meat_hook_modifier = "modifier_meat_hook_target_datadriven"
 
 	if target:GetTeam() ~= caster:GetTeam() then
 		local damageTable = {}
@@ -33,6 +34,7 @@ function MeatHook( keys )
 			return 0.03
 		else
 			FindClearSpaceForUnit(target, targetLocation, false)
+			target:RemoveModifierByName(meat_hook_modifier)
 		end
 
 		end)
