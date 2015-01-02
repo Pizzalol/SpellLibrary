@@ -12,6 +12,14 @@
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"dragon_knight_breathe_fire"
 
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
+		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+	}
+
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -54,6 +62,40 @@
 			"var_type"				"FIELD_INTEGER"
 			"speed"					"1050"
 		}
+				
 	}
+	
+	"OnSpellStart"
+	{
+		"LinearProjectile"
+		{
+			"Target" "POINT"
+			"EffectName" "particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+			"MoveSpeed" "%speed"
+			"StartRadius" "%start_radius"
+			"StartPosition" "attach_origin"
+			"EndRadius" "%end_radius"
+			"FixedDistance" "%range"
+			"TargetTeams" "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"TargetTypes" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNITY_TARGET_MECHANICAL"
+			"TargetFlags" "DOTA_UNIT_TARGET_FLAG_NONE"
+			"HasFrontalCone" "1"
+			"ProvidesVision" "0"
+		}
+		"FireSound"
+		{
+			"EffectName" "Hero_DragonKnight.BreathFire"
+			"Target" "CASTER"
+		}
+	}
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit" "0"
+			"Damage"
+			{
+				"Target" "TARGET"
+				"Type" "DAMAGE_TYPE_MAGICAL"
+				"Damage" "%AbilityDamage"
+			}
+		}
 }
-
