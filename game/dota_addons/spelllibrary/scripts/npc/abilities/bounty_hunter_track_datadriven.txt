@@ -1,3 +1,7 @@
+// Rewrite of the Bounty Hunter Track ability
+// Author: Pizzalol/chrislotix
+// Date: 02.01.2015.
+// NOTE: Doesnt have the smokey trail particle
 "bounty_hunter_track_datadriven"
 {
 	// General
@@ -7,6 +11,17 @@
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"bounty_hunter_track"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+		"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track.vpcf"
+		"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
+		"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"  
+	}
 	
 	// Unit Targeting
 	//-------------------------------------------------------------------------------------------------------------
@@ -63,6 +78,94 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"gold_steal"			"0.2 0.3 0.4"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_track_aura_datadriven"
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_track_datadriven"
+			"Target"		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_cast.vpcf"
+   			"EffectAttachType"	"start_at_customorigin"
+
+			"ControlPointEntities"
+			{
+			    "CASTER" "attach_attack1"
+			    "TARGET" "attach_hitloc"
+			}
+
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_BountyHunter.Target"
+			"Target"		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_track_aura_datadriven"
+		{
+			"Duration"	"%duration"
+			"IsDebuff"	"1"
+
+			"EffectName"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"Aura" 			"modifier_track_speed_datadriven"
+			"Aura_Radius" 	"%aura_radius"
+			"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"Aura_ApplyToCaster"	"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_track_datadriven"
+		{
+			"Duration"	"%duration"
+			"IsHidden"	"1"
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_bounty_hunter/track.lua"
+					"Function"		"Track"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"TargetFlags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+				}
+			}
+		}
+
+		"modifier_track_speed_datadriven"
+		{
+			"EffectName"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_move_speed_pct"
+			}
 		}
 	}
 }

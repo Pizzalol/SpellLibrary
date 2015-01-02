@@ -15,6 +15,7 @@
 	{
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
 		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+		"particle"			"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
 	}
 	
 	// Casting
@@ -70,18 +71,48 @@
 		"LinearProjectile"
 		{
 			"Target"      	"POINT"
-		    "EffectName"  	"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+		    "EffectName"  	"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
 		    "MoveSpeed"   	"%hook_speed"
 		    "StartRadius"   "%hook_width"
-		    "StartPosition" "attach_attack1"
+		    "StartPosition" "attach_origin"
 		    "EndRadius"     "%hook_width"
 		    "FixedDistance" "%hook_distance"
-		    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
-		    "HasFrontalCone"    "1"
+		    "HasFrontalCone"    "0"
 		    "ProvidesVision" "1"
 		    "VisionRadius"	"500"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_hook_test"
+			"Target"		"CASTER"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{	
+		"DeleteOnHit"	"1"
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_pudge/meat_hook.lua"
+			"Function"		"MeatHook"
+			"speed"			"%hook_speed"
+		}
+	}
+
+
+	"Modifiers"
+	{
+		"modifier_hook_test"
+		{	
+			"Duration"	"0.1"
+			"States"
+			{
+				"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }

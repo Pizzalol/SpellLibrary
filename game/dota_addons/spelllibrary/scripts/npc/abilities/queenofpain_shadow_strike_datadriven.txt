@@ -215,7 +215,7 @@
 			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 			"EffectName"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
-			"EffectAttachType"	"attach_hitloc"
+			"EffectAttachType"	"attach_spine"
 
 			"ThinkInterval"	"3.0"
 
