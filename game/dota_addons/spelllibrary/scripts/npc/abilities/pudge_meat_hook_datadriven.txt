@@ -134,6 +134,18 @@
 			"Target"		"TARGET"
 		}
 
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+
+			"ControlPointEntities"
+			{
+				"CASTER"	"follow_origin"
+				"TARGET"	"follow_origin"
+			}
+		}
+
 		"FireSound"
 		{
 			"EffectName"	"Hero_Pudge.AttackHookImpact"

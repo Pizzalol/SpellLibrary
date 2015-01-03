@@ -5978,7 +5978,10 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityTextureName"			"crystal_maiden_brilliance_aura"
 		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -5986,24 +5989,60 @@
 				"var_type"			"FIELD_FLOAT"
 				"mana_regen"		"1.0 1.5 2.0 2.5"
 			}
+			// Extra variables
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"global_radius"		"9000"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"modifier_brilliance_aura_caster_datadriven"
+			{
+				"Passive"				"1"
+				"IsPurgable"			"0"
+				"IsHidden"				"1"
+				"Aura"					"modifier_brilliance_aura_effect_datadriven"
+				"Aura_Radius"			"%global_radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+				}
+			}
+			
+			"modifier_brilliance_aura_effect_datadriven"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+				}
+			}
 		}
 	}
-	
 	//End of file crystal_maiden_brilliance_aura_datadriven.txt
 
 
 	//Start of file crystal_maiden_crystal_nova_datadriven.txt
+	// Note: Still need to implement script to provide extra vision for few seconds at the cast point
 	"crystal_maiden_crystal_nova_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"crystal_maiden_crystal_nova"
+		"AOERadius"						"%radius"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -6052,8 +6091,81 @@
 				"vision_duration"	"6.0"
 			}
 		}
-	}	
-	
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+			"particle"				"particles/units/heroes/hero_crystalmaiden/maiden_crystal_nova.vpcf"
+			"particle"				"particles/generic_gameplay/generic_slowed_cold.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"TargetPoint"			"POINT"
+				"EffectName"			"particles/units/heroes/hero_crystalmaiden/maiden_crystal_nova.vpcf"
+				"EffectAttachType"		"world_origin"
+				"ControlPoints"
+				{
+					"01"				"%radius 2 %radius*2"
+				}
+			}
+			
+			"FireSound"
+			{
+				"EffectName"			"Hero_Crystal.CrystalNova"
+				"Target"				"CASTER"
+			}
+		
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"		"POINT"
+					"Radius"		"%radius"
+					"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+					"Type"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+					"Flag"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+				
+				"Action"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Damage"	"%AbilityDamage"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+					}
+					
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"modifier_crystal_nova_slow_datadriven"
+					}
+				}
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_crystal_nova_slow_datadriven"
+			{
+				"Duration"				"%duration"
+				"EffectName"			"particles/generic_gameplay/generic_slowed_cold.vpcf"
+				"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
+				"StatusEffectPriority"	"10"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attackspeed_slow"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_slow"
+				}
+			}
+		}
+	}
 	//End of file crystal_maiden_crystal_nova_datadriven.txt
 
 
@@ -6225,9 +6337,137 @@
 				"var_type"			"FIELD_FLOAT"
 				"damage"			"100"
 			}
+			// Extra variable
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"		"0.1"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_interval"	"0.5"
+			}
 		}
-	}	
-	
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+			"particle"				"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+			"particle"				"particles/units/heroes/hero_crystalmaiden/maiden_frostbite.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"particles/units/heroes/hero_crystalmaiden/maiden_frostbite.vpcf"
+				"MoveSpeed"			"2000"
+			}
+		
+			"Stun"
+			{
+				"Target"			"TARGET"
+				"Duration"			"%stun_duration"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"		"TARGET"
+					"Type"			"DOTA_UNIT_TARGET_HERO"
+				}
+				"ModifierName"		"modifier_frost_bite_root_datadriven"
+				"Duration"			"%duration"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"		"TARGET"
+					"Type"			"DOTA_UNIT_TARGET_HERO"
+				}
+				"ModifierName"		"modifier_frost_bite_damage_datadriven"
+				"Duration"			"%duration - %damage_interval"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"		"TARGET"
+					"Type"			"DOTA_UNIT_TARGET_BASIC"
+				}
+				"ModifierName"		"modifier_frost_bite_root_datadriven"
+				"Duration"			"%creep_duration"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"		"TARGET"
+					"Type"			"DOTA_UNIT_TARGET_BASIC"
+				}
+				"ModifierName"		"modifier_frost_bite_damage_datadriven"
+				"Duration"			"%creep_duration - %damage_interval"
+			}
+			
+			"FireSound"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"hero_Crystal.frostbite"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_frost_bite_root_datadriven"
+			{
+				"IsPurgable"		"1"
+			
+				"EffectName"		"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+			
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+				}
+			}
+			
+			"modifier_frost_bite_damage_datadriven"
+			{
+				"IsPurgable"		"1"
+				"IsHidden"		"1"
+				
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Damage"	"%damage_per_second_tooltip / 2"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+					}
+				}
+				
+				"ThinkInterval"		"%damage_interval"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Damage"	"%damage_per_second_tooltip / 2"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+					}
+				}
+			}
+		}
+	}
 	//End of file crystal_maiden_frostbite_datadriven.txt
 
 
@@ -7713,6 +7953,7 @@
 	// Rewrite of the Dragon Knight Dragon Tail
 	// Author: chrislotix
 	// Date: 02.01.2015.
+	// NOTE: the particle has probably bad attach points
 	"dragon_knight_dragon_tail_datadriven"
 	{
 		// General
@@ -7928,11 +8169,12 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"drow_ranger_frost_arrows"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -7972,8 +8214,83 @@
 				"frost_arrows_creep_duration"	"7.0"
 			}
 		}
-	}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
+			"particle"				"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
+			"particle"				"particles/generic_gameplay/generic_slowed_cold.vpcf"
+		}
+		
+		"Modifiers"
+		{
+			"modifier_frost_arrows_caster_datadriven"
+			{
+				"Passive"               		"1"
+				"IsHidden"						"1"
+				"IsPurgable"					"0"
+				
+				"Orb"
+				{
+					"Priority"					"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"			"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
+					"CastAttack"				"1"
+				}
 	
+				"OnOrbFire"
+				{
+					"SpendMana"
+					{
+						"Mana"					"%AbilityManaCost"
+					}
+					"FireSound"
+					{
+						"EffectName"			"Hero_DrowRanger.FrostArrows"
+						"Target"				"CASTER"
+					}
+				}
+	
+				"OnOrbImpact"
+				{
+					"ApplyModifier"
+					{
+						"Target"
+						{
+							"Center"			"TARGET"
+							"Type"				"DOTA_UNIT_TARGET_BASIC"
+						}
+						"ModifierName"			"modifier_frost_arrows_slow_datadriven"
+						"Duration"				"%frost_arrows_creep_duration"
+					}
+					
+					"ApplyModifier"
+					{
+						"Target"
+						{
+							"Center"			"TARGET"
+							"Type"				"DOTA_UNIT_TARGET_HERO"
+						}
+						"ModifierName"			"modifier_frost_arrows_slow_datadriven"
+						"Duration"				"%frost_arrows_hero_duration"
+					}
+				}
+			}
+			
+			"modifier_frost_arrows_slow_datadriven"
+			{
+				"IsHidden"						"0"
+			
+				"EffectName"					"particles/generic_gameplay/generic_slowed_cold.vpcf"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%frost_arrows_movement_speed"
+				}
+			}
+		}
+	}
 	//End of file drow_ranger_frost_arrows_datadriven.txt
 
 
@@ -8095,7 +8412,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
@@ -8154,8 +8471,77 @@
 				"knockback_height"		"0"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
+			"particle"				"particles/units/heroes/hero_drow/drow_silence_wave.vpcf"
+			"particle"				"particles/generic_gameplay/generic_silence.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+				"Target"			"POINT"
+				"EffectName"		"particles/units/heroes/hero_drow/drow_silence_wave.vpcf"
+				"MoveSpeed"			"%wave_speed"
+				"StartRadius"		"%wave_width"
+				"StartPosition"		"attach_attack1"
+				"EndRadius"			"%wave_width"
+				"FixedDistance"		"%wave_range_tooltip"
+				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				"TargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
+				"HasFrontalCone"	"0"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"		"Hero_DrowRanger.Silence"
+				"Target"			"CASTER"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"0"
+		
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_wave_of_silence_debuff_datadriven"
+				"Target"			"TARGET"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_drow/wave_of_silence.lua"
+				"Function"			"modifier_wave_of_silence_knockback"
+				"height"			"%knockback_height"
+				"duration"			"%knockback_duration"
+				"distance"			"%knockback_distance_max"
+				"range"				"%wave_range_tooltip"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_wave_of_silence_debuff_datadriven"
+			{
+				"Duration"			"%silence_duration"
+				
+				"EffectName"			"particles/generic_gameplay/generic_silence.vpcf"
+				"EffectAttachType"		"follow_overhead"
+				
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
-	
 	//End of file drow_ranger_wave_of_silence_datadriven.txt
 
 
@@ -23913,6 +24299,10 @@
 
 
 	//Start of file pudge_meat_hook_datadriven.txt
+	// Rewrite of the Pudge Dismember ability
+	// Author: Pizzalol
+	// Date: 01.01.2015.
+	// NOTE: Temporary particle
 	"pudge_meat_hook_datadriven"
 	{
 		// General
@@ -24043,6 +24433,18 @@
 				"EffectName"	"particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf"
 				"EffectAttachType"	"follow_origin"
 				"Target"		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+	
+				"ControlPointEntities"
+				{
+					"CASTER"	"follow_origin"
+					"TARGET"	"follow_origin"
+				}
 			}
 	
 			"FireSound"
@@ -27441,7 +27843,62 @@
 				"var_type"			"FIELD_FLOAT"
 				"epicenter_cooldown_scepter"	"120.0 100.0 80.0"
 			}
-			
+			// radius of each pulse
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"epicenter_damage_interval"		"0.5"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_pulse_01_radius"		"275"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_pulse_02_radius"		"325"
+			}
+			"12"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_pulse_03_radius"		"375"
+			}
+			"13"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_pulse_04_radius"		"425"
+			}
+			"14"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_pulse_05_radius"		"475"
+			}
+			"15"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_pulse_06_radius"		"525"
+			}
+			"16"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_pulse_07_radius"		"575"
+			}
+			"17"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_pulse_08_radius"		"650"
+			}
+			"18"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_pulse_09_radius"		"675"
+			}
+			"19"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_pulse_10_radius"		"700"
+			}
 		}
 		
 		// Data driven
@@ -27449,23 +27906,9 @@
 		"precache"
 		{
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
+			"particle"				"particles/generic_gameplay/generic_stunned.vpcf"
 			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter.vpcf"
-			// Below this is childen particles
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_ring.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_pulse.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_wave_1.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_wave_2.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_wave_dust.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_glow.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_cloud.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_light.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_liquid.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_glow_b1.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_glow_b2.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_gnd_hit.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_dust.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_glow_b3.vpcf"
-			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell_dust.vpcf"
+			"particle"				"particles/units/heroes/hero_sandking/sandking_epicenter_tell.vpcf"
 		}
 			
 			
@@ -27637,6 +28080,16 @@
 			{
 				"IsDebuff"			"1"
 				"Duration"			"%epicenter_slow_duration_tooltip"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"TARGET"
+					}
+				}
 			
 				"Properties"
 				{
@@ -27662,7 +28115,7 @@
 						"Target"
 						{
 							"Center"	"CASTER"
-							"Radius"	"275"
+							"Radius"	"%epicenter_pulse_01_radius"
 							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -27692,7 +28145,7 @@
 						"EffectAttachType"	"start_at_customorigin"
 						"ControlPoints"
 						{
-							"01"			"275 275 275"
+							"01"			"%epicenter_pulse_01_radius %epicenter_pulse_01_radius %epicenter_pulse_01_radius"
 						}
 					}
 				}
@@ -27714,7 +28167,7 @@
 						"Target"
 						{
 							"Center"	"CASTER"
-							"Radius"	"325"
+							"Radius"	"%epicenter_pulse_02_radius"
 							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -27744,7 +28197,7 @@
 						"EffectAttachType"	"start_at_customorigin"
 						"ControlPoints"
 						{
-							"01"			"325 325 325"
+							"01"			"%epicenter_pulse_02_radius %epicenter_pulse_02_radius %epicenter_pulse_02_radius"
 						}
 					}
 				}
@@ -27766,7 +28219,7 @@
 						"Target"
 						{
 							"Center"	"CASTER"
-							"Radius"	"375"
+							"Radius"	"%epicenter_pulse_03_radius"
 							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -27796,7 +28249,7 @@
 						"EffectAttachType"	"start_at_customorigin"
 						"ControlPoints"
 						{
-							"01"			"375 375 375"
+							"01"			"%epicenter_pulse_03_radius %epicenter_pulse_03_radius %epicenter_pulse_03_radius"
 						}
 					}
 				}
@@ -27818,7 +28271,7 @@
 						"Target"
 						{
 							"Center"	"CASTER"
-							"Radius"	"425"
+							"Radius"	"%epicenter_pulse_04_radius"
 							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -27848,7 +28301,7 @@
 						"EffectAttachType"	"start_at_customorigin"
 						"ControlPoints"
 						{
-							"01"			"425 425 425"
+							"01"			"%epicenter_pulse_04_radius %epicenter_pulse_04_radius %epicenter_pulse_04_radius"
 						}
 					}
 				}
@@ -27870,7 +28323,7 @@
 						"Target"
 						{
 							"Center"	"CASTER"
-							"Radius"	"475"
+							"Radius"	"%epicenter_pulse_05_radius"
 							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -27900,7 +28353,7 @@
 						"EffectAttachType"	"start_at_customorigin"
 						"ControlPoints"
 						{
-							"01"			"475 475 475"
+							"01"			"%epicenter_pulse_05_radius %epicenter_pulse_05_radius %epicenter_pulse_05_radius"
 						}
 					}
 				}
@@ -27922,7 +28375,7 @@
 						"Target"
 						{
 							"Center"	"CASTER"
-							"Radius"	"525"
+							"Radius"	"%epicenter_pulse_06_radius"
 							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -27952,7 +28405,7 @@
 						"EffectAttachType"	"start_at_customorigin"
 						"ControlPoints"
 						{
-							"01"			"525 525 525"
+							"01"			"%epicenter_pulse_06_radius %epicenter_pulse_06_radius %epicenter_pulse_06_radius"
 						}
 					}
 				}
@@ -27974,7 +28427,7 @@
 						"Target"
 						{
 							"Center"	"CASTER"
-							"Radius"	"575"
+							"Radius"	"%epicenter_pulse_07_radius"
 							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -28004,7 +28457,7 @@
 						"EffectAttachType"	"start_at_customorigin"
 						"ControlPoints"
 						{
-							"01"			"575 575 575"
+							"01"			"%epicenter_pulse_07_radius %epicenter_pulse_07_radius %epicenter_pulse_07_radius"
 						}
 					}
 				}
@@ -28026,7 +28479,7 @@
 						"Target"
 						{
 							"Center"	"CASTER"
-							"Radius"	"650"
+							"Radius"	"%epicenter_pulse_08_radius"
 							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -28056,7 +28509,7 @@
 						"EffectAttachType"	"start_at_customorigin"
 						"ControlPoints"
 						{
-							"01"			"650 650 650"
+							"01"			"%epicenter_pulse_08_radius %epicenter_pulse_08_radius %epicenter_pulse_08_radius"
 						}
 					}
 				}
@@ -28078,7 +28531,7 @@
 						"Target"
 						{
 							"Center"	"CASTER"
-							"Radius"	"675"
+							"Radius"	"%epicenter_pulse_09_radius"
 							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -28108,7 +28561,7 @@
 						"EffectAttachType"	"start_at_customorigin"
 						"ControlPoints"
 						{
-							"01"			"675 675 675"
+							"01"			"%epicenter_pulse_09_radius %epicenter_pulse_09_radius %epicenter_pulse_09_radius"
 						}
 					}
 				}
@@ -28130,7 +28583,7 @@
 						"Target"
 						{
 							"Center"	"CASTER"
-							"Radius"	"700"
+							"Radius"	"%epicenter_pulse_10_radius"
 							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -28160,7 +28613,7 @@
 						"EffectAttachType"	"start_at_customorigin"
 						"ControlPoints"
 						{
-							"01"			"700 700 700"
+							"01"			"%epicenter_pulse_10_radius %epicenter_pulse_10_radius %epicenter_pulse_10_radius"
 						}
 					}
 				}
