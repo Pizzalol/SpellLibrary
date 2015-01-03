@@ -1,6 +1,6 @@
 --[[
 	Author: kritth
-	Date: 1.1.2015.
+	Date: 3.1.2015.
 	Order the explosion in clockwise direction
 ]]
 function freezing_field_order_explosion( keys )
@@ -23,9 +23,8 @@ end
 
 --[[
 	Author: kritth
-	Date: 1.1.2015.
+	Date: 3.1.2015.
 	Apply the explosion
-	NOTE: Need to fire sound at impact location insteads of caster
 ]]
 function freezing_field_explode( keys )
 	local ability = keys.ability
@@ -37,6 +36,7 @@ function freezing_field_explode( keys )
 	local radius = ability:GetLevelSpecialValueFor( "explosion_radius", ( ability:GetLevel() - 1 ) )
 	local directionConstraint = keys.section
 	local modifierName = "modifier_freezing_field_debuff_datadriven"
+	local refModifierName = "modifier_freezing_field_ref_point_datadriven"
 	local particleName = "particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
 	local soundEventName = "hero_Crystal.freezingField.explosion"
 	
@@ -91,6 +91,9 @@ function freezing_field_explode( keys )
 	ParticleManager:SetParticleControl( fxIndex, 0, attackPoint )
 	ParticleManager:ReleaseParticleIndex( fxIndex )
 	
-	-- Fire sound
-	StartSoundEvent( soundEventName, caster )
+	-- Fire sound at dummy
+	local dummy = CreateUnitByName( "npc_dummy_blank", attackPoint, false, caster, caster, caster:GetTeamNumber() )
+	ability:ApplyDataDrivenModifier( caster, dummy, refModifierName, {} )
+	StartSoundEvent( soundEventName, dummy )
+	Timers:CreateTimer( 0.1, function() dummy:Destroy() end )
 end
