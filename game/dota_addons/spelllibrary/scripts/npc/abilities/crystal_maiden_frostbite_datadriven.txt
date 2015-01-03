@@ -63,6 +63,134 @@
 			"var_type"			"FIELD_FLOAT"
 			"damage"			"100"
 		}
+		// Extra variable
+		"07"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"stun_duration"		"0.1"
+		}
+		"08"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"damage_interval"	"0.5"
+		}
 	}
-}	
-
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+		"particle"				"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+		"particle"				"particles/units/heroes/hero_crystalmaiden/maiden_frostbite.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"TrackingProjectile"
+		{
+			"Target"			"TARGET"
+			"EffectName"		"particles/units/heroes/hero_crystalmaiden/maiden_frostbite.vpcf"
+			"MoveSpeed"			"2000"
+		}
+	
+		"Stun"
+		{
+			"Target"			"TARGET"
+			"Duration"			"%stun_duration"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"
+			{
+				"Center"		"TARGET"
+				"Type"			"DOTA_UNIT_TARGET_HERO"
+			}
+			"ModifierName"		"modifier_frost_bite_root_datadriven"
+			"Duration"			"%duration"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"
+			{
+				"Center"		"TARGET"
+				"Type"			"DOTA_UNIT_TARGET_HERO"
+			}
+			"ModifierName"		"modifier_frost_bite_damage_datadriven"
+			"Duration"			"%duration - %damage_interval"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"
+			{
+				"Center"		"TARGET"
+				"Type"			"DOTA_UNIT_TARGET_BASIC"
+			}
+			"ModifierName"		"modifier_frost_bite_root_datadriven"
+			"Duration"			"%creep_duration"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"
+			{
+				"Center"		"TARGET"
+				"Type"			"DOTA_UNIT_TARGET_BASIC"
+			}
+			"ModifierName"		"modifier_frost_bite_damage_datadriven"
+			"Duration"			"%creep_duration - %damage_interval"
+		}
+		
+		"FireSound"
+		{
+			"Target"			"TARGET"
+			"EffectName"		"hero_Crystal.frostbite"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_frost_bite_root_datadriven"
+		{
+			"IsPurgable"		"1"
+		
+			"EffectName"		"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+		
+			"States"
+			{
+				"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+			}
+		}
+		
+		"modifier_frost_bite_damage_datadriven"
+		{
+			"IsPurgable"		"1"
+			"IsHidden"		"1"
+			
+			"OnCreated"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Damage"	"%damage_per_second_tooltip / 2"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+				}
+			}
+			
+			"ThinkInterval"		"%damage_interval"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Damage"	"%damage_per_second_tooltip / 2"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+				}
+			}
+		}
+	}
+}
