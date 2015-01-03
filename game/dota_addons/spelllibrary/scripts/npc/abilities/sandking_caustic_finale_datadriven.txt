@@ -37,7 +37,7 @@
 	"precache"
 	{
 		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
-		"particle"				"particles/units/heroes/hero_sandking/sandking_caustic_finale_debuff.vpcf"
+		"particle"				"particles/units/heroes/hero_sandking/sandking_caustic_finale_explode.vpcf"
 	}
 	
 	"Modifiers"
@@ -49,16 +49,13 @@
 			"Passive"			"1"
 			"OnAttack"
 			{
-				// Keep this in data driven but it's not optimal, else just run script
 				"ApplyModifier"
 				{
 					"ModifierName"		"modifier_caustic_finale_debuff_datadriven"
 					"Target"
 					{
 						"Center"		"TARGET"
-						"Radius"		"1"
-						"Teams"  		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+						"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 					}
 				}
 			}
@@ -69,24 +66,18 @@
 			"IsDebuff"			"1"
 			"IsPurgable"		"0"
 			"Duration"			"%caustic_finale_duration"
-			"OnCreated"
+			
+			"OnDestroy"
 			{
-				"AttachEffect"
+				"RunScript"
 				{
-					"EffectName"		"particles/units/heroes/hero_sandking/sandking_caustic_finale_debuff.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"			"TARGET"
+					"ScriptFile"		"heroes/hero_sand_king/caustic_finale.lua"
+					"Function"			"caustic_finale_dead_effect"
 				}
 			}
 			
 			"OnDeath"
 			{
-				"FireSound"
-				{
-					"EffectName"		"Ability.SandKing_CausticFinale"
-					"Target"			"UNIT"
-				}
-			
 				"Damage"
 				{
 					"Type"				"DAMAGE_TYPE_MAGICAL"
@@ -103,4 +94,3 @@
 		}
 	}
 }
-
