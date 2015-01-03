@@ -1,0 +1,24 @@
+// Made by BMD
+"dummy_unit_datadriven"
+{
+	"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"BaseClass" "ability_datadriven"
+	"AbilityTextureName" "rubick_empty1"
+	"MaxLevel" "1"
+
+	"Modifiers"
+	{
+		"modifier_dummy_unit_datadriven"
+		{
+			"Passive" "1"
+			"IsHidden" "1"
+
+			"States"
+			{
+				"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}
