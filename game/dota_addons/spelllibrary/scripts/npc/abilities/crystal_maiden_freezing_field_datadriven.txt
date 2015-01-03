@@ -35,13 +35,13 @@
 		"01"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"radius"			"685 685 685"
+			"radius"			"835 835 835"
 		}
 	
 		"02"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"explosion_radius"	"250"
+			"explosion_radius"	"300"
 		}
 		"04"
 		{
@@ -160,11 +160,16 @@
 	{
 		"modifier_freezing_field_caster_datadriven"
 		{
-			"IsPurgable"		"0"
-			"IsHidden"			"0"
-			"OverrideAnimation"	"ACT_DOTA_IDLE"
+			"IsPurgable"			"0"
+			"IsHidden"				"0"
+			"OverrideAnimation"		"ACT_DOTA_IDLE"
 			
-			"Duration"			"%AbilityDuration"
+			"Aura"					"modifier_freezing_field_debuff_datadriven"
+			"Aura_Radius"			"%radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			
+			"Duration"				"%AbilityDuration"
 			
 			"OnCreated"
 			{
@@ -187,8 +192,8 @@
 		"modifier_freezing_field_northwest_thinker_datadriven"
 		{
 			"IsPurgable"		"0"
-			"IsHidden"			"0"
-			"ThinkInterval"		"0.4"
+			"IsHidden"			"1"
+			"ThinkInterval"		"%explosion_interval * 4"
 			
 			"Duration"			"%AbilityDuration"
 			
@@ -206,8 +211,8 @@
 		"modifier_freezing_field_northeast_thinker_datadriven"
 		{
 			"IsPurgable"		"0"
-			"IsHidden"			"0"
-			"ThinkInterval"		"0.4"
+			"IsHidden"			"1"
+			"ThinkInterval"		"%explosion_interval * 4"
 			
 			"Duration"			"%AbilityDuration"
 			
@@ -225,8 +230,8 @@
 		"modifier_freezing_field_southeast_thinker_datadriven"
 		{
 			"IsPurgable"		"0"
-			"IsHidden"			"0"
-			"ThinkInterval"		"0.4"
+			"IsHidden"			"1"
+			"ThinkInterval"		"%explosion_interval * 4"
 			
 			"Duration"			"%AbilityDuration"
 			
@@ -244,8 +249,8 @@
 		"modifier_freezing_field_southwest_thinker_datadriven"
 		{
 			"IsPurgable"		"0"
-			"IsHidden"			"0"
-			"ThinkInterval"		"0.4"
+			"IsHidden"			"1"
+			"ThinkInterval"		"%explosion_interval * 4"
 			
 			"Duration"			"%AbilityDuration"
 			
