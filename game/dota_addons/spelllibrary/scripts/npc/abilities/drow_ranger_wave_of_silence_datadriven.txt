@@ -68,6 +68,7 @@
 	{
 		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
 		"particle"				"particles/units/heroes/hero_drow/drow_silence_wave.vpcf"
+		"particle"				"particles/generic_gameplay/generic_silence.vpcf"
 	}
 	
 	"OnSpellStart"
@@ -120,6 +121,9 @@
 		"modifier_wave_of_silence_debuff_datadriven"
 		{
 			"Duration"			"%silence_duration"
+			
+			"EffectName"			"particles/generic_gameplay/generic_silence.vpcf"
+			"EffectAttachType"		"follow_overhead"
 			
 			"States"
 			{
