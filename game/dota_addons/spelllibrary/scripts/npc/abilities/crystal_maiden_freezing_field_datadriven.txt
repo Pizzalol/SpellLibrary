@@ -17,12 +17,12 @@
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"150 120 90"
+	"AbilityCooldown"				"0"//150 120 90"
 	"AbilityDuration"				"7.0"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"200 400 600"
+	"AbilityManaCost"				"0"//200 400 600"
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -94,5 +94,187 @@
 			"attack_slow_scepter"	"-50"
 		}
 	}
-}
 	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+		"particle"				"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
+		"particle"				"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
+		"particle"				"particles/generic_gameplay/generic_slowed_cold.vpcf"
+		"particle"				"particles/status_fx/status_effect_frost_lich.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_freezing_field_caster_datadriven"
+		}
+		
+		"FireSound"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"hero_Crystal.freezingField.wind"
+		}
+	}
+	
+	"OnChannelFinish"
+	{
+		"RemoveModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_freezing_field_caster_datadriven"
+		}
+		
+		// Remove 4 modifiers, one for each section
+		
+		"RemoveModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_freezing_field_northeast_thinker_datadriven"
+		}
+		
+		"RemoveModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_freezing_field_northwest_thinker_datadriven"
+		}
+		
+		"RemoveModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_freezing_field_southwest_thinker_datadriven"
+		}
+		
+		"RemoveModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_freezing_field_southeast_thinker_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_freezing_field_caster_datadriven"
+		{
+			"IsPurgable"		"0"
+			"IsHidden"			"0"
+			"OverrideAnimation"	"ACT_DOTA_IDLE"
+			
+			"Duration"			"%AbilityDuration"
+			
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"			"CASTER"
+					"EffectName"		"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"EffectRadius"		"%radius"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+					"Function"		"freezing_field_order_explosion"
+				}
+			}
+		}
+		
+		"modifier_freezing_field_northwest_thinker_datadriven"
+		{
+			"IsPurgable"		"0"
+			"IsHidden"			"0"
+			"ThinkInterval"		"0.4"
+			
+			"Duration"			"%AbilityDuration"
+			
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+					"Function"		"freezing_field_explode"
+					"section"		"0"
+				}
+			}
+		}
+		
+		"modifier_freezing_field_northeast_thinker_datadriven"
+		{
+			"IsPurgable"		"0"
+			"IsHidden"			"0"
+			"ThinkInterval"		"0.4"
+			
+			"Duration"			"%AbilityDuration"
+			
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+					"Function"		"freezing_field_explode"
+					"section"		"1"
+				}
+			}
+		}
+		
+		"modifier_freezing_field_southeast_thinker_datadriven"
+		{
+			"IsPurgable"		"0"
+			"IsHidden"			"0"
+			"ThinkInterval"		"0.4"
+			
+			"Duration"			"%AbilityDuration"
+			
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+					"Function"		"freezing_field_explode"
+					"section"		"2"
+				}
+			}
+		}
+		
+		"modifier_freezing_field_southwest_thinker_datadriven"
+		{
+			"IsPurgable"		"0"
+			"IsHidden"			"0"
+			"ThinkInterval"		"0.4"
+			
+			"Duration"			"%AbilityDuration"
+			
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+					"Function"		"freezing_field_explode"
+					"section"		"3"
+				}
+			}
+		}
+		
+		"modifier_freezing_field_debuff_datadriven"
+		{
+			"IsHidden"				"0"
+			"IsPurgable"			"0"
+			"Duration"				"%slow_duration"
+			
+			"EffectName"			"particles/generic_gameplay/generic_slowed_cold.vpcf"
+			"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
+			"StatusEffectPriority"	"10"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow"
+			}
+		}
+	}
+}
