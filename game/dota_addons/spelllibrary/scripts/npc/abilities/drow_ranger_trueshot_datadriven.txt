@@ -1,3 +1,4 @@
+// Note: Constraint is that agility never go above 2841
 "drow_ranger_trueshot_datadriven"
 {
 	// General
@@ -5,6 +6,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityTextureName"			"drow_ranger_trueshot"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -14,7 +16,7 @@
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCooldown"				"120"
-	"AbilityDuration"				"30.0"
+	"AbilityDuration"				"5.0"
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -25,6 +27,168 @@
 			"var_type"					"FIELD_FLOAT"
 			"trueshot_ranged_damage"	"18 24 30 36"
 		}
+		
+		// extra variable
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"global_radius"				"9000"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"				"CASTER"
+			"ModifierName"			"modifier_trueshot_aura_creep_datadriven"
+			"Duration"				"%AbilityDuration"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_trueshot_aura_datadriven"
+		{
+			"Passive"				"1"
+			"IsPurgable"			"0"
+			"IsHidden"				"0"
+			
+			"Aura"					"modifier_trueshot_effect_datadriven"
+			"Aura_Radius"			"%global_radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
+		}
+		
+		"modifier_trueshot_aura_creep_datadriven"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"0"
+			
+			"Aura"					"modifier_trueshot_effect_datadriven"
+			"Aura_Radius"			"%global_radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
+		}
+		
+		"modifier_trueshot_effect_datadriven"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"0"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_drow/trueshot.lua"
+					"Function"		"trueshot_initialize"
+				}
+			}
+		}
+	
+		// Bit Modifiers
+		"modifier_trueshot_damage_mod_1"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"1"
+			}
+		}
+		
+		"modifier_trueshot_damage_mod_2"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"2"
+			}
+		}
+		"modifier_trueshot_damage_mod_4"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"4"
+			}
+		}
+		"modifier_trueshot_damage_mod_8"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"8"
+			}
+		}
+		"modifier_trueshot_damage_mod_16"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"16"
+			}
+		}
+		"modifier_trueshot_damage_mod_32"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"32"
+			}
+		}
+		"modifier_trueshot_damage_mod_64"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"64"
+			}
+		}
+		"modifier_trueshot_damage_mod_128"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"128"
+			}
+		}
+		"modifier_trueshot_damage_mod_256"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"256"
+			}
+		}
+		"modifier_trueshot_damage_mod_512"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"512"
+			}
+		}
 	}
 }
-
