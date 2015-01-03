@@ -5,6 +5,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityTextureName"			"drow_ranger_marksmanship"
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -20,7 +21,74 @@
 			"var_type"						"FIELD_INTEGER"
 			"radius"						"400"
 		}
+		// Extra variables
+		"03"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"think_interval"				"0.1"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"							"particles/units/heroes/hero_drow/drow_marksmanship.vpcf"
+		"particle"							"particles/units/heroes/hero_drow/drow_marksmanship_start.vpcf"
+	}
+	
+	"Modifiers"
+	{
+		"modifier_marksmanship_passive_datadriven"
+		{
+			"Passive"						"1"
+			"IsHidden"						"1"
+			"IsPurgable"					"0"
+		
+			"ThinkInterval"					"%think_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_drow/marksmanship.lua"
+					"Function"				"marksmanship_detection"
+				}
+			}
+		}
+		
+		"modifier_marksmanship_effect_datadriven"
+		{
+			"IsPurgable"					"0"
+			
+			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"Target"				"CASTER"
+					"EffectName"			"particles/units/heroes/hero_drow/drow_marksmanship_start.vpcf"
+					"EffectAttachType"		"start_at_customorigin"
+					"ControlPointEntities"
+					{
+						"CASTER"			"attach_attack1"
+					}
+				}
+			
+				"AttachEffect"
+				{
+					"Target"				"CASTER"
+					"EffectName"			"particles/units/heroes/hero_drow/drow_marksmanship.vpcf"
+					"EffectAttachType"		"follow_origin"
+					"ControlPoints"
+					{
+						"02"				"150 150 150"
+					}
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%marksmanship_agility_bonus"
+			}
+		}
 	}
 }
-
-
