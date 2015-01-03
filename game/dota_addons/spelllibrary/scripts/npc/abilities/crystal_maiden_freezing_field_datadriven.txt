@@ -17,12 +17,12 @@
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"0"//150 120 90"
+	"AbilityCooldown"				"150 120 90"
 	"AbilityDuration"				"7.0"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"0"//200 400 600"
+	"AbilityManaCost"				"200 400 600"
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -279,6 +279,18 @@
 			{
 				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow"
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow"
+			}
+		}
+		
+		"modifier_freezing_field_ref_point_datadriven"
+		{
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
 	}
