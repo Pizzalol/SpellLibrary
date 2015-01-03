@@ -2,7 +2,7 @@
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
@@ -61,5 +61,70 @@
 			"knockback_height"		"0"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
+		"particle"				"particles/units/heroes/hero_drow/drow_silence_wave.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"LinearProjectile"
+		{
+			"Target"			"POINT"
+			"EffectName"		"particles/units/heroes/hero_drow/drow_silence_wave.vpcf"
+			"MoveSpeed"			"%wave_speed"
+			"StartRadius"		"%wave_width"
+			"StartPosition"		"attach_attack1"
+			"EndRadius"			"%wave_width"
+			"FixedDistance"		"%wave_range_tooltip"
+			"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"TargetTypes"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			"TargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
+			"HasFrontalCone"	"0"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"		"Hero_DrowRanger.Silence"
+			"Target"			"CASTER"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"			"0"
+	
+		"ApplyModifier"
+		{
+			"ModifierName"		"modifier_wave_of_silence_debuff_datadriven"
+			"Target"			"TARGET"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_drow/wave_of_silence.lua"
+			"Function"			"modifier_wave_of_silence_knockback"
+			"height"			"%knockback_height"
+			"duration"			"%knockback_duration"
+			"distance"			"%knockback_distance_max"
+			"range"				"%wave_range_tooltip"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_wave_of_silence_debuff_datadriven"
+		{
+			"Duration"			"%silence_duration"
+			
+			"States"
+			{
+				"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
 }
-
