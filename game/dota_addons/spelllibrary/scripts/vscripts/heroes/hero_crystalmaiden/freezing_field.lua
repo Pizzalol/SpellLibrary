@@ -70,7 +70,6 @@ function freezing_field_explode( keys )
 			damage_type = keys.ability:GetAbilityDamageType()
 		}
 		ApplyDamage( damageTable )
-		ability:ApplyDataDrivenModifier( caster, v, modifierName, {} )
 	end
 	
 	-- Loop through hero units
@@ -85,7 +84,6 @@ function freezing_field_explode( keys )
 			damage_type = keys.ability:GetAbilityDamageType()
 		}
 		ApplyDamage( damageTable )
-		ability:ApplyDataDrivenModifier( caster, v, modifierName, {} )
 	end
 	
 	-- Fire effect
