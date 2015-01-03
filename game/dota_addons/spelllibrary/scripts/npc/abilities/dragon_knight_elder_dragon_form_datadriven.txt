@@ -1,3 +1,6 @@
+// Rewrite of the Dragon Knight Elder Dragon Form
+// Author: chrislotix
+// Date: 03.01.2015.
 "dragon_knight_elder_dragon_form_datadriven"
 {
 	// General
@@ -8,6 +11,15 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"dragon_knight_elder_dragon_form"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
+		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf"
+		"model"			"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+	}
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
@@ -80,6 +92,228 @@
 			"var_type"					"FIELD_FLOAT"
 			"frost_aoe"					"250"
 		}
+		"13"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"green_dragon_duration"	"60 0 0"
+
+		}
+			"14"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"red_dragon_duration"	"0 60 0"
+
+		}
+			"15"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"blue_dragon_duration"	"0 0 60"
+
+		}
 		
 	}
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_DragonKnight.ElderDragonForm"
+			"Target"		"CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_elder_form_bonus_range_datadriven"
+			"Target"	"CASTER"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_green_dragon_datadriven"
+			"Target"	"CASTER"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_red_dragon_datadriven"
+			"Target"	"CASTER"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_blue_dragon_datadriven"
+			"Target"	"CASTER"
+		}
+
+
+
+	}
+
+	"Modifiers"
+	{
+		"modifier_elder_form_bonus_range_datadriven"
+		{
+			"Duration"	"%duration"
+			"IsPurgable"	"0"
+			"IsBuff"	"1"
+			"IsHidden"	"0"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%bonus_movement_speed"
+				"MODIFIER_PROPERTY_MODEL_CHANGE"	"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+			}
+
+		}
+
+		"modifier_green_dragon_datadriven"
+		{
+			"Duration"	"%green_dragon_duration"
+
+			"OnAttack"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_DragonKnight.ElderDragonShoot1.Attack"
+					"Target"	"CASTER"
+				}
+			}
+
+			"OnAttackLanded"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_DragonKnight.ProjectileImpact"
+					"Target"		"TARGET"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_corrosive_breath_datadriven"
+					"Target"	"TARGET"
+				}
+			}
+		}
+
+		"modifier_red_dragon_datadriven"
+		{
+			"Duration"	"%red_dragon_duration"
+
+			"OnAttack"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_DragonKnight.ElderDragonShoot2.Attack"
+					"Target"	"CASTER"
+				}
+			}
+
+			
+			"OnAttackLanded"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_DragonKnight.ProjectileImpact"
+					"Target"		"TARGET"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_corrosive_breath_datadriven"
+					"Target"	"TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+					"Function"		"Splash"
+				}
+			}
+		}
+
+		"modifier_blue_dragon_datadriven"
+		{
+			"Duration"	"%blue_dragon_duration"
+
+			"OnAttack"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_DragonKnight.ElderDragonShoot3.Attack"
+					"Target"	"CASTER"
+				}
+			}
+
+
+			"OnAttacklanded"
+			{
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_DragonKnight.ProjectileImpact"
+					"Target"		"TARGET"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_corrosive_breath_datadriven"
+					"Target"	"TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+					"Function"		"Splash"
+				}
+
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Radius"	"%frost_aoe"
+						"Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+						"Flags" "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					}
+					"Action"
+					{
+						"ApplyModifier"
+						{
+							"ModifierName"	"modifier_frost_breath_slow_datadriven"
+							"Target"		"TARGET"
+						}
+					}
+				}
+			}
+		}
+
+		"modifier_corrosive_breath_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%corrosive_breath_duration"
+
+			"ThinkInterval"	"1.0"
+
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%corrosive_breath_damage"
+				}
+			}
+		}
+
+		"modifier_frost_breath_slow_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%frost_duration"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%frost_bonus_movement_speed"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%frost_bonus_attack_speed"
+			}
+		}
+	}	
+
 }
