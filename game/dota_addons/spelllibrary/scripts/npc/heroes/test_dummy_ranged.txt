@@ -5,5 +5,5 @@
 	"Ability1" "pudge_meat_hook_datadriven"
 	"Ability2" "sandking_sand_storm_datadriven"
 	"Ability3" "lina_fiery_soul_datadriven"
-	"Ability4" "bounty_hunter_track_datadriven"
+	"Ability4" "dragon_knight_elder_dragon_form_datadriven"
 }

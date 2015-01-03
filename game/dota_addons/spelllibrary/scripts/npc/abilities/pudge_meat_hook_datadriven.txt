@@ -1,7 +1,8 @@
-// Rewrite of the Pudge Dismember ability
+// Rewrite of the Pudge Meat Hook ability
 // Author: Pizzalol
-// Date: 01.01.2015.
-// NOTE: Temporary particle
+// Date: 03.01.2015.
+// NOTE: Need to do vision
+// NOTE2: Add 0.01 sec delay to creating the projectile 
 "pudge_meat_hook_datadriven"
 {
 	// General
@@ -18,9 +19,6 @@
 	"precache"
 	{
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
-		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
-		"particle"			"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
-		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook_hook.vpcf"
 		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
 		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf"
 	}
@@ -80,10 +78,16 @@
 
 	"OnSpellStart"
 	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Pudge.AttackHookExtend"
+			"Target"		"CASTER"
+		}
+
 		"LinearProjectile"
 		{
 			"Target"      	"POINT"
-		    "EffectName"  	"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+		    "EffectName"  	""
 		    "MoveSpeed"   	"%hook_speed"
 		    "StartRadius"   "%hook_width"
 		    "StartPosition" "attach_origin"
@@ -93,8 +97,7 @@
 		    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
 		    "HasFrontalCone"    "0"
-		    "ProvidesVision" "1"
-		    "VisionRadius"	"500"
+		    "ProvidesVision" "0"
 		}
 
 		"ApplyModifier"
@@ -109,6 +112,15 @@
 			"Target"		"CASTER"
 		}
 
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_pudge/meat_hook.lua"
+			"Function"		"LaunchMeatHook"
+			"speed"			"%hook_speed"
+			"Target"		"POINT"
+			"sound_extend"			"Hero_Pudge.AttackHookExtend"
+		}
+
 	}
 
 	"OnProjectileHitUnit"
@@ -117,8 +129,12 @@
 		"RunScript"
 		{
 			"ScriptFile"	"scripts/vscripts/heroes/hero_pudge/meat_hook.lua"
-			"Function"		"MeatHook"
+			"Function"		"RetractMeatHook"
 			"speed"			"%hook_speed"
+			"meat_hook_modifier"	"modifier_meat_hook_target_datadriven"
+			"sound_extend"			"Hero_Pudge.AttackHookExtend"
+			"sound_retract"			"Hero_Pudge.AttackHookRetract"
+			"sound_retract_stop"	"Hero_Pudge.AttackHookRetractStop"
 		}
 
 		"ApplyModifier"
@@ -134,22 +150,16 @@
 			"Target"		"TARGET"
 		}
 
-		"FireEffect"
-		{
-			"EffectName"	"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
-			"EffectAttachType"	"start_at_customorigin"
-
-			"ControlPointEntities"
-			{
-				"CASTER"	"follow_origin"
-				"TARGET"	"follow_origin"
-			}
-		}
-
 		"FireSound"
 		{
 			"EffectName"	"Hero_Pudge.AttackHookImpact"
 			"Target"		"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Pudge.AttackHookRetract"
+			"Target"		"CASTER"
 		}
 	}
 
@@ -185,6 +195,16 @@
 			"States"
 			{
 				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_meat_hook_dummy_datadriven"
+		{
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
 	}
