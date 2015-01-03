@@ -37,8 +37,6 @@
 			"Aura_Radius"			"%global_radius"
 			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
-			"EffectName"			"particles/generic_gameplay/dropped_gem_ground_c.vpcf"
-			"EffectAttachType"		"follow_origin"
 			
 			"Properties"
 			{
