@@ -1,14 +1,16 @@
+// Note: Still need to implement script to provide extra vision for few seconds at the cast point
 "crystal_maiden_crystal_nova_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"crystal_maiden_crystal_nova"
+	"AOERadius"						"%radius"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -57,5 +59,78 @@
 			"vision_duration"	"6.0"
 		}
 	}
-}	
-
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+		"particle"				"particles/units/heroes/hero_crystalmaiden/maiden_crystal_nova.vpcf"
+		"particle"				"particles/generic_gameplay/generic_slowed_cold.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireEffect"
+		{
+			"TargetPoint"			"POINT"
+			"EffectName"			"particles/units/heroes/hero_crystalmaiden/maiden_crystal_nova.vpcf"
+			"EffectAttachType"		"world_origin"
+			"ControlPoints"
+			{
+				"01"				"%radius 2 %radius*2"
+			}
+		}
+		
+		"FireSound"
+		{
+			"EffectName"			"Hero_Crystal.CrystalNova"
+			"Target"				"CASTER"
+		}
+	
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"		"POINT"
+				"Radius"		"%radius"
+				"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+				"Type"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				"Flag"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+			
+			"Action"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Damage"	"%AbilityDamage"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+				}
+				
+				"ApplyModifier"
+				{
+					"Target"		"TARGET"
+					"ModifierName"	"modifier_crystal_nova_slow_datadriven"
+				}
+			}
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_crystal_nova_slow_datadriven"
+		{
+			"Duration"				"%duration"
+			"EffectName"			"particles/generic_gameplay/generic_slowed_cold.vpcf"
+			"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
+			"StatusEffectPriority"	"10"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attackspeed_slow"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_slow"
+			}
+		}
+	}
+}
