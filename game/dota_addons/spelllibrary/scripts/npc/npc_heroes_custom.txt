@@ -10,8 +10,8 @@
 	
 		"Ability1" "viper_poison_attack_datadriven"
 		"Ability2" "antimage_blink_datadriven"
-		"Ability3" "viper_corrosive_skin_datadriven"
-		"Ability4" "queenofpain_sonic_wave_datadriven"
+		"Ability3" "bounty_hunter_wind_walk_datadriven"
+		"Ability4" "slardar_amplify_damage_datadriven"
 	}
 	//End of file test_dummy_melee.txt
 
@@ -24,7 +24,7 @@
 		"Ability1" "pudge_meat_hook_datadriven"
 		"Ability2" "mirana_arrow_datadriven"
 		"Ability3" "lina_fiery_soul_datadriven"
-		"Ability4" "dragon_knight_elder_dragon_form_datadriven"
+		"Ability4" "mirana_invis_datadriven"
 	}
 	//End of file test_dummy_ranged.txt
 }

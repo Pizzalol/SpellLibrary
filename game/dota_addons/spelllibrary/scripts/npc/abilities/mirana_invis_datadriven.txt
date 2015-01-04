@@ -1,3 +1,6 @@
+// Rewrite of the Mirana Moonlight Shadow ability
+// Author: Pizzalol
+// Date: 04.01.2015.
 "mirana_invis_datadriven"
 {
 	// General
@@ -7,6 +10,16 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"mirana_invis"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+		"particle"			"particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+		"particle"			"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+		"particle"			"particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -34,6 +47,171 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"duration"				"15.0"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"radius"				"9000"
+		}
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"		"CASTER"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ActOnTargets"
+		{
+			"Target"
+            {
+                "Center" "CASTER"
+                "Radius" "%radius"
+                "Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
+                "Types" "DOTA_UNIT_TARGET_HERO"
+            }
+
+            "Action"
+            {
+            	"ApplyModifier"
+            	{
+            		"ModifierName"	"modifier_moonlight_duration_datadriven"
+            		"Target"		"TARGET"
+            	}
+            	"ApplyModifier"
+            	{
+            		"ModifierName"	"modifier_moonlight_fade_datadriven"
+            		"Target"		"TARGET"
+            	}
+
+            	"FireEffect"
+            	{
+            		"EffectName"	"particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+            		"EffectAttachType"	"follow_origin"
+            		"Target"		"TARGET"
+            	}
+            }
+        }
+
+        "FireSound"
+        {
+        	"EffectName"	"Ability.MoonlightShadow"
+        	"Target"		"CASTER"
+        }
+	}
+
+
+	"Modifiers"
+	{
+		"modifier_moonlight_duration_datadriven"
+		{
+			"Duration"	"%duration"
+
+			"EffectName"	"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+			"EffectAttachType"	"follow_overhead"
+			
+			"OnAttack"
+			{
+				//apply fade
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_moonlight_fade_datadriven"
+					"Target"		"ATTACKER"
+				}
+			}
+
+			"OnAbilityExecuted"
+			{
+				//apply fade
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_moonlight_fade_datadriven"
+					"Target"		"UNIT"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_moonlight_fade_datadriven"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+				}
+
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_moonlight_invis_datadriven"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+				}
+			}
+		}
+
+		"modifier_moonlight_fade_datadriven"
+		{
+			"Duration"	"%fade_delay"
+			"OnCreated"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_moonlight_invis_datadriven"
+					"Target"		"TARGET"
+				}
+			}
+			"OnDestroy"
+			{
+				//apply invis
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_moonlight_invis_datadriven"
+					"Target"		"TARGET"
+				}
+			}
+		}
+
+		"modifier_moonlight_invis_datadriven"
+		{
+			"IsHidden"	"1"
+
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_invisible"
+					"Target"		"TARGET"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_invisible"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }

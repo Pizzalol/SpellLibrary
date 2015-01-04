@@ -4,6 +4,6 @@
 
 	"Ability1" "viper_poison_attack_datadriven"
 	"Ability2" "antimage_blink_datadriven"
-	"Ability3" "viper_corrosive_skin_datadriven"
-	"Ability4" "queenofpain_sonic_wave_datadriven"
+	"Ability3" "bounty_hunter_wind_walk_datadriven"
+	"Ability4" "slardar_amplify_damage_datadriven"
 }

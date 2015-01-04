@@ -82,7 +82,7 @@
 				"AttachEffect"
 				{
 					"EffectName"	"particles/units/heroes/hero_slardar/slardar_amp_damage.vpcf"
-					"EffectAttachType"	"follow_point"
+					"EffectAttachType"	"follow_overhead"
 					"Target"	"TARGET"
 
 				}
@@ -95,6 +95,7 @@
 
 			"States"
 			{
+				"MODIFIER_STATE_INVISIBLE" 			"MODIFIER_STATE_VALUE_DISABLED"
 				"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
