@@ -20715,6 +20715,9 @@
 
 
 	//Start of file mirana_starfall_datadriven.txt
+	// Rewrite of the Mirana Starfall ability
+	// Author: Pizzalol
+	// Date: 04.01.2015.
 	"mirana_starfall_datadriven"
 	{
 		// General
@@ -20725,6 +20728,15 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"mirana_starfall"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"particle"			"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
+			"particle"			"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -20756,6 +20768,134 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"starfall_secondary_radius"	"175"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"starfall_delay"	"0.57"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"starfall_secondary_damage_pct"	"0.75"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"starfall_secondary_targets"	"1"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Ability.Starfall"
+				"Target"		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"		"CASTER"
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+	            {
+	                "Center" "CASTER"
+	                "Radius" "%starfall_radius"
+	                "Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY" 
+	                "Types" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            }
+	
+	            "Action"
+	            {
+	            	"FireEffect"
+	            	{
+	            		"EffectName"	"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
+	            		"EffectAttachType"	"follow_origin"
+	            		"Target"		"TARGET"
+	            	}
+	
+	            	"DelayedAction"
+	            	{
+	            		"Delay"		"%starfall_delay"
+	
+	            		"Action"
+	            		{
+	
+	            			"FireSound"
+	            			{
+	            				"EffectName"	"Ability.StarfallImpact"
+	            				"Target"		"TARGET"
+	            			}
+	
+	            			"Damage"
+	            			{
+	            				"Target"	"TARGET"
+	            				"Type"		"DAMAGE_TYPE_MAGICAL"
+	            				"Damage"	"%AbilityDamage"
+	            			}
+	            		}
+	            	}
+	            }
+			}
+	
+			// Secondary starfall
+			"ActOnTargets"
+			{
+				"Target"
+	            {
+	                "Center" "CASTER"
+	                "Radius" "%starfall_secondary_radius"
+	                "Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY" 
+	                "Types" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                "MaxTargets"	"%starfall_secondary_targets"
+	                "Random"		"1"
+	            }
+	
+	            "Action"
+	            {
+	            	"DelayedAction"
+	            	{
+	            		"Delay"	"%starfall_delay"
+	
+	            		"Action"
+	            		{
+	            			"FireEffect"
+			            	{
+			            		"EffectName"	"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
+			            		"EffectAttachType"	"follow_origin"
+			            		"Target"		"TARGET"
+			            	}
+	
+			            	"DelayedAction"
+			            	{
+			            		"Delay"		"%starfall_delay"
+	
+			            		"Action"
+			            		{
+	
+			            			"FireSound"
+			            			{
+			            				"EffectName"	"Ability.StarfallImpact"
+			            				"Target"		"TARGET"
+			            			}
+	
+			            			"Damage"
+			            			{
+			            				"Target"	"TARGET"
+			            				"Type"		"DAMAGE_TYPE_MAGICAL"
+			            				"Damage"	"%AbilityDamage * %starfall_secondary_damage_pct"
+			            			}
+			            		}
+			            	}
+	            		}
+	            	}
+	            }
 			}
 		}
 	}
@@ -25444,23 +25584,6 @@
 		"OnProjectileHitUnit"
 		{	
 			"DeleteOnHit"	"1"
-			"RunScript"
-			{
-				"ScriptFile"			"scripts/vscripts/heroes/hero_pudge/meat_hook.lua"
-				"Function"				"RetractMeatHook"
-				"meat_hook_modifier"	"modifier_meat_hook_target_datadriven"
-				"dummy_modifier"		"modifier_meat_hook_dummy_datadriven"
-				"vision_modifier"		"modifier_meat_hook_vision_datadriven"
-				"sound_extend"			"Hero_Pudge.AttackHookExtend"
-				"sound_retract"			"Hero_Pudge.AttackHookRetract"
-				"sound_retract_stop"	"Hero_Pudge.AttackHookRetractStop"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_meat_hook_target_datadriven"
-				"Target"		"TARGET"
-			}
 	
 			"FireEffect"
 			{
@@ -25479,6 +25602,24 @@
 			{
 				"EffectName"	"Hero_Pudge.AttackHookRetract"
 				"Target"		"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"			"scripts/vscripts/heroes/hero_pudge/meat_hook.lua"
+				"Function"				"RetractMeatHook"
+				"meat_hook_modifier"	"modifier_meat_hook_target_datadriven"
+				"dummy_modifier"		"modifier_meat_hook_dummy_datadriven"
+				"vision_modifier"		"modifier_meat_hook_vision_datadriven"
+				"sound_extend"			"Hero_Pudge.AttackHookExtend"
+				"sound_retract"			"Hero_Pudge.AttackHookRetract"
+				"sound_retract_stop"	"Hero_Pudge.AttackHookRetractStop"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_meat_hook_target_datadriven"
+				"Target"		"TARGET"
 			}
 		}
 	

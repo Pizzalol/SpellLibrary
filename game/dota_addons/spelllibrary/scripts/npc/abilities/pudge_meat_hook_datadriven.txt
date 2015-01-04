@@ -125,23 +125,6 @@
 	"OnProjectileHitUnit"
 	{	
 		"DeleteOnHit"	"1"
-		"RunScript"
-		{
-			"ScriptFile"			"scripts/vscripts/heroes/hero_pudge/meat_hook.lua"
-			"Function"				"RetractMeatHook"
-			"meat_hook_modifier"	"modifier_meat_hook_target_datadriven"
-			"dummy_modifier"		"modifier_meat_hook_dummy_datadriven"
-			"vision_modifier"		"modifier_meat_hook_vision_datadriven"
-			"sound_extend"			"Hero_Pudge.AttackHookExtend"
-			"sound_retract"			"Hero_Pudge.AttackHookRetract"
-			"sound_retract_stop"	"Hero_Pudge.AttackHookRetractStop"
-		}
-
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_meat_hook_target_datadriven"
-			"Target"		"TARGET"
-		}
 
 		"FireEffect"
 		{
@@ -160,6 +143,24 @@
 		{
 			"EffectName"	"Hero_Pudge.AttackHookRetract"
 			"Target"		"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"			"scripts/vscripts/heroes/hero_pudge/meat_hook.lua"
+			"Function"				"RetractMeatHook"
+			"meat_hook_modifier"	"modifier_meat_hook_target_datadriven"
+			"dummy_modifier"		"modifier_meat_hook_dummy_datadriven"
+			"vision_modifier"		"modifier_meat_hook_vision_datadriven"
+			"sound_extend"			"Hero_Pudge.AttackHookExtend"
+			"sound_retract"			"Hero_Pudge.AttackHookRetract"
+			"sound_retract_stop"	"Hero_Pudge.AttackHookRetractStop"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_meat_hook_target_datadriven"
+			"Target"		"TARGET"
 		}
 	}
 
