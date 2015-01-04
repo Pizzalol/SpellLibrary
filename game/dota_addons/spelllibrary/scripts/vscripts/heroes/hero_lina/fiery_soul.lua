@@ -37,17 +37,17 @@ function FierySoul( keys )
 		caster:SetModifierStackCount(modifierStackName, ability, maxStack)
 
 		-- Apply the new refreshed stack
-		for i = 0, maxStack do
+		for i = 1, maxStack do
 			ability:ApplyDataDrivenModifier(caster, caster, modifierBuffName, {})
 		end
 	else
-		-- Increase the number of stacks if there were no stacks before
-		if currentStack == 0 then currentStack = currentStack + 1 end
+		-- Increase the number of stacks
+		currentStack = currentStack + 1
 
 		caster:SetModifierStackCount(modifierStackName, ability, currentStack)
 
 		-- Apply the new increased stack
-		for i = 0, currentStack do
+		for i = 1, currentStack do
 			ability:ApplyDataDrivenModifier(caster, caster, modifierBuffName, {})
 		end
 	end
