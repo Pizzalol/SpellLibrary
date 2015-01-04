@@ -9,7 +9,7 @@ function RetractMeatHook( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local damage = ability:GetAbilityDamage() 
-	local hookSpeed = keys.speed * 0.03
+	local hookSpeed = ability:GetLevelSpecialValueFor("hook_speed", (ability:GetLevel() - 1)) * 0.03
 	local casterLocation = caster:GetAbsOrigin()
 	local targetLocation = target:GetAbsOrigin() 
 	local distance = (targetLocation - casterLocation):Length2D()
@@ -17,7 +17,7 @@ function RetractMeatHook( keys )
 	-- Modifiers
 	local meat_hook_modifier = keys.meat_hook_modifier
 	local vision_modifier = keys.vision_modifier
-	local vision_duration = keys.vision_duration
+	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", (ability:GetLevel() - 1))
 	local dummy_modifier = keys.dummy_modifier
 
 	-- Sound
@@ -83,7 +83,7 @@ function LaunchMeatHook( keys )
 
 	-- KV variables
 	local targetPoint = keys.target_points[1]
-	local hookSpeed = keys.speed * 0.03
+	local hookSpeed = ability:GetLevelSpecialValueFor("hook_speed", (ability:GetLevel() - 1)) * 0.03
 	local dummy_modifier = keys.dummy_modifier	
 	local hook_particle = keys.hook_particle
 	local sound_extend = keys.sound_extend

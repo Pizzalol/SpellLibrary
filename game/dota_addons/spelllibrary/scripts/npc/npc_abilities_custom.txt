@@ -8290,8 +8290,10 @@
 		"precache"
 		{
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
-			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf"
-			"model"			"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
+			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
+			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
+			
 		}
 	
 		// Time		
@@ -8431,7 +8433,7 @@
 				{
 					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%bonus_movement_speed"
-					"MODIFIER_PROPERTY_MODEL_CHANGE"	"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+					
 				}
 	
 			}
@@ -8440,6 +8442,16 @@
 			{
 				"Duration"	"%green_dragon_duration"
 	
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"	"CASTER"
+					}
+				}
+	
 				"OnAttack"
 				{
 					"FireSound"
@@ -8447,6 +8459,11 @@
 						"EffectName"	"Hero_DragonKnight.ElderDragonShoot1.Attack"
 						"Target"	"CASTER"
 					}
+				}
+	
+				"OnDestroy"
+				{
+					
 				}
 	
 				"OnAttackLanded"
@@ -8468,6 +8485,16 @@
 			"modifier_red_dragon_datadriven"
 			{
 				"Duration"	"%red_dragon_duration"
+	
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"	"CASTER"
+					}
+				}
 	
 				"OnAttack"
 				{
@@ -8504,6 +8531,16 @@
 			"modifier_blue_dragon_datadriven"
 			{
 				"Duration"	"%blue_dragon_duration"
+	
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"	"CASTER"
+					}
+				}
 	
 				"OnAttack"
 				{
@@ -20206,6 +20243,9 @@
 
 
 	//Start of file mirana_arrow_datadriven.txt
+	// Rewrite of the Mirana Sacred Arrow ability
+	// Author: Pizzalol
+	// Date: 04.01.2015.
 	"mirana_arrow_datadriven"
 	{
 		// General
@@ -20216,6 +20256,14 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"mirana_arrow"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"particle"			"particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -20278,6 +20326,86 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"arrow_vision"	"650"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"arrow_max_damagerange"	"1500"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"vision_duration"	"3.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+				"Target"      	"POINT"
+			    "EffectName"  	"particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf"
+			    "MoveSpeed"   	"%arrow_speed"
+			    "StartRadius"   "%arrow_width"
+			    "StartPosition" "attach_origin"
+			    "EndRadius"     "%arrow_width"
+			    "FixedDistance" "%arrow_range"
+			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
+			    "HasFrontalCone"    "0"
+			    "ProvidesVision"	"1"
+			    "VisionRadius"	"%arrow_vision"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"			"scripts/vscripts/heroes/hero_mirana/arrow.lua"
+				"Function"				"LaunchArrow"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"			"Hero_Mirana.ArrowCast"
+				"Target"				"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"scripts/vscripts/heroes/hero_mirana/arrow.lua"
+				"Function"				"ArrowHit"
+				"Target"				"TARGET"
+				"dummy_modifier"		"modifier_arrow_vision"
+				"vision_duration"		"%vision_duration"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"			"Hero_Mirana.ArrowImpact"
+				"Target"				"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_arrow_vision"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%arrow_vision"
+					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%arrow_vision"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_FLYING"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -25110,7 +25238,6 @@
 			{
 				"ScriptFile"			"scripts/vscripts/heroes/hero_pudge/meat_hook.lua"
 				"Function"				"LaunchMeatHook"
-				"speed"					"%hook_speed"
 				"Target"				"POINT"
 				"sound_extend"			"Hero_Pudge.AttackHookExtend"
 				"hook_particle"			"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
@@ -25126,11 +25253,9 @@
 			{
 				"ScriptFile"			"scripts/vscripts/heroes/hero_pudge/meat_hook.lua"
 				"Function"				"RetractMeatHook"
-				"speed"					"%hook_speed"
 				"meat_hook_modifier"	"modifier_meat_hook_target_datadriven"
 				"dummy_modifier"		"modifier_meat_hook_dummy_datadriven"
 				"vision_modifier"		"modifier_meat_hook_vision_datadriven"
-				"vision_duration"		"%vision_duration"
 				"sound_extend"			"Hero_Pudge.AttackHookExtend"
 				"sound_retract"			"Hero_Pudge.AttackHookRetract"
 				"sound_retract_stop"	"Hero_Pudge.AttackHookRetractStop"

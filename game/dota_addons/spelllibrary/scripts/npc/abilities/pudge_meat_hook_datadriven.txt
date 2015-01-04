@@ -114,7 +114,6 @@
 		{
 			"ScriptFile"			"scripts/vscripts/heroes/hero_pudge/meat_hook.lua"
 			"Function"				"LaunchMeatHook"
-			"speed"					"%hook_speed"
 			"Target"				"POINT"
 			"sound_extend"			"Hero_Pudge.AttackHookExtend"
 			"hook_particle"			"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
@@ -130,11 +129,9 @@
 		{
 			"ScriptFile"			"scripts/vscripts/heroes/hero_pudge/meat_hook.lua"
 			"Function"				"RetractMeatHook"
-			"speed"					"%hook_speed"
 			"meat_hook_modifier"	"modifier_meat_hook_target_datadriven"
 			"dummy_modifier"		"modifier_meat_hook_dummy_datadriven"
 			"vision_modifier"		"modifier_meat_hook_vision_datadriven"
-			"vision_duration"		"%vision_duration"
 			"sound_extend"			"Hero_Pudge.AttackHookExtend"
 			"sound_retract"			"Hero_Pudge.AttackHookRetract"
 			"sound_retract_stop"	"Hero_Pudge.AttackHookRetractStop"
