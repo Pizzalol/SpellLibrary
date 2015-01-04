@@ -17,8 +17,10 @@
 	"precache"
 	{
 		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
-		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf"
-		"model"			"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
+		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
+		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
+		
 	}
 
 	// Time		
@@ -158,7 +160,7 @@
 			{
 				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%bonus_movement_speed"
-				"MODIFIER_PROPERTY_MODEL_CHANGE"	"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+				
 			}
 
 		}
@@ -167,6 +169,16 @@
 		{
 			"Duration"	"%green_dragon_duration"
 
+			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"	"CASTER"
+				}
+			}
+
 			"OnAttack"
 			{
 				"FireSound"
@@ -174,6 +186,11 @@
 					"EffectName"	"Hero_DragonKnight.ElderDragonShoot1.Attack"
 					"Target"	"CASTER"
 				}
+			}
+
+			"OnDestroy"
+			{
+				
 			}
 
 			"OnAttackLanded"
@@ -195,6 +212,16 @@
 		"modifier_red_dragon_datadriven"
 		{
 			"Duration"	"%red_dragon_duration"
+
+			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"	"CASTER"
+				}
+			}
 
 			"OnAttack"
 			{
@@ -231,6 +258,16 @@
 		"modifier_blue_dragon_datadriven"
 		{
 			"Duration"	"%blue_dragon_duration"
+
+			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"	"CASTER"
+				}
+			}
 
 			"OnAttack"
 			{
