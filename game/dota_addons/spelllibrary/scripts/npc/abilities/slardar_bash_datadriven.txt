@@ -97,11 +97,24 @@
 
 					"OnSuccess"
 					{
-						"RunScript"
+						"ApplyModifier"
 						{
-							"ScriptFile"	"scripts/vscripts/heroes/hero_slardar/bash.lua"	
-							"Function"		"Bash"
-							"Target"		"TARGET"	
+							"Target"
+							{
+								"Center"	"TARGET"
+								"Types"		"DOTA_UNIT_TARGET_HERO"
+							}
+							"ModifierName"	"modifier_bash_stun_hero_datadriven"
+						}
+
+						"ApplyModifier"
+						{
+							"Target"
+							{
+								"Center"	"TARGET"
+								"Types"		"DOTA_UNIT_TARGET_BASIC"
+							}
+							"ModifierName"	"modifier_bash_stun_creep_datadriven"
 						}
 						"Damage"
 						{

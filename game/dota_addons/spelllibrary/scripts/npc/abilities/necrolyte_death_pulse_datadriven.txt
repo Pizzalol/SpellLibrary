@@ -1,3 +1,6 @@
+// Rewrite of the Necrophos Death Pulse ability
+// Author: Pizzalol
+// Date: 05.01.2015.
 "necrolyte_death_pulse_datadriven"
 {
 	// General
@@ -8,6 +11,15 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"necrolyte_death_pulse"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_necrolyte.vsndevts"
+		"particle"			"particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf"
+		"particle"			"particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -44,6 +56,87 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"projectile_speed"		"400"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Necrolyte.DeathPulse"
+		}
+		"ActOnTargets"
+		{
+			"Target"
+            {
+                "Center" "CASTER"
+                "Radius" "%area_of_effect"
+                "Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY" 
+                "Types" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+            }
+
+            "Action"
+            {
+            	"TrackingProjectile"
+				{
+				    "Target"           "TARGET"
+				    "EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf"
+				    "Dodgeable"        "0"
+				    "ProvidesVision"   "0"
+				    //"VisionRadius"     "300"
+				    "MoveSpeed"        "%projectile_speed"
+				    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+				}
+            }
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+            {
+                "Center" "CASTER"
+                "Radius" "%area_of_effect"
+                "Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
+                "Types" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+            }
+
+            "Action"
+            {
+            	"TrackingProjectile"
+				{
+				    "Target"           "TARGET"
+				    "EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf"
+				    "Dodgeable"        "0"
+				    "ProvidesVision"   "0"
+				    //"VisionRadius"     "300"
+				    "MoveSpeed"        "%projectile_speed"
+				    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+				}
+            }
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"Damage"
+		{
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			}
+			"Type"	"DAMAGE_TYPE_MAGICAL"
+			"Damage"	"%AbilityDamage"
+		}
+
+		"Heal"
+		{
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			}
+			"HealAmount"	"%heal"
 		}
 	}
 }

@@ -49,7 +49,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"scripts/vscripts/heroes/hero_phantomassassin/blur.lua"
+					"ScriptFile"	"scripts/vscripts/heroes/hero_phantom_assassin/blur.lua"
 					"Function"		"Blur"
 				}
 			}

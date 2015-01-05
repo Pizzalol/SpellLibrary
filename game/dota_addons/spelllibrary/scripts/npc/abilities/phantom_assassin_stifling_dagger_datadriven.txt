@@ -87,11 +87,26 @@
 
 	"OnProjectileHitUnit"
 	{
-		"RunScript"
+		"Damage"
 		{
-			"ScriptFile"		"scripts/vscripts/heroes/hero_phantomassassin/stiflingdagger.lua"
-			"Function"			"StiflingDagger"
-			"Target"			"TARGET"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Types"		"DOTA_UNIT_TARGET_HERO"
+			}
+			"Type"			"DAMAGE_TYPE_PURE"
+			"Damage"		"%AbilityDamage * %hero_dmg_pct / 100"
+		}
+
+		"Damage"
+		{
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Types"		"DOTA_UNIT_TARGET_BASIC"
+			}
+			"Type"			"DAMAGE_TYPE_PURE"
+			"Damage"		"%AbilityDamage"
 		}
 
 		"FireSound"

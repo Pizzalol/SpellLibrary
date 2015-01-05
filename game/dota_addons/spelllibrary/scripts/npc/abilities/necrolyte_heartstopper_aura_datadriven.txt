@@ -6,6 +6,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"necrolyte_heartstopper_aura"
 	
 	
 	// Casting
@@ -23,7 +24,42 @@
 		{
 			"var_type"			"FIELD_FLOAT"
 			"aura_damage"		"-0.6 -0.9 -1.2 -1.5" 
-		} 
+		}
+		"03"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"aura_damage_interval"		"0.2" 
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_heartstopper_aura_datadriven"
+		{
+			"Passive"		"1"
+			"IsHidden"		"1"
+
+			"Aura" 			"modifier_heartstopper_debuff_datadriven"
+			"Aura_Radius" 	"%aura_radius"
+			"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		}
+
+		"modifier_heartstopper_debuff_datadriven"
+		{
+			"IsDebuff"	"1"
+
+			"ThinkInterval"	"%aura_damage_interval"
+
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/heartstopper_aura.lua"
+					"Function"		"HeartstopperAura"
+				}
+			}
+		}
 	}
 }
 
