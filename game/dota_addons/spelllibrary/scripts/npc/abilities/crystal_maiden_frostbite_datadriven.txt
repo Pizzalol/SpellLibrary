@@ -105,7 +105,7 @@
 			"Target"
 			{
 				"Center"		"TARGET"
-				"Type"			"DOTA_UNIT_TARGET_HERO"
+				"Types"			"DOTA_UNIT_TARGET_HERO"
 			}
 			"ModifierName"		"modifier_frost_bite_root_datadriven"
 			"Duration"			"%duration"
@@ -116,7 +116,7 @@
 			"Target"
 			{
 				"Center"		"TARGET"
-				"Type"			"DOTA_UNIT_TARGET_HERO"
+				"Types"			"DOTA_UNIT_TARGET_HERO"
 			}
 			"ModifierName"		"modifier_frost_bite_damage_datadriven"
 			"Duration"			"%duration - %damage_interval"
@@ -127,7 +127,7 @@
 			"Target"
 			{
 				"Center"		"TARGET"
-				"Type"			"DOTA_UNIT_TARGET_BASIC"
+				"Types"			"DOTA_UNIT_TARGET_BASIC"
 			}
 			"ModifierName"		"modifier_frost_bite_root_datadriven"
 			"Duration"			"%creep_duration"
@@ -138,7 +138,7 @@
 			"Target"
 			{
 				"Center"		"TARGET"
-				"Type"			"DOTA_UNIT_TARGET_BASIC"
+				"Types"			"DOTA_UNIT_TARGET_BASIC"
 			}
 			"ModifierName"		"modifier_frost_bite_damage_datadriven"
 			"Duration"			"%creep_duration - %damage_interval"
