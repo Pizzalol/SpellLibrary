@@ -80,7 +80,7 @@
 		"FireEffect"
 		{
 			"EffectName"	"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
-			"EffectAttachType"	"follow_origin"
+			"EffectAttachType"	"attach_origin"
 			"Target"		"CASTER"
 		}
 

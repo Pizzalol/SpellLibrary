@@ -1,9 +1,20 @@
+// Rewrite of the Mirana Leap ability
+// Author: Pizzalol
+// Date: 05.01.2015.
 "mirana_leap_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityTextureName"	"mirana_leap"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -52,6 +63,88 @@
 		{
 			"var_type"			"FIELD_INTEGER"
 			"leap_speedbonus_as"	"8 16 24 32"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"leap_duration"			"10.0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Ability.Leap"
+			"Target"		"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_mirana/leap.lua"
+			"Function"		"Leap"
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+            {
+                "Center" "CASTER"
+                "Radius" "%leap_radius"
+                "Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
+                "Types" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+            }
+
+            "Action"
+            {
+            	"ApplyModifier"
+            	{
+            		"ModifierName"	"modifier_leap_datadriven"
+            		"Target"		"TARGET"
+            	}
+            }
+		}
+
+		"DelayedAction"
+		{
+			"Delay"		"%leap_distance / %leap_speed"
+
+			"Action"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+		            {
+		                "Center" "CASTER"
+		                "Radius" "%leap_radius"
+		                "Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
+		                "Types" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		            }
+
+		            "Action"
+		            {
+		            	"ApplyModifier"
+		            	{
+		            		"ModifierName"	"modifier_leap_datadriven"
+		            		"Target"		"TARGET"
+		            	}
+		            }
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_leap_datadriven"
+		{
+			"Duration"	"%leap_duration"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%leap_speedbonus_as"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%leap_speedbonus"
+			}
 		}
 	}
 }

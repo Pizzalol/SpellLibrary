@@ -191,7 +191,7 @@
 		"modifier_meat_hook_target_datadriven"
 		{
 			"IsDebuff"				"1"
-			"OverrideAnimation"		"ACT_DOTA_DISABLED"
+			"OverrideAnimation"		"ACT_DOTA_FLAIL"
 
 			"States"
 			{

@@ -4,6 +4,6 @@
 
 	"Ability1" "mirana_starfall_datadriven"
 	"Ability2" "mirana_arrow_datadriven"
-	"Ability3" "lina_fiery_soul_datadriven"
+	"Ability3" "mirana_leap_datadriven"
 	"Ability4" "mirana_invis_datadriven"
 }
