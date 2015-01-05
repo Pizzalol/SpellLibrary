@@ -1,3 +1,8 @@
+// Rewrite of the Obsidian Destroyer Arcane Orb
+// Author: chrislotix
+// Date: 05.01.2015.
+
+
 "obsidian_destroyer_arcane_orb_datadriven"
 {
 	// General
@@ -8,9 +13,16 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-
+	"AbilityTextureName"			"obsidian_destroyer_arcane_orb"
 	"AbilityCastRange"				"450"
 
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
+		"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
+	}	
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityManaCost"				"100 100 100 100"
@@ -28,6 +40,45 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"illusion_damage"		"100 200 300 400"
+		}
+		
+	}
+	"Modifiers"
+	{
+		"modifier_arcane_orb_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"0"
+
+			"Orb"
+			{
+				"Priority"	"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
+				"CastAttack"	"1"
+			}
+
+			"OnOrbFire"
+			{
+				"SpendMana"
+				{
+					"Mana"	"%AbilityManaCost"
+				}
+				"FireSound"
+				{
+					"EffectName"	"Hero_ObsidianDestroyer.ArcaneOrb"
+					"Target"	"TARGET"	
+				}
+			}
+
+			"OnOrbImpact"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/arcane_orb.lua"
+					"Function"	"ArcaneOrb"
+					"Target"	"TARGET"
+				}
+			}
 		}
 	}
 }	
