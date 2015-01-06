@@ -21,9 +21,9 @@
 	{
 		"override_hero" "npc_dota_hero_ancient_apparition"
 	
-		"Ability1" "pudge_meat_hook_datadriven"
-		"Ability2" "mirana_arrow_datadriven"
-		"Ability3" "phantom_assassin_stifling_dagger_datadriven"
+		"Ability1" "necrolyte_death_pulse_datadriven"
+		"Ability2" "necrolyte_heartstopper_aura_datadriven"
+		"Ability3" "necrolyte_sadist_datadriven"
 		"Ability4" "mirana_invis_datadriven"
 	}
 	//End of file test_dummy_ranged.txt

@@ -6193,24 +6193,6 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_slow"
 				}
 			}
-			
-			"modifier_crystal_nova_post_vision_datadriven"
-			{
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BONUS_DAY_VISION"			"%vision_radius"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%vision_radius"
-				}
-				
-				"States"
-				{
-					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
 		}
 	}
 	//End of file crystal_maiden_crystal_nova_datadriven.txt
@@ -20263,6 +20245,7 @@
 	// Rewrite of the Mirana Sacred Arrow ability
 	// Author: Pizzalol
 	// Date: 04.01.2015.
+	// Changed: 06.01.2015.
 	"mirana_arrow_datadriven"
 	{
 		// General
@@ -20395,8 +20378,6 @@
 				"ScriptFile"			"scripts/vscripts/heroes/hero_mirana/arrow.lua"
 				"Function"				"ArrowHit"
 				"Target"				"TARGET"
-				//"dummy_modifier"		"modifier_arrow_vision"
-				//"vision_duration"		"%vision_duration"
 			}
 	
 			"FireSound"
@@ -22029,6 +22010,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"necrolyte_sadist"
 		
 		"AbilitySpecial"
 		{
@@ -22040,7 +22022,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"hero_multiplier"	"10"
+				"hero_multiplier"	"10"			// Only used for the stack count
 			}
 			"03"
 			{
@@ -22051,6 +22033,121 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"regen_duration"			"6.0"
+			}
+			// Hero regen
+			// Change this if you change the values above
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_regen_hero"		"18 36 54 90"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health_regen_hero"		"9 18 27 36"
+			}
+	
+		}
+	
+		"Modifiers"
+		{
+			"modifier_sadist_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnKill"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_sadist_regen_datadriven"
+						"Target"		"CASTER"
+					}
+				}
+	
+				"OnHeroKilled"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_sadist_hero_regen_datadriven"
+						"Target"		"CASTER"
+					}
+				}
+			}
+	
+			// Stack modifier
+			"modifier_sadist_buff_datadriven"
+			{
+				"IsBuff"	"1"
+				"Duration"	"%regen_duration"
+			}
+	
+			"modifier_sadist_regen_datadriven"
+			{
+				"Duration"	"%regen_duration"
+				"IsHidden"	"1"
+	
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/sadist.lua"
+						"Function"		"ApplySadist"
+						"stack_modifier"	"modifier_sadist_buff_datadriven"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/sadist.lua"
+						"Function"		"RemoveSadist"
+						"stack_modifier"	"modifier_sadist_buff_datadriven"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_regen"
+				}
+			}
+	
+			"modifier_sadist_hero_regen_datadriven"
+			{
+				"Duration"	"%regen_duration"
+				"IsHidden"	"1"
+	
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/sadist.lua"
+						"Function"		"ApplySadistHero"
+						"stack_modifier"	"modifier_sadist_buff_datadriven"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/sadist.lua"
+						"Function"		"RemoveSadistHero"
+						"stack_modifier"	"modifier_sadist_buff_datadriven"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen_hero"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_regen_hero"
+				}
 			}
 		}
 	}
@@ -24296,6 +24393,7 @@
 	// Rewrite of the Phantom Assassin Stifling Dagger ability
 	// Author: Pizzalol
 	// Date: 21.12.2014.
+	// Changed: 05.01.2015.
 	"phantom_assassin_stifling_dagger_datadriven"
 	{
 		// General
@@ -32210,6 +32308,8 @@
 	// Rewrite of the Slardar Bash
 	// Author: chrislotix
 	// Date: 01.01.2015.
+	// Changed: 05.01.2015.
+	// Changed by: Pizzalol
 	"slardar_bash_datadriven"
 	{
 		// General
@@ -39864,6 +39964,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"windrunner_focusfire"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -39904,8 +40005,102 @@
 				"focusfire_damage_reduction_scepter"	"-30 -15 0"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"						"CASTER"
+				"EffectName"					"Ability.Focusfire"
+			}
+		
+			"ApplyModifier"
+			{
+				"Target"						"CASTER"
+				"ModifierName"					"modifier_focusfire_caster_datadriven"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"					"heroes/hero_windrunner/focusfire.lua"
+				"Function"						"focusfire_register"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_focusfire_caster_datadriven"
+			{
+				"IsHidden"			"0"
+				"IsPurgable"		"0"
+				"Duration"			"%AbilityDuration"
+			
+				// when attack start, remove attackspeed
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_windrunner/focusfire.lua"
+						"Function"				"focusfire_on_attack_start"
+					}
+				}
+			
+				// after attack complete, remove damage
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_windrunner/focusfire.lua"
+						"Function"				"focusfire_on_attack_landed"
+					}
+				}
+			
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"Target"				"CASTER"
+						"ModifierName"			"modifier_focusfire_attackspeed_buff_datadriven"
+					}
+					
+					"RemoveModifier"
+					{
+						"Target"				"CASTER"
+						"ModifierName"			"modifier_focusfire_damage_debuff_datadriven"
+					}
+				}
+			}
+			
+			"modifier_focusfire_attackspeed_buff_datadriven"
+			{
+				"IsHidden"			"1"
+				"IsPurgable"		"0"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				}
+			}
+			
+			"modifier_focusfire_damage_debuff_datadriven"
+			{
+				"IsHidden"			"1"
+				"IsPurgable"		"0"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%focusfire_damage_reduction"
+				}
+			}
+		}
 	}
-	
 	//End of file windrunner_focusfire_datadriven.txt
 
 
@@ -39915,20 +40110,22 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"windrunner_powershot"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1800"
+		"AbilityCastRange"				"2600"
 		"AbilityCastPoint"				"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"9.0 9.0 9.0 9.0"
+		"AbilityCooldown"				"0.0" // 9.0 9.0 9.0 9.0"
 		"AbilityChannelTime"			"1.0 1.0 1.0 1.0"
 	
 		// Damage.
@@ -39937,7 +40134,7 @@
 	
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90 100 110 120"
+		"AbilityManaCost"				"0" // 90 100 110 120"
 	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -39961,7 +40158,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"arrow_range"			"1825"
+				"arrow_range"			"2600"
 			}
 			"05"
 			{
@@ -39976,16 +40173,137 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"800 800 800 800"
+				"vision_radius"			"400 400 400 400"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"vision_duration"		"3.34 3.34 3.34 3.34"
 			}
+			// Extra variable
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_interval"		"0.01"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_interval"	"0.01"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_time"			"1.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
+			"particle"					"particles/units/heroes/hero_windrunner/windrunner_spell_powershot.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			// Reset speed and damage variables and set timer for channel
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_windrunner/powershot.lua"
+				"Function"				"powershot_initialize"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_powershot_charge_datadriven"
+			}
+			
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Ability.PowershotPull"
+			}
+		}
+		
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_powershot_charge_datadriven"
+			}
+			
+			"RunScript"
+			{
+				"Target"				"POINT"
+				"ScriptFile"			"heroes/hero_windrunner/powershot.lua"
+				"Function"				"powershot_start_traverse"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"false"
+		
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_windrunner/powershot.lua"
+				"Function"				"powershot_register_unit"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_powershot_charge_datadriven"
+			{
+				"Duration"				"%charge_time"
+			
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_windrunner/powershot.lua"
+						"Function"		"powershot_charge"
+					}
+				}
+			
+				"ThinkInterval"			"%charge_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_windrunner/powershot.lua"
+						"Function"		"powershot_charge"
+					}
+				}
+			}
+			
+			// For destroying tree
+			"modifier_powershot_dummy_datadriven"
+			{
+				"OnCreated"
+				{
+					"DestroyTrees"
+					{
+						"Target"		"TARGET"
+						"Radius"		"%tree_width * 2"			// I feel 75 is way too small and it shouldn't be right
+					}
+				}
+			
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
-	
 	//End of file windrunner_powershot_datadriven.txt
 
 
@@ -40055,6 +40373,7 @@
 
 
 	//Start of file windrunner_windrun_datadriven.txt
+	// NOTE: Need to find the proper sound. It doesn't seem to fire.
 	"windrunner_windrun_datadriven"
 	{
 		// General
@@ -40062,6 +40381,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"windrunner_windrun"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -40069,12 +40389,12 @@
 	
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15.0 15.0 15.0 15.0"
+		"AbilityCooldown"				"0" // 15.0 15.0 15.0 15.0"
 		"AbilityDuration"				"3 4 5 6"
 	
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 100 100 100"
+		"AbilityManaCost"				"0" // 100 100 100 100"
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -40086,13 +40406,13 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_bonus_pct"	"50 50 50 50"		
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_bonus_pct"		"50 50 50 50"		
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"evasion_pct_tooltip"	"100"
+				"evasion_pct_tooltip"		"100"
 			}
 			"03"
 			{
@@ -40109,9 +40429,111 @@
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"3 4 5 6"
 			}
+			// Extra variables
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"linger_duration"			"2.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
+			"particle"					"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Ability.Windrun"	// Find the name for actual sound
+			}
+		
+			"ApplyModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_windrun_caster_datadriven"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_windrun_debuff_aura_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_windrun_caster_datadriven"
+			{
+				"Duration"				"%duration"
+				
+				"EffectName"			"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%evasion_pct_tooltip"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_bonus_pct"
+				}
+			}
+		
+			"modifier_windrun_debuff_aura_datadriven"
+			{
+				"Duration"				"%duration"
+			
+				"IsHidden"				"1"
+				"Aura"					"modifier_windrun_debuff_datadriven"
+				"Aura_Radius"			"%radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+			
+			"modifier_windrun_debuff_datadriven"
+			{
+				"IsDebuff"				"1"
+			
+				"OnCreated"
+				{
+					"RemoveModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"modifier_windrun_debuff_datadriven"
+					}
+				}
+			
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"modifier_windrun_debuff_linger_datadriven"
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%enemy_movespeed_bonus_pct"
+				}
+			}
+			
+			"modifier_windrun_debuff_linger_datadriven"
+			{
+				"Duration"				"%linger_duration"
+				
+				"IsDebuff"				"1"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%enemy_movespeed_bonus_pct"
+				}
+			}
 		}
 	}
-		
 	//End of file windrunner_windrun_datadriven.txt
 
 

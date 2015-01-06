@@ -5,7 +5,7 @@ function HeartstopperAura( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target
-	local target_max_hp = target:GetMaxHealth()
+	local target_max_hp = target:GetMaxHealth() / 100
 	local aura_damage = ability:GetLevelSpecialValueFor("aura_damage", (ability:GetLevel() - 1))
 	local aura_damage_interval = ability:GetLevelSpecialValueFor("aura_damage_interval", (ability:GetLevel() - 1))
 
@@ -17,7 +17,7 @@ function HeartstopperAura( keys )
 	damage_table.victim = target
 	damage_table.damage_type = DAMAGE_TYPE_PURE
 	damage_table.ability = ability
-	damage_table.damage = target_max_hp / -aura_damage * aura_damage_interval / 100
+	damage_table.damage = target_max_hp * -aura_damage * aura_damage_interval
 
 	ApplyDamage(damage_table)
 end
