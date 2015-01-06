@@ -4,6 +4,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"sniper_take_aim"
 	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -15,5 +16,21 @@
 			"bonus_attack_range"			"100 200 300 400"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"Modifiers"
+	{
+		"modifier_take_aim_datadriven"
+		{
+			"Passive"			"1"
+			"IsPurgable"		"0"
+			"IsHidden"			"1"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+			}
+		}
+	}
 }
-
