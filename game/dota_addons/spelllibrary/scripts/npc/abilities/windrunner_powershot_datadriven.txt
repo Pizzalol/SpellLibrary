@@ -3,15 +3,17 @@
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"windrunner_powershot"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastRange"				"1800"
+	"AbilityCastRange"				"2600"
 	"AbilityCastPoint"				"0.3"
 	
 	// Time		
@@ -49,7 +51,7 @@
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"arrow_range"			"1825"
+			"arrow_range"			"2600"
 		}
 		"05"
 		{
@@ -64,13 +66,134 @@
 		"07"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"vision_radius"			"800 800 800 800"
+			"vision_radius"			"400 400 400 400"
 		}
 		"08"
 		{
 			"var_type"				"FIELD_FLOAT"
 			"vision_duration"		"3.34 3.34 3.34 3.34"
 		}
+		// Extra variable
+		"09"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"charge_interval"		"0.01"
+		}
+		"10"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damage_per_interval"	"0.01"
+		}
+		"11"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"charge_time"			"1.0"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
+		"particle"					"particles/units/heroes/hero_windrunner/windrunner_spell_powershot.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		// Reset speed and damage variables and set timer for channel
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_windrunner/powershot.lua"
+			"Function"				"powershot_initialize"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"				"CASTER"
+			"ModifierName"			"modifier_powershot_charge_datadriven"
+		}
+		
+		"FireSound"
+		{
+			"Target"				"CASTER"
+			"EffectName"			"Ability.PowershotPull"
+		}
+	}
+	
+	"OnChannelFinish"
+	{
+		"RemoveModifier"
+		{
+			"Target"				"CASTER"
+			"ModifierName"			"modifier_powershot_charge_datadriven"
+		}
+		
+		"RunScript"
+		{
+			"Target"				"POINT"
+			"ScriptFile"			"heroes/hero_windrunner/powershot.lua"
+			"Function"				"powershot_start_traverse"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"				"false"
+	
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_windrunner/powershot.lua"
+			"Function"				"powershot_register_unit"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_powershot_charge_datadriven"
+		{
+			"Duration"				"%charge_time"
+		
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_windrunner/powershot.lua"
+					"Function"		"powershot_charge"
+				}
+			}
+		
+			"ThinkInterval"			"%charge_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_windrunner/powershot.lua"
+					"Function"		"powershot_charge"
+				}
+			}
+		}
+		
+		// For destroying tree
+		"modifier_powershot_dummy_datadriven"
+		{
+			"OnCreated"
+			{
+				"DestroyTrees"
+				{
+					"Target"		"TARGET"
+					"Radius"		"%tree_width"
+				}
+			}
+		
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
 	}
 }
-
