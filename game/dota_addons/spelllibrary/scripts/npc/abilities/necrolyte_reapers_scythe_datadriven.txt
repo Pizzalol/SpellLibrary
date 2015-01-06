@@ -1,3 +1,6 @@
+// Rewrite of the Necrophos Reapers Scythe ability
+// Author: Pizzalol
+// Date: 06.01.2015.
 "necrolyte_reapers_scythe_datadriven"
 {
 	// General
@@ -12,6 +15,17 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"necrolyte_reapers_scythe"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_necrolyte.vsndevts"
+		"particle"			"particles/units/heroes/hero_necrolyte/necrolyte_scythe.vpcf"
+		"particle"			"particles/units/heroes/hero_necrolyte/necrolyte_scythe_model.vpcf"
+		"particle"			"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
+		"particle"			"particles/generic_gameplay/generic_stunned.vpcf"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -71,6 +85,105 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"respawn_constant"		"30"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_reapers_scythe_datadriven"
+			"Target"		"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Necrolyte.ReapersScythe.Cast"
+			"Target"		"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Necrolyte.ReapersScythe.Target"
+			"Target"		"TARGET"
+		}
+
+		"DelayedAction"
+		{
+			"Delay"		"%stun_duration"
+
+			"Action"
+			{
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
+					"EffectAttachType"	"start_at_customorigin"
+					
+					"ControlPointEntities"
+					{
+						"TARGET"	"follow_origin"
+						"TARGET"	"follow_origin"
+					}
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/reapers_scythe.lua"
+					"Function"		"ReapersScythe"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_reapers_scythe_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%stun_duration"
+
+			"OverrideAnimation"	"ACT_DOTA_DISABLED"
+
+			"EffectName" "particles/generic_gameplay/generic_stunned.vpcf"
+        	"EffectAttachType" "follow_overhead"
+
+			
+
+			"OnCreated"
+			{
+				"DelayedAction"
+				{
+					// Scythe animation has a 0.7 sec travel time
+					"Delay"		"%stun_duration - 0.7"
+
+					"Action"
+					{
+						"FireEffect"
+						{
+							"EffectName"	"particles/units/heroes/hero_necrolyte/necrolyte_scythe_model.vpcf"
+							"EffectAttachType"	"follow_origin"
+
+							"ControlPointEntities"
+							{
+								"CASTER"	"follow_origin"
+								"TARGET"	"follow_origi"
+							}
+						}
+					}
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_necrolyte/necrolyte_scythe.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"		"TARGET"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }

@@ -24,7 +24,7 @@
 		"Ability1" "necrolyte_death_pulse_datadriven"
 		"Ability2" "necrolyte_heartstopper_aura_datadriven"
 		"Ability3" "necrolyte_sadist_datadriven"
-		"Ability4" "mirana_invis_datadriven"
+		"Ability4" "necrolyte_reapers_scythe_datadriven"
 	}
 	//End of file test_dummy_ranged.txt
 }
