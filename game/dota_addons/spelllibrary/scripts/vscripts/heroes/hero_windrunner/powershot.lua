@@ -93,6 +93,15 @@ function powershot_start_traverse( keys )
 	}
 	caster.powershot_projectileID = ProjectileManager:CreateLinearProjectile( projectileTable )
 	
+	-- Register units around caster
+	local units = FindUnitsInRadius( caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false )
+	for k, v in pairs( units ) do
+		local index = v:entindex()
+		caster.powershot_units_array[ index ] = v
+		caster.powershot_units_hit[ index ] = false
+	end
+	
 	-- Traverse
 	Timers:CreateTimer( function()
 			-- Traverse the point
@@ -100,7 +109,7 @@ function powershot_start_traverse( keys )
 			
 			-- Loop through the units array
 			for k, v in pairs( caster.powershot_units_array ) do
-				-- Check if it's not null, never got hit and in radius
+				-- Check if it never got hit and is in radius
 				if caster.powershot_units_hit[ k ] == false
 						and powershot_distance( v:GetAbsOrigin(), caster.powershot_currentPos ) <= caster.powershot_radius then
 					-- Deal damage
@@ -117,6 +126,8 @@ function powershot_start_traverse( keys )
 					caster.powershot_percent_movespeed = caster.powershot_percent_movespeed * ( 1.0 - caster.powershot_speed_reduction )
 					-- Change flag
 					caster.powershot_units_hit[ k ] = true
+					-- Fire sound
+					StartSoundEvent( "Hero_Windrunner.PowershotDamage", v )
 				end
 			end
 			
