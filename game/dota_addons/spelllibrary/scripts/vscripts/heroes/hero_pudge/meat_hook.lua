@@ -2,6 +2,7 @@ hookTable = hookTable or {}
 
 --[[Author: Pizzalol
 	Date: 02.01.2015.
+	Changed: 06.01.2015.
 	Upon hitting a unit it gives vision and checks if its a friendly unit or an enemy one and then pulls it back]]
 function RetractMeatHook( keys )
 	-- Spell
@@ -14,11 +15,8 @@ function RetractMeatHook( keys )
 	local targetLocation = target:GetAbsOrigin() 
 	local distance = (targetLocation - casterLocation):Length2D()
 
-	-- Modifiers
+	-- Modifier
 	local meat_hook_modifier = keys.meat_hook_modifier
-	local vision_modifier = keys.vision_modifier
-	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", (ability:GetLevel() - 1))
-	local dummy_modifier = keys.dummy_modifier
 
 	-- Sound
 	local sound_extend = keys.sound_extend
@@ -27,10 +25,9 @@ function RetractMeatHook( keys )
 	StopSoundEvent(sound_extend, caster)
 
 	-- Vision
-	local vision_dummy = CreateUnitByName("npc_dummy_blank", targetLocation, false, caster, caster, caster:GetTeam())
-	ability:ApplyDataDrivenModifier(caster, vision_dummy, vision_modifier, {})
-	ability:ApplyDataDrivenModifier(caster, vision_dummy, dummy_modifier, {})
-	Timers:CreateTimer(vision_duration, function() vision_dummy:RemoveSelf() end)
+	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", (ability:GetLevel() - 1))
+	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", (ability:GetLevel() - 1))
+	ability:CreateVisibilityNode(targetLocation, vision_radius, vision_duration) 
 
 	-- Damage
 	if target:GetTeam() ~= caster:GetTeam() then

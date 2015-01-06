@@ -1,6 +1,7 @@
 // Rewrite of the Phantom Assassin Stifling Dagger ability
 // Author: Pizzalol
 // Date: 21.12.2014.
+// Changed: 05.01.2015.
 "phantom_assassin_stifling_dagger_datadriven"
 {
 	// General

@@ -1,6 +1,7 @@
 // Rewrite of the Mirana Sacred Arrow ability
 // Author: Pizzalol
 // Date: 04.01.2015.
+// Changed: 06.01.2015.
 "mirana_arrow_datadriven"
 {
 	// General
@@ -133,34 +134,12 @@
 			"ScriptFile"			"scripts/vscripts/heroes/hero_mirana/arrow.lua"
 			"Function"				"ArrowHit"
 			"Target"				"TARGET"
-			"dummy_modifier"		"modifier_arrow_vision"
-			"vision_duration"		"%vision_duration"
 		}
 
 		"FireSound"
 		{
 			"EffectName"			"Hero_Mirana.ArrowImpact"
 			"Target"				"TARGET"
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_arrow_vision"
-		{
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%arrow_vision"
-				"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%arrow_vision"
-			}
-
-			"States"
-			{
-				"MODIFIER_STATE_FLYING"			"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
-			}
 		}
 	}
 }

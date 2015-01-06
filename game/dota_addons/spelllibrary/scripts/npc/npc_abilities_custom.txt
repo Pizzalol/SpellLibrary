@@ -6625,7 +6625,7 @@
 				"Target"
 				{
 					"Center"		"TARGET"
-					"Type"			"DOTA_UNIT_TARGET_HERO"
+					"Types"			"DOTA_UNIT_TARGET_HERO"
 				}
 				"ModifierName"		"modifier_frost_bite_root_datadriven"
 				"Duration"			"%duration"
@@ -6636,7 +6636,7 @@
 				"Target"
 				{
 					"Center"		"TARGET"
-					"Type"			"DOTA_UNIT_TARGET_HERO"
+					"Types"			"DOTA_UNIT_TARGET_HERO"
 				}
 				"ModifierName"		"modifier_frost_bite_damage_datadriven"
 				"Duration"			"%duration - %damage_interval"
@@ -6647,7 +6647,7 @@
 				"Target"
 				{
 					"Center"		"TARGET"
-					"Type"			"DOTA_UNIT_TARGET_BASIC"
+					"Types"			"DOTA_UNIT_TARGET_BASIC"
 				}
 				"ModifierName"		"modifier_frost_bite_root_datadriven"
 				"Duration"			"%creep_duration"
@@ -6658,7 +6658,7 @@
 				"Target"
 				{
 					"Center"		"TARGET"
-					"Type"			"DOTA_UNIT_TARGET_BASIC"
+					"Types"			"DOTA_UNIT_TARGET_BASIC"
 				}
 				"ModifierName"		"modifier_frost_bite_damage_datadriven"
 				"Duration"			"%creep_duration - %damage_interval"
@@ -20395,34 +20395,14 @@
 				"ScriptFile"			"scripts/vscripts/heroes/hero_mirana/arrow.lua"
 				"Function"				"ArrowHit"
 				"Target"				"TARGET"
-				"dummy_modifier"		"modifier_arrow_vision"
-				"vision_duration"		"%vision_duration"
+				//"dummy_modifier"		"modifier_arrow_vision"
+				//"vision_duration"		"%vision_duration"
 			}
 	
 			"FireSound"
 			{
 				"EffectName"			"Hero_Mirana.ArrowImpact"
 				"Target"				"TARGET"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_arrow_vision"
-			{
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%arrow_vision"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%arrow_vision"
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_FLYING"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
-				}
 			}
 		}
 	}
@@ -21890,6 +21870,9 @@
 
 
 	//Start of file necrolyte_heartstopper_aura_datadriven.txt
+	// Rewrite of the Necrophos Heartstopper Aura ability
+	// Author: Pizzalol
+	// Date: 05.01.2015.
 	"necrolyte_heartstopper_aura_datadriven"
 	{
 		// General
@@ -22969,6 +22952,11 @@
 
 
 	//Start of file obsidian_destroyer_arcane_orb_datadriven.txt
+	// Rewrite of the Obsidian Destroyer Arcane Orb
+	// Author: chrislotix
+	// Date: 05.01.2015.
+	
+	
 	"obsidian_destroyer_arcane_orb_datadriven"
 	{
 		// General
@@ -22979,9 +22967,16 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-	
+		"AbilityTextureName"			"obsidian_destroyer_arcane_orb"
 		"AbilityCastRange"				"450"
 	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
+			"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
+		}	
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"100 100 100 100"
@@ -22999,6 +22994,45 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"illusion_damage"		"100 200 300 400"
+			}
+			
+		}
+		"Modifiers"
+		{
+			"modifier_arcane_orb_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"0"
+	
+				"Orb"
+				{
+					"Priority"	"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
+					"CastAttack"	"1"
+				}
+	
+				"OnOrbFire"
+				{
+					"SpendMana"
+					{
+						"Mana"	"%AbilityManaCost"
+					}
+					"FireSound"
+					{
+						"EffectName"	"Hero_ObsidianDestroyer.ArcaneOrb"
+						"Target"	"TARGET"	
+					}
+				}
+	
+				"OnOrbImpact"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/arcane_orb.lua"
+						"Function"	"ArcaneOrb"
+						"Target"	"TARGET"
+					}
+				}
 			}
 		}
 	}	
@@ -25846,8 +25880,6 @@
 				"ScriptFile"			"scripts/vscripts/heroes/hero_pudge/meat_hook.lua"
 				"Function"				"RetractMeatHook"
 				"meat_hook_modifier"	"modifier_meat_hook_target_datadriven"
-				"dummy_modifier"		"modifier_meat_hook_dummy_datadriven"
-				"vision_modifier"		"modifier_meat_hook_vision_datadriven"
 				"sound_extend"			"Hero_Pudge.AttackHookExtend"
 				"sound_retract"			"Hero_Pudge.AttackHookRetract"
 				"sound_retract_stop"	"Hero_Pudge.AttackHookRetractStop"
@@ -25902,20 +25934,6 @@
 					"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
-			"modifier_meat_hook_vision_datadriven"
-			{
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%vision_radius"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%vision_radius"
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_FLYING"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}

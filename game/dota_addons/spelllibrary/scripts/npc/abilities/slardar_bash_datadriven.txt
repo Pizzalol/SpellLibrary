@@ -1,6 +1,8 @@
 // Rewrite of the Slardar Bash
 // Author: chrislotix
 // Date: 01.01.2015.
+// Changed: 05.01.2015.
+// Changed by: Pizzalol
 "slardar_bash_datadriven"
 {
 	// General

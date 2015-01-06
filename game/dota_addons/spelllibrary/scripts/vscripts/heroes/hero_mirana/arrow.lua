@@ -14,6 +14,7 @@ end
 
 --[[Author: Pizzalol
 	Date: 04.01.2015.
+	Changed: 06.01.2015.
 	Calculates the distance traveled by the arrow, then applies damage and stun according to calculations
 	Provides vision of the area upon impact]]
 function ArrowHit( keys )
@@ -23,13 +24,10 @@ function ArrowHit( keys )
 	local ability = keys.ability
 	local ability_damage = ability:GetAbilityDamage()
 
-	-- Vision dummmy
-	local vision_modifier = keys.dummy_modifier
-	local vision_duration = keys.vision_duration
-	local vision_dummy = CreateUnitByName("npc_dummy_blank", target_location, false, caster, caster, caster:GetTeam())
-	vision_dummy:AddNewModifier(caster, nil, "modifier_phased", {})
-	ability:ApplyDataDrivenModifier(caster, vision_dummy, vision_modifier, {})
-	Timers:CreateTimer(vision_duration, function() vision_dummy:RemoveSelf() end)
+	-- Vision
+	local vision_radius = ability:GetLevelSpecialValueFor("arrow_vision", (ability:GetLevel() - 1))
+	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", (ability:GetLevel() - 1))
+	ability:CreateVisibilityNode(target_location, vision_radius, vision_duration)
 
 	-- Initializing the damage table
 	local damage_table = {}
