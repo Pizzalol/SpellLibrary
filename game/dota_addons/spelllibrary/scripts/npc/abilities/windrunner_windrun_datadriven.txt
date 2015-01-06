@@ -1,3 +1,4 @@
+// NOTE: Need to find the proper sound. It doesn't seem to fire.
 "windrunner_windrun_datadriven"
 {
 	// General
@@ -5,6 +6,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"windrunner_windrun"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -12,12 +14,12 @@
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"15.0 15.0 15.0 15.0"
+	"AbilityCooldown"				"0" // 15.0 15.0 15.0 15.0"
 	"AbilityDuration"				"3 4 5 6"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"100 100 100 100"
+	"AbilityManaCost"				"0" // 100 100 100 100"
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -29,13 +31,13 @@
 	{
 		"01"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"movespeed_bonus_pct"	"50 50 50 50"		
+			"var_type"					"FIELD_INTEGER"
+			"movespeed_bonus_pct"		"50 50 50 50"		
 		}
 		"02"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"evasion_pct_tooltip"	"100"
+			"evasion_pct_tooltip"		"100"
 		}
 		"03"
 		{
@@ -52,6 +54,108 @@
 			"var_type"					"FIELD_FLOAT"
 			"duration"					"3 4 5 6"
 		}
+		// Extra variables
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"linger_duration"			"2.0"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
+		"particle"					"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"				"CASTER"
+			"EffectName"			"Ability.Windrun"	// Find the name for actual sound
+		}
+	
+		"ApplyModifier"
+		{
+			"Target"				"CASTER"
+			"ModifierName"			"modifier_windrun_caster_datadriven"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"				"CASTER"
+			"ModifierName"			"modifier_windrun_debuff_aura_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_windrun_caster_datadriven"
+		{
+			"Duration"				"%duration"
+			
+			"EffectName"			"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
+			"EffectAttachType"		"follow_origin"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%evasion_pct_tooltip"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_bonus_pct"
+			}
+		}
+	
+		"modifier_windrun_debuff_aura_datadriven"
+		{
+			"Duration"				"%duration"
+		
+			"IsHidden"				"1"
+			"Aura"					"modifier_windrun_debuff_datadriven"
+			"Aura_Radius"			"%radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		}
+		
+		"modifier_windrun_debuff_datadriven"
+		{
+			"IsDebuff"				"1"
+		
+			"OnCreated"
+			{
+				"RemoveModifier"
+				{
+					"Target"		"TARGET"
+					"ModifierName"	"modifier_windrun_debuff_datadriven"
+				}
+			}
+		
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"Target"		"TARGET"
+					"ModifierName"	"modifier_windrun_debuff_linger_datadriven"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%enemy_movespeed_bonus_pct"
+			}
+		}
+		
+		"modifier_windrun_debuff_linger_datadriven"
+		{
+			"Duration"				"%linger_duration"
+			
+			"IsDebuff"				"1"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%enemy_movespeed_bonus_pct"
+			}
+		}
 	}
 }
-	
