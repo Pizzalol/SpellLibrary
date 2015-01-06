@@ -11105,7 +11105,6 @@
 	// Rewrite of the Faceless Void Backtrack ability
 	// Author: Pizzalol
 	// Date: 06.01.2015.
-	// NOTE: Does not avoid lethal blows
 	"faceless_void_backtrack_datadriven"
 	{
 		// General
@@ -11154,7 +11153,7 @@
 				{
 					"Random"
 					{
-						"Chance"	"50"
+						"Chance"	"%dodge_chance_pct"
 	
 						"OnSuccess"
 						{
@@ -11169,25 +11168,9 @@
 							{
 								"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/backtrack.lua"
 								"Function"		"BacktrackHeal"
-								"incoming_damage"	"%attack_damage"
-							}
-						}
-	
-						"OnFailure"
-						{
-							"RunScript"
-							{
-								"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/backtrack.lua"
-								"Function"		"BacktrackLethal"
-								"incoming_damage"	"%attack_damage"
 							}
 						}
 					}
-				}
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MIN_HEALTH"	"1"
 				}
 			}			
 		}

@@ -66,23 +66,7 @@
 							"Function"		"BacktrackHeal"
 						}
 					}
-
-					"OnFailure"
-					{
-						"RunScript"
-						{
-							"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/backtrack.lua"
-							"Function"		"BacktrackLethal"
-							"incoming_damage"	"%attack_damage"
-							"modifier_name"		"modifier_backtrack_datadriven"
-						}
-					}
 				}
-			}
-
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_MIN_HEALTH"	"1"
 			}
 		}			
 	}
