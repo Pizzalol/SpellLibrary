@@ -8292,6 +8292,7 @@
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
+			"model"			"models/units/heroes/hero_dragon_knight/dragon_knight_dragon.vmdl"
 			
 		}
 	
@@ -11101,12 +11102,24 @@
 
 
 	//Start of file faceless_void_backtrack_datadriven.txt
+	// Rewrite of the Faceless Void Backtrack ability
+	// Author: Pizzalol
+	// Date: 06.01.2015.
+	// NOTE: Does not avoid lethal blows
 	"faceless_void_backtrack_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"faceless_void_backtrack"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf"
+		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -11117,6 +11130,66 @@
 				"var_type"				"FIELD_INTEGER"
 				"dodge_chance_pct"		"10 15 20 25"
 			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_backtrack_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"ThinkInterval"		"0.03"
+	
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/backtrack.lua"
+						"Function"		"BacktrackHealth"
+					}
+				}
+	
+				"OnTakeDamage"
+				{
+					"Random"
+					{
+						"Chance"	"50"
+	
+						"OnSuccess"
+						{
+							"FireEffect"
+							{
+								"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf"
+								"EffectAttachType"	"follow_origin"
+								"Target"		"CASTER"
+							}
+	
+							"RunScript"
+							{
+								"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/backtrack.lua"
+								"Function"		"BacktrackHeal"
+								"incoming_damage"	"%attack_damage"
+							}
+						}
+	
+						"OnFailure"
+						{
+							"RunScript"
+							{
+								"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/backtrack.lua"
+								"Function"		"BacktrackLethal"
+								"incoming_damage"	"%attack_damage"
+							}
+						}
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MIN_HEALTH"	"1"
+				}
+			}			
 		}
 	}
 	
@@ -11188,6 +11261,10 @@
 
 
 	//Start of file faceless_void_time_lock_datadriven.txt
+	// Rewrite of the Faceless Void Time Lock ability
+	// Author: Pizzalol
+	// Date: 06.01.2015.
+	// NOTE: Missing the time lock particle
 	"faceless_void_time_lock_datadriven"
 	{
 		// General
@@ -11196,6 +11273,16 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"faceless_void_time_lock"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+			"particle"			"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+			"particle"			"particles/generic_gameplay/generic_stunned.vpcf"
+		}
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -11224,6 +11311,88 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"40 50 60 70"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_time_lock_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"	"%chance_pct"
+						"PseudoRandom"	"DOTA_PSEUDO_RANDOM_FACELESS_BASH"
+	
+						"OnSuccess"
+						{
+							"FireSound"
+							{
+								"EffectName"	"Hero_FacelessVoid.TimeLockImpact"
+								"Target"		"TARGET"
+							}
+	
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_time_lock_hero_datadriven"
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Types"		"DOTA_UNIT_TARGET_HERO"
+								}
+							}
+	
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_time_lock_creep_datadriven"
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Types"		"DOTA_UNIT_TARGET_BASIC"
+								}
+							}
+	
+							"Damage"
+							{
+								"Target"	"TARGET"
+								"Type"		"DAMAGE_TYPE_MAGICAL"
+								"Damage"	"%bonus_damage"
+							}
+						}
+					}
+				}
+			}
+	
+			"modifier_time_lock_hero_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+	
+				"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_time_lock_creep_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration_creep"
+	
+				"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -40215,7 +40384,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
+			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
 		}
 		
 		"OnSpellStart"

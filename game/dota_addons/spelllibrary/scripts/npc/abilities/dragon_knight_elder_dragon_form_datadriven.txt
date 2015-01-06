@@ -20,6 +20,7 @@
 		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
 		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
 		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
+		"model"			"models/units/heroes/hero_dragon_knight/dragon_knight_dragon.vmdl"
 		
 	}
 
