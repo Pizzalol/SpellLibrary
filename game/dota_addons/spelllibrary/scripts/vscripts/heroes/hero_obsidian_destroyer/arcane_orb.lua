@@ -3,6 +3,7 @@
 	Date: 05.01.2015.]]
 
 function ArcaneOrb( keys )
+
 	local ability = keys.ability
 	local caster = keys.caster
 	local mana = caster:GetMana()
@@ -20,12 +21,15 @@ function ArcaneOrb( keys )
 	damage_table.victim = target
 
 
-	if not target:IsRealHero() or target:IsSummoned() then
-		damage_table.damage = mana * extra_damage + summon_damage
-	else
+
+	if target:IsRealHero() then
 		damage_table.damage = mana * extra_damage
+	else
+		damage_table.damage = mana * extra_damage + summon_damage
 	end 
 
 	ApplyDamage(damage_table)
+
+	print("ebin2")
 end
 
