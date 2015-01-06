@@ -1,29 +1,33 @@
 --[[
 	Author: kritth
-	Date: 3.1.2015.
+	Date: 5.1.2015.
 	Order the explosion in clockwise direction
 ]]
 function freezing_field_order_explosion( keys )
 	Timers:CreateTimer( 0.1, function()
 		keys.ability:ApplyDataDrivenModifier( keys.caster, keys.caster, "modifier_freezing_field_northwest_thinker_datadriven", {} )
+		return nil
 		end )
 		
 	Timers:CreateTimer( 0.2, function()
 		keys.ability:ApplyDataDrivenModifier( keys.caster, keys.caster, "modifier_freezing_field_northeast_thinker_datadriven", {} )
+		return nil
 		end )
 	
 	Timers:CreateTimer( 0.3, function()
 		keys.ability:ApplyDataDrivenModifier( keys.caster, keys.caster, "modifier_freezing_field_southeast_thinker_datadriven", {} )
+		return nil
 		end )
 	
 	Timers:CreateTimer( 0.4, function()
 		keys.ability:ApplyDataDrivenModifier( keys.caster, keys.caster, "modifier_freezing_field_southwest_thinker_datadriven", {} )
+		return nil
 		end )
 end
 
 --[[
 	Author: kritth
-	Date: 3.1.2015.
+	Date: 5.1.2015.
 	Apply the explosion
 ]]
 function freezing_field_explode( keys )
@@ -58,23 +62,9 @@ function freezing_field_explode( keys )
 	end
 	
 	-- From here onwards might be possible to port it back to datadriven through modifierArgs with point but for now leave it as is
-	-- Loop through basic units
+	-- Loop through units
 	local units = FindUnitsInRadius( caster:GetTeamNumber(), attackPoint, caster, radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false )
-	for k, v in pairs( units ) do
-		local damageTable =
-		{
-			victim = v,
-			attacker = caster,
-			damage = abilityDamage,
-			damage_type = keys.ability:GetAbilityDamageType()
-		}
-		ApplyDamage( damageTable )
-	end
-	
-	-- Loop through hero units
-	local units = FindUnitsInRadius( caster:GetTeamNumber(), attackPoint, caster, radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false )
+			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false )
 	for k, v in pairs( units ) do
 		local damageTable =
 		{
@@ -95,5 +85,8 @@ function freezing_field_explode( keys )
 	local dummy = CreateUnitByName( "npc_dummy_blank", attackPoint, false, caster, caster, caster:GetTeamNumber() )
 	ability:ApplyDataDrivenModifier( caster, dummy, refModifierName, {} )
 	StartSoundEvent( soundEventName, dummy )
-	Timers:CreateTimer( 0.1, function() dummy:Destroy() end )
+	Timers:CreateTimer( 0.1, function()
+		dummy:Destroy()
+		return nil
+	end )
 end

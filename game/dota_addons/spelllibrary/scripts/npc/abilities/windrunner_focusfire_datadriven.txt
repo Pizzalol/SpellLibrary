@@ -9,6 +9,7 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"windrunner_focusfire"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -49,5 +50,99 @@
 			"focusfire_damage_reduction_scepter"	"-30 -15 0"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"							"soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"						"CASTER"
+			"EffectName"					"Ability.Focusfire"
+		}
+	
+		"ApplyModifier"
+		{
+			"Target"						"CASTER"
+			"ModifierName"					"modifier_focusfire_caster_datadriven"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"					"heroes/hero_windrunner/focusfire.lua"
+			"Function"						"focusfire_register"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_focusfire_caster_datadriven"
+		{
+			"IsHidden"			"0"
+			"IsPurgable"		"0"
+			"Duration"			"%AbilityDuration"
+		
+			// when attack start, remove attackspeed
+			"OnAttackStart"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_windrunner/focusfire.lua"
+					"Function"				"focusfire_on_attack_start"
+				}
+			}
+		
+			// after attack complete, remove damage
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_windrunner/focusfire.lua"
+					"Function"				"focusfire_on_attack_landed"
+				}
+			}
+		
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"Target"				"CASTER"
+					"ModifierName"			"modifier_focusfire_attackspeed_buff_datadriven"
+				}
+				
+				"RemoveModifier"
+				{
+					"Target"				"CASTER"
+					"ModifierName"			"modifier_focusfire_damage_debuff_datadriven"
+				}
+			}
+		}
+		
+		"modifier_focusfire_attackspeed_buff_datadriven"
+		{
+			"IsHidden"			"1"
+			"IsPurgable"		"0"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+			}
+		}
+		
+		"modifier_focusfire_damage_debuff_datadriven"
+		{
+			"IsHidden"			"1"
+			"IsPurgable"		"0"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%focusfire_damage_reduction"
+			}
+		}
+	}
 }
-
