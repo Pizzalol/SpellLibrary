@@ -55,7 +55,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"precache"
 	{
-		"soundfile"							"soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
+		"soundfile"							"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
 	}
 	
 	"OnSpellStart"
