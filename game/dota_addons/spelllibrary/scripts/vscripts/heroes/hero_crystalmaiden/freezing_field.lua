@@ -62,23 +62,9 @@ function freezing_field_explode( keys )
 	end
 	
 	-- From here onwards might be possible to port it back to datadriven through modifierArgs with point but for now leave it as is
-	-- Loop through basic units
+	-- Loop through units
 	local units = FindUnitsInRadius( caster:GetTeamNumber(), attackPoint, caster, radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false )
-	for k, v in pairs( units ) do
-		local damageTable =
-		{
-			victim = v,
-			attacker = caster,
-			damage = abilityDamage,
-			damage_type = keys.ability:GetAbilityDamageType()
-		}
-		ApplyDamage( damageTable )
-	end
-	
-	-- Loop through hero units
-	local units = FindUnitsInRadius( caster:GetTeamNumber(), attackPoint, caster, radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false )
+			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false )
 	for k, v in pairs( units ) do
 		local damageTable =
 		{
