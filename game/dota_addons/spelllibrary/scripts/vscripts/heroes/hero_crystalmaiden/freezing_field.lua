@@ -1,29 +1,33 @@
 --[[
 	Author: kritth
-	Date: 3.1.2015.
+	Date: 5.1.2015.
 	Order the explosion in clockwise direction
 ]]
 function freezing_field_order_explosion( keys )
 	Timers:CreateTimer( 0.1, function()
 		keys.ability:ApplyDataDrivenModifier( keys.caster, keys.caster, "modifier_freezing_field_northwest_thinker_datadriven", {} )
+		return nil
 		end )
 		
 	Timers:CreateTimer( 0.2, function()
 		keys.ability:ApplyDataDrivenModifier( keys.caster, keys.caster, "modifier_freezing_field_northeast_thinker_datadriven", {} )
+		return nil
 		end )
 	
 	Timers:CreateTimer( 0.3, function()
 		keys.ability:ApplyDataDrivenModifier( keys.caster, keys.caster, "modifier_freezing_field_southeast_thinker_datadriven", {} )
+		return nil
 		end )
 	
 	Timers:CreateTimer( 0.4, function()
 		keys.ability:ApplyDataDrivenModifier( keys.caster, keys.caster, "modifier_freezing_field_southwest_thinker_datadriven", {} )
+		return nil
 		end )
 end
 
 --[[
 	Author: kritth
-	Date: 3.1.2015.
+	Date: 5.1.2015.
 	Apply the explosion
 ]]
 function freezing_field_explode( keys )
@@ -95,5 +99,8 @@ function freezing_field_explode( keys )
 	local dummy = CreateUnitByName( "npc_dummy_blank", attackPoint, false, caster, caster, caster:GetTeamNumber() )
 	ability:ApplyDataDrivenModifier( caster, dummy, refModifierName, {} )
 	StartSoundEvent( soundEventName, dummy )
-	Timers:CreateTimer( 0.1, function() dummy:Destroy() end )
+	Timers:CreateTimer( 0.1, function()
+		dummy:Destroy()
+		return nil
+	end )
 end
