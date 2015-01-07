@@ -6,6 +6,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"ursa_fury_swipes"
 			
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -27,5 +28,51 @@
 			"damage_per_stack"				"15 20 25 30"
 		}
 	}
-}	
-
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"							"particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
+		"particle"							"particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
+	}
+	
+	"Modifiers"
+	{
+		"modifier_fury_swipes_caster_datadriven"
+		{
+			"Passive"						"1"
+			"IsHidden"						"0"
+			"IsPurgable"					"0"
+		
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_ursa/fury_swipes.lua"
+					"Function"				"fury_swipes_attack"
+				}
+			}
+		}
+		
+		"modifier_fury_swipes_target_datadriven"
+		{
+			"IsHidden"					"0"
+			"IsPurgable"				"0"
+			"IsDebuff"					"1"
+			
+			"EffectName"				"particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
+			"EffectAttachType"			"follow_overhead"
+			
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"				"TARGET"
+					"EffectName"			"particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
+					"EffectAttachType"		"follow_overhead"
+				}
+			}
+		}
+	}
+}
