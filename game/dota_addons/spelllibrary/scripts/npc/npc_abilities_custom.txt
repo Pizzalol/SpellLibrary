@@ -11384,6 +11384,9 @@
 
 
 	//Start of file faceless_void_time_walk_datadriven.txt
+	// Rewrite of the Faceless Void Time Walk ability
+	// Author: Pizzalol
+	// Date: 07.01.2015.
 	"faceless_void_time_walk_datadriven"
 	{
 		// General
@@ -11391,6 +11394,14 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"faceless_void_time_walk"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -11442,6 +11453,71 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_range"		"700 900 1100 1300"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_time_walk_slow_aura_datadriven"
+				"Target"		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_FacelessVoid.TimeWalk"
+				"Target"		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_time_walk_datadriven"
+				"Target"		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/time_walk.lua"
+				"Function"		"TimeWalk"
+				"Target"		"POINT"
+				"caster_modifier"	"modifier_time_walk_datadriven"
+				"caster_aura"		"modifier_time_walk_slow_aura_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_time_walk_slow_aura_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"Aura" 			"modifier_time_walk_slow_datadriven"
+				"Aura_Radius" 	"%radius"
+				"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+	
+			"modifier_time_walk_slow_datadriven"
+			{
+				"Duration"	"%duration"
+				"IsDebuff"	"1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed_pct"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_pct"
+				}
+			}
+	
+			"modifier_time_walk_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -23406,6 +23482,11 @@
 
 
 	//Start of file obsidian_destroyer_astral_imprisonment_datadriven.txt
+	// Rewrite of the Obsidian Destroyer Astral Imprisonment
+	// Author: chrislotix
+	// Date: 06.01.2015.
+	// NOTE: Negative stacks are showing after self casts
+	
 	"obsidian_destroyer_astral_imprisonment_datadriven"
 	{
 		// General
@@ -23416,6 +23497,17 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"obsidian_destroyer_astral_imprisonment"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"		
+			"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
+			
+			
+		}
 	
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -23443,7 +23535,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"int_steal"				"4 6 8 10"
+				"int_steal"				"-4 -6 -8 -10"
 			}
 			"02"
 			{
@@ -23455,13 +23547,124 @@
 				"var_type"				"FIELD_FLOAT"
 				"prison_duration"		"1.0 2.0 3.0 4.0"
 			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"int_gain"				"4 6 8 10"
+			}
 		}
-	}	
+	
+		"OnSpellStart"
+		{
+	
+			"FireSound"
+			{
+				"EffectName" "Hero_ObsidianDestroyer.AstralImprisonment.Cast"
+				"Target"	"TARGET"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_ObsidianDestroyer.AstralImprisonment"
+				"Target"	"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_astral_imprisonment_int_steal_target_datadriven"
+				"Target"	"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_astral_imprisonment_int_steal_datadriven"
+				"Target"	"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_astral_imprisonment_datadriven"
+				"Target"	"TARGET"
+			}
+		}
+	
+		
+	
+		"Modifiers"
+		{
+			"modifier_astral_imprisonment_datadriven"
+			{
+				"Duration"	"%prison_duration"
+				"IsDebuff"	"1"
+				"IsHidden"	"0"
+				"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
+				"EffectAttachType"	"attach_origin"	
+	
+	
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
+						"Function"	"AstralImprisonmentStopSound"					
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_ObsidianDestroyer.AstralImprisonment.End"
+						"Target"	"TARGET"
+	
+					}
+				}				
+			}
+	
+			"modifier_astral_imprisonment_int_steal_datadriven"
+			{
+				"Duration"	"%steal_duration"
+				"IsDebuff"	"0"
+				"IsPurgable"	"0"
+				"Attributes" "MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%int_gain"
+				}
+			}
+	
+			"modifier_astral_imprisonment_int_steal_target_datadriven"
+			{
+				"Duration"	"%steal_duration"
+				"IsDebuff"	"1"
+				"IsPurgable"	"0"
+				"Attributes" "MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%int_steal"
+				}
+			}
+		}
+	}
+	
 	
 	//End of file obsidian_destroyer_astral_imprisonment_datadriven.txt
 
 
 	//Start of file obsidian_destroyer_essence_aura_datadriven.txt
+	// Rewrite of the Obsidian Destroyer Essence Aura
+	// Author: chrislotix
+	// Date: 07.01.2015.
+	
+	
 	"obsidian_destroyer_essence_aura_datadriven"
 	{
 		// General
@@ -23470,6 +23673,14 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"			"obsidian_destroyer_essence_aura"
+	
+			// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"		
+		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -23496,8 +23707,59 @@
 				"restore_chance"		"40"
 			}
 		}
-	}
 	
+		"Modifiers"
+		{
+			//Static bonus mana which applies to od only
+	
+			"modifier_essence_aura_mana_bonus_datadriven"
+			{
+				"Passive"	"1"
+				"IsPurgable"	"0"
+				"IsHidden"	"1"
+				"Aura" "modifier_essence_aura_effect_datadriven" // this should be the actual mana restore on proc
+				"Aura_Radius" "%radius"
+				"Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types" "DOTA_UNIT_TARGET_HERO"
+				"Aura_ApplyToCaster" "1"
+	
+	
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS"	"%bonus_mana"
+				}
+			}	
+	
+			"modifier_essence_aura_effect_datadriven"
+			{
+						
+				"OnAbilityExecuted"
+				{
+					"Random"
+					{
+						"Chance"	"%restore_chance"
+	
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/essence_aura.lua"
+								"Function"		"RestoreMana"
+								"Target"	"UNIT"
+							}
+							"FireEffect"
+							{
+								"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"
+								"EffectAttachType"	"follow_origin"
+								"Target"	"UNIT"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 	//End of file obsidian_destroyer_essence_aura_datadriven.txt
 
 
@@ -33206,7 +33468,7 @@
 	
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20.0 15.0 10.0"
+		"AbilityCooldown"				"0.0" // 20.0 15.0 10.0"
 	
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
@@ -33214,7 +33476,7 @@
 	
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175 275 375"
+		"AbilityManaCost"				"0" // 175 275 375"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -33234,9 +33496,142 @@
 				"var_type"					"FIELD_INTEGER"
 				"tooltip_range"				"2000 2500 3000"
 			}
+			// Extra variables
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"charge_time"				"2.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"debuff_duration"			"4.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
+			"particle"					"particles/units/heroes/hero_sniper/sniper_assassinate.vpcf"
+			"particle"					"particles/units/heroes/hero_sniper/sniper_crosshair.vpcf"
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Ability.AssassinateLoad"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_assassinate_caster_datadriven"
+			}
+		
+			"ApplyModifier"
+			{
+				"Target"				"TARGET"
+				"ModifierName"			"modifier_assassinate_target_datadriven"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_sniper/assassinate.lua"
+				"Function"				"assassinate_register_target"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Ability.Assassinate"
+			}
+		
+			"TrackingProjectile"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"particles/units/heroes/hero_sniper/sniper_assassinate.vpcf"
+				"Dodgeable"				"1"
+				"ProvidesVision"		"0"
+				"MoveSpeed"				"%projectile_speed"
+				"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+			}
+			
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Hero_Sniper.AssassinateProjectile"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"FireSound"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"Hero_Sniper.AssassinateDamage"
+			}
+		
+			"Damage"
+			{
+				"Target"				"TARGET"
+				"Damage"				"%AbilityDamage"
+				"Type"					"DAMAGE_TYPE_MAGICAL"
+			}
+			
+			"RemoveModifier"
+			{
+				"Target"				"TARGET"
+				"ModifierName"			"modifier_assassinate_target_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_assassinate_caster_datadriven"
+			{
+				"Duration"				"%charge_time"
+			
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_assassinate_caster_datadriven"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_sniper/assassinate.lua"
+						"Function"				"assassinate_remove_target"
+					}
+				}
+			}
+		
+			"modifier_assassinate_target_datadriven"
+			{
+				"IsHidden"				"0"
+				"IsPurgeble"			"0"
+				"IsDebuff"				"1"
+				"Duration"				"%debuff_duration"
+				
+				"EffectName"			"particles/units/heroes/hero_sniper/sniper_crosshair.vpcf"
+				"EffectAttachType"		"follow_overhead"
+				
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE" 			"MODIFIER_STATE_VALUE_DISABLED"
+					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
-	
 	//End of file sniper_assassinate_datadriven.txt
 
 
@@ -33376,6 +33771,7 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"120 120 120 120"
+		"AbilityCooldown"				"40.0 40.0 40.0 40.0"
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -33559,6 +33955,12 @@
 					}
 				}
 				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BONUS_DAY_VISION"			"%radius"
+					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%radius"
+				}
+				
 				"States"
 				{
 					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
@@ -33566,6 +33968,7 @@
 					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING"							"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		
@@ -36043,8 +36446,82 @@
 				"speed"				"900 900 900 900"
 			}
 		}
+		
+		// Datadriven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"particle"				"particles/units/heroes/hero_tinker/tinker_missile.vpcf"
+			"particle"				"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
+			"particle"				"particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"Hero_Tinker.Heat-Seeking_Missile"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_tinker/heat_seeking_missile"
+				"Function"			"heat_seeking_missile_seek_targets"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"FireSound"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"Hero_Tinker.Heat-Seeking_Missile.Impact"
+			}
+		
+			"FireEffect"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+				"ControlPointEntities"
+				{
+					"TARGET"		"attach_origin"
+				}
+			}
+		
+			"Damage"
+			{
+				"Target"			"TARGET"
+				"Damage"			"%AbilityDamage"
+				"Type"				"DAMAGE_TYPE_MAGICAL"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_heat_seeking_missile_dud"
+			{
+				"IsHidden"			"1"
+				"IsPurgable"		"0"
+				
+				"Duration"			"1.0"
+				
+				"EffectName"		"particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf"
+				"EffectAttachType"	"start_at_origin"
+				
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"Target"	"TARGET"
+						"EffectName"	"Hero_Tinker.Heat-Seeking_Missile_Dud"
+					}
+				}
+			}
+		}
 	}
-	
 	//End of file tinker_heat_seeking_missile_datadriven.txt
 
 
@@ -36108,8 +36585,94 @@
 				"cast_range_scepter"	"1100"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"particle"					"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Hero_Tinker.LaserAnim"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Hero_Tinker.Laser"
+			}
+		
+			"TrackingProjectile"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
+				"MoveSpeed"				"1100"
+				"Dodgeable"				"1"
+				"ProvidesVision"		"0"
+				"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_ATTACK_2"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Hero_Tinker.LaserImpact"
+			}
+		
+			"Damage"
+			{
+				"Target"		"TARGET"
+				"Damage"		"%AbilityDamage"
+				"Type"			"DAMAGE_TYPE_PURE"
+			}
+		
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Types"		"DOTA_UNIT_TARGET_BASIC"
+				}
+				"ModifierName"	"modifier_laser_debuff_datadriven"
+				"Duration"		"%duration_creep"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"ModifierName"	"modifier_laser_debuff_datadriven"
+				"Duration"		"%duration_hero"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_laser_debuff_datadriven"
+			{
+				"IsDebuff"		"1"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"	"%miss_rate"
+				}
+			}
+		}
 	}
-	
 	//End of file tinker_laser_datadriven.txt
 
 
@@ -36185,8 +36748,29 @@
 				"distance_scepter"		"1800"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_tinker/march_of_the_machines.lua"
+				"Function"				"march_of_the_machines_spawn"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_march_of_the_machines_dummy_datadriven"
+			{
+				"States"
+				{
+					// insert states here
+				}
+			}
+		}
 	}
-	
 	//End of file tinker_march_of_the_machines_datadriven.txt
 
 
@@ -36198,6 +36782,8 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"			"tinker_rearm"
+		"AbilityCastAnimation"			"ACT_DOTA_CHANNEL_ABILITY_4"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -36211,6 +36797,7 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"150 250 350"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -36221,8 +36808,108 @@
 				"channel_tooltip"			"3 2 1"
 			}
 		}
+		
+		// Data Driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"particle"				"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"FireSound"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"Hero_Tinker.RearmStart"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"Hero_Tinker.Rearm"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_tinker/rearm.lua"
+				"Function"			"rearm_start"
+			}
+		}
+		
+		"OnChannelInterrupted"
+		{
+			"RemoveModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"modifier_rearm_level_1_datadriven"
+			}
+			
+			"RemoveModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"modifier_rearm_level_2_datadriven"
+			}
+			
+			"RemoveModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"modifier_rearm_level_3_datadriven"
+			}
+		}
+		
+		"OnChannelSucceeded"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_tinker/rearm.lua"
+				"Function"			"rearm_refresh_cooldown"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_rearm_level_1_datadriven"
+			{
+				"IsHidden"			"0"
+			
+				"Duration"			"%channel_tooltip"
+				
+				"EffectName"		"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"OverrideAnimation"	"ACT_DOTA_TINKER_REARM1"
+			}
+			
+			"modifier_rearm_level_2_datadriven"
+			{
+				"IsHidden"			"0"
+			
+				"Duration"			"%channel_tooltip"
+				
+				"EffectName"		"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"OverrideAnimation"	"ACT_DOTA_TINKER_REARM2"
+			}
+			
+			"modifier_rearm_level_3_datadriven"
+			{
+				"IsHidden"			"0"
+			
+				"Duration"			"%channel_tooltip"
+				
+				"EffectName"		"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"OverrideAnimation"	"ACT_DOTA_TINKER_REARM3"
+			}
+		}
 	}
-	
 	//End of file tinker_rearm_datadriven.txt
 
 

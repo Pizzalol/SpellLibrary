@@ -1,3 +1,6 @@
+// Rewrite of the Faceless Void Time Walk ability
+// Author: Pizzalol
+// Date: 07.01.2015.
 "faceless_void_time_walk_datadriven"
 {
 	// General
@@ -12,8 +15,6 @@
 	"precache"
 	{
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
-		"particle"			"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-		"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_time_walk.vpcf"
 	}
 	
 	// Casting
@@ -83,19 +84,19 @@
 			"Target"		"CASTER"
 		}
 
-		"AttachEffect"
+		"ApplyModifier"
 		{
-			"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_time_walk.vpcf"
-			"EffectAttachType"	"follow_origin"
+			"ModifierName"	"modifier_time_walk_datadriven"
 			"Target"		"CASTER"
 		}
 
-		// Remove slow aura and invulnerability with script on landing
 		"RunScript"
 		{
 			"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/time_walk.lua"
 			"Function"		"TimeWalk"
 			"Target"		"POINT"
+			"caster_modifier"	"modifier_time_walk_datadriven"
+			"caster_aura"		"modifier_time_walk_slow_aura_datadriven"
 		}
 	}
 
@@ -116,8 +117,6 @@
 			"Duration"	"%duration"
 			"IsDebuff"	"1"
 
-			// Add particle effect
-
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed_pct"
@@ -127,7 +126,12 @@
 
 		"modifier_time_walk_datadriven"
 		{
-			// Caster invulnerability here
+			"IsHidden"	"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }
