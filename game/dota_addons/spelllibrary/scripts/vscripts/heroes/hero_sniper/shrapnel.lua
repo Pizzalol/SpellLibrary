@@ -1,9 +1,12 @@
 --[[
 	Author: kritth
-	Date: 6.1.2015.
+	Date: 7.1.2015.
 	Init: Create a timer to start charging charges
 ]]
 function shrapnel_start_charge( keys )
+	-- Only start charging at level 1
+	if keys.ability:GetLevel() ~= 1 then return end
+
 	local caster = keys.caster
 	local ability = keys.ability
 	local modifierName = "modifier_shrapnel_stack_counter_datadriven"
@@ -59,7 +62,6 @@ function shrapnel_start_cooldown( caster, charge_replenish_time )
 	caster.shrapnel_cooldown = charge_replenish_time
 	Timers:CreateTimer( function()
 			local current_cooldown = caster.shrapnel_cooldown - 0.1
-			print( current_cooldown )
 			if current_cooldown > 0.1 then
 				caster.shrapnel_cooldown = current_cooldown
 				return 0.1
@@ -106,7 +108,7 @@ function shrapnel_fire( keys )
 		-- Check if stack is 0, display ability cooldown
 		if caster.shrapnel_charges == 0 then
 			-- Start Cooldown from caster.shrapnel_cooldown
-			ability:StartCooldown( caster.shrapnel_cooldown )		-- TODO: CHANGE TO REFLECT COOLDOWN
+			ability:StartCooldown( caster.shrapnel_cooldown )
 		else
 			ability:EndCooldown()
 		end
