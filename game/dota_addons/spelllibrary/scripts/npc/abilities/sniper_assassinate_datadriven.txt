@@ -21,7 +21,7 @@
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"20.0 15.0 10.0"
+	"AbilityCooldown"				"0.0" // 20.0 15.0 10.0"
 
 	// Damage.
 	//-------------------------------------------------------------------------------------------------------------
@@ -29,7 +29,7 @@
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"175 275 375"
+	"AbilityManaCost"				"0" // 175 275 375"
 	
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -49,6 +49,139 @@
 			"var_type"					"FIELD_INTEGER"
 			"tooltip_range"				"2000 2500 3000"
 		}
+		// Extra variables
+		"03"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"charge_time"				"2.0"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"debuff_duration"			"4.0"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
+		"particle"					"particles/units/heroes/hero_sniper/sniper_assassinate.vpcf"
+		"particle"					"particles/units/heroes/hero_sniper/sniper_crosshair.vpcf"
+	}
+	
+	"OnAbilityPhaseStart"
+	{
+		"FireSound"
+		{
+			"Target"				"CASTER"
+			"EffectName"			"Ability.AssassinateLoad"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"				"CASTER"
+			"ModifierName"			"modifier_assassinate_caster_datadriven"
+		}
+	
+		"ApplyModifier"
+		{
+			"Target"				"TARGET"
+			"ModifierName"			"modifier_assassinate_target_datadriven"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_sniper/assassinate.lua"
+			"Function"				"assassinate_register_target"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"				"CASTER"
+			"EffectName"			"Ability.Assassinate"
+		}
+	
+		"TrackingProjectile"
+		{
+			"Target"				"TARGET"
+			"EffectName"			"particles/units/heroes/hero_sniper/sniper_assassinate.vpcf"
+			"Dodgeable"				"1"
+			"ProvidesVision"		"0"
+			"MoveSpeed"				"%projectile_speed"
+			"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+		}
+		
+		"FireSound"
+		{
+			"Target"				"CASTER"
+			"EffectName"			"Hero_Sniper.AssassinateProjectile"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"FireSound"
+		{
+			"Target"				"TARGET"
+			"EffectName"			"Hero_Sniper.AssassinateDamage"
+		}
+	
+		"Damage"
+		{
+			"Target"				"TARGET"
+			"Damage"				"%AbilityDamage"
+			"Type"					"DAMAGE_TYPE_MAGICAL"
+		}
+		
+		"RemoveModifier"
+		{
+			"Target"				"TARGET"
+			"ModifierName"			"modifier_assassinate_target_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_assassinate_caster_datadriven"
+		{
+			"Duration"				"%charge_time"
+		
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"Target"		"CASTER"
+					"ModifierName"	"modifier_assassinate_caster_datadriven"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_sniper/assassinate.lua"
+					"Function"				"assassinate_remove_target"
+				}
+			}
+		}
+	
+		"modifier_assassinate_target_datadriven"
+		{
+			"IsHidden"				"0"
+			"IsPurgeble"			"0"
+			"IsDebuff"				"1"
+			"Duration"				"%debuff_duration"
+			
+			"EffectName"			"particles/units/heroes/hero_sniper/sniper_crosshair.vpcf"
+			"EffectAttachType"		"follow_overhead"
+			
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE" 			"MODIFIER_STATE_VALUE_DISABLED"
+				"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
 	}
 }
-
