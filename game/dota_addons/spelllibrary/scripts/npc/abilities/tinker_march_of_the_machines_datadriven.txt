@@ -69,5 +69,26 @@
 			"distance_scepter"		"1800"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_tinker/march_of_the_machines.lua"
+			"Function"				"march_of_the_machines_spawn"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_march_of_the_machines_dummy_datadriven"
+		{
+			"States"
+			{
+				// insert states here
+			}
+		}
+	}
 }
-
