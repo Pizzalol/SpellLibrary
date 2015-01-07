@@ -4,6 +4,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityTextureName"				"ursa_overpower"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -39,5 +40,70 @@
 			"duration_tooltip"			"15"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"						"soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts"
+		"particle"						"particles/status_fx/status_effect_overpower.vpcf"
+		"particle"						"particles/units/heroes/hero_ursa/ursa_overpower_buff.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"					"CASTER"
+			"EffectName"				"Hero_Ursa.Overpower"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"				"heroes/hero_ursa/overpower.lua"
+			"Function"					"overpower_init"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_enrage_buff_datadriven"
+		{
+			"Duration"					"%duration_tooltip"
+			
+			"StatusEffectName"			"particles/status_fx/status_effect_overpower.vpcf"
+			"StatusEffectPriority"		"10"
+		
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"					"CASTER"
+					"EffectName"				"particles/units/heroes/hero_ursa/ursa_overpower_buff.vpcf"
+					"EffectAttachType"			"start_at_customorigin"
+					"ControlPointEntities"
+					{
+						"CASTER"				"attach_head"
+						"CASTER"				"attach_hitloc"
+						"CASTER"				"attach_hitloc"
+						"CASTER"				"attach_hitloc"
+					}
+				}
+			}
+		
+			"OnAttack"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_ursa/overpower.lua"
+					"Function"				"overpower_decrease_stack"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_bonus_pct"
+			}
+		}
+	}
 }
-
