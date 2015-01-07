@@ -7,7 +7,8 @@ function AstralImprisonmentStopSound( keys )
 	local sound_name = "Hero_ObsidianDestroyer.AstralImprisonment"
 	local target = keys.target
 
-	StopSoundEvent(sound_name, target)
+	--Stops the loop sound when the modifier ends
 
+	StopSoundEvent(sound_name, target)
 	
 end

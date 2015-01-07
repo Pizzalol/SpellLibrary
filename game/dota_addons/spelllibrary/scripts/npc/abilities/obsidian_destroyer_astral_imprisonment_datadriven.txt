@@ -1,6 +1,7 @@
 // Rewrite of the Obsidian Destroyer Astral Imprisonment
 // Author: chrislotix
 // Date: 06.01.2015.
+// NOTE: Negative stacks are showing after self casts
 
 "obsidian_destroyer_astral_imprisonment_datadriven"
 {
@@ -115,6 +116,8 @@
 			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
 			"EffectAttachType"	"attach_origin"	
 
+
+
 			"States"
 			{
 				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
@@ -145,6 +148,7 @@
 			"Duration"	"%steal_duration"
 			"IsDebuff"	"0"
 			"IsPurgable"	"0"
+			"Attributes" "MODIFIER_ATTRIBUTE_MULTIPLE"
 
 			"Properties"
 			{
@@ -157,6 +161,7 @@
 			"Duration"	"%steal_duration"
 			"IsDebuff"	"1"
 			"IsPurgable"	"0"
+			"Attributes" "MODIFIER_ATTRIBUTE_MULTIPLE"
 
 			"Properties"
 			{
