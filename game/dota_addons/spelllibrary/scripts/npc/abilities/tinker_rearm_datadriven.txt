@@ -5,6 +5,8 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityTextureName"			"tinker_rearm"
+	"AbilityCastAnimation"			"ACT_DOTA_CHANNEL_ABILITY_4"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -18,6 +20,7 @@
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityManaCost"				"150 250 350"
+	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
@@ -28,5 +31,105 @@
 			"channel_tooltip"			"3 2 1"
 		}
 	}
+	
+	// Data Driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+		"particle"				"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+	}
+	
+	"OnAbilityPhaseStart"
+	{
+		"FireSound"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"Hero_Tinker.RearmStart"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"Hero_Tinker.Rearm"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_tinker/rearm.lua"
+			"Function"			"rearm_start"
+		}
+	}
+	
+	"OnChannelInterrupted"
+	{
+		"RemoveModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_rearm_level_1_datadriven"
+		}
+		
+		"RemoveModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_rearm_level_2_datadriven"
+		}
+		
+		"RemoveModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_rearm_level_3_datadriven"
+		}
+	}
+	
+	"OnChannelSucceeded"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_tinker/rearm.lua"
+			"Function"			"rearm_refresh_cooldown"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_rearm_level_1_datadriven"
+		{
+			"IsHidden"			"0"
+		
+			"Duration"			"%channel_tooltip"
+			
+			"EffectName"		"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
+			"OverrideAnimation"	"ACT_DOTA_TINKER_REARM1"
+		}
+		
+		"modifier_rearm_level_2_datadriven"
+		{
+			"IsHidden"			"0"
+		
+			"Duration"			"%channel_tooltip"
+			
+			"EffectName"		"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
+			"OverrideAnimation"	"ACT_DOTA_TINKER_REARM2"
+		}
+		
+		"modifier_rearm_level_3_datadriven"
+		{
+			"IsHidden"			"0"
+		
+			"Duration"			"%channel_tooltip"
+			
+			"EffectName"		"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
+			"OverrideAnimation"	"ACT_DOTA_TINKER_REARM3"
+		}
+	}
 }
-
