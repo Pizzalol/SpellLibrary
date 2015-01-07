@@ -16,7 +16,7 @@
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"25.0 25.0 25.0"
+	"AbilityCooldown"				"0.0" // 25.0 25.0 25.0"
 	"AbilityDuration"				"15.0 15.0 15.0"
 
 	// Cost
@@ -33,5 +33,171 @@
 			"life_damage_bonus_percent" "5 6 7"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"						"soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts"
+		"particle"						"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"					"CASTER"
+			"EffectName"				"Hero_Ursa.Enrage"
+		}
+	
+		"ApplyModifier"
+		{
+			"Target"					"CASTER"
+			"ModifierName"				"modifier_enrage_buff_datadriven"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"				"heroes/hero_ursa/enrage.lua"
+			"Function"					"enrage_init"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_enrage_buff_datadriven"
+		{
+			"IsHidden"					"0"
+			"IsPurgable"				"0"
+			
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"					"CASTER"
+					"EffectName"				"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
+					"EffectAttachType"			"start_at_customorigin"
+					"ControlPointEntities"
+					{
+						"CASTER"				"attach_attack1"
+					}
+				}
+				
+				"AttachEffect"
+				{
+					"Target"					"CASTER"
+					"EffectName"				"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
+					"EffectAttachType"			"start_at_customorigin"
+					"ControlPointEntities"
+					{
+						"CASTER"				"attach_attack2"
+					}
+				}
+			}
+			
+			"Duration"					"%AbilityDuration"
+		}
+	
+		// bit fields
+		"modifier_enrage_damage_mod_1"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"1"
+			}
+		}
+		"modifier_enrage_damage_mod_2"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"2"
+			}
+		}
+		"modifier_enrage_damage_mod_4"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"4"
+			}
+		}
+		"modifier_enrage_damage_mod_8"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"8"
+			}
+		}
+		"modifier_enrage_damage_mod_16"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"16"
+			}
+		}
+		"modifier_enrage_damage_mod_32"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"32"
+			}
+		}
+		"modifier_enrage_damage_mod_64"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"64"
+			}
+		}
+		"modifier_enrage_damage_mod_128"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"128"
+			}
+		}
+		"modifier_enrage_damage_mod_256"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"256"
+			}
+		}
+		"modifier_enrage_damage_mod_512"
+		{
+			"IsPurgable"			"0"
+			"IsHidden"				"1"  
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"512"
+			}
+		}
+	}
 }
-
