@@ -109,6 +109,15 @@
 			
 			"EffectName"		"particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf"
 			"EffectAttachType"	"start_at_origin"
+			
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"Target"	"TARGET"
+					"EffectName"	"Hero_Tinker.Heat-Seeking_Missile_Dud"
+				}
+			}
 		}
 	}
 }
