@@ -22,6 +22,7 @@
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityManaCost"				"120 120 120 120"
+	"AbilityCooldown"				"40.0 40.0 40.0 40.0"
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -205,6 +206,12 @@
 				}
 			}
 			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BONUS_DAY_VISION"			"%radius"
+				"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%radius"
+			}
+			
 			"States"
 			{
 				"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
@@ -212,6 +219,7 @@
 				"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_FLYING"							"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
 	
