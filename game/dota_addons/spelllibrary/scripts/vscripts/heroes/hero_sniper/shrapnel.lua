@@ -10,34 +10,61 @@ function shrapnel_start_charge( keys )
 	local maximum_charges = ability:GetLevelSpecialValueFor( "maximum_charges", ( ability:GetLevel() - 1 ) )
 	local charge_replenish_time = ability:GetLevelSpecialValueFor( "charge_replenish_time", ( ability:GetLevel() - 1 ) )
 	
-	charge_replenish_time = 5.0
-	
 	-- Initialize stack
 	caster:SetModifierStackCount( modifierName, caster, 0 )
-	caster.shrapnel_charges = 0
-	caster.start_charge = true
+	caster.shrapnel_charges = maximum_charges
+	caster.start_charge = false
+	caster.shrapnel_cooldown = 0.0
+	
+	ability:ApplyDataDrivenModifier( caster, caster, modifierName, {} )
+	caster:SetModifierStackCount( modifierName, caster, maximum_charges )
 	
 	-- create timer to restore stack
 	Timers:CreateTimer( function()
 			-- Restore charge
 			if caster.start_charge and caster.shrapnel_charges < maximum_charges then
+				-- Calculate stacks
 				local next_charge = caster.shrapnel_charges + 1
 				caster:RemoveModifierByName( modifierName )
 				if next_charge ~= 3 then
 					ability:ApplyDataDrivenModifier( caster, caster, modifierName, { Duration = charge_replenish_time } )
+					shrapnel_start_cooldown( caster, charge_replenish_time )
 				else
 					ability:ApplyDataDrivenModifier( caster, caster, modifierName, {} )
 					caster.start_charge = false
 				end
 				caster:SetModifierStackCount( modifierName, caster, next_charge )
+				
+				-- Update stack
 				caster.shrapnel_charges = next_charge
 			end
+			
 			-- Check if max is reached then check every 0.5 seconds if the charge is used
 			if caster.shrapnel_charges ~= maximum_charges then
 				caster.start_charge = true
 				return charge_replenish_time
 			else
 				return 0.5
+			end
+		end
+	)
+end
+
+--[[
+	Author: kritth
+	Date: 6.1.2015.
+	Helper: Create timer to track cooldown
+]]
+function shrapnel_start_cooldown( caster, charge_replenish_time )
+	caster.shrapnel_cooldown = charge_replenish_time
+	Timers:CreateTimer( function()
+			local current_cooldown = caster.shrapnel_cooldown - 0.1
+			print( current_cooldown )
+			if current_cooldown > 0.1 then
+				caster.shrapnel_cooldown = current_cooldown
+				return 0.1
+			else
+				return nil
 			end
 		end
 	)
@@ -66,16 +93,23 @@ function shrapnel_fire( keys )
 		local launch_particle_name = "particles/units/heroes/hero_sniper/sniper_shrapnel_launch.vpcf"
 		local launch_sound_name = "Hero_Sniper.ShrapnelShoot"
 		
-		charge_replenish_time = 5.0
-		
 		-- Deplete charge
 		local next_charge = caster.shrapnel_charges - 1
 		if caster.shrapnel_charges == maximum_charges then
 			caster:RemoveModifierByName( modifierName )
 			ability:ApplyDataDrivenModifier( caster, caster, modifierName, { Duration = charge_replenish_time } )
+			shrapnel_start_cooldown( caster, charge_replenish_time )
 		end
 		caster:SetModifierStackCount( modifierName, caster, next_charge )
 		caster.shrapnel_charges = next_charge
+		
+		-- Check if stack is 0, display ability cooldown
+		if caster.shrapnel_charges == 0 then
+			-- Start Cooldown from caster.shrapnel_cooldown
+			ability:StartCooldown( caster.shrapnel_cooldown )		-- TODO: CHANGE TO REFLECT COOLDOWN
+		else
+			ability:EndCooldown()
+		end
 		
 		-- Create particle at caster
 		local fxLaunchIndex = ParticleManager:CreateParticle( launch_particle_name, PATTACH_CUSTOMORIGIN, caster )
@@ -84,20 +118,29 @@ function shrapnel_fire( keys )
 		ParticleManager:ReleaseParticleIndex( fxLaunchIndex )
 		StartSoundEvent( launch_sound_name, caster )
 		
-		-- Create delay damage
-		Timers:CreateTimer( damage_delay, function()
-				-- create dummy to do damage and apply debuff modifier
-				local dummy = CreateUnitByName( "npc_dummy_blank", target, false, caster, caster, caster:GetTeamNumber() )
-				ability:ApplyDataDrivenModifier( caster, dummy, dummyModifierName, {} )
-				Timers:CreateTimer( dummy_duration, function()
-						dummy:Destroy()
-						return nil
-					end
-				)
-				return nil
-			end
-		)
+		-- Deal damage
+		shrapnel_damage( caster, ability, target, damage_delay, dummyModifierName, dummy_duration )
 	else
 		keys.ability:RefundManaCost()
 	end
+end
+
+--[[
+	Author: kritth
+	Date: 6.1.2015.
+	Main: Create dummy to apply damage
+]]
+function shrapnel_damage( caster, ability, target, damage_delay, dummyModifierName, dummy_duration )
+	Timers:CreateTimer( damage_delay, function()
+			-- create dummy to do damage and apply debuff modifier
+			local dummy = CreateUnitByName( "npc_dummy_blank", target, false, caster, caster, caster:GetTeamNumber() )
+			ability:ApplyDataDrivenModifier( caster, dummy, dummyModifierName, {} )
+			Timers:CreateTimer( dummy_duration, function()
+					dummy:Destroy()
+					return nil
+				end
+			)
+			return nil
+		end
+	)
 end
