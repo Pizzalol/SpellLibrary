@@ -45,5 +45,70 @@
 			"speed"				"900 900 900 900"
 		}
 	}
+	
+	// Datadriven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+		"particle"				"particles/units/heroes/hero_tinker/tinker_missile.vpcf"
+		"particle"				"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
+		"particle"				"particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"Hero_Tinker.Heat-Seeking_Missile"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_tinker/heat_seeking_missile"
+			"Function"			"heat_seeking_missile_seek_targets"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"FireSound"
+		{
+			"Target"			"TARGET"
+			"EffectName"		"Hero_Tinker.Heat-Seeking_Missile.Impact"
+		}
+	
+		"FireEffect"
+		{
+			"Target"			"TARGET"
+			"EffectName"		"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+			"ControlPointEntities"
+			{
+				"TARGET"		"attach_origin"
+			}
+		}
+	
+		"Damage"
+		{
+			"Target"			"TARGET"
+			"Damage"			"%AbilityDamage"
+			"Type"				"DAMAGE_TYPE_MAGICAL"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_heat_seeking_missile_dud"
+		{
+			"IsHidden"			"1"
+			"IsPurgable"		"0"
+			
+			"Duration"			"1.0"
+			
+			"EffectName"		"particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf"
+			"EffectAttachType"	"start_at_origin"
+		}
+	}
 }
-
