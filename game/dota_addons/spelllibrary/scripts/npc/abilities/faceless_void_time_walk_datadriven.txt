@@ -5,6 +5,16 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"faceless_void_time_walk"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+		"particle"			"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+		"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_time_walk.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -56,6 +66,68 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"tooltip_range"		"700 900 1100 1300"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_time_walk_slow_aura_datadriven"
+			"Target"		"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_FacelessVoid.TimeWalk"
+			"Target"		"CASTER"
+		}
+
+		"AttachEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_time_walk.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"		"CASTER"
+		}
+
+		// Remove slow aura and invulnerability with script on landing
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/time_walk.lua"
+			"Function"		"TimeWalk"
+			"Target"		"POINT"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_time_walk_slow_aura_datadriven"
+		{
+			"IsHidden"	"1"
+
+			"Aura" 			"modifier_time_walk_slow_datadriven"
+			"Aura_Radius" 	"%radius"
+			"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		}
+
+		"modifier_time_walk_slow_datadriven"
+		{
+			"Duration"	"%duration"
+			"IsDebuff"	"1"
+
+			// Add particle effect
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed_pct"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_pct"
+			}
+		}
+
+		"modifier_time_walk_datadriven"
+		{
+			// Caster invulnerability here
 		}
 	}
 }

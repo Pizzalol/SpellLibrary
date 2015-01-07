@@ -33362,15 +33362,12 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"sniper_shrapnel"
+		"AOERadius"						"450"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1800"
 		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15.0 15.0 15.0 15.0"
 	
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
@@ -33406,7 +33403,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"9.0"
+				"duration"				"10.0"
 			}
 			"05"
 			{
@@ -33418,9 +33415,173 @@
 				"var_type"				"FIELD_FLOAT"
 				"slow_duration"			"2.0 2.0 2.0 2.0"
 			}
+			// Extra variables
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_interval"			"1.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maximum_charges"		"3"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_replenish_time"	"40.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
+			"particle"					"particles/units/heroes/hero_sniper/sniper_shrapnel.vpcf"
+			"particle"					"particles/units/heroes/hero_sniper/sniper_shrapnel_launch.vpcf"
+			"particle"					"particles/econ/items/sniper/sniper_charlie/sniper_shrapnel_charlie.vpcf"
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_sniper/shrapnel.lua"
+				"Function"				"shrapnel_start_charge"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_sniper/shrapnel.lua"
+				"Function"				"shrapnel_fire"
+				"Target"				"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_shrapnel_stack_counter_datadriven"
+			{
+				"Passive"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+				"IsDebuff"				"0"
+			}
+			
+			"modifier_shrapnel_dummy_datadriven"
+			{
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"Hero_Sniper.ShrapnelShatter"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_sniper/sniper_shrapnel.vpcf"
+						"EffectAttachType"		"follow_origin"
+						"EffectRadius"			"%radius"
+					}
+					
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/econ/items/sniper/sniper_charlie/sniper_shrapnel_charlie.vpcf"
+						"EffectAttachType"		"follow_origin"
+						"EffectRadius"			"%radius"
+					}
+					
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Radius"	"%radius"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+						
+						"Action"
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Damage"		"%AbilityDamage"
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+							}
+							
+							"ApplyModifier"
+							{
+								"Target"		"TARGET"
+								"ModifierName"	"modifier_shrapnel_slow_datadriven"
+							}
+						}
+					}
+				}
+				
+				"ThinkInterval"			"%tick_interval"
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Radius"	"%radius"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+						
+						"Action"
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Damage"		"%AbilityDamage"
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+							}
+							
+							"ApplyModifier"
+							{
+								"Target"		"TARGET"
+								"ModifierName"	"modifier_shrapnel_slow_datadriven"
+							}
+						}
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		
+			"modifier_shrapnel_slow_datadriven"
+			{
+				"IsHidden"				"0"
+			
+				"Duration"				"%slow_duration"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_movement_speed"
+				}
+			}
 		}
 	}
-	
 	//End of file sniper_shrapnel_datadriven.txt
 
 

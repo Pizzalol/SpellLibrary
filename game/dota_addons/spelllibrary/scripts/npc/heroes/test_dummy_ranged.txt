@@ -2,7 +2,7 @@
 {
 	"override_hero" "npc_dota_hero_ancient_apparition"
 
-	"Ability1" "necrolyte_death_pulse_datadriven"
+	"Ability1" "sniper_shrapnel_datadriven"
 	"Ability2" "faceless_void_backtrack_datadriven"
 	"Ability3" "faceless_void_time_lock_datadriven"
 	"Ability4" "necrolyte_reapers_scythe_datadriven"
