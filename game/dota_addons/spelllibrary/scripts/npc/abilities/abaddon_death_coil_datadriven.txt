@@ -57,6 +57,12 @@
 		}
 	}
 
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+		"particle" 	"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
+	}
+
 	"OnSpellStart"
 	{
 		"RunScript"
