@@ -6,6 +6,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"tinker_march_of_the_machines"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -72,12 +73,58 @@
 	
 	// Data driven
 	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+		"particle"					"particles/units/heroes/hero_tinker/tinker_machine.vpcf"
+	}
+	
+	"OnAbilityPhaseStart"
+	{
+		"FireSound"
+		{
+			"Target"				"CASTER"
+			"EffectName"			"Hero_Tinker.March_of_the_Machines.Cast"
+		}
+	}
+	
 	"OnSpellStart"
 	{
+		"FireSound"
+		{
+			"Target"				"POINT"
+			"EffectName"			"Hero_Tinker.March_of_the_Machines"
+		}
+	
 		"RunScript"
 		{
 			"ScriptFile"			"heroes/hero_tinker/march_of_the_machines.lua"
 			"Function"				"march_of_the_machines_spawn"
+			"Target"				"POINT"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"			"TARGET"
+				"Radius"			"%splash_radius"
+				"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+			}
+			
+			"Action"
+			{
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Damage"		"%AbilityDamage"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+				}
+			}
 		}
 	}
 	
@@ -87,7 +134,12 @@
 		{
 			"States"
 			{
-				// insert states here
+				"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_FLYING"							"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
 	}
