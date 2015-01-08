@@ -31,9 +31,10 @@ function DeathCoil( event )
 			Target = target,
 			Source = caster,
 			Ability = ability,
-			EffectName = particle_name,			
+			EffectName = particle_name,
 			bDodgeable = false,
  			bProvidesVision = true,
+ 			iMoveSpeed = projectile_speed,
 	        iVisionRadius = 0,
 	        iVisionTeamNumber = caster:GetTeamNumber(),
 			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
