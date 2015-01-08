@@ -78,7 +78,7 @@
 		"modifier_repel_datadriven"
 		{
 			"IsBuff"		"1"
-			"IsPurgeable"	"1"
+			"IsPurgable"	"1"
 			"Duration"		"%duration"
 			"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
 			"EffectAttachType"	"follow_origin"
