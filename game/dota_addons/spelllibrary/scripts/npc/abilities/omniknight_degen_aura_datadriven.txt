@@ -1,3 +1,7 @@
+// Rewrite of Omniknight Degen Aura
+// Author: Noya
+// Date: 8.1.2015.
+// Notes: -
 "omniknight_degen_aura_datadriven"
 {
 	// General
@@ -6,6 +10,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"omniknight_degen_aura"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -31,5 +36,41 @@
 			"radius"				"350"
 		}
 	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+		"particle"	"particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_degen_aura"
+		{
+			"Passive" 			"1"
+			"IsHidden" 			"1"
+			"IsBuff"			"1"
+
+			"Aura" 				"modifier_degen_aura_effect"
+			"Aura_Radius" 		"%radius"
+			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		}
+
+		"modifier_degen_aura_effect"
+		{
+			"IsDebuff"			"1"
+			"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%speed_bonus"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_bonus_tooltip"
+			}
+		}
+
+	}
+
+
 }
 
