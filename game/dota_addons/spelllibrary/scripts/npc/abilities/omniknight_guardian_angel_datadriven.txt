@@ -1,3 +1,7 @@
+// Rewrite of Omniknight Purification
+// Author: Noya
+// Date: 8.1.2015.
+// Notes: -
 "omniknight_guardian_angel_datadriven"
 {
 	// General
@@ -36,6 +40,83 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"duration_scepter"			"8.0 9.0 10.0"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+		"particle"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+		"particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
+		"particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
+			"Target"		"CASTER"
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"  		"CASTER"
+				"Radius"		"%radius"
+				"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+
+			"Action"
+			{
+				"ApplyModifier"
+				{
+					"Target" 		"TARGET"
+					"ModifierName"	"modifier_guardian_angel"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_guardian_angel"
+		{
+			"IsBuff"			"1"
+			"Duration"			"%duration"
+			"StatusEffectName"     "particles/status_fx/status_effect_guardian_angel.vpcf"
+			"StatusEffectPriority" "10"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+					"EffectAttachType"	"follow_overhead"
+					"Target"			"CASTER"
+				}
+
+			 	"AttachEffect"
+				{
+					"Target"
+					{
+						"Center"  		"CASTER"
+						"Radius"		"%radius"
+						"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+						"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+					"EffectName"				"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+					"EffectAttachType"			"follow_origin"
+					"EffectRadius"				"%radius"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"	"1"
+			}
 		}
 	}
 }
