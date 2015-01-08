@@ -23,16 +23,13 @@ function heat_seeking_missile_seek_targets( keys )
 	for k, v in pairs( units ) do
 		if count < max_targets then
 			local projTable = {
-				EffectName = particle_name,
-				Ability = ability,
-				vSpawnOrigin = caster:GetAbsOrigin(),
-				Target = v,
+				Target = target,
 				Source = caster,
+				Ability = ability,
+				EffectName = particle_name,
 				bDodgeable = false,
-				iMoveSpeed = 900,
-				iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-				iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-				iUnitTargetType = DOTA_UNIT_TARGET_HERO
+				bProvidesVision = false,
+				iMoveSpeed = 900
 			}
 			ProjectileManager:CreateTrackingProjectile( projTable )
 			count = count + 1
