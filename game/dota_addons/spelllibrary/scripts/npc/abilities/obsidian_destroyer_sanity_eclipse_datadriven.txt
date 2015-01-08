@@ -1,3 +1,10 @@
+// Rewrite of the Obsidian Destroyer Sanity Eclipse
+// Author: chrislotix
+// Date: 08.01.2015.
+// Note: need to fix particles
+
+
+
 "obsidian_destroyer_sanity_eclipse_datadriven"
 {
 	// General
@@ -11,6 +18,21 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"obsidian_destroyer_sanity_eclipse"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"		
+		"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
+		"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_aoe.vpcf"
+		"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_embers.vpcf"	
+		"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_glow.vpcf"
+		"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_damage.vpcf"
+		"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_mana_loss.vpcf"
+		"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_smoke_main.vpcf"	
+		
+	}
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
@@ -54,6 +76,94 @@
 			"var_type"					"FIELD_INTEGER"
 			"cast_range_scepter"				"700 750 800"
 		}			
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_ObsidianDestroyer.SanityEclipse.Cast"
+			"Target"	"CASTER"
+		}
+
+			"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+			"TargetPoint"	"POINT"
+		}
+
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_aoe.vpcf"
+			"EffectAttachType" "start_at_customorigin"
+			"TargetPoint"	"POINT"
+		}
+	
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_embers.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+			"TargetPoint"	"POINT"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_glow.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+			"TargetPoint"	"POINT"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_damage.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+			"TargetPoint"	"POINT"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_mana_loss.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+			"TargetPoint"	"POINT"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_smoke_main.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+			"TargetPoint"	"POINT"
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"	"POINT"
+				"Radius"	"%radius"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Type"		"DOTA_UNIT_TARGET_HERO"
+			}
+
+			"Action"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/sanity_eclipse.lua"
+					"Function"		"SanityEclipseDamage"
+					"Target"		"POINT"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_ObsidianDestroyer.SanityEclipse"
+					"Target"	"CASTER"
+				}
+			}
+
+			
+		}
 	}
 }
 
