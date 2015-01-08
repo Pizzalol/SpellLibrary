@@ -86,6 +86,12 @@
 			"Target"	"CASTER"
 		}
 
+		"FireSound"
+		{
+			"EffectName"	"Hero_ObsidianDestroyer.SanityEclipse"
+			"Target"	"CASTER"
+		}
+
 			"FireEffect"
 		{
 			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
@@ -153,16 +159,8 @@
 					"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/sanity_eclipse.lua"
 					"Function"		"SanityEclipseDamage"
 					"Target"		"POINT"
-				}
-
-				"FireSound"
-				{
-					"EffectName"	"Hero_ObsidianDestroyer.SanityEclipse"
-					"Target"	"CASTER"
-				}
+				}			
 			}
-
-			
 		}
 	}
 }

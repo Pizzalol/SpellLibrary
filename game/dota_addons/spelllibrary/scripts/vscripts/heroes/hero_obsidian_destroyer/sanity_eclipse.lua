@@ -1,7 +1,7 @@
 --[[Sanity Eclipse
 	Author: chrislotix
 	Date: 08.01.2015.
-	NOTE: Need to fix the mana burn when the target has more int than the caster]]
+	]]
 
 
 function SanityEclipseDamage( keys )
@@ -24,28 +24,24 @@ function SanityEclipseDamage( keys )
 	damage_table.ability = ability
 	damage_table.victim = target
 
-	--if the int difference is below or equal to threshold, burn 75% current mana and apply int difference * damage_modifier in magic damage
-	if (od_int - target_int) < threshold or (od_int - target_int) == threshold then
+	--if od's int is lower than targets int then keep do nothing and keep targets mana as it is
+	if od_int < target_int then
+		target:SetMana(mana)
+		--if the int difference is below or equal to threshold, burn 75% current mana and apply int difference * damage_modifier in magic damage
+		elseif 
+			(od_int - target_int) < threshold or (od_int - target_int) == threshold then
 		target:SetMana(mana*0.25)
 		damage_table.damage = (od_int - target_int) * dmg_multiplier
 		ApplyDamage(damage_table)
 		--if the int difference is bigger than than threshold then deal damage
-		elseif (od_int - target_int) > threshold then
+		elseif 	(od_int - target_int) > threshold then
 			damage_table.damage = (od_int - target_int)	* dmg_multiplier
 			ApplyDamage(damage_table)
-		end
-
-
-	print("ebin")
-
+	end
 end
 
 
-	--od info
-	--if od_int - target_int > threshold = deal damage
-	--if od_int - target_int == threshold = deal damage
-	--if od_int - target_int < threshold = mana burn + deal damage done
-	--if od_int < target_int == do nothing
+	
 
 
 
