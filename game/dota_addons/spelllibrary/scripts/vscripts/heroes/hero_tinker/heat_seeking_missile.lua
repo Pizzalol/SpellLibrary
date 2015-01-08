@@ -23,13 +23,14 @@ function heat_seeking_missile_seek_targets( keys )
 	for k, v in pairs( units ) do
 		if count < max_targets then
 			local projTable = {
-				Target = target,
+				Target = v,
 				Source = caster,
 				Ability = ability,
 				EffectName = particle_name,
 				bDodgeable = false,
 				bProvidesVision = false,
-				iMoveSpeed = 900
+				iMoveSpeed = 900, 
+				vSpawnOrigin = caster:GetAbsOrigin()
 			}
 			ProjectileManager:CreateTrackingProjectile( projTable )
 			count = count + 1
