@@ -8,6 +8,7 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"kunkka_torrent"
+	"AOERadius"						"225"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -59,6 +60,163 @@
 			"var_type"					"FIELD_FLOAT"
 			"delay"						"1.6 1.6 1.6 1.6"
 		}
-	}		
-}
+		// Extra variables
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"tick_count"				"10"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"vision_duration"			"2.0"				// I just guess
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"torrent_height"			"400"
+		}
+	}
 
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------	
+	"precache"
+	{
+		"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+		"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_bubbles.vpcf"
+		"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"				"heroes/hero_kunkka/torrent.lua"
+			"Function"					"torrent_bubble_allies"
+			"Target"					"POINT"
+		}
+		
+		"DelayedAction"
+		{
+			"Delay"						"%delay"
+			"Action"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_kunkka/torrent.lua"
+					"Function"				"torrent_emit_sound"
+					"Target"				"POINT"
+				}
+			
+				"FireEffect"
+				{
+					"Target"				"CASTER"
+					"EffectName"			"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
+					"EffectAttachType"		"start_at_customorigin"
+					"EffectRadius"			"%radius"
+					"ControlPoints"
+					{
+						"00"				"POINT"
+					}
+				}
+			
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"			"POINT"
+						"Radius"			"%radius"
+						"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+					
+					"Action"
+					{
+						"Damage"
+						{
+							"Target"			"TARGET"
+							"Damage"			"%AbilityDamage / 2"
+							"Type"				"DAMAGE_TYPE_MAGICAL"
+						}
+						
+						"RemoveModifier"
+						{
+							"Target"			"TARGET"
+							"ModifierName"		"modifier_knockback"
+						}
+						
+						"Knockback"
+						{
+							"Target"			"TARGET"
+							"Center"			"CASTER"
+							"Duration"			"%stun_duration"
+							"Distance"			"0"
+							"Height"			"%torrent_height"
+							"IsFixedDistance"	"1"
+							"ShouldStun"		"1"
+						}
+						
+						"ApplyModifier"
+						{
+							"Target"			"TARGET"
+							"ModifierName"		"modifier_torrent_damage_thinker_datadriven"
+						}
+						
+						"ApplyModifier"
+						{
+							"Target"			"TARGET"
+							"ModifierName"		"modifier_torrent_slow_debuff_datadriven"
+						}
+					}
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"				"heroes/hero_kunkka/torrent.lua"
+					"Function"					"torrent_post_vision"
+					"Target"					"POINT"
+				}
+			}
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_torrent_damage_thinker_datadriven"
+		{
+			"IsPurgable"				"0"
+			"IsHidden"					"1"
+			
+			"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Duration"					"%stun_duration"
+			"ThinkInterval"				"%stun_duration / %tick_count"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"			"TARGET"
+					"Damage"			"%AbilityDamage / ( 2 * %tick_count )"
+					"Type"				"DAMAGE_TYPE_MAGICAL"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		
+		"modifier_torrent_slow_debuff_datadriven"
+		{
+			"IsDebuff"					"1"
+		
+			"Duration"					"%stun_duration + %slow_duration"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"movespeed_bonus"
+			}
+		}
+	}
+}
