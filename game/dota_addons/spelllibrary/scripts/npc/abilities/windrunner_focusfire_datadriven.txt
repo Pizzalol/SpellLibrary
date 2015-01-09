@@ -1,3 +1,6 @@
+// CHANGELIST:
+// 09.01.2015 - Change focusfire_on_attack_start to focusfire_on_attack_landed to reduce redundancy
+
 "windrunner_focusfire_datadriven"
 {
 	// General
@@ -93,7 +96,7 @@
 				"RunScript"
 				{
 					"ScriptFile"			"heroes/hero_windrunner/focusfire.lua"
-					"Function"				"focusfire_on_attack_start"
+					"Function"				"focusfire_on_attack_landed"
 				}
 			}
 		
