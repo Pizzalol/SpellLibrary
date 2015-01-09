@@ -1,3 +1,9 @@
+// Rewrite of Abaddon Borrowed Time
+// Author: Noya
+// Date: 9.1.2015.
+// Notes: Strong Dispel mechanic is missing for now
+// 		  The damage isn't really prevented, just healed twice so it looks like every damage instance is a heal.
+//	  	  This is not consistent with the Dota 2 mechanics for damage absorb, which has effects like denying lifesteal
 "abaddon_borrowed_time_datadriven"
 {
 	// General
@@ -48,6 +54,67 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"redirect_range_tooltip_scepter"		"900"
+		}
+	}
+
+	"precache"
+	{	
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+		"particle"  "particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+		"particle"	"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target" 		"CASTER"
+			"ModifierName"	"modifier_borrowed_time"
+		}
+		"FireSound"
+		{
+			"Target" 		"CASTER"
+			"EffectName"	"Hero_Abaddon.BorrowedTime"	
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_borrowed_time_passive"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnTakeDamage"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_abaddon/borrowed_time.lua"
+					"Function"		"BorrowedTimeActivate"
+				}
+			}
+		}
+
+		"modifier_borrowed_time"
+		{
+			"IsBuff"			"1"
+
+			"EffectName"		"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"StatusEffectName"		"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+			"StatusEffectPriority"  "15"
+			
+			"OnTakeDamage"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_abaddon/borrowed_time.lua"
+					"Function"		"BorrowedTimeHeal"
+					"DamageTaken"	"%attack_damage"
+				}
+			}
+
 		}
 	}
 }
