@@ -6,6 +6,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"kunkka_tidebringer"
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
@@ -26,5 +27,90 @@
 			"damage_bonus"				"15 30 45 60"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"Modifiers"
+	{
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+			"particle"					"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+			"particle"					"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
+		}
+	
+		"modifier_tidebringer_splash_datadriven"
+		{
+			"Passive"					"1"
+			"IsHidden"					"1"
+			"IsPurgable"				"0"
+			
+			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"Target"			"CASTER"
+					"EffectName"		"Hero_Kunkaa.Tidebringer"
+				}
+			
+				"AttachEffect"
+				{
+					"Target"			"CASTER"
+					"EffectName"		"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+					"EffectAttachType"	"start_at_customorigin"
+					"ControlPointEntities"
+					{
+						"CASTER"		"attach_sword"
+						"CASTER"		"attach_sword"
+						"CASTER"		"attach_sword"
+					}
+				}
+			}
+			
+			"OnAttackLanded"
+			{
+				"FireSound"
+				{
+					"Target"			"TARGET"
+					"EffectName"		"Hero_Kunkka.Tidebringer.Attack"
+				}
+			
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"		"TARGET"
+						"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					}
+					
+					"Action"
+					{
+						"FireSound"
+						{
+							"Target"			"TARGET"
+							"EffectName"		"Hero_Kunkka.TidebringerDamage"
+						}
+					
+						"CleaveAttack"
+						{
+							"CleavePercent"		"100"
+							"CleaveRadius"		"%radius"
+							"CleaveEffect"		"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
+						}
+						
+						"RunScript"
+						{
+							"ScriptFile"		"heroes/hero_kunkka/tidebringer.lua"
+							"Function"			"tidebringer_set_cooldown"
+						}
+					}
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_bonus"
+			}
+		}
+	}
 }
-
