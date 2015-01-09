@@ -1,7 +1,7 @@
 // Rewrite of the Obsidian Destroyer Sanity Eclipse
 // Author: chrislotix
 // Date: 08.01.2015.
-// Note: need to fix particles
+
 
 
 
@@ -18,6 +18,7 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"obsidian_destroyer_sanity_eclipse"
+	"AOERadius"						"%radius"
 
 	// Precache
 	//-------------------------------------------------------------------------------------------------------------
@@ -92,55 +93,20 @@
 			"Target"	"CASTER"
 		}
 
-			"FireEffect"
-		{
+		"FireEffect"
+		{ 
 			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
 			"EffectAttachType"	"start_at_customorigin"
 			"TargetPoint"	"POINT"
-		}
 
-
-		"FireEffect"
-		{
-			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_aoe.vpcf"
-			"EffectAttachType" "start_at_customorigin"
-			"TargetPoint"	"POINT"
-		}
-	
-		"FireEffect"
-		{
-			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_embers.vpcf"
-			"EffectAttachType"	"start_at_customorigin"
-			"TargetPoint"	"POINT"
-		}
-
-		"FireEffect"
-		{
-			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_glow.vpcf"
-			"EffectAttachType"	"start_at_customorigin"
-			"TargetPoint"	"POINT"
-		}
-
-		"FireEffect"
-		{
-			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_damage.vpcf"
-			"EffectAttachType"	"start_at_customorigin"
-			"TargetPoint"	"POINT"
-		}
-
-		"FireEffect"
-		{
-			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_mana_loss.vpcf"
-			"EffectAttachType"	"start_at_customorigin"
-			"TargetPoint"	"POINT"
-		}
-
-		"FireEffect"
-		{
-			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_smoke_main.vpcf"
-			"EffectAttachType"	"start_at_customorigin"
-			"TargetPoint"	"POINT"
-		}
+			"ControlPoints"
+			{
+				"00" "POINT"
+				"01" "%radius 0 0"
+				"02" "%radius 0 0"
+				"03" "%radius 0 0"				
+			}
+		}		
 
 		"ActOnTargets"
 		{

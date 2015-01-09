@@ -92,6 +92,12 @@
 							"EffectAttachType"	"follow_origin"
 							"Target"	"UNIT"
 						}
+
+						"FireSound"
+						{
+							"EffectName"	"Hero_ObsidianDestroyer.EssenceAura"
+							"Target"		"UNIT"
+						}
 					}
 				}
 			}

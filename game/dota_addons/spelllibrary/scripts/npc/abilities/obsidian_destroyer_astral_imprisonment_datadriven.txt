@@ -88,14 +88,14 @@
 		"ApplyModifier"
 		{
 			"ModifierName"	"modifier_astral_imprisonment_int_steal_target_datadriven"
-			"Target"	"TARGET"
+			"Target"
+			{
+				"Center" "TARGET"
+				"Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+			}
 		}
 
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_astral_imprisonment_int_steal_datadriven"
-			"Target"	"CASTER"
-		}
+		
 
 		"ApplyModifier"
 		{
@@ -162,6 +162,15 @@
 			"IsDebuff"	"1"
 			"IsPurgable"	"0"
 			"Attributes" "MODIFIER_ATTRIBUTE_MULTIPLE"
+
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_astral_imprisonment_int_steal_datadriven"
+					"Target"	"CASTER"		
+				}
+			}
 
 			"Properties"
 			{
