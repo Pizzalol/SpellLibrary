@@ -10,6 +10,7 @@ function DoubleEdgeSelfDamage( event )
 	local self_damage = ability:GetLevelSpecialValueFor( "edge_damage" , ability:GetLevel() - 1  )
 	local HP = caster:GetHealth()
 	local MagicResist = caster:GetMagicalArmorValue()
+	local damageType = ability:GetAbilityDamageType()
 
 	-- Calculate the magic damage
 	local damagePostReduction = self_damage * (1 - MagicResist)
@@ -19,7 +20,7 @@ function DoubleEdgeSelfDamage( event )
 		caster:SetHealth(1)
 	else
 		-- Self Damage
-		ApplyDamage({ victim = caster, attacker = caster, damage = self_damage,	damage_type = DAMAGE_TYPE_MAGICAL })
+		ApplyDamage({ victim = caster, attacker = caster, damage = self_damage,	damage_type = damageType })
 	end
 
 end
