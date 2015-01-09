@@ -1,3 +1,8 @@
+// Rewrite of Alchemist Chemical Rage
+// Author: Noya
+// Date: 9.1.2015.
+// Notes: Didn't add the obnoxious "Hero_Alchemist.ChemicalRage" looping sound. 
+//		  Neither the attack sounds, as they overlap with the original weapon sounds.
 "alchemist_chemical_rage_datadriven"
 {
 	// General
@@ -58,6 +63,85 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"bonus_movespeed"		"30 40 60"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+		"particle"	"particles/status_fx/status_effect_chemical_rage.vpcf"
+		"particle"	"particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Alchemist.ChemicalRage.Cast"
+			"Target"		"CASTER"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_chemical_rage_transform"
+			"Target"		"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_chemical_rage_transform"
+		{
+			"IsBuff"	"1"
+			"IsHidden"	"1"
+			"Duration"	"%transformation_time"
+
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_transform_invulnerability"
+					"Target"		"CASTER"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_chemical_rage"
+					"Target" 		"CASTER"
+				}
+			}
+		}
+
+		"modifier_transform_invulnerability"
+		{
+			"IsHidden"	"1"
+			"Duration"	"0.03"
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"	
+			}
+		}
+
+		"modifier_chemical_rage"
+		{
+			"IsBuff"	"1"
+			"Duration"	"%duration"
+
+			"EffectName"		"particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"StatusEffectName"	"particles/status_fx/status_effect_chemical_rage.vpcf"
+			"StatusEffectPriority"	"5"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"	"%base_attack_time"
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"			"%bonus_mana_regen"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movespeed"
+			}
 		}
 	}
 }
