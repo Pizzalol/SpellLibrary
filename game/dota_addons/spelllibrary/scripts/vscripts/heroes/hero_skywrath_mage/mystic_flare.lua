@@ -1,6 +1,11 @@
 --[[
+	CHANGELIST:
+	09.01.2015 - Standardized variables
+]]
+
+--[[
 	Author: kritth
-	Date: 9.1.2015.
+	Date: 09.01.2015.
 	Deal constant interval damage shared in the radius
 ]]
 function mystic_flare_start( keys )
@@ -15,6 +20,11 @@ function mystic_flare_start( keys )
 	local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 )
 	local target = keys.target_points[1]
 	local total_damage = ability:GetLevelSpecialValueFor( "damage", ability:GetLevel() - 1 )
+	local targetTeam = ability:GetAbilityTargetTeam() -- DOTA_UNIT_TARGET_TEAM_ENEMY
+	local targetType = ability:GetAbilityTargetType() -- DOTA_UNIT_TARGET_HERO
+	local targetFlag = ability:GetAbilityTargetFlags() -- DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS
+	local damageType = ability:GetAbilityDamageType() -- DAMAGE_TYPE_MAGICAL
+	local soundTarget = "Hero_SkywrathMage.MysticFlare.Target"
 	
 	-- Create for VFX particles on ground
 	local dummy = CreateUnitByName( "npc_dummy_blank", target, false, caster, caster, caster:GetTeamNumber() )
@@ -26,8 +36,8 @@ function mystic_flare_start( keys )
 	-- Deal damage per interval equally
 	Timers:CreateTimer( function()
 			local units = FindUnitsInRadius(
-				caster:GetTeamNumber(), target, caster, radius, DOTA_UNIT_TARGET_TEAM_ENEMY,
-				DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false
+				caster:GetTeamNumber(), target, caster, radius, targetTeam,
+				targetType, targetFlag, FIND_ANY_ORDER, false
 			)
 			if #units > 0 then
 				local damage_per_hero = damage_per_interval / #units
@@ -37,12 +47,12 @@ function mystic_flare_start( keys )
 						victim = v,
 						attacker = caster,
 						damage = damage_per_hero,
-						damage_type = DAMAGE_TYPE_MAGICAL
+						damage_type = damageType
 					}
 					ApplyDamage( damageTable )
 					
 					-- Fire sound
-					StartSoundEvent( "Hero_SkywrathMage.MysticFlare.Target", v )
+					StartSoundEvent( soundTarget, v )
 				end
 			end
 			

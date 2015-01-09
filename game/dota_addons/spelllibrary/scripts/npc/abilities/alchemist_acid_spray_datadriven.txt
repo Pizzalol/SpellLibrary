@@ -1,3 +1,7 @@
+// Rewrite of Alchemist Acid Spray
+// Author: Noya
+// Date: 9.1.2015.
+// Notes: Particle color is a bit different from the original (less Alpha?)
 "alchemist_acid_spray_datadriven"
 {
 	// General
@@ -6,6 +10,8 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"alchemist_acid_spray"
+	"AOERadius"						"625"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -42,7 +48,7 @@
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"armor_reduction"		"4 5 6 7"
+			"armor_reduction"		"-4 -5 -6 -7"
 		}
 		"05"
 		{
@@ -50,5 +56,82 @@
 			"tick_rate"				"1.0"
 		}
 	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+		"particle"  "particles/units/heroes/hero_alchemist/alchemist_acid_spray.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+	 	"CreateThinker"
+	 	{
+	 		"ModifierName"	"modifier_acid_spray_thinker"
+	 		"Target" 		"POINT"
+	 	}
+	} 
+
+	"Modifiers"
+	{
+		"modifier_acid_spray_thinker"
+		{
+			"Aura"					"modifier_acid_spray"
+			"Aura_Radius"			"%radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+			"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			"Duration"				"%duration"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_alchemist/acid_spray.lua"
+					"Function"		"AcidSpraySound"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_alchemist/alchemist_acid_spray.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"TARGET"
+					"ControlPoints"
+					{
+						"00" "0 0 0"
+						"01" "%radius 1 1"
+						"15" "25 150 25"
+						"16" "1 0 0"
+					}
+				}
+			}
+		}
+
+		"modifier_acid_spray"
+		{
+			"IsDebuff"		"1"
+			"ThinkInterval"	"%tick_rate"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_reduction"
+			}
+			"OnIntervalThink"
+			{
+				"FireSound"
+				{
+					"EffectName" 	"Hero_Alchemist.AcidSpray.Damage"
+					"Target"		"TARGET"
+				}
+				"Damage"
+				{
+					"Target"		 "TARGET"
+					"Type"			 "DAMAGE_TYPE_PHYSICAL"
+					"Damage"		 "%damage"
+				}
+			}
+		}
+
+	}
+
 }
 
