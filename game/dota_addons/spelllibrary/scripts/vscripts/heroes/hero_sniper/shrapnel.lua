@@ -138,7 +138,7 @@ function shrapnel_damage( caster, ability, target, damage_delay, dummyModifierNa
 			local dummy = CreateUnitByName( "npc_dummy_blank", target, false, caster, caster, caster:GetTeamNumber() )
 			ability:ApplyDataDrivenModifier( caster, dummy, dummyModifierName, {} )
 			Timers:CreateTimer( dummy_duration, function()
-					dummy:Destroy()
+					dummy:ForceKill( true )
 					return nil
 				end
 			)
