@@ -54,5 +54,52 @@
 			"vision_duration"		"3.34"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+		"particle"					"particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"				"CASTER"
+			"EffectName"			"Hero_SkywrathMage.ArcaneBolt.Cast"
+		}
+	
+		"TrackingProjectile"
+		{
+			"Target"				"TARGET"
+			"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"
+			"Dodgeable"				"0"
+			"ProvidesVision"		"1"
+			"VisionRadius"			"%bolt_vision"
+			"MoveSpeed"				"%bolt_speed"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_skywrath_mage/arcane_bolt.lua"
+			"Function"				"arcane_bolt_init"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"FireSound"
+		{
+			"Target"				"CASTER"
+			"EffectName"			"Hero_SkywrathMage.ArcaneBolt.Impact"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_skywrath_mage/arcane_bolt.lua"
+			"Function"				"arcane_bolt_hit"
+		}
+	}
 }
-
