@@ -1,4 +1,9 @@
 --[[
+	CHANGELIST:
+	09.01.2015 - Standized variables
+]]
+
+--[[
 	Author: kritth
 	Date: 5.1.2015.
 	Init: Initialize the damaage
@@ -13,12 +18,15 @@ end
 	Init: Charge the damage per duration
 ]]
 function powershot_charge( keys )
+	-- Variables 
 	local caster = keys.caster
+	local specialValueName =  "damage_per_interval"
+	
 	-- Fail check
 	if not caster.powershot_damage_percent then
 		caster.powershot_damage_percent = 0.0
 	end
-	caster.powershot_damage_percent = caster.powershot_damage_percent + keys.ability:GetLevelSpecialValueFor( "damage_per_interval", ( keys.ability:GetLevel() - 1 ) )
+	caster.powershot_damage_percent = caster.powershot_damage_percent + keys.ability:GetLevelSpecialValueFor( specialValueName, ( keys.ability:GetLevel() - 1 ) )
 end
 
 --[[
@@ -27,9 +35,11 @@ end
 	Init: Register units to become target
 ]]
 function powershot_register_unit( keys )
+	-- Variables
 	local caster = keys.caster
 	local target = keys.target
 	local index = keys.target:entindex()
+	
 	-- Register
 	caster.powershot_units_array[ index ] = keys.target
 	caster.powershot_units_hit[ index ] = false
@@ -43,12 +53,17 @@ end
 	09.01.2015 - Minor cleanup
 ]]
 function powershot_start_traverse( keys )
-	-- Init local variables
-	local dummyModifierName = "modifier_powershot_dummy_datadriven"
+	-- Variables
 	local caster = keys.caster
 	local ability = keys.ability
 	local point = keys.target_points[ 1 ]
 	local forwardVec = point - caster:GetAbsOrigin()
+	local dummyModifierName = "modifier_powershot_dummy_datadriven"
+	local startAttackSound = "Ability.PowershotPull"
+	local startTraverseSound = "Ability.Powershot"
+	local projectileName = "particles/units/heroes/hero_windrunner/windrunner_spell_powershot.vpcf"
+	
+	-- Necessary variables from KV
 	local max_range = ability:GetLevelSpecialValueFor( "arrow_range", ( ability:GetLevel() - 1 ) )
 	local max_movespeed = ability:GetLevelSpecialValueFor( "arrow_speed", ( ability:GetLevel() - 1 ) )
 	local radius = ability:GetLevelSpecialValueFor( "arrow_width", ( ability:GetLevel() - 1 ) )
@@ -70,13 +85,13 @@ function powershot_start_traverse( keys )
 	caster.powershot_speed_reduction = ability:GetLevelSpecialValueFor( "speed_reduction", ( ability:GetLevel() - 1 ) )
 	
 	-- Stop sound event and fire new one, can do this in datadriven but for continuous purpose, let's put it here
-	StopSoundEvent( "Ability.PowershotPull", caster )
-	StartSoundEvent( "Ability.Powershot", caster )
+	StopSoundEvent( startAttackSound, caster )
+	StartSoundEvent( startTraverseSound, caster )
 	
 	-- Create projectile
 	local projectileTable =
 	{
-		EffectName = "particles/units/heroes/hero_windrunner/windrunner_spell_powershot.vpcf",
+		EffectName = projectileName,
 		Ability = ability,
 		vSpawnOrigin = caster:GetAbsOrigin(),
 		vVelocity = Vector( caster.powershot_forwardVec.x * max_movespeed,
