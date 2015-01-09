@@ -70,7 +70,7 @@ function march_of_the_machines_spawn( keys )
 			
 			-- Check if the number of machines have been reached
 			if dummy.march_of_the_machines_num == machines_per_sec * duration then
-				dummy:Destroy()
+				dummy:ForceKill( true )
 				return nil
 			else
 				return 1 / machines_per_sec
