@@ -1,3 +1,8 @@
+// Rewrite of Centaur Return
+// Author: Noya
+// Date: 9.1.2015.
+// Notes: Unlike the original version, the damage is returned after the hit lands. That effect is just a legacy and not useful.
+//		  To change it to apply the damage when the attack starts, would need to do hidden aura that applies a debuff that checks OnAttackStart on the caster and does the damage.		  
 "centaur_return_datadriven"
 {
 	// General
@@ -6,6 +11,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AbilityTextureName"			"centaur_return"
 	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -20,6 +26,38 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"strength_pct"				"26 34 42 50"
+		}
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_centaur/centaur_return.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_return"
+		{
+			"Passive"	"1"
+			"OnAttacked"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_centaur/return.lua"
+					"Function"		"Return"
+				}
+				"FireEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_centaur/centaur_return.vpcf"
+					"EffectAttachType"  "attach_hitloc"
+					"Target" 			"CASTER"
+					"ControlPointEntities"
+					{
+						"CASTER" 		"attach_hitloc"
+						"ATTACKER" 		"attach_hitloc"
+					}
+				}
+			}	
 		}
 	}
 }
