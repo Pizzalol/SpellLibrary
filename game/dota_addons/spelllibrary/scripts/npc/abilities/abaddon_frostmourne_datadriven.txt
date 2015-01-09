@@ -1,10 +1,16 @@
+// Rewrite of Abaddon Curse of Avernus
+// Author: Noya
+// Date: 9.1.2015.
+// Notes: This will be placed when attacking every type of units, including team friendly.
+//		  To control the debuff only placing on enemies, apply the debuff through a lua RunScript
 "abaddon_frostmourne_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"SpellImmunityType"		"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"	"abaddon_frostmourne"
 	
 
 	// Special
@@ -40,6 +46,70 @@
 		{
 			"var_type"						"FIELD_INTEGER"
 			"attack_speed"					"10 20 30 40"
+		}
+	}
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+		"particle"  "particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_frostmourne"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"OnAttackLanded"
+			{
+				"ApplyModifier"
+				{
+					"Target"			"TARGET"
+					"ModifierName"		"modifier_frostmourne_debuff"
+				}
+				"ApplyModifier"
+				{
+					"Target"			"CASTER"
+					"ModifierName"		"modifier_frostmourne_buff"
+				}
+			}
+		}
+
+		"modifier_frostmourne_debuff"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%debuff_duration"
+			"EffectName"	"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_pct"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
+			}
+			
+			"OnAttacked"
+			{
+				"ApplyModifier"
+				{
+					"Target"			"ATTACKER"
+					"ModifierName"		"modifier_frostmourne_buff"
+				}
+			}
+		}
+
+		"modifier_frostmourne_buff"
+		{
+			"IsBuff"		"1"
+			"Duration"		"%buff_duration"
+			"EffectName"	"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+			}
 		}
 	}
 }
