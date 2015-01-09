@@ -1,3 +1,4 @@
+// NOTE: Three particles making the ground dome did not show up for me, so I manually put them into the spell. If you try without those three and show up fine for you, it is safe to delete them.
 "skywrath_mage_mystic_flare_datadriven"
 {
 	// General
@@ -10,6 +11,7 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"skywrath_mage_mystic_flare"
+	"AOERadius"						"170"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -50,9 +52,97 @@
 		}
 		"05"
 		{
-			"var_type"			"FIELD_FLOAT"
-			"scepter_cooldown"	"20 10 0"
+			"var_type"				"FIELD_FLOAT"
+			"scepter_cooldown"		"20 10 0"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+		"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_c.vpcf"		// Attach for core
+		"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_f.vpcf"		// Attach for core
+		"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_j.vpcf"		// Attach for core
+		"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient.vpcf"			// Main particle
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"Hero_SkywrathMage.MysticFlare.Cast"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_skywrath_mage/mystic_flare.lua"
+			"Function"			"mystic_flare_start"
+			"Target"			"POINT"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_mystic_flare_dummy_vfx_datadriven"
+		{
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"Target"				"CASTER"
+					"EffectName"			"Hero_SkywrathMage.MysticFlare"
+				}
+			
+				// For some reasons, these three particles do not show up for me so I have to manually put them in
+				"AttachEffect"
+				{
+					"Target"				"TARGET"
+					"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_c.vpcf"	
+					"EffectAttachType"		"follow_origin"
+					"EffectRadius"			"%radius"
+				}
+				
+				"AttachEffect"
+				{
+					"Target"				"TARGET"
+					"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_f.vpcf"
+					"EffectAttachType"		"follow_origin"
+					"EffectRadius"			"%radius"
+				}
+			
+				"AttachEffect"
+				{
+					"Target"				"TARGET"
+					"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_j.vpcf"	
+					"EffectAttachType"		"follow_origin"
+					"EffectRadius"			"%radius"
+				}
+			
+				// Main Effect
+				"AttachEffect"
+				{
+					"Target"				"TARGET"
+					"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient.vpcf"	
+					"EffectAttachType"		"follow_origin"
+					"EffectRadius"			"%radius"
+					"ControlPoints"
+					{
+						"01"				"0 %duration 0"
+					}
+				}
+			}
+		
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }
-
