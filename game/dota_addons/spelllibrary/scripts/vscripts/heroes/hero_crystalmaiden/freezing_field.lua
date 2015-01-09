@@ -86,7 +86,7 @@ function freezing_field_explode( keys )
 	ability:ApplyDataDrivenModifier( caster, dummy, refModifierName, {} )
 	StartSoundEvent( soundEventName, dummy )
 	Timers:CreateTimer( 0.1, function()
-		dummy:Destroy()
+		dummy:ForceKill( true )
 		return nil
 	end )
 end

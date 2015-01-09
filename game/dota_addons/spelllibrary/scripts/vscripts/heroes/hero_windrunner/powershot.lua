@@ -39,6 +39,8 @@ end
 	Author: kritth
 	Date: 5.1.2015.
 	Main: Start traversing upon timer while providing vision, reducing damage and speed per units hit, and also destroy trees
+	Changes:
+	09.01.2015 - Minor cleanup
 ]]
 function powershot_start_traverse( keys )
 	-- Init local variables
@@ -136,7 +138,7 @@ function powershot_start_traverse( keys )
 				local dummy = CreateUnitByName( "npc_dummy_blank", caster.powershot_currentPos, false, caster, caster, caster:GetTeamNumber() )
 				ability:ApplyDataDrivenModifier( caster, dummy, dummyModifierName, {} )
 				Timers:CreateTimer( 0.1, function()
-					dummy:Destroy()
+					dummy:ForceKill( true )
 					return nil
 				end )
 			end
