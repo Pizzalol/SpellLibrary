@@ -1,4 +1,9 @@
 --[[
+	CHANGELIST:
+	09.01.2015 - Remove ReleaseParticleIndex( .. )
+]]
+
+--[[
 	Author: kritth
 	Date: 7.1.2015.
 	Init: Create a timer to start charging charges
@@ -7,6 +12,7 @@ function shrapnel_start_charge( keys )
 	-- Only start charging at level 1
 	if keys.ability:GetLevel() ~= 1 then return end
 
+	-- Variables
 	local caster = keys.caster
 	local ability = keys.ability
 	local modifierName = "modifier_shrapnel_stack_counter_datadriven"
@@ -117,7 +123,6 @@ function shrapnel_fire( keys )
 		local fxLaunchIndex = ParticleManager:CreateParticle( launch_particle_name, PATTACH_CUSTOMORIGIN, caster )
 		ParticleManager:SetParticleControl( fxLaunchIndex, 0, casterLoc )
 		ParticleManager:SetParticleControl( fxLaunchIndex, 1, Vector( casterLoc.x, casterLoc.y, 800 ) )
-		ParticleManager:ReleaseParticleIndex( fxLaunchIndex )
 		StartSoundEvent( launch_sound_name, caster )
 		
 		-- Deal damage
