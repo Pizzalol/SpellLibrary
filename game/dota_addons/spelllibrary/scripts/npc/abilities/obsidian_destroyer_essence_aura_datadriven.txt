@@ -1,8 +1,6 @@
 // Rewrite of the Obsidian Destroyer Essence Aura
 // Author: chrislotix
 // Date: 07.01.2015.
-
-
 "obsidian_destroyer_essence_aura_datadriven"
 {
 	// General

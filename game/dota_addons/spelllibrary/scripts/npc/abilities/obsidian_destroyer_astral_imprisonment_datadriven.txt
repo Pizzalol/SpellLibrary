@@ -1,7 +1,6 @@
 // Rewrite of the Obsidian Destroyer Astral Imprisonment
 // Author: chrislotix
 // Date: 06.01.2015.
-// NOTE: Negative stacks are showing after self casts
 
 "obsidian_destroyer_astral_imprisonment_datadriven"
 {
