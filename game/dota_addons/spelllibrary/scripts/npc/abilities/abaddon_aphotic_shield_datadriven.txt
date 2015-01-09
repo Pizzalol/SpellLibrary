@@ -1,3 +1,7 @@
+// Rewrite of Abaddon Aphotic Shield
+// Author: Noya
+// Date: 9.1.2015.
+// Notes: Strong Dispel mechanic is missing for now
 "abaddon_aphotic_shield_datadriven"
 {
 	// General
@@ -43,6 +47,94 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"radius"				"675"
+		}
+	}
+
+	"precache"
+	{	
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+		"particle"  "particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
+		"particle"	"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf"
+		"particle"	"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
+			"Function"		"AphoticShield"
+		}
+
+		"RemoveModifier"
+		{
+			"Target" 		"TARGET"
+			"ModifierName"	"modifier_aphotic_shield"
+		}
+
+		"ApplyModifier"
+		{
+			"Target" 		"TARGET"
+			"ModifierName"	"modifier_aphotic_shield"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_aphotic_shield"
+		{
+			"IsBuff"			"1"
+			"Duration"			"%duration"
+		
+			"ThinkInterval"		"0.03"
+
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
+					"Function"		"AphoticShieldHealth"
+				}
+			}
+
+			"OnTakeDamage"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
+					"Function"		"AphoticShieldAbsorb"
+					"DamageTaken"	"%attack_damage"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"AttachEffect"
+				{
+				 	"EffectName"		"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
+				 	"EffectAttachType"	"follow_origin"
+				 	"Target"			"TARGET"
+
+				 	"ControlPointEntities"
+		            {
+		                "TARGET"    "attach_origin"
+		                "TARGET"    "attach_origin"
+		            }
+				}
+
+				"Damage"
+				{
+					"Target"
+					{
+						"Center"  			"TARGET"
+						"Radius"			"%radius"
+						"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+					"Type"			 "DAMAGE_TYPE_MAGICAL"
+					"Damage"		 "%damage_absorb"
+				}
+			}
 		}
 	}
 }

@@ -1,4 +1,4 @@
-// Rewrite of Omniknight Guardian Angel
+// Rewrite of Abaddon Death Coil
 // Author: Noya
 // Date: 8.1.2015.
 // Notes: Disabling Self target is done with a lua workaround. 
