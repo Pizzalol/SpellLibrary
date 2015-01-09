@@ -66,6 +66,12 @@
 			"Function"		"AphoticShield"
 		}
 
+		"FireSound"
+		{
+			"EffectName"	"Hero_Abaddon.AphoticShield.Cast"
+			"Target"        "TARGET"  
+		}
+
 		"RemoveModifier"
 		{
 			"Target" 		"TARGET"
@@ -113,13 +119,18 @@
 				{
 				 	"EffectName"		"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
 				 	"EffectAttachType"	"follow_origin"
-				 	"Target"			"TARGET"
-
+				 	"Target"			"UNIT"
 				 	"ControlPointEntities"
 		            {
 		                "TARGET"    "attach_origin"
 		                "TARGET"    "attach_origin"
 		            }
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
+					"Function"		"EndShield"
 				}
 
 				"Damage"

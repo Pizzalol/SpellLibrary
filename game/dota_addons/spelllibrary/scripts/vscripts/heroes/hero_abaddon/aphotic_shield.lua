@@ -64,9 +64,10 @@ function AphoticShieldAbsorb( event )
 
 end
 
--- Destroys the particle when the modifier is destroyed
+-- Destroys the particle when the modifier is destroyed. Also plays the sound
 function EndShieldParticle( event )
 	local target = event.target
+	target:EmitSound("Hero_Abaddon.AphoticShield.Destroy")
 	ParticleManager:DestroyParticle(target.ShieldParticle,false)
 end
 
