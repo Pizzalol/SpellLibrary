@@ -1,22 +1,33 @@
 --[[
+	CHANGELIST
+	09.01.2015 - Standized the variables
+]]
+
+--[[
 	Author: kritth
 	Date: 7.1.2015.
 	Create a timer to periodically add/remove damage base on health
 ]]
 function enrage_init( keys )
+	-- Local variables
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifierName = "modifier_enrage_buff_datadriven"
+	local percent = ability:GetLevelSpecialValueFor( "life_damage_bonus_percent", ability:GetLevel() - 1)
+	
+	-- Necessary data to pass into the timer iteration
+	local prefix = "modifier_enrage_damage_mod_"
+	local bitTable = { 512, 256, 128, 64, 32, 16, 8, 4, 2, 1 }
+
+	
 	-- Remove existing damage
 	keys.caster.enrage_damage = 0
 	
 	-- Create Timer
 	Timers:CreateTimer(
 		function()
-			-- Local variables
-			local caster = keys.caster
-			local ability = keys.ability
-			local percent = ability:GetLevelSpecialValueFor( "life_damage_bonus_percent", ability:GetLevel() - 1)
+			-- Variables for each loop
 			local damage = caster:GetMaxHealth() * ( percent / 100.0 )
-			local prefix = "modifier_enrage_damage_mod_"
-			local bitTable = { 512, 256, 128, 64, 32, 16, 8, 4, 2, 1 }
 			
 			-- Check if user needs additional modifiers
 			if caster.enrage_damage ~= damage then
@@ -47,7 +58,7 @@ function enrage_init( keys )
 			caster.enrage_damage = damage
 			
 			-- Check if it is time to remove the buff
-			if caster:HasModifier( "modifier_enrage_buff_datadriven" ) == false then
+			if caster:HasModifier( modifierName ) == false then
 				-- Remove all damage modifiers
 				local modCount = caster:GetModifierCount()
 				for i = 0, modCount do
