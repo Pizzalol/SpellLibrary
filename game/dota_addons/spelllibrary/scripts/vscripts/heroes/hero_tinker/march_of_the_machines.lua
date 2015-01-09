@@ -1,4 +1,9 @@
 --[[
+	CHANGELIST:
+	09.01.2015 - Standardized the variables
+]]
+
+--[[
 	Author: kritth
 	Date: 7.1.2015.
 	Find necessary vectors, and spawn spawning until units cap is reached
@@ -16,6 +21,9 @@ function march_of_the_machines_spawn( keys )
 	local projectile_speed = ability:GetLevelSpecialValueFor( "speed", ability:GetLevel() - 1 )
 	local machines_per_sec = ability:GetLevelSpecialValueFor ( "machines_per_sec", ability:GetLevel() - 1 )
 	local dummyModifierName = "modifier_march_of_the_machines_dummy_datadriven"
+	local projectileName = "particles/units/heroes/hero_tinker/tinker_machine.vpcf"
+	local targetTeam = ability:GetAbilityTargetTeam()
+	local targetType = ability:GetAbilityTargeType() -- DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL
 	
 	-- Find forward vector
 	local forwardVec = targetLoc - casterLoc
@@ -49,7 +57,7 @@ function march_of_the_machines_spawn( keys )
 			-- Spawn projectiles
 			local projectileTable = {
 				Ability = ability,
-				EffectName = "particles/units/heroes/hero_tinker/tinker_machine.vpcf",
+				EffectName = projectileName,
 				vSpawnOrigin = spawn_location,
 				fDistance = distance,
 				fStartRadius = collision_radius,
@@ -57,8 +65,8 @@ function march_of_the_machines_spawn( keys )
 				Source = caster,
 				bHasFrontalCone = false,
 				bReplaceExisting = false,
-				iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-				iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL,
+				iUnitTargetTeam = targetTeam,
+				iUnitTargetType = targetType,
 				bDeleteOnHit = true,
 				vVelocity = forwardVec * projectile_speed,
 				bProvidesVision = false,
