@@ -1,7 +1,12 @@
 --[[
+	CHANGELIST:
+	09.01.2015 - Change the file into .lua extension
+]]
+
+--[[
 	Author: kritth
-	Date: 1.1.2015
-	knockback
+	Date: 09.01.2015
+	Knockback enemies in the line accordingly to the distance
 ]]
 function modifier_wave_of_silence_knockback( keys )
 	local vCaster = keys.caster:GetAbsOrigin()
