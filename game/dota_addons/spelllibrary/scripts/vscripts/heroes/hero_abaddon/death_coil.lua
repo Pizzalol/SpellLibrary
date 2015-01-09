@@ -9,6 +9,7 @@ function DeathCoil( event )
 	local target = event.target
 	local ability = event.ability
 	local damage = ability:GetLevelSpecialValueFor( "target_damage" , ability:GetLevel() - 1  )
+	local self_damage = ability:GetLevelSpecialValueFor( "self_damage" , ability:GetLevel() - 1  )
 	local heal = ability:GetLevelSpecialValueFor( "heal_amount" , ability:GetLevel() - 1 )
 	local projectile_speed = ability:GetSpecialValueFor( "projectile_speed" )
 	local particle_name = "particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
@@ -25,6 +26,9 @@ function DeathCoil( event )
 		else
 			target:Heal( heal, caster)
 		end
+
+		-- Self Damage
+		ApplyDamage({ victim = caster, attacker = caster, damage = self_damage,	damage_type = DAMAGE_TYPE_MAGICAL })
 
 		-- Create the projectile
 		local info = {
