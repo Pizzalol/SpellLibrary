@@ -4,6 +4,10 @@
 
 
 	//Start of file abaddon_aphotic_shield_datadriven.txt
+	// Rewrite of Abaddon Aphotic Shield
+	// Author: Noya
+	// Date: 9.1.2015.
+	// Notes: Strong Dispel mechanic is missing for now
 	"abaddon_aphotic_shield_datadriven"
 	{
 		// General
@@ -51,12 +55,117 @@
 				"radius"				"675"
 			}
 		}
+	
+		"precache"
+		{	
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle"  "particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
+			"particle"	"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf"
+			"particle"	"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
+				"Function"		"AphoticShield"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Abaddon.AphoticShield.Cast"
+				"Target"        "TARGET"  
+			}
+	
+			"RemoveModifier"
+			{
+				"Target" 		"TARGET"
+				"ModifierName"	"modifier_aphotic_shield"
+			}
+	
+			"ApplyModifier"
+			{
+				"Target" 		"TARGET"
+				"ModifierName"	"modifier_aphotic_shield"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_aphotic_shield"
+			{
+				"IsBuff"			"1"
+				"Duration"			"%duration"
+			
+				"ThinkInterval"		"0.03"
+	
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
+						"Function"		"AphoticShieldHealth"
+					}
+				}
+	
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
+						"Function"		"AphoticShieldAbsorb"
+						"DamageTaken"	"%attack_damage"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"AttachEffect"
+					{
+					 	"EffectName"		"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
+					 	"EffectAttachType"	"follow_origin"
+					 	"Target"			"UNIT"
+					 	"ControlPointEntities"
+			            {
+			                "TARGET"    "attach_origin"
+			                "TARGET"    "attach_origin"
+			            }
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
+						"Function"		"EndShield"
+					}
+	
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  			"TARGET"
+							"Radius"			"%radius"
+							"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+						"Type"			 "DAMAGE_TYPE_MAGICAL"
+						"Damage"		 "%damage_absorb"
+					}
+				}
+			}
+		}
 	}
 	
 	//End of file abaddon_aphotic_shield_datadriven.txt
 
 
 	//Start of file abaddon_borrowed_time_datadriven.txt
+	// Rewrite of Abaddon Borrowed Time
+	// Author: Noya
+	// Date: 9.1.2015.
+	// Notes: Strong Dispel mechanic is missing for now
+	// 		  The damage isn't really prevented, just healed twice so it looks like every damage instance is a heal.
+	//	  	  This is not consistent with the Dota 2 mechanics for damage absorb, which has effects like denying lifesteal
 	"abaddon_borrowed_time_datadriven"
 	{
 		// General
@@ -109,12 +218,80 @@
 				"redirect_range_tooltip_scepter"		"900"
 			}
 		}
+	
+		"precache"
+		{	
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle"  "particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+			"particle"	"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 		"CASTER"
+				"ModifierName"	"modifier_borrowed_time"
+			}
+			"FireSound"
+			{
+				"Target" 		"CASTER"
+				"EffectName"	"Hero_Abaddon.BorrowedTime"	
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_borrowed_time_passive"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_abaddon/borrowed_time.lua"
+						"Function"		"BorrowedTimeActivate"
+					}
+				}
+			}
+	
+			"modifier_borrowed_time"
+			{
+				"IsBuff"			"1"
+	
+				"EffectName"		"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+				"StatusEffectPriority"  "15"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_abaddon/borrowed_time.lua"
+						"Function"		"BorrowedTimeHeal"
+						"DamageTaken"	"%attack_damage"
+					}
+				}
+	
+			}
+		}
 	}
 	
 	//End of file abaddon_borrowed_time_datadriven.txt
 
 
 	//Start of file abaddon_death_coil_datadriven.txt
+	// Rewrite of Abaddon Death Coil
+	// Author: Noya
+	// Date: 8.1.2015.
+	// Notes: Disabling Self target is done with a lua workaround. 
+	//		  To show "Can't target self" you can add the CustomError Flash module by zedor: https://github.com/zedor/CustomError
+	//		  The ability animation still plays even when the spells is self targeted
+	//		  Projectile is only cosmetic, the damage/heal is not tied to it
 	"abaddon_death_coil_datadriven"
 	{
 		// General
@@ -163,7 +340,22 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_amount"					"100 150 200 250"
+				"heal_amount"			"100 150 200 250"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle" 	"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_abaddon/death_coil.lua"
+				"Function"		"DeathCoil"
 			}
 		}
 	}
@@ -172,13 +364,19 @@
 
 
 	//Start of file abaddon_frostmourne_datadriven.txt
+	// Rewrite of Abaddon Curse of Avernus
+	// Author: Noya
+	// Date: 9.1.2015.
+	// Notes: This will be placed when attacking every type of units, including team friendly.
+	//		  To control the debuff only placing on enemies, apply the debuff through a lua RunScript
 	"abaddon_frostmourne_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"		"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"	"abaddon_frostmourne"
 		
 	
 		// Special
@@ -214,6 +412,70 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"attack_speed"					"10 20 30 40"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+			"particle"  "particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_frostmourne"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnAttackLanded"
+				{
+					"ApplyModifier"
+					{
+						"Target"			"TARGET"
+						"ModifierName"		"modifier_frostmourne_debuff"
+					}
+					"ApplyModifier"
+					{
+						"Target"			"CASTER"
+						"ModifierName"		"modifier_frostmourne_buff"
+					}
+				}
+			}
+	
+			"modifier_frostmourne_debuff"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%debuff_duration"
+				"EffectName"	"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_pct"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
+				}
+				
+				"OnAttacked"
+				{
+					"ApplyModifier"
+					{
+						"Target"			"ATTACKER"
+						"ModifierName"		"modifier_frostmourne_buff"
+					}
+				}
+			}
+	
+			"modifier_frostmourne_buff"
+			{
+				"IsBuff"		"1"
+				"Duration"		"%buff_duration"
+				"EffectName"	"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+				}
 			}
 		}
 	}
@@ -11190,6 +11452,15 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"faceless_void_chronosphere"
+		"AOERadius"						"%radius"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -11236,6 +11507,106 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"vision_radius"			"475"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_FacelessVoid.Chronosphere"
+				"Target"			"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+				"TargetPoint"	"POINT"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/heroes/hero_faceless_void/chronosphere.lua"
+				"Function"			"Chronosphere"
+				"Target"			"POINT"
+				"caster_modifier"	"modifier_chronosphere_caster_datadriven"
+				"caster_aura"		"modifier_chronosphere_aura_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_chronosphere_aura_datadriven"
+			{
+				"Duration"	"%duration"
+	
+				//"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+				//"EffectAttachType"	"follow_origin"
+	
+				// Add an extra aura for caster
+				
+				"Aura" 			"modifier_chronosphere_datadriven"
+				"Aura_Radius" 	"%radius"
+				"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types" 	"DOTA_UNIT_TARGET_ALL"
+				"Aura_ApplyToCaster"	"0"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BONUS_DAY_VISION"	"%vision_radius"
+					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"	"%vision_radius"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_chronosphere_datadriven"
+			{
+				"IsDebuff"	"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"scripts/vscripts/heroes/hero_faceless_void/chronosphere.lua"
+						"Function"			"ChronosphereFriendly"
+						"Target"			"TARGET"
+						"target_modifier"	"modifier_chronosphere_caster_datadriven"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_chronosphere_caster_datadriven"
+						"Target"		"TARGET"
+					}
+				}
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_chronosphere_caster_datadriven"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"1000"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_DISABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -16670,6 +17041,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"kunkka_torrent"
+		"AOERadius"						"225"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -16721,9 +17093,166 @@
 				"var_type"					"FIELD_FLOAT"
 				"delay"						"1.6 1.6 1.6 1.6"
 			}
-		}		
-	}
+			// Extra variables
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tick_count"				"10"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_duration"			"2.0"				// I just guess
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"torrent_height"			"400"
+			}
+		}
 	
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------	
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_bubbles.vpcf"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"heroes/hero_kunkka/torrent.lua"
+				"Function"					"torrent_bubble_allies"
+				"Target"					"POINT"
+			}
+			
+			"DelayedAction"
+			{
+				"Delay"						"%delay"
+				"Action"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_kunkka/torrent.lua"
+						"Function"				"torrent_emit_sound"
+						"Target"				"POINT"
+					}
+				
+					"FireEffect"
+					{
+						"Target"				"CASTER"
+						"EffectName"			"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+						"EffectRadius"			"%radius"
+						"ControlPoints"
+						{
+							"00"				"POINT"
+						}
+					}
+				
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"			"POINT"
+							"Radius"			"%radius"
+							"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+						
+						"Action"
+						{
+							"Damage"
+							{
+								"Target"			"TARGET"
+								"Damage"			"%AbilityDamage / 2"
+								"Type"				"DAMAGE_TYPE_MAGICAL"
+							}
+							
+							"RemoveModifier"
+							{
+								"Target"			"TARGET"
+								"ModifierName"		"modifier_knockback"
+							}
+							
+							"Knockback"
+							{
+								"Target"			"TARGET"
+								"Center"			"CASTER"
+								"Duration"			"%stun_duration"
+								"Distance"			"0"
+								"Height"			"%torrent_height"
+								"IsFixedDistance"	"1"
+								"ShouldStun"		"1"
+							}
+							
+							"ApplyModifier"
+							{
+								"Target"			"TARGET"
+								"ModifierName"		"modifier_torrent_damage_thinker_datadriven"
+							}
+							
+							"ApplyModifier"
+							{
+								"Target"			"TARGET"
+								"ModifierName"		"modifier_torrent_slow_debuff_datadriven"
+							}
+						}
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"				"heroes/hero_kunkka/torrent.lua"
+						"Function"					"torrent_post_vision"
+						"Target"					"POINT"
+					}
+				}
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_torrent_damage_thinker_datadriven"
+			{
+				"IsPurgable"				"0"
+				"IsHidden"					"1"
+				
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Duration"					"%stun_duration"
+				"ThinkInterval"				"%stun_duration / %tick_count"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"			"TARGET"
+						"Damage"			"%AbilityDamage / ( 2 * %tick_count )"
+						"Type"				"DAMAGE_TYPE_MAGICAL"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_torrent_slow_debuff_datadriven"
+			{
+				"IsDebuff"					"1"
+			
+				"Duration"					"%stun_duration + %slow_duration"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"movespeed_bonus"
+				}
+			}
+		}
+	}
 	//End of file kunkka_torrent_datadriven.txt
 
 
@@ -18442,6 +18971,8 @@
 	// Rewrite of the Lina Light Strike Array ability
 	// Author: Pizzalol
 	// Date: 30.12.2014.
+	// Changed: 09.01.2015.
+	// Reason: Changed the damage from delayed action to a modifier
 	"lina_laguna_blade_datadriven"
 	{
 		// General
@@ -18505,25 +19036,10 @@
 	
 		"OnSpellStart"
 		{
-			"DelayedAction"
+			"FireSound"
 			{
-				"Delay"		"%damage_delay"
-	
-				"Action"
-				{
-					"Damage"
-					{
-						"Target"	"TARGET"
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%damage"
-					}
-	
-					"FireSound"
-					{
-						"EffectName"	"Ability.LagunaBladeImpact"
-						"Target"		"TARGET"
-					}
-				}
+				"EffectName"	"Ability.LagunaBladeImpact"
+				"Target"		"TARGET"
 			}
 	
 			"FireSound"
@@ -18542,6 +19058,31 @@
 				{
 					"CASTER"	"attach_attack1"
 					"TARGET"	"attach_hitloc"
+				}
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_laguna_blade_datadriven"
+				"Target"			"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_laguna_blade_datadriven"
+			{
+				"IsHidden"	"1"
+				"Duration"	"%damage_delay"
+	
+				"OnDestroy"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%damage"
+					}
 				}
 			}
 		}
@@ -18633,7 +19174,6 @@
 	
 				"ControlPoints"
 	            {
-	            	"00"	"POINT"
 	            	"01"	"%light_strike_array_aoe 0 0"
 	            	"03"	"0 0 0"
 	            }
@@ -23485,7 +24025,6 @@
 	// Rewrite of the Obsidian Destroyer Astral Imprisonment
 	// Author: chrislotix
 	// Date: 06.01.2015.
-	// NOTE: Negative stacks are showing after self casts
 	
 	"obsidian_destroyer_astral_imprisonment_datadriven"
 	{
@@ -23572,14 +24111,14 @@
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_astral_imprisonment_int_steal_target_datadriven"
-				"Target"	"TARGET"
+				"Target"
+				{
+					"Center" "TARGET"
+					"Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+				}
 			}
 	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_astral_imprisonment_int_steal_datadriven"
-				"Target"	"CASTER"
-			}
+			
 	
 			"ApplyModifier"
 			{
@@ -23647,6 +24186,15 @@
 				"IsPurgable"	"0"
 				"Attributes" "MODIFIER_ATTRIBUTE_MULTIPLE"
 	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_astral_imprisonment_int_steal_datadriven"
+						"Target"	"CASTER"		
+					}
+				}
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%int_steal"
@@ -23663,8 +24211,6 @@
 	// Rewrite of the Obsidian Destroyer Essence Aura
 	// Author: chrislotix
 	// Date: 07.01.2015.
-	
-	
 	"obsidian_destroyer_essence_aura_datadriven"
 	{
 		// General
@@ -23754,6 +24300,12 @@
 								"EffectAttachType"	"follow_origin"
 								"Target"	"UNIT"
 							}
+	
+							"FireSound"
+							{
+								"EffectName"	"Hero_ObsidianDestroyer.EssenceAura"
+								"Target"		"UNIT"
+							}
 						}
 					}
 				}
@@ -23764,6 +24316,13 @@
 
 
 	//Start of file obsidian_destroyer_sanity_eclipse_datadriven.txt
+	// Rewrite of the Obsidian Destroyer Sanity Eclipse
+	// Author: chrislotix
+	// Date: 08.01.2015.
+	
+	
+	
+	
 	"obsidian_destroyer_sanity_eclipse_datadriven"
 	{
 		// General
@@ -23777,6 +24336,22 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"obsidian_destroyer_sanity_eclipse"
+		"AOERadius"						"%radius"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"		
+			"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
+			"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_aoe.vpcf"
+			"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_embers.vpcf"	
+			"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_glow.vpcf"
+			"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_damage.vpcf"
+			"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_mana_loss.vpcf"
+			"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_smoke_main.vpcf"	
+			
+		}
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -23820,6 +24395,57 @@
 				"var_type"					"FIELD_INTEGER"
 				"cast_range_scepter"				"700 750 800"
 			}			
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_ObsidianDestroyer.SanityEclipse.Cast"
+				"Target"	"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_ObsidianDestroyer.SanityEclipse"
+				"Target"	"CASTER"
+			}
+	
+			"FireEffect"
+			{ 
+				"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+				"TargetPoint"	"POINT"
+	
+				"ControlPoints"
+				{
+					"00" "POINT"
+					"01" "%radius 0 0"
+					"02" "%radius 0 0"
+					"03" "%radius 0 0"				
+				}
+			}		
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Type"		"DOTA_UNIT_TARGET_HERO"
+				}
+	
+				"Action"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/sanity_eclipse.lua"
+						"Function"		"SanityEclipseDamage"
+						"Target"		"POINT"
+					}			
+				}
+			}
 		}
 	}
 	
@@ -24207,6 +24833,10 @@
 
 
 	//Start of file omniknight_degen_aura_datadriven.txt
+	// Rewrite of Omniknight Degen Aura
+	// Author: Noya
+	// Date: 8.1.2015.
+	// Notes: -
 	"omniknight_degen_aura_datadriven"
 	{
 		// General
@@ -24215,6 +24845,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"omniknight_degen_aura"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -24240,12 +24871,52 @@
 				"radius"				"350"
 			}
 		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_degen_aura"
+			{
+				"Passive" 			"1"
+				"IsHidden" 			"1"
+				"IsBuff"			"1"
+	
+				"Aura" 				"modifier_degen_aura_effect"
+				"Aura_Radius" 		"%radius"
+				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+			}
+	
+			"modifier_degen_aura_effect"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%speed_bonus"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_bonus_tooltip"
+				}
+			}
+	
+		}
+	
+	
 	}
 	
 	//End of file omniknight_degen_aura_datadriven.txt
 
 
 	//Start of file omniknight_guardian_angel_datadriven.txt
+	// Rewrite of Omniknight Guardian Angel
+	// Author: Noya
+	// Date: 8.1.2015.
+	// Notes: -
 	"omniknight_guardian_angel_datadriven"
 	{
 		// General
@@ -24286,12 +24957,94 @@
 				"duration_scepter"			"8.0 9.0 10.0"
 			}
 		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+			"particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
+			"particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
+				"Target"		"CASTER"
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  		"CASTER"
+					"Radius"		"%radius"
+					"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+	
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"Target" 		"TARGET"
+						"ModifierName"	"modifier_guardian_angel"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_guardian_angel"
+			{
+				"IsBuff"			"1"
+				"IsPurgable"		"1"
+				"Duration"			"%duration"
+				"StatusEffectName"     "particles/status_fx/status_effect_guardian_angel.vpcf"
+				"StatusEffectPriority" "10"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"CASTER"
+					}
+	
+				 	"AttachEffect"
+					{
+						"Target"
+						{
+							"Center"  		"CASTER"
+							"Radius"		"%radius"
+							"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+							"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+						"EffectName"				"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+						"EffectAttachType"			"follow_origin"
+						"EffectRadius"				"%radius"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"	"1"
+				}
+			}
+		}
 	}
 	
 	//End of file omniknight_guardian_angel_datadriven.txt
 
 
 	//Start of file omniknight_purification_datadriven.txt
+	// Rewrite of Omniknight Purification
+	// Author: Noya
+	// Date: 8.1.2015.
+	// Notes: The Heal shows a green popup. To get rid of this just use the Lua version of Heal.
 	"omniknight_purification_datadriven"
 	{
 		// General
@@ -24334,12 +25087,88 @@
 				"radius"				"260"
 			}
 		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification_hit.vpcf"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification_cast.vpcf"
+	
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Omniknight.Purification"
+				"Target"		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"ControlPoints"
+				{
+					"00"	"0 0 0"
+					"01"	"%radius %radius %radius"
+				}
+			}
+			
+			"FireEffect"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification_cast.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+	
+			"Heal"
+			{
+				"Target" 		"TARGET"
+				"HealAmount"	"%heal"
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  			"TARGET"
+					"Radius"			"%radius"
+					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+	
+				"Action"
+				{
+					"Damage"
+					{
+						"Target"		 "TARGET"
+						"Type"			 "DAMAGE_TYPE_PURE"
+						"Damage"		 "%heal"
+					}
+					"FireEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification_hit.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+				}
+			}
+		}
 	}
 	
 	//End of file omniknight_purification_datadriven.txt
 
 
 	//Start of file omniknight_repel_datadriven.txt
+	// Rewrite of Omniknight Repel
+	// Author: Noya
+	// Date: 8.1.2015.
+	// Notes: Will need to be changed to 100% Magic Resistance and "Spell Immunity" when the tools get updated to 6.82
+	//		  The Purge interaction is incorrect for item_diffusal_blade which can't target a State Magic Immune unit
+	//		  Sound plays for the full duration on every level
 	"omniknight_repel_datadriven"
 	{
 		// General
@@ -24378,6 +25207,50 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"6.0 8.0 10.0 12.0"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Omniknight.Repel"
+				"Target"			"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_repel_cast.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"Target" 			"TARGET"
+				"ModifierName"		"modifier_repel_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_repel_datadriven"
+			{
+				"IsBuff"		"1"
+				"IsPurgable"	"1"
+				"Duration"		"%duration"
+				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -27400,7 +28273,7 @@
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 	
 				"EffectName"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
-				"EffectAttachType"	"attach_spine"
+				"EffectAttachType"	"follow_chest"
 	
 				"ThinkInterval"	"3.0"
 	
@@ -32488,6 +33361,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"skywrath_mage_ancient_seal"
 	
 	
 		// Casting
@@ -32518,8 +33392,97 @@
 				"seal_duration"			"3.0 4.0 5.0 6.0"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+			"particle"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff_rune.vpcf"
+			"particle"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_silence.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"		"TARGET"
+				"EffectName"	"Hero_SkywrathMage.AncientSeal.Target"
+			}
+		
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"ModifierName"	"modifier_ancient_seal_hero_debuff_datadriven"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Types"		"DOTA_UNIT_TARGET_BASIC"
+				}
+				"ModifierName"	"modifier_ancient_seal_basic_debuff_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_ancient_seal_hero_debuff_datadriven"
+			{
+				"Duration"				"%seal_duration"
+				
+				"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff.vpcf"
+				"EffectAttachType"		"follow_overhead"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%resist_debuff"
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"						"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_ancient_seal_basic_debuff_datadriven"
+			{
+				"Duration"				"%seal_duration"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff_rune.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"			"attach_origin"
+						}
+					}
+					
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_silence.vpcf"
+						"EffectAttachType"		"follow_overhead"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"						"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
-	
 	//End of file skywrath_mage_ancient_seal_datadriven.txt
 
 
@@ -32580,8 +33543,55 @@
 				"vision_duration"		"3.34"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+			"particle"					"particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Hero_SkywrathMage.ArcaneBolt.Cast"
+			}
+		
+			"TrackingProjectile"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"
+				"Dodgeable"				"0"
+				"ProvidesVision"		"1"
+				"VisionRadius"			"%bolt_vision"
+				"MoveSpeed"				"%bolt_speed"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_skywrath_mage/arcane_bolt.lua"
+				"Function"				"arcane_bolt_init"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Hero_SkywrathMage.ArcaneBolt.Impact"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_skywrath_mage/arcane_bolt.lua"
+				"Function"				"arcane_bolt_hit"
+			}
+		}
 	}
-	
 	//End of file skywrath_mage_arcane_bolt_datadriven.txt
 
 
@@ -32644,7 +33654,7 @@
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"movement_speed_pct"	"30 35 40 45"
+				"movement_speed_pct"	"-30 -35 -40 -45"
 			}
 			"07"
 			{
@@ -32657,12 +33667,94 @@
 				"vision_duration"		"3.34"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------	
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+			"particle"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"		"CASTER"
+				"EffectName"		"Hero_SkywrathMage.ConcussiveShot.Cast"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_skywrath_mage/concussive_shot.lua"
+				"Function"		"concussive_shot_seek_target"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_skywrath_mage/concussive_shot.lua"
+				"Function"		"concussive_shot_post_vision"
+			}
+			
+			"FireSound"
+			{
+				"Target"		"CASTER"
+				"EffectName"		"Hero_SkywrathMage.ConcussiveShot.Target"
+			}
+		
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"			"TARGET"
+					"Radius"			"%slow_radius"
+					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				
+				"Action"
+				{
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Damage"		"%damage"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+					}
+					
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"modifier_concussive_shot_slow_datadriven"
+					}
+				}
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_concussive_shot_slow_datadriven"
+			{
+				"IsHidden"				"0"
+				"IsDebuff"				"1"
+				
+				"Duration"				"%slow_duration"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed_pct"
+				}
+			}
+		}
 	}
-	
 	//End of file skywrath_mage_concussive_shot_datadriven.txt
 
 
 	//Start of file skywrath_mage_mystic_flare_datadriven.txt
+	// NOTE: Three particles making the ground dome did not show up for me, so I manually put them into the spell. If you try without those three and show up fine for you, it is safe to delete them.
 	"skywrath_mage_mystic_flare_datadriven"
 	{
 		// General
@@ -32675,6 +33767,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"skywrath_mage_mystic_flare"
+		"AOERadius"						"170"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -32715,12 +33808,100 @@
 			}
 			"05"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"scepter_cooldown"	"20 10 0"
+				"var_type"				"FIELD_FLOAT"
+				"scepter_cooldown"		"20 10 0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_c.vpcf"		// Attach for core
+			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_f.vpcf"		// Attach for core
+			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_j.vpcf"		// Attach for core
+			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient.vpcf"			// Main particle
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"Hero_SkywrathMage.MysticFlare.Cast"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_skywrath_mage/mystic_flare.lua"
+				"Function"			"mystic_flare_start"
+				"Target"			"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_mystic_flare_dummy_vfx_datadriven"
+			{
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"Target"				"CASTER"
+						"EffectName"			"Hero_SkywrathMage.MysticFlare"
+					}
+				
+					// For some reasons, these three particles do not show up for me so I have to manually put them in
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_c.vpcf"	
+						"EffectAttachType"		"follow_origin"
+						"EffectRadius"			"%radius"
+					}
+					
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_f.vpcf"
+						"EffectAttachType"		"follow_origin"
+						"EffectRadius"			"%radius"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_j.vpcf"	
+						"EffectAttachType"		"follow_origin"
+						"EffectRadius"			"%radius"
+					}
+				
+					// Main Effect
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient.vpcf"	
+						"EffectAttachType"		"follow_origin"
+						"EffectRadius"			"%radius"
+						"ControlPoints"
+						{
+							"01"				"0 %duration 0"
+						}
+					}
+				}
+			
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
-	
 	//End of file skywrath_mage_mystic_flare_datadriven.txt
 
 
@@ -36685,6 +37866,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"tinker_march_of_the_machines"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -36751,12 +37933,58 @@
 		
 		// Data driven
 		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"particle"					"particles/units/heroes/hero_tinker/tinker_machine.vpcf"
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Hero_Tinker.March_of_the_Machines.Cast"
+			}
+		}
+		
 		"OnSpellStart"
 		{
+			"FireSound"
+			{
+				"Target"				"POINT"
+				"EffectName"			"Hero_Tinker.March_of_the_Machines"
+			}
+		
 			"RunScript"
 			{
 				"ScriptFile"			"heroes/hero_tinker/march_of_the_machines.lua"
 				"Function"				"march_of_the_machines_spawn"
+				"Target"				"POINT"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"			"TARGET"
+					"Radius"			"%splash_radius"
+					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				}
+				
+				"Action"
+				{
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Damage"		"%AbilityDamage"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+					}
+				}
 			}
 		}
 		
@@ -36766,7 +37994,12 @@
 			{
 				"States"
 				{
-					// insert states here
+					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING"							"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -38556,9 +39789,82 @@
 				"var_type"					"FIELD_INTEGER"
 				"movement_slow"				"-25 -35 -45 -55"
 			}
+			// Extra variables
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"debuff_duration"			"4.0"
+			}
 		}
-	}	
-	
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts"
+			"particle"						"particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"Hero_Ursa.Earthshock"
+			}
+		
+			"FireEffect"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
+				"EffectAttachType"			"start_at_origin"
+				"EffectRadius"				"%shock_radius"
+			}
+		
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%shock_radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				}
+				
+				"Action"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Damage"	"%AbilityDamage"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+					}
+					
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"modifier_earthshock_debuff_datadriven"
+					}
+				}
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_earthshock_debuff_datadriven"
+			{
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+			
+				"Duration"			"%debuff_duration"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow"
+				}
+			}
+		}
+	}
 	//End of file ursa_earthshock_datadriven.txt
 
 
@@ -38598,8 +39904,174 @@
 				"life_damage_bonus_percent" "5 6 7"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts"
+			"particle"						"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"Hero_Ursa.Enrage"
+			}
+		
+			"ApplyModifier"
+			{
+				"Target"					"CASTER"
+				"ModifierName"				"modifier_enrage_buff_datadriven"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"				"heroes/hero_ursa/enrage.lua"
+				"Function"					"enrage_init"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_enrage_buff_datadriven"
+			{
+				"IsHidden"					"0"
+				"IsPurgable"				"0"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"					"CASTER"
+						"EffectName"				"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
+						"EffectAttachType"			"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"				"attach_attack1"
+						}
+					}
+					
+					"AttachEffect"
+					{
+						"Target"					"CASTER"
+						"EffectName"				"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
+						"EffectAttachType"			"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"				"attach_attack2"
+						}
+					}
+				}
+				
+				"Duration"					"%AbilityDuration"
+			}
+		
+			// bit fields
+			"modifier_enrage_damage_mod_1"
+			{
+				"IsPurgable"			"0"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"1"
+				}
+			}
+			"modifier_enrage_damage_mod_2"
+			{
+				"IsPurgable"			"0"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"2"
+				}
+			}
+			"modifier_enrage_damage_mod_4"
+			{
+				"IsPurgable"			"0"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"4"
+				}
+			}
+			"modifier_enrage_damage_mod_8"
+			{
+				"IsPurgable"			"0"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"8"
+				}
+			}
+			"modifier_enrage_damage_mod_16"
+			{
+				"IsPurgable"			"0"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"16"
+				}
+			}
+			"modifier_enrage_damage_mod_32"
+			{
+				"IsPurgable"			"0"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"32"
+				}
+			}
+			"modifier_enrage_damage_mod_64"
+			{
+				"IsPurgable"			"0"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"64"
+				}
+			}
+			"modifier_enrage_damage_mod_128"
+			{
+				"IsPurgable"			"0"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"128"
+				}
+			}
+			"modifier_enrage_damage_mod_256"
+			{
+				"IsPurgable"			"0"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"256"
+				}
+			}
+			"modifier_enrage_damage_mod_512"
+			{
+				"IsPurgable"			"0"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"512"
+				}
+			}
+		}
 	}
-	
 	//End of file ursa_enrage_datadriven.txt
 
 
@@ -38612,6 +40084,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"ursa_fury_swipes"
 				
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -38633,8 +40106,54 @@
 				"damage_per_stack"				"15 20 25 30"
 			}
 		}
-	}	
-	
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"							"particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
+			"particle"							"particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
+		}
+		
+		"Modifiers"
+		{
+			"modifier_fury_swipes_caster_datadriven"
+			{
+				"Passive"						"1"
+				"IsHidden"						"0"
+				"IsPurgable"					"0"
+			
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_ursa/fury_swipes.lua"
+						"Function"				"fury_swipes_attack"
+					}
+				}
+			}
+			
+			"modifier_fury_swipes_target_datadriven"
+			{
+				"IsHidden"					"0"
+				"IsPurgable"				"0"
+				"IsDebuff"					"1"
+				
+				"EffectName"				"particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
+				"EffectAttachType"			"follow_overhead"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
+						"EffectAttachType"		"follow_overhead"
+					}
+				}
+			}
+		}
+	}
 	//End of file ursa_fury_swipes_datadriven.txt
 
 
@@ -38645,6 +40164,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityTextureName"				"ursa_overpower"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -38680,8 +40200,73 @@
 				"duration_tooltip"			"15"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts"
+			"particle"						"particles/status_fx/status_effect_overpower.vpcf"
+			"particle"						"particles/units/heroes/hero_ursa/ursa_overpower_buff.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"Hero_Ursa.Overpower"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"				"heroes/hero_ursa/overpower.lua"
+				"Function"					"overpower_init"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_enrage_buff_datadriven"
+			{
+				"Duration"					"%duration_tooltip"
+				
+				"StatusEffectName"			"particles/status_fx/status_effect_overpower.vpcf"
+				"StatusEffectPriority"		"10"
+			
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"					"CASTER"
+						"EffectName"				"particles/units/heroes/hero_ursa/ursa_overpower_buff.vpcf"
+						"EffectAttachType"			"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"				"attach_head"
+							"CASTER"				"attach_hitloc"
+							"CASTER"				"attach_hitloc"
+							"CASTER"				"attach_hitloc"
+						}
+					}
+				}
+			
+				"OnAttack"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_ursa/overpower.lua"
+						"Function"				"overpower_decrease_stack"
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_bonus_pct"
+				}
+			}
+		}
 	}
-	
 	//End of file ursa_overpower_datadriven.txt
 
 

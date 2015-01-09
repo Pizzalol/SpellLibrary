@@ -78,7 +78,6 @@
 
 			"ControlPoints"
             {
-            	"00"	"POINT"
             	"01"	"%light_strike_array_aoe 0 0"
             	"03"	"0 0 0"
             }

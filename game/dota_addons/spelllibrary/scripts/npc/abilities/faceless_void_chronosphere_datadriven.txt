@@ -8,6 +8,15 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"faceless_void_chronosphere"
+	"AOERadius"						"%radius"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+		"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -54,6 +63,106 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"vision_radius"			"475"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_FacelessVoid.Chronosphere"
+			"Target"			"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+			"TargetPoint"	"POINT"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"		"scripts/vscripts/heroes/hero_faceless_void/chronosphere.lua"
+			"Function"			"Chronosphere"
+			"Target"			"POINT"
+			"caster_modifier"	"modifier_chronosphere_caster_datadriven"
+			"caster_aura"		"modifier_chronosphere_aura_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_chronosphere_aura_datadriven"
+		{
+			"Duration"	"%duration"
+
+			//"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+			//"EffectAttachType"	"follow_origin"
+
+			// Add an extra aura for caster
+			
+			"Aura" 			"modifier_chronosphere_datadriven"
+			"Aura_Radius" 	"%radius"
+			"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types" 	"DOTA_UNIT_TARGET_ALL"
+			"Aura_ApplyToCaster"	"0"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BONUS_DAY_VISION"	"%vision_radius"
+				"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"	"%vision_radius"
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_chronosphere_datadriven"
+		{
+			"IsDebuff"	"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"scripts/vscripts/heroes/hero_faceless_void/chronosphere.lua"
+					"Function"			"ChronosphereFriendly"
+					"Target"			"TARGET"
+					"target_modifier"	"modifier_chronosphere_caster_datadriven"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_chronosphere_caster_datadriven"
+					"Target"		"TARGET"
+				}
+			}
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_chronosphere_caster_datadriven"
+		{
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"1000"
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_DISABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }

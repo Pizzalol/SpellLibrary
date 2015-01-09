@@ -22,9 +22,9 @@
 		"override_hero" "npc_dota_hero_ancient_apparition"
 	
 		"Ability1" "faceless_void_time_walk_datadriven"
-		"Ability2" "windrunner_powershot_datadriven"
-		"Ability3" "windrunner_windrun_datadriven"
-		"Ability4" "necrolyte_reapers_scythe_datadriven"
+		"Ability2" "lina_light_strike_array_datadriven"
+		"Ability3" "queenofpain_shadow_strike_datadriven"
+		"Ability4" "lina_laguna_blade_datadriven"
 	}
 	//End of file test_dummy_ranged.txt
 }
