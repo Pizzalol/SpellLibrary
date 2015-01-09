@@ -7,6 +7,7 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"skywrath_mage_ancient_seal"
 
 
 	// Casting
@@ -37,5 +38,94 @@
 			"seal_duration"			"3.0 4.0 5.0 6.0"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+		"particle"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff_rune.vpcf"
+		"particle"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_silence.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"		"TARGET"
+			"EffectName"	"Hero_SkywrathMage.AncientSeal.Target"
+		}
+	
+		"ApplyModifier"
+		{
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Types"		"DOTA_UNIT_TARGET_HERO"
+			}
+			"ModifierName"	"modifier_ancient_seal_hero_debuff_datadriven"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Types"		"DOTA_UNIT_TARGET_BASIC"
+			}
+			"ModifierName"	"modifier_ancient_seal_basic_debuff_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_ancient_seal_hero_debuff_datadriven"
+		{
+			"Duration"				"%seal_duration"
+			
+			"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff.vpcf"
+			"EffectAttachType"		"follow_overhead"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%resist_debuff"
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_SILENCED"						"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		
+		"modifier_ancient_seal_basic_debuff_datadriven"
+		{
+			"Duration"				"%seal_duration"
+			
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"				"TARGET"
+					"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff_rune.vpcf"
+					"EffectAttachType"		"start_at_customorigin"
+					"ControlPointEntities"
+					{
+						"TARGET"			"attach_origin"
+					}
+				}
+				
+				"AttachEffect"
+				{
+					"Target"				"TARGET"
+					"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_silence.vpcf"
+					"EffectAttachType"		"follow_overhead"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_SILENCED"						"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
 }
-
