@@ -1,3 +1,6 @@
+// Rewrite of Centaur Stampede
+// Author: Noya
+// Date: 9.1.2015.
 "centaur_stampede_datadriven"
 {
 	// General
@@ -5,6 +8,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"centaur_stampede"
@@ -54,6 +58,112 @@
 		{
 			"var_type"			"FIELD_INTEGER"
 			"slow_movement_speed"			"100"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+		"particle"	"particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
+		"particle"	"particles/units/heroes/hero_centaur/centaur_stampede.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_centaur/stampede.lua"
+			"Function"		"StampedeStart"
+		}
+
+		"ApplyModifier"
+		{
+			"Target"
+			{
+				"Center"  				"CASTER"
+				"Radius" 				"GLOBAL"
+				"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" 
+				"ExcludeTypes"			"DOTA_UNIT_TARGET_BASIC"
+			}
+			"ModifierName"		"modifier_stampede"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_stampede"
+		{
+			"Duration"	"%duration"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"50000"
+			}
+			"States"
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			"EffectName" 		"particles/units/heroes/hero_centaur/centaur_stampede.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
+					"EffectAttachType"	"follow_overhead"
+					"Target"			"TARGET"
+				}
+			}
+
+			"OnUnitMoved"
+			{
+				"Random"
+				{
+					"Chance"	"3.22"
+					"OnSuccess"
+					{
+						"FireSound"
+						{
+							"EffectName"		"Hero_Centaur.Stampede.Movement"
+							"Target" 			"UNIT"
+						}
+					}
+				}				
+			}
+
+			"Aura"        	"modifier_stampede_collision"
+    		"Aura_Radius" 	"%radius"
+    		"Aura_Teams"  	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+    		"Aura_Types"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		}
+
+		"modifier_stampede_collision"
+		{
+			"IsHidden"	"1"
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_centaur/stampede.lua"
+					"Function"		"Stampede"
+				}
+				"FireSound"
+				{
+					"EffectName"	"Hero_Centaur.Stampede.Stun"
+					"Target"		"TARGET"
+				}
+			}
+		}
+
+		"modifier_stampede_debuff"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%slow_duration"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"%slow_movement_speed"
+			}
 		}
 	}
 }
