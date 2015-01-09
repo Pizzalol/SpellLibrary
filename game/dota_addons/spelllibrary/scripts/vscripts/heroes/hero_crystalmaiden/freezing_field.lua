@@ -1,4 +1,9 @@
 --[[
+	CHANGELIST:
+	09.01.2015 - Standandized variables and remove ReleaseParticleIndex( .. )
+]]
+
+--[[
 	Author: kritth
 	Date: 5.1.2015.
 	Order the explosion in clockwise direction
@@ -27,7 +32,7 @@ end
 
 --[[
 	Author: kritth
-	Date: 5.1.2015.
+	Date: 09.01.2015.
 	Apply the explosion
 ]]
 function freezing_field_explode( keys )
@@ -43,6 +48,10 @@ function freezing_field_explode( keys )
 	local refModifierName = "modifier_freezing_field_ref_point_datadriven"
 	local particleName = "particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
 	local soundEventName = "hero_Crystal.freezingField.explosion"
+	local targetTeam = ability:GetAbilityTargetTeam() -- DOTA_UNIT_TARGET_TEAM_ENEMY
+	local targetType = ability:GetAbilityTargetType() -- DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO
+	local targetFlag = ability:GetAbilityTargetFlags() -- DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
+	local damageType = ability:GetAbilityDamageType()
 	
 	-- Get random point
 	local castDistance = RandomInt( minDistance, maxDistance )
@@ -64,14 +73,14 @@ function freezing_field_explode( keys )
 	-- From here onwards might be possible to port it back to datadriven through modifierArgs with point but for now leave it as is
 	-- Loop through units
 	local units = FindUnitsInRadius( caster:GetTeamNumber(), attackPoint, caster, radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false )
+			targetTeam, targetType, targetFlag, 0, false )
 	for k, v in pairs( units ) do
 		local damageTable =
 		{
 			victim = v,
 			attacker = caster,
 			damage = abilityDamage,
-			damage_type = keys.ability:GetAbilityDamageType()
+			damage_type = damageType
 		}
 		ApplyDamage( damageTable )
 	end
@@ -79,7 +88,6 @@ function freezing_field_explode( keys )
 	-- Fire effect
 	local fxIndex = ParticleManager:CreateParticle( particleName, PATTACH_CUSTOMORIGIN, caster )
 	ParticleManager:SetParticleControl( fxIndex, 0, attackPoint )
-	ParticleManager:ReleaseParticleIndex( fxIndex )
 	
 	-- Fire sound at dummy
 	local dummy = CreateUnitByName( "npc_dummy_blank", attackPoint, false, caster, caster, caster:GetTeamNumber() )
