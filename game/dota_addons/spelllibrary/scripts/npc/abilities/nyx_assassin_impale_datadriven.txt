@@ -52,6 +52,96 @@
 			"var_type"			"FIELD_INTEGER"
 			"speed"				"1600 1600 1600 1600"
 		}
+		// Extra variables
+		"05"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"air_time"			"0.52"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+		"particle"				"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"Hero_NyxAssassin.Impale"
+		}
+	
+		"LinearProjectile"
+		{
+			"Target"			"POINT"
+			"EffectName"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale.vpcf"
+			"StartRadius"		"%width"
+			"EndRadius"			"%width"
+			"MoveSpeed"			"%speed"
+			"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"TargetTypes"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"TargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			"FixedDistance"		"%length"
+			"ProvidesVision"	"0"
+			"HasFrontalCone"	"0"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"			"0"
+	
+		"FireSound"
+		{
+			"Target"			"TARGET"
+			"EffectName"		"Hero_NyxAssassin.Impale.Target" 
+		}
+	
+		"RemoveModifier"
+		{
+			"Target"			"TARGET"
+			"ModifierName"		"modifier_knockback"
+		}
+		
+		"Knockback"
+		{
+			"Target"			"TARGET"
+			"Center"			"CASTER"
+			"Distance"			"0"
+			"Duration"			"%air_time"
+			"Height"			"200"
+			"IsFixedDistance"	"1"
+		}
+		
+		"Stun"
+		{
+			"Target"			"TARGET"
+			"Duration"			"%duration"
+		}
+		
+		"DelayedAction"
+		{
+			"Delay"				"%air_time"
+			"Action"
+			{
+				"FireSound"
+				{
+					"Target"			"TARGET"
+					"EffectName"		"Hero_NyxAssassin.Impale.TargetLand" 
+				}
+			
+				"Damage"
+				{
+					"Target"			"TARGET"
+					"Damage"			"%AbilityDamage"
+					"Type"				"DAMAGE_TYPE_MAGICAL"
+				}
+			}
+		}
 	}
 }
-

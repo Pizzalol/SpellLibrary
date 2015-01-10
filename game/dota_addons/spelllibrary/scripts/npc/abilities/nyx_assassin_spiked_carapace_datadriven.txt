@@ -1,3 +1,4 @@
+// Need to fix attachment point for particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf
 "nyx_assassin_spiked_carapace_datadriven"
 {
 	// General
@@ -25,12 +26,12 @@
 		"01"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"reflect_duration"			"2.25"
+			"reflect_duration"			"4" // 2.25"
 		}
 		"02"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"stun_duration"				"0.6 1.2 1.8 2.4"
+			"stun_duration"				"3" // 0.6 1.2 1.8 2.4"
 		}
 		"03"
 		{
@@ -48,5 +49,86 @@
 			"bonus_intellect"				"0"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"						"particles/generic_gameplay/generic_stunned.vpcf"
+		"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
+		"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"				"heroes/hero_nyx_assassin/spiked_carapace.lua"
+			"Function"					"spiked_carapace_init"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"					"CASTER"
+			"ModifierName"				"modifier_spiked_carapace_buff_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_spiked_carapace_buff_datadriven"
+		{
+			"IsBuff"				"0"
+			"IsPurgable"			"0"
+		
+			"Duration"				"%reflect_duration"
+			
+			"EffectName"			"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
+			
+			"OnTakeDamage"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_nyx_assassin/spiked_carapace.lua"
+					"Function"		"spiked_carapace_reflect"
+					"DamageTaken"	"%attack_damage"
+				}
+			}
+		}
+		
+		"modifier_spiked_carapaced_stun_datadriven"
+		{
+			"IsDebuff"				"1"
+		
+			"Duration"				"%stun_duration"
+			
+			"OverrideAnimation"		"ACT_DOTA_DISABLED"
+			
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"			"TARGET"
+					"EffectName"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"ControlPoints"
+					{
+						"02"			"%stun_duration %stun_duration %stun_duration"
+					}
+				}
+			
+				"AttachEffect"
+				{
+					"Target"			"TARGET"
+					"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+					"EffectAttachType"	"follow_overhead"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
 }
-

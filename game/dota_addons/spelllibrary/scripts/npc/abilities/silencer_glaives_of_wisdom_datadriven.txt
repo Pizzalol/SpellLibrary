@@ -1,3 +1,6 @@
+// Rewrite of the Silencer Glaives of Wisdom
+// Author: chrislotix
+// Date: 10.01.2015.
 "silencer_glaives_of_wisdom_datadriven"
 {
 	// General
@@ -8,6 +11,7 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+	"AbilityTextureName"			"silencer_glaives_of_wisdom"
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
@@ -31,6 +35,52 @@
 		{
 			"var_type"			"FIELD_INTEGER"
 			"steal_range"		"925"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_glaives_of_wisdom_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"Orb"
+			{
+				"Priority"	"DOTA_ORB_PRIORITY_ABILITY"
+				"ProjectileName"	"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
+				"CastAttack"	"1"
+			}
+
+			"OnOrbFire"
+			{
+				"SpendMana"
+				{
+					"Mana"	"%AbilityManaCost"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Silencer.GlaivesOfWisdom"
+					"Target"		"CASTER"
+				}
+			}
+
+			"OnOrbImpact"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Silencer.GlaivesOfWisdom.Damage"
+					"Target"		"TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_silencer/glaives_of_wisdom.lua"
+					"Function"		"IntToDamage"
+					"Target"		"TARGET"
+				}
+			}	
 		}
 	}
 }
