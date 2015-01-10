@@ -40,7 +40,7 @@ function ChronosphereAura( keys )
 	else ignore_void = true end
 
 
-	if (caster:GetPlayerOwner() == target:GetPlayerOwner()) or (target:GetName() == "npc_dota_hero_faceless_void" and not ignore_void) then
+	if (caster:GetPlayerOwner() == target:GetPlayerOwner()) or (target:GetName() == "npc_dota_hero_faceless_void" and ignore_void) then
 		ability:ApplyDataDrivenModifier(caster, target, caster_modifier, {})
 	else
 		ability:ApplyDataDrivenModifier(caster, target, aura_modifier, {}) 

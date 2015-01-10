@@ -1,6 +1,12 @@
 // Rewrite of the Dragon Knight Elder Dragon Form
 // Author: chrislotix/Pizzalol
 // Date: 03.01.2015.
+// Changed: 10.01.2015.
+// Reason: Improved spell code
+// NOTE: Dragon Form is always a Green Dragon
+// NOTE2: -------------------------- Projectile model will be the corresponding dragon form auto attack model --------------------------
+// Until Valve implements a way to retrieve the original attack projectile
+// NOTE3: If used on melee heroes then the projectile speed will be instant and thus no projectile model
 "dragon_knight_elder_dragon_form_datadriven"
 {
 	// General
@@ -20,7 +26,10 @@
 		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
 		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
 		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
-		"model"			"models/units/heroes/hero_dragon_knight/dragon_knight_dragon.vmdl"
+		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
+		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
+		"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf"
+		"model"			"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
 		
 	}
 
@@ -43,7 +52,7 @@
 		"01"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"duration"					"60.0 60.0 60.0"
+			"duration"					"10.0 10.0 10.0"
 		}
 		"02"
 		{
@@ -122,6 +131,7 @@
 		{
 			"Duration"	"%duration"
 			"IsHidden"	"1"
+			"AllowIllusionDuplicate"    "1"
 
 			"OnCreated"
 			{
@@ -141,8 +151,9 @@
 				"RunScript"
 				{
 					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
-					"Function"				"GreenDragon"
-					"model"					"models/units/heroes/hero_dragon_knight/dragon_knight_dragon.vmdl"
+					"Function"				"ModelSwapStart"
+					"model"					"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+					"projectile_model"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
 				}
 			}
 
@@ -162,6 +173,12 @@
 					"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
 					"EffectAttachType"	"follow_origin"
 					"Target"	"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+					"Function"				"ModelSwapEnd"
 				}
 			}
 
@@ -185,6 +202,7 @@
 		{
 			"Duration"	"%duration"
 			"IsHidden"	"1"
+			"AllowIllusionDuplicate"    "1"
 
 			"OnCreated"
 			{
@@ -193,6 +211,14 @@
 					"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
 					"EffectAttachType"	"follow_origin"
 					"Target"	"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+					"Function"				"ModelSwapStart"
+					"model"					"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+					"projectile_model"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
 				}
 
 				"ApplyModifier"
@@ -215,6 +241,12 @@
 					"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
 					"EffectAttachType"	"follow_origin"
 					"Target"	"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+					"Function"				"ModelSwapEnd"
 				}
 			}
 
@@ -248,6 +280,7 @@
 		{
 			"Duration"	"%duration"
 			"IsHidden"	"1"
+			"AllowIllusionDuplicate"    "1"
 
 			"OnCreated"
 			{
@@ -256,6 +289,14 @@
 					"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
 					"EffectAttachType"	"follow_origin"
 					"Target"	"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+					"Function"				"ModelSwapStart"
+					"model"					"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+					"projectile_model"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf"
 				}
 
 				"ApplyModifier"
@@ -284,6 +325,12 @@
 					"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
 					"EffectAttachType"	"follow_origin"
 					"Target"	"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+					"Function"				"ModelSwapEnd"
 				}
 			}
 

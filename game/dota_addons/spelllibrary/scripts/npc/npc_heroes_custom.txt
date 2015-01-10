@@ -11,7 +11,7 @@
 		"Ability1" "viper_poison_attack_datadriven"
 		"Ability2" "antimage_blink_datadriven"
 		"Ability3" "bounty_hunter_wind_walk_datadriven"
-		"Ability4" "slardar_amplify_damage_datadriven"
+		"Ability4" "dragon_knight_elder_dragon_form_datadriven"
 	}
 	//End of file test_dummy_melee.txt
 

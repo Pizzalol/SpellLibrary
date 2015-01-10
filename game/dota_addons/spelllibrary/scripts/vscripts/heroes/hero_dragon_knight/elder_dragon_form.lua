@@ -1,5 +1,10 @@
+caster_model = "" -- Storing the original model of the caster
+
+--[[Author: chirslotix/Pizzalol
+	Date: 10.01.2015.
+	Deals splash auto attack damage to nearby targets depending on distance]]
 function Splash( keys )
-	
+	-- Variables
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
@@ -11,11 +16,12 @@ function Splash( keys )
 	local splash_damage_medium = ability:GetLevelSpecialValueFor("splash_damage_percent", 1) / 100
 	local splash_damage_big = ability:GetLevelSpecialValueFor("splash_damage_percent", 2) / 100
 	
-
+	-- Finding the units for each radius
 	local splash_radius_small = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin() , nil, radius_small , DOTA_UNIT_TARGET_TEAM_ENEMY	, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false) 
 	local splash_radius_medium = FindUnitsInRadius(caster:GetTeam() , target:GetAbsOrigin() , nil, radius_medium, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 	local splash_radius_big = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin() , nil, radius_big, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 
+	-- Initializing the damage table
 	local damage_table = {}
 	damage_table.attacker = caster
 	damage_table.damage_type = DAMAGE_TYPE_PHYSICAL
@@ -71,6 +77,9 @@ function Splash( keys )
 	end
 end
 
+--[[Author: Pizzalol
+	Date: 10.01.2015.
+	It transforms the caster into a different dragon depending on the ability level]]
 function Transform( keys )
 	local caster = keys.caster
 	local ability = keys.ability
@@ -88,10 +97,28 @@ function Transform( keys )
 	ability:ApplyDataDrivenModifier(caster, caster, modifier, {})
 end
 
-function GreenDragon( keys )
+--[[Author: Pizzalol
+	Date: 10.01.2015.
+	Swaps the auto attack projectile and the caster model]]
+function ModelSwapStart( keys )
 	local caster = keys.caster
-	local ability = keys.ability
 	local model = keys.model
+	local projectile_model = keys.projectile_model
 
+	-- Saves the original model
+	caster_model = caster:GetModelName()
+	caster:SetRangedProjectileName(projectile_model)
+
+	-- Sets the new model
 	caster:SetOriginalModel(model)
+end
+
+--[[Author: Pizzalol
+	Date: 10.01.2015.
+	Reverts back to the original model]]
+function ModelSwapEnd( keys )
+	local caster = keys.caster
+
+	caster:SetModel(caster_model)
+	caster:SetOriginalModel(caster_model)
 end

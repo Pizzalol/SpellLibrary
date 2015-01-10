@@ -9013,6 +9013,12 @@
 	// Rewrite of the Dragon Knight Elder Dragon Form
 	// Author: chrislotix/Pizzalol
 	// Date: 03.01.2015.
+	// Changed: 10.01.2015.
+	// Reason: Improved spell code
+	// NOTE: Dragon Form is always a Green Dragon
+	// NOTE2: -------------------------- Projectile model will be the corresponding dragon form auto attack model --------------------------
+	// Until Valve implements a way to retrieve the original attack projectile
+	// NOTE3: If used on melee heroes then the projectile speed will be instant and thus no projectile model
 	"dragon_knight_elder_dragon_form_datadriven"
 	{
 		// General
@@ -9032,7 +9038,10 @@
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
-			"model"			"models/units/heroes/hero_dragon_knight/dragon_knight_dragon.vmdl"
+			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
+			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
+			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf"
+			"model"			"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
 			
 		}
 	
@@ -9055,7 +9064,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"60.0 60.0 60.0"
+				"duration"					"10.0 10.0 10.0"
 			}
 			"02"
 			{
@@ -9134,6 +9143,7 @@
 			{
 				"Duration"	"%duration"
 				"IsHidden"	"1"
+				"AllowIllusionDuplicate"    "1"
 	
 				"OnCreated"
 				{
@@ -9153,8 +9163,9 @@
 					"RunScript"
 					{
 						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
-						"Function"				"GreenDragon"
-						"model"					"models/units/heroes/hero_dragon_knight/dragon_knight_dragon.vmdl"
+						"Function"				"ModelSwapStart"
+						"model"					"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+						"projectile_model"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
 					}
 				}
 	
@@ -9174,6 +9185,12 @@
 						"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
 						"EffectAttachType"	"follow_origin"
 						"Target"	"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+						"Function"				"ModelSwapEnd"
 					}
 				}
 	
@@ -9197,6 +9214,7 @@
 			{
 				"Duration"	"%duration"
 				"IsHidden"	"1"
+				"AllowIllusionDuplicate"    "1"
 	
 				"OnCreated"
 				{
@@ -9205,6 +9223,14 @@
 						"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
 						"EffectAttachType"	"follow_origin"
 						"Target"	"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+						"Function"				"ModelSwapStart"
+						"model"					"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+						"projectile_model"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
 					}
 	
 					"ApplyModifier"
@@ -9227,6 +9253,12 @@
 						"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
 						"EffectAttachType"	"follow_origin"
 						"Target"	"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+						"Function"				"ModelSwapEnd"
 					}
 				}
 	
@@ -9260,6 +9292,7 @@
 			{
 				"Duration"	"%duration"
 				"IsHidden"	"1"
+				"AllowIllusionDuplicate"    "1"
 	
 				"OnCreated"
 				{
@@ -9268,6 +9301,14 @@
 						"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
 						"EffectAttachType"	"follow_origin"
 						"Target"	"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+						"Function"				"ModelSwapStart"
+						"model"					"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
+						"projectile_model"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf"
 					}
 	
 					"ApplyModifier"
@@ -9296,6 +9337,12 @@
 						"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
 						"EffectAttachType"	"follow_origin"
 						"Target"	"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+						"Function"				"ModelSwapEnd"
 					}
 				}
 	
@@ -12043,11 +12090,11 @@
 				"var_type"				"FIELD_FLOAT"
 				"aura_interval"			"0.1"
 			}
-			// If you want the Chronosphere to ignore void then set it to 1 otherwise keep it at 0
+			// If you want the Chronosphere to ignore Faceless Void then keep it at 1 otherwise set it to 0
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ignore_void"			"0"
+				"ignore_void"			"1"
 			}
 	
 		}
@@ -24559,9 +24606,99 @@
 				"var_type"			"FIELD_INTEGER"
 				"speed"				"1600 1600 1600 1600"
 			}
+			// Extra variables
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"air_time"			"0.52"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+			"particle"				"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"Hero_NyxAssassin.Impale"
+			}
+		
+			"LinearProjectile"
+			{
+				"Target"			"POINT"
+				"EffectName"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale.vpcf"
+				"StartRadius"		"%width"
+				"EndRadius"			"%width"
+				"MoveSpeed"			"%speed"
+				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"TargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"FixedDistance"		"%length"
+				"ProvidesVision"	"0"
+				"HasFrontalCone"	"0"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"0"
+		
+			"FireSound"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"Hero_NyxAssassin.Impale.Target" 
+			}
+		
+			"RemoveModifier"
+			{
+				"Target"			"TARGET"
+				"ModifierName"		"modifier_knockback"
+			}
+			
+			"Knockback"
+			{
+				"Target"			"TARGET"
+				"Center"			"CASTER"
+				"Distance"			"0"
+				"Duration"			"%air_time"
+				"Height"			"200"
+				"IsFixedDistance"	"1"
+			}
+			
+			"Stun"
+			{
+				"Target"			"TARGET"
+				"Duration"			"%duration"
+			}
+			
+			"DelayedAction"
+			{
+				"Delay"				"%air_time"
+				"Action"
+				{
+					"FireSound"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"Hero_NyxAssassin.Impale.TargetLand" 
+					}
+				
+					"Damage"
+					{
+						"Target"			"TARGET"
+						"Damage"			"%AbilityDamage"
+						"Type"				"DAMAGE_TYPE_MAGICAL"
+					}
+				}
+			}
 		}
 	}
-	
 	//End of file nyx_assassin_impale_datadriven.txt
 
 
@@ -24605,12 +24742,28 @@
 				"float_multiplier"		"3.5 4 4.5 5"
 			}
 		}
+		
+		// Data drive
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn_msg.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_nyx_assassin/mana_burn.lua"
+				"Function"				"mana_burn_function"
+			}
+		}
 	}
-	
 	//End of file nyx_assassin_mana_burn_datadriven.txt
 
 
 	//Start of file nyx_assassin_spiked_carapace_datadriven.txt
+	// Need to fix attachment point for particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf
 	"nyx_assassin_spiked_carapace_datadriven"
 	{
 		// General
@@ -24638,12 +24791,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"reflect_duration"			"2.25"
+				"reflect_duration"			"4" // 2.25"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.6 1.2 1.8 2.4"
+				"stun_duration"				"3" // 0.6 1.2 1.8 2.4"
 			}
 			"03"
 			{
@@ -24661,8 +24814,89 @@
 				"bonus_intellect"				"0"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"						"particles/generic_gameplay/generic_stunned.vpcf"
+			"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
+			"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"heroes/hero_nyx_assassin/spiked_carapace.lua"
+				"Function"					"spiked_carapace_init"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"					"CASTER"
+				"ModifierName"				"modifier_spiked_carapace_buff_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_spiked_carapace_buff_datadriven"
+			{
+				"IsBuff"				"0"
+				"IsPurgable"			"0"
+			
+				"Duration"				"%reflect_duration"
+				
+				"EffectName"			"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_nyx_assassin/spiked_carapace.lua"
+						"Function"		"spiked_carapace_reflect"
+						"DamageTaken"	"%attack_damage"
+					}
+				}
+			}
+			
+			"modifier_spiked_carapaced_stun_datadriven"
+			{
+				"IsDebuff"				"1"
+			
+				"Duration"				"%stun_duration"
+				
+				"OverrideAnimation"		"ACT_DOTA_DISABLED"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"ControlPoints"
+						{
+							"02"			"%stun_duration %stun_duration %stun_duration"
+						}
+					}
+				
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+						"EffectAttachType"	"follow_overhead"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
-	
 	//End of file nyx_assassin_spiked_carapace_datadriven.txt
 
 
@@ -33902,6 +34136,9 @@
 
 
 	//Start of file silencer_glaives_of_wisdom_datadriven.txt
+	// Rewrite of the Silencer Glaives of Wisdom
+	// Author: chrislotix
+	// Date: 10.01.2015.
 	"silencer_glaives_of_wisdom_datadriven"
 	{
 		// General
@@ -33912,6 +34149,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"AbilityTextureName"			"silencer_glaives_of_wisdom"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -33935,6 +34173,52 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"steal_range"		"925"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_glaives_of_wisdom_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"Orb"
+				{
+					"Priority"	"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"	"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
+					"CastAttack"	"1"
+				}
+	
+				"OnOrbFire"
+				{
+					"SpendMana"
+					{
+						"Mana"	"%AbilityManaCost"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Silencer.GlaivesOfWisdom"
+						"Target"		"CASTER"
+					}
+				}
+	
+				"OnOrbImpact"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Silencer.GlaivesOfWisdom.Damage"
+						"Target"		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_silencer/glaives_of_wisdom.lua"
+						"Function"		"IntToDamage"
+						"Target"		"TARGET"
+					}
+				}	
 			}
 		}
 	}

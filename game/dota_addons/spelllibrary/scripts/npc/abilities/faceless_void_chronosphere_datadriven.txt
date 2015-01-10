@@ -75,11 +75,11 @@
 			"var_type"				"FIELD_FLOAT"
 			"aura_interval"			"0.1"
 		}
-		// If you want the Chronosphere to ignore void then set it to 1 otherwise keep it at 0
+		// If you want the Chronosphere to ignore Faceless Void then keep it at 1 otherwise set it to 0
 		"07"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"ignore_void"			"0"
+			"ignore_void"			"1"
 		}
 
 	}
