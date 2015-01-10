@@ -33,8 +33,14 @@ function ChronosphereAura( keys )
 	local ability = keys.ability
 	local aura_modifier = keys.aura_modifier
 	local caster_modifier = keys.caster_modifier
+	local ignore_void = keys.ignore_void
 
-	if caster:GetPlayerOwner() == target:GetPlayerOwner() then
+	-- Variable for deciding if Chronosphere should affect Faceless Void
+	if ignore_void == 0 then ignore_void = false
+	else ignore_void = true end
+
+
+	if (caster:GetPlayerOwner() == target:GetPlayerOwner()) or (target:GetName() == "npc_dota_hero_faceless_void" and not ignore_void) then
 		ability:ApplyDataDrivenModifier(caster, target, caster_modifier, {})
 	else
 		ability:ApplyDataDrivenModifier(caster, target, aura_modifier, {}) 
