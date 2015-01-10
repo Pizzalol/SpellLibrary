@@ -1,9 +1,14 @@
+// Rewrite of Alchemist Greevils Greed
+// Author: Noya
+// Date: 9.1.2015.
+// Notes: 
 "alchemist_goblins_greed_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"alchemist_goblins_greed"
 
 	// Special	
 	//-------------------------------------------------------------------------------------------------------------
@@ -30,5 +35,49 @@
 			"bonus_gold_cap"		"30"
 		}
 	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+		"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"
+		"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_msg_gold.vpcf"
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_alchemist/goblins_greed.lua"
+			"Function"		"GoblinsGreedBaseBonus"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_goblins_greed"
+		{
+			"Passive"	"1"
+			"IsHidden"	"0"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_alchemist/goblins_greed.lua"
+					"Function"		"GoblinsGreedBaseBonus"
+				}
+			}
+
+			"OnKill"
+			{
+			    "RunScript"
+				{
+					"ScriptFile"	"heroes/hero_alchemist/goblins_greed.lua"
+					"Function"		"GoblinsGreed"
+				}
+		    }
+		}
+	}
+	
 }
 
