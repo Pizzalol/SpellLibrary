@@ -1,3 +1,7 @@
+// Rewrite of Alchemist Unstable Concoction Throw (Sub-Ability)
+// Author: Noya
+// Date: 10.1.2015.
+// Notes: Used together with "alchemist_unstable_concoction_datadriven", hero needs both abilities (this one starts hidden)
 "alchemist_unstable_concoction_throw_datadriven"
 {
 	// General
@@ -8,6 +12,7 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"alchemist_unstable_concoction_throw"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -66,6 +71,98 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"brew_explosion"			"7.0"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+		"particle"	"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf"
+		"particle"	"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_explosion.vpcf"
+		"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"TrackingProjectile"
+        {
+            "Target"			"TARGET"
+            "EffectName"        "particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf"
+            "Dodgeable"         "0"
+            "ProvidesVision"    "1"
+            "VisionRadius"      "%vision_range"
+            "MoveSpeed"         "%movement_speed"
+            "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+        }
+
+        "FireSound"
+        {
+        	"EffectName"		"Hero_Alchemist.UnstableConcoction.Throw"
+        	"Target"			"CASTER"
+        }
+
+        "RunScript"
+		{
+			"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
+			"Function"		"EndBrewing"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"1"
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Alchemist.UnstableConcoction.Stun"
+			"Target" 		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_explosion.vpcf"
+			"EffectAttachType" 	"attach_hitloc"
+			"Target" 			"TARGET"
+
+			//This is required for the explosion to actually attach on the projectile hit location
+			"ControlPointEntities"
+			{
+				"TARGET"	"attach_hitloc"	
+				"TARGET"	"attach_hitloc"
+				"TARGET"	"attach_hitloc"
+				"TARGET"	"attach_hitloc"
+			}			
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
+			"Function"		"ConcoctionHit"
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
+			"Function"		"UnstableConcoctionThrowLevelUp"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_unstable_concoction_stun"
+		{
+			"IsDebuff"	"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			"OverrideAnimation"	"ACT_DOTA_DISABLED"
+			"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"	"follow_overhead"
 		}
 	}
 }

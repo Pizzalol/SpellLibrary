@@ -59,15 +59,6 @@
 			"Passive"	"1"
 			"IsHidden"	"0"
 
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/hero_alchemist/goblins_greed.lua"
-					"Function"		"GoblinsGreedBaseBonus"
-				}
-			}
-
 			"OnKill"
 			{
 			    "RunScript"
