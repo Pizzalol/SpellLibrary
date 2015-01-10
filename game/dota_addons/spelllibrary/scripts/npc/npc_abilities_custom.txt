@@ -775,6 +775,10 @@
 
 
 	//Start of file alchemist_acid_spray_datadriven.txt
+	// Rewrite of Alchemist Acid Spray
+	// Author: Noya
+	// Date: 9.1.2015.
+	// Notes: Particle color is a bit different from the original (less Alpha?)
 	"alchemist_acid_spray_datadriven"
 	{
 		// General
@@ -783,6 +787,8 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"alchemist_acid_spray"
+		"AOERadius"						"625"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -819,7 +825,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"4 5 6 7"
+				"armor_reduction"		"-4 -5 -6 -7"
 			}
 			"05"
 			{
@@ -827,12 +833,94 @@
 				"tick_rate"				"1.0"
 			}
 		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"particle"  "particles/units/heroes/hero_alchemist/alchemist_acid_spray.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+		 	"CreateThinker"
+		 	{
+		 		"ModifierName"	"modifier_acid_spray_thinker"
+		 		"Target" 		"POINT"
+		 	}
+		} 
+	
+		"Modifiers"
+		{
+			"modifier_acid_spray_thinker"
+			{
+				"Aura"					"modifier_acid_spray"
+				"Aura_Radius"			"%radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Duration"				"%duration"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_alchemist/acid_spray.lua"
+						"Function"		"AcidSpraySound"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_alchemist/alchemist_acid_spray.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+						"ControlPoints"
+						{
+							"00" "0 0 0"
+							"01" "%radius 1 1"
+							"15" "25 150 25"
+							"16" "1 0 0"
+						}
+					}
+				}
+			}
+	
+			"modifier_acid_spray"
+			{
+				"IsDebuff"		"1"
+				"ThinkInterval"	"%tick_rate"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_reduction"
+				}
+				"OnIntervalThink"
+				{
+					"FireSound"
+					{
+						"EffectName" 	"Hero_Alchemist.AcidSpray.Damage"
+						"Target"		"TARGET"
+					}
+					"Damage"
+					{
+						"Target"		 "TARGET"
+						"Type"			 "DAMAGE_TYPE_PHYSICAL"
+						"Damage"		 "%damage"
+					}
+				}
+			}
+	
+		}
+	
 	}
 	
 	//End of file alchemist_acid_spray_datadriven.txt
 
 
 	//Start of file alchemist_chemical_rage_datadriven.txt
+	// Rewrite of Alchemist Chemical Rage
+	// Author: Noya
+	// Date: 9.1.2015.
+	// Notes: Didn't add the obnoxious "Hero_Alchemist.ChemicalRage" looping sound. 
+	//		  Neither the attack sounds, as they overlap with the original weapon sounds.
 	"alchemist_chemical_rage_datadriven"
 	{
 		// General
@@ -893,6 +981,85 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_movespeed"		"30 40 60"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"particle"	"particles/status_fx/status_effect_chemical_rage.vpcf"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Alchemist.ChemicalRage.Cast"
+				"Target"		"CASTER"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_chemical_rage_transform"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_chemical_rage_transform"
+			{
+				"IsBuff"	"1"
+				"IsHidden"	"1"
+				"Duration"	"%transformation_time"
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_transform_invulnerability"
+						"Target"		"CASTER"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_chemical_rage"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+	
+			"modifier_transform_invulnerability"
+			{
+				"IsHidden"	"1"
+				"Duration"	"0.03"
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"	
+				}
+			}
+	
+			"modifier_chemical_rage"
+			{
+				"IsBuff"	"1"
+				"Duration"	"%duration"
+	
+				"EffectName"		"particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"StatusEffectName"	"particles/status_fx/status_effect_chemical_rage.vpcf"
+				"StatusEffectPriority"	"5"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"	"%base_attack_time"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"			"%bonus_mana_regen"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movespeed"
+				}
 			}
 		}
 	}
@@ -5123,6 +5290,10 @@
 
 
 	//Start of file centaur_double_edge_datadriven.txt
+	// Rewrite of Centaur Double Edge
+	// Author: Noya
+	// Date: 9.1.2015.
+	// Notes: Particle is fucked up in Source 2 (even the original spell)
 	"centaur_double_edge_datadriven"
 	{
 		// General
@@ -5159,6 +5330,43 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"radius"						"190"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"particle"	"particles/units/heroes/hero_centaur/centaur_double_edge.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target" 			"CASTER"
+				"EffectName"		"Hero_Centaur.DoubleEdge"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_centaur/double_edge.lua"
+				"Function"		"DoubleEdgeParticle"
+			}
+			"Damage"
+			{
+				"Target"
+				{
+					"Center"  	"CASTER"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"Type"			"DAMAGE_TYPE_MAGICAL"
+				"Damage"		"%edge_damage"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_centaur/double_edge.lua"
+				"Function"		"DoubleEdgeSelfDamage"
 			}
 		}
 	}
@@ -5212,6 +5420,9 @@
 
 
 	//Start of file centaur_hoof_stomp_datadriven.txt
+	// Rewrite of Centaur Hoof Stomp 
+	// Author: Noya
+	// Date: 9.1.2015.
 	"centaur_hoof_stomp_datadriven"
 	{
 		// General
@@ -5247,6 +5458,76 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"stomp_damage"					"100 150 200 250"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"particle"	"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
+			"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
+				"EffectAttachType" 	"follow_origin"
+				"EffectRadius"		"%radius"
+				"Target" 			"CASTER"
+				"ControlPoints"
+				{
+					"01"	"%radius 0 %radius"
+				}
+			}
+	
+			"FireSound"
+			{
+				"EffectName"		"Hero_Centaur.HoofStomp"
+				"Target" 			"CASTER"
+			}
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  				"CASTER"
+					"Radius" 				"%radius"
+					"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+	
+				"Action"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%stomp_damage"
+					}
+	
+					"ApplyModifier"
+					{
+						"Target" 		"TARGET"
+						"ModifierName"	"modifier_hoof_stomp"
+					}
+				}
+			}		
+		}
+	
+		"Modifiers"
+		{
+			"modifier_hoof_stomp"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%stun_duration"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"			
+				}
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
 			}
 		}
 	}
@@ -5326,6 +5607,11 @@
 
 
 	//Start of file centaur_return_datadriven.txt
+	// Rewrite of Centaur Return
+	// Author: Noya
+	// Date: 9.1.2015.
+	// Notes: Unlike the original version, the damage is returned after the hit lands. That effect is just a legacy and not useful.
+	//		  To change it to apply the damage when the attack starts, would need to do hidden aura that applies a debuff that checks OnAttackStart on the caster and does the damage.		  
 	"centaur_return_datadriven"
 	{
 		// General
@@ -5334,6 +5620,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"			"centaur_return"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -5350,12 +5637,47 @@
 				"strength_pct"				"26 34 42 50"
 			}
 		}
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_centaur/centaur_return.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_return"
+			{
+				"Passive"	"1"
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_centaur/return.lua"
+						"Function"		"Return"
+					}
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_centaur/centaur_return.vpcf"
+						"EffectAttachType"  "attach_hitloc"
+						"Target" 			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER" 		"attach_hitloc"
+							"ATTACKER" 		"attach_hitloc"
+						}
+					}
+				}	
+			}
+		}
 	}
 	
 	//End of file centaur_return_datadriven.txt
 
 
 	//Start of file centaur_stampede_datadriven.txt
+	// Rewrite of Centaur Stampede
+	// Author: Noya
+	// Date: 9.1.2015.
 	"centaur_stampede_datadriven"
 	{
 		// General
@@ -5363,6 +5685,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"centaur_stampede"
@@ -5412,6 +5735,112 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"slow_movement_speed"			"100"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"particle"	"particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
+			"particle"	"particles/units/heroes/hero_centaur/centaur_stampede.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_centaur/stampede.lua"
+				"Function"		"StampedeStart"
+			}
+	
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"  				"CASTER"
+					"Radius" 				"GLOBAL"
+					"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" 
+					"ExcludeTypes"			"DOTA_UNIT_TARGET_BASIC"
+				}
+				"ModifierName"		"modifier_stampede"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_stampede"
+			{
+				"Duration"	"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"50000"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"EffectName" 		"particles/units/heroes/hero_centaur/centaur_stampede.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"TARGET"
+					}
+				}
+	
+				"OnUnitMoved"
+				{
+					"Random"
+					{
+						"Chance"	"3.22"
+						"OnSuccess"
+						{
+							"FireSound"
+							{
+								"EffectName"		"Hero_Centaur.Stampede.Movement"
+								"Target" 			"UNIT"
+							}
+						}
+					}				
+				}
+	
+				"Aura"        	"modifier_stampede_collision"
+	    		"Aura_Radius" 	"%radius"
+	    		"Aura_Teams"  	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    		"Aura_Types"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+	
+			"modifier_stampede_collision"
+			{
+				"IsHidden"	"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_centaur/stampede.lua"
+						"Function"		"Stampede"
+					}
+					"FireSound"
+					{
+						"EffectName"	"Hero_Centaur.Stampede.Stun"
+						"Target"		"TARGET"
+					}
+				}
+			}
+	
+			"modifier_stampede_debuff"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%slow_duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"%slow_movement_speed"
+				}
 			}
 		}
 	}
@@ -17005,6 +17434,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"kunkka_tidebringer"
 	
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -17025,8 +17455,93 @@
 				"damage_bonus"				"15 30 45 60"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"precache"
+			{
+				"soundfile"					"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+				"particle"					"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+				"particle"					"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
+			}
+		
+			"modifier_tidebringer_splash_datadriven"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+				
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"Hero_Kunkaa.Tidebringer"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+						}
+					}
+				}
+				
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"Hero_Kunkka.Tidebringer.Attack"
+					}
+				
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"		"TARGET"
+							"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						}
+						
+						"Action"
+						{
+							"FireSound"
+							{
+								"Target"			"TARGET"
+								"EffectName"		"Hero_Kunkka.TidebringerDamage"
+							}
+						
+							"CleaveAttack"
+							{
+								"CleavePercent"		"100"
+								"CleaveRadius"		"%radius"
+								"CleaveEffect"		"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
+							}
+							
+							"RunScript"
+							{
+								"ScriptFile"		"heroes/hero_kunkka/tidebringer.lua"
+								"Function"			"tidebringer_set_cooldown"
+							}
+						}
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_bonus"
+				}
+			}
+		}
 	}
-	
 	//End of file kunkka_tidebringer_datadriven.txt
 
 
@@ -22888,6 +23403,8 @@
 	// Rewrite of the Necrophos Sadist ability
 	// Author: Pizzalol
 	// Date: 06.01.2015.
+	// Changed: 10.01.2015.
+	// Reason: Improved the code
 	"necrolyte_sadist_datadriven"
 	{
 		// General
@@ -22918,19 +23435,6 @@
 				"var_type"			"FIELD_FLOAT"
 				"regen_duration"			"6.0"
 			}
-			// Hero regen
-			// Change this if you change the values above
-			"05"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"mana_regen_hero"		"18 36 54 90"
-			}
-			"06"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"health_regen_hero"		"9 18 27 36"
-			}
-	
 		}
 	
 		"Modifiers"
@@ -22951,10 +23455,11 @@
 	
 				"OnHeroKilled"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"ModifierName"	"modifier_sadist_hero_regen_datadriven"
-						"Target"		"CASTER"
+						"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/sadist.lua"
+						"Function"		"ApplySadistHero"
+						"modifier"	"modifier_sadist_regen_datadriven"
 					}
 				}
 			}
@@ -22997,40 +23502,6 @@
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_regen"
-				}
-			}
-	
-			"modifier_sadist_hero_regen_datadriven"
-			{
-				"Duration"	"%regen_duration"
-				"IsHidden"	"1"
-	
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
-	
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/sadist.lua"
-						"Function"		"ApplySadistHero"
-						"stack_modifier"	"modifier_sadist_buff_datadriven"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/sadist.lua"
-						"Function"		"RemoveSadistHero"
-						"stack_modifier"	"modifier_sadist_buff_datadriven"
-					}
-				}
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen_hero"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_regen_hero"
 				}
 			}
 		}
@@ -42743,6 +43214,9 @@
 
 
 	//Start of file windrunner_focusfire_datadriven.txt
+	// CHANGELIST:
+	// 09.01.2015 - Change focusfire_on_attack_start to focusfire_on_attack_landed to reduce redundancy
+	
 	"windrunner_focusfire_datadriven"
 	{
 		// General
@@ -42838,7 +43312,7 @@
 					"RunScript"
 					{
 						"ScriptFile"			"heroes/hero_windrunner/focusfire.lua"
-						"Function"				"focusfire_on_attack_start"
+						"Function"				"focusfire_on_attack_landed"
 					}
 				}
 			

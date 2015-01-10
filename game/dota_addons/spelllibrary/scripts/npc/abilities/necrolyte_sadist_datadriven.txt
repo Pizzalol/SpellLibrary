@@ -1,6 +1,8 @@
 // Rewrite of the Necrophos Sadist ability
 // Author: Pizzalol
 // Date: 06.01.2015.
+// Changed: 10.01.2015.
+// Reason: Improved the code
 "necrolyte_sadist_datadriven"
 {
 	// General
@@ -31,19 +33,6 @@
 			"var_type"			"FIELD_FLOAT"
 			"regen_duration"			"6.0"
 		}
-		// Hero regen
-		// Change this if you change the values above
-		"05"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"mana_regen_hero"		"18 36 54 90"
-		}
-		"06"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"health_regen_hero"		"9 18 27 36"
-		}
-
 	}
 
 	"Modifiers"
@@ -64,10 +53,11 @@
 
 			"OnHeroKilled"
 			{
-				"ApplyModifier"
+				"RunScript"
 				{
-					"ModifierName"	"modifier_sadist_hero_regen_datadriven"
-					"Target"		"CASTER"
+					"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/sadist.lua"
+					"Function"		"ApplySadistHero"
+					"modifier"	"modifier_sadist_regen_datadriven"
 				}
 			}
 		}
@@ -110,40 +100,6 @@
 			{
 				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
 				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_regen"
-			}
-		}
-
-		"modifier_sadist_hero_regen_datadriven"
-		{
-			"Duration"	"%regen_duration"
-			"IsHidden"	"1"
-
-			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/sadist.lua"
-					"Function"		"ApplySadistHero"
-					"stack_modifier"	"modifier_sadist_buff_datadriven"
-				}
-			}
-
-			"OnDestroy"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/sadist.lua"
-					"Function"		"RemoveSadistHero"
-					"stack_modifier"	"modifier_sadist_buff_datadriven"
-				}
-			}
-
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen_hero"
-				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_regen_hero"
 			}
 		}
 	}

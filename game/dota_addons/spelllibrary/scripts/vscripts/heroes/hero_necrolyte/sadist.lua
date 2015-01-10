@@ -31,28 +31,17 @@ end
 
 --[[Author: Pizzalol
 	Date: 06.01.2015.
-	Applies a hero sadist stack]]
+	Changed: 10.01.2015.
+	Reason: Changed it to a loop that applies normal stacks instead
+	Runs a loop that applies normal stacks according to the hero multiplier]]
 function ApplySadistHero( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local stack_modifier = keys.stack_modifier
-	local stack_count = caster:GetModifierStackCount(stack_modifier, ability)
-	local hero_multiplier = ability:GetLevelSpecialValueFor("hero_multiplier", (ability:GetLevel() - 1)) - 1 -- Its -1 per normal sadist stack that you apply
+	local modifier = keys.modifier
+	local hero_multiplier = ability:GetLevelSpecialValueFor("hero_multiplier", (ability:GetLevel() - 1))
 
-	ability:ApplyDataDrivenModifier(caster, caster, stack_modifier, {})
-
-	caster:SetModifierStackCount(stack_modifier, ability, stack_count + hero_multiplier)
-end
-
---[[Author: Pizzalol
-	Date: 06.01.2015.
-	Removes a hero sadist stack]]
-function RemoveSadistHero( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local stack_modifier = keys.stack_modifier
-	local stack_count = caster:GetModifierStackCount(stack_modifier, ability)
-	local hero_multiplier = ability:GetLevelSpecialValueFor("hero_multiplier", (ability:GetLevel() - 1)) - 1 -- Its -1 per normal sadist stack that you apply
-
-	caster:SetModifierStackCount( stack_modifier, ability, stack_count - hero_multiplier)
+	-- Starts from 2 since OnKill already applied 1 stack
+	for i = 2, hero_multiplier do
+		ability:ApplyDataDrivenModifier(caster, caster, modifier, {})
+	end
 end
