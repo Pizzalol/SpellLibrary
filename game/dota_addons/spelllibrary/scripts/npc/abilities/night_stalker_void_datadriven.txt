@@ -21,6 +21,15 @@
 	"AbilityCooldown"				"8 8 8 8"
 	"AbilityManaCost"				"80 90 100 110"
 	"AbilityDamage"					"90 160 255 335"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+		"particle"			"particles/units/heroes/hero_night_stalker/nightstalker_void.vpcf"
+		"particle"			"particles/generic_gameplay/generic_stunned.vpcf"
+	}
 		
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -49,6 +58,58 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"attackspeed_slow"		"-35 -35 -35 -35"
+		}
+		// Extra
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"mini_stun"				"0.1"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Nightstalker.Void"
+			"Target"		"TARGET"
+		}
+
+		"Stun"
+		{
+			"Target"	"TARGET"
+			"Duration"	"%mini_stun"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_night_stalker/void.lua"
+			"Function"		"Void"
+			"modifier"		"modifier_void_datadriven"
+		}
+
+		"Damage"
+		{
+			"Target"	"TARGET"
+			"Type"		"DAMAGE_TYPE_MAGICAL"
+			"Damage"	"%AbilityDamage"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_void_datadriven"
+		{
+			"IsDebuff"	"1"
+
+			"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_void.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_slow"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attackspeed_slow"
+			}
 		}
 	}
 }

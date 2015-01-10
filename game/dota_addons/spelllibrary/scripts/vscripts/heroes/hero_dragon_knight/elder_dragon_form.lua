@@ -1,5 +1,3 @@
-caster_model = "" -- Storing the original model of the caster
-
 --[[Author: chirslotix/Pizzalol
 	Date: 10.01.2015.
 	Deals splash auto attack damage to nearby targets depending on distance]]
@@ -106,7 +104,7 @@ function ModelSwapStart( keys )
 	local projectile_model = keys.projectile_model
 
 	-- Saves the original model
-	caster_model = caster:GetModelName()
+	caster.caster_model = caster:GetModelName()
 	caster:SetRangedProjectileName(projectile_model)
 
 	-- Sets the new model
@@ -119,6 +117,6 @@ end
 function ModelSwapEnd( keys )
 	local caster = keys.caster
 
-	caster:SetModel(caster_model)
-	caster:SetOriginalModel(caster_model)
+	caster:SetModel(caster.caster_model)
+	caster:SetOriginalModel(caster.caster_model)
 end
