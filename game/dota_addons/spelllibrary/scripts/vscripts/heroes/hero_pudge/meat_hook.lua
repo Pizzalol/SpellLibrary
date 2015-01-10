@@ -2,8 +2,11 @@ hookTable = hookTable or {}
 
 --[[Author: Pizzalol
 	Date: 02.01.2015.
-	Changed: 06.01.2015.
+	Changed: 10.01.2015.
 	Upon hitting a unit it gives vision and checks if its a friendly unit or an enemy one and then pulls it back]]
+	--[[Changelog
+		10.01.2015.
+		Fixed ability damage type to not be static]]
 function RetractMeatHook( keys )
 	-- Spell
 	local caster = keys.caster
@@ -34,7 +37,7 @@ function RetractMeatHook( keys )
 		local damageTable = {}
 		damageTable.attacker = caster
 		damageTable.victim = target
-		damageTable.damage_type = DAMAGE_TYPE_PURE
+		damageTable.damage_type = ability:GetAbilityDamageType()
 		damageTable.ability = ability
 		damageTable.damage = damage
 
