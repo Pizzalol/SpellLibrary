@@ -24637,6 +24637,9 @@
 
 
 	//Start of file night_stalker_void_datadriven.txt
+	// Rewrite of the Nightstalker Void ability
+	// Author: Pizzalol
+	// Date: 10.01.2015.
 	"night_stalker_void_datadriven"
 	{
 		// General
@@ -24698,6 +24701,12 @@
 				"var_type"				"FIELD_INTEGER"
 				"attackspeed_slow"		"-35 -35 -35 -35"
 			}
+			// Extra
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mini_stun"				"0.1"
+			}
 		}
 	
 		"OnSpellStart"
@@ -24708,11 +24717,17 @@
 				"Target"		"TARGET"
 			}
 	
-			"FireEffect"
+			"Stun"
 			{
-				"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_void.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Target"		"TARGET"
+				"Target"	"TARGET"
+				"Duration"	"%mini_stun"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_night_stalker/void.lua"
+				"Function"		"Void"
+				"modifier"		"modifier_void_datadriven"
 			}
 	
 			"Damage"
@@ -24720,6 +24735,23 @@
 				"Target"	"TARGET"
 				"Type"		"DAMAGE_TYPE_MAGICAL"
 				"Damage"	"%AbilityDamage"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_void_datadriven"
+			{
+				"IsDebuff"	"1"
+	
+				"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_void.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_slow"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attackspeed_slow"
+				}
 			}
 		}
 	}
@@ -34326,6 +34358,13 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"AbilityTextureName"			"silencer_glaives_of_wisdom"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"				
+		}
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
