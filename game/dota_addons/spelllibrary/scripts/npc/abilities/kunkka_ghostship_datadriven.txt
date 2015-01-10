@@ -21,7 +21,7 @@
 
 	// Damage.
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityDamage"					"400 500 600"
+	"AbilityDamage"					"250" // 400 500 600"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
@@ -34,7 +34,7 @@
 		"01"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"tooltip_delay"				"3.0"
+			"tooltip_delay"				"3.07"
 		}
 		"02"
 		{
@@ -66,6 +66,103 @@
 			"var_type"					"FIELD_INTEGER"
 			"ghostship_speed"			"650 650 650"
 		}
+		// Extra variable
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"rum_reduce_pct"			"50"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"damage_duration"			"10.0"
+		}
+		"10"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"damage_interval"			"1.0"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+		"particle"						"particles/units/heroes/hero_kunkka/kunkka_ghostship_marker.vpcf"
+		"particle"						"particles/units/heroes/hero_kunkka/kunkka_ghost_ship.vpcf"
+		"particle"						"particles/status_fx/status_effect_rum.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"					"CASTER"
+			"EffectName"				"Ability.Ghostship.bell"
+		}
+	
+		"FireSound"
+		{
+			"Target"					"CASTER"
+			"EffectName"				"Ability.Ghostship"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"				"heroes/hero_kunkka/ghostship.lua"
+			"Function"					"ghostship_start_traverse"
+			"Target"					"POINT"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"					"0"
+		
+		"ApplyModifier"
+		{
+			"Target"					"TARGET"
+			"ModifierName"				"modifier_ghostship_rum_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_ghostship_rum_datadriven"
+		{
+			"IsBuff"				"1"
+			
+			"Duration"				"%buff_duration"
+			
+			"StatusEffectName"		"particles/status_fx/status_effect_rum.vpcf"
+			"StatusEffectPriority"	"10"
+			
+			"OnTakeDamage"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_kunkka/ghostship.lua"
+					"Function"			"ghostship_register_damage"
+					"DamageTaken"		"%attack_damage"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_kunkka/ghostship.lua"
+					"Function"			"ghostship_spread_damage"
+					"Target"			"TARGET"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%rum_reduce_pct"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_bonus"
+			}
+		}
 	}
 }
-
