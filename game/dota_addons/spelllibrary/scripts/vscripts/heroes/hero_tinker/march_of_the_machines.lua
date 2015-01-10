@@ -69,7 +69,7 @@ function march_of_the_machines_spawn( keys )
 				iUnitTargetType = targetType,
 				bDeleteOnHit = true,
 				vVelocity = forwardVec * projectile_speed,
-				bProvidesVision = false,
+				bProvidesVision = false
 			}
 			ProjectileManager:CreateLinearProjectile( projectileTable )
 			

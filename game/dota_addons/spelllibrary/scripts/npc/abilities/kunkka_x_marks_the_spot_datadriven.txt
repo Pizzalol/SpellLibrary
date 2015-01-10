@@ -31,7 +31,7 @@
 		"01"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"duration"					"1.0 2.0 3.0 4.0"
+			"duration"					"3.0 2.0 3.0 4.0"
 		}	
 		"02"
 		{
@@ -63,6 +63,15 @@
 		"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
 	}
 	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
+			"Function"					"x_marks_the_spot_level_up"
+		}
+	}
+	
 	"OnSpellStart"
 	{
 		"ApplyModifier"
@@ -92,6 +101,10 @@
 	{
 		"modifier_x_marks_the_spot_debuff_datadriven"
 		{
+			"IsDebuff"			"1"
+			"IsHidden"			"0"
+			"IsPurgable"		"0"
+		
 			"OnCreated"
 			{
 				"FireSound"
