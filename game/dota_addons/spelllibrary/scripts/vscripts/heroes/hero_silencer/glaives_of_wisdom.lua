@@ -1,3 +1,7 @@
+--[[Glaives of Wisdom intelligence to damage
+	Author: chrislotix
+	Date: 10.1.2015.]]
+
 function IntToDamage( keys )
 
 	local ability = keys.ability
@@ -18,8 +22,6 @@ function IntToDamage( keys )
 
 	ApplyDamage(damage_table)
 
-	print(damage_table.damage)
-	print("ebin")
-
+	print(damage_table.damage)	
 
 end

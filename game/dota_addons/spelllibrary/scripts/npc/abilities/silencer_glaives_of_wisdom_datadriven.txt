@@ -1,3 +1,6 @@
+// Rewrite of the Silencer Glaives of Wisdom
+// Author: chrislotix
+// Date: 10.01.2015.
 "silencer_glaives_of_wisdom_datadriven"
 {
 	// General
