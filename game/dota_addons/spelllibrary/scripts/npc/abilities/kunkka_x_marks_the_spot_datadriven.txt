@@ -5,7 +5,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
 	"FightRecapLevel"				"1"
@@ -54,5 +54,84 @@
 			"fow_duration"				"5.94"
 		}	
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+		"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"
+			{
+				"Center"		"TARGET"
+				"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			}
+			"ModifierName"		"modifier_x_marks_the_spot_debuff_datadriven"
+			"Duration"			"%allied_duration_tooltip"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"
+			{
+				"Center"		"TARGET"
+				"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			}
+			"ModifierName"		"modifier_x_marks_the_spot_debuff_datadriven"
+			"Duration"			"%duration"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_x_marks_the_spot_debuff_datadriven"
+		{
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"Target"					"TARGET"
+					"EffectName"				"Ability.XMarksTheSpot.Target"
+				}
+			
+				"AttachEffect"
+				{
+					"Target"					"TARGET"
+					"EffectName"				"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
+					"EffectAttachType"			"start_at_customorigin"
+					"ControlPointEntities"
+					{
+						"TARGET"				"attach_origin"
+					}
+				}
+			
+				"RunScript"
+				{
+					"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
+					"Function"					"x_marks_the_spot_init"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"FireSound"
+				{
+					"Target"					"TARGET"
+					"EffectName"				"Ability.XMarksTheSpot.Return"
+				}
+			
+				"RunScript"
+				{
+					"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
+					"Function"					"x_marks_the_spot_return"
+				}
+			}
+		}
+	}
 }
-
