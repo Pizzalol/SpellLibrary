@@ -1,3 +1,6 @@
+// Rewrite of the Silencer Curse of the Silent
+// Author: chrislotix
+// Date: 09.01.2015.
 "silencer_curse_of_the_silent_datadriven"
 {
 	// General
@@ -9,6 +12,16 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"silencer_curse_of_the_silent"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
+		"particle"		"particles/units/heroes/hero_silencer/silencer_curse.vpcf"
+		"particle"		"particles/units/heroes/hero_silencer/silencer_curse_aoe.vpcf"		
+				
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -53,5 +66,104 @@
 			"tooltip_duration"	"6"
 		}
 	}
+
+	"OnSpellStart"
+	{
+		"FireEffect"
+		{	
+			"EffectName"	"particles/units/heroes/hero_silencer/silencer_curse_aoe.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+			"TargetPoint"	"POINT"	
+			"ControlPoints"
+			{
+				"01"	"%radius 0 0"
+
+			}
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Silencer.Curse.Cast"
+			"Target"		"CASTER"
+		}	
+
+
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"	"POINT"
+				"Radius"	"%radius"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Type"		"DOTA_UNIT_TARGET_HERO"
+			}
+			
+			"Action"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_curse_debuff_datadriven"
+					"Target"	"TARGET"
+				}				
+			}
+		}
+
+
+	}
+
+	"Modifiers"
+	{
+		"modifier_curse_debuff_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%tooltip_duration"
+			"IsHidden"	"0"
+			"IsPurgable"	"1"
+			"Attributes" "MODIFIER_ATTRIBUTE_MULTIPLE"
+			"EffectName"	"particles/units/heroes/hero_silencer/silencer_curse.vpcf"
+			"EffectAttachType"	"follow_overhead"
+			"Target"	"TARGET"
+
+			"ThinkInterval"	"1.0"
+
+			"OnCreated"
+			{		
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Silencer.Curse.Impact"
+					"Target"		"CASTER"
+				}
+			}			
+
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%health_damage"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_silencer/curse_of_the_silent.lua"
+					"Function"		"ManaDrain"
+					"Target"		"POINT"
+				}				
+			}
+
+			"OnSpentMana"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName" "modifier_curse_debuff_datadriven"
+					"Target"	"UNIT"
+				} 
+			}
+		}
+	}
 }	
 
+//MODIFIER_EVENT_ON_ABILITY_EXECUTED
+//MODIFIER_EVENT_ON_SPENT_MANA

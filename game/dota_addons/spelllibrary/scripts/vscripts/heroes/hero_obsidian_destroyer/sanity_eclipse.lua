@@ -20,7 +20,7 @@ function SanityEclipseDamage( keys )
 	local damage_table = {} 
 
 	damage_table.attacker = caster
-	damage_table.damage_type = DAMAGE_TYPE_MAGICAL
+	damage_table.damage_type = ability:GetAbilityDamageType()
 	damage_table.ability = ability
 	damage_table.victim = target
 

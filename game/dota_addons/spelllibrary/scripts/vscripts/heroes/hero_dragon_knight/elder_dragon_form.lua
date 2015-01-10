@@ -21,7 +21,7 @@ function Splash( keys )
 	damage_table.damage_type = DAMAGE_TYPE_PHYSICAL
 	damage_table.damage = caster:GetAttackDamage() * splash_damage_small
 
-	print("test")
+	print("ebin")
 
 
 	--loop for doing the splash damage while ignoring the original target
