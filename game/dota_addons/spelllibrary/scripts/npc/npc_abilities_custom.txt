@@ -9011,7 +9011,7 @@
 
 	//Start of file dragon_knight_elder_dragon_form_datadriven.txt
 	// Rewrite of the Dragon Knight Elder Dragon Form
-	// Author: chrislotix
+	// Author: chrislotix/Pizzalol
 	// Date: 03.01.2015.
 	"dragon_knight_elder_dragon_form_datadriven"
 	{
@@ -9106,27 +9106,9 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"frost_aoe"					"250"
-			}
-			"13"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"green_dragon_duration"	"60 0 0"
-	
-			}
-				"14"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"red_dragon_duration"	"0 60 0"
-	
-			}
-				"15"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"blue_dragon_duration"	"0 0 60"
-	
-			}
-			
+			}		
 		}
+	
 		"OnSpellStart"
 		{
 			"FireSound"
@@ -9135,52 +9117,23 @@
 				"Target"		"CASTER"
 			}
 	
-			"ApplyModifier"
+			"RunScript"
 			{
-				"ModifierName"	"modifier_elder_form_bonus_range_datadriven"
-				"Target"	"CASTER"
+				"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+				"Function"				"Transform"
+				"modifier_one"			"modifier_green_dragon_datadriven"
+				"modifier_two"			"modifier_red_dragon_datadriven"
+				"modifier_three"		"modifier_blue_dragon_datadriven"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_green_dragon_datadriven"
-				"Target"	"CASTER"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_red_dragon_datadriven"
-				"Target"	"CASTER"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_blue_dragon_datadriven"
-				"Target"	"CASTER"
-			}
-	
-	
 	
 		}
 	
 		"Modifiers"
 		{
-			"modifier_elder_form_bonus_range_datadriven"
-			{
-				"Duration"	"%duration"
-				"IsPurgable"	"0"
-				"IsBuff"	"1"
-				"IsHidden"	"0"
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%bonus_movement_speed"
-					
-				}
-	
-			}
-	
 			"modifier_green_dragon_datadriven"
 			{
-				"Duration"	"%green_dragon_duration"
+				"Duration"	"%duration"
+				"IsHidden"	"1"
 	
 				"OnCreated"
 				{
@@ -9189,6 +9142,19 @@
 						"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
 						"EffectAttachType"	"follow_origin"
 						"Target"	"CASTER"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_corrosive_breath_attack_datadriven"
+						"Target"		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+						"Function"				"GreenDragon"
+						"model"					"models/units/heroes/hero_dragon_knight/dragon_knight_dragon.vmdl"
 					}
 				}
 	
@@ -9203,7 +9169,12 @@
 	
 				"OnDestroy"
 				{
-					
+					"FireEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"	"CASTER"
+					}
 				}
 	
 				"OnAttackLanded"
@@ -9213,20 +9184,43 @@
 						"EffectName"	"Hero_DragonKnight.ProjectileImpact"
 						"Target"		"TARGET"
 					}
+				}
 	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_corrosive_breath_datadriven"
-						"Target"	"TARGET"
-					}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%bonus_movement_speed"				
 				}
 			}
 	
 			"modifier_red_dragon_datadriven"
 			{
-				"Duration"	"%red_dragon_duration"
+				"Duration"	"%duration"
+				"IsHidden"	"1"
 	
 				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"	"CASTER"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_corrosive_breath_attack_datadriven"
+						"Target"		"CASTER"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_splash_attack_datadriven"
+						"Target"		"CASTER"
+					}
+				}
+	
+				"OnDestroy"
 				{
 					"FireEffect"
 					{
@@ -9253,26 +9247,49 @@
 						"EffectName"	"Hero_DragonKnight.ProjectileImpact"
 						"Target"		"TARGET"
 					}
+				}
 	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_corrosive_breath_datadriven"
-						"Target"	"TARGET"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
-						"Function"		"Splash"
-					}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%bonus_movement_speed"				
 				}
 			}
 	
 			"modifier_blue_dragon_datadriven"
 			{
-				"Duration"	"%blue_dragon_duration"
+				"Duration"	"%duration"
+				"IsHidden"	"1"
 	
 				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"	"CASTER"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_corrosive_breath_attack_datadriven"
+						"Target"		"CASTER"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_splash_attack_datadriven"
+						"Target"		"CASTER"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_frost_breath_attack_datadriven"
+						"Target"		"CASTER"
+					}
+				}
+	
+				"OnDestroy"
 				{
 					"FireEffect"
 					{
@@ -9300,19 +9317,49 @@
 						"EffectName"	"Hero_DragonKnight.ProjectileImpact"
 						"Target"		"TARGET"
 					}
+				}
 	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%bonus_movement_speed"				
+				}
+			}
+	
+			"modifier_corrosive_breath_attack_datadriven"
+			{
+				"Duration"	"%duration"
+	
+				"OnAttackLanded"
+				{
 					"ApplyModifier"
 					{
 						"ModifierName"	"modifier_corrosive_breath_datadriven"
 						"Target"	"TARGET"
 					}
+				}
+			}
 	
+			"modifier_splash_attack_datadriven"
+			{
+				"Duration"	"%duration"
+	
+				"OnAttackLanded"
+				{
 					"RunScript"
 					{
 						"ScriptFile"	"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
 						"Function"		"Splash"
 					}
+				}
+			}
 	
+			"modifier_frost_breath_attack_datadriven"
+			{
+				"Duration"	"%duration"
+	
+				"OnAttackLanded"
+				{
 					"ActOnTargets"
 					{
 						"Target"
@@ -9364,8 +9411,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%frost_bonus_attack_speed"
 				}
 			}
-		}	
-	
+		}
 	}
 	//End of file dragon_knight_elder_dragon_form_datadriven.txt
 
@@ -11997,6 +12043,7 @@
 				"var_type"				"FIELD_FLOAT"
 				"aura_interval"			"0.1"
 			}
+			
 		}
 	
 		"OnSpellStart"
@@ -17414,7 +17461,7 @@
 	
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"400 500 600"
+		"AbilityDamage"					"250" // 400 500 600"
 	
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -17427,7 +17474,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"tooltip_delay"				"3.0"
+				"tooltip_delay"				"3.07"
 			}
 			"02"
 			{
@@ -17459,13 +17506,111 @@
 				"var_type"					"FIELD_INTEGER"
 				"ghostship_speed"			"650 650 650"
 			}
+			// Extra variable
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rum_reduce_pct"			"50"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_duration"			"10.0"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_interval"			"1.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_ghostship_marker.vpcf"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_ghost_ship.vpcf"
+			"particle"						"particles/status_fx/status_effect_rum.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"Ability.Ghostship.bell"
+			}
+		
+			"FireSound"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"Ability.Ghostship"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"				"heroes/hero_kunkka/ghostship.lua"
+				"Function"					"ghostship_start_traverse"
+				"Target"					"POINT"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"					"0"
+			
+			"ApplyModifier"
+			{
+				"Target"					"TARGET"
+				"ModifierName"				"modifier_ghostship_rum_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_ghostship_rum_datadriven"
+			{
+				"IsBuff"				"1"
+				
+				"Duration"				"%buff_duration"
+				
+				"StatusEffectName"		"particles/status_fx/status_effect_rum.vpcf"
+				"StatusEffectPriority"	"10"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_kunkka/ghostship.lua"
+						"Function"			"ghostship_register_damage"
+						"DamageTaken"		"%attack_damage"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_kunkka/ghostship.lua"
+						"Function"			"ghostship_spread_damage"
+						"Target"			"TARGET"
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%rum_reduce_pct"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_bonus"
+				}
+			}
 		}
 	}
-	
 	//End of file kunkka_ghostship_datadriven.txt
 
 
 	//Start of file kunkka_return_datadriven.txt
+	// NOTE: This ability use same script as kunkka_x_marks_the_spot_datadriven
 	"kunkka_return_datadriven"
 	{
 		// General
@@ -17473,6 +17618,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"kunkka_return"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -17485,8 +17631,18 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_kunkka/x_marks_the_spot.lua"
+				"Function"				"x_marks_the_spot_force_return"
+			}
+		}
 	}
-	
 	//End of file kunkka_return_datadriven.txt
 
 
@@ -17870,7 +18026,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"1.0 2.0 3.0 4.0"
+				"duration"					"3.0 2.0 3.0 4.0"
 			}	
 			"02"
 			{
@@ -17902,6 +18058,15 @@
 			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
 		}
 		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
+				"Function"					"x_marks_the_spot_level_up"
+			}
+		}
+		
 		"OnSpellStart"
 		{
 			"ApplyModifier"
@@ -17931,6 +18096,10 @@
 		{
 			"modifier_x_marks_the_spot_debuff_datadriven"
 			{
+				"IsDebuff"			"1"
+				"IsHidden"			"0"
+				"IsPurgable"		"0"
+			
 				"OnCreated"
 				{
 					"FireSound"
@@ -33508,6 +33677,9 @@
 
 
 	//Start of file silencer_curse_of_the_silent_datadriven.txt
+	// Rewrite of the Silencer Curse of the Silent
+	// Author: chrislotix
+	// Date: 09.01.2015.
 	"silencer_curse_of_the_silent_datadriven"
 	{
 		// General
@@ -33519,6 +33691,16 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"silencer_curse_of_the_silent"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
+			"particle"		"particles/units/heroes/hero_silencer/silencer_curse.vpcf"
+			"particle"		"particles/units/heroes/hero_silencer/silencer_curse_aoe.vpcf"		
+					
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -33563,8 +33745,107 @@
 				"tooltip_duration"	"6"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{	
+				"EffectName"	"particles/units/heroes/hero_silencer/silencer_curse_aoe.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+				"TargetPoint"	"POINT"	
+				"ControlPoints"
+				{
+					"01"	"%radius 0 0"
+	
+				}
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Silencer.Curse.Cast"
+				"Target"		"CASTER"
+			}	
+	
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Type"		"DOTA_UNIT_TARGET_HERO"
+				}
+				
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_curse_debuff_datadriven"
+						"Target"	"TARGET"
+					}				
+				}
+			}
+	
+	
+		}
+	
+		"Modifiers"
+		{
+			"modifier_curse_debuff_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%tooltip_duration"
+				"IsHidden"	"0"
+				"IsPurgable"	"1"
+				"Attributes" "MODIFIER_ATTRIBUTE_MULTIPLE"
+				"EffectName"	"particles/units/heroes/hero_silencer/silencer_curse.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"Target"	"TARGET"
+	
+				"ThinkInterval"	"1.0"
+	
+				"OnCreated"
+				{		
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Silencer.Curse.Impact"
+						"Target"		"CASTER"
+					}
+				}			
+	
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%health_damage"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_silencer/curse_of_the_silent.lua"
+						"Function"		"ManaDrain"
+						"Target"		"POINT"
+					}				
+				}
+	
+				"OnSpentMana"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName" "modifier_curse_debuff_datadriven"
+						"Target"	"UNIT"
+					} 
+				}
+			}
+		}
 	}	
 	
+	//MODIFIER_EVENT_ON_ABILITY_EXECUTED
+	//MODIFIER_EVENT_ON_SPENT_MANA
 	//End of file silencer_curse_of_the_silent_datadriven.txt
 
 
@@ -38581,6 +38862,8 @@
 		
 		"OnProjectileHitUnit"
 		{
+			"DeleteOnHit"					"1"
+		
 			"ActOnTargets"
 			{
 				"Target"

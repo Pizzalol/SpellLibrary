@@ -75,6 +75,7 @@
 			"var_type"				"FIELD_FLOAT"
 			"aura_interval"			"0.1"
 		}
+		
 	}
 
 	"OnSpellStart"

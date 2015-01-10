@@ -21,8 +21,6 @@ function Splash( keys )
 	damage_table.damage_type = DAMAGE_TYPE_PHYSICAL
 	damage_table.damage = caster:GetAttackDamage() * splash_damage_small
 
-	print("ebin")
-
 
 	--loop for doing the splash damage while ignoring the original target
 	for i,v in ipairs(splash_radius_small) do
@@ -71,4 +69,29 @@ function Splash( keys )
 			end
 		end
 	end
+end
+
+function Transform( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local level = ability:GetLevel()
+	local modifier_one = keys.modifier_one
+	local modifier_two = keys.modifier_two
+	local modifier_three = keys.modifier_three
+
+	-- Deciding the transformation level
+	local modifier
+	if level == 1 then modifier = modifier_one
+	elseif level == 2 then modifier = modifier_two
+	else modifier = modifier_three end
+
+	ability:ApplyDataDrivenModifier(caster, caster, modifier, {})
+end
+
+function GreenDragon( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local model = keys.model
+
+	caster:SetOriginalModel(model)
 end

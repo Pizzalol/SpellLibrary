@@ -1,5 +1,5 @@
 // Rewrite of the Dragon Knight Elder Dragon Form
-// Author: chrislotix
+// Author: chrislotix/Pizzalol
 // Date: 03.01.2015.
 "dragon_knight_elder_dragon_form_datadriven"
 {
@@ -94,27 +94,9 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"frost_aoe"					"250"
-		}
-		"13"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"green_dragon_duration"	"60 0 0"
-
-		}
-			"14"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"red_dragon_duration"	"0 60 0"
-
-		}
-			"15"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"blue_dragon_duration"	"0 0 60"
-
-		}
-		
+		}		
 	}
+
 	"OnSpellStart"
 	{
 		"FireSound"
@@ -123,52 +105,23 @@
 			"Target"		"CASTER"
 		}
 
-		"ApplyModifier"
+		"RunScript"
 		{
-			"ModifierName"	"modifier_elder_form_bonus_range_datadriven"
-			"Target"	"CASTER"
+			"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+			"Function"				"Transform"
+			"modifier_one"			"modifier_green_dragon_datadriven"
+			"modifier_two"			"modifier_red_dragon_datadriven"
+			"modifier_three"		"modifier_blue_dragon_datadriven"
 		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_green_dragon_datadriven"
-			"Target"	"CASTER"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_red_dragon_datadriven"
-			"Target"	"CASTER"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_blue_dragon_datadriven"
-			"Target"	"CASTER"
-		}
-
-
 
 	}
 
 	"Modifiers"
 	{
-		"modifier_elder_form_bonus_range_datadriven"
-		{
-			"Duration"	"%duration"
-			"IsPurgable"	"0"
-			"IsBuff"	"1"
-			"IsHidden"	"0"
-
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%bonus_movement_speed"
-				
-			}
-
-		}
-
 		"modifier_green_dragon_datadriven"
 		{
-			"Duration"	"%green_dragon_duration"
+			"Duration"	"%duration"
+			"IsHidden"	"1"
 
 			"OnCreated"
 			{
@@ -177,6 +130,19 @@
 					"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
 					"EffectAttachType"	"follow_origin"
 					"Target"	"CASTER"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_corrosive_breath_attack_datadriven"
+					"Target"		"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+					"Function"				"GreenDragon"
+					"model"					"models/units/heroes/hero_dragon_knight/dragon_knight_dragon.vmdl"
 				}
 			}
 
@@ -191,7 +157,12 @@
 
 			"OnDestroy"
 			{
-				
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"	"CASTER"
+				}
 			}
 
 			"OnAttackLanded"
@@ -201,20 +172,43 @@
 					"EffectName"	"Hero_DragonKnight.ProjectileImpact"
 					"Target"		"TARGET"
 				}
+			}
 
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_corrosive_breath_datadriven"
-					"Target"	"TARGET"
-				}
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%bonus_movement_speed"				
 			}
 		}
 
 		"modifier_red_dragon_datadriven"
 		{
-			"Duration"	"%red_dragon_duration"
+			"Duration"	"%duration"
+			"IsHidden"	"1"
 
 			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"	"CASTER"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_corrosive_breath_attack_datadriven"
+					"Target"		"CASTER"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_splash_attack_datadriven"
+					"Target"		"CASTER"
+				}
+			}
+
+			"OnDestroy"
 			{
 				"FireEffect"
 				{
@@ -241,26 +235,49 @@
 					"EffectName"	"Hero_DragonKnight.ProjectileImpact"
 					"Target"		"TARGET"
 				}
+			}
 
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_corrosive_breath_datadriven"
-					"Target"	"TARGET"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"	"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
-					"Function"		"Splash"
-				}
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%bonus_movement_speed"				
 			}
 		}
 
 		"modifier_blue_dragon_datadriven"
 		{
-			"Duration"	"%blue_dragon_duration"
+			"Duration"	"%duration"
+			"IsHidden"	"1"
 
 			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_dragon_knight/dragon_knight_transform_blue.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"	"CASTER"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_corrosive_breath_attack_datadriven"
+					"Target"		"CASTER"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_splash_attack_datadriven"
+					"Target"		"CASTER"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_frost_breath_attack_datadriven"
+					"Target"		"CASTER"
+				}
+			}
+
+			"OnDestroy"
 			{
 				"FireEffect"
 				{
@@ -288,19 +305,49 @@
 					"EffectName"	"Hero_DragonKnight.ProjectileImpact"
 					"Target"		"TARGET"
 				}
+			}
 
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%bonus_movement_speed"				
+			}
+		}
+
+		"modifier_corrosive_breath_attack_datadriven"
+		{
+			"Duration"	"%duration"
+
+			"OnAttackLanded"
+			{
 				"ApplyModifier"
 				{
 					"ModifierName"	"modifier_corrosive_breath_datadriven"
 					"Target"	"TARGET"
 				}
+			}
+		}
 
+		"modifier_splash_attack_datadriven"
+		{
+			"Duration"	"%duration"
+
+			"OnAttackLanded"
+			{
 				"RunScript"
 				{
 					"ScriptFile"	"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
 					"Function"		"Splash"
 				}
+			}
+		}
 
+		"modifier_frost_breath_attack_datadriven"
+		{
+			"Duration"	"%duration"
+
+			"OnAttackLanded"
+			{
 				"ActOnTargets"
 				{
 					"Target"
@@ -352,6 +399,5 @@
 				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%frost_bonus_attack_speed"
 			}
 		}
-	}	
-
+	}
 }
