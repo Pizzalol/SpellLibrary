@@ -106,6 +106,8 @@
 	
 	"OnProjectileHitUnit"
 	{
+		"DeleteOnHit"					"1"
+	
 		"ActOnTargets"
 		{
 			"Target"
