@@ -12,6 +12,13 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 	"AbilityTextureName"			"silencer_glaives_of_wisdom"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"				
+	}
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
