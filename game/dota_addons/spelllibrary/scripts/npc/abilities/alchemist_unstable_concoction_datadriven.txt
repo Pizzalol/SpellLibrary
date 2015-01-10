@@ -1,3 +1,7 @@
+// Rewrite of Alchemist Unstable Concoction
+// Author: Noya
+// Date: 10.1.2015.
+// Notes: Used together with "alchemist_unstable_concoction_throw_datadriven"
 "alchemist_unstable_concoction_datadriven"
 {
 	// General
@@ -59,6 +63,58 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"radius"					"175"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+		"particle"	"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_timer.vpcf"
+
+		// This particle isn't used because it would need a separate rule to attach to the hands or weapons for each hero
+		// CP1 and CP2 are left and right hands respectively
+		"particle"  "particles/units/heroes/hero_alchemist/alchemist_unstableconc_bottles.vpcf" 
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
+			"Function"		"StartBrewing"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_unstable_concoction_brewing"
+			"Target"		"CASTER"
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
+			"Function"		"UnstableConcoctionLevelUp"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_unstable_concoction_brewing"
+		{
+			"IsHidden"			"0" //1
+			"Duration"			"%brew_time"
+			"ThinkInterval"		"0.5"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
+					"Function"		"UpdateTimerParticle"
+				}
+			}
 		}
 	}
 }
