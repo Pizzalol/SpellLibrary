@@ -37,5 +37,20 @@
 			"float_multiplier"		"3.5 4 4.5 5"
 		}
 	}
+	
+	// Data drive
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"					"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn_msg.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_nyx_assassin/mana_burn.lua"
+			"Function"				"mana_burn_function"
+		}
+	}
 }
-
