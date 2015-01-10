@@ -5,5 +5,5 @@
 	"Ability1" "faceless_void_time_walk_datadriven"
 	"Ability2" "lina_light_strike_array_datadriven"
 	"Ability3" "necrolyte_sadist_datadriven"
-	"Ability4" "lina_laguna_blade_datadriven"
+	"Ability4" "faceless_void_chronosphere_datadriven"
 }

@@ -1,28 +1,42 @@
 
 function Chronosphere( keys )
+	-- Variables
 	local caster = keys.caster
 	local ability = keys.ability
 	local target_point = keys.target_points[1]
-	local duration = ability:GetLevelSpecialValueFor("duration", (ability:GetLevel() - 1))
 
-	local dummy_modifier = keys.caster_aura
+	-- Special Variables
+	local duration = ability:GetLevelSpecialValueFor("duration", (ability:GetLevel() - 1))
+	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", (ability:GetLevel() - 1))
+
+	-- Dummy
+	local dummy_modifier = keys.dummy_aura
 	local dummy = CreateUnitByName("npc_dummy_blank", target_point, false, caster, caster, caster:GetTeam())
 	dummy:AddNewModifier(caster, nil, "modifier_phased", {})
-
 	ability:ApplyDataDrivenModifier(caster, dummy, dummy_modifier, {})
 
+	-- Vision
+	ability:CreateVisibilityNode(target_point, vision_radius, duration)
+
+	-- Timer to remove the dummy
 	Timers:CreateTimer(duration, function() dummy:RemoveSelf() end)
 end
 
--- on aura created run this
--- on aura destroy remove this
-function ChronosphereFriendly( keys )
+--[[Author: Pizzalol
+	Date: 10.01.2015.
+	Checks if the target is a unit owned by the player that cast the Chronosphere
+	If it is then it applies the no collision and extra movementspeed modifier
+	otherwise it applies the stun modifier]]
+function ChronosphereAura( keys )
 	local caster = keys.caster
-	local ability = keys.ability
 	local target = keys.target
-	local target_modifier = keys.target_modifier
+	local ability = keys.ability
+	local aura_modifier = keys.aura_modifier
+	local caster_modifier = keys.caster_modifier
 
-	if target:GetPlayerOwner() == caster:GetPlayerOwner() then
-		ability:ApplyDataDrivenModifier(caster, target, target_modifier, {})
+	if caster:GetPlayerOwner() == target:GetPlayerOwner() then
+		ability:ApplyDataDrivenModifier(caster, target, caster_modifier, {})
+	else
+		ability:ApplyDataDrivenModifier(caster, target, aura_modifier, {}) 
 	end
 end

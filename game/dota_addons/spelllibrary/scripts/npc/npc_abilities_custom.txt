@@ -1068,12 +1068,17 @@
 
 
 	//Start of file alchemist_goblins_greed_datadriven.txt
+	// Rewrite of Alchemist Greevils Greed
+	// Author: Noya
+	// Date: 9.1.2015.
+	// Notes: 
 	"alchemist_goblins_greed_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"alchemist_goblins_greed"
 	
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -1100,6 +1105,50 @@
 				"bonus_gold_cap"		"30"
 			}
 		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_msg_gold.vpcf"
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_alchemist/goblins_greed.lua"
+				"Function"		"GoblinsGreedBaseBonus"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_goblins_greed"
+			{
+				"Passive"	"1"
+				"IsHidden"	"0"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_alchemist/goblins_greed.lua"
+						"Function"		"GoblinsGreedBaseBonus"
+					}
+				}
+	
+				"OnKill"
+				{
+				    "RunScript"
+					{
+						"ScriptFile"	"heroes/hero_alchemist/goblins_greed.lua"
+						"Function"		"GoblinsGreed"
+					}
+			    }
+			}
+		}
+		
 	}
 	
 	//End of file alchemist_goblins_greed_datadriven.txt
@@ -11871,6 +11920,10 @@
 
 
 	//Start of file faceless_void_chronosphere_datadriven.txt
+	// Rewrite of the Faceless Void Chronosphere ability
+	// Author: Pizzalol
+	// Date: 10.01.2015.
+	// NOTE: Chrono status effect particle doesnt work for now
 	"faceless_void_chronosphere_datadriven"
 	{
 		// General
@@ -11889,6 +11942,7 @@
 		{
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
 			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+			"particle"			"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
 		}
 		
 		// Casting
@@ -11937,6 +11991,12 @@
 				"var_type"				"FIELD_INTEGER"
 				"vision_radius"			"475"
 			}
+			// Extra
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aura_interval"			"0.1"
+			}
 		}
 	
 		"OnSpellStart"
@@ -11947,20 +12007,12 @@
 				"Target"			"CASTER"
 			}
 	
-			"FireEffect"
-			{
-				"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
-				"EffectAttachType"	"start_at_customorigin"
-				"TargetPoint"	"POINT"
-			}
-	
 			"RunScript"
 			{
 				"ScriptFile"		"scripts/vscripts/heroes/hero_faceless_void/chronosphere.lua"
 				"Function"			"Chronosphere"
 				"Target"			"POINT"
-				"caster_modifier"	"modifier_chronosphere_caster_datadriven"
-				"caster_aura"		"modifier_chronosphere_aura_datadriven"
+				"dummy_aura"		"modifier_chronosphere_aura_datadriven"
 			}
 		}
 	
@@ -11970,21 +12022,47 @@
 			{
 				"Duration"	"%duration"
 	
-				//"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
-				//"EffectAttachType"	"follow_origin"
-	
-				// Add an extra aura for caster
-				
-				"Aura" 			"modifier_chronosphere_datadriven"
-				"Aura_Radius" 	"%radius"
-				"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types" 	"DOTA_UNIT_TARGET_ALL"
-				"Aura_ApplyToCaster"	"0"
-	
-				"Properties"
+				"OnCreated"
 				{
-					"MODIFIER_PROPERTY_BONUS_DAY_VISION"	"%vision_radius"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"	"%vision_radius"
+					"AttachEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+						"EffectAttachType"	"attach_origin"
+						"Target"		"TARGET"
+	
+						"ControlPoints"
+						{
+							"01"	"%radius %radius 0"
+						}
+					}
+				}
+				
+				"ThinkInterval"		"%aura_interval"
+	
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Types"		"DOTA_UNIT_TARGET_ALL"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Radius"	"%radius"
+						}
+	
+						"Action"
+						{
+							"RunScript"
+							{
+								"ScriptFile"		"scripts/vscripts/heroes/hero_faceless_void/chronosphere.lua"
+								"Function"			"ChronosphereAura"
+								"Target"			"TARGET"
+								"aura_modifier"		"modifier_chronosphere_datadriven"
+								"caster_modifier"	"modifier_chronosphere_caster_datadriven"
+							}
+						}
+					}
 				}
 	
 				"States"
@@ -11998,26 +12076,8 @@
 			"modifier_chronosphere_datadriven"
 			{
 				"IsDebuff"	"1"
+				"Duration"	"%aura_interval"
 	
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"scripts/vscripts/heroes/hero_faceless_void/chronosphere.lua"
-						"Function"			"ChronosphereFriendly"
-						"Target"			"TARGET"
-						"target_modifier"	"modifier_chronosphere_caster_datadriven"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_chronosphere_caster_datadriven"
-						"Target"		"TARGET"
-					}
-				}
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
@@ -12026,6 +12086,12 @@
 	
 			"modifier_chronosphere_caster_datadriven"
 			{
+				"IsHidden"	"1"
+				"Duration"	"%aura_interval * 2"
+	
+				"StatusEffectName"	"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"1000"
@@ -12033,8 +12099,7 @@
 	
 				"States"
 				{
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_DISABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -17779,7 +17844,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
 		"FightRecapLevel"				"1"
@@ -17828,8 +17893,87 @@
 				"fow_duration"				"5.94"
 			}	
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"		"TARGET"
+					"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				}
+				"ModifierName"		"modifier_x_marks_the_spot_debuff_datadriven"
+				"Duration"			"%allied_duration_tooltip"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"		"TARGET"
+					"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				}
+				"ModifierName"		"modifier_x_marks_the_spot_debuff_datadriven"
+				"Duration"			"%duration"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_x_marks_the_spot_debuff_datadriven"
+			{
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"Target"					"TARGET"
+						"EffectName"				"Ability.XMarksTheSpot.Target"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"					"TARGET"
+						"EffectName"				"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
+						"EffectAttachType"			"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"				"attach_origin"
+						}
+					}
+				
+					"RunScript"
+					{
+						"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
+						"Function"					"x_marks_the_spot_init"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"FireSound"
+					{
+						"Target"					"TARGET"
+						"EffectName"				"Ability.XMarksTheSpot.Return"
+					}
+				
+					"RunScript"
+					{
+						"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
+						"Function"					"x_marks_the_spot_return"
+					}
+				}
+			}
+		}
 	}
-	
 	//End of file kunkka_x_marks_the_spot_datadriven.txt
 
 
