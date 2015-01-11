@@ -25386,8 +25386,82 @@
 				"cooldown_scepter"		"70 60 50"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+			"particle"						"particles/status_fx/status_effect_base.vpcf"
+			"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta_start.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"DelayedAction"
+			{
+				"Delay"						"%fade_time"
+				"Action"
+				{
+					"FireSound"
+					{
+						"Target"				"CASTER"
+						"EffectName"			"Hero_NyxAssassin.Vendetta"
+					}
+				
+					"ApplyModifier"
+					{
+						"Target"				"CASTER"
+						"ModifierName"			"modifier_vendetta_buff_datadriven"
+					}
+					
+					"ApplyModifier"
+					{
+						"Target"				"CASTER"
+						"ModifierName"			"modifier_invisible"
+						"Duration"				"%duration"
+					}
+				}
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_vendetta_buff_datadriven"
+			{
+				"Duration"					"%duration"
+			
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta_start.vpcf"
+						"EffectAttachType"	"start_at_origin"
+					}
+				}
+			
+				"OnAttack"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_nyx_assassin/vendetta.lua"
+						"Function"		"vendetta_attack"
+					}
+				}
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed"
+				}
+			
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
-	
 	//End of file nyx_assassin_vendetta_datadriven.txt
 
 
@@ -34622,6 +34696,10 @@
 
 
 	//Start of file silencer_global_silence_datadriven.txt
+	// Rewrite of the Silencer Last Word
+	// Author: chrislotix
+	// Date: 11.01.2015.
+	
 	"silencer_global_silence_datadriven"
 	{
 		// General
@@ -34632,6 +34710,14 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"silencer_global_silence"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"		
+			"particle"		"particles/units/heroes/hero_silencer/silencer_global_silence.vpcf"		
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -34667,6 +34753,69 @@
 				"duration_scepter"		"5.0 6.0 7.0"
 			}			
 		}
+	
+		"OnSpellStart"
+		{
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Silencer.GlobalSilence.Cast"
+				"Target"		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_silencer/silencer_global_silence.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"		"CASTER"
+			}
+	
+			"ActOnTargets"
+			{
+	
+				"Target"
+				{
+					"Center" "CASTER"
+					"Radius" "GLOBAL"
+					"Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+					"Flags" "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+	
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_global_silence_datadriven"
+						"Target"	"TARGET"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Silencer.GlobalSilence.Effect"
+						"Target"		"TARGET"
+					}	
+				}			
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_global_silence_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%tooltip_duration"
+				"IsPurgable"	"1"
+				"EffectName"	"particles/generic_gameplay/generic_silence.vpcf"
+				"EffectAttachType"	"follow_overhead"			
+	
+	
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
 	
 	
@@ -34678,10 +34827,7 @@
 	// Rewrite of the Silencer Last Word
 	// Author: chrislotix
 	// Date: 11.01.2015.
-<<<<<<< HEAD
-=======
 	// NOTE: Will trigger on items with mana cost
->>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 	"silencer_last_word_datadriven"
 	{
 		// General
@@ -34703,11 +34849,7 @@
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"		
 			"particle"		"particles/units/heroes/hero_silencer/silencer_last_word.vpcf"
 			"particle"		"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
-<<<<<<< HEAD
-				
-=======
 			"particle"		"particles/generic_gameplay/generic_silence.vpcf"		
->>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 		}
 	
 		// Casting
@@ -34752,18 +34894,7 @@
 			{
 				"EffectName"	"Hero_Silencer.LastWord.Cast"
 				"Target"	"TARGET"
-<<<<<<< HEAD
-			}
-	
-			"FireEffect"
-			{
-				"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Target"	"TARGET"
-			}
-=======
 			}	
->>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 	
 			"ApplyModifier"
 			{
@@ -34780,8 +34911,6 @@
 				"IsDebuff"	"1"
 				"Duration"	"%debuff_duration"
 				"ThinkInterval"	"%debuff_duration"
-<<<<<<< HEAD
-=======
 				"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
 				"EffectAttachType"	"follow_origin"
 	
@@ -34790,7 +34919,6 @@
 					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"	
 				}
 				
->>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 	
 				"OnIntervalThink"
 				{
@@ -34805,15 +34933,12 @@
 					{
 						"ModifierName"	"modifier_last_word_disarm_datadriven"
 						"Target"	"TARGET" 
-<<<<<<< HEAD
-=======
 					}
 	
 					"ApplyModifier"
 					{
 						"ModifierName"	"modifier_last_word_silence_datadriven"
 						"Target"	"TARGET"
->>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 					}							
 				}			
 	
@@ -34824,17 +34949,6 @@
 						"EffectName"	"Hero_Silencer.LastWord.Target"
 						"Target"		"TARGET"
 					}
-<<<<<<< HEAD
-	
-					"FireEffect"
-					{
-						"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"	"TARGET"
-					}
-	
-=======
->>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 				}
 	
 				"OnSpentMana"
@@ -34871,11 +34985,6 @@
 						"Type" "DAMAGE_TYPE_MAGICAL"
 						"Damage" "%damage"
 					}
-<<<<<<< HEAD
-	
-					
-=======
->>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 				}
 			}
 	
@@ -34883,11 +34992,8 @@
 			{
 				"IsDebuff"	"1"
 				"Duration"	"%duration"
-<<<<<<< HEAD
-=======
 				"EffectName"	"particles/generic_gameplay/generic_silence.vpcf"
 				"EffectAttachType"	"follow_overhead"
->>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 	
 				"States"
 				{
@@ -34899,11 +35005,8 @@
 			{
 				"IsDebuff"	"1"
 				"Duration"	"%duration"
-<<<<<<< HEAD
-=======
 				"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word_disarm.vpcf"
 				"EffectAttachType"	"follow_overhead"
->>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 	
 				"OnCreated"
 				{
@@ -34912,20 +35015,12 @@
 						"Target" "TARGET"
 						"Type" "DAMAGE_TYPE_MAGICAL"
 						"Damage" "%damage"	
-<<<<<<< HEAD
-					}
-=======
 					}			
->>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 				}	
 	
 				"States"
 				{
-<<<<<<< HEAD
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-=======
 					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"				
->>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 				}
 			}
 		}
