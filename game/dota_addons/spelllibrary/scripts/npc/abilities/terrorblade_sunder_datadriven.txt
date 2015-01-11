@@ -1,7 +1,7 @@
 // Rewrite of Terrorblade Sunder
 // Author: Noya
 // Date: 11.1.2015.
-// Notes: Particle is buggy
+// Notes: Spell can be self targeted. If you want to disable self-targeting, check abaddon_aphotic_shield_datadriven
 "terrorblade_sunder_datadriven"
 {
 	// General
