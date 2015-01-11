@@ -1,9 +1,14 @@
+// Rewrite of Terrorblade Conjure Image
+// Author: Noya
+// Date: 10.1.2015.
+// Notes: Datadriven Modifiers with "AllowIllusionDuplicate" aren't automatically created with this method and need to be added manually in lua
 "terrorblade_conjure_image_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityTextureName"			"terrorblade_conjure_image"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -46,6 +51,25 @@
 			"var_type"							"FIELD_FLOAT"
 			"illusion_incoming_damage_total_tooltip"			"425.0"
 		}			
+	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Terrorblade.ConjureImage"
+			"Target"			"CASTER"
+		}
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_terrorblade/conjure_image.lua"
+			"Function"			"ConjureImage"
+		}
 	}
 }
 
