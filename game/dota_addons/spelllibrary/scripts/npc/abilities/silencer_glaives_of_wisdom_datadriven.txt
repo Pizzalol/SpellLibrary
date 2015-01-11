@@ -1,6 +1,7 @@
 // Rewrite of the Silencer Glaives of Wisdom
 // Author: chrislotix
 // Date: 10.01.2015.
+// NOTE: It won't have int steal since it's part of the actual Silencer and not the spell itself
 "silencer_glaives_of_wisdom_datadriven"
 {
 	// General

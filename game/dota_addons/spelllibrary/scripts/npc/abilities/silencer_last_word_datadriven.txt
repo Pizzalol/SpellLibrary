@@ -1,6 +1,7 @@
 // Rewrite of the Silencer Last Word
 // Author: chrislotix
 // Date: 11.01.2015.
+// NOTE: Will trigger on items with mana cost
 "silencer_last_word_datadriven"
 {
 	// General
@@ -22,7 +23,7 @@
 		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"		
 		"particle"		"particles/units/heroes/hero_silencer/silencer_last_word.vpcf"
 		"particle"		"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
-			
+		"particle"		"particles/generic_gameplay/generic_silence.vpcf"		
 	}
 
 	// Casting
@@ -67,14 +68,7 @@
 		{
 			"EffectName"	"Hero_Silencer.LastWord.Cast"
 			"Target"	"TARGET"
-		}
-
-		"FireEffect"
-		{
-			"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word.vpcf"
-			"EffectAttachType"	"follow_origin"
-			"Target"	"TARGET"
-		}
+		}	
 
 		"ApplyModifier"
 		{
@@ -91,6 +85,14 @@
 			"IsDebuff"	"1"
 			"Duration"	"%debuff_duration"
 			"ThinkInterval"	"%debuff_duration"
+			"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"States"
+			{
+				"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"	
+			}
+			
 
 			"OnIntervalThink"
 			{
@@ -105,6 +107,12 @@
 				{
 					"ModifierName"	"modifier_last_word_disarm_datadriven"
 					"Target"	"TARGET" 
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_last_word_silence_datadriven"
+					"Target"	"TARGET"
 				}							
 			}			
 
@@ -115,14 +123,6 @@
 					"EffectName"	"Hero_Silencer.LastWord.Target"
 					"Target"		"TARGET"
 				}
-
-				"FireEffect"
-				{
-					"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"	"TARGET"
-				}
-
 			}
 
 			"OnSpentMana"
@@ -159,8 +159,6 @@
 					"Type" "DAMAGE_TYPE_MAGICAL"
 					"Damage" "%damage"
 				}
-
-				
 			}
 		}
 
@@ -168,6 +166,8 @@
 		{
 			"IsDebuff"	"1"
 			"Duration"	"%duration"
+			"EffectName"	"particles/generic_gameplay/generic_silence.vpcf"
+			"EffectAttachType"	"follow_overhead"
 
 			"States"
 			{
@@ -179,6 +179,8 @@
 		{
 			"IsDebuff"	"1"
 			"Duration"	"%duration"
+			"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word_disarm.vpcf"
+			"EffectAttachType"	"follow_overhead"
 
 			"OnCreated"
 			{
@@ -187,12 +189,12 @@
 					"Target" "TARGET"
 					"Type" "DAMAGE_TYPE_MAGICAL"
 					"Damage" "%damage"	
-				}
+				}			
 			}	
 
 			"States"
 			{
-				"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"				
 			}
 		}
 	}

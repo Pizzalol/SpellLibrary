@@ -1,6 +1,7 @@
 // Rewrite of the Silencer Curse of the Silent
 // Author: chrislotix
 // Date: 09.01.2015.
+// NOTE: Will trigger on items with mana cost
 "silencer_curse_of_the_silent_datadriven"
 {
 	// General
@@ -164,6 +165,3 @@
 		}
 	}
 }	
-
-//MODIFIER_EVENT_ON_ABILITY_EXECUTED
-//MODIFIER_EVENT_ON_SPENT_MANA
