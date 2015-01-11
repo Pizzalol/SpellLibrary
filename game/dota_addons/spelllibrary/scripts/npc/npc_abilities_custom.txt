@@ -34129,6 +34129,7 @@
 	// Rewrite of the Silencer Curse of the Silent
 	// Author: chrislotix
 	// Date: 09.01.2015.
+	// NOTE: Will trigger on items with mana cost
 	"silencer_curse_of_the_silent_datadriven"
 	{
 		// General
@@ -34292,61 +34293,14 @@
 			}
 		}
 	}	
-	
-	//MODIFIER_EVENT_ON_ABILITY_EXECUTED
-	//MODIFIER_EVENT_ON_SPENT_MANA
 	//End of file silencer_curse_of_the_silent_datadriven.txt
-
-
-	//Start of file silencer_gaives_of_wisdom_datadriven.txt
-	"silencer_gaives_of_wisdom_datadriven"
-	{
-	    // General
-	    //-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                    "ability_datadriven" 
-	    "AbilityBehavior"               ""
-	    "AbilityType"                   ""
-	    "SpellImmunityType"             ""
-	    "AbilityTextureName"            ""
-	
-	    // Precache
-	    //-------------------------------------------------------------------------------------------------------------
-	    "precache"
-	    {
-	
-	    }
-	
-	    // Casting
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCastPoint"              ""
-	    "AbilityCastRange"              ""
-	
-	    // Time
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCooldown"               ""
-	
-	    // Cost
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityManaCost"               ""
-	
-	    // Damage
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityDamage"                 ""
-	
-	    // Special
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilitySpecial"
-	    {
-	
-	    }
-	}
-	//End of file silencer_gaives_of_wisdom_datadriven.txt
 
 
 	//Start of file silencer_glaives_of_wisdom_datadriven.txt
 	// Rewrite of the Silencer Glaives of Wisdom
 	// Author: chrislotix
 	// Date: 10.01.2015.
+	// NOTE: It won't have int steal since it's part of the actual Silencer and not the spell itself
 	"silencer_glaives_of_wisdom_datadriven"
 	{
 		// General
@@ -34495,6 +34449,10 @@
 
 
 	//Start of file silencer_last_word_datadriven.txt
+	// Rewrite of the Silencer Last Word
+	// Author: chrislotix
+	// Date: 11.01.2015.
+	// NOTE: Will trigger on items with mana cost
 	"silencer_last_word_datadriven"
 	{
 		// General
@@ -34508,6 +34466,16 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"silencer_last_word"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"		
+			"particle"		"particles/units/heroes/hero_silencer/silencer_last_word.vpcf"
+			"particle"		"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
+			"particle"		"particles/generic_gameplay/generic_silence.vpcf"		
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -34544,7 +34512,146 @@
 				"damage"			"150 200 250 300"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Silencer.LastWord.Cast"
+				"Target"	"TARGET"
+			}	
+	
+			"ApplyModifier"
+			{
+				"ModifierName" "modifier_last_word_datadriven"
+				"Target"	"TARGET"
+			}
+	
+		}
+	
+		"Modifiers"
+		{
+			"modifier_last_word_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%debuff_duration"
+				"ThinkInterval"	"%debuff_duration"
+				"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"States"
+				{
+					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"	
+				}
+				
+	
+				"OnIntervalThink"
+				{
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Silencer.LastWord.Damage"
+						"Target"		"TARGET"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_last_word_disarm_datadriven"
+						"Target"	"TARGET" 
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_last_word_silence_datadriven"
+						"Target"	"TARGET"
+					}							
+				}			
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Silencer.LastWord.Target"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"OnSpentMana"
+				{
+	
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_silencer/last_word.lua"
+						"Function"		"LastWordStopSound"
+						"Target"		"UNIT"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Silencer.LastWord.Damage"
+						"Target"		"UNIT"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName" "modifier_last_word_datadriven"
+						"Target"	"UNIT"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_last_word_silence_datadriven"
+						"Target"	"UNIT"
+					}
+	
+					"Damage"
+					{
+						"Target" "UNIT"
+						"Type" "DAMAGE_TYPE_MAGICAL"
+						"Damage" "%damage"
+					}
+				}
+			}
+	
+			"modifier_last_word_silence_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+				"EffectName"	"particles/generic_gameplay/generic_silence.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_last_word_disarm_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+				"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word_disarm.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Target" "TARGET"
+						"Type" "DAMAGE_TYPE_MAGICAL"
+						"Damage" "%damage"	
+					}			
+				}	
+	
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"				
+				}
+			}
+		}
 	}
+	
+	
 	
 	//End of file silencer_last_word_datadriven.txt
 
@@ -38472,12 +38579,17 @@
 
 
 	//Start of file terrorblade_conjure_image_datadriven.txt
+	// Rewrite of Terrorblade Conjure Image
+	// Author: Noya
+	// Date: 10.1.2015.
+	// Notes: Datadriven Modifiers with "AllowIllusionDuplicate" aren't automatically created with this method and need to be added manually in lua
 	"terrorblade_conjure_image_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"terrorblade_conjure_image"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -38521,18 +38633,43 @@
 				"illusion_incoming_damage_total_tooltip"			"425.0"
 			}			
 		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Terrorblade.ConjureImage"
+				"Target"			"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_terrorblade/conjure_image.lua"
+				"Function"			"ConjureImage"
+			}
+		}
 	}
 	
 	//End of file terrorblade_conjure_image_datadriven.txt
 
 
 	//Start of file terrorblade_metamorphosis_datadriven.txt
+	// Rewrite of Terrorblade Metamorphosis
+	// Author: Noya
+	// Date: 10.1.2015.
+	// Notes: Might have some issues on particular heroes, the Hide and ShowWearables were only tested in Abaddon and Windrunner so far
+	//		  transform_time is not used, as it looks and feels better that way
 	"terrorblade_metamorphosis_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"terrorblade_metamorphosis"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -38583,7 +38720,97 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed_loss"				"25"
+				"speed_loss"				"-25"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+			"particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
+			"model"		"models/heroes/terrorblade/demon.vmdl"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Terrorblade.Metamorphosis"
+				"Target"			"CASTER"
+			}
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"CASTER"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_metamorphosis"
+				"Target"			"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_metamorphosis"
+			{
+				"Duration"	"%duration"
+				
+				"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+				"EffectAttachType"  "follow_origin"
+	
+				"AllowsIllusionDuplicate"	"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_terrorblade/metamorphosis.lua"
+						"Function"				"ModelSwapStart"
+						"model"					"models/heroes/terrorblade/demon.vmdl"
+						"projectile_model"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_terrorblade/metamorphosis.lua"
+						"Function"			"HideWearables"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 	"%speed_loss"
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 		"%bonus_damage"		
+					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" 	"%base_attack_time"				
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_terrorblade/metamorphosis.lua"
+						"Function"		"ModelSwapEnd"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_terrorblade/metamorphosis.lua"
+						"Function"		"ShowWearables"
+					}
+				}
 			}
 		}
 	}
@@ -38654,6 +38881,10 @@
 
 
 	//Start of file terrorblade_sunder_datadriven.txt
+	// Rewrite of Terrorblade Sunder
+	// Author: Noya
+	// Date: 11.1.2015.
+	// Notes: Particle is buggy
 	"terrorblade_sunder_datadriven"
 	{
 		// General
@@ -38661,7 +38892,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
@@ -38688,7 +38919,59 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hit_point_minimum_pct"		"25 20 15"
+				"hit_point_minimum_pct"		"20"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+			"particle"  "particles/units/heroes/hero_terrorblade/terrorblade_sunder.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName" 	"Hero_Terrorblade.Sunder.Cast"
+				"Target"	 	"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName" 	"Hero_Terrorblade.Sunder.Target"
+				"Target"	 	"TARGET"
+			}
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_sunder.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				"Target"			"TARGET"
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin" // Pull?
+				}
+				"ControlPoints"
+	            {
+	            	"03"	"1 1 1"		// Position along ring
+	            	"08"	"1 0 0"		// Pull towards CP
+	            	"10"	"1 0 0"		// Color Fade
+	            	"11"	"1 0 0"		// Color Fade Random
+	            	"15"	"50 150 50" // Color
+	            	"16"	"50 150 50" // ColorB
+	            }
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_terrorblade/sunder.lua"
+				"Function"		"Sunder"
 			}
 		}
 	}

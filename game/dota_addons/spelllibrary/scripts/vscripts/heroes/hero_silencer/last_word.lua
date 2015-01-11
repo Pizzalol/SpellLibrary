@@ -8,7 +8,4 @@ function LastWordStopSound( keys )
 	local unit = keys.unit
 
 	StopSoundEvent(sound_name, unit)
-
-	print("test")
-
 end

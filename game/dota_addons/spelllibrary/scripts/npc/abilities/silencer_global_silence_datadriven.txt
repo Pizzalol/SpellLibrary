@@ -1,3 +1,7 @@
+// Rewrite of the Silencer Last Word
+// Author: chrislotix
+// Date: 11.01.2015.
+
 "silencer_global_silence_datadriven"
 {
 	// General
@@ -8,6 +12,14 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"silencer_global_silence"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"		
+		"particle"		"particles/units/heroes/hero_silencer/silencer_global_silence.vpcf"		
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -42,6 +54,69 @@
 			"var_type"				"FIELD_FLOAT"
 			"duration_scepter"		"5.0 6.0 7.0"
 		}			
+	}
+
+	"OnSpellStart"
+	{
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Silencer.GlobalSilence.Cast"
+			"Target"		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_silencer/silencer_global_silence.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"		"CASTER"
+		}
+
+		"ActOnTargets"
+		{
+
+			"Target"
+			{
+				"Center" "CASTER"
+				"Radius" "GLOBAL"
+				"Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				"Flags" "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+
+			"Action"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_global_silence_datadriven"
+					"Target"	"TARGET"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Silencer.GlobalSilence.Effect"
+					"Target"		"TARGET"
+				}	
+			}			
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_global_silence_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%tooltip_duration"
+			"IsPurgable"	"1"
+			"EffectName"	"particles/generic_gameplay/generic_silence.vpcf"
+			"EffectAttachType"	"follow_overhead"			
+
+
+			"States"
+			{
+				"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
 	}
 }
 
