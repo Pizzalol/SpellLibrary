@@ -22189,6 +22189,8 @@
 	// Rewrite of the Mirana Moonlight Shadow ability
 	// Author: Pizzalol
 	// Date: 04.01.2015.
+	// Changed: 11.01.2015.
+	// Reason: Fixed radius to be global
 	"mirana_invis_datadriven"
 	{
 		// General
@@ -22236,11 +22238,6 @@
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"15.0"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"radius"				"9000"
-			}
 		}
 	
 		"OnAbilityPhaseStart"
@@ -22260,7 +22257,7 @@
 				"Target"
 	            {
 	                "Center" "CASTER"
-	                "Radius" "%radius"
+	                "Radius" "GLOBAL"
 	                "Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
 	                "Types" "DOTA_UNIT_TARGET_HERO"
 	            }
@@ -22306,7 +22303,6 @@
 				
 				"OnAttack"
 				{
-					//apply fade
 					"ApplyModifier"
 					{
 						"ModifierName"	"modifier_moonlight_fade_datadriven"
@@ -22316,7 +22312,6 @@
 	
 				"OnAbilityExecuted"
 				{
-					//apply fade
 					"ApplyModifier"
 					{
 						"ModifierName"	"modifier_moonlight_fade_datadriven"
@@ -22361,7 +22356,6 @@
 				}
 				"OnDestroy"
 				{
-					//apply invis
 					"ApplyModifier"
 					{
 						"ModifierName"	"modifier_moonlight_invis_datadriven"
@@ -24521,6 +24515,9 @@
 
 
 	//Start of file night_stalker_crippling_fear_datadriven.txt
+	// Rewrite of the Nightstalker Crippling Fear ability
+	// Author: Pizzalol
+	// Date: 11.01.2015.
 	"night_stalker_crippling_fear_datadriven"
 	{
 		// General
@@ -24542,6 +24539,14 @@
 		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
 		"AbilityCooldown"				"12 12 12 12"
 		"AbilityManaCost"				"90 90 90 90"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+			"particle"			"particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear.vpcf"
+		}
 			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -24568,12 +24573,74 @@
 				"miss_rate_night"			"50"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Nightstalker.Trickling_Fear"
+				"Target"		"TARGET"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_night_stalker/crippling_fear.lua"
+				"Function"		"CripplingFear"
+				"modifier_day"		"modifier_crippling_fear_day_datadriven"
+				"modifier_night"	"modifier_crippling_fear_night_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_crippling_fear_day_datadriven"
+			{
+				"Duration"	"%duration_day"
+				"IsDebuff"	"1"
+	
+				"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"%miss_rate_day"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_crippling_fear_night_datadriven"
+			{
+				"Duration"	"%duration_night"
+				"IsDebuff"	"1"
+	
+				"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"%miss_rate_night"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
 	
 	//End of file night_stalker_crippling_fear_datadriven.txt
 
 
 	//Start of file night_stalker_darkness_datadriven.txt
+	// Rewrite of the Nightstalker Darkness ability
+	// Author: Pizzalol
+	// Date: 11.01.2015.
+	// NOTE: Darkness is not global for now
 	"night_stalker_darkness_datadriven"
 	{
 		// General
@@ -24581,12 +24648,21 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"			"night_stalker_darkness"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3 0.3 0.3"
 		"AbilityCooldown"				"180 150 120"
 		"AbilityManaCost"				"0 0 0"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+			"particle"			"particles/units/heroes/hero_night_stalker/nightstalker_ulti.vpcf"
+		}
 			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -24602,6 +24678,85 @@
 				"var_type"				"FIELD_INTEGER"
 				"blind_percentage"				"-25"
 			}
+			// Using a value now, need to change it to GLOBAL once its fixed
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"radius"				"12000"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Nightstalker.Darkness"
+				"Target"		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_ulti.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_darkness_aura_datadriven"
+				"Target"		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_night_stalker/darkness.lua"
+				"Function"		"Darkness"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_darkness_aura_datadriven"
+			{
+				"Duration"	"%duration"
+	
+				"Attributes" "MODIFIER_ATTRIBUTE_PERMANENT"
+	
+				"ThinkInterval"	"1"
+	
+				"OnIntervalThink"
+				{
+					
+				}
+	
+				"Aura" 			"modifier_darkness_datadriven"
+				"Aura_Radius" 	"%radius"
+				"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 	"DOTA_UNIT_TARGET_ALL"
+			}
+	
+			"modifier_darkness_datadriven"
+			{
+				"IsDebuff"	"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_night_stalker/darkness.lua"
+						"Function"		"ReduceVision"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_night_stalker/darkness.lua"
+						"Function"		"RevertVision"
+					}
+				}
+			}
 		}
 	}
 	
@@ -24609,12 +24764,25 @@
 
 
 	//Start of file night_stalker_hunter_in_the_night_datadriven.txt
+	// Rewrite of the Nightstalker Hunter In The Night ability
+	// Author: Pizzalol
+	// Date: 11.01.2015.
+	// NOTE: Nightstalker wont swap models with this passive
 	"night_stalker_hunter_in_the_night_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"night_stalker_hunter_in_the_night"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_night_stalker/nightstalker_night_buff.vpcf"
+			"particle"			"particles/units/heroes/hero_night_stalker/nightstalker_change.vpcf"
+		}
 			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -24629,6 +24797,64 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"bonus_attack_speed_night"			"45 60 75 90"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_hunter_in_the_night_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"AllowIllusionDuplicate"	"1"
+	
+				"ThinkInterval"	"0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_night_stalker/hunter_in_the_night.lua"
+						"Function"		"HunterInTheNight"
+						"modifier"		"modifier_hunter_in_the_night_buff_datadriven"
+					}
+				}
+			}
+	
+			"modifier_hunter_in_the_night_buff_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"AllowIllusionDuplicate"	"1"
+	
+				"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_night_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_change.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"		"CASTER"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"FireEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_change.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"		"CASTER"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movement_speed_pct_night"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed_night"
+				}
 			}
 		}
 	}
@@ -34495,6 +34721,9 @@
 
 
 	//Start of file silencer_last_word_datadriven.txt
+	// Rewrite of the Silencer Last Word
+	// Author: chrislotix
+	// Date: 11.01.2015.
 	"silencer_last_word_datadriven"
 	{
 		// General
@@ -34508,6 +34737,16 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"silencer_last_word"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"		
+			"particle"		"particles/units/heroes/hero_silencer/silencer_last_word.vpcf"
+			"particle"		"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
+				
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -34544,7 +34783,145 @@
 				"damage"			"150 200 250 300"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Silencer.LastWord.Cast"
+				"Target"	"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"	"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName" "modifier_last_word_datadriven"
+				"Target"	"TARGET"
+			}
+	
+		}
+	
+		"Modifiers"
+		{
+			"modifier_last_word_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%debuff_duration"
+				"ThinkInterval"	"%debuff_duration"
+	
+				"OnIntervalThink"
+				{
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Silencer.LastWord.Damage"
+						"Target"		"TARGET"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_last_word_disarm_datadriven"
+						"Target"	"TARGET" 
+					}							
+				}			
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Silencer.LastWord.Target"
+						"Target"		"TARGET"
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"	"TARGET"
+					}
+	
+				}
+	
+				"OnSpentMana"
+				{
+	
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_silencer/last_word.lua"
+						"Function"		"LastWordStopSound"
+						"Target"		"UNIT"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Silencer.LastWord.Damage"
+						"Target"		"UNIT"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName" "modifier_last_word_datadriven"
+						"Target"	"UNIT"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_last_word_silence_datadriven"
+						"Target"	"UNIT"
+					}
+	
+					"Damage"
+					{
+						"Target" "UNIT"
+						"Type" "DAMAGE_TYPE_MAGICAL"
+						"Damage" "%damage"
+					}
+	
+					
+				}
+			}
+	
+			"modifier_last_word_silence_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+	
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_last_word_disarm_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+	
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Target" "TARGET"
+						"Type" "DAMAGE_TYPE_MAGICAL"
+						"Damage" "%damage"	
+					}
+				}	
+	
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
+	
+	
 	
 	//End of file silencer_last_word_datadriven.txt
 
@@ -38472,12 +38849,17 @@
 
 
 	//Start of file terrorblade_conjure_image_datadriven.txt
+	// Rewrite of Terrorblade Conjure Image
+	// Author: Noya
+	// Date: 10.1.2015.
+	// Notes: Datadriven Modifiers with "AllowIllusionDuplicate" aren't automatically created with this method and need to be added manually in lua
 	"terrorblade_conjure_image_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"terrorblade_conjure_image"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -38521,18 +38903,43 @@
 				"illusion_incoming_damage_total_tooltip"			"425.0"
 			}			
 		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Terrorblade.ConjureImage"
+				"Target"			"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_terrorblade/conjure_image.lua"
+				"Function"			"ConjureImage"
+			}
+		}
 	}
 	
 	//End of file terrorblade_conjure_image_datadriven.txt
 
 
 	//Start of file terrorblade_metamorphosis_datadriven.txt
+	// Rewrite of Terrorblade Metamorphosis
+	// Author: Noya
+	// Date: 10.1.2015.
+	// Notes: Might have some issues on particular heroes, the Hide and ShowWearables were only tested in Abaddon and Windrunner so far
+	//		  transform_time is not used, as it looks and feels better that way
 	"terrorblade_metamorphosis_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"terrorblade_metamorphosis"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -38583,7 +38990,97 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed_loss"				"25"
+				"speed_loss"				"-25"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+			"particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
+			"model"		"models/heroes/terrorblade/demon.vmdl"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Terrorblade.Metamorphosis"
+				"Target"			"CASTER"
+			}
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"CASTER"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_metamorphosis"
+				"Target"			"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_metamorphosis"
+			{
+				"Duration"	"%duration"
+				
+				"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+				"EffectAttachType"  "follow_origin"
+	
+				"AllowsIllusionDuplicate"	"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_terrorblade/metamorphosis.lua"
+						"Function"				"ModelSwapStart"
+						"model"					"models/heroes/terrorblade/demon.vmdl"
+						"projectile_model"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_terrorblade/metamorphosis.lua"
+						"Function"			"HideWearables"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 	"%speed_loss"
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 		"%bonus_damage"		
+					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" 	"%base_attack_time"				
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_terrorblade/metamorphosis.lua"
+						"Function"		"ModelSwapEnd"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_terrorblade/metamorphosis.lua"
+						"Function"		"ShowWearables"
+					}
+				}
 			}
 		}
 	}
@@ -38654,6 +39151,10 @@
 
 
 	//Start of file terrorblade_sunder_datadriven.txt
+	// Rewrite of Terrorblade Sunder
+	// Author: Noya
+	// Date: 11.1.2015.
+	// Notes: Particle is buggy
 	"terrorblade_sunder_datadriven"
 	{
 		// General
@@ -38661,7 +39162,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
@@ -38688,7 +39189,59 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hit_point_minimum_pct"		"25 20 15"
+				"hit_point_minimum_pct"		"20"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+			"particle"  "particles/units/heroes/hero_terrorblade/terrorblade_sunder.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName" 	"Hero_Terrorblade.Sunder.Cast"
+				"Target"	 	"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName" 	"Hero_Terrorblade.Sunder.Target"
+				"Target"	 	"TARGET"
+			}
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_sunder.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				"Target"			"TARGET"
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin" // Pull?
+				}
+				"ControlPoints"
+	            {
+	            	"03"	"1 1 1"		// Position along ring
+	            	"08"	"1 0 0"		// Pull towards CP
+	            	"10"	"1 0 0"		// Color Fade
+	            	"11"	"1 0 0"		// Color Fade Random
+	            	"15"	"50 150 50" // Color
+	            	"16"	"50 150 50" // ColorB
+	            }
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_terrorblade/sunder.lua"
+				"Function"		"Sunder"
 			}
 		}
 	}

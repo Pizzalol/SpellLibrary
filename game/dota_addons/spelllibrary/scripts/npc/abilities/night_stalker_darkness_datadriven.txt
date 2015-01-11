@@ -1,3 +1,7 @@
+// Rewrite of the Nightstalker Darkness ability
+// Author: Pizzalol
+// Date: 11.01.2015.
+// NOTE: Darkness is not global for now
 "night_stalker_darkness_datadriven"
 {
 	// General
@@ -5,12 +9,21 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityTextureName"			"night_stalker_darkness"
 	
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastPoint"				"0.3 0.3 0.3"
 	"AbilityCooldown"				"180 150 120"
 	"AbilityManaCost"				"0 0 0"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+		"particle"			"particles/units/heroes/hero_night_stalker/nightstalker_ulti.vpcf"
+	}
 		
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -25,6 +38,85 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"blind_percentage"				"-25"
+		}
+		// Using a value now, need to change it to GLOBAL once its fixed
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"radius"				"12000"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Nightstalker.Darkness"
+			"Target"		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_ulti.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"		"CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_darkness_aura_datadriven"
+			"Target"		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_night_stalker/darkness.lua"
+			"Function"		"Darkness"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_darkness_aura_datadriven"
+		{
+			"Duration"	"%duration"
+
+			"Attributes" "MODIFIER_ATTRIBUTE_PERMANENT"
+
+			"ThinkInterval"	"1"
+
+			"OnIntervalThink"
+			{
+				
+			}
+
+			"Aura" 			"modifier_darkness_datadriven"
+			"Aura_Radius" 	"%radius"
+			"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types" 	"DOTA_UNIT_TARGET_ALL"
+		}
+
+		"modifier_darkness_datadriven"
+		{
+			"IsDebuff"	"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_night_stalker/darkness.lua"
+					"Function"		"ReduceVision"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_night_stalker/darkness.lua"
+					"Function"		"RevertVision"
+				}
+			}
 		}
 	}
 }

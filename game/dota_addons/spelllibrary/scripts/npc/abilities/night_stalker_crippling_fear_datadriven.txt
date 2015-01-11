@@ -1,3 +1,6 @@
+// Rewrite of the Nightstalker Crippling Fear ability
+// Author: Pizzalol
+// Date: 11.01.2015.
 "night_stalker_crippling_fear_datadriven"
 {
 	// General
@@ -19,6 +22,14 @@
 	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
 	"AbilityCooldown"				"12 12 12 12"
 	"AbilityManaCost"				"90 90 90 90"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+		"particle"			"particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear.vpcf"
+	}
 		
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -43,6 +54,64 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"miss_rate_night"			"50"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Nightstalker.Trickling_Fear"
+			"Target"		"TARGET"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_night_stalker/crippling_fear.lua"
+			"Function"		"CripplingFear"
+			"modifier_day"		"modifier_crippling_fear_day_datadriven"
+			"modifier_night"	"modifier_crippling_fear_night_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_crippling_fear_day_datadriven"
+		{
+			"Duration"	"%duration_day"
+			"IsDebuff"	"1"
+
+			"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear.vpcf"
+			"EffectAttachType"	"follow_overhead"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"%miss_rate_day"
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_crippling_fear_night_datadriven"
+		{
+			"Duration"	"%duration_night"
+			"IsDebuff"	"1"
+
+			"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear.vpcf"
+			"EffectAttachType"	"follow_overhead"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"%miss_rate_night"
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }

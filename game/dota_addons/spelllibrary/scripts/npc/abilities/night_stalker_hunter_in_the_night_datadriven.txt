@@ -1,9 +1,22 @@
+// Rewrite of the Nightstalker Hunter In The Night ability
+// Author: Pizzalol
+// Date: 11.01.2015.
+// NOTE: Nightstalker wont swap models with this passive
 "night_stalker_hunter_in_the_night_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"night_stalker_hunter_in_the_night"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_night_stalker/nightstalker_night_buff.vpcf"
+		"particle"			"particles/units/heroes/hero_night_stalker/nightstalker_change.vpcf"
+	}
 		
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -18,6 +31,64 @@
 		{
 			"var_type"							"FIELD_INTEGER"
 			"bonus_attack_speed_night"			"45 60 75 90"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_hunter_in_the_night_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"AllowIllusionDuplicate"	"1"
+
+			"ThinkInterval"	"0.1"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_night_stalker/hunter_in_the_night.lua"
+					"Function"		"HunterInTheNight"
+					"modifier"		"modifier_hunter_in_the_night_buff_datadriven"
+				}
+			}
+		}
+
+		"modifier_hunter_in_the_night_buff_datadriven"
+		{
+			"IsHidden"	"1"
+
+			"AllowIllusionDuplicate"	"1"
+
+			"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_night_buff.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_change.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"		"CASTER"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_change.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"		"CASTER"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movement_speed_pct_night"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed_night"
+			}
 		}
 	}
 }

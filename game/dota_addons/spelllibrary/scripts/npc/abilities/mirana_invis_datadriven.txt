@@ -1,6 +1,8 @@
 // Rewrite of the Mirana Moonlight Shadow ability
 // Author: Pizzalol
 // Date: 04.01.2015.
+// Changed: 11.01.2015.
+// Reason: Fixed radius to be global
 "mirana_invis_datadriven"
 {
 	// General
@@ -48,11 +50,6 @@
 			"var_type"				"FIELD_FLOAT"
 			"duration"				"15.0"
 		}
-		"03"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"radius"				"9000"
-		}
 	}
 
 	"OnAbilityPhaseStart"
@@ -72,7 +69,7 @@
 			"Target"
             {
                 "Center" "CASTER"
-                "Radius" "%radius"
+                "Radius" "GLOBAL"
                 "Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
                 "Types" "DOTA_UNIT_TARGET_HERO"
             }
@@ -118,7 +115,6 @@
 			
 			"OnAttack"
 			{
-				//apply fade
 				"ApplyModifier"
 				{
 					"ModifierName"	"modifier_moonlight_fade_datadriven"
@@ -128,7 +124,6 @@
 
 			"OnAbilityExecuted"
 			{
-				//apply fade
 				"ApplyModifier"
 				{
 					"ModifierName"	"modifier_moonlight_fade_datadriven"
@@ -173,7 +168,6 @@
 			}
 			"OnDestroy"
 			{
-				//apply invis
 				"ApplyModifier"
 				{
 					"ModifierName"	"modifier_moonlight_invis_datadriven"
