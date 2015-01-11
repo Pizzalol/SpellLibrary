@@ -22,6 +22,4 @@ function IntToDamage( keys )
 
 	ApplyDamage(damage_table)
 
-	print(damage_table.damage)	
-
 end

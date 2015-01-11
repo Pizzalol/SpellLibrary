@@ -34355,6 +34355,7 @@
 	// Rewrite of the Silencer Curse of the Silent
 	// Author: chrislotix
 	// Date: 09.01.2015.
+	// NOTE: Will trigger on items with mana cost
 	"silencer_curse_of_the_silent_datadriven"
 	{
 		// General
@@ -34518,61 +34519,14 @@
 			}
 		}
 	}	
-	
-	//MODIFIER_EVENT_ON_ABILITY_EXECUTED
-	//MODIFIER_EVENT_ON_SPENT_MANA
 	//End of file silencer_curse_of_the_silent_datadriven.txt
-
-
-	//Start of file silencer_gaives_of_wisdom_datadriven.txt
-	"silencer_gaives_of_wisdom_datadriven"
-	{
-	    // General
-	    //-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                    "ability_datadriven" 
-	    "AbilityBehavior"               ""
-	    "AbilityType"                   ""
-	    "SpellImmunityType"             ""
-	    "AbilityTextureName"            ""
-	
-	    // Precache
-	    //-------------------------------------------------------------------------------------------------------------
-	    "precache"
-	    {
-	
-	    }
-	
-	    // Casting
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCastPoint"              ""
-	    "AbilityCastRange"              ""
-	
-	    // Time
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCooldown"               ""
-	
-	    // Cost
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityManaCost"               ""
-	
-	    // Damage
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityDamage"                 ""
-	
-	    // Special
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilitySpecial"
-	    {
-	
-	    }
-	}
-	//End of file silencer_gaives_of_wisdom_datadriven.txt
 
 
 	//Start of file silencer_glaives_of_wisdom_datadriven.txt
 	// Rewrite of the Silencer Glaives of Wisdom
 	// Author: chrislotix
 	// Date: 10.01.2015.
+	// NOTE: It won't have int steal since it's part of the actual Silencer and not the spell itself
 	"silencer_glaives_of_wisdom_datadriven"
 	{
 		// General
@@ -34724,6 +34678,10 @@
 	// Rewrite of the Silencer Last Word
 	// Author: chrislotix
 	// Date: 11.01.2015.
+<<<<<<< HEAD
+=======
+	// NOTE: Will trigger on items with mana cost
+>>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 	"silencer_last_word_datadriven"
 	{
 		// General
@@ -34745,7 +34703,11 @@
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"		
 			"particle"		"particles/units/heroes/hero_silencer/silencer_last_word.vpcf"
 			"particle"		"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
+<<<<<<< HEAD
 				
+=======
+			"particle"		"particles/generic_gameplay/generic_silence.vpcf"		
+>>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 		}
 	
 		// Casting
@@ -34790,6 +34752,7 @@
 			{
 				"EffectName"	"Hero_Silencer.LastWord.Cast"
 				"Target"	"TARGET"
+<<<<<<< HEAD
 			}
 	
 			"FireEffect"
@@ -34798,6 +34761,9 @@
 				"EffectAttachType"	"follow_origin"
 				"Target"	"TARGET"
 			}
+=======
+			}	
+>>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 	
 			"ApplyModifier"
 			{
@@ -34814,6 +34780,17 @@
 				"IsDebuff"	"1"
 				"Duration"	"%debuff_duration"
 				"ThinkInterval"	"%debuff_duration"
+<<<<<<< HEAD
+=======
+				"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"States"
+				{
+					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"	
+				}
+				
+>>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 	
 				"OnIntervalThink"
 				{
@@ -34828,6 +34805,15 @@
 					{
 						"ModifierName"	"modifier_last_word_disarm_datadriven"
 						"Target"	"TARGET" 
+<<<<<<< HEAD
+=======
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_last_word_silence_datadriven"
+						"Target"	"TARGET"
+>>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 					}							
 				}			
 	
@@ -34838,6 +34824,7 @@
 						"EffectName"	"Hero_Silencer.LastWord.Target"
 						"Target"		"TARGET"
 					}
+<<<<<<< HEAD
 	
 					"FireEffect"
 					{
@@ -34846,6 +34833,8 @@
 						"Target"	"TARGET"
 					}
 	
+=======
+>>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 				}
 	
 				"OnSpentMana"
@@ -34882,8 +34871,11 @@
 						"Type" "DAMAGE_TYPE_MAGICAL"
 						"Damage" "%damage"
 					}
+<<<<<<< HEAD
 	
 					
+=======
+>>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 				}
 			}
 	
@@ -34891,6 +34883,11 @@
 			{
 				"IsDebuff"	"1"
 				"Duration"	"%duration"
+<<<<<<< HEAD
+=======
+				"EffectName"	"particles/generic_gameplay/generic_silence.vpcf"
+				"EffectAttachType"	"follow_overhead"
+>>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 	
 				"States"
 				{
@@ -34902,6 +34899,11 @@
 			{
 				"IsDebuff"	"1"
 				"Duration"	"%duration"
+<<<<<<< HEAD
+=======
+				"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word_disarm.vpcf"
+				"EffectAttachType"	"follow_overhead"
+>>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 	
 				"OnCreated"
 				{
@@ -34910,12 +34912,20 @@
 						"Target" "TARGET"
 						"Type" "DAMAGE_TYPE_MAGICAL"
 						"Damage" "%damage"	
+<<<<<<< HEAD
 					}
+=======
+					}			
+>>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 				}	
 	
 				"States"
 				{
+<<<<<<< HEAD
 					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+=======
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"				
+>>>>>>> 43b643412b4c8cdb016e4053d355202d4449b589
 				}
 			}
 		}
