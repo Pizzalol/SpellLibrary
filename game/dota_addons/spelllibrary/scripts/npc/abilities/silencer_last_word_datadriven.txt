@@ -1,3 +1,6 @@
+// Rewrite of the Silencer Last Word
+// Author: chrislotix
+// Date: 11.01.2015.
 "silencer_last_word_datadriven"
 {
 	// General
@@ -11,6 +14,16 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"silencer_last_word"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"		
+		"particle"		"particles/units/heroes/hero_silencer/silencer_last_word.vpcf"
+		"particle"		"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
+			
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -47,5 +60,143 @@
 			"damage"			"150 200 250 300"
 		}
 	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Silencer.LastWord.Cast"
+			"Target"	"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"	"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName" "modifier_last_word_datadriven"
+			"Target"	"TARGET"
+		}
+
+	}
+
+	"Modifiers"
+	{
+		"modifier_last_word_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%debuff_duration"
+			"ThinkInterval"	"%debuff_duration"
+
+			"OnIntervalThink"
+			{
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Silencer.LastWord.Damage"
+					"Target"		"TARGET"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_last_word_disarm_datadriven"
+					"Target"	"TARGET" 
+				}							
+			}			
+
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Silencer.LastWord.Target"
+					"Target"		"TARGET"
+				}
+
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"	"TARGET"
+				}
+
+			}
+
+			"OnSpentMana"
+			{
+
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_silencer/last_word.lua"
+					"Function"		"LastWordStopSound"
+					"Target"		"UNIT"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Silencer.LastWord.Damage"
+					"Target"		"UNIT"
+				}
+
+				"RemoveModifier"
+				{
+					"ModifierName" "modifier_last_word_datadriven"
+					"Target"	"UNIT"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_last_word_silence_datadriven"
+					"Target"	"UNIT"
+				}
+
+				"Damage"
+				{
+					"Target" "UNIT"
+					"Type" "DAMAGE_TYPE_MAGICAL"
+					"Damage" "%damage"
+				}
+
+				
+			}
+		}
+
+		"modifier_last_word_silence_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+
+			"States"
+			{
+				"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_last_word_disarm_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+
+			"OnCreated"
+			{
+				"Damage"
+				{
+					"Target" "TARGET"
+					"Type" "DAMAGE_TYPE_MAGICAL"
+					"Damage" "%damage"	
+				}
+			}	
+
+			"States"
+			{
+				"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
 }
+
+
 
