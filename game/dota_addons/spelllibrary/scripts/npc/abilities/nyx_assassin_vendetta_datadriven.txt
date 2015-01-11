@@ -49,5 +49,79 @@
 			"cooldown_scepter"		"70 60 50"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"						"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+		"particle"						"particles/status_fx/status_effect_base.vpcf"
+		"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta_start.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"DelayedAction"
+		{
+			"Delay"						"%fade_time"
+			"Action"
+			{
+				"FireSound"
+				{
+					"Target"				"CASTER"
+					"EffectName"			"Hero_NyxAssassin.Vendetta"
+				}
+			
+				"ApplyModifier"
+				{
+					"Target"				"CASTER"
+					"ModifierName"			"modifier_vendetta_buff_datadriven"
+				}
+				
+				"ApplyModifier"
+				{
+					"Target"				"CASTER"
+					"ModifierName"			"modifier_invisible"
+					"Duration"				"%duration"
+				}
+			}
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_vendetta_buff_datadriven"
+		{
+			"Duration"					"%duration"
+		
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"			"TARGET"
+					"EffectName"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta_start.vpcf"
+					"EffectAttachType"	"start_at_origin"
+				}
+			}
+		
+			"OnAttack"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_nyx_assassin/vendetta.lua"
+					"Function"		"vendetta_attack"
+				}
+			}
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed"
+			}
+		
+			"States"
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
 }
-
