@@ -2,7 +2,7 @@
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -47,5 +47,55 @@
 			"static_remnant_damage"			"140 180 220 260"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"				"particles/units/heroes/hero_stormspirit/stormspirit_static_remnant.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"Hero_StormSpirit.StaticRemnantPlant"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_stormspirit/static_remnant.lua"
+			"Function"			"static_remnant_init"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_static_remnant_dummy_datadriven"
+		{
+			"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_1"
+		
+			"EffectName"		"particles/units/heroes/hero_stormspirit/stormspirit_static_remnant.vpcf"
+			"EffectAttachType"	"follow_origin"
+		
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_COMMAND_RESTRICTED"				"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		
+		"modifier_static_remnant_dummy_freeze_datadriven"
+		{
+			"States"
+			{
+				"MODIFIER_STATE_FROZEN"							"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
 }
-
