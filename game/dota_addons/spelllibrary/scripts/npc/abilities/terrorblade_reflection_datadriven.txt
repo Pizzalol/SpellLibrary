@@ -1,3 +1,10 @@
+// Rewrite of Terrorblade Reflection
+// Author: Noya
+// Date: 11.1.2015.
+// Notes: Same Illusion creation method used for Conjure Image, but with different properties behavior and position
+//		  Illusions show as blue for allied instead of black,
+//		  For enemies they are seen as fully black but don't have the trasparency of the original
+//		  Also not ported the small grow scale with time of the illusions (which isn't stated in the spell description)
 "terrorblade_reflection_datadriven"
 {
 	// General
@@ -46,12 +53,82 @@
 		"04"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"move_slow"					"60"
+			"move_slow"					"-60"
 		}
 		"05"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"attack_slow_tooltip"		"60"
+			"attack_slow_tooltip"		"-60"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+		"particle"	"particles/status_fx/status_effect_terrorblade_reflection.vpcf"
+		"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_reflection_slow.vpcf"
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_terrorblade/reflection.lua"
+			"Function"			"ReflectionCast"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"		"modifier_reflection_slow"
+			"Target" 			"TARGET"
+		}
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_terrorblade/reflection.lua"
+			"Function"			"Reflection"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_reflection_invulnerability"
+		{
+			"IsHidden"	"1"
+
+			"StatusEffectName"		"particles/status_fx/status_effect_terrorblade_reflection.vpcf"
+			"StatusEffectPriority"	"100"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"522"
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+				
+			}
+		}	
+
+		"modifier_reflection_slow"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%illusion_duration"
+
+			"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_reflection_slow.vpcf"
+			"EffecAttachType"	"follow_origin"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_slow"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
+			}
 		}
 	}
 }
