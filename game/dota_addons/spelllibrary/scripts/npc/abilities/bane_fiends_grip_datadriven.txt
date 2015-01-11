@@ -1,3 +1,6 @@
+// Rewrite of the Bane Nightmare
+// Author: chrislotix
+// Date: 11.01.2015.
 "bane_fiends_grip_datadriven"
 {
 	// General
@@ -12,6 +15,14 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"bane_fiends_grip"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
+		"particle"		"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"		
+	}	
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -68,5 +79,120 @@
 			"fiend_grip_damage_scepter"		"155 215 270"
 		}
 	}
+
+	"OnSpellStart"
+	{
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Bane.FiendsGrip.Cast"
+			"Target"	"TARGET"	
+		}
+
+		"Damage"
+		{
+			"Target"	"TARGET"
+			"Type"		"DAMAGE_TYPE_MAGICAL"
+			"Damage"	"%fiend_grip_damage"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_fiends_grip_datadriven"
+			"Target"	"TARGET"
+		}
+	}
+
+	"OnChannelInterrupted"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_fiends_grip_datadriven"
+			"Target"	"TARGET"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
+			"Function"		"FiendsGripStopLoop"
+			"Target"		"TARGET"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
+			"Function"		"FiendsGripCastStopLoop"
+			"Target"		"TARGET"
+		}
+	}
+
+	"OnChannelFinish"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_fiends_grip_datadriven"
+			"Target"	"TARGET"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
+			"Function"		"FiendsGripStopLoop"
+			"Target"		"TARGET"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
+			"Function"		"FiendsGripCastStopLoop"
+			"Target"		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_fiends_grip_datadriven"
+		{
+			"IsDebuff"	"1"
+			"ThinkInterval"	"%fiend_grip_tick_interval"
+			"EffectName"	"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
+			"EffectAttachType"	"attach_origin"
+
+			"OverrideAnimation" "ACT_DOTA_FLAIL"
+
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%fiend_grip_damage"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
+					"Function"		"ManaDrain"
+					"Target"		"TARGET"
+				}				
+			}
+
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Bane.FiendsGrip"
+					"Target"	"TARGET"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
 }
+
+//need lua for mana drain and for stoping loop sound
 
