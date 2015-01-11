@@ -58,33 +58,6 @@
 			"EffectName" 	"Hero_Terrorblade.Sunder.Target"
 			"Target"	 	"TARGET"
 		}
-		"FireEffect"
-		{
-			"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_sunder.vpcf"
-			"EffectAttachType"  "start_at_customorigin"
-			"Target"			"TARGET"
-			"ControlPointEntities"
-			{
-				"CASTER"	"attach_origin"
-				"TARGET"	"attach_origin"
-				"TARGET"	"attach_origin"
-				"TARGET"	"attach_origin"
-				"TARGET"	"attach_origin"
-				"TARGET"	"attach_origin"
-				"TARGET"	"attach_origin"
-				"TARGET"	"attach_origin"
-				"TARGET"	"attach_origin" // Pull?
-			}
-			"ControlPoints"
-            {
-            	"03"	"1 1 1"		// Position along ring
-            	"08"	"1 0 0"		// Pull towards CP
-            	"10"	"1 0 0"		// Color Fade
-            	"11"	"1 0 0"		// Color Fade Random
-            	"15"	"50 150 50" // Color
-            	"16"	"50 150 50" // ColorB
-            }
-		}
 		"RunScript"
 		{
 			"ScriptFile"	"heroes/hero_terrorblade/sunder.lua"
