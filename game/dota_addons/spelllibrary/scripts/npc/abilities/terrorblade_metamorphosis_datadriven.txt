@@ -1,9 +1,15 @@
+// Rewrite of Terrorblade Metamorphosis
+// Author: Noya
+// Date: 10.1.2015.
+// Notes: Might have some issues on particular heroes, the Hide and ShowWearables were only tested in Abaddon and Windrunner so far
+//		  transform_time is not used, as it looks and feels better that way
 "terrorblade_metamorphosis_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityTextureName"			"terrorblade_metamorphosis"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -54,7 +60,97 @@
 		"07"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"speed_loss"				"25"
+			"speed_loss"				"-25"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+		"particle"  "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+		"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+		"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+		"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
+		"model"		"models/heroes/terrorblade/demon.vmdl"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Terrorblade.Metamorphosis"
+			"Target"			"CASTER"
+		}
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"			"CASTER"
+		}
+		"ApplyModifier"
+		{
+			"ModifierName"		"modifier_metamorphosis"
+			"Target"			"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_metamorphosis"
+		{
+			"Duration"	"%duration"
+			
+			"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+			"EffectAttachType"  "follow_origin"
+
+			"AllowsIllusionDuplicate"	"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_terrorblade/metamorphosis.lua"
+					"Function"				"ModelSwapStart"
+					"model"					"models/heroes/terrorblade/demon.vmdl"
+					"projectile_model"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_terrorblade/metamorphosis.lua"
+					"Function"			"HideWearables"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_ambient.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"TARGET"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 	"%speed_loss"
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" 		"%bonus_damage"		
+				"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" 	"%base_attack_time"				
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_terrorblade/metamorphosis.lua"
+					"Function"		"ModelSwapEnd"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_terrorblade/metamorphosis.lua"
+					"Function"		"ShowWearables"
+				}
+			}
 		}
 	}
 }
