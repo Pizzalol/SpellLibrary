@@ -83,13 +83,6 @@
 
 			"Attributes" "MODIFIER_ATTRIBUTE_PERMANENT"
 
-			"ThinkInterval"	"1"
-
-			"OnIntervalThink"
-			{
-				
-			}
-
 			"Aura" 			"modifier_darkness_datadriven"
 			"Aura_Radius" 	"%radius"
 			"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"

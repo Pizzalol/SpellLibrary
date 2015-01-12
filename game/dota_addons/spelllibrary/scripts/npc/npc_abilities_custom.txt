@@ -9157,12 +9157,11 @@
 	// Rewrite of the Dragon Knight Elder Dragon Form
 	// Author: chrislotix/Pizzalol
 	// Date: 03.01.2015.
-	// Changed: 10.01.2015.
-	// Reason: Improved spell code
+	// Changed: 12.01.2015.
+	// Reason: Fixed wearables
 	// NOTE: Dragon Form is always a Green Dragon
 	// NOTE2: -------------------------- Projectile model will be the corresponding dragon form auto attack model --------------------------
 	// Until Valve implements a way to retrieve the original attack projectile
-	// NOTE3: If used on melee heroes then the projectile speed will be instant and thus no projectile model
 	"dragon_knight_elder_dragon_form_datadriven"
 	{
 		// General
@@ -9208,7 +9207,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"10.0 10.0 10.0"
+				"duration"					"60.0 60.0 60.0"
 			}
 			"02"
 			{
@@ -9311,6 +9310,12 @@
 						"model"					"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
 						"projectile_model"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
 					}
+	
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+						"Function"				"HideWearables"
+					}
 				}
 	
 				"OnAttack"
@@ -9335,6 +9340,12 @@
 					{
 						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
 						"Function"				"ModelSwapEnd"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+						"Function"				"ShowWearables"
 					}
 				}
 	
@@ -9377,6 +9388,12 @@
 						"projectile_model"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
 					}
 	
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+						"Function"				"HideWearables"
+					}
+	
 					"ApplyModifier"
 					{
 						"ModifierName"	"modifier_corrosive_breath_attack_datadriven"
@@ -9403,6 +9420,12 @@
 					{
 						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
 						"Function"				"ModelSwapEnd"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+						"Function"				"ShowWearables"
 					}
 				}
 	
@@ -9455,6 +9478,12 @@
 						"projectile_model"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf"
 					}
 	
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+						"Function"				"HideWearables"
+					}
+	
 					"ApplyModifier"
 					{
 						"ModifierName"	"modifier_corrosive_breath_attack_datadriven"
@@ -9487,6 +9516,12 @@
 					{
 						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
 						"Function"				"ModelSwapEnd"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
+						"Function"				"ShowWearables"
 					}
 				}
 	
@@ -24721,13 +24756,6 @@
 				"Duration"	"%duration"
 	
 				"Attributes" "MODIFIER_ATTRIBUTE_PERMANENT"
-	
-				"ThinkInterval"	"1"
-	
-				"OnIntervalThink"
-				{
-					
-				}
 	
 				"Aura" 			"modifier_darkness_datadriven"
 				"Aura_Radius" 	"%radius"
