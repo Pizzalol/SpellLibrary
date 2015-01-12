@@ -69,16 +69,14 @@ end
 	Shows the Cast Particle, which for TB is originated between each weapon, in here both bodies are linked because not every hero has 2 weapon attach points
 ]]
 function ReflectionCast( event )
-	print("CAST START")
 
 	local caster = event.caster
 	local target = event.target
 	local particleName = "particles/units/heroes/hero_terrorblade/terrorblade_reflection_cast.vpcf"
 
 	local particle = ParticleManager:CreateParticle( particleName, PATTACH_POINT_FOLLOW, caster )
-	ParticleManager:SetParticleControl(particle, 3, Vector(1,0,0)) --[[Returns:void
-	Set the control point data for a control on a particle effect
-	]]
+	ParticleManager:SetParticleControl(particle, 3, Vector(1,0,0))
+	
 	ParticleManager:SetParticleControlEnt(particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 end
