@@ -1,3 +1,8 @@
+// Rewrite of Skeleton Wraith King Reincarnation
+// Author: Noya
+// Date: 12.1.2015.
+// Notes: "MODIFIER_PROPERTY_REINCARNATION" is Unhandled, this uses lua Kill and gives the gold back when the caster dies
+// 	      It still counts the death count for the player, because there's currently no way to decrease deaths (only lua IncrementDeaths)
 "skeleton_king_reincarnation_datadriven"
 {
 	// General
@@ -47,6 +52,47 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"slow_duration"			"5.0"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+		"particle"	"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
+		"particle"	"particles/units/heroes/hero_skeletonking/skeleton_king_death.vpcf"
+		"particle"	"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_slow_debuff.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_reincarnation"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"OnTakeDamage"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_skeleton_king/reincarnation.lua"
+					"Function"			"Reincarnation"
+				}
+			}
+		}
+
+		"modifier_reincarnation_slow"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%slow_duration"
+
+			"EffectName"		"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_slow_debuff.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attackslow_tooltip"
+			}
 		}
 	}
 }

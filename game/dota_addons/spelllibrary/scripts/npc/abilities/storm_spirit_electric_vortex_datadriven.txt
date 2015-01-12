@@ -38,7 +38,7 @@
 		"02"
 		{
 			"var_type"						"FIELD_FLOAT"
-			"electric_vortex_pull_tether_range"			"1200.0"		
+			"electric_vortex_pull_tether_range"			"1200.0"		// what is this variable ??
 		}
 		"03"
 		{
@@ -56,5 +56,82 @@
 			"duration"	"1.0 1.5 2.0 2.5"
 		}
 	}
-}
 	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"						"soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts"
+		"particle"						"particles/units/heroes/hero_stormspirit/stormspirit_electric_vortex_owner.vpcf"
+		"particle"						"particles/units/heroes/hero_stormspirit/stormspirit_electric_vortex.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"					"CASTER"
+			"EffectName"				"Hero_StormSpirit.ElectricVortexCast"
+		}
+	
+		"ApplyModifier"
+		{
+			"Target"					"CASTER"
+			"ModifierName"				"modifier_electric_vortex_caster_datadriven"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"					"TARGET"
+			"ModifierName"				"modifier_electric_vortex_target_datadriven"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"				"heroes/hero_stormspirit/electric_vortex.lua"
+			"Function"					"electric_vortex_pull"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_electric_vortex_caster_datadriven"
+		{
+			"IsDebuff"					"1"
+		
+			"Duration"					"%electric_vortex_self_slow_duration"
+			
+			"EffectName"				"particles/units/heroes/hero_stormspirit/stormspirit_electric_vortex_owner.vpcf"
+			"EffectAttachType"			"follow_origin"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%electric_vortex_self_slow"
+			}
+		}
+		
+		"modifier_electric_vortex_target_datadriven"
+		{
+			"IsDebuff"					"1"
+		
+			"Duration"					"%duration"
+			
+			"OverrideAnimation"			"ACT_DOTA_FLAIL"
+		
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"Target"			"TARGET"
+					"EffectName"		"Hero_StormSpirit.ElectricVortex"
+				}
+			}
+		
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}

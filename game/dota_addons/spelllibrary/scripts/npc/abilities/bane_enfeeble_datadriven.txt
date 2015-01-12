@@ -1,3 +1,6 @@
+// Rewrite of the Bane Enfeeble
+// Author: chrislotix
+// Date: 11.01.2015.
 "bane_enfeeble_datadriven"
 {
 	// General
@@ -8,6 +11,15 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"bane_enfeeble"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
+		"particle"		"particles/units/heroes/hero_bane/bane_enfeeble.vpcf"		
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -31,6 +43,44 @@
 		{
 			"var_type"						"FIELD_INTEGER"
 			"enfeeble_attack_reduction"		"-30 -60 -90 -120"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Bane.Enfeeble.Cast"
+			"Target"	"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Bane.Enfeeble"
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_enfeeble_datadriven"
+			"Target"		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_enfeeble_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%AbilityDuration"
+			"IsPurgable"	"0"
+			"EffectName"	"particles/units/heroes/hero_bane/bane_enfeeble.vpcf"
+			"EffectAttachType"	"follow_overhead"			
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%enfeeble_attack_reduction"
+			}
 		}
 	}
 }

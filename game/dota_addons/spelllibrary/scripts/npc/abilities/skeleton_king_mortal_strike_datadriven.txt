@@ -1,3 +1,7 @@
+// Rewrite of Skeleton Wraith King Mortal Strike
+// Author: Noya
+// Date: 12.1.2015.
+// Notes: Crit is decided OnAttackStarted, but removed before being decided so that a player can never get a guaranteed crit by cancelling animation
 "skeleton_king_mortal_strike_datadriven"
 {
 	// General
@@ -6,6 +10,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	"AbilityTextureName"			"skeleton_king_mortal_strike"
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -30,6 +35,73 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"drain_duration"			"7.0"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+		"particle"	"particles/units/heroes/hero_skeletonking/skeleton_king_weapon_blur_critical.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_mortal_strike"
+		{
+		    "Passive"   "1"
+		    "IsHidden"  "1"
+		    "OnAttackStart"
+		    {
+		        "RemoveModifier"
+		        {
+		            "ModifierName" 	"modifier_mortal_strike_crit"
+		            "Target" 		"CASTER"
+		        }
+
+		        "Random"
+		        {
+		            "Chance" "%crit_chance"
+		            "OnSuccess"
+		            {
+		            	"FireSound"
+				        {
+				        	"EffectName"	"Hero_SkeletonKing.CriticalStrike"
+				        	"Target"		"CASTER"
+				        }
+
+				        "FireEffect"
+				        {
+				       		"EffectName" 		"particles/units/heroes/hero_skeletonking/skeleton_king_weapon_blur_critical.vpcf"
+				            "EffectAttachType"  "follow_origin"
+				            "Target"    		"CASTER"
+				        }
+
+		                "ApplyModifier"
+		                {
+		                    "ModifierName" 	"modifier_mortal_strike_crit"
+		                    "Target"    	"CASTER"    
+		                }        
+		            }
+		        }
+		    }
+		}
+
+		"modifier_mortal_strike_crit"
+		{
+		    "IsHidden"  "1"
+		    "Properties"
+		    {
+		        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_mult"
+		    }
+
+		    "OnAttackLanded"
+		    {
+		        "RemoveModifier"
+		        {
+		            "ModifierName"  "modifier_mortal_strike_crit"
+		            "Target"   		"CASTER"    
+		        }
+		    }
 		}
 	}
 }

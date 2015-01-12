@@ -6,6 +6,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"storm_spirit_overload"
 	
 	"AbilityDuration"				"0.6 0.6 0.6 0.6"
 	
@@ -44,5 +45,115 @@
 			"tooltip_duration"				"0.6 0.6 0.6 0.6"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"							"soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts"
+		"particle"							"particles/units/heroes/hero_stormspirit/stormspirit_overload_ambient.vpcf"
+	}
+	
+	"Modifiers"
+	{
+		"modifier_overload_passive_datadriven"
+		{
+			"Passive"						"1"
+			"IsPurgable"					"0"
+			"IsHidden"						"0"
+			"IsBuff"						"1"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_stormspirit/overload.lua"
+					"Function"				"overload_check_order"
+				}
+			}
+		}
+		
+		"modifier_overload_damage_datadriven"
+		{
+			"IsPurgable"					"0"
+			"IsHidden"						"1"
+			
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"				"CASTER"
+					"EffectName"			"particles/units/heroes/hero_stormspirit/stormspirit_overload_ambient.vpcf"
+					"EffectAttachType"		"start_at_customorigin"
+					"ControlPointEntities"
+					{
+						"CASTER"			"attach_attack1"
+					}
+				}
+			}
+			
+			"OnAttackLanded"
+			{
+				"FireSound"
+				{
+					"Target"				"TARGET"
+					"EffectName"			"Hero_StormSpirit.Overload"
+				}
+			
+				"FireEffect"
+				{
+					"Target"				"TARGET"
+					"EffectName"			"particles/units/heroes/hero_stormspirit/stormspirit_overload_discharge.vpcf"
+					"EffectAttachType"		"start_at_origin"
+				}
+			
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"			"TARGET"
+						"Radius"			"%overload_aoe"
+						"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types"				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_MECHANICAL"
+						"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					}
+					
+					"Action"
+					{
+						"Damage"
+						{
+							"Target"		"TARGET"
+							"Damage"		"%AbilityDamage"
+							"Type"			"DAMAGE_TYPE_MAGICAL"
+						}
+						
+						"ApplyModifier"
+						{
+							"Target"		"TARGET"
+							"ModifierName"	"modifier_overload_debuff_datadriven"
+						}
+					}
+				}
+			
+				"RemoveModifier"
+				{
+					"Target"				"CASTER"
+					"ModifierName"			"modifier_overload_damage_datadriven"
+				}
+			}
+		}
+		
+		"modifier_overload_debuff_datadriven"
+		{
+			"IsDebuff"						"1"
+		
+			"Duration"						"%tooltip_duration"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%overload_move_slow"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%overload_attack_slow"
+			}
+		}
+	}
 }
-

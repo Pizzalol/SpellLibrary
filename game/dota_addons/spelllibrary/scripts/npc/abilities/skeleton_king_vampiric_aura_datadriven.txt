@@ -1,3 +1,7 @@
+// Rewrite of Skeleton Wraith King Vampiric Aura
+// Author: Noya
+// Date: 12.1.2015.
+// Notes: Using the datadriven Lifesteal Action (shows a +Healed green popup)
 "skeleton_king_vampiric_aura_datadriven"
 {
 	// General
@@ -5,6 +9,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityTextureName"			"skeleton_king_vampiric_aura"
 	
 	"AbilitySpecial"
 	{
@@ -17,6 +22,39 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"vampiric_aura"			"15 20 25 30"
+		}
+	}
+
+	"precache"
+	{
+		// Not really used in the Lifesteal action
+		"particle"	"particles/units/heroes/hero_skeletonking/wraith_king_vampiric_aura_lifesteal.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_vampiric_aura"
+		{
+			"Passive" 			"1"
+			"IsHidden" 			"1"
+			"IsBuff"			"1"
+
+			"Aura" 				"modifier_vampiric_aura_buff"
+			"Aura_Radius" 		"%vampiric_aura_radius"
+			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		}
+
+		"modifier_vampiric_aura_buff"
+		{
+			"OnAttackLanded"
+			{
+				"Lifesteal"
+				{
+					"Target" 			"ATTACKER"
+					"LifestealPercent"	"%vampiric_aura"
+				}
+			}
 		}
 	}
 }

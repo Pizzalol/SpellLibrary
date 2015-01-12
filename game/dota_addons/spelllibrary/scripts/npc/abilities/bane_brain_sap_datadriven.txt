@@ -1,3 +1,7 @@
+// Rewrite of the Bane Brain Sap
+// Author: chrislotix
+// Date: 11.01.2015.
+// NOTE: Wonky particle
 "bane_brain_sap_datadriven"
 {
 	// General
@@ -10,6 +14,14 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"bane_brain_sap"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
+		"particle"		"particles/units/heroes/hero_bane/bane_enfeeble.vpcf"		
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -35,6 +47,43 @@
 		{
 			"var_type"						"FIELD_INTEGER"
 			"tooltip_brain_sap_heal_amt"		"90 160 230 300"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName" "Hero_Bane.BrainSap.Target"
+			"Target"	"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Bane.BrainSap"
+			"Target"	"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_bane/bane_sap.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"	"TARGET"
+		}
+
+
+
+		"Damage"
+		{
+			"Target"	"TARGET"
+			"Type"		"DAMAGE_TYPE_PURE"
+			"Damage"	"%tooltip_brain_sap_heal_amt"
+		}
+
+		"Heal"
+		{
+			"Target"	"CASTER"
+			"HealAmount"	"%tooltip_brain_sap_heal_amt"
 		}
 	}
 }
