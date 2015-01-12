@@ -1,10 +1,20 @@
+// Rewrite of the Broodmother Incapacitating Bite ability
+// Author: Pizzalol
+// Date: 12.01.2015.
 "broodmother_incapacitating_bite_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"broodmother_incapacitating_bite"
 
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_broodmother/broodmother_incapacitatingbite_debuff.vpcf"
+	}
 		
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -24,6 +34,43 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"duration"			"2.0 2.0 2.0 2.0"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_incapacitating_bite_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"OnAttackLanded"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_incapacitating_bite_debuff_datadriven"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				}
+			}
+		}
+
+		"modifier_incapacitating_bite_debuff_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+
+			"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_incapacitatingbite_debuff.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
+				"MODIFIER_PROPERTY_MISS_PERCENTAGE"				"%miss_chance"
+			}
 		}
 	}
 }

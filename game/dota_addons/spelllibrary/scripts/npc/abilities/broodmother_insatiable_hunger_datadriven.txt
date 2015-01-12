@@ -1,3 +1,7 @@
+// Rewrite of the Broodmother Insatiable Hunger ability
+// Author: Pizzalol
+// Date: 12.01.2015.
+// NOTE: Sound loops for now
 "broodmother_insatiable_hunger_datadriven"
 {
 	// General
@@ -13,6 +17,14 @@
 	"AbilityCastPoint"				"0.2 0.2 0.2"
 	"AbilityCooldown"				"45.0 45.0 45.0"
 	"AbilityManaCost"				"100 100 100"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
+		"particle"			"particles/units/heroes/hero_broodmother/broodmother_hunger_buff.vpcf"
+	}
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -32,6 +44,47 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"duration"				"14.0 14.0 14.0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Broodmother.InsatiableHunger"
+			"Target"		"CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_insatiable_hunger_datadriven"
+			"Target"		"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_insatiable_hunger_datadriven"
+		{
+			"Duration"	"%duration"
+			"IsBuff"	"1"
+
+			"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_hunger_buff.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnAttackLanded"
+			{
+				"Lifesteal"
+				{
+					"Target"	"CASTER"
+					"LifestealPercent"	"%lifesteal_pct"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
+			}
 		}
 	}
 }

@@ -2500,6 +2500,10 @@
 
 
 	//Start of file bane_brain_sap_datadriven.txt
+	// Rewrite of the Bane Brain Sap
+	// Author: chrislotix
+	// Date: 11.01.2015.
+	// NOTE: Wonky particle
 	"bane_brain_sap_datadriven"
 	{
 		// General
@@ -2512,6 +2516,14 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"bane_brain_sap"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
+			"particle"		"particles/units/heroes/hero_bane/bane_enfeeble.vpcf"		
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -2539,12 +2551,52 @@
 				"tooltip_brain_sap_heal_amt"		"90 160 230 300"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName" "Hero_Bane.BrainSap.Target"
+				"Target"	"TARGET"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Bane.BrainSap"
+				"Target"	"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_bane/bane_sap.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"	"TARGET"
+			}
+	
+	
+	
+			"Damage"
+			{
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_PURE"
+				"Damage"	"%tooltip_brain_sap_heal_amt"
+			}
+	
+			"Heal"
+			{
+				"Target"	"CASTER"
+				"HealAmount"	"%tooltip_brain_sap_heal_amt"
+			}
+		}
 	}
 	
 	//End of file bane_brain_sap_datadriven.txt
 
 
 	//Start of file bane_enfeeble_datadriven.txt
+	// Rewrite of the Bane Enfeeble
+	// Author: chrislotix
+	// Date: 11.01.2015.
 	"bane_enfeeble_datadriven"
 	{
 		// General
@@ -2555,6 +2607,15 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"bane_enfeeble"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
+			"particle"		"particles/units/heroes/hero_bane/bane_enfeeble.vpcf"		
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -2580,12 +2641,53 @@
 				"enfeeble_attack_reduction"		"-30 -60 -90 -120"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Bane.Enfeeble.Cast"
+				"Target"	"TARGET"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Bane.Enfeeble"
+				"Target"		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_enfeeble_datadriven"
+				"Target"		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_enfeeble_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%AbilityDuration"
+				"IsPurgable"	"0"
+				"EffectName"	"particles/units/heroes/hero_bane/bane_enfeeble.vpcf"
+				"EffectAttachType"	"follow_overhead"			
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%enfeeble_attack_reduction"
+				}
+			}
+		}
 	}
 	
 	//End of file bane_enfeeble_datadriven.txt
 
 
 	//Start of file bane_fiends_grip_datadriven.txt
+	// Rewrite of the Bane Nightmare
+	// Author: chrislotix
+	// Date: 11.01.2015.
 	"bane_fiends_grip_datadriven"
 	{
 		// General
@@ -2600,6 +2702,14 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"bane_fiends_grip"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
+			"particle"		"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"		
+		}	
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -2656,7 +2766,122 @@
 				"fiend_grip_damage_scepter"		"155 215 270"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Bane.FiendsGrip.Cast"
+				"Target"	"TARGET"	
+			}
+	
+			"Damage"
+			{
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%fiend_grip_damage"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_fiends_grip_datadriven"
+				"Target"	"TARGET"
+			}
+		}
+	
+		"OnChannelInterrupted"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_fiends_grip_datadriven"
+				"Target"	"TARGET"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
+				"Function"		"FiendsGripStopLoop"
+				"Target"		"TARGET"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
+				"Function"		"FiendsGripCastStopLoop"
+				"Target"		"TARGET"
+			}
+		}
+	
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_fiends_grip_datadriven"
+				"Target"	"TARGET"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
+				"Function"		"FiendsGripStopLoop"
+				"Target"		"TARGET"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
+				"Function"		"FiendsGripCastStopLoop"
+				"Target"		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_fiends_grip_datadriven"
+			{
+				"IsDebuff"	"1"
+				"ThinkInterval"	"%fiend_grip_tick_interval"
+				"EffectName"	"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
+				"EffectAttachType"	"attach_origin"
+	
+				"OverrideAnimation" "ACT_DOTA_FLAIL"
+	
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%fiend_grip_damage"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
+						"Function"		"ManaDrain"
+						"Target"		"TARGET"
+					}				
+				}
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Bane.FiendsGrip"
+						"Target"	"TARGET"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
+	
+	//need lua for mana drain and for stoping loop sound
 	
 	//End of file bane_fiends_grip_datadriven.txt
 
@@ -5164,13 +5389,23 @@
 
 
 	//Start of file broodmother_incapacitating_bite_datadriven.txt
+	// Rewrite of the Broodmother Incapacitating Bite ability
+	// Author: Pizzalol
+	// Date: 12.01.2015.
 	"broodmother_incapacitating_bite_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"broodmother_incapacitating_bite"
 	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_incapacitatingbite_debuff.vpcf"
+		}
 			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -5192,12 +5427,53 @@
 				"duration"			"2.0 2.0 2.0 2.0"
 			}
 		}
+	
+		"Modifiers"
+		{
+			"modifier_incapacitating_bite_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnAttackLanded"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_incapacitating_bite_debuff_datadriven"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					}
+				}
+			}
+	
+			"modifier_incapacitating_bite_debuff_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+	
+				"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_incapacitatingbite_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"				"%miss_chance"
+				}
+			}
+		}
 	}
 	
 	//End of file broodmother_incapacitating_bite_datadriven.txt
 
 
 	//Start of file broodmother_insatiable_hunger_datadriven.txt
+	// Rewrite of the Broodmother Insatiable Hunger ability
+	// Author: Pizzalol
+	// Date: 12.01.2015.
+	// NOTE: Sound loops for now
 	"broodmother_insatiable_hunger_datadriven"
 	{
 		// General
@@ -5213,6 +5489,14 @@
 		"AbilityCastPoint"				"0.2 0.2 0.2"
 		"AbilityCooldown"				"45.0 45.0 45.0"
 		"AbilityManaCost"				"100 100 100"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_hunger_buff.vpcf"
+		}
 	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -5232,6 +5516,47 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"14.0 14.0 14.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Broodmother.InsatiableHunger"
+				"Target"		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_insatiable_hunger_datadriven"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_insatiable_hunger_datadriven"
+			{
+				"Duration"	"%duration"
+				"IsBuff"	"1"
+	
+				"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_hunger_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnAttackLanded"
+				{
+					"Lifesteal"
+					{
+						"Target"	"CASTER"
+						"LifestealPercent"	"%lifesteal_pct"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
+				}
 			}
 		}
 	}
@@ -35060,6 +35385,10 @@
 
 
 	//Start of file skeleton_king_hellfire_blast_datadriven.txt
+	// Rewrite of Skeleton Wraith King Hellfire Blast
+	// Author: Noya
+	// Date: 12.1.2015.
+	// Notes: The damage is done in a separate hidden thinker modifier that is applied after the stun duration
 	"skeleton_king_hellfire_blast_datadriven"
 	{
 		// General
@@ -35134,12 +35463,152 @@
 				"tooltip_slow_duration"	"2"
 			}
 		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+			"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+			"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
+			"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+			{
+			    "Target"           	"TARGET"
+			    "EffectName"       	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+			    "Dodgeable"        	"1"
+			    "ProvidesVision"   	"0"
+			    "VisionRadius"     	"0"
+			    "MoveSpeed"        	"%blast_speed"
+			    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_SkeletonKing.Hellfire_Blast"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"1"
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_SkeletonKing.Hellfire_BlastImpact"
+				"Target"		"CASTER"
+			}
+	
+			"Damage"
+			{
+				"Target"		"TARGET"
+				"Type"			"DAMAGE_TYPE_MAGICAL"
+				"Damage"		 "%AbilityDamage"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_hellfire_blast_stun"
+				"Target"		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_hellfire_blast_slow"
+				"Target"		"TARGET"
+			}
+	
+			"DelayedAction"
+			{
+				"Delay"			"%blast_stun_duration"
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_hellfire_blast_dot"
+						"Target"		"TARGET"
+					}
+				}
+			}
+			
+	
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"TARGET"
+	
+				//CP3 needs to be attached to the target hit
+				"ControlPointEntities"
+				{
+					"TARGET"		"attach_hitloc"
+					"TARGET"		"attach_hitloc"
+					"TARGET"		"attach_hitloc"
+					"TARGET"		"attach_hitloc"
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_hellfire_blast_stun"
+			{
+				"IsDebuff"			"1"
+				"Duration"			"%blast_stun_duration"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+			}
+	
+			"modifier_hellfire_blast_slow"
+			{
+				"IsDebuff"			"1"
+				"Duration"			"%blast_dot_duration"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%speed_bonus"
+				}
+	
+				"EffectName"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+	
+			"modifier_hellfire_blast_dot"
+			{
+				"IsHidden"	"1"
+				"Duration"	"%tooltip_slow_duration"
+	
+				"ThinkInterval"		"1"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%blast_dot_damage"
+					}
+				}
+			}
+		}
 	}
 	
 	//End of file skeleton_king_hellfire_blast_datadriven.txt
 
 
 	//Start of file skeleton_king_mortal_strike_datadriven.txt
+	// Rewrite of Skeleton Wraith King Mortal Strike
+	// Author: Noya
+	// Date: 12.1.2015.
+	// Notes: Crit is decided OnAttackStarted, but removed before being decided so that a player can never get a guaranteed crit by cancelling animation
 	"skeleton_king_mortal_strike_datadriven"
 	{
 		// General
@@ -35148,6 +35617,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"			"skeleton_king_mortal_strike"
 	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -35174,12 +35644,84 @@
 				"drain_duration"			"7.0"
 			}
 		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+			"particle"	"particles/units/heroes/hero_skeletonking/skeleton_king_weapon_blur_critical.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_mortal_strike"
+			{
+			    "Passive"   "1"
+			    "IsHidden"  "1"
+			    "OnAttackStart"
+			    {
+			        "RemoveModifier"
+			        {
+			            "ModifierName" 	"modifier_mortal_strike_crit"
+			            "Target" 		"CASTER"
+			        }
+	
+			        "Random"
+			        {
+			            "Chance" "%crit_chance"
+			            "OnSuccess"
+			            {
+			            	"FireSound"
+					        {
+					        	"EffectName"	"Hero_SkeletonKing.CriticalStrike"
+					        	"Target"		"CASTER"
+					        }
+	
+					        "FireEffect"
+					        {
+					       		"EffectName" 		"particles/units/heroes/hero_skeletonking/skeleton_king_weapon_blur_critical.vpcf"
+					            "EffectAttachType"  "follow_origin"
+					            "Target"    		"CASTER"
+					        }
+	
+			                "ApplyModifier"
+			                {
+			                    "ModifierName" 	"modifier_mortal_strike_crit"
+			                    "Target"    	"CASTER"    
+			                }        
+			            }
+			        }
+			    }
+			}
+	
+			"modifier_mortal_strike_crit"
+			{
+			    "IsHidden"  "1"
+			    "Properties"
+			    {
+			        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_mult"
+			    }
+	
+			    "OnAttackLanded"
+			    {
+			        "RemoveModifier"
+			        {
+			            "ModifierName"  "modifier_mortal_strike_crit"
+			            "Target"   		"CASTER"    
+			        }
+			    }
+			}
+		}
 	}
 	
 	//End of file skeleton_king_mortal_strike_datadriven.txt
 
 
 	//Start of file skeleton_king_reincarnation_datadriven.txt
+	// Rewrite of Skeleton Wraith King Reincarnation
+	// Author: Noya
+	// Date: 12.1.2015.
+	// Notes: "MODIFIER_PROPERTY_REINCARNATION" is Unhandled, this uses lua Kill and gives the gold back when the caster dies
+	// 	      It still counts the death count for the player, because there's currently no way to decrease deaths (only lua IncrementDeaths)
 	"skeleton_king_reincarnation_datadriven"
 	{
 		// General
@@ -35231,12 +35773,57 @@
 				"slow_duration"			"5.0"
 			}
 		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+			"particle"	"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
+			"particle"	"particles/units/heroes/hero_skeletonking/skeleton_king_death.vpcf"
+			"particle"	"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_slow_debuff.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_reincarnation"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_skeleton_king/reincarnation.lua"
+						"Function"			"Reincarnation"
+					}
+				}
+			}
+	
+			"modifier_reincarnation_slow"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%slow_duration"
+	
+				"EffectName"		"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_slow_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attackslow_tooltip"
+				}
+			}
+		}
 	}
 	
 	//End of file skeleton_king_reincarnation_datadriven.txt
 
 
 	//Start of file skeleton_king_vampiric_aura_datadriven.txt
+	// Rewrite of Skeleton Wraith King Vampiric Aura
+	// Author: Noya
+	// Date: 12.1.2015.
+	// Notes: Using the datadriven Lifesteal Action (shows a +Healed green popup)
 	"skeleton_king_vampiric_aura_datadriven"
 	{
 		// General
@@ -35244,6 +35831,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityTextureName"			"skeleton_king_vampiric_aura"
 		
 		"AbilitySpecial"
 		{
@@ -35256,6 +35844,39 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"vampiric_aura"			"15 20 25 30"
+			}
+		}
+	
+		"precache"
+		{
+			// Not really used in the Lifesteal action
+			"particle"	"particles/units/heroes/hero_skeletonking/wraith_king_vampiric_aura_lifesteal.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_vampiric_aura"
+			{
+				"Passive" 			"1"
+				"IsHidden" 			"1"
+				"IsBuff"			"1"
+	
+				"Aura" 				"modifier_vampiric_aura_buff"
+				"Aura_Radius" 		"%vampiric_aura_radius"
+				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+	
+			"modifier_vampiric_aura_buff"
+			{
+				"OnAttackLanded"
+				{
+					"Lifesteal"
+					{
+						"Target" 			"ATTACKER"
+						"LifestealPercent"	"%vampiric_aura"
+					}
+				}
 			}
 		}
 	}
@@ -37719,7 +38340,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"electric_vortex_pull_tether_range"			"1200.0"		
+				"electric_vortex_pull_tether_range"			"1200.0"		// what is this variable ??
 			}
 			"03"
 			{
@@ -37737,8 +38358,85 @@
 				"duration"	"1.0 1.5 2.0 2.5"
 			}
 		}
-	}
 		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts"
+			"particle"						"particles/units/heroes/hero_stormspirit/stormspirit_electric_vortex_owner.vpcf"
+			"particle"						"particles/units/heroes/hero_stormspirit/stormspirit_electric_vortex.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"Hero_StormSpirit.ElectricVortexCast"
+			}
+		
+			"ApplyModifier"
+			{
+				"Target"					"CASTER"
+				"ModifierName"				"modifier_electric_vortex_caster_datadriven"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"					"TARGET"
+				"ModifierName"				"modifier_electric_vortex_target_datadriven"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"				"heroes/hero_stormspirit/electric_vortex.lua"
+				"Function"					"electric_vortex_pull"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_electric_vortex_caster_datadriven"
+			{
+				"IsDebuff"					"1"
+			
+				"Duration"					"%electric_vortex_self_slow_duration"
+				
+				"EffectName"				"particles/units/heroes/hero_stormspirit/stormspirit_electric_vortex_owner.vpcf"
+				"EffectAttachType"			"follow_origin"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%electric_vortex_self_slow"
+				}
+			}
+			
+			"modifier_electric_vortex_target_datadriven"
+			{
+				"IsDebuff"					"1"
+			
+				"Duration"					"%duration"
+				
+				"OverrideAnimation"			"ACT_DOTA_FLAIL"
+			
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"Hero_StormSpirit.ElectricVortex"
+					}
+				}
+			
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
 	//End of file storm_spirit_electric_vortex_datadriven.txt
 
 
@@ -37751,6 +38449,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"storm_spirit_overload"
 		
 		"AbilityDuration"				"0.6 0.6 0.6 0.6"
 		
@@ -37789,8 +38488,118 @@
 				"tooltip_duration"				"0.6 0.6 0.6 0.6"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts"
+			"particle"							"particles/units/heroes/hero_stormspirit/stormspirit_overload_ambient.vpcf"
+		}
+		
+		"Modifiers"
+		{
+			"modifier_overload_passive_datadriven"
+			{
+				"Passive"						"1"
+				"IsPurgable"					"0"
+				"IsHidden"						"0"
+				"IsBuff"						"1"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_stormspirit/overload.lua"
+						"Function"				"overload_check_order"
+					}
+				}
+			}
+			
+			"modifier_overload_damage_datadriven"
+			{
+				"IsPurgable"					"0"
+				"IsHidden"						"1"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"				"CASTER"
+						"EffectName"			"particles/units/heroes/hero_stormspirit/stormspirit_overload_ambient.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"			"attach_attack1"
+						}
+					}
+				}
+				
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"Hero_StormSpirit.Overload"
+					}
+				
+					"FireEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_stormspirit/stormspirit_overload_discharge.vpcf"
+						"EffectAttachType"		"start_at_origin"
+					}
+				
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"			"TARGET"
+							"Radius"			"%overload_aoe"
+							"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_MECHANICAL"
+							"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+						
+						"Action"
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Damage"		"%AbilityDamage"
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+							}
+							
+							"ApplyModifier"
+							{
+								"Target"		"TARGET"
+								"ModifierName"	"modifier_overload_debuff_datadriven"
+							}
+						}
+					}
+				
+					"RemoveModifier"
+					{
+						"Target"				"CASTER"
+						"ModifierName"			"modifier_overload_damage_datadriven"
+					}
+				}
+			}
+			
+			"modifier_overload_debuff_datadriven"
+			{
+				"IsDebuff"						"1"
+			
+				"Duration"						"%tooltip_duration"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%overload_move_slow"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%overload_attack_slow"
+				}
+			}
+		}
 	}
-	
 	//End of file storm_spirit_overload_datadriven.txt
 
 
@@ -37799,7 +38608,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -37844,8 +38653,58 @@
 				"static_remnant_damage"			"140 180 220 260"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_stormspirit/stormspirit_static_remnant.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"Hero_StormSpirit.StaticRemnantPlant"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_stormspirit/static_remnant.lua"
+				"Function"			"static_remnant_init"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_static_remnant_dummy_datadriven"
+			{
+				"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_1"
+			
+				"EffectName"		"particles/units/heroes/hero_stormspirit/stormspirit_static_remnant.vpcf"
+				"EffectAttachType"	"follow_origin"
+			
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_static_remnant_dummy_freeze_datadriven"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_FROZEN"							"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
-	
 	//End of file storm_spirit_static_remnant_datadriven.txt
 
 
@@ -39222,6 +40081,13 @@
 
 
 	//Start of file terrorblade_reflection_datadriven.txt
+	// Rewrite of Terrorblade Reflection
+	// Author: Noya
+	// Date: 11.1.2015.
+	// Notes: Same Illusion creation method used for Conjure Image, but with different properties behavior and position
+	//		  Illusions show as blue for allied instead of black,
+	//		  For enemies they are seen as fully black but don't have the trasparency of the original
+	//		  Also not ported the small grow scale with time of the illusions (which isn't stated in the spell description)
 	"terrorblade_reflection_datadriven"
 	{
 		// General
@@ -39270,12 +40136,82 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"60"
+				"move_slow"					"-60"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow_tooltip"		"60"
+				"attack_slow_tooltip"		"-60"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+			"particle"	"particles/status_fx/status_effect_terrorblade_reflection.vpcf"
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_reflection_slow.vpcf"
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_terrorblade/reflection.lua"
+				"Function"			"ReflectionCast"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_reflection_slow"
+				"Target" 			"TARGET"
+			}
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_terrorblade/reflection.lua"
+				"Function"			"Reflection"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_reflection_invulnerability"
+			{
+				"IsHidden"	"1"
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_terrorblade_reflection.vpcf"
+				"StatusEffectPriority"	"100"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"522"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+					
+				}
+			}	
+	
+			"modifier_reflection_slow"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%illusion_duration"
+	
+				"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_reflection_slow.vpcf"
+				"EffecAttachType"	"follow_origin"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_slow"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
+				}
 			}
 		}
 	}
@@ -39287,7 +40223,7 @@
 	// Rewrite of Terrorblade Sunder
 	// Author: Noya
 	// Date: 11.1.2015.
-	// Notes: Particle is buggy
+	// Notes: Spell can be self targeted. If you want to disable self-targeting, check abaddon_aphotic_shield_datadriven
 	"terrorblade_sunder_datadriven"
 	{
 		// General
@@ -39343,33 +40279,6 @@
 			{
 				"EffectName" 	"Hero_Terrorblade.Sunder.Target"
 				"Target"	 	"TARGET"
-			}
-			"FireEffect"
-			{
-				"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_sunder.vpcf"
-				"EffectAttachType"  "start_at_customorigin"
-				"Target"			"TARGET"
-				"ControlPointEntities"
-				{
-					"CASTER"	"attach_origin"
-					"TARGET"	"attach_origin"
-					"TARGET"	"attach_origin"
-					"TARGET"	"attach_origin"
-					"TARGET"	"attach_origin"
-					"TARGET"	"attach_origin"
-					"TARGET"	"attach_origin"
-					"TARGET"	"attach_origin"
-					"TARGET"	"attach_origin" // Pull?
-				}
-				"ControlPoints"
-	            {
-	            	"03"	"1 1 1"		// Position along ring
-	            	"08"	"1 0 0"		// Pull towards CP
-	            	"10"	"1 0 0"		// Color Fade
-	            	"11"	"1 0 0"		// Color Fade Random
-	            	"15"	"50 150 50" // Color
-	            	"16"	"50 150 50" // ColorB
-	            }
 			}
 			"RunScript"
 			{

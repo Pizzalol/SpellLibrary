@@ -22,8 +22,8 @@
 		"override_hero" "npc_dota_hero_ancient_apparition"
 	
 		"Ability1" "night_stalker_void_datadriven"
-		"Ability2" "night_stalker_crippling_fear_datadriven"
-		"Ability3" "night_stalker_hunter_in_the_night_datadriven"
+		"Ability2" "broodmother_incapacitating_bite_datadriven"
+		"Ability3" "broodmother_insatiable_hunger_datadriven"
 		"Ability4" "night_stalker_darkness_datadriven"
 	}
 	//End of file test_dummy_ranged.txt
