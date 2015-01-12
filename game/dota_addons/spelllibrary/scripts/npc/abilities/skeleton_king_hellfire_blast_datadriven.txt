@@ -1,3 +1,7 @@
+// Rewrite of Skeleton Wraith King Hellfire Blast
+// Author: Noya
+// Date: 12.1.2015.
+// Notes: The damage is done in a separate hidden thinker modifier that is applied after the stun duration
 "skeleton_king_hellfire_blast_datadriven"
 {
 	// General
@@ -70,6 +74,142 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"tooltip_slow_duration"	"2"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+		"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+		"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
+		"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"TrackingProjectile"
+		{
+		    "Target"           	"TARGET"
+		    "EffectName"       	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+		    "Dodgeable"        	"1"
+		    "ProvidesVision"   	"0"
+		    "VisionRadius"     	"0"
+		    "MoveSpeed"        	"%blast_speed"
+		    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_SkeletonKing.Hellfire_Blast"
+			"Target"		"CASTER"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"			"1"
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_SkeletonKing.Hellfire_BlastImpact"
+			"Target"		"CASTER"
+		}
+
+		"Damage"
+		{
+			"Target"		"TARGET"
+			"Type"			"DAMAGE_TYPE_MAGICAL"
+			"Damage"		 "%AbilityDamage"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_hellfire_blast_stun"
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_hellfire_blast_slow"
+			"Target"		"TARGET"
+		}
+
+		"DelayedAction"
+		{
+			"Delay"			"%blast_stun_duration"
+			"Action"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_hellfire_blast_dot"
+					"Target"		"TARGET"
+				}
+			}
+		}
+		
+
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"			"TARGET"
+
+			//CP3 needs to be attached to the target hit
+			"ControlPointEntities"
+			{
+				"TARGET"		"attach_hitloc"
+				"TARGET"		"attach_hitloc"
+				"TARGET"		"attach_hitloc"
+				"TARGET"		"attach_hitloc"
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_hellfire_blast_stun"
+		{
+			"IsDebuff"			"1"
+			"Duration"			"%blast_stun_duration"
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OverrideAnimation"	"ACT_DOTA_DISABLED"
+			"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"	"follow_overhead"
+		}
+
+		"modifier_hellfire_blast_slow"
+		{
+			"IsDebuff"			"1"
+			"Duration"			"%blast_dot_duration"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%speed_bonus"
+			}
+
+			"EffectName"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+			"EffectAttachType"	"follow_origin"
+		}
+
+		"modifier_hellfire_blast_dot"
+		{
+			"IsHidden"	"1"
+			"Duration"	"%tooltip_slow_duration"
+
+			"ThinkInterval"		"1"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%blast_dot_damage"
+				}
+			}
 		}
 	}
 }
