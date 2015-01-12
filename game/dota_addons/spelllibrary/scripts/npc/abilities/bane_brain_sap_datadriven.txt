@@ -68,7 +68,11 @@
 		{
 			"EffectName"	"particles/units/heroes/hero_bane/bane_sap.vpcf"
 			"EffectAttachType"	"follow_origin"
-			"Target"	"TARGET"
+			"ControlPointEntities"
+			{
+				"CASTER" "follow_origin"
+				"TARGET" "follow_origin"		
+			}
 		}
 
 
