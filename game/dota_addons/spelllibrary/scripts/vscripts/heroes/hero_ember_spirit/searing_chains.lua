@@ -16,7 +16,7 @@ function searing_chains_pin_point( keys )
 	-- Target stats
 	local targetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY
 	local targetType = DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO
-	local targetFlag = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
+	local targetFlag = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE
 	local unitOrder = FIND_ANY_ORDER
 
 	-- Find and apply debuff
