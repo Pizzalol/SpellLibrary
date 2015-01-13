@@ -8,7 +8,16 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+	"AbilityTextureName"			"bane_nightmare"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
+		"particle"		"particles/units/heroes/hero_bane/bane_nightmare.vpcf"		
+	}	
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -61,6 +70,105 @@
 			"var_type"					"FIELD_INTEGER"
 			"cast_range_tooltip"		"500 550 600 650"
 		}
+		"06" //extra variable
+		{
+			"var_type"					"FIELD_INTEGER"
+			"aura_radius"				"1000"
+		}
 	}
-}
 
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Bane.Nightmare"
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_nightmare_datadriven"
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_nightmare_aura_datadriven"
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	""modifier_nightmare_invul_datadriven""
+			"Target"		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_nightmare_datadriven"
+		{
+			"Duration"	"%duration"
+			"IsDebuff"	"1"
+			"EffectName"    "particles/units/heroes/hero_bane/bane_nightmare.vpcf"
+            "EffectAttachType"      "attach_overhead"
+            "ThinkInterval" "%nightmare_dot_interval"
+
+            "OnIntervalThink"
+            {
+            	"RunScript"
+            	{
+            		"ScriptFile"	"scripts/vscripts/heroes/hero_bane/nightmare.lua"
+            		"Function"		"NightmareDamage"
+            		"Target"		"TARGET"
+            	}
+            } 
+
+            "States"
+            {
+	           	"MODIFIER_STATE_NIGHTMARED"     "MODIFIER_STATE_VALUE_ENABLED"
+	            "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	            "MODIFIER_STATE_SPECIALLY_DENIABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+	            "MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"		
+            }
+		}
+
+		"modifier_nightmare_aura_datadriven"
+		{
+			"Duration"	"%duration"
+			"IsHidden"	"0"
+
+			"Aura"			"modifier_nightmare_debuff_datadriven"
+			"Aura_Radius"	"%aura_radius"
+			"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"	"DOTA_UNIT_TARGET_HERO"
+		}
+
+		"modifier_nightmare_debuff_datadriven"
+		{
+			"IsHidden"	"0"
+			"IsDebuff"	"1"
+
+			"OnAttackStart"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_bane/nightmare.lua"
+					"Function"		"NightmareBreak"
+					"Target"		"TARGET"
+				}
+			}
+		}
+
+		"modifier_nightmare_invul_datadriven"
+		{
+			"Duration"	"%nightmare_invuln_time"
+			"IsDebuff"	"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}	
