@@ -60,5 +60,78 @@
 		}
 						
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"							"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
+		"particle"							"particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_cast.vpcf"
+		"particle"							"particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_debuff.vpcf"
+		"particle"							"particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_start.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"						"CASTER"
+			"EffectName"					"Hero_EmberSpirit.SearingChains.Cast"
+		}
+	
+		"FireEffect"
+		{
+			"Target"						"CASTER"
+			"EffectName"					"particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_cast.vpcf"
+			"EffectAttachType"				"follow_origin"
+			"ControlPoints"
+			{
+				"01"						"%radius 0 0"
+			}
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"					"heroes/hero_ember_spirit/searing_chains.lua"
+			"Function"						"searing_chains_pin_point"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_searing_chains_debuff_datadriven"
+		{
+			"IsDebuff"						"1"
+		
+			"Duration"						"%duration"
+			
+			"EffectName"					"particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_debuff.vpcf"
+			"EffectAttachType"				"follow_origin"
+			
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"Target"				"TARGET"
+					"EffectName"			"Hero_EmberSpirit.SearingChains.Target"
+				}
+			}
+			
+			"ThinkInterval"					"%tick_interval"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"				"TARGET"
+					"Damage"				"%chains_damage"
+					"Type"					"DAMAGE_TYPE_MAGICAL"
+				}
+			}
+		
+			"States"
+			{
+				"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
 }
-
