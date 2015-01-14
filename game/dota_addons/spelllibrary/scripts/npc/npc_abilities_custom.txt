@@ -5473,7 +5473,6 @@
 	// Rewrite of the Broodmother Insatiable Hunger ability
 	// Author: Pizzalol
 	// Date: 12.01.2015.
-	// NOTE: Sound loops for now
 	"broodmother_insatiable_hunger_datadriven"
 	{
 		// General
@@ -5550,6 +5549,16 @@
 					{
 						"Target"	"CASTER"
 						"LifestealPercent"	"%lifesteal_pct"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_broodmother/insatiable_hunger.lua"
+						"Function"		"InsatiableHungerStopSound"
+						"sound"			"Hero_Broodmother.InsatiableHunger"
 					}
 				}
 	
@@ -5638,6 +5647,11 @@
 
 
 	//Start of file broodmother_spawn_spiderlings_datadriven.txt
+	// Rewrite of the Broodmother Spawn Spiderlings ability
+	// Author: Pizzalol
+	// Date: 14.01.2015.
+	// NOTE: Spawn effect and sound will play for every spiderling
+	// NOTE2: ------------------ Uses the normal dota spiderlings NOT custom ones -----------------
 	"broodmother_spawn_spiderlings_datadriven"
 	{
 		// General
@@ -5660,6 +5674,16 @@
 		"AbilityCastPoint"				"0.2 0.2 0.2 0.2"
 		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
 		"AbilityManaCost"				"120 120 120 120"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_spiderlings_debuff.vpcf"
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_web_cast.vpcf"
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
+		}
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -5693,6 +5717,101 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"projectile_speed"	"1200"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Broodmother.SpawnSpiderlingsCast"
+				"Target"		"CASTER"
+			}
+	
+			"TrackingProjectile"
+			{
+				"Target" "TARGET"
+				"EffectName" "particles/units/heroes/hero_broodmother/broodmother_web_cast.vpcf"
+				"Dodgeable" "1"
+				"ProvidesVision" "0"
+				"MoveSpeed" "%projectile_speed"
+				"SourceAttachment" "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Broodmother.SpawnSpiderlingsImpact"
+				"Target"		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_spawn_spiderlings_datadriven"
+				"Target"		"TARGET"
+			}
+	
+			"Damage"
+			{
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%damage"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_spawn_spiderlings_datadriven"
+			{
+				"Duration"	"%buff_duration"
+				"IsDebuff"	"1"
+	
+				"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_spiderlings_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnDeath"
+				{
+					"SpawnUnit"
+					{
+						"UnitName"	"npc_dota_broodmother_spiderling"
+						"UnitCount"	"%count"
+						"SpawnRadius"	"50"
+						"Duration"	"%spiderling_duration"
+						"Target"
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+	
+						"OnSpawn"
+						{
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_phased"
+								"Target"		"TARGET"
+								"Duration"		"0.03"
+							}
+	
+							"FireSound"
+							{
+								"EffectName"	"Hero_Broodmother.SpawnSpiderlings"
+								"Target"		"TARGET"
+							}
+	
+							"FireEffect"
+							{
+								"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
+								"EffectAttachType"	"attach_origin"
+								"Target"		"TARGET"
+							}
+						}
+	
+						"GrantsGold"	"1"
+						"GrantsXP"		"1"
+					}
+				}
 			}
 		}
 	}

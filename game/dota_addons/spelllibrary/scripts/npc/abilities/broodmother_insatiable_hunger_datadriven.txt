@@ -1,7 +1,6 @@
 // Rewrite of the Broodmother Insatiable Hunger ability
 // Author: Pizzalol
 // Date: 12.01.2015.
-// NOTE: Sound loops for now
 "broodmother_insatiable_hunger_datadriven"
 {
 	// General
@@ -78,6 +77,16 @@
 				{
 					"Target"	"CASTER"
 					"LifestealPercent"	"%lifesteal_pct"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_broodmother/insatiable_hunger.lua"
+					"Function"		"InsatiableHungerStopSound"
+					"sound"			"Hero_Broodmother.InsatiableHunger"
 				}
 			}
 
