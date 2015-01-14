@@ -89,9 +89,7 @@ function Reincarnation( event )
 
 	elseif casterHP == 0 then
 		-- On Death without reincarnation, set the respawn time to the respawn time formula
-		if caster.RespawnTime then
-			caster:SetTimeUntilRespawn(respawnTimeFormula)
-		end
+		caster:SetTimeUntilRespawn(respawnTimeFormula)
 	end	
 
 
