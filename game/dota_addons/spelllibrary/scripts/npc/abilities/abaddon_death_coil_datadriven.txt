@@ -63,11 +63,20 @@
 		"particle" 	"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
 	}
 
-	"OnSpellStart"
+	"OnAbilityPhaseStart"
 	{
 		"RunScript"
 		{
 			"ScriptFile"	"heroes/hero_abaddon/death_coil.lua"
+			"Function"		"DeathCoilPreCast"
+		}
+	}
+
+	"OnAbilityStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/death_knight/death_coil.lua"
 			"Function"		"DeathCoil"
 		}
 	}
