@@ -7,6 +7,7 @@
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"storm_spirit_ball_lightning"
 	
 		// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -59,6 +60,143 @@
 			"var_type"								"FIELD_INTEGER"
 			"ball_lightning_vision_radius"			"1000"		
 		}
+		// Extra variable
+		"08"
+		{
+			"var_type"								"FIELD_INTEGER"
+			"tree_destroy_radius"					"100"
+		}
+		"09"
+		{
+			"var_type"								"FIELD_INTEGER"
+			"distance_per_mana"						"100"
+		}
+		"10"
+		{
+			"var_type"								"FIELD_FLOAT"
+			"tree_destroy_interval"					"0.01"
+		}
+		"11"
+		{
+			"var_type"								"FIELD_INTEGER"
+			"distance_per_damage"					"100"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"							"#soundfile"
+		"particle"							"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
+		"particle"							"particles/status_fx/status_effect_base.vpcf" // Only for dummy
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"						"CASTER"
+			"EffectName"					"Hero_StormSpirit.BallLightning"
+		}
+		
+		"FireSound"
+		{
+			"Target"						"CASTER"
+			"EffectName"					"Hero_StormSpirit.BallLightning.Loop"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"					"heroes/hero_stormspirit/ball_lightning.lua"
+			"Function"						"ball_lightning_traverse"
+			"Target"						"POINT"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"						"CASTER"
+			"ModifierName"					"modifier_ball_lightning_buff_datadriven"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"						"0"
+	
+		"RunScript"
+		{
+			"ScriptFile"					"heroes/hero_stormspirit/ball_lightning.lua"
+			"Function"						"ball_lightning_damage"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_ball_lightning_buff_datadriven"
+		{
+			"IsPurgable"					"0"
+			"IsBuff"						"1"
+		
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"				"CASTER"	
+					"EffectName"			"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
+					"EffectAttachType"		"start_at_customorigin"
+					"ControlPointEntities"
+					{
+						"CASTER"			"attach_hitloc"
+						"CASTER"			"attach_hitloc"
+					}
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_stormspirit/ball_lightning.lua"
+					"Function"				"ball_lightning_destroy_trees"
+				}
+			}
+		
+			"ThinkInterval"					"%tree_destroy_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_stormspirit/ball_lightning.lua"
+					"Function"				"ball_lightning_destroy_trees"
+				}
+			}
+		
+			"States"
+			{
+				"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		
+		"modifier_ball_lightning_destroy_trees_datadriven"
+		{
+			"IsHidden"						"1"
+			"IsPurgable"					"0"
+		
+			"Duration"						"%tree_destroy_interval"
+		
+			"OnCreated"
+			{
+				"DestroyTrees"
+				{
+					"Target"				"CASTER"
+					"Radius"				"%tree_destroy_radius"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
 	}
 }
-
