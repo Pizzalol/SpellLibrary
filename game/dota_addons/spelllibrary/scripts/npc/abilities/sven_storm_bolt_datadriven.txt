@@ -101,6 +101,13 @@
 			"EffectName"	"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
 			"EffectAttachType"	"attach_origin"
 			"Target"		"TARGET"
+			"ControlPointEntities"
+			{
+				"TARGET"	"attach_origin"
+				"TARGET"	"attach_origin"
+				"TARGET"	"attach_origin"
+				"TARGET"	"attach_origin"	//CP3 has a child explosion origin
+			}
 		}
 
 		"ActOnTargets"
