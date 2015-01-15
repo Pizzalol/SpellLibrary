@@ -1,10 +1,16 @@
+// Rewrite of Lone Druid Spirit Bear
+// Author: Noya
+// Date: 14.01.2015.
+// Notes: The unit spawned are taken directly from npc_units.txts
+//		  Bear doesn't show in the hero UI
 "lone_druid_spirit_bear_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"BaseClass"					"ability_datadriven"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"DisplayAdditionalHeroes"	"1"
+	"AbilityTextureName"		"lone_druid_spirit_bear"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -46,6 +52,72 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"backlash_damage"			"10.0"
+		}
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
+		"particle"	"particles/status_fx/status_effect_spirit_bear.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+	    {
+	        "ScriptFile"    "heroes/hero_lone_druid/spirit_bear.lua"
+	        "Function"      "SpiritBearLevel"
+	    }
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+	    {
+	        "ScriptFile"    "heroes/hero_lone_druid/spirit_bear.lua"
+	        "Function"      "SpiritBearSpawn"
+	    }
+
+	    "FireSound"
+	    {
+	    	"EffectName"	"Hero_LoneDruid.SpiritBear.Cast" 
+	    	"Target"		"CASTER"
+	    }
+	}
+
+	"Modifiers"
+	{
+		"modifier_spirit_bear"
+		{
+			"StatusEffectName"		"particles/status_fx/status_effect_spirit_bear.vpcf"
+			"StatusEffectPriority"	"1"
+
+			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"Target"			"TARGET"
+					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
+					"EffectAttachType"	"follow_origin"
+				}
+			}
+
+			"OnDeath"
+			{
+				"FireEffect"
+				{
+					"Target"			"TARGET"
+					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+					"EffectAttachType"	"follow_origin"
+				}
+				"RunScript"
+			    {
+			        "ScriptFile"    "heroes/hero_lone_druid/spirit_bear.lua"
+			        "Function"      "SpiritBearDeath"
+			    }
+			}
 		}
 	}
 }
