@@ -1,7 +1,7 @@
 // Rewrite of the Faceless Void Time Lock ability
 // Author: Pizzalol
 // Date: 06.01.2015.
-// NOTE: Missing the time lock particle
+// Changed 14.01.2015 - Reason: Added Timelock-Chronos Particle (Noya)
 "faceless_void_time_lock_datadriven"
 {
 	// General
@@ -112,6 +112,9 @@
 			"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
 			"EffectAttachType"	"follow_overhead"
 
+			"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+			"StatusEffectPriority"	"1"
+
 			"States"
 			{
 				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
@@ -125,6 +128,9 @@
 
 			"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
 			"EffectAttachType"	"follow_overhead"
+
+			"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+			"StatusEffectPriority"	"1"
 
 			"States"
 			{

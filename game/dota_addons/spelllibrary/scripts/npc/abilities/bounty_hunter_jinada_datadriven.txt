@@ -101,6 +101,7 @@
 			"IsDebuff"	"1"
 			"Duration"	"%duration"
 			"StatusEffectName"	"particles/units/heroes/hero_bounty_hunter/status_effect_bounty_hunter_jinda_slow.vpcf"
+			"StatusEffectPriority"	"3"
 
 			"Properties"
 			{

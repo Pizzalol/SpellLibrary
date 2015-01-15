@@ -85,6 +85,7 @@
 			"Duration"		"%AbilityDuration"
 
 			"StatusEffectName"	"particles/status_fx/status_effect_gods_strength.vpcf"
+			"StatusEffectPriority"	"10"
 
 			"Properties"
 			{

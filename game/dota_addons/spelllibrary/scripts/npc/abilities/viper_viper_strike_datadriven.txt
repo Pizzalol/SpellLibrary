@@ -179,6 +179,7 @@
 			"Duration"	"%duration"
 
 			"StatusEffectName"		"particles/status_fx/status_effect_poison_viper.vpcf"
+			"StatusEffectPriority"	"15"
 
 			"OnCreated"
 			{
