@@ -91,6 +91,8 @@
 	{
 		"modifier_spirit_bear"
 		{
+			"IsHidden"		"1"
+
 			"StatusEffectName"		"particles/status_fx/status_effect_spirit_bear.vpcf"
 			"StatusEffectPriority"	"1"
 

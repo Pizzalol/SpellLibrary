@@ -1,3 +1,7 @@
+// Rewrite of Lone Druid Rabid
+// Author: Noya
+// Date: 15.01.2015.
+// Notes: Instead of only applying the buff to the spirit bear, we apply to every caster controlled unit
 "lone_druid_rabid_datadriven"
 {
 	// General
@@ -38,6 +42,75 @@
 		{
 			"var_type"			"FIELD_FLOAT"
 			"rabid_duration"	"10.0 10.0 10.0 10.0"
+		}
+
+		// Change this value to 0 to only affect the Spirit Bear (or edit the lua to change which unit it applies to)
+		"04"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"affect_all_units"	"1"
+		}
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_rabid_buff.vpcf"
+		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_rabid_buff_speed_ring.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+	    {
+	        "ScriptFile"    "heroes/hero_lone_druid/rabid.lua"
+	        "Function"      "Rabid"
+	        "Target"
+	        {
+	        	"Center"  		"CASTER"
+	        	"Radius" 		"GLOBAL"
+	        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	        	"Types" 		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	        }
+	    }
+
+	    "FireSound"
+	    {
+	    	"EffectName"	"Hero_LoneDruid.Rabid"
+	    	"Target"		"CASTER"
+	    }
+	}
+
+	"Modifiers"
+	{
+		
+		"modifier_rabid"
+		{
+			"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_rabid_buff_speed_ring.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_rabid_buff.vpcf"
+					"EffectAttachType"	"follow_overhead"
+					"Target"			"TARGET"
+
+					"ControlPointEntities"
+					{
+						"TARGET"	"follow_overhead"
+						"TARGET"	"follow_overhead"
+						"TARGET"	"follow_overhead"
+					}
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_move_speed"
+			}
 		}
 	}
 }
