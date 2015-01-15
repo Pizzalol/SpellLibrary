@@ -1,9 +1,21 @@
+// Rewrite of the Lycan Summon Wolves
+// Author: chrislotix
+// Date: 15.01.2015.
 "lycan_summon_wolves_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityTextureName"			"lycan_summon_wolves"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"		
+		"particle"		""		
+	}	
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -46,6 +58,101 @@
 			"var_type"					"FIELD_INTEGER"
 			"wolf_hp"					"200 240 280 320"
 		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"wolf_1_count"				"2 0 0 0"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"wolf_2_count"				"0 2 0 0"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"wolf_3_count"				"0 0 2 0"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"wolf_4_count"				"0 0 0 2"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lycan.SummonWolves"
+			"Target"		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+			"Function"		"KillWolves"
+			"Target"
+	        {
+	        	"Center"  				"CASTER"
+	        	"Radius" 				"GLOBAL"
+	        	"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	        	"Types" 				"DOTA_UNIT_TARGET_BASIC"
+	        }
+
+			"wolf_name1"	"npc_dota_lycan_wolf1"
+			"wolf_name2"	"npc_dota_lycan_wolf2"
+			"wolf_name3"	"npc_dota_lycan_wolf3"
+			"wolf_name4"	"npc_dota_lycan_wolf4"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"	"npc_dota_lycan_wolf1"
+			"UnitCount"	"%wolf_1_count"
+			"Target"	"CASTER"
+			"Duration"	"%wolf_duration"
+
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"			
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"	"npc_dota_lycan_wolf2"
+			"UnitCount"	"%wolf_2_count"			
+			"Target"	"CASTER"
+			"Duration"	"%wolf_duration"
+
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"			
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"	"npc_dota_lycan_wolf3"
+			"UnitCount"	"%wolf_3_count"			
+			"Target"	"CASTER"
+			"Duration"	"%wolf_duration"
+
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"			
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"	"npc_dota_lycan_wolf4"
+			"UnitCount"	"%wolf_4_count"			
+			"Target"	"CASTER"
+			"Duration"	"%wolf_duration"
+
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"			
+		}
+
+
+
+
 	}
 }
 
