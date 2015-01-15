@@ -75,7 +75,8 @@
 
 						"ApplyModifier"
 						{
-							"ModifierName"	"modifier_time_lock_hero_datadriven"
+							"ModifierName"	"modifier_time_lock_stun_datadriven"
+							"Duration"		"%duration"
 							"Target"
 							{
 								"Center"	"TARGET"
@@ -85,7 +86,8 @@
 
 						"ApplyModifier"
 						{
-							"ModifierName"	"modifier_time_lock_creep_datadriven"
+							"ModifierName"	"modifier_time_lock_stun_datadriven"
+							"Duration"		"%duration_creep"
 							"Target"
 							{
 								"Center"	"TARGET"
@@ -104,27 +106,9 @@
 			}
 		}
 
-		"modifier_time_lock_hero_datadriven"
+		"modifier_time_lock_stun_datadriven"
 		{
 			"IsDebuff"	"1"
-			"Duration"	"%duration"
-
-			"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
-			"EffectAttachType"	"follow_overhead"
-
-			"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-			"StatusEffectPriority"	"1"
-
-			"States"
-			{
-				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-
-		"modifier_time_lock_creep_datadriven"
-		{
-			"IsDebuff"	"1"
-			"Duration"	"%duration_creep"
 
 			"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
 			"EffectAttachType"	"follow_overhead"

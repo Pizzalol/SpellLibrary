@@ -1,8 +1,9 @@
 // Rewrite of the Slardar Bash
 // Author: chrislotix
 // Date: 01.01.2015.
-// Changed: 05.01.2015.
+// Changed: 15.01.2015.
 // Changed by: Pizzalol
+// Reason: Improved spell code
 "slardar_bash_datadriven"
 {
 	// General
@@ -51,9 +52,8 @@
 	}
 	"Modifiers"
 	{
-		"modifier_bash_stun_hero_datadriven"
+		"modifier_bash_stun_datadriven"
 		{
-			"Duration"		"%duration"
 			"IsDebuff" 		"1"
 			"OverrideAnimation"		"ACT_DOTA_DISABLED"
 
@@ -63,29 +63,11 @@
 			"States"
 			{
 				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-			}			
-
-		}
-
-		"modifier_bash_stun_creep_datadriven"
-		{
-			"Duration" "%duration_creep"
-			"IsDebuff" "1"
-			"OverrideAnimation"		"ACT_DOTA_DISABLED"
-
-			"EffectName" "particles/generic_gameplay/generic_stunned.vpcf"
-        	"EffectAttachType" "follow_overhead"
-
-			"States"
-			{
-				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
-
-			
 		}
 
 
-		"modifier_bash_stun_datadriven"		
+		"modifier_bash_datadriven"		
 		{
 			"IsHidden"	"1"
 			"Passive"	"1"
@@ -99,6 +81,12 @@
 
 					"OnSuccess"
 					{
+						"FireSound"
+						{
+							"EffectName"	"Hero_Slardar.Bash"
+							"Target"		"TARGET"
+						}
+
 						"ApplyModifier"
 						{
 							"Target"
@@ -106,7 +94,8 @@
 								"Center"	"TARGET"
 								"Types"		"DOTA_UNIT_TARGET_HERO"
 							}
-							"ModifierName"	"modifier_bash_stun_hero_datadriven"
+							"ModifierName"	"modifier_bash_stun_datadriven"
+							"Duration"		"%duration"
 						}
 
 						"ApplyModifier"
@@ -116,19 +105,16 @@
 								"Center"	"TARGET"
 								"Types"		"DOTA_UNIT_TARGET_BASIC"
 							}
-							"ModifierName"	"modifier_bash_stun_creep_datadriven"
+							"ModifierName"	"modifier_bash_stun_datadriven"
+							"Duration"		"%duration_creep"
 						}
+
 						"Damage"
 						{
 							"Target"	"TARGET"
 							"Type"		"DAMAGE_TYPE_PHYSICAL"
 							"Damage"	"%bonus_damage"
-						}
-						"FireSound"
-						{
-							"EffectName"	"Hero_Slardar.Bash"
-							"Target"		"TARGET"
-						}
+						}						
 					}
 				}
 			} 

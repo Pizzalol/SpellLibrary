@@ -1,7 +1,9 @@
 // Rewrite of the Viper Viper Strike ability
 // Author: Pizzalol
 // Date: 19.12.2014.
-// NOTE: Wonky projectile particle and the warmup particle probably has a wrong attach point?
+// Changed: 15.01.2015.
+// NOTE: Wonky projectile particle
+// NOTE2: Edit the warmup particle and delete 3 out of 4 children for it to work properly (thanks to Noya for the info)
 "viper_viper_strike_datadriven"
 {
 	// General
@@ -104,7 +106,12 @@
 		{
 			"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
 			"EffectAttachType"	"attach_origin"
-			"Target"			"CASTER"
+
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_attack1"
+				"CASTER"	"attach_attack1"
+			}
 		}
 	}
 

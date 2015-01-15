@@ -20,7 +20,7 @@
 	{
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
 		"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
-		"particle"			"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+		"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
 	}
 	
 	// Casting
@@ -175,7 +175,7 @@
 			"IsHidden"	"1"
 			"Duration"	"%aura_interval * 2"
 
-			"StatusEffectName"	"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+			"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
 			"EffectAttachType"	"follow_origin"
 
 			"Properties"

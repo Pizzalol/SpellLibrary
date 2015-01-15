@@ -350,11 +350,20 @@
 			"particle" 	"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
 		}
 	
-		"OnSpellStart"
+		"OnAbilityPhaseStart"
 		{
 			"RunScript"
 			{
 				"ScriptFile"	"heroes/hero_abaddon/death_coil.lua"
+				"Function"		"DeathCoilPreCast"
+			}
+		}
+	
+		"OnAbilityStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/death_knight/death_coil.lua"
 				"Function"		"DeathCoil"
 			}
 		}
@@ -2570,7 +2579,11 @@
 			{
 				"EffectName"	"particles/units/heroes/hero_bane/bane_sap.vpcf"
 				"EffectAttachType"	"follow_origin"
-				"Target"	"TARGET"
+				"ControlPointEntities"
+				{
+					"CASTER" "follow_origin"
+					"TARGET" "follow_origin"		
+				}
 			}
 	
 	
@@ -2897,7 +2910,16 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"AbilityTextureName"			"bane_nightmare"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
+			"particle"		"particles/units/heroes/hero_bane/bane_nightmare.vpcf"		
+		}	
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -2950,9 +2972,108 @@
 				"var_type"					"FIELD_INTEGER"
 				"cast_range_tooltip"		"500 550 600 650"
 			}
+			"06" //extra variable
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_radius"				"1000"
+			}
 		}
-	}
 	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Bane.Nightmare"
+				"Target"		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_nightmare_datadriven"
+				"Target"		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_nightmare_aura_datadriven"
+				"Target"		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	""modifier_nightmare_invul_datadriven""
+				"Target"		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_nightmare_datadriven"
+			{
+				"Duration"	"%duration"
+				"IsDebuff"	"1"
+				"EffectName"    "particles/units/heroes/hero_bane/bane_nightmare.vpcf"
+	            "EffectAttachType"      "attach_overhead"
+	            "ThinkInterval" "%nightmare_dot_interval"
+	
+	            "OnIntervalThink"
+	            {
+	            	"RunScript"
+	            	{
+	            		"ScriptFile"	"scripts/vscripts/heroes/hero_bane/nightmare.lua"
+	            		"Function"		"NightmareDamage"
+	            		"Target"		"TARGET"
+	            	}
+	            } 
+	
+	            "States"
+	            {
+		           	"MODIFIER_STATE_NIGHTMARED"     "MODIFIER_STATE_VALUE_ENABLED"
+		            "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+		            "MODIFIER_STATE_SPECIALLY_DENIABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+		            "MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"		
+	            }
+			}
+	
+			"modifier_nightmare_aura_datadriven"
+			{
+				"Duration"	"%duration"
+				"IsHidden"	"0"
+	
+				"Aura"			"modifier_nightmare_debuff_datadriven"
+				"Aura_Radius"	"%aura_radius"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_HERO"
+			}
+	
+			"modifier_nightmare_debuff_datadriven"
+			{
+				"IsHidden"	"0"
+				"IsDebuff"	"1"
+	
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_bane/nightmare.lua"
+						"Function"		"NightmareBreak"
+						"Target"		"TARGET"
+					}
+				}
+			}
+	
+			"modifier_nightmare_invul_datadriven"
+			{
+				"Duration"	"%nightmare_invuln_time"
+				"IsDebuff"	"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}	
 	//End of file bane_nightmare_datadriven.txt
 
 
@@ -4190,6 +4311,7 @@
 				"IsDebuff"	"1"
 				"Duration"	"%duration"
 				"StatusEffectName"	"particles/units/heroes/hero_bounty_hunter/status_effect_bounty_hunter_jinda_slow.vpcf"
+				"StatusEffectPriority"	"3"
 	
 				"Properties"
 				{
@@ -11862,6 +11984,7 @@
 
 
 	//Start of file ember_spirit_flame_guard_datadriven.txt
+	// NOTE: This ability will only absorb damage whose AbilityUnitDamageType field is marked as DAMAGE_TYPE_MAGICAL
 	"ember_spirit_flame_guard_datadriven"
 	{
 		// General
@@ -11870,6 +11993,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"ember_spirit_flame_guard"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -11916,8 +12040,116 @@
 				"damage_per_second"				"30 40 50 60"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
+			"particle"							"particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"						"CASTER"
+				"EffectName"					"Hero_EmberSpirit.FlameGuard.Cast"
+			}
+		
+			"RemoveModifier"
+			{
+				"Target"						"CASTER"
+				"ModifierName"					"modifier_flame_guard_buff_datadriven"
+			}
+		
+			"ApplyModifier"
+			{
+				"Target"						"CASTER"
+				"ModifierName"					"modifier_flame_guard_buff_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_flame_guard_buff_datadriven"
+			{
+				"Duration"						"%duration"
+			
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"			"attach_origin"
+							"TARGET"			"attach_origin"
+						}
+					}
+					
+					"FireSound"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"Hero_EmberSpirit.FlameGuard.Loop"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_ember_spirit/flame_guard.lua"
+						"Function"				"flame_guard_init"
+					}
+				}
+			
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_ember_spirit/flame_guard.lua"
+						"Function"				"flame_guard_on_take_damage"
+						"Damage"				"%attack_damage"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_ember_spirit/flame_guard.lua"
+						"Function"				"flame_guard_stop_listening"
+					}
+				}
+				
+				"ThinkInterval"					"%tick_interval"
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"			"TARGET"
+							"Radius"			"%radius"
+							"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+							"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+						
+						"Action"
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Damage"		"%damage_per_second * %tick_interval"
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+							}
+						}
+					}
+				}
+			}
+		}
 	}
-	
 	//End of file ember_spirit_flame_guard_datadriven.txt
 
 
@@ -11984,8 +12216,81 @@
 			}
 							
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
+			"particle"							"particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_cast.vpcf"
+			"particle"							"particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_debuff.vpcf"
+			"particle"							"particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_start.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"						"CASTER"
+				"EffectName"					"Hero_EmberSpirit.SearingChains.Cast"
+			}
+		
+			"FireEffect"
+			{
+				"Target"						"CASTER"
+				"EffectName"					"particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_cast.vpcf"
+				"EffectAttachType"				"follow_origin"
+				"ControlPoints"
+				{
+					"01"						"%radius 0 0"
+				}
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"					"heroes/hero_ember_spirit/searing_chains.lua"
+				"Function"						"searing_chains_pin_point"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_searing_chains_debuff_datadriven"
+			{
+				"IsDebuff"						"1"
+			
+				"Duration"						"%duration"
+				
+				"EffectName"					"particles/units/heroes/hero_ember_spirit/ember_spirit_searing_chains_debuff.vpcf"
+				"EffectAttachType"				"follow_origin"
+				
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"Hero_EmberSpirit.SearingChains.Target"
+					}
+				}
+				
+				"ThinkInterval"					"%tick_interval"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"				"TARGET"
+						"Damage"				"%chains_damage"
+						"Type"					"DAMAGE_TYPE_MAGICAL"
+					}
+				}
+			
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
 	}
-	
 	//End of file ember_spirit_searing_chains_datadriven.txt
 
 
@@ -11994,7 +12299,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
@@ -12003,6 +12308,7 @@
 		"AbilityCastPoint"				"0"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"ember_spirit_sleight_of_fist"
+		"AOERadius"						"250 350 450 550"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -12030,8 +12336,8 @@
 						
 			"03"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"attack_interval"				"0.2"
+				"var_type"					"FIELD_FLOAT"
+				"attack_interval"			"0.2"
 			}
 	
 			"04"
@@ -12040,8 +12346,119 @@
 				"creep_damage_penalty"			"-50"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
+			"particle"						"particles/units/heroes/hero_ember_spirit/ember_spirit_sleight_of_fist_cast.vpcf"
+			"particle"						"particles/units/heroes/hero_ember_spirit/ember_spirit_sleight_of_fist_caster.vpcf" // for dummy
+			"particle"						"particles/units/heroes/hero_ember_spirit/ember_spirit_sleight_of_fist_targetted_marker.vpcf"
+			"particle"						"particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_tgt.vpcf"
+			"particle"						"particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_trail.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"Hero_EmberSpirit.SleightOfFist.Cast"
+			}
+		
+			"ApplyModifier"
+			{
+				"Target"					"CASTER"
+				"ModifierName"				"modifier_sleight_of_fist_caster_datadriven"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"				"heroes/hero_ember_spirit/sleight_of_fist.lua"
+				"Function"					"sleight_of_fist_init"
+				"Target"					"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_sleight_of_fist_caster_datadriven"
+			{
+				"IsPurgable"				"0"
+			
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_sleight_of_fist_dummy_datadriven"
+			{
+				"IsPurgable"				"0"
+				"IsHidden"					"1"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"					"TARGET"
+						"EffectName"				"particles/units/heroes/hero_ember_spirit/ember_spirit_sleight_of_fist_caster.vpcf"
+						"EffectAttachType"			"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"				"attach_hitloc"
+						}
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"						"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_sleight_of_fist_target_datadriven"
+			{
+				"IsPurgable"				"0"
+			
+				"EffectName"				"particles/units/heroes/hero_ember_spirit/ember_spirit_sleight_of_fist_targetted_marker.vpcf"
+				"EffectAttachType"			"follow_overhead"
+			}
+			
+			"modifier_sleight_of_fist_target_hero_datadriven"
+			{
+				"IsPurgable"				"0"
+				"IsHidden"					"1"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_hero_damage"
+				}
+			}
+			
+			"modifier_sleight_if_fist_target_creep_datadriven"
+			{
+				"IsPurgable"				"0"
+				"IsHidden"					"1"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%creep_damage_penalty"
+				}
+			}
+		}
 	}
-	
 	//End of file ember_spirit_sleight_of_fist_datadriven.txt
 
 
@@ -12658,7 +13075,7 @@
 		{
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
 			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
-			"particle"			"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
 		}
 		
 		// Casting
@@ -12813,7 +13230,7 @@
 				"IsHidden"	"1"
 				"Duration"	"%aura_interval * 2"
 	
-				"StatusEffectName"	"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+				"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
 				"EffectAttachType"	"follow_origin"
 	
 				"Properties"
@@ -12836,7 +13253,7 @@
 	// Rewrite of the Faceless Void Time Lock ability
 	// Author: Pizzalol
 	// Date: 06.01.2015.
-	// NOTE: Missing the time lock particle
+	// Changed 14.01.2015 - Reason: Added Timelock-Chronos Particle (Noya)
 	"faceless_void_time_lock_datadriven"
 	{
 		// General
@@ -12910,7 +13327,8 @@
 	
 							"ApplyModifier"
 							{
-								"ModifierName"	"modifier_time_lock_hero_datadriven"
+								"ModifierName"	"modifier_time_lock_stun_datadriven"
+								"Duration"		"%duration"
 								"Target"
 								{
 									"Center"	"TARGET"
@@ -12920,7 +13338,8 @@
 	
 							"ApplyModifier"
 							{
-								"ModifierName"	"modifier_time_lock_creep_datadriven"
+								"ModifierName"	"modifier_time_lock_stun_datadriven"
+								"Duration"		"%duration_creep"
 								"Target"
 								{
 									"Center"	"TARGET"
@@ -12939,27 +13358,15 @@
 				}
 			}
 	
-			"modifier_time_lock_hero_datadriven"
+			"modifier_time_lock_stun_datadriven"
 			{
 				"IsDebuff"	"1"
-				"Duration"	"%duration"
 	
 				"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
 				"EffectAttachType"	"follow_overhead"
 	
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
-			"modifier_time_lock_creep_datadriven"
-			{
-				"IsDebuff"	"1"
-				"Duration"	"%duration_creep"
-	
-				"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
-				"EffectAttachType"	"follow_overhead"
+				"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+				"StatusEffectPriority"	"1"
 	
 				"States"
 				{
@@ -36561,7 +36968,7 @@
 	// Rewrite of the Slardar Amplify Damage
 	// Author: chrislotix
 	// Date: 01.01.2015.
-	// NOTE: cloud doesn't appear
+	// Changed: 14.01.2015 - Fixed particle attachment in Lua
 	"slardar_amplify_damage_datadriven"
 	{
 		// General
@@ -36636,15 +37043,38 @@
 				"Duration"	"%duration"
 				"isDebuff"	"1"			
 				"StatusEffectName" "particles/status_fx/status_effect_slardar_amp_damage.vpcf"
+				"StatusEffectPriority"	"20"
 	
 				"OnCreated"
 				{
-					"AttachEffect"
-					{
-						"EffectName"	"particles/units/heroes/hero_slardar/slardar_amp_damage.vpcf"
-						"EffectAttachType"	"follow_overhead"
-						"Target"	"TARGET"
+					// Closest datadriven particle attachment for this, shows the cloud but they don't go overhead, just origin
+					//"AttachEffect"
+					//{
+					//	"EffectName"		"particles/units/heroes/hero_slardar/slardar_amp_damage.vpcf"
+					//	"EffectAttachType"	"follow_customorigin"
+					//	"Target"			"TARGET"
 	
+					//	"ControlPointEntities"
+					//	{
+					//		"TARGET"	"follow_overhead"	//Armor
+					//		"TARGET"	"follow_overhead"	//Rain
+					//		"TARGET"	"follow_overhead"	//Cloud
+					//	}
+					//}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_slardar/amplify_damage.lua"
+						"Function"		"AmplifyDamageParticle"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_slardar/amplify_damage.lua"
+						"Function"		"EndAmplifyDamageParticle"
 					}
 				}
 	
@@ -36671,8 +37101,9 @@
 	// Rewrite of the Slardar Bash
 	// Author: chrislotix
 	// Date: 01.01.2015.
-	// Changed: 05.01.2015.
+	// Changed: 15.01.2015.
 	// Changed by: Pizzalol
+	// Reason: Improved spell code
 	"slardar_bash_datadriven"
 	{
 		// General
@@ -36721,9 +37152,8 @@
 		}
 		"Modifiers"
 		{
-			"modifier_bash_stun_hero_datadriven"
+			"modifier_bash_stun_datadriven"
 			{
-				"Duration"		"%duration"
 				"IsDebuff" 		"1"
 				"OverrideAnimation"		"ACT_DOTA_DISABLED"
 	
@@ -36733,29 +37163,11 @@
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}			
-	
-			}
-	
-			"modifier_bash_stun_creep_datadriven"
-			{
-				"Duration" "%duration_creep"
-				"IsDebuff" "1"
-				"OverrideAnimation"		"ACT_DOTA_DISABLED"
-	
-				"EffectName" "particles/generic_gameplay/generic_stunned.vpcf"
-	        	"EffectAttachType" "follow_overhead"
-	
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
-	
-				
 			}
 	
 	
-			"modifier_bash_stun_datadriven"		
+			"modifier_bash_datadriven"		
 			{
 				"IsHidden"	"1"
 				"Passive"	"1"
@@ -36769,6 +37181,12 @@
 	
 						"OnSuccess"
 						{
+							"FireSound"
+							{
+								"EffectName"	"Hero_Slardar.Bash"
+								"Target"		"TARGET"
+							}
+	
 							"ApplyModifier"
 							{
 								"Target"
@@ -36776,7 +37194,8 @@
 									"Center"	"TARGET"
 									"Types"		"DOTA_UNIT_TARGET_HERO"
 								}
-								"ModifierName"	"modifier_bash_stun_hero_datadriven"
+								"ModifierName"	"modifier_bash_stun_datadriven"
+								"Duration"		"%duration"
 							}
 	
 							"ApplyModifier"
@@ -36786,19 +37205,16 @@
 									"Center"	"TARGET"
 									"Types"		"DOTA_UNIT_TARGET_BASIC"
 								}
-								"ModifierName"	"modifier_bash_stun_creep_datadriven"
+								"ModifierName"	"modifier_bash_stun_datadriven"
+								"Duration"		"%duration_creep"
 							}
+	
 							"Damage"
 							{
 								"Target"	"TARGET"
 								"Type"		"DAMAGE_TYPE_PHYSICAL"
 								"Damage"	"%bonus_damage"
-							}
-							"FireSound"
-							{
-								"EffectName"	"Hero_Slardar.Bash"
-								"Target"		"TARGET"
-							}
+							}						
 						}
 					}
 				} 
@@ -38360,6 +38776,7 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"storm_spirit_ball_lightning"
 		
 			// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -38412,9 +38829,146 @@
 				"var_type"								"FIELD_INTEGER"
 				"ball_lightning_vision_radius"			"1000"		
 			}
+			// Extra variable
+			"08"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"tree_destroy_radius"					"100"
+			}
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"distance_per_mana"						"100"
+			}
+			"10"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"tree_destroy_interval"					"0.01"
+			}
+			"11"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"distance_per_damage"					"100"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"							"#soundfile"
+			"particle"							"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
+			"particle"							"particles/status_fx/status_effect_base.vpcf" // Only for dummy
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"						"CASTER"
+				"EffectName"					"Hero_StormSpirit.BallLightning"
+			}
+			
+			"FireSound"
+			{
+				"Target"						"CASTER"
+				"EffectName"					"Hero_StormSpirit.BallLightning.Loop"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"					"heroes/hero_stormspirit/ball_lightning.lua"
+				"Function"						"ball_lightning_traverse"
+				"Target"						"POINT"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"						"CASTER"
+				"ModifierName"					"modifier_ball_lightning_buff_datadriven"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"						"0"
+		
+			"RunScript"
+			{
+				"ScriptFile"					"heroes/hero_stormspirit/ball_lightning.lua"
+				"Function"						"ball_lightning_damage"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_ball_lightning_buff_datadriven"
+			{
+				"IsPurgable"					"0"
+				"IsBuff"						"1"
+			
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"				"CASTER"	
+						"EffectName"			"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"			"attach_hitloc"
+							"CASTER"			"attach_hitloc"
+						}
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_stormspirit/ball_lightning.lua"
+						"Function"				"ball_lightning_destroy_trees"
+					}
+				}
+			
+				"ThinkInterval"					"%tree_destroy_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_stormspirit/ball_lightning.lua"
+						"Function"				"ball_lightning_destroy_trees"
+					}
+				}
+			
+				"States"
+				{
+					"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_ball_lightning_destroy_trees_datadriven"
+			{
+				"IsHidden"						"1"
+				"IsPurgable"					"0"
+			
+				"Duration"						"%tree_destroy_interval"
+			
+				"OnCreated"
+				{
+					"DestroyTrees"
+					{
+						"Target"				"CASTER"
+						"Radius"				"%tree_destroy_radius"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
-	
 	//End of file storm_spirit_ball_lightning_datadriven.txt
 
 
@@ -38915,6 +39469,7 @@
 				"Duration"		"%AbilityDuration"
 	
 				"StatusEffectName"	"particles/status_fx/status_effect_gods_strength.vpcf"
+				"StatusEffectPriority"	"10"
 	
 				"Properties"
 				{
@@ -39093,6 +39648,13 @@
 				"EffectName"	"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
 				"EffectAttachType"	"attach_origin"
 				"Target"		"TARGET"
+				"ControlPointEntities"
+				{
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"	//CP3 has a child explosion origin
+				}
 			}
 	
 			"ActOnTargets"
@@ -44810,7 +45372,9 @@
 	// Rewrite of the Viper Viper Strike ability
 	// Author: Pizzalol
 	// Date: 19.12.2014.
-	// NOTE: Wonky projectile particle and the warmup particle probably has a wrong attach point?
+	// Changed: 15.01.2015.
+	// NOTE: Wonky projectile particle
+	// NOTE2: Edit the warmup particle and delete 3 out of 4 children for it to work properly (thanks to Noya for the info)
 	"viper_viper_strike_datadriven"
 	{
 		// General
@@ -44913,7 +45477,12 @@
 			{
 				"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_warmup.vpcf"
 				"EffectAttachType"	"attach_origin"
-				"Target"			"CASTER"
+	
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_attack1"
+					"CASTER"	"attach_attack1"
+				}
 			}
 		}
 	
@@ -44988,6 +45557,7 @@
 				"Duration"	"%duration"
 	
 				"StatusEffectName"		"particles/status_fx/status_effect_poison_viper.vpcf"
+				"StatusEffectPriority"	"15"
 	
 				"OnCreated"
 				{
