@@ -1,7 +1,7 @@
 // Rewrite of the Slardar Amplify Damage
 // Author: chrislotix
 // Date: 01.01.2015.
-// NOTE: cloud doesn't appear
+// Changed: 14.01.2015 - Fixed particle attachment in Lua
 "slardar_amplify_damage_datadriven"
 {
 	// General
@@ -76,15 +76,38 @@
 			"Duration"	"%duration"
 			"isDebuff"	"1"			
 			"StatusEffectName" "particles/status_fx/status_effect_slardar_amp_damage.vpcf"
+			"StatusEffectPriority"	"20"
 
 			"OnCreated"
 			{
-				"AttachEffect"
-				{
-					"EffectName"	"particles/units/heroes/hero_slardar/slardar_amp_damage.vpcf"
-					"EffectAttachType"	"follow_overhead"
-					"Target"	"TARGET"
+				// Closest datadriven particle attachment for this, shows the cloud but they don't go overhead, just origin
+				//"AttachEffect"
+				//{
+				//	"EffectName"		"particles/units/heroes/hero_slardar/slardar_amp_damage.vpcf"
+				//	"EffectAttachType"	"follow_customorigin"
+				//	"Target"			"TARGET"
 
+				//	"ControlPointEntities"
+				//	{
+				//		"TARGET"	"follow_overhead"	//Armor
+				//		"TARGET"	"follow_overhead"	//Rain
+				//		"TARGET"	"follow_overhead"	//Cloud
+				//	}
+				//}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_slardar/amplify_damage.lua"
+					"Function"		"AmplifyDamageParticle"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_slardar/amplify_damage.lua"
+					"Function"		"EndAmplifyDamageParticle"
 				}
 			}
 
