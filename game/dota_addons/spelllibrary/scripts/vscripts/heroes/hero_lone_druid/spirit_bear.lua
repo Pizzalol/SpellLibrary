@@ -11,6 +11,12 @@ function SpiritBearSpawn( event )
 	local unit_name = "npc_dota_lone_druid_bear"..level
 	local origin = caster:GetAbsOrigin() + RandomVector(100)
 
+	-- Synergy Level. Checks both the default and the datadriven Synergy
+	local synergyAbility = caster:FindAbilityByName("lone_druid_synergy_datadriven")
+	if synergyAbility == nil then
+		synergyAbility = caster:FindAbilityByName("lone_druid_synergy")
+	end
+
 	-- Check if the bear is alive, heals and spawns them near the caster if it is
 	if caster.bear and caster.bear:IsAlive() then
 		FindClearSpaceForUnit(caster.bear, origin, true)
@@ -18,6 +24,12 @@ function SpiritBearSpawn( event )
 	
 		-- Spawn particle
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster.bear)	
+
+		-- Re-Apply the synergy buff if we found one
+		if caster.bear:HasModifier("modifier_bear_synergy") then
+			caster.bear:RemoveModifierByName("modifier_bear_synergy")
+			synergyAbility:ApplyDataDrivenModifier(caster, caster.bear, "modifier_bear_synergy", nil)
+		end
 		
 	else
 		-- Create the unit and make it controllable
@@ -25,7 +37,14 @@ function SpiritBearSpawn( event )
 		caster.bear:SetControllableByPlayer(player, true)
 
 		-- Apply the backslash on death modifier
-		ability:ApplyDataDrivenModifier(caster, caster.bear, "modifier_spirit_bear", nil)
+		if ability ~= nil then
+			ability:ApplyDataDrivenModifier(caster, caster.bear, "modifier_spirit_bear", nil)
+		end
+
+		-- Apply the synergy buff if the ability exists
+		if synergyAbility ~= nil then
+			synergyAbility:ApplyDataDrivenModifier(caster, caster.bear, "modifier_bear_synergy", nil)
+		end
 
 		-- Learn its abilities: return lvl 2, entangle lvl 3, demolish lvl 4. By Index
 		LearnBearAbilities( caster.bear, 1 )
@@ -47,6 +66,12 @@ function SpiritBearLevel( event )
 
 	print("Level Up Bear")
 
+	-- Synergy Level. Checks both the default and the datadriven Synergy
+	local synergyAbility = caster:FindAbilityByName("lone_druid_synergy_datadriven")
+	if synergyAbility == nil then
+		synergyAbility = caster:FindAbilityByName("lone_druid_synergy")
+	end
+
 	if caster.bear and caster.bear:IsAlive() then 
 		-- Remove the old bear in its position
 		local origin = caster.bear:GetAbsOrigin()
@@ -58,6 +83,11 @@ function SpiritBearLevel( event )
 
 		-- Apply the backslash on death modifier
 		ability:ApplyDataDrivenModifier(caster, caster.bear, "modifier_spirit_bear", nil)
+
+		-- Apply the synergy buff if the ability exists
+		if synergyAbility ~= nil then
+			synergyAbility:ApplyDataDrivenModifier(caster, caster.bear, "modifier_bear_synergy", nil)
+		end
 
 		-- Learn its abilities: return lvl 2, entangle lvl 3, demolish lvl 4. By Index
 		LearnBearAbilities( caster.bear, 1 )

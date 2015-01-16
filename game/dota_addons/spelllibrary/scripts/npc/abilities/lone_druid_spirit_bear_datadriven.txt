@@ -28,6 +28,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
 	{
+		// This Values are mostly for tooltips, the unit stats are not affected
 		"01"
 		{
 			"var_type"					"FIELD_INTEGER"
@@ -36,7 +37,7 @@
 		"02"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"bear_regen_tooltip"	"2 3 4 5"
+			"bear_regen_tooltip"		"2 3 4 5"
 		}
 		"03"
 		{
@@ -61,6 +62,7 @@
 		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
 		"particle"	"particles/status_fx/status_effect_spirit_bear.vpcf"
 		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+		"model"		"models/heroes/lone_druid/spirit_bear.vmdl"
 	}
 
 	"OnUpgrade"

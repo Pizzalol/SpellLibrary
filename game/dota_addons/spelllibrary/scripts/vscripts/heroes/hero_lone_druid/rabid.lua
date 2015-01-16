@@ -10,10 +10,10 @@ function Rabid( event )
 	local targets = event.target_entities
 	local ability = event.ability
 	local rabid_duration = ability:GetLevelSpecialValueFor( "rabid_duration", ability:GetLevel() - 1 )
-	local affect_all_units = ability:GetSpecialValueFor( "affect_all_units" )
 
 	-- Unit name contains a part of the unit name, so you can make different levels of the unit and they will still be registered
-	local unit_name = "npc_dota_lone_druid_bear"
+	-- If you change this to "" it will affect all self-controlled units
+	local unit_name = "" --"npc_dota_lone_druid_bear"
 
 	-- Stuff for Synergy, in case the hero has the ability
 	local synergyAbility = caster:FindAbilityByName("lone_druid_synergy_datadriven")
@@ -34,22 +34,12 @@ function Rabid( event )
 	end
 
 	-- Iterate over all the units
-	if affect_all_units == 1 then
-		for _,unit in pairs(targets) do
-			if unit:GetOwner() == caster then
-				ability:ApplyDataDrivenModifier(caster, unit, "modifier_rabid", { duration = rabid_duration })
-			end
-		end
-	else
-		-- Only check for units that starts with the unit_name
-		for _,unit in pairs(targets) do
-			--local k = string.find("Kappa","Kapp") = 1
-			local u = unit:GetUnitName()
-			local string_contains_unit = string.find( tostring(u) , tostring(unit_name))
-			if unit:GetOwner() == caster and string_contains_unit == 1 then
-				EmitSoundOn("Hero_LoneDruid.RabidBear", unit)
-				ability:ApplyDataDrivenModifier(caster, unit, "modifier_rabid", { duration = rabid_duration })
-			end
+	for _,unit in pairs(targets) do
+		local u = unit:GetUnitName()
+		local string_contains_unit = string.find( tostring(u) , tostring(unit_name))
+		if unit:GetOwner() == caster and string_contains_unit == 1 then
+			EmitSoundOn("Hero_LoneDruid.RabidBear", unit)
+			ability:ApplyDataDrivenModifier(caster, unit, "modifier_rabid", { duration = rabid_duration })
 		end
 	end
 
