@@ -5948,6 +5948,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"broodmother_spin_web"
+		"AOERadius"						"%radius"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -5955,6 +5957,15 @@
 		"AbilityCastPoint"				"0.4"
 		"AbilityCooldown"				"0.0"
 		"AbilityManaCost"				"50"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_web.vpcf"
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_spin_web_cast.vpcf"
+		}
 			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -6004,6 +6015,42 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"charge_restore_time"	"40.0"
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
+				"Function"				"web_start_charge"
+				"modifier_name"			"modifier_web_stack_counter_datadriven"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_sniper/spin_web.lua"
+				"Function"				"spin_web"
+				"Target"				"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_web_stack_counter_datadriven"
+			{
+				"Passive"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+				"IsDebuff"				"0"
+			}
+	
+			"modifier_web_aura_datadriven"
+			{
+	
 			}
 		}
 	}
@@ -38006,7 +38053,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"sniper_shrapnel"
-		"AOERadius"						"450"
+		"AOERadius"						"%radius"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -40970,6 +41017,67 @@
 	}
 	
 	//End of file terrorblade_sunder_datadriven.txt
+
+
+	//Start of file test_ability.txt
+	"test_ability"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"		
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"10.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"	"npc_dota_broodmother_spiderling"
+				"UnitCount"	"1"
+				"SpawnRadius"	"200"
+				"Target"		"CASTER"
+	
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_kill"
+						"Target"		"TARGET"
+						"Duration"		"%duration"
+					}
+				}
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"	"npc_dota_broodmother_spiderling"
+				"UnitCount"	"1"
+				"SpawnRadius"	"200"
+				"Target"		"CASTER"
+			}
+		}
+	}
+	
+	//End of file test_ability.txt
 
 
 	//Start of file throw_coal_datadriven.txt

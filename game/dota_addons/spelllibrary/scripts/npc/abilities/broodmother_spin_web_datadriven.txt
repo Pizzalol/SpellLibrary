@@ -4,6 +4,8 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityTextureName"			"broodmother_spin_web"
+	"AOERadius"						"%radius"
 	
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -11,6 +13,15 @@
 	"AbilityCastPoint"				"0.4"
 	"AbilityCooldown"				"0.0"
 	"AbilityManaCost"				"50"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
+		"particle"			"particles/units/heroes/hero_broodmother/broodmother_web.vpcf"
+		"particle"			"particles/units/heroes/hero_broodmother/broodmother_spin_web_cast.vpcf"
+	}
 		
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -60,6 +71,44 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"charge_restore_time"	"40.0"
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
+			"Function"				"web_start_charge"
+			"modifier_name"			"modifier_web_stack_counter_datadriven"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_sniper/spin_web.lua"
+			"Function"				"spin_web"
+			"Target"				"POINT"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_web_stack_counter_datadriven"
+		{
+			"Passive"				"1"
+			"IsHidden"				"0"
+			"IsPurgable"			"0"
+			"IsDebuff"				"0"
+		}
+
+		"modifier_web_aura_datadriven"
+		{
+			// run a script which gathers all the units in an area around the dummy
+			// checks if its the caster or any unit belonging to the caster
+			// apply modifier similar to chronosphere for the duration of the dummy
 		}
 	}
 }
