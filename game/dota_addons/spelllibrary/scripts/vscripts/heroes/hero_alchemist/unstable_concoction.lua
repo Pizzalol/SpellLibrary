@@ -8,13 +8,14 @@ function StartBrewing( event )
 	local caster = event.caster
 	local ability = event.ability
 	ability.brew_start = GameRules:GetGameTime()
+	
+	-- Swap sub_ability
+	local sub_ability_name = event.sub_ability_name
+	local main_ability_name = ability:GetAbilityName()
 
-	-- Swap sub-ability	
-	local subAbility = caster:FindAbilityByName("alchemist_unstable_concoction_throw_datadriven")
+	caster:SwapAbilities(main_ability_name, sub_ability_name, false, true)
+	print("Swapped "..main_ability_name.." with " ..sub_ability_name)
 
-	caster:SwapAbilities(ability:GetAbilityName(), subAbility:GetAbilityName(), false, true)
-	subAbility:SetHidden(false)	
-	ability:SetHidden(true)
 
 	-- Play the sound, which will be stopped when the sub ability fires
 	caster:EmitSound("Hero_Alchemist.UnstableConcoction.Fuse")
@@ -43,23 +44,28 @@ function UpdateTimerParticle( event )
 	local integer = math.floor(math.abs(number))
 
 	-- Round the decimal number to .0 or .5
-	local decimal = (number * 10) % 10
+	local decimal = math.abs(number) % 1
 
-	print(number,integer,decimal)
-	if decimal > 5 then 
+	if decimal < 0.5 then 
 		decimal = 1 -- ".0"
 	else 
 		decimal = 8 -- ".5"
-	end	
+	end
+
+	print(integer,decimal)
 
 	for k, v in pairs( allHeroes ) do
 		if v:GetPlayerID() and v:GetTeam() == caster:GetTeam() then
-			local particle = ParticleManager:CreateParticleForPlayer( particleName, PATTACH_OVERHEAD_FOLLOW, v, PlayerResource:GetPlayer( v:GetPlayerID() ) )
-			
-			ParticleManager:SetParticleControl( particle, 0, caster:GetAbsOrigin() )
-			ParticleManager:SetParticleControl( particle, 1, Vector( preSymbol, integer, decimal) )
-			ParticleManager:SetParticleControl( particle, 2, Vector( digits, 0, 0) )
-
+			-- Don't display the 0.0 message
+			if integer == 0 and decimal == 1 then
+				
+			else
+				local particle = ParticleManager:CreateParticleForPlayer( particleName, PATTACH_OVERHEAD_FOLLOW, caster, PlayerResource:GetPlayer( v:GetPlayerID() ) )
+				
+				ParticleManager:SetParticleControl( particle, 0, caster:GetAbsOrigin() )
+				ParticleManager:SetParticleControl( particle, 1, Vector( preSymbol, integer, decimal) )
+				ParticleManager:SetParticleControl( particle, 2, Vector( digits, 0, 0) )
+			end
 		end
 	end
 
@@ -68,34 +74,86 @@ end
 --[[
 	Author: Noya
 	Date: 10.1.2015.
-	When the sub-ability is cast, stops the sound, the particle thinker and sets the time charged
+	When the sub_ability is cast, stops the sound, the particle thinker and sets the time charged
 	Also swaps the abilities back to the original state
 ]]
 function EndBrewing( event )
 
 	local caster = event.caster
+	local sub_ability = event.ability
 
 	-- Stops the charging sound
 	caster:StopSound("Hero_Alchemist.UnstableConcoction.Fuse")
 
-	-- Swap the sub-ability back to normal
-	local subAbility = event.ability
-	local ability = caster:FindAbilityByName("alchemist_unstable_concoction_datadriven")
+	-- Swap the sub_ability back to normal
+	local sub_ability_name = sub_ability:GetAbilityName()
+	local main_ability_name = event.main_ability_name
 
-	caster:SwapAbilities(ability:GetAbilityName(), subAbility:GetAbilityName(), false, true)
-	subAbility:SetHidden(true)	
-	ability:SetHidden(false)
+	caster:SwapAbilities(main_ability_name, sub_ability_name, true, false)
+	print("Swapped "..main_ability_name.." with " ..sub_ability_name)
 
-	print("Swapped "..ability:GetAbilityName().." with " ..subAbility:GetAbilityName())
+	-- Get the handle of the main ability to get the time started
+	local ability = caster:FindAbilityByName(main_ability_name)
 
 	-- Set how much time the spell charged
 	ability.time_charged = GameRules:GetGameTime() - ability.brew_start
-	print("Charged stun for " .. ability.time_charged .. " seconds")
 
 	-- Remove the brewing modifier
 	caster:RemoveModifierByName("modifier_unstable_concoction_brewing")
 
 end	
+
+--[[
+	Author: Noya
+	Date: 16.1.2015.
+	After destroying the modifier, checks how much time was the spell charged for, and does a explosion around self if charged over the brew_explosion time
+]]
+function CheckSelfStun( event )
+
+	local caster = event.caster
+	local ability = event.ability
+	local brew_explosion = ability:GetLevelSpecialValueFor( "brew_explosion", ability:GetLevel() - 1 )
+
+	-- Set how much time the spell charged
+	ability.time_charged = GameRules:GetGameTime() - ability.brew_start
+
+	if ability.time_charged >= brew_explosion then
+		print("Stun Self")
+
+		-- Stops the charging sound
+		caster:StopSound("Hero_Alchemist.UnstableConcoction.Fuse")
+
+		-- Plays the Concoction Stun sound
+		caster:EmitSound("Hero_Alchemist.UnstableConcoction.Stun")
+
+		-- Swap the sub_ability back to normal
+		local main_ability_name = ability:GetAbilityName()
+		local sub_ability_name = event.sub_ability_name
+
+		caster:SwapAbilities(sub_ability_name, main_ability_name, false, true)
+		print("Swapped "..sub_ability_name.." with " ..main_ability_name)
+
+		-- Launch the projectile hit on the caster, which will do the effect on enemies
+		ConcoctionHit ( event )
+
+		-- Apply the self stun for max duration and damage
+		local subAbility = caster:FindAbilityByName(sub_ability_name)
+		local max_stun = ability:GetLevelSpecialValueFor( "max_stun", ability:GetLevel() - 1 )
+		local max_damage = ability:GetLevelSpecialValueFor( "max_damage", ability:GetLevel() - 1 )
+		local mainAbilityDamageType = ability:GetAbilityDamageType()
+
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_unstable_concoction_stun", {duration = max_stun})
+		ApplyDamage({ victim = caster, attacker = caster, damage = max_damage, damage_type = mainAbilityDamageType })
+
+		-- Fire the explosion effect
+		local particleName = "particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_explosion.vpcf"
+		local particle = ParticleManager:CreateParticle( particleName, PATTACH_POINT_FOLLOW, caster )
+				
+		ParticleManager:SetParticleControlEnt(particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(particle, 3, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+	end
+
+end
 
 --[[
 	Author: Noya
@@ -109,7 +167,7 @@ function ConcoctionHit( event )
 	local caster = event.caster
 	local target = event.target
 	local ability = event.ability
-	local damage
+	local heroes_around = event.target_entities
 	local brew_time = ability:GetLevelSpecialValueFor( "brew_time", ability:GetLevel() - 1 )
 	local mainAbility = caster:FindAbilityByName("alchemist_unstable_concoction_datadriven")
 	local mainAbilityDamageType = mainAbility:GetAbilityDamageType()
@@ -135,16 +193,10 @@ function ConcoctionHit( event )
 		damage = max_damage * charged_percent
 	end
 
-	-- Apply the stun with the variable duration
-	ability:ApplyDataDrivenModifier(caster, target, "modifier_unstable_concoction_stun", { duration = stun_duration})
-
-	-- Do the damage in AoE
-	local radius = ability:GetLevelSpecialValueFor( "midair_explosion_radius", ability:GetLevel() - 1 )
-	local heroes_around = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, 
-											DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 
-											DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	-- Apply the AoE stun and damage with the variable duration
 	for _,unit in pairs(heroes_around) do
-		ApplyDamage({ victim = unit, attacker = caster, damage = damage, damage_type = mainAbilityDamageType }) 
+		ApplyDamage({ victim = unit, attacker = caster, damage = damage, damage_type = mainAbilityDamageType })
+		ability:ApplyDataDrivenModifier(caster, unit, "modifier_unstable_concoction_stun", { duration = stun_duration})
 	end
 	
 
