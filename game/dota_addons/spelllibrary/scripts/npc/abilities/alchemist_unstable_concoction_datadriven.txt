@@ -97,7 +97,8 @@
 		"RunScript"
 		{
 			"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-			"Function"		"UnstableConcoctionLevelUp"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"alchemist_unstable_concoction_throw_datadriven"
 		}
 	}
 
@@ -105,7 +106,7 @@
 	{
 		"modifier_unstable_concoction_brewing"
 		{
-			"IsHidden"			"0" //1
+			"IsHidden"			"1"
 			"Duration"			"%brew_explosion"
 			"ThinkInterval"		"0.5"
 			"OnIntervalThink"

@@ -204,44 +204,22 @@ end
 
 --[[
 	Author: Noya
-	Date: 10.1.2015.
-	Levels up the sub ability after the main ability was upgraded
+	Date: 16.01.2015.
+	Levels up the ability_name to the same level of the ability that runs this
 ]]
-function UnstableConcoctionLevelUp( event )
-	print("Leveled Up the Ability")
-
+function LevelUpAbility( event )
 	local caster = event.caster
-	local ability = event.ability
-	local abilityName = ability:GetAbilityName()
-	local abilityLevel = ability:GetLevel()
-	local subAbilityName = "alchemist_unstable_concoction_throw_datadriven"
-	local subAbility = caster:FindAbilityByName(subAbilityName)	
-	local subAbilityLevel = subAbility:GetLevel()
+	local this_ability = event.ability		
+	local this_abilityName = this_ability:GetAbilityName()
+	local this_abilityLevel = this_ability:GetLevel()
+
+	-- The ability to level up
+	local ability_name = event.ability_name
+	local ability_handle = caster:FindAbilityByName(ability_name)	
+	local ability_level = ability_handle:GetLevel()
 
 	-- Check to not enter a level up loop
-	if subAbilityLevel ~= abilityLevel then
-		subAbility:SetLevel(abilityLevel)
-	end
-end
-
---[[
-	Author: Noya
-	Date: 10.1.2015.
-	Levels up the main ability after the sub ability was upgraded
-]]
-function UnstableConcoctionThrowLevelUp( event )
-	print("Leveled Up the Sub Ability")
-
-	local caster = event.caster
-	local ability = event.ability
-	local abilityName = ability:GetAbilityName()
-	local abilityLevel = ability:GetLevel()
-	local mainAbilityName = "alchemist_unstable_concoction_datadriven"
-	local mainAbility = caster:FindAbilityByName(mainAbilityName)	
-	local mainAbilityLevel = mainAbility:GetLevel()
-
-	-- Check to not enter a level up loop
-	if mainAbilityLevel ~= abilityLevel then
-		mainAbility:SetLevel(abilityLevel)
+	if ability_level ~= this_abilityLevel then
+		ability_handle:SetLevel(this_abilityLevel)
 	end
 end

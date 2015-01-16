@@ -155,7 +155,8 @@
 		"RunScript"
 		{
 			"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-			"Function"		"UnstableConcoctionThrowLevelUp"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"alchemist_unstable_concoction_datadriven"
 		}
 	}
 

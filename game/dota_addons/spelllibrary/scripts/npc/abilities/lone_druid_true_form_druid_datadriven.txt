@@ -1,10 +1,15 @@
+// Rewrite of Alchemist Unstable Concoction Throw (Sub-Ability)
+// Author: Noya
+// Date: 10.1.2015.
+// Notes: Used together with "lone_druid_true_form_datadriven", hero needs both abilities (this one starts hidden)
 "lone_druid_true_form_druid_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityTextureType"			"lone_druid_true_form_druid"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -25,6 +30,39 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"transformation_time"		"1.933"
+		}
+	}
+
+	"OnAbilityStart"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_true_form"
+			"Target"		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_lone_druid/true_form.lua"
+			"Function"				"TrueFormEnd"
+			"model"					"models/heroes/lone_druid/lone_druid.vmdl"
+			"main_ability_name"		"lone_druid_true_form_datadriven"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_lone_druid/true_form.lua"
+			"Function"				"ShowWearables"
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_lone_druid/true_form.lua"
+			"Function"			"LevelUpAbility"
+			"ability_name"		"lone_druid_true_form_datadriven"
 		}
 	}
 }
