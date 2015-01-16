@@ -1,7 +1,7 @@
 // Rewrite of Lone Druid Spirit Bear
 // Author: Noya
 // Date: 14.01.2015.
-// Notes: The unit spawned are taken directly from npc_units.txts
+// Notes: The unit spawned are taken directly from npc_units txt files, if you wish another unit change the unit_name value without the level number.
 //		  Bear doesn't show in the hero UI
 "lone_druid_spirit_bear_datadriven"
 {
@@ -80,6 +80,7 @@
 	    {
 	        "ScriptFile"    "heroes/hero_lone_druid/spirit_bear.lua"
 	        "Function"      "SpiritBearSpawn"
+	        "unit_name"		"npc_dota_lone_druid_bear"
 	    }
 
 	    "FireSound"

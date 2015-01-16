@@ -50,6 +50,7 @@
 				"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 			}
+			"unit_name"		"npc_dota_lone_druid_bear"
 	    }
 	}
 

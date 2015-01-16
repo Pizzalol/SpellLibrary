@@ -12,8 +12,8 @@ function Rabid( event )
 	local rabid_duration = ability:GetLevelSpecialValueFor( "rabid_duration", ability:GetLevel() - 1 )
 
 	-- Unit name contains a part of the unit name, so you can make different levels of the unit and they will still be registered
-	-- If you change this to "" it will affect all self-controlled units
-	local unit_name = "" --"npc_dota_lone_druid_bear"
+	-- If you change this to "" in the parameter passed, it will affect all self-controlled units
+	local unit_name = event.unit_name
 
 	-- Stuff for Synergy, in case the hero has the ability
 	local synergyAbility = caster:FindAbilityByName("lone_druid_synergy_datadriven")

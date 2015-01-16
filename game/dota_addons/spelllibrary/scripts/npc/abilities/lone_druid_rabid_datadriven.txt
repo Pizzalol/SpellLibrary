@@ -1,7 +1,7 @@
 // Rewrite of Lone Druid Rabid
 // Author: Noya
 // Date: 15.01.2015.
-// Notes: Instead of only applying the buff to the spirit bear, we apply to every caster controlled unit
+// Notes: If you wish to buff all player controlled units, change the unit_name value to "npc_", it checks if the unit names contain that string.
 "lone_druid_rabid_datadriven"
 {
 	// General
@@ -65,6 +65,7 @@
 	        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	        	"Types" 		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	        }
+	        "unit_name"		"npc_dota_lone_druid_bear"
 	    }
 
 	    "FireSound"

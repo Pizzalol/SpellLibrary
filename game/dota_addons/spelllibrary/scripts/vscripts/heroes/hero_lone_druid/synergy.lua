@@ -11,8 +11,8 @@ function SynergyLevel( event )
 	local ability = event.ability
 
 	-- Unit name contains a part of the unit name, so you can make different levels of the unit and they will still be registered
-	-- If you change this to "" it will affect all self-controlled units (only after upgrading the ability)
-	local unit_name = "npc_dota_lone_druid_bear"
+	-- If you change this to "npc_" in the parameter passed, it will affect all self-controlled units
+	local unit_name = event.unit_name
 	
 	-- Re-apply modifier_bear_synergy, only check for units that start with the unit_name
 	for _,unit in pairs(targets) do

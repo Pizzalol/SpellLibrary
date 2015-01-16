@@ -1,15 +1,19 @@
 --[[
 	Author: Noya
 	Date: 15.01.2015.
-	Spawns a unit with 4 possible levels, if the unit
+	Spawns a unit with different levels of the unit_name passed
+	Each level needs a _level unit inside npc_units or npc_units_custom.txt
 ]]
 function SpiritBearSpawn( event )
 	local caster = event.caster
 	local player = caster:GetPlayerID()
 	local ability = event.ability
 	local level = ability:GetLevel()
-	local unit_name = "npc_dota_lone_druid_bear"..level
 	local origin = caster:GetAbsOrigin() + RandomVector(100)
+
+	-- Set the unit name, concatenated with the level number
+	local unit_name = event.unit_name
+	unit_name = unit_name..level
 
 	-- Synergy Level. Checks both the default and the datadriven Synergy
 	local synergyAbility = caster:FindAbilityByName("lone_druid_synergy_datadriven")
