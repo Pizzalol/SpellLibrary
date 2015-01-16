@@ -99,8 +99,9 @@
 			{
 				"ApplyModifier"
 				{
-					"ModifierName"	"modifier_transform_invulnerability"
+					"ModifierName"	"modifier_invulnerable"
 					"Target"		"CASTER"
+					"Duration"		"0.03"
 				}
 			}
 			
@@ -111,16 +112,6 @@
 					"ModifierName"	"modifier_chemical_rage"
 					"Target" 		"CASTER"
 				}
-			}
-		}
-
-		"modifier_transform_invulnerability"
-		{
-			"IsHidden"	"1"
-			"Duration"	"0.03"
-			"States"
-			{
-				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"	
 			}
 		}
 

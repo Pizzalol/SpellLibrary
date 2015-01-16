@@ -40,7 +40,7 @@
 			"ModifierName"	"modifier_druid_transform"
 			"Target"		"CASTER"
 		}
-		
+
 		"FireSound"
 		{
 			"EffectName"	"Hero_LoneDruid.TrueForm.Recast"
@@ -81,6 +81,16 @@
 			"States"
 			{
 				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_invulnerable"
+					"Target"		"CASTER"
+					"Duration"		"0.03"
+				}
 			}
 
 			"OnDestroy"
