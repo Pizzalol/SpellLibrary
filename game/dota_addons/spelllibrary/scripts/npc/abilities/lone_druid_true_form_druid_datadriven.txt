@@ -9,7 +9,7 @@
 	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-	"AbilityTextureType"			"lone_druid_true_form_druid"
+	"AbilityTextureName"			"lone_druid_true_form_druid"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -33,26 +33,32 @@
 		}
 	}
 
-	"OnAbilityStart"
+	"OnSpellStart"
 	{
-		"RemoveModifier"
+		"ApplyModifier"
 		{
-			"ModifierName"	"modifier_true_form"
+			"ModifierName"	"modifier_druid_transform"
+			"Target"		"CASTER"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_LoneDruid.TrueForm.Recast"
 			"Target"		"CASTER"
 		}
 
-		"RunScript"
+		"FireEffect"
 		{
-			"ScriptFile"			"heroes/hero_lone_druid/true_form.lua"
-			"Function"				"TrueFormEnd"
-			"model"					"models/heroes/lone_druid/lone_druid.vmdl"
-			"main_ability_name"		"lone_druid_true_form_datadriven"
-		}
-
-		"RunScript"
-		{
-			"ScriptFile"			"heroes/hero_lone_druid/true_form.lua"
-			"Function"				"ShowWearables"
+			"Target"			"CASTER"
+			"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_true_form.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"ControlPointEntities"
+			{
+				"CASTER"		"attach_origin"
+				"CASTER"		"attach_origin"
+				"CASTER"		"attach_origin"
+				"CASTER"		"attach_origin"	//CP3
+			}
 		}
 	}
 
@@ -63,6 +69,37 @@
 			"ScriptFile"		"heroes/hero_lone_druid/true_form.lua"
 			"Function"			"LevelUpAbility"
 			"ability_name"		"lone_druid_true_form_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_druid_transform"
+		{
+			"Duration"		"%transformation_time"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_lone_druid/true_form.lua"
+					"Function"				"TrueFormEnd"
+					"main_ability_name"		"lone_druid_true_form_datadriven"
+					"remove_modifier_name"	"modifier_true_form"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_lone_druid/true_form.lua"
+						"Function"			"ShowWearables"
+					}
+				}
+			}
 		}
 	}
 }
