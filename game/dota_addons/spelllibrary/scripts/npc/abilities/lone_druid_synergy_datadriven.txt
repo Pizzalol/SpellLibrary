@@ -1,9 +1,14 @@
+// Rewrite of Lone Druid Synergy
+// Author: Noya
+// Date: 16.01.2015.
+// Note: This ability doesn't do anything by itself, it's just used by other abilities to get bonus from it and apply/remove modifiers.
 "lone_druid_synergy_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"lone_druid_synergy"
 
 
 	// Special
@@ -29,6 +34,45 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"true_form_hp_bonus"	"100 200 300 400"
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+	    {
+	        "ScriptFile"    "heroes/hero_lone_druid/synergy.lua"
+	        "Function"      "SynergyLevel"
+        	"Target"
+			{
+				"Center"  				"CASTER"
+				"Radius" 				"GLOBAL"
+				"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+			"unit_name"		"npc_dota_lone_druid_bear"
+	    }
+	}
+
+	"Modifiers"
+	{
+		"modifier_bear_synergy"
+		{
+			"IsHidden"	"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bear_bonus_damage"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bear_bonus_speed"
+			}
+		}
+
+		"modifier_true_form_synergy"
+		{
+			"IsHidden"	"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS"	"%true_form_hp_bonus"
+			}
 		}
 	}
 }
