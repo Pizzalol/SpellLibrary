@@ -1,0 +1,57 @@
+"test_ability"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"0.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"		
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"10.0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"SpawnUnit"
+		{
+			"UnitName"	"npc_dota_broodmother_spiderling"
+			"UnitCount"	"1"
+			"SpawnRadius"	"200"
+			"Target"		"CASTER"
+
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_kill"
+					"Target"		"TARGET"
+					"Duration"		"%duration"
+				}
+			}
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"	"npc_dota_broodmother_spiderling"
+			"UnitCount"	"1"
+			"SpawnRadius"	"200"
+			"Target"		"CASTER"
+		}
+	}
+}
+

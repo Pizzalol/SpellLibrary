@@ -8,7 +8,7 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"sniper_shrapnel"
-	"AOERadius"						"450"
+	"AOERadius"						"%radius"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
