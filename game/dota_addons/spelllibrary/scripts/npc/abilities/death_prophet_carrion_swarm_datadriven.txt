@@ -1,3 +1,7 @@
+// Rewrite of Death Prophet Carrion Swarm
+// Author: Noya
+// Date: 17.01.2015.
+// Notes: Default projectile particle can't be properly attached. This uses the economy arcana particle.
 "death_prophet_carrion_swarm_datadriven"
 {
 	// General
@@ -52,6 +56,54 @@
 			"var_type"					"FIELD_INTEGER"
 			"speed"						"1100 1100 1100 1100"
 		}
+	}
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_carrion_swarm.vpcf"	//Can't attach the bats
+		"particle"	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"LinearProjectile"
+		{
+		    "Target"		 	"POINT"
+		    "EffectName"     	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+		    "MoveSpeed"      	"%speed"
+		    "StartRadius"    	"%start_radius"
+		    "EndRadius"      	"%end_radius"
+		    "StartPosition"  	"attach_attack1"
+		    "FixedDistance"  	"%range"
+		    "TargetTeams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		    "TargetTypes"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		    "HasFrontalCone" 	"1"
+		    "ProvidesVision" 	"0"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_DeathProphet.CarrionSwarm"
+			"Target"		"CASTER"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"0"
+		"FireSound"
+        {
+        	"EffectName" 	   	"Hero_DeathProphet.CarrionSwarm.Damage"
+            "Target" 			"TARGET"
+        }
+
+        "Damage"
+        {
+        	"Target"		 "TARGET"
+        	"Type"			 "DAMAGE_TYPE_MAGICAL"
+        	"Damage"		 "%AbilityDamage"
+        }
 	}
 }
 
