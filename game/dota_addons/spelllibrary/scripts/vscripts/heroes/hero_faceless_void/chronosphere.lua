@@ -33,7 +33,7 @@ function ChronosphereAura( keys )
 	local ability = keys.ability
 	local aura_modifier = keys.aura_modifier
 	local caster_modifier = keys.caster_modifier
-	local ignore_void = keys.ignore_void
+	local ignore_void = ability:GetLevelSpecialValueFor("ignore_void", (ability:GetLevel() - 1))
 
 	-- Variable for deciding if Chronosphere should affect Faceless Void
 	if ignore_void == 0 then ignore_void = false

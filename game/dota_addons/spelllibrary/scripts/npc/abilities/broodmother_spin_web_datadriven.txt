@@ -40,7 +40,7 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"heath_regen"			"2 4 6 8"
+			"health_regen"			"2 4 6 8"
 		}
 		"04"
 		{
@@ -70,7 +70,24 @@
 		"09"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"charge_restore_time"	"40.0"
+			"charge_restore_time"	"5.0"//"40.0"
+		}
+		// Extra
+		// Set this value to 1 if you want it to affect every player controlled unit
+		"10"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"all_units"			"0"
+		}
+		"11"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"linger_time"	"0.15"
+		}
+		"12"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"aura_interval"	"0.1"
 		}
 	}
 
@@ -88,9 +105,12 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"			"heroes/hero_sniper/spin_web.lua"
+			"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
 			"Function"				"spin_web"
-			"Target"				"POINT"
+			"Target"				"POINT"			
+			"stack_modifier"		"modifier_web_stack_counter_datadriven"
+			"dummy_modifier"		"modifier_web_dummy_aura_datadriven"
+			"aura_modifier"			""
 		}
 	}
 
@@ -104,11 +124,120 @@
 			"IsDebuff"				"0"
 		}
 
-		"modifier_web_aura_datadriven"
+		"modifier_web_dummy_aura_datadriven"
 		{
 			// run a script which gathers all the units in an area around the dummy
 			// checks if its the caster or any unit belonging to the caster
 			// apply modifier similar to chronosphere for the duration of the dummy
+			"ThinkInterval"		"%aura_interval"
+
+			"OnIntervalThink"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Radius"	"%radius"
+						"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+						"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					}
+
+					"Action"
+					{
+						"RunScript"
+						{
+							"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
+							"Function"				"spin_web_aura"
+							"unit_spiderling"		"npc_dota_broodmother_spiderling"
+							"unit_spiderite"		"npc_dota_broodmother_spiderite"
+							"aura_modifier"			"modifier_web_regen_datadriven"
+							"pathing_modifier"		"modifier_web_pathing_datadriven"
+							"pathing_fade_modifier"	"modifier_web_pathing_fade_datadriven"
+						}
+					}
+				}				
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_TEAM_SELECT"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_web_pathing_datadriven"
+		{
+			"IsHidden"	"0"
+
+			"OnTakeDamage"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_web_pathing_fade_datadriven"
+					"Target"		"UNIT"
+				}
+
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_web_pathing_datadriven"
+					"Target"		"UNIT"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_FLYING"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_web_pathing_fade_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%damage_time"
+
+			"OnTakeDamage"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_web_pathing_fade_datadriven"
+					"Target"		"UNIT"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_web_pathing_datadriven"
+					"Target"		"TARGET"	
+				}
+			}
+		}
+
+		"modifier_web_regen_datadriven"
+		{
+			"IsBuff"	"1"
+			"Duration"	"%linger_time"
+
+			"OnDestroy"
+			{
+				// remove all the modifiers
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen"
+			}
 		}
 	}
 }

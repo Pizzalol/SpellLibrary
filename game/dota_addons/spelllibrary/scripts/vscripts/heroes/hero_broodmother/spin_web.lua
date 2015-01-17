@@ -1,34 +1,36 @@
 --[[Author: kritth
 	Used by: Pizzalol
-	Date: 16.01.2015.]]
+	Date: 6.01.2015.
+	If you level up while having max charges then there will be a visual bug on the modifier for the duration of recharge time]]
 function web_start_charge( keys )
+	-- Initial variables to keep track of different max charge requirements
+	local caster = keys.caster
+	local ability = keys.ability
+	caster.web_maximum_charges = ability:GetLevelSpecialValueFor( "max_charges", ( ability:GetLevel() - 1 ) )
 	-- Only start charging at level 1
 	if keys.ability:GetLevel() ~= 1 then return end
 
-	-- Variables
-	local caster = keys.caster
-	local ability = keys.ability
+	-- Variables	
 	local modifierName = keys.modifier_name --"modifier_web_stack_counter_datadriven"
-	local maximum_charges = ability:GetLevelSpecialValueFor( "max_charges", ( ability:GetLevel() - 1 ) )
 	local charge_replenish_time = ability:GetLevelSpecialValueFor( "charge_restore_time", ( ability:GetLevel() - 1 ) )
 	
 	-- Initialize stack
 	caster:SetModifierStackCount( modifierName, caster, 0 )
-	caster.web_charges = maximum_charges
+	caster.web_charges = caster.web_maximum_charges
 	caster.start_charge = false
 	caster.web_cooldown = 0.0
 	
 	ability:ApplyDataDrivenModifier( caster, caster, modifierName, {} )
-	caster:SetModifierStackCount( modifierName, caster, maximum_charges )
+	caster:SetModifierStackCount( modifierName, caster, caster.web_maximum_charges )
 	
 	-- create timer to restore stack
 	Timers:CreateTimer( function()
 			-- Restore charge
-			if caster.start_charge and caster.web_charges < maximum_charges then
+			if caster.start_charge and caster.web_charges < caster.web_maximum_charges then
 				-- Calculate stacks
 				local next_charge = caster.web_charges + 1
 				caster:RemoveModifierByName( modifierName )
-				if next_charge ~= 3 then
+				if next_charge ~= caster.web_maximum_charges then
 					ability:ApplyDataDrivenModifier( caster, caster, modifierName, { Duration = charge_replenish_time } )
 					web_start_cooldown( caster, charge_replenish_time )
 				else
@@ -42,7 +44,7 @@ function web_start_charge( keys )
 			end
 			
 			-- Check if max is reached then check every 0.5 seconds if the charge is used
-			if caster.web_charges ~= maximum_charges then
+			if caster.web_charges ~= caster.web_maximum_charges then
 				caster.start_charge = true
 				return charge_replenish_time
 			else
@@ -53,8 +55,11 @@ function web_start_charge( keys )
 end
 
 
+
+
 --[[
 	Author: kritth
+	Used by: Pizzalol
 	Date: 6.1.2015.
 	Helper: Create timer to track cooldown
 ]]
@@ -73,37 +78,37 @@ function web_start_cooldown( caster, charge_replenish_time )
 end
 
 --[[
-	Author: kritth
-	Date: 6.1.2015.
+	Author: kritth/Pizzalol
+	Date: 16.1.2015.
 	Main: Check/Reduce charge, spawn dummy and cast the actual ability
 ]]
-function web_fire( keys )
+function spin_web( keys )
 	local caster = keys.caster
 	-- Reduce stack if more than 0 else refund mana
 	if caster.web_charges > 0 then
 		-- variables
-		--[[local caster = keys.caster
+		--local caster = keys.caster
 		local target = keys.target_points[1]
 		local ability = keys.ability
-		local casterLoc = caster:GetAbsOrigin()
-		local modifierName = "modifier_web_stack_counter_datadriven"
-		local dummyModifierName = "modifier_web_dummy_datadriven"
-		local radius = ability:GetLevelSpecialValueFor( "radius", ( ability:GetLevel() - 1 ) )
-		local maximum_charges = ability:GetLevelSpecialValueFor( "maximum_charges", ( ability:GetLevel() - 1 ) )
-		local charge_replenish_time = ability:GetLevelSpecialValueFor( "charge_replenish_time", ( ability:GetLevel() - 1 ) )
-		local dummy_duration = ability:GetLevelSpecialValueFor( "duration", ( ability:GetLevel() - 1 ) ) + 0.1
-		local damage_delay = ability:GetLevelSpecialValueFor( "damage_delay", ( ability:GetLevel() - 1 ) ) + 0.1
-		local launch_particle_name = "particles/units/heroes/hero_sniper/sniper_web_launch.vpcf"
-		local launch_sound_name = "Hero_Sniper.webShoot"
+		--local casterLoc = caster:GetAbsOrigin()
+		local stack_modifier = keys.stack_modifier
+		local dummy_modifier = keys.dummy_modifier
+		local maximum_charges = ability:GetLevelSpecialValueFor( "max_charges", ( ability:GetLevel() - 1 ) )
+		local charge_replenish_time = ability:GetLevelSpecialValueFor( "charge_restore_time", ( ability:GetLevel() - 1 ) )
+		local max_webs = ability:GetLevelSpecialValueFor("count", (ability:GetLevel() - 1))
+
+		-- Dummy
+		local dummy = CreateUnitByName("npc_dummy_blank", target, false, caster, caster, caster:GetTeam())
+		ability:ApplyDataDrivenModifier(caster, dummy, dummy_modifier, {})
 		
 		-- Deplete charge
 		local next_charge = caster.web_charges - 1
 		if caster.web_charges == maximum_charges then
-			caster:RemoveModifierByName( modifierName )
-			ability:ApplyDataDrivenModifier( caster, caster, modifierName, { Duration = charge_replenish_time } )
+			caster:RemoveModifierByName( stack_modifier )
+			ability:ApplyDataDrivenModifier( caster, caster, stack_modifier, { Duration = charge_replenish_time } )
 			web_start_cooldown( caster, charge_replenish_time )
 		end
-		caster:SetModifierStackCount( modifierName, caster, next_charge )
+		caster:SetModifierStackCount( stack_modifier, caster, next_charge )
 		caster.web_charges = next_charge
 		
 		-- Check if stack is 0, display ability cooldown
@@ -113,26 +118,48 @@ function web_fire( keys )
 		else
 			ability:EndCooldown()
 		end
-		
-		-- Create particle at caster
-		local fxLaunchIndex = ParticleManager:CreateParticle( launch_particle_name, PATTACH_CUSTOMORIGIN, caster )
-		ParticleManager:SetParticleControl( fxLaunchIndex, 0, casterLoc )
-		ParticleManager:SetParticleControl( fxLaunchIndex, 1, Vector( casterLoc.x, casterLoc.y, 800 ) )
-		StartSoundEvent( launch_sound_name, caster )
-		
-		-- Deal damage
-		web_damage( caster, ability, target, damage_delay, dummyModifierName, dummy_duration )]]
-
-		-- Deplete charge
-		local next_charge = caster.web_charges - 1
-		if caster.web_charges == maximum_charges then
-			caster:RemoveModifierByName( modifierName )
-			ability:ApplyDataDrivenModifier( caster, caster, modifierName, { Duration = charge_replenish_time } )
-			web_start_cooldown( caster, charge_replenish_time )
-		end
-		caster:SetModifierStackCount( modifierName, caster, next_charge )
-		caster.web_charges = next_charge
 	else
 		keys.ability:RefundManaCost()
+	end
+end
+
+function spin_web_aura( keys )
+	local ability = keys.ability
+	local caster = keys.caster	
+	local target = keys.target
+
+	-- Owner variables
+	local caster_owner = caster:GetPlayerOwner()
+	local target_owner = target:GetPlayerOwner()
+
+	-- Ability variables
+	local unit_spiderling = keys.unit_spiderling
+	local unit_spiderite = keys.unit_spiderite
+	local all_units = ability:GetLevelSpecialValueFor("all_units", (ability:GetLevel() - 1))
+
+	-- Modifiers
+	local aura_modifier = keys.aura_modifier
+	local pathing_modifier = keys.pathing_modifier
+	local pathing_fade_modifier = keys.pathing_fade_modifier
+	--print("Running aura")
+
+
+	if all_units == 1 then all_units = true else all_units = false end
+
+	if all_units then
+		if target_owner == caster_owner then
+			ability:ApplyDataDrivenModifier(caster, target, aura_modifier, {})
+			-- add if not has fade modifier or invis modifier then add path modifier
+			if not target:HasModifier(pathing_fade_modifier) and not target:HasModifier(pathing_modifier) then
+				ability:ApplyDataDrivenModifier(caster, target, pathing_modifier, {}) 
+			end
+		end
+	else
+		if target_owner == caster_owner and target == caster or target == unit_spiderite or target == unit_spiderling then
+			ability:ApplyDataDrivenModifier(caster, target, aura_modifier, {})
+			if not target:HasModifier(pathing_fade_modifier) and not target:HasModifier(pathing_modifier) then
+				ability:ApplyDataDrivenModifier(caster, target, pathing_modifier, {}) 
+			end
+		end
 	end
 end

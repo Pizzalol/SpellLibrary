@@ -145,7 +145,6 @@
 							"Target"			"TARGET"
 							"aura_modifier"		"modifier_chronosphere_datadriven"
 							"caster_modifier"	"modifier_chronosphere_caster_datadriven"
-							"ignore_void"		"%ignore_void"
 						}
 					}
 				}

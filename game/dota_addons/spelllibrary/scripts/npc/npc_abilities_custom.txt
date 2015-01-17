@@ -5984,7 +5984,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heath_regen"			"2 4 6 8"
+				"health_regen"			"2 4 6 8"
 			}
 			"04"
 			{
@@ -6014,7 +6014,24 @@
 			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"charge_restore_time"	"40.0"
+				"charge_restore_time"	"5.0"//"40.0"
+			}
+			// Extra
+			// Set this value to 1 if you want it to affect every player controlled unit
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"all_units"			"0"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"linger_time"	"0.15"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aura_interval"	"0.1"
 			}
 		}
 	
@@ -6032,9 +6049,12 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"heroes/hero_sniper/spin_web.lua"
+				"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
 				"Function"				"spin_web"
-				"Target"				"POINT"
+				"Target"				"POINT"			
+				"stack_modifier"		"modifier_web_stack_counter_datadriven"
+				"dummy_modifier"		"modifier_web_dummy_aura_datadriven"
+				"aura_modifier"			""
 			}
 		}
 	
@@ -6048,9 +6068,120 @@
 				"IsDebuff"				"0"
 			}
 	
-			"modifier_web_aura_datadriven"
+			"modifier_web_dummy_aura_datadriven"
 			{
+				// run a script which gathers all the units in an area around the dummy
+				// checks if its the caster or any unit belonging to the caster
+				// apply modifier similar to chronosphere for the duration of the dummy
+				"ThinkInterval"		"%aura_interval"
 	
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Radius"	"%radius"
+							"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+						}
+	
+						"Action"
+						{
+							"RunScript"
+							{
+								"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
+								"Function"				"spin_web_aura"
+								"unit_spiderling"		"npc_dota_broodmother_spiderling"
+								"unit_spiderite"		"npc_dota_broodmother_spiderite"
+								"aura_modifier"			"modifier_web_regen_datadriven"
+								"pathing_modifier"		"modifier_web_pathing_datadriven"
+								"pathing_fade_modifier"	"modifier_web_pathing_fade_datadriven"
+							}
+						}
+					}				
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_TEAM_SELECT"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_web_pathing_datadriven"
+			{
+				"IsHidden"	"0"
+	
+				"OnTakeDamage"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_pathing_fade_datadriven"
+						"Target"		"UNIT"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_pathing_datadriven"
+						"Target"		"UNIT"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_FLYING"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_web_pathing_fade_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%damage_time"
+	
+				"OnTakeDamage"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_pathing_fade_datadriven"
+						"Target"		"UNIT"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_pathing_datadriven"
+						"Target"		"TARGET"	
+					}
+				}
+			}
+	
+			"modifier_web_regen_datadriven"
+			{
+				"IsBuff"	"1"
+				"Duration"	"%linger_time"
+	
+				"OnDestroy"
+				{
+					// remove all the modifiers
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen"
+				}
 			}
 		}
 	}
@@ -13247,7 +13378,6 @@
 								"Target"			"TARGET"
 								"aura_modifier"		"modifier_chronosphere_datadriven"
 								"caster_modifier"	"modifier_chronosphere_caster_datadriven"
-								"ignore_void"		"%ignore_void"
 							}
 						}
 					}
@@ -21468,6 +21598,10 @@
 
 
 	//Start of file lone_druid_rabid_datadriven.txt
+	// Rewrite of Lone Druid Rabid
+	// Author: Noya
+	// Date: 15.01.2015.
+	// Notes: If you wish to buff all player controlled units, change the unit_name value to "npc_", it checks if the unit names contain that string.
 	"lone_druid_rabid_datadriven"
 	{
 		// General
@@ -21510,19 +21644,88 @@
 				"rabid_duration"	"10.0 10.0 10.0 10.0"
 			}
 		}
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_rabid_buff.vpcf"
+			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_rabid_buff_speed_ring.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+		    {
+		        "ScriptFile"    "heroes/hero_lone_druid/rabid.lua"
+		        "Function"      "Rabid"
+		        "Target"
+		        {
+		        	"Center"  		"CASTER"
+		        	"Radius" 		"GLOBAL"
+		        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		        	"Types" 		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		        }
+		        "unit_name"		"npc_dota_lone_druid_bear"
+		    }
+	
+		    "FireSound"
+		    {
+		    	"EffectName"	"Hero_LoneDruid.Rabid"
+		    	"Target"		"CASTER"
+		    }
+		}
+	
+		"Modifiers"
+		{
+			
+			"modifier_rabid"
+			{
+				"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_rabid_buff_speed_ring.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_rabid_buff.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"TARGET"
+	
+						"ControlPointEntities"
+						{
+							"TARGET"	"follow_overhead"
+							"TARGET"	"follow_overhead"
+							"TARGET"	"follow_overhead"
+						}
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_move_speed"
+				}
+			}
+		}
 	}
 	
 	//End of file lone_druid_rabid_datadriven.txt
 
 
 	//Start of file lone_druid_spirit_bear_datadriven.txt
+	// Rewrite of Lone Druid Spirit Bear
+	// Author: Noya
+	// Date: 14.01.2015.
+	// Notes: The unit spawned are taken directly from npc_units txt files, if you wish another unit change the unit_name value without the level number.
+	//		  Bear doesn't show in the hero UI
 	"lone_druid_spirit_bear_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"DisplayAdditionalHeroes"	"1"
+		"AbilityTextureName"		"lone_druid_spirit_bear"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -21540,6 +21743,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
+			// This Values are mostly for tooltips, the unit stats are not affected
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -21548,7 +21752,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bear_regen_tooltip"	"2 3 4 5"
+				"bear_regen_tooltip"		"2 3 4 5"
 			}
 			"03"
 			{
@@ -21564,6 +21768,76 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"backlash_damage"			"10.0"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
+			"particle"	"particles/status_fx/status_effect_spirit_bear.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+			"model"		"models/heroes/lone_druid/spirit_bear.vmdl"
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+		    {
+		        "ScriptFile"    "heroes/hero_lone_druid/spirit_bear.lua"
+		        "Function"      "SpiritBearLevel"
+		    }
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+		    {
+		        "ScriptFile"    "heroes/hero_lone_druid/spirit_bear.lua"
+		        "Function"      "SpiritBearSpawn"
+		        "unit_name"		"npc_dota_lone_druid_bear"
+		    }
+	
+		    "FireSound"
+		    {
+		    	"EffectName"	"Hero_LoneDruid.SpiritBear.Cast" 
+		    	"Target"		"CASTER"
+		    }
+		}
+	
+		"Modifiers"
+		{
+			"modifier_spirit_bear"
+			{
+				"IsHidden"		"1"
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_spirit_bear.vpcf"
+				"StatusEffectPriority"	"1"
+	
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_bear_spawn.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+				}
+	
+				"OnDeath"
+				{
+					"FireEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+					"RunScript"
+				    {
+				        "ScriptFile"    "heroes/hero_lone_druid/spirit_bear.lua"
+				        "Function"      "SpiritBearDeath"
+				    }
+				}
 			}
 		}
 	}
@@ -21678,12 +21952,17 @@
 
 
 	//Start of file lone_druid_synergy_datadriven.txt
+	// Rewrite of Lone Druid Synergy
+	// Author: Noya
+	// Date: 16.01.2015.
+	// Note: This ability doesn't do anything by itself, it's just used by other abilities to get bonus from it and apply/remove modifiers.
 	"lone_druid_synergy_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"lone_druid_synergy"
 	
 	
 		// Special
@@ -21709,6 +21988,45 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"true_form_hp_bonus"	"100 200 300 400"
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+		    {
+		        "ScriptFile"    "heroes/hero_lone_druid/synergy.lua"
+		        "Function"      "SynergyLevel"
+	        	"Target"
+				{
+					"Center"  				"CASTER"
+					"Radius" 				"GLOBAL"
+					"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"unit_name"		"npc_dota_lone_druid_bear"
+		    }
+		}
+	
+		"Modifiers"
+		{
+			"modifier_bear_synergy"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bear_bonus_damage"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bear_bonus_speed"
+				}
+			}
+	
+			"modifier_true_form_synergy"
+			{
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS"	"%true_form_hp_bonus"
+				}
 			}
 		}
 	}
@@ -22223,12 +22541,24 @@
 
 
 	//Start of file lycan_summon_wolves_datadriven.txt
+	// Rewrite of the Lycan Summon Wolves
+	// Author: chrislotix
+	// Date: 15.01.2015.
 	"lycan_summon_wolves_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"lycan_summon_wolves"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"		
+			"particle"		""		
+		}	
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -22271,6 +22601,101 @@
 				"var_type"					"FIELD_INTEGER"
 				"wolf_hp"					"200 240 280 320"
 			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wolf_1_count"				"2 0 0 0"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wolf_2_count"				"0 2 0 0"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wolf_3_count"				"0 0 2 0"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wolf_4_count"				"0 0 0 2"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lycan.SummonWolves"
+				"Target"		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+				"Function"		"KillWolves"
+				"Target"
+		        {
+		        	"Center"  				"CASTER"
+		        	"Radius" 				"GLOBAL"
+		        	"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		        	"Types" 				"DOTA_UNIT_TARGET_BASIC"
+		        }
+	
+				"wolf_name1"	"npc_dota_lycan_wolf1"
+				"wolf_name2"	"npc_dota_lycan_wolf2"
+				"wolf_name3"	"npc_dota_lycan_wolf3"
+				"wolf_name4"	"npc_dota_lycan_wolf4"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"	"npc_dota_lycan_wolf1"
+				"UnitCount"	"%wolf_1_count"
+				"Target"	"CASTER"
+				"Duration"	"%wolf_duration"
+	
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"			
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"	"npc_dota_lycan_wolf2"
+				"UnitCount"	"%wolf_2_count"			
+				"Target"	"CASTER"
+				"Duration"	"%wolf_duration"
+	
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"			
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"	"npc_dota_lycan_wolf3"
+				"UnitCount"	"%wolf_3_count"			
+				"Target"	"CASTER"
+				"Duration"	"%wolf_duration"
+	
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"			
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"	"npc_dota_lycan_wolf4"
+				"UnitCount"	"%wolf_4_count"			
+				"Target"	"CASTER"
+				"Duration"	"%wolf_duration"
+	
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"			
+			}
+	
+	
+	
+	
 		}
 	}
 	
