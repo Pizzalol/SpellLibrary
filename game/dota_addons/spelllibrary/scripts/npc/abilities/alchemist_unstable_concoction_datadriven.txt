@@ -80,8 +80,9 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-			"Function"		"StartBrewing"
+			"ScriptFile"			"heroes/hero_alchemist/unstable_concoction.lua"
+			"Function"				"StartBrewing"
+			"sub_ability_name"		"alchemist_unstable_concoction_throw_datadriven"
 		}
 
 		"ApplyModifier"
@@ -96,7 +97,8 @@
 		"RunScript"
 		{
 			"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-			"Function"		"UnstableConcoctionLevelUp"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"alchemist_unstable_concoction_throw_datadriven"
 		}
 	}
 
@@ -104,8 +106,8 @@
 	{
 		"modifier_unstable_concoction_brewing"
 		{
-			"IsHidden"			"0" //1
-			"Duration"			"%brew_time"
+			"IsHidden"			"1"
+			"Duration"			"%brew_explosion"
 			"ThinkInterval"		"0.5"
 			"OnIntervalThink"
 			{
@@ -115,6 +117,36 @@
 					"Function"		"UpdateTimerParticle"
 				}
 			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_alchemist/unstable_concoction.lua"
+					"Function"				"CheckSelfStun"
+					"sub_ability_name"		"alchemist_unstable_concoction_throw_datadriven"
+					"Target"
+			        {
+			        	"Center"  		"CASTER"
+			        	"Radius" 		"%radius"
+			        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			        	"Types" 		"DOTA_UNIT_TARGET_HERO"
+			        }
+				}
+			}
+		}
+
+		"modifier_unstable_concoction_stun"
+		{
+			"IsDebuff"	"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			"OverrideAnimation"	"ACT_DOTA_DISABLED"
+			"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"	"follow_overhead"
 		}
 	}
 }

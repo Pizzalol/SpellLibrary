@@ -1,10 +1,15 @@
+// Rewrite of Lone Druid True Form
+// Author: Noya
+// Date: 16.01.2015.
+// Notes: Armor is added as +Green because there is no way to currently add Base Armor.
 "lone_druid_true_form_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityTextureName"			"lone_druid_true_form"
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
@@ -40,12 +45,111 @@
 		"04"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"speed_loss"				"45"
+			"speed_loss"				"-45"
 		}
 		"05"
 		{
 			"var_type"					"FIELD_FLOAT"
 			"transformation_time"		"1.933"
+		}
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_true_form.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+		"model"		"models/heroes/lone_druid/true_form.vmdl"
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName" 	"modifier_true_form_transform"
+			"Target"		"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_LoneDruid.TrueForm.Cast"
+			"Target"		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_true_form.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"ControlPointEntities"
+			{
+				"CASTER"		"attach_origin"
+				"CASTER"		"attach_origin"
+				"CASTER"		"attach_origin"
+				"CASTER"		"attach_origin"	//CP3
+			}
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_lone_druid/true_form.lua"
+			"Function"			"LevelUpAbility"
+			"ability_name"		"lone_druid_true_form_druid_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_true_form_transform"
+		{
+			"IsHidden"	"1"
+			"Duration"	"%transformation_time"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName" 	"modifier_true_form"
+					"Target"		"CASTER"
+				}
+			}
+		}
+
+		"modifier_true_form"
+		{
+			"IsHidden"	"0"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"	"%base_attack_time"
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+				"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_hp"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%speed_loss"
+			}
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_lone_druid/true_form.lua"
+					"Function"				"TrueFormStart"
+					"model"					"models/heroes/lone_druid/true_form.vmdl"
+					"sub_ability_name"		"lone_druid_true_form_druid_datadriven"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_lone_druid/true_form.lua"
+					"Function"				"HideWearables"
+				}
+			}
 		}
 	}
 }

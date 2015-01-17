@@ -11,6 +11,7 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"AbilityTextureName"			"alchemist_unstable_concoction_throw"
 	
@@ -103,8 +104,9 @@
 
         "RunScript"
 		{
-			"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-			"Function"		"EndBrewing"
+			"ScriptFile"			"heroes/hero_alchemist/unstable_concoction.lua"
+			"Function"				"EndBrewing"
+			"main_ability_name"		"alchemist_unstable_concoction_datadriven"
 		}
 	}
 
@@ -138,6 +140,13 @@
 		{
 			"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
 			"Function"		"ConcoctionHit"
+			"Target"
+	        {
+	        	"Center"  		"CASTER"
+	        	"Radius" 		"%midair_explosion_radius"
+	        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	        	"Types" 		"DOTA_UNIT_TARGET_HERO"
+	        }
 		}
 	}
 
@@ -146,7 +155,8 @@
 		"RunScript"
 		{
 			"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-			"Function"		"UnstableConcoctionThrowLevelUp"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"alchemist_unstable_concoction_datadriven"
 		}
 	}
 

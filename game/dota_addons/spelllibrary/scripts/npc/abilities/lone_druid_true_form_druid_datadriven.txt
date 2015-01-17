@@ -1,10 +1,15 @@
+// Rewrite of Alchemist Unstable Concoction Throw (Sub-Ability)
+// Author: Noya
+// Date: 10.1.2015.
+// Notes: Used together with "lone_druid_true_form_datadriven", hero needs both abilities (this one starts hidden)
 "lone_druid_true_form_druid_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityTextureName"			"lone_druid_true_form_druid"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -25,6 +30,86 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"transformation_time"		"1.933"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_druid_transform"
+			"Target"		"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_LoneDruid.TrueForm.Recast"
+			"Target"		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_true_form.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"ControlPointEntities"
+			{
+				"CASTER"		"attach_origin"
+				"CASTER"		"attach_origin"
+				"CASTER"		"attach_origin"
+				"CASTER"		"attach_origin"	//CP3
+			}
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_lone_druid/true_form.lua"
+			"Function"			"LevelUpAbility"
+			"ability_name"		"lone_druid_true_form_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_druid_transform"
+		{
+			"Duration"		"%transformation_time"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_invulnerable"
+					"Target"		"CASTER"
+					"Duration"		"0.03"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_lone_druid/true_form.lua"
+					"Function"				"TrueFormEnd"
+					"main_ability_name"		"lone_druid_true_form_datadriven"
+					"remove_modifier_name"	"modifier_true_form"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_lone_druid/true_form.lua"
+						"Function"			"ShowWearables"
+					}
+				}
+			}
 		}
 	}
 }

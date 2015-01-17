@@ -30,4 +30,14 @@
 			"Function"				"x_marks_the_spot_force_return"
 		}
 	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_kunkka/x_marks_the_spot.lua"
+			"Function"				"LevelUpAbility"
+			"ability_name"			"kunkka_x_marks_the_spot_datadriven"
+		}
+	}
 }

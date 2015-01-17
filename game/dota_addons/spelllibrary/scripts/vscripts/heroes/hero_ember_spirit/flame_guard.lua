@@ -1,5 +1,8 @@
 --[[
 	NOTE: This ability will only work with ability that is marked as DAMAGE_TYPE_MAGICAL
+	CHECK: Multiple embers with max level shield against you
+	CHANGELIST:
+	17.01.2015 - Add early exit condition
 ]]
 
 --[[
@@ -34,7 +37,7 @@ function flame_guard_init( keys )
 	local targetEntIndex = targetUnit:entindex()
 	local abilityBlockType = DAMAGE_TYPE_MAGICAL
 	
-	-- This will always happen BEFORE OnTakeDamage
+	-- Listening to entity hurt
 	ListenToGameEvent( "entity_hurt", function( event )
 			-- check if should keep listening
 			if targetUnit.listener == true then
@@ -66,6 +69,14 @@ function flame_guard_on_take_damage( keys )
 	local damageTaken = keys.Damage
 	local modifierName = "modifier_flame_guard_target_datadriven"
 	
+	-- Forcefully dispell the modifier
+	if targetUnit.flame_guard_absorb_amount < 0 then
+		targetUnit:RemoveModifierByName( modifierName )
+		keys.target.take_next = nil
+		targetUnit.listener = false
+		return
+	end
+	
 	-- Check if flag has been turned from listener
 	if targetUnit.take_next[ attackerEnt ] ~= nil and targetUnit.take_next[ attackerEnt ] == false then
 		-- Absorb damage
@@ -77,7 +88,9 @@ function flame_guard_on_take_damage( keys )
 		if targetUnit.flame_guard_absorb_amount < 0 then
 			targetUnit:SetHealth( targetUnit:GetHealth() + targetUnit.flame_guard_absorb_amount )
 			targetUnit:RemoveModifierByName( modifierName )
+			keys.target.take_next = nil
 			targetUnit.listener = false
+			return
 		end
 	end
 end
