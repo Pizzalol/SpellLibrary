@@ -1,3 +1,6 @@
+// Rewrite of Lich Frost Nova
+// Author: Noya
+// Date: 18.1.2015.
 "lich_frost_nova_datadriven"
 {
 	// General
@@ -15,6 +18,8 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"600"
 	"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+
+	"AoERadius"						"200"
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
@@ -56,6 +61,83 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"aoe_damage"			"75 100 125 150"
+		}
+	}
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
+		"particle"	"particles/status_fx/status_effect_frost_lich.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+	}
+	
+
+	"OnSpellStart"
+	{
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"			"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Ability.FrostNova"
+			"Target"		"TARGET"
+		}
+
+		"Damage"
+		{
+			"Type"		"DAMAGE_TYPE_MAGICAL"
+			"Target"	"TARGET"
+			"Damage"	"%AbilityDamage"
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"  				"TARGET"
+				"Radius" 				"%radius"
+				"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			}
+
+			"Action"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"    	"modifier_frost_nova_slow"
+					"Target"			"TARGET"
+					"Duration"			"%AbilityDuration"
+				}
+
+				"Damage"
+				{
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Target"	"TARGET"
+					"Damage"	"%aoe_damage"
+				}
+
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_frost_nova_slow"
+		{
+			"IsDebuff"		"1"
+
+			"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
+			"StatusEffectPriority"	"10"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed"
+			}
 		}
 	}
 }
