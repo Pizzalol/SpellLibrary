@@ -2,8 +2,8 @@
 {
 	"override_hero" "npc_dota_hero_ancient_apparition"
 
-	"Ability1" "sniper_shrapnel_datadriven"
+	"Ability1" "broodmother_spawn_spiderlings_datadriven"
 	"Ability2" "broodmother_spin_web_datadriven"
 	"Ability3" "night_stalker_hunter_in_the_night_datadriven"
-	"Ability4" "night_stalker_darkness_datadriven"
+	"Ability4" "faceless_void_chronosphere_datadriven"
 }

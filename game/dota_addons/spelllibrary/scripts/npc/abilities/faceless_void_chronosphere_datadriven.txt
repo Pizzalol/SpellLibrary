@@ -1,7 +1,8 @@
 // Rewrite of the Faceless Void Chronosphere ability
 // Author: Pizzalol
 // Date: 10.01.2015.
-// NOTE: Chrono status effect particle doesnt work for now
+// Changed: 18.01.2015.
+// Reason: Fixed Chronosphere modifier and particle
 "faceless_void_chronosphere_datadriven"
 {
 	// General
@@ -103,6 +104,13 @@
 
 	"Modifiers"
 	{
+		// Cosmetic
+		"modifier_chronosphere_tooltip_datadriven"
+		{
+			"IsDebuff"		"1"
+			"IsPurgable"	"0"
+		}
+
 		"modifier_chronosphere_aura_datadriven"
 		{
 			"Duration"	"%duration"
@@ -160,8 +168,26 @@
 
 		"modifier_chronosphere_datadriven"
 		{
-			"IsDebuff"	"1"
+			"IsHidden"	"1"
 			"Duration"	"%aura_interval"
+
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_chronosphere_tooltip_datadriven"
+					"Target"		"TARGET"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_chronosphere_tooltip_datadriven"
+					"Target"		"TARGET"
+				}
+			}
 
 			"States"
 			{

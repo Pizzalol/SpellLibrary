@@ -5975,6 +5975,10 @@
 
 
 	//Start of file broodmother_spin_web_datadriven.txt
+	// Rewrite of the Broodmother Spin Web ability
+	// Author: Pizzalol
+	// Date: 18.01.2015.
+	// NOTE: This ability requires Broodmother Spin Web Destroy (datadriven version) for full functionality
 	"broodmother_spin_web_datadriven"
 	{
 		// General
@@ -6079,7 +6083,13 @@
 		}
 	
 		"OnSpellStart"
-		{
+		{	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Broodmother.SpinWebCast"
+				"Target"		"CASTER"
+			}
+	
 			"RunScript"
 			{
 				"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
@@ -6087,12 +6097,13 @@
 				"Target"				"POINT"			
 				"stack_modifier"		"modifier_web_stack_counter_datadriven"
 				"dummy_modifier"		"modifier_web_dummy_aura_datadriven"
-				"aura_modifier"			""
+				"dummy_ability"			"broodmother_spin_web_destroy_datadriven"
 			}
 		}
 	
 		"Modifiers"
 		{
+			// Cosmetic modifier for stacks
 			"modifier_web_stack_counter_datadriven"
 			{
 				"Passive"				"1"
@@ -6101,11 +6112,34 @@
 				"IsDebuff"				"0"
 			}
 	
-			"modifier_web_dummy_aura_datadriven"
+			// Cosmetic modifier for the web tooltip
+			"modifier_web_tooltip_datadriven"
 			{
-				// run a script which gathers all the units in an area around the dummy
-				// checks if its the caster or any unit belonging to the caster
-				// apply modifier similar to chronosphere for the duration of the dummy
+				"IsPurgable"	"0"
+				"IsDebuff"		"0"
+			}
+	
+			// Runs a script which checks all the units in an area around the dummy
+			// checks if its the caster or any of the specified units belonging to the caster
+			// applies the aura modifier along with the other required modifiers
+			"modifier_web_dummy_aura_datadriven"
+			{			
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_web.vpcf"
+						"EffectAttachType"	"attach_origin"
+						"Target"		"TARGET"
+	
+						"ControlPoints"
+						{
+							"00"	"0 0 0"
+							"01"	"%radius 0 150"
+						}
+					}
+				}
+	
 				"ThinkInterval"		"%aura_interval"
 	
 				"OnIntervalThink"
@@ -6131,10 +6165,13 @@
 								"aura_modifier"			"modifier_web_regen_datadriven"
 								"pathing_modifier"		"modifier_web_pathing_datadriven"
 								"pathing_fade_modifier"	"modifier_web_pathing_fade_datadriven"
+								"invis_modifier"		"modifier_web_invis_datadriven"
+								"invis_fade_modifier"	"modifier_web_invis_fade_datadriven"
 							}
 						}
 					}				
 				}
+	
 	
 				"States"
 				{
@@ -6142,13 +6179,15 @@
 					"MODIFIER_STATE_NO_TEAM_SELECT"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 	
+			// Pathing
 			"modifier_web_pathing_datadriven"
 			{
-				"IsHidden"	"0"
+				"IsHidden"	"1"
 	
 				"OnTakeDamage"
 				{
@@ -6178,7 +6217,7 @@
 	
 			"modifier_web_pathing_fade_datadriven"
 			{
-				"IsDebuff"	"1"
+				"IsHidden"	"1"
 				"Duration"	"%damage_time"
 	
 				"OnTakeDamage"
@@ -6200,14 +6239,24 @@
 				}
 			}
 	
+			// The modifier which gets applied by the aura
 			"modifier_web_regen_datadriven"
 			{
-				"IsBuff"	"1"
+				"IsHidden"	"1"
 				"Duration"	"%linger_time"
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_tooltip_datadriven"
+						"Target"		"TARGET"
+					}
+				}
 	
 				"OnDestroy"
 				{
-					// remove all the modifiers
+					// Remove all the modifiers
 					// Pathing
 					"RemoveModifier"
 					{
@@ -6219,12 +6268,118 @@
 						"ModifierName"	"modifier_web_pathing_datadriven"
 						"Target"		"TARGET"
 					}
+					// Cosmetic
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_tooltip_datadriven"
+						"Target"		"TARGET"
+					}
+					// Invis
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_invis_fade_datadriven"
+						"Target"		"TARGET"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_invis_datadriven"
+						"Target"		"TARGET"
+					}
 				}
 	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen"
+				}
+			}		
+	
+			// Invisibility
+			"modifier_web_invis_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"OnAttack"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_invis_fade_datadriven"
+						"Target"		"ATTACKER"
+					}
+				}
+	
+				"OnAbilityExecuted"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_invis_fade_datadriven"
+						"Target"		"UNIT"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_web_invis_fade_datadriven"
+			{
+				"Duration"	"%fade_delay"
+				"IsHidden"	"1"
+	
+				"OnAttack"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_invis_fade_datadriven"
+						"Target"		"ATTACKER"
+					}
+				}
+	
+				"OnAbilityExecuted"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_invis_fade_datadriven"
+						"Target"		"UNIT"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_invis_datadriven"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_invis_datadriven"
+						"Target"		"TARGET"
+					}
 				}
 			}
 		}
@@ -6233,6 +6388,10 @@
 
 
 	//Start of file broodmother_spin_web_destroy_datadriven.txt
+	// Rewrite of the Broodmother Spin Web Destroy ability
+	// Author: Pizzalol
+	// Date: 18.01.2015.
+	// NOTE: This spell is part of the Broodmother Spin Web ability
 	"broodmother_spin_web_destroy_datadriven"
 	{
 		// General
@@ -6240,6 +6399,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"MaxLevel"						"1"
+		"AbilityTextureName"			"broodmother_spin_web_destroy"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -6253,19 +6413,15 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
 	
-	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
+				"Function"				"spin_web_destroy"
+			}
+		}
 	}
-	
-	
-	/=============================================================================================================================================================================
-	/=============================================================================================================================================================================
-	/=============================================================================================================================================================================
-	/=============================================================================================================================================================================
-	/=============================================================================================================================================================================
-	/=============================================================================================================================================================================
-	/=============================================================================================================================================================================
-	/=============================================================================================================================================================================
-	
 	//End of file broodmother_spin_web_destroy_datadriven.txt
 
 
@@ -13329,7 +13485,8 @@
 	// Rewrite of the Faceless Void Chronosphere ability
 	// Author: Pizzalol
 	// Date: 10.01.2015.
-	// NOTE: Chrono status effect particle doesnt work for now
+	// Changed: 18.01.2015.
+	// Reason: Fixed Chronosphere modifier and particle
 	"faceless_void_chronosphere_datadriven"
 	{
 		// General
@@ -13431,6 +13588,13 @@
 	
 		"Modifiers"
 		{
+			// Cosmetic
+			"modifier_chronosphere_tooltip_datadriven"
+			{
+				"IsDebuff"		"1"
+				"IsPurgable"	"0"
+			}
+	
 			"modifier_chronosphere_aura_datadriven"
 			{
 				"Duration"	"%duration"
@@ -13488,8 +13652,26 @@
 	
 			"modifier_chronosphere_datadriven"
 			{
-				"IsDebuff"	"1"
+				"IsHidden"	"1"
 				"Duration"	"%aura_interval"
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_chronosphere_tooltip_datadriven"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_chronosphere_tooltip_datadriven"
+						"Target"		"TARGET"
+					}
+				}
 	
 				"States"
 				{
