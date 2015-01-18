@@ -24,7 +24,7 @@
 		"Ability1" "broodmother_spawn_spiderlings_datadriven"
 		"Ability2" "broodmother_spin_web_datadriven"
 		"Ability3" "night_stalker_hunter_in_the_night_datadriven"
-		"Ability4" "faceless_void_chronosphere_datadriven"
+		"Ability4" "lion_finger_of_death_datadriven"
 	}
 	//End of file test_dummy_ranged.txt
 }

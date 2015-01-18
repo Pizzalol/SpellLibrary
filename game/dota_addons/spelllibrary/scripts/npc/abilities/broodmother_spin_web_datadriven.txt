@@ -74,7 +74,7 @@
 		"09"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"charge_restore_time"	"5.0"//"40.0"
+			"charge_restore_time"	"40.0"
 		}
 		// Extra
 		// Set this value to 1 if you want it to affect every player controlled unit

@@ -6051,7 +6051,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"charge_restore_time"	"5.0"//"40.0"
+				"charge_restore_time"	"40.0"
 			}
 			// Extra
 			// Set this value to 1 if you want it to affect every player controlled unit
@@ -21429,6 +21429,14 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"lion_finger_of_death"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+			"particle"			"particles/units/heroes/hero_lion/lion_spell_finger_of_death.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -21480,6 +21488,59 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"splash_radius_scepter"		"200"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lion.FingerOfDeath"
+				"Target"		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lion.FingerOfDeathImpact"
+				"Target"		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_lion/lion_spell_finger_of_death.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+				
+	
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_attack1"
+					"TARGET"	"attach_hitloc"
+				}
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_finger_of_death_datadriven"
+				"Target"			"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_finger_of_death_datadriven"
+			{
+				"IsHidden"	"1"
+				"Duration"	"%damage_delay"
+	
+				"OnDestroy"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%damage"
+					}
+				}
 			}
 		}
 	}
@@ -24969,6 +25030,58 @@
 				"var_type"					"FIELD_FLOAT"
 				"invuln_duration"			"0.3"
 			}			
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mirror_image"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_mirror_image"
+			{	
+				"Duration"			"%invuln_duration"
+				"IsHidden"			"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE" 			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"CASTER"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"DOTA_Item.Manta.Activate"
+						"Target"		"CASTER"
+					}
+			    }
+	
+			    "OnDestroy"
+			    {
+			    	"RunScript"
+				    {
+				        "ScriptFile"    "heroes/hero_naga_siren/mirror_image.lua"
+				        "Function"      "MirrorImage"
+				    }
+			    }
+			}
 		}
 	}
 	

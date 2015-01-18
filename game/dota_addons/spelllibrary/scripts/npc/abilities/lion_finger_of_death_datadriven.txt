@@ -1,3 +1,6 @@
+// Rewrite of the Lion Finger of Death ability
+// Author: Pizzalol
+// Date: 18.01.2015.
 "lion_finger_of_death_datadriven"
 {
 	// General
@@ -11,6 +14,14 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"lion_finger_of_death"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+		"particle"			"particles/units/heroes/hero_lion/lion_spell_finger_of_death.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -62,6 +73,59 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"splash_radius_scepter"		"200"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lion.FingerOfDeath"
+			"Target"		"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lion.FingerOfDeathImpact"
+			"Target"		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_lion/lion_spell_finger_of_death.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+			
+
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_attack1"
+				"TARGET"	"attach_hitloc"
+			}
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"		"modifier_finger_of_death_datadriven"
+			"Target"			"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_finger_of_death_datadriven"
+		{
+			"IsHidden"	"1"
+			"Duration"	"%damage_delay"
+
+			"OnDestroy"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%damage"
+				}
+			}
 		}
 	}
 }
