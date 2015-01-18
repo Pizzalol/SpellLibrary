@@ -57,5 +57,57 @@
 			"invuln_duration"			"0.3"
 		}			
 	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_mirror_image"
+			"Target"		"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_mirror_image"
+		{	
+			"Duration"			"%invuln_duration"
+			"IsHidden"			"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE" 			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"CASTER"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"DOTA_Item.Manta.Activate"
+					"Target"		"CASTER"
+				}
+		    }
+
+		    "OnDestroy"
+		    {
+		    	"RunScript"
+			    {
+			        "ScriptFile"    "heroes/hero_naga_siren/mirror_image.lua"
+			        "Function"      "MirrorImage"
+			    }
+		    }
+		}
+	}
 }
 
