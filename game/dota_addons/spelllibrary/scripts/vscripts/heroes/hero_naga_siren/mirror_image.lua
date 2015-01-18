@@ -34,7 +34,7 @@ function MirrorImage( event )
 	for i=1,images_count do
 
 		-- Get a random position to create the illusion in
-		local origin = caster:GetAbsOrigin() + RandomVector(150)
+		local origin = caster:GetAbsOrigin() + RandomVector(100)
 
 		-- handle_UnitOwner needs to be nil, else it will crash the game.
 		local illusion = CreateUnitByName(unit_name, origin, true, caster, nil, caster:GetTeamNumber())
@@ -81,7 +81,7 @@ function MirrorImage( event )
 	end
 
 	-- Repositionate the main hero somewhere
-	local new_hero_position = caster:GetAbsOrigin() + RandomVector(150)
+	local new_hero_position = caster:GetAbsOrigin() + RandomVector(100)
 	FindClearSpaceForUnit(caster, new_hero_position, true)
 
 end
