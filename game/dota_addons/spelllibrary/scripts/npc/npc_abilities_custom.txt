@@ -1026,8 +1026,9 @@
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"	"modifier_transform_invulnerability"
+						"ModifierName"	"modifier_invulnerable"
 						"Target"		"CASTER"
+						"Duration"		"0.03"
 					}
 				}
 				
@@ -1038,16 +1039,6 @@
 						"ModifierName"	"modifier_chemical_rage"
 						"Target" 		"CASTER"
 					}
-				}
-			}
-	
-			"modifier_transform_invulnerability"
-			{
-				"IsHidden"	"1"
-				"Duration"	"0.03"
-				"States"
-				{
-					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"	
 				}
 			}
 	
@@ -1237,8 +1228,9 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-				"Function"		"StartBrewing"
+				"ScriptFile"			"heroes/hero_alchemist/unstable_concoction.lua"
+				"Function"				"StartBrewing"
+				"sub_ability_name"		"alchemist_unstable_concoction_throw_datadriven"
 			}
 	
 			"ApplyModifier"
@@ -1253,7 +1245,8 @@
 			"RunScript"
 			{
 				"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-				"Function"		"UnstableConcoctionLevelUp"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"alchemist_unstable_concoction_throw_datadriven"
 			}
 		}
 	
@@ -1261,8 +1254,8 @@
 		{
 			"modifier_unstable_concoction_brewing"
 			{
-				"IsHidden"			"0" //1
-				"Duration"			"%brew_time"
+				"IsHidden"			"1"
+				"Duration"			"%brew_explosion"
 				"ThinkInterval"		"0.5"
 				"OnIntervalThink"
 				{
@@ -1272,6 +1265,36 @@
 						"Function"		"UpdateTimerParticle"
 					}
 				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_alchemist/unstable_concoction.lua"
+						"Function"				"CheckSelfStun"
+						"sub_ability_name"		"alchemist_unstable_concoction_throw_datadriven"
+						"Target"
+				        {
+				        	"Center"  		"CASTER"
+				        	"Radius" 		"%radius"
+				        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				        	"Types" 		"DOTA_UNIT_TARGET_HERO"
+				        }
+					}
+				}
+			}
+	
+			"modifier_unstable_concoction_stun"
+			{
+				"IsDebuff"	"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
 			}
 		}
 	}
@@ -1293,6 +1316,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"alchemist_unstable_concoction_throw"
 		
@@ -1385,8 +1409,9 @@
 	
 	        "RunScript"
 			{
-				"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-				"Function"		"EndBrewing"
+				"ScriptFile"			"heroes/hero_alchemist/unstable_concoction.lua"
+				"Function"				"EndBrewing"
+				"main_ability_name"		"alchemist_unstable_concoction_datadriven"
 			}
 		}
 	
@@ -1420,6 +1445,13 @@
 			{
 				"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
 				"Function"		"ConcoctionHit"
+				"Target"
+		        {
+		        	"Center"  		"CASTER"
+		        	"Radius" 		"%midair_explosion_radius"
+		        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		        	"Types" 		"DOTA_UNIT_TARGET_HERO"
+		        }
 			}
 		}
 	
@@ -1428,7 +1460,8 @@
 			"RunScript"
 			{
 				"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-				"Function"		"UnstableConcoctionThrowLevelUp"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"alchemist_unstable_concoction_datadriven"
 			}
 		}
 	
@@ -6175,6 +6208,17 @@
 				"OnDestroy"
 				{
 					// remove all the modifiers
+					// Pathing
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_pathing_fade_datadriven"
+						"Target"		"TARGET"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_pathing_datadriven"
+						"Target"		"TARGET"
+					}
 				}
 	
 				"Properties"
@@ -6185,7 +6229,6 @@
 			}
 		}
 	}
-	
 	//End of file broodmother_spin_web_datadriven.txt
 
 
@@ -8910,6 +8953,10 @@
 
 
 	//Start of file death_prophet_carrion_swarm_datadriven.txt
+	// Rewrite of Death Prophet Carrion Swarm
+	// Author: Noya
+	// Date: 17.01.2015.
+	// Notes: Default projectile particle can't be properly attached. This uses the economy arcana particle.
 	"death_prophet_carrion_swarm_datadriven"
 	{
 		// General
@@ -8964,6 +9011,54 @@
 				"var_type"					"FIELD_INTEGER"
 				"speed"						"1100 1100 1100 1100"
 			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_carrion_swarm.vpcf"	//Can't attach the bats
+			"particle"	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+			    "Target"		 	"POINT"
+			    "EffectName"     	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+			    "MoveSpeed"      	"%speed"
+			    "StartRadius"    	"%start_radius"
+			    "EndRadius"      	"%end_radius"
+			    "StartPosition"  	"attach_attack1"
+			    "FixedDistance"  	"%range"
+			    "TargetTeams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			    "HasFrontalCone" 	"1"
+			    "ProvidesVision" 	"0"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.CarrionSwarm"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"FireSound"
+	        {
+	        	"EffectName" 	   	"Hero_DeathProphet.CarrionSwarm.Damage"
+	            "Target" 			"TARGET"
+	        }
+	
+	        "Damage"
+	        {
+	        	"Target"		 "TARGET"
+	        	"Type"			 "DAMAGE_TYPE_MAGICAL"
+	        	"Damage"		 "%AbilityDamage"
+	        }
 		}
 	}
 	
@@ -18903,6 +18998,16 @@
 				"Function"				"x_marks_the_spot_force_return"
 			}
 		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_kunkka/x_marks_the_spot.lua"
+				"Function"				"LevelUpAbility"
+				"ability_name"			"kunkka_x_marks_the_spot_datadriven"
+			}
+		}
 	}
 	//End of file kunkka_return_datadriven.txt
 
@@ -19324,7 +19429,8 @@
 			"RunScript"
 			{
 				"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
-				"Function"					"x_marks_the_spot_level_up"
+				"Function"					"LevelUpAbility"
+				"ability_name"				"kunkka_return_datadriven"
 			}
 		}
 		
@@ -19405,231 +19511,6 @@
 		}
 	}
 	//End of file kunkka_x_marks_the_spot_datadriven.txt
-
-
-	//Start of file kun_ghostship_datadriven.txt
-	"kun_ghostship_datadriven"
-	{
-	    // General
-	    //-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                    "ability_datadriven" 
-	    "AbilityBehavior"               ""
-	    "AbilityType"                   ""
-	    "SpellImmunityType"             ""
-	    "AbilityTextureName"            ""
-	
-	    // Precache
-	    //-------------------------------------------------------------------------------------------------------------
-	    "precache"
-	    {
-	
-	    }
-	
-	    // Casting
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCastPoint"              ""
-	    "AbilityCastRange"              ""
-	
-	    // Time
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCooldown"               ""
-	
-	    // Cost
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityManaCost"               ""
-	
-	    // Damage
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityDamage"                 ""
-	
-	    // Special
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilitySpecial"
-	    {
-	
-	    }
-	}
-	//End of file kun_ghostship_datadriven.txt
-
-
-	//Start of file kun_return_datadriven.txt
-	"kun_return_datadriven"
-	{
-	    // General
-	    //-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                    "ability_datadriven" 
-	    "AbilityBehavior"               ""
-	    "AbilityType"                   ""
-	    "SpellImmunityType"             ""
-	    "AbilityTextureName"            ""
-	
-	    // Precache
-	    //-------------------------------------------------------------------------------------------------------------
-	    "precache"
-	    {
-	
-	    }
-	
-	    // Casting
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCastPoint"              ""
-	    "AbilityCastRange"              ""
-	
-	    // Time
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCooldown"               ""
-	
-	    // Cost
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityManaCost"               ""
-	
-	    // Damage
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityDamage"                 ""
-	
-	    // Special
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilitySpecial"
-	    {
-	
-	    }
-	}
-	//End of file kun_return_datadriven.txt
-
-
-	//Start of file kun_tidebringer_datadriven.txt
-	"kun_tidebringer_datadriven"
-	{
-	    // General
-	    //-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                    "ability_datadriven" 
-	    "AbilityBehavior"               ""
-	    "AbilityType"                   ""
-	    "SpellImmunityType"             ""
-	    "AbilityTextureName"            ""
-	
-	    // Precache
-	    //-------------------------------------------------------------------------------------------------------------
-	    "precache"
-	    {
-	
-	    }
-	
-	    // Casting
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCastPoint"              ""
-	    "AbilityCastRange"              ""
-	
-	    // Time
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCooldown"               ""
-	
-	    // Cost
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityManaCost"               ""
-	
-	    // Damage
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityDamage"                 ""
-	
-	    // Special
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilitySpecial"
-	    {
-	
-	    }
-	}
-	//End of file kun_tidebringer_datadriven.txt
-
-
-	//Start of file kun_torrent_datadriven.txt
-	"kun_torrent_datadriven"
-	{
-	    // General
-	    //-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                    "ability_datadriven" 
-	    "AbilityBehavior"               ""
-	    "AbilityType"                   ""
-	    "SpellImmunityType"             ""
-	    "AbilityTextureName"            ""
-	
-	    // Precache
-	    //-------------------------------------------------------------------------------------------------------------
-	    "precache"
-	    {
-	
-	    }
-	
-	    // Casting
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCastPoint"              ""
-	    "AbilityCastRange"              ""
-	
-	    // Time
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCooldown"               ""
-	
-	    // Cost
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityManaCost"               ""
-	
-	    // Damage
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityDamage"                 ""
-	
-	    // Special
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilitySpecial"
-	    {
-	
-	    }
-	}
-	//End of file kun_torrent_datadriven.txt
-
-
-	//Start of file kun_x_marks_the_spot_datadriven.txt
-	"kun_x_marks_the_spot_datadriven"
-	{
-	    // General
-	    //-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                    "ability_datadriven" 
-	    "AbilityBehavior"               ""
-	    "AbilityType"                   ""
-	    "SpellImmunityType"             ""
-	    "AbilityTextureName"            ""
-	
-	    // Precache
-	    //-------------------------------------------------------------------------------------------------------------
-	    "precache"
-	    {
-	
-	    }
-	
-	    // Casting
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCastPoint"              ""
-	    "AbilityCastRange"              ""
-	
-	    // Time
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCooldown"               ""
-	
-	    // Cost
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityManaCost"               ""
-	
-	    // Damage
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityDamage"                 ""
-	
-	    // Special
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilitySpecial"
-	    {
-	
-	    }
-	}
-	//End of file kun_x_marks_the_spot_datadriven.txt
 
 
 	//Start of file legion_commander_duel_alt1_datadriven.txt
@@ -22088,13 +21969,18 @@
 
 
 	//Start of file lone_druid_true_form_datadriven.txt
+	// Rewrite of Lone Druid True Form
+	// Author: Noya
+	// Date: 16.01.2015.
+	// Notes: Armor is added as +Green because there is no way to currently add Base Armor.
 	"lone_druid_true_form_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"			"lone_druid_true_form"
 	
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -22130,12 +22016,111 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed_loss"				"45"
+				"speed_loss"				"-45"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"transformation_time"		"1.933"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_true_form.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lone_druid.vsndevts"
+			"model"		"models/heroes/lone_druid/true_form.vmdl"
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName" 	"modifier_true_form_transform"
+				"Target"		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_LoneDruid.TrueForm.Cast"
+				"Target"		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_true_form.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"ControlPointEntities"
+				{
+					"CASTER"		"attach_origin"
+					"CASTER"		"attach_origin"
+					"CASTER"		"attach_origin"
+					"CASTER"		"attach_origin"	//CP3
+				}
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_lone_druid/true_form.lua"
+				"Function"			"LevelUpAbility"
+				"ability_name"		"lone_druid_true_form_druid_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_true_form_transform"
+			{
+				"IsHidden"	"1"
+				"Duration"	"%transformation_time"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName" 	"modifier_true_form"
+						"Target"		"CASTER"
+					}
+				}
+			}
+	
+			"modifier_true_form"
+			{
+				"IsHidden"	"0"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"	"%base_attack_time"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_hp"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%speed_loss"
+				}
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_lone_druid/true_form.lua"
+						"Function"				"TrueFormStart"
+						"model"					"models/heroes/lone_druid/true_form.vmdl"
+						"sub_ability_name"		"lone_druid_true_form_druid_datadriven"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_lone_druid/true_form.lua"
+						"Function"				"HideWearables"
+					}
+				}
 			}
 		}
 	}
@@ -22144,13 +22129,18 @@
 
 
 	//Start of file lone_druid_true_form_druid_datadriven.txt
+	// Rewrite of Alchemist Unstable Concoction Throw (Sub-Ability)
+	// Author: Noya
+	// Date: 10.1.2015.
+	// Notes: Used together with "lone_druid_true_form_datadriven", hero needs both abilities (this one starts hidden)
 	"lone_druid_true_form_druid_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"			"lone_druid_true_form_druid"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -22171,6 +22161,85 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"transformation_time"		"1.933"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_druid_transform"
+				"Target"		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_LoneDruid.TrueForm.Recast"
+				"Target"		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_true_form.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"ControlPointEntities"
+				{
+					"CASTER"		"attach_origin"
+					"CASTER"		"attach_origin"
+					"CASTER"		"attach_origin"
+					"CASTER"		"attach_origin"	//CP3
+				}
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_lone_druid/true_form.lua"
+				"Function"			"LevelUpAbility"
+				"ability_name"		"lone_druid_true_form_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_druid_transform"
+			{
+				"Duration"		"%transformation_time"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_invulnerable"
+						"Target"		"CASTER"
+						"Duration"		"0.03"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_lone_druid/true_form.lua"
+						"Function"				"TrueFormEnd"
+						"main_ability_name"		"lone_druid_true_form_datadriven"
+						"remove_modifier_name"	"modifier_true_form"					
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_lone_druid/true_form.lua"
+						"Function"			"ShowWearables"
+					}
+				}
 			}
 		}
 	}

@@ -100,14 +100,13 @@
 					"ScriptFile"			"heroes/hero_lone_druid/true_form.lua"
 					"Function"				"TrueFormEnd"
 					"main_ability_name"		"lone_druid_true_form_datadriven"
-					"remove_modifier_name"	"modifier_true_form"
-					}
+					"remove_modifier_name"	"modifier_true_form"					
+				}
 
-					"RunScript"
-					{
-						"ScriptFile"		"heroes/hero_lone_druid/true_form.lua"
-						"Function"			"ShowWearables"
-					}
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_lone_druid/true_form.lua"
+					"Function"			"ShowWearables"
 				}
 			}
 		}

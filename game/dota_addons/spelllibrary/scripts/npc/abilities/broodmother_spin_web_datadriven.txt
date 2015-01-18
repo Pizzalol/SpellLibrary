@@ -231,6 +231,17 @@
 			"OnDestroy"
 			{
 				// remove all the modifiers
+				// Pathing
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_web_pathing_fade_datadriven"
+					"Target"		"TARGET"
+				}
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_web_pathing_datadriven"
+					"Target"		"TARGET"
+				}
 			}
 
 			"Properties"
