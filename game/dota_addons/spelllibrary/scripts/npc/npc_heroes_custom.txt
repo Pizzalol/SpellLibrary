@@ -22,7 +22,7 @@
 		"override_hero" "npc_dota_hero_ancient_apparition"
 	
 		"Ability1" "lion_impale_datadriven"
-		"Ability2" "broodmother_spin_web_datadriven"
+		"Ability2" "lion_voodoo_datadriven"
 		"Ability3" "night_stalker_hunter_in_the_night_datadriven"
 		"Ability4" "lion_finger_of_death_datadriven"
 	}
