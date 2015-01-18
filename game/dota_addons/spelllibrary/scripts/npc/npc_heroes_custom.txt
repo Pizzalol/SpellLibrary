@@ -23,7 +23,7 @@
 	
 		"Ability1" "lion_impale_datadriven"
 		"Ability2" "lion_voodoo_datadriven"
-		"Ability3" "night_stalker_hunter_in_the_night_datadriven"
+		"Ability3" "lion_mana_drain_datadriven"
 		"Ability4" "lion_finger_of_death_datadriven"
 	}
 	//End of file test_dummy_ranged.txt

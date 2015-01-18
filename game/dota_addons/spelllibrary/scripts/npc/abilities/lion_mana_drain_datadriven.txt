@@ -1,3 +1,6 @@
+// Rewrite of the Lion Mana Drain ability
+// Author: Pizzalol
+// Date: 18.01.2015.
 "lion_mana_drain_datadriven"
 {
 	// General
@@ -8,6 +11,15 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"lion_mana_drain"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+		"particle"			"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -55,6 +67,89 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"tick_interval"				"0.25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lion.ManaDrain"
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"		"modifier_mana_drain_datadriven"
+			"Target"			"TARGET"
+		}
+	}
+
+	"OnChannelInterrupted"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_lion/mana_drain.lua"
+			"Function"		"mana_drain_stop_sound"
+			"sound"			"Hero_Lion.ManaDrain"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"		"modifier_mana_drain_datadriven"
+			"Target"			"TARGET"
+		}
+	}
+
+	"OnChannelFinish"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_lion/mana_drain.lua"
+			"Function"		"mana_drain_stop_sound"
+			"sound"			"Hero_Lion.ManaDrain"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"		"modifier_mana_drain_datadriven"
+			"Target"			"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_mana_drain_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+					"EffectAttachType"	"start_at_customorigin"
+					"Target"		"TARGET"
+
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_hitloc"
+						"CASTER"	"attach_hitloc"
+					}
+				}
+			}
+
+			"ThinkInterval"	"%tick_interval"
+
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_lion/mana_drain.lua"
+					"Function"		"mana_drain"
+				}
+			}
 		}
 	}
 }
