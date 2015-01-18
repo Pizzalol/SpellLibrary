@@ -21416,6 +21416,9 @@
 
 
 	//Start of file lion_finger_of_death_datadriven.txt
+	// Rewrite of the Lion Finger of Death ability
+	// Author: Pizzalol
+	// Date: 18.01.2015.
 	"lion_finger_of_death_datadriven"
 	{
 		// General
@@ -21550,6 +21553,9 @@
 
 
 	//Start of file lion_impale_datadriven.txt
+	// Rewrite of the Lion Impale ability
+	// Author: Pizzalol
+	// Date: 18.01.2015.
 	"lion_impale_datadriven"
 	{
 		// General
@@ -21562,6 +21568,14 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"lion_impale"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+			"particle"			"particles/units/heroes/hero_lion/lion_spell_impale.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -21603,6 +21617,89 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"speed"				"1600 1600 1600 1600"
+			}
+			// Extra variables
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"air_time"			"0.52"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lion.Impale"
+				"Target"		"CASTER"
+			}
+	
+			"LinearProjectile"
+			{
+				"Target"			"POINT"
+				"EffectName"		"particles/units/heroes/hero_lion/lion_spell_impale.vpcf"
+				"StartRadius"		"%width"
+				"EndRadius"			"%width"
+				"MoveSpeed"			"%speed"
+				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"FixedDistance"		"%length"
+				"ProvidesVision"	"0"
+				"HasFrontalCone"	"0"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"		"0"
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lion.ImpaleHitTarget"
+				"Target"		"TARGET"
+			}
+	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_knockback"
+				"Target"		"TARGET"
+			}
+	
+			"Knockback"
+			{
+				"Target"	"TARGET"
+				"Center"	"CASTER"
+				"Distance"	"0"
+				"Duration"	"%air_time"
+				"Height"	"200"
+				"IsFixedDistance"	"1"
+			}
+	
+			"DelayedAction"
+			{
+				"Delay"		"%air_time"
+	
+				"Action"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Lion.ImpaleTargetLand"
+						"Target"		"TARGET"
+					}
+	
+					"Stun"
+					{
+						"Target"		"TARGET"
+						"Duration"		"%duration"
+					}
+	
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%AbilityDamage"
+					}
+				}
 			}
 		}
 	}
