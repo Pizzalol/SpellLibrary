@@ -1,3 +1,6 @@
+// Rewrite of Lich Dark Ritual
+// Author: Noya
+// Date: 18.1.2015.
 "lich_dark_ritual_datadriven"
 {
 	// General
@@ -7,6 +10,7 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_SUMMONED | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+	"AbilityTextureName"			"lich_dark_ritual"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -30,6 +34,53 @@
 			"var_type"				"FIELD_INTEGER"
 			"health_conversion"		"25 40 55 70"
 		}
+
+		// Extra values, for the experience share
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"xp_radius"				"1300"
+		}
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Ability.DarkRitual"
+			"Target" 		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
+			"EffectAttachType" 	"follow_origin"
+			"Target" 			"TARGET"
+			"ControlPointEntities"
+			{
+				"TARGET"	"attach_hitloc"
+				"CASTER"	"attach_hitloc"
+			}
+		}
+
+		"RunScript"
+	    {
+	        "ScriptFile"    "heroes/hero_lich/dark_ritual.lua"
+	        "Function"      "DarkRitual"
+	        "Target"
+	        {
+	        	"Center"  		"TARGET"
+	        	"Radius" 		"%xp_radius"
+	        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	        	"Types" 		"DOTA_UNIT_TARGET_HERO"
+		    }
+	    }
 	}
 }
 
