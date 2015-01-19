@@ -18810,10 +18810,20 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 		"MaxLevel"						"3"
+		"AbilityTextureName"			"keeper_of_the_light_recall"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_cast.vpcf"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -18836,6 +18846,86 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"teleport_delay"		"5.0 4.0 3.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.Recall.Cast"
+				"Target"		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_cast.vpcf"
+				"EffectAttachType"	"start_at_custom_origin"
+				
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_origin"
+					"CASTER"	"attach_origin"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/recall.lua"
+				"Function"		"Recall"
+				"modifier"		"modifier_recall_datadriven"
+				"sound_caster"	"Hero_KeeperOfTheLight.Recall.Cast"
+				"sound_target"	"Hero_KeeperOfTheLight.Recall.Target"
+				"Target"		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_recall_datadriven"
+			{
+				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"ThinkInterval"		"%teleport_delay"
+	
+				"OnIntervalThink"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_KeeperOfTheLight.Recall.End"
+						"Target"		"TARGET"
+					}
+	
+					"MoveUnit"
+					{
+						"Target"	"TARGET"
+						"MoveToTarget"	"CASTER"
+					}
+				}
+	
+				"OnTakeDamage"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_KeeperOfTheLight.Recall.Fail"
+						"Target"		"UNIT"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/recall.lua"
+						"Function"		"RecallFail"
+						"sound_caster"	"Hero_KeeperOfTheLight.Recall.Cast"
+						"sound_target"	"Hero_KeeperOfTheLight.Recall.Target"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_recall_datadriven"
+						"Target"		"UNIT"
+					}
+				}
 			}
 		}
 	}
