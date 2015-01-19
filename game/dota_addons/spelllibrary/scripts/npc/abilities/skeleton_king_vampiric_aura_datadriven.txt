@@ -46,13 +46,26 @@
 		}
 
 		"modifier_vampiric_aura_buff"
-		{
-			"OnAttackLanded"
+   		{	
+   			"OnAttackLanded"    	
+   			{
+   				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_skeleton_k/vampiric_aura.lua"
+					"Function"		"VampiricAuraApply"
+				}
+			}
+	    }
+
+	    "modifier_vampiric_aura_lifesteal"
+	    {
+	    	"IsHidden"		"1"
+	    	"OnDealDamage"
 			{
 				"Lifesteal"
 				{
-					"Target" 			"ATTACKER"
-					"LifestealPercent"	"%vampiric_aura"
+					"Target" 				"ATTACKER"
+					"LifestealPercent"		"%lifesteal"
 				}
 			}
 		}
