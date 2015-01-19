@@ -18803,6 +18803,11 @@
 
 
 	//Start of file keeper_of_the_light_recall_datadriven.txt
+	// Rewrite of the Keeper of the Light Recall ability
+	// Author: Pizzalol
+	// Date: 19.01.2015.
+	// NOTE: This ability gets leveled up by KotL Spirit Form(datadriven version) and is also used by it
+	// NOTE2: If you wish to use it as a standalone ability then just remove the NOT LEARNABLE behavior
 	"keeper_of_the_light_recall_datadriven"
 	{
 		// General
