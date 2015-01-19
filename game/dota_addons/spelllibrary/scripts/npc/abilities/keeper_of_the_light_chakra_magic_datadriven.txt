@@ -1,3 +1,6 @@
+// Rewrite of the Keeper of the Light Chakra Magic ability
+// Author: Pizzalol
+// Date: 19.01.2015.
 "keeper_of_the_light_chakra_magic_datadriven"
 {
 	// General
@@ -7,6 +10,15 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+	"AbilityTextureName"			"keeper_of_the_light_chakra_magic"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -32,8 +44,35 @@
 	{
 		"01"
 		{
-			"var_type"				"FIELD_INTEGER"
+			"var_type"				"FIELD_FLOAT"
 			"mana_restore"			"75 150 225 300"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_KeeperOfTheLight.ChakraMagic.Target"
+			"Target"		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+
+			"ControlPointEntities"
+			{
+				"CASTER"	"follow_origin"
+				"TARGET"	"follow_origin"
+			}
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/chakra_magic.lua"
+			"Function"		"ChakraMagic"
 		}
 	}
 }

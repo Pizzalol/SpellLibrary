@@ -21,9 +21,11 @@
 	{
 		"override_hero" "npc_dota_hero_ancient_apparition"
 	
+		"AbilityLayout"	"6"
+	
 		"Ability1" "lion_impale_datadriven"
 		"Ability2" "lion_voodoo_datadriven"
-		"Ability3" "lion_mana_drain_datadriven"
+		"Ability3" "keeper_of_the_light_chakra_magic_datadriven"
 		"Ability4" "lion_finger_of_death_datadriven"
 	}
 	//End of file test_dummy_ranged.txt

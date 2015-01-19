@@ -18530,6 +18530,9 @@
 
 
 	//Start of file keeper_of_the_light_chakra_magic_datadriven.txt
+	// Rewrite of the Keeper of the Light Chakra Magic ability
+	// Author: Pizzalol
+	// Date: 19.01.2015.
 	"keeper_of_the_light_chakra_magic_datadriven"
 	{
 		// General
@@ -18539,6 +18542,15 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"AbilityTextureName"			"keeper_of_the_light_chakra_magic"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -18564,8 +18576,35 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"				"FIELD_FLOAT"
 				"mana_restore"			"75 150 225 300"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.ChakraMagic.Target"
+				"Target"		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+	
+				"ControlPointEntities"
+				{
+					"CASTER"	"follow_origin"
+					"TARGET"	"follow_origin"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/chakra_magic.lua"
+				"Function"		"ChakraMagic"
 			}
 		}
 	}
@@ -20379,6 +20418,10 @@
 
 
 	//Start of file lich_chain_frost_datadriven.txt
+	// Rewrite of Lich Chain Frost
+	// Author: Noya
+	// Date: 19.1.2015.
+	// Note: Find a method to fix having many chain frosts flying at the same time.
 	"lich_chain_frost_datadriven"
 	{
 		// General
@@ -20465,13 +20508,120 @@
 				"var_type"				"FIELD_INTEGER"
 				"cast_range_scepter"	"850 850 850"
 			}
-		}			
+	
+			//Extra
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"jump_interval"			"0.2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mini_stun"				"0.1"
+			}		
+		}
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
+			"particle"	"particles/units/heroes/hero_lich/lich_slowed_cold.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lich.ChainFrost"
+				"Target" 		"TARGET"
+			}
+	
+			"Stun"
+			{
+				"Target"		"TARGET"
+				"Duration"		"%mini_stun"
+			}
+	
+			"TrackingProjectile"
+			{
+				"Target"           	"TARGET"
+				"EffectName"		"particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
+				"Dodgeable"			"1"
+				"ProvidesVision"	"1"
+				"VisionRadius"		"%vision_radius"
+				"MoveSpeed"        	"%projectile_speed"
+				"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"1"
+	
+			"Damage"
+			{
+				"Target"		 "TARGET"
+				"Type"			 "DAMAGE_TYPE_MAGICAL"
+				"Damage"		 "%damage"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_chain_frost_slow"
+				"Target" 		"TARGET"
+			}
+	
+			"DelayedAction"
+			{
+				"Delay"		"%jump_interval"
+				"Action"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_lich/chain_frost.lua"
+						"Function"		"ChainFrost"
+						"Target"
+						{
+							"Center"  		"TARGET"
+							"Radius" 		"%jump_range"
+							"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_chain_frost_slow"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+		
+				"Duration"			"%slow_duration"
+		
+				"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
+				"StatusEffectPriority"	"10"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%slow_movement_speed"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_attack_speed" 
+				}
+			}
+		}
 	}
 	
 	//End of file lich_chain_frost_datadriven.txt
 
 
 	//Start of file lich_dark_ritual_datadriven.txt
+	// Rewrite of Lich Dark Ritual
+	// Author: Noya
+	// Date: 18.1.2015.
 	"lich_dark_ritual_datadriven"
 	{
 		// General
@@ -20481,6 +20631,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_SUMMONED | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"AbilityTextureName"			"lich_dark_ritual"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -20504,6 +20655,53 @@
 				"var_type"				"FIELD_INTEGER"
 				"health_conversion"		"25 40 55 70"
 			}
+	
+			// Extra values, for the experience share
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"xp_radius"				"1300"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Ability.DarkRitual"
+				"Target" 		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
+				"EffectAttachType" 	"follow_origin"
+				"Target" 			"TARGET"
+				"ControlPointEntities"
+				{
+					"TARGET"	"attach_hitloc"
+					"CASTER"	"attach_hitloc"
+				}
+			}
+	
+			"RunScript"
+		    {
+		        "ScriptFile"    "heroes/hero_lich/dark_ritual.lua"
+		        "Function"      "DarkRitual"
+		        "Target"
+		        {
+		        	"Center"  		"TARGET"
+		        	"Radius" 		"%xp_radius"
+		        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		        	"Types" 		"DOTA_UNIT_TARGET_HERO"
+			    }
+		    }
 		}
 	}
 	
@@ -20511,6 +20709,11 @@
 
 
 	//Start of file lich_frost_armor_datadriven.txt
+	// Rewrite of Lich Frost Nova
+	// Author: Noya
+	// Date: 18.1.2015.
+	// Notes: Includes autocast lua logic, to cast this spell on an allied hero who gets under attack within the autocast radius
+	//		  Can only be autocast on heroes, but changing the aura type can modify this.
 	"lich_frost_armor_datadriven"
 	{
 		// General
@@ -20520,6 +20723,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"AbilityTextureName"			"lich_frost_armor"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -20563,6 +20767,123 @@
 				"var_type"				"FIELD_INTEGER"
 				"slow_attack_speed"		"-20 -20 -20 -20"
 			}
+	
+			// Extra values to control the Autocast AI
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"autocast_radius"		"1100"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
+			"particle"	"particles/status_fx/status_effect_frost_armor.vpcf"
+			"particle"	"particles/status_fx/status_effect_frost.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lich.FrostArmor"
+				"Target"		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_frost_armor"
+				"Target"		"TARGET"
+				"Duration"		"%AbilityDuration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_frost_armor"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_bonus"
+				}
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "heroes/hero_lich/frost_armor.lua"
+				        "Function"      "FrostArmorParticle"	
+				    }
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "heroes/hero_lich/frost_armor.lua"
+				        "Function"      "EndFrostArmorParticle"	
+				    }
+				}
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_frost_armor.vpcf"
+				"StatusEffectPriority"	"10"
+	
+				"OnAttacked"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_frost_armor_slow"
+						"Target"		"ATTACKER"
+						"Duration"		"%slow_duration"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Lich.FrostArmor"
+						"Target"		"TARGET"
+					}
+				}
+			}
+	
+			"modifier_frost_armor_slow"
+			{
+				"IsDebuff"	"1"
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_frost.vpcf"
+				"StatusEffectPriority"	"10"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed"
+				}
+			}
+	
+			"modifier_frost_armor_autocast_aura"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"Aura" 				"modifier_frost_armor_autocast_attacked"
+				"Aura_Radius" 		"%autocast_radius"
+				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types" 		"DOTA_UNIT_TARGET_HERO"
+			}
+	
+			"modifier_frost_armor_autocast_attacked"
+			{
+				"IsHidden"	"1"
+				"OnAttacked"
+				{
+					"RunScript"
+				    {
+				        "ScriptFile"    "heroes/hero_lich/frost_armor.lua"
+				        "Function"      "FrostArmorAutocast"
+				    }
+				}
+			}
 		}
 	}
 	
@@ -20570,6 +20891,9 @@
 
 
 	//Start of file lich_frost_nova_datadriven.txt
+	// Rewrite of Lich Frost Nova
+	// Author: Noya
+	// Date: 18.1.2015.
 	"lich_frost_nova_datadriven"
 	{
 		// General
@@ -20587,6 +20911,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+	
+		"AoERadius"						"200"
 	
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -20628,6 +20954,83 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"aoe_damage"			"75 100 125 150"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
+			"particle"	"particles/status_fx/status_effect_frost_lich.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+		}
+		
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"TARGET"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Ability.FrostNova"
+				"Target"		"TARGET"
+			}
+	
+			"Damage"
+			{
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Target"	"TARGET"
+				"Damage"	"%AbilityDamage"
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  				"TARGET"
+					"Radius" 				"%radius"
+					"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				}
+	
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"    	"modifier_frost_nova_slow"
+						"Target"			"TARGET"
+						"Duration"			"%AbilityDuration"
+					}
+	
+					"Damage"
+					{
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Target"	"TARGET"
+						"Damage"	"%aoe_damage"
+					}
+	
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_frost_nova_slow"
+			{
+				"IsDebuff"		"1"
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
+				"StatusEffectPriority"	"10"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed"
+				}
 			}
 		}
 	}
@@ -37504,13 +37907,26 @@
 			}
 	
 			"modifier_vampiric_aura_buff"
-			{
-				"OnAttackLanded"
+	   		{	
+	   			"OnAttackLanded"    	
+	   			{
+	   				"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_skeleton_k/vampiric_aura.lua"
+						"Function"		"VampiricAuraApply"
+					}
+				}
+		    }
+	
+		    "modifier_vampiric_aura_lifesteal"
+		    {
+		    	"IsHidden"		"1"
+		    	"OnDealDamage"
 				{
 					"Lifesteal"
 					{
-						"Target" 			"ATTACKER"
-						"LifestealPercent"	"%vampiric_aura"
+						"Target" 				"ATTACKER"
+						"LifestealPercent"		"%lifesteal"
 					}
 				}
 			}
