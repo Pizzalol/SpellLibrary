@@ -1,3 +1,7 @@
+// Rewrite of Lich Chain Frost
+// Author: Noya
+// Date: 19.1.2015.
+// Note: Find a method to fix having many chain frosts flying at the same time.
 "lich_chain_frost_datadriven"
 {
 	// General
@@ -84,6 +88,110 @@
 			"var_type"				"FIELD_INTEGER"
 			"cast_range_scepter"	"850 850 850"
 		}
-	}			
+
+		//Extra
+		"11"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"jump_interval"			"0.2"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"mini_stun"				"0.1"
+		}		
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
+		"particle"	"particles/units/heroes/hero_lich/lich_slowed_cold.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lich.ChainFrost"
+			"Target" 		"TARGET"
+		}
+
+		"Stun"
+		{
+			"Target"		"TARGET"
+			"Duration"		"%mini_stun"
+		}
+
+		"TrackingProjectile"
+		{
+			"Target"           	"TARGET"
+			"EffectName"		"particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
+			"Dodgeable"			"1"
+			"ProvidesVision"	"1"
+			"VisionRadius"		"%vision_radius"
+			"MoveSpeed"        	"%projectile_speed"
+			"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"1"
+
+		"Damage"
+		{
+			"Target"		 "TARGET"
+			"Type"			 "DAMAGE_TYPE_MAGICAL"
+			"Damage"		 "%damage"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_chain_frost_slow"
+			"Target" 		"TARGET"
+		}
+
+		"DelayedAction"
+		{
+			"Delay"		"%jump_interval"
+			"Action"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_lich/chain_frost.lua"
+					"Function"		"ChainFrost"
+					"Target"
+					{
+						"Center"  		"TARGET"
+						"Radius" 		"%jump_range"
+						"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_chain_frost_slow"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"1"
+	
+			"Duration"			"%slow_duration"
+	
+			"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
+			"StatusEffectPriority"	"10"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%slow_movement_speed"
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_attack_speed" 
+			}
+		}
+	}
 }
 
