@@ -11,6 +11,9 @@
 !/game/dota_addons/spelllibrary
 /game/dota_addons/spelllibrary/*
 !/game/dota_addons/spelllibrary/scripts
+!/game/dota_addons/spelllibrary/resource
+/game/dota_addons/spelllibrary/resource/*
+!/game/dota_addons/spelllibrary/resource/flash3
 
 
 
