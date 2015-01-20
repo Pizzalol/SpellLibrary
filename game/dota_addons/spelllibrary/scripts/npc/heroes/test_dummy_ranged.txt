@@ -5,7 +5,7 @@
 	"AbilityLayout"	"6"
 
 	"Ability1"	"lion_impale_datadriven"
-	"Ability2"	"lion_voodoo_datadriven"
+	"Ability2"	"keeper_of_the_light_mana_leak_datadriven"
 	"Ability3"	"keeper_of_the_light_chakra_magic_datadriven"
 	"Ability4"	"keeper_of_the_light_recall_datadriven"
 	"Ability5"	"keeper_of_the_light_blinding_light_datadriven"

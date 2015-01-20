@@ -140,8 +140,7 @@
 						}
 						
 					}
-				}
-				
+				}				
 				
 				"ApplyModifier"
 				{

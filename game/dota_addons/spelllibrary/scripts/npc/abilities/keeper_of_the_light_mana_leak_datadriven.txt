@@ -1,3 +1,6 @@
+// Rewrite of the Keeper of the Light Mana Leak ability
+// Author: Pizzalol
+// Date: 20.01.2015.
 "keeper_of_the_light_mana_leak_datadriven"
 {
 	// General
@@ -7,6 +10,18 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"keeper_of_the_light_mana_leak"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf"
+		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf"
+		"particle"  		""
+		
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -48,6 +63,110 @@
 			"var_type"					"FIELD_INTEGER"
 			"cast_range_tooltip"		"550 700 850 1000"
 		}
+		// Extra
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"leash_range_check"			"300"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"check_interval"			"0.1"
+		}
 	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_KeeperOfTheLight.ManaLeak.Cast"
+			"Target" 		"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_KeeperOfTheLight.ManaLeak.Target"
+			"Target" 		"TARGET"
+		}
+		
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf"
+			"EffectAttachType"  "start_at_customorigin"
+			
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_origin"
+				"TARGET"	"follow_origin"
+			}
+		}
+		
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_mana_leak_datadriven"
+			"Target" 		"TARGET"
+			"Duration"		"%duration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_mana_leak_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/mana_leak.lua"
+					"Function"		"ManaLeakInit"
+					"sound"			"Hero_KeeperOfTheLight.ManaLeak.Stun"
+					"modifier"		"modifier_mana_leak_datadriven"
+				}
+			}
+
+			"OnUnitMoved"
+			{
+				"Random"
+				{
+					"Chance"			"10"
+					"PseudoRandom" "DOTA_PSEUDO_RANDOM_JUGG_CRIT"					
+					"OnSuccess"
+					{
+						"FireEffect"
+						{
+							"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf"
+							"EffectAttachType"  "attach_origin"
+							"Target"            "UNIT"
+						}
+
+						"FireSound"
+						{
+							"EffectName"	"Hero_KeeperOfTheLight.ManaLeak.Target"
+							"Target" 		"UNIT"
+						}						
+					}
+				}										
+			}			
+			
+	
+			"ThinkInterval"  "%check_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/mana_leak.lua"
+					"Function"		"ManaLeak"
+					"sound"			"Hero_KeeperOfTheLight.ManaLeak.Stun"
+					"modifier"		"modifier_mana_leak_datadriven"
+				}
+			}			
+		}
+	}	
 }	
 
