@@ -1,9 +1,14 @@
+// Rewrite of Brewmaster Drunken Brawler
+// Author: Noya
+// Date: 20.01.2015.
+// Note: Icon changing is originally done with flash scaleform, in this ability there will just be a buff icon to display when the player has a guaranteed crit/miss.
 "brewmaster_drunken_brawler_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"brewmaster_drunken_brawler"
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -30,5 +35,206 @@
 			"last_proc"			"16 14 12 10"
 		}
 	}
-}
 
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_brewmaster/brewmaster_drunken_brawler_crit.vpcf"
+		"particle"	"particles/units/heroes/hero_brewmaster/brewmaster_drunkenbrawler_evade.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+	}
+
+	"Modifiers"
+	{
+		"modifier_drunken_brawler"
+		{
+		    "Passive"   "1"
+		    "IsHidden"  "1"
+
+		    "Properties"
+		    {
+		        "MODIFIER_PROPERTY_EVASION_CONSTANT" "%dodge_chance"
+		    }
+
+		    // As we aren't tracking the attacks before the spell is learned, let's asume that when the
+		    // modifier is first created, the caster hasn't attacked in the last 10 sec and give the guaranteed crit/dodge.
+		    "OnCreated"
+		    {
+		    	"ApplyModifier"
+		    	{
+		    		"ModifierName"	"modifier_drunken_brawler_guaranteed_crit"
+		    		"Target" 		"CASTER"
+		    	}
+
+		    	"ApplyModifier"
+		    	{
+		    		"ModifierName"	"modifier_drunken_brawler_guaranteed_dodge"
+		    		"Target" 		"TARGET"
+		    	}		    	
+		    }
+
+		    // Normal Crit
+		    "OnAttackStart"
+		    {
+		    	"RemoveModifier"
+		        {
+		            "ModifierName"  	"modifier_drunken_brawler_crit"
+		            "Target"   			"CASTER"    
+		        }
+
+		        "Random"
+		        {
+		            "Chance" "%crit_chance"
+		            "OnSuccess"
+		            {
+		            	"FireSound"
+				        {
+				        	"EffectName"	"Hero_Brewmaster.Brawler.Crit"
+				        	"Target"		"CASTER"
+				        }
+
+				        "FireEffect"
+				        {
+				       		"EffectName" 		"particles/units/heroes/hero_brewmaster/brewmaster_drunken_brawler_crit.vpcf"
+				            "EffectAttachType"  "attach_attack1"
+				            "Target"    		"CASTER"
+				        }
+
+		                "ApplyModifier"
+		                {
+		                    "ModifierName" 	"modifier_drunken_brawler_crit"
+		                    "Target"    	"CASTER"    
+		                }        
+		            }
+		        }
+		    }
+
+		    // Guaranteed Crit Tracking
+		    "OnAttackLanded"
+		    {
+		    	"RunScript"
+		    	{
+		    		"ScriptFile"	"heroes/hero_brewmaster/drunken_brawler.lua"
+		    		"Function"		"DrunkenBrawlerCritReset"
+		    	}
+
+		    	"RemoveModifier"
+		        {
+		            "ModifierName"  "modifier_drunken_brawler_guaranteed_crit"
+		            "Target"   		"CASTER"    
+		        }  	
+		    }
+
+		    // Guaranteed Dodge Tracking. Also needs an aura to check for OnAttackFailed and remove the guaranteed dodge
+		    "OnAttacked"
+		    {
+		    	"RunScript"
+		    	{
+		    		"ScriptFile"	"heroes/hero_brewmaster/drunken_brawler.lua"
+		    		"Function"		"DrunkenBrawlerDodgeReset"
+		    	}
+		    }
+
+		    "Aura"          "modifier_drunken_brawler_miss_detection"
+		    "Aura_Radius"   "1000" //Max Attack Range
+		    "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		    "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		    "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+
+		}
+
+		"modifier_drunken_brawler_crit"
+		{
+		    "IsHidden"  "1"
+
+		    "Properties"
+		    {
+		        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_multiplier"
+		    }
+		}
+
+		"modifier_drunken_brawler_guaranteed_crit"
+		{
+			"TextureName"		"brewmaster_drunken_brawler_crit"
+
+			"OnAttackLanded"
+			{
+				"FireSound"
+		        {
+		        	"EffectName"	"Hero_Brewmaster.Brawler.Crit"
+		        	"Target"		"CASTER"
+		        }
+
+		        "FireEffect"
+		        {
+		       		"EffectName" 		"particles/units/heroes/hero_brewmaster/brewmaster_drunken_brawler_crit.vpcf"
+		            "EffectAttachType"  "attach_attack1"
+		            "Target"    		"CASTER"
+		        }
+			}
+
+		    "Properties"
+		    {
+		        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_multiplier"
+		    }
+
+		    "OnCreated"
+		    {
+		    	"AttachEffect"
+		    	{
+		    		"EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_drunkenbrawler_crit.vpcf"
+		   			"EffectAttachType"	"follow_origin"
+		    		"Target"            "CASTER"
+		    		"ControlPointEntities"
+		    		{
+		    			"CASTER"	"attach_origin"
+		    			"CASTER"	"attach_origin"
+		    		}
+		    	}
+		    }
+		}
+
+		"modifier_drunken_brawler_miss_detection"
+		{
+			"IsHidden"	"1"
+			"OnAttackFailed"
+			{
+				"RunScript"
+		    	{
+		    		"ScriptFile"	"heroes/hero_brewmaster/drunken_brawler.lua"
+		    		"Function"		"DrunkenBrawlerDodgeReset"
+		    	}
+
+		    	"RemoveModifier"
+		    	{
+		    		"ModifierName"	"modifier_drunken_brawler_guaranteed_dodge"
+		    		"Target" 		"TARGET" // <- attacked unit
+		    	}
+			}
+		}
+
+		"modifier_drunken_brawler_guaranteed_dodge"
+		{
+			"TextureName"		"brewmaster_drunken_brawler_miss"
+
+			"Properties"
+		    {
+		        "MODIFIER_PROPERTY_EVASION_CONSTANT" "100"
+		    }
+
+		    "OnCreated"
+		    {
+		    	"AttachEffect"
+		    	{
+		    		"EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_drunkenbrawler_evade.vpcf"
+		   			"EffectAttachType"	"follow_origin"
+		    		"Target"            "CASTER"
+		    		"ControlPointEntities"
+		    		{
+		    			"CASTER"	"attach_origin"
+		    			"CASTER"	"attach_origin"
+		    		}
+		    	}
+		    }
+		}
+	}
+}
