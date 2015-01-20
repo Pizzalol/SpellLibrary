@@ -94,6 +94,12 @@
 					"Function"		"voodoo_start"
 					"model"			"models/props_gameplay/frog.vmdl"
 				}
+
+				"RunScript"
+				{
+					"ScriptFile"		"scripts/vscripts/heroes/hero_lion/voodoo.lua"
+					"Function"			"HideWearables"
+				}
 			}
 
 			"OnDestroy"
@@ -102,6 +108,12 @@
 				{
 					"ScriptFile"	"scripts/vscripts/heroes/hero_lion/voodoo.lua"
 					"Function"		"voodoo_end"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_lion/voodoo.lua"
+					"Function"		"ShowWearables"
 				}
 			}
 
