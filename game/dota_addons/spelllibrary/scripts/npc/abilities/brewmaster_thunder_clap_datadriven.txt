@@ -50,12 +50,12 @@
 		"05"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"movement_slow"				"25 35 45 55"
+			"movement_slow"				"-25 -35 -45 -55"
 		}
 		"06"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"attack_speed_slow"			"25 35 45 55"
+			"attack_speed_slow"			"-25 -35 -45 -55"
 		}
 	}
 
@@ -139,8 +139,8 @@
 
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "-%movement_slow"
-			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "-%attack_speed_slow" 
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_slow"
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_slow" 
 			}
 
 			"OnCreated"

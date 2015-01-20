@@ -1,3 +1,6 @@
+// Rewrite of Brewmaster Drunken Haze
+// Author: Noya
+// Date: 20.01.2015.
 "brewmaster_drunken_haze_datadriven"
 {
 	// General
@@ -11,6 +14,8 @@
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"brewmaster_drunken_haze"
 	
+	"AoERadius"						"200"
+
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastPoint"				"0.4 0.4 0.4"
@@ -45,12 +50,91 @@
 		"05"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"movement_slow"				"14 18 22 26"
+			"movement_slow"				"-14 -18 -22 -26"
 		}
 		"04"
 		{
 			"var_type"					"FIELD_INTEGER"
 			"miss_chance"				"45 55 65 75"
+		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze_debuff.vpcf"
+		"particle" 	"particles/status_fx/status_effect_brewmaster_drunken_haze.vpcf"
+		"particle"	"particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"TrackingProjectile"
+		{
+		    "Target"           "TARGET"
+		    "EffectName"       "particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze.vpcf"
+		    "Dodgeable"        "0"
+		    "ProvidesVision"   "0"
+		    "MoveSpeed"        "1300"
+		    "SourceAttachment" "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+		}		
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Brewmaster.DrunkenHaze.Cast"
+			"Target"		"CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"    "modifier_drunken_haze"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Radius"	"%radius"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_HERO"
+			}
+			"Duration"		"%duration"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"    "modifier_drunken_haze"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Radius"	"%radius"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_BASIC"
+			}
+			"Duration"		"%duration_creeps"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Brewmaster.DrunkenHaze.Target"
+			"Target"		"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_drunken_haze"
+		{
+			"IsDebuff"	"1"
+
+			"EffectName"			"particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze_debuff.vpcf"
+			"EffectAttachType"		"follow_origin"
+
+			"StatusEffectName"		"particles/status_fx/status_effect_brewmaster_drunken_haze.vpcf"
+			"StatusEffectPriority"	"5"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MISS_PERCENTAGE"				"%miss_chance"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow"
+			}
 		}
 	}
 }
