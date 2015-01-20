@@ -130,7 +130,7 @@
 
 				"FireSound"
 				{
-					"EffectName"	"Hero_Lich.FrostArmor"
+					"EffectName"	"Hero_Lich.FrostArmorDamage"
 					"Target"		"TARGET"
 				}
 			}
