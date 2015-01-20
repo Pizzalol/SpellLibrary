@@ -18463,6 +18463,11 @@
 
 
 	//Start of file keeper_of_the_light_blinding_light_datadriven.txt
+	// Rewrite of the Keeper of the Light Blinding Light ability
+	// Author: Pizzalol
+	// Date: 20.01.2015.
+	// NOTE: This ability gets leveled up by KotL Spirit Form(datadriven version) and is also used by it
+	// NOTE2: If you wish to use it as a standalone ability then just remove the NOT LEARNABLE behavior
 	"keeper_of_the_light_blinding_light_datadriven"
 	{
 		// General
@@ -18471,6 +18476,17 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"						"3"
+		"AbilityTextureName"			"keeper_of_the_light_blinding_light"
+		"AOERadius"						"%radius"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_aoe.vpcf"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_debuff.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -18523,7 +18539,102 @@
 				"var_type"				"FIELD_FLOAT"
 				"knockback_duration"	"0.4 0.4 0.4"
 			}
+			// Extra
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tree_radius"			"150"
+			}
 		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.BlindingLight"
+				"Target" 		"CASTER"
+			}
+			
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_aoe.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				"TargetPoint"		"POINT"
+	
+				"ControlPoints"
+				{
+					"01"	"POINT"
+					"02"	"%radius 0 0"
+				}
+				
+			}
+			
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  	"POINT"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+			
+				"Action"    
+				{
+					"Knockback"
+					{
+						"Target"            "TARGET"
+						"Center" 	        "POINT"
+						"Distance"	        "%knockback_distance"
+						"Duration"	        "%knockback_duration"
+						"Height"	        "%knockback_height"
+						"IsFixedDistance"	"1"
+						"ShouldStun"        "0"	
+					}
+	
+					"DelayedAction"
+					{
+						"Delay"     "%knockback_duration"
+						"Action"    
+						{
+							"DestroyTrees"
+							{
+								"Target" 		"TARGET"
+								"Radius"		"%tree_radius"
+							}
+							
+						}
+					}
+					
+					
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_blinding_light_datadriven"
+						"Target" 		"TARGET"
+						"Duration"		"%miss_duration"
+					}
+				}
+			}		
+		}
+	
+		"Modifiers"
+		{
+			"modifier_blinding_light_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+		
+				"EffectName"		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE" "%miss_rate" 
+				}			
+			}
+		}	
 	}
 	
 	//End of file keeper_of_the_light_blinding_light_datadriven.txt
@@ -18891,6 +19002,8 @@
 			{
 				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall.vpcf"
 				"EffectAttachType"	"follow_origin"
+	
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 	
 				"ThinkInterval"		"%teleport_delay"
 	

@@ -87,6 +87,8 @@
 			"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall.vpcf"
 			"EffectAttachType"	"follow_origin"
 
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
 			"ThinkInterval"		"%teleport_delay"
 
 			"OnIntervalThink"
