@@ -90,6 +90,11 @@
 			"IsHidden"			"0"
 			"IsDebuff"			"0"
 	
+			"States"
+			{
+				"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+	
 			"OnCreated"
 			{
 				"AttachEffect"
