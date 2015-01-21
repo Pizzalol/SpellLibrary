@@ -4844,12 +4844,17 @@
 
 
 	//Start of file brewmaster_drunken_brawler_datadriven.txt
+	// Rewrite of Brewmaster Drunken Brawler
+	// Author: Noya
+	// Date: 20.01.2015.
+	// Note: Icon changing is originally done with flash scaleform, in this ability there will just be a buff icon to display when the player has a guaranteed crit/miss.
 	"brewmaster_drunken_brawler_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"brewmaster_drunken_brawler"
 	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4876,12 +4881,216 @@
 				"last_proc"			"16 14 12 10"
 			}
 		}
-	}
 	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_brewmaster/brewmaster_drunken_brawler_crit.vpcf"
+			"particle"	"particles/units/heroes/hero_brewmaster/brewmaster_drunkenbrawler_evade.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_drunken_brawler"
+			{
+			    "Passive"   "1"
+			    "IsHidden"  "1"
+	
+			    "Properties"
+			    {
+			        "MODIFIER_PROPERTY_EVASION_CONSTANT" "%dodge_chance"
+			    }
+	
+			    // As we aren't tracking the attacks before the spell is learned, let's asume that when the
+			    // modifier is first created, the caster hasn't attacked in the last 10 sec and give the guaranteed crit/dodge.
+			    "OnCreated"
+			    {
+			    	"ApplyModifier"
+			    	{
+			    		"ModifierName"	"modifier_drunken_brawler_guaranteed_crit"
+			    		"Target" 		"CASTER"
+			    	}
+	
+			    	"ApplyModifier"
+			    	{
+			    		"ModifierName"	"modifier_drunken_brawler_guaranteed_dodge"
+			    		"Target" 		"TARGET"
+			    	}		    	
+			    }
+	
+			    // Normal Crit
+			    "OnAttackStart"
+			    {
+			    	"RemoveModifier"
+			        {
+			            "ModifierName"  	"modifier_drunken_brawler_crit"
+			            "Target"   			"CASTER"    
+			        }
+	
+			        "Random"
+			        {
+			            "Chance" "%crit_chance"
+			            "OnSuccess"
+			            {
+			            	"FireSound"
+					        {
+					        	"EffectName"	"Hero_Brewmaster.Brawler.Crit"
+					        	"Target"		"CASTER"
+					        }
+	
+					        "FireEffect"
+					        {
+					       		"EffectName" 		"particles/units/heroes/hero_brewmaster/brewmaster_drunken_brawler_crit.vpcf"
+					            "EffectAttachType"  "attach_attack1"
+					            "Target"    		"CASTER"
+					        }
+	
+			                "ApplyModifier"
+			                {
+			                    "ModifierName" 	"modifier_drunken_brawler_crit"
+			                    "Target"    	"CASTER"    
+			                }        
+			            }
+			        }
+			    }
+	
+			    // Guaranteed Crit Tracking
+			    "OnAttackLanded"
+			    {
+			    	"RunScript"
+			    	{
+			    		"ScriptFile"	"heroes/hero_brewmaster/drunken_brawler.lua"
+			    		"Function"		"DrunkenBrawlerCritReset"
+			    	}
+	
+			    	"RemoveModifier"
+			        {
+			            "ModifierName"  "modifier_drunken_brawler_guaranteed_crit"
+			            "Target"   		"CASTER"    
+			        }  	
+			    }
+	
+			    // Guaranteed Dodge Tracking. Also needs an aura to check for OnAttackFailed and remove the guaranteed dodge
+			    "OnAttacked"
+			    {
+			    	"RunScript"
+			    	{
+			    		"ScriptFile"	"heroes/hero_brewmaster/drunken_brawler.lua"
+			    		"Function"		"DrunkenBrawlerDodgeReset"
+			    	}
+			    }
+	
+			    "Aura"          "modifier_drunken_brawler_miss_detection"
+			    "Aura_Radius"   "1000" //Max Attack Range
+			    "Aura_Teams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "Aura_Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			    "Aura_Flags"    "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	
+			}
+	
+			"modifier_drunken_brawler_crit"
+			{
+			    "IsHidden"  "1"
+	
+			    "Properties"
+			    {
+			        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_multiplier"
+			    }
+			}
+	
+			"modifier_drunken_brawler_guaranteed_crit"
+			{
+				"TextureName"		"brewmaster_drunken_brawler_crit"
+	
+				"OnAttackLanded"
+				{
+					"FireSound"
+			        {
+			        	"EffectName"	"Hero_Brewmaster.Brawler.Crit"
+			        	"Target"		"CASTER"
+			        }
+	
+			        "FireEffect"
+			        {
+			       		"EffectName" 		"particles/units/heroes/hero_brewmaster/brewmaster_drunken_brawler_crit.vpcf"
+			            "EffectAttachType"  "attach_attack1"
+			            "Target"    		"CASTER"
+			        }
+				}
+	
+			    "Properties"
+			    {
+			        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_multiplier"
+			    }
+	
+			    "OnCreated"
+			    {
+			    	"AttachEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_drunkenbrawler_crit.vpcf"
+			   			"EffectAttachType"	"follow_origin"
+			    		"Target"            "CASTER"
+			    		"ControlPointEntities"
+			    		{
+			    			"CASTER"	"attach_origin"
+			    			"CASTER"	"attach_origin"
+			    		}
+			    	}
+			    }
+			}
+	
+			"modifier_drunken_brawler_miss_detection"
+			{
+				"IsHidden"	"1"
+				"OnAttackFailed"
+				{
+					"RunScript"
+			    	{
+			    		"ScriptFile"	"heroes/hero_brewmaster/drunken_brawler.lua"
+			    		"Function"		"DrunkenBrawlerDodgeReset"
+			    	}
+	
+			    	"RemoveModifier"
+			    	{
+			    		"ModifierName"	"modifier_drunken_brawler_guaranteed_dodge"
+			    		"Target" 		"TARGET" // <- attacked unit
+			    	}
+				}
+			}
+	
+			"modifier_drunken_brawler_guaranteed_dodge"
+			{
+				"TextureName"		"brewmaster_drunken_brawler_miss"
+	
+				"Properties"
+			    {
+			        "MODIFIER_PROPERTY_EVASION_CONSTANT" "100"
+			    }
+	
+			    "OnCreated"
+			    {
+			    	"AttachEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_drunkenbrawler_evade.vpcf"
+			   			"EffectAttachType"	"follow_origin"
+			    		"Target"            "CASTER"
+			    		"ControlPointEntities"
+			    		{
+			    			"CASTER"	"attach_origin"
+			    			"CASTER"	"attach_origin"
+			    		}
+			    	}
+			    }
+			}
+		}
+	}
 	//End of file brewmaster_drunken_brawler_datadriven.txt
 
 
 	//Start of file brewmaster_drunken_haze_datadriven.txt
+	// Rewrite of Brewmaster Drunken Haze
+	// Author: Noya
+	// Date: 20.01.2015.
 	"brewmaster_drunken_haze_datadriven"
 	{
 		// General
@@ -4895,6 +5104,8 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"brewmaster_drunken_haze"
 		
+		"AoERadius"						"200"
+	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.4 0.4 0.4"
@@ -4929,12 +5140,91 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"14 18 22 26"
+				"movement_slow"				"-14 -18 -22 -26"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"miss_chance"				"45 55 65 75"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze_debuff.vpcf"
+			"particle" 	"particles/status_fx/status_effect_brewmaster_drunken_haze.vpcf"
+			"particle"	"particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+			{
+			    "Target"           "TARGET"
+			    "EffectName"       "particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze.vpcf"
+			    "Dodgeable"        "0"
+			    "ProvidesVision"   "0"
+			    "MoveSpeed"        "1300"
+			    "SourceAttachment" "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}		
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Brewmaster.DrunkenHaze.Cast"
+				"Target"		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"    "modifier_drunken_haze"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"Duration"		"%duration"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"    "modifier_drunken_haze"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%duration_creeps"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Brewmaster.DrunkenHaze.Target"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_drunken_haze"
+			{
+				"IsDebuff"	"1"
+	
+				"EffectName"			"particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze_debuff.vpcf"
+				"EffectAttachType"		"follow_origin"
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_brewmaster_drunken_haze.vpcf"
+				"StatusEffectPriority"	"5"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"				"%miss_chance"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow"
+				}
 			}
 		}
 	}
@@ -5255,6 +5545,9 @@
 
 
 	//Start of file brewmaster_thunder_clap_datadriven.txt
+	// Rewrite of Brewmaster Thunder Clap
+	// Author: Noya
+	// Date: 20.01.2015.
 	"brewmaster_thunder_clap_datadriven"
 	{
 		// General
@@ -5263,6 +5556,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"brewmaster_thunder_clap"
 	
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -5303,12 +5597,107 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"25 35 45 55"
+				"movement_slow"				"-25 -35 -45 -55"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_speed_slow"			"25 35 45 55"
+				"attack_speed_slow"			"-25 -35 -45 -55"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap_debuff.vpcf"
+			"particle"  "particles/status_fx/status_effect_brewmaster_thunder_clap.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Brewmaster.ThunderClap"
+				"Target" 		"CASTER"
+			}
+			
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"EffectRadius"		"%radius"
+				"Target"            "CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_thunder_clap"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"Duration"		"%duration"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_thunder_clap"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%duration_creeps"
+			}
+	
+			"Damage"
+			{
+				"Target"
+				{
+					"Center"  	"CASTER"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"Type"			"DAMAGE_TYPE_MAGICAL"
+				"Damage"		"%damage"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_thunder_clap"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+		
+				"EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"StatusEffectName" 		"particles/status_fx/status_effect_brewmaster_thunder_clap.vpcf" 	   
+				"StatusEffectPriority"  "10"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_slow"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_slow" 
+				}
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Brewmaster.ThunderClap.Target"
+						"Target" 		"TARGET"
+					}			
+				}		
 			}
 		}
 	}
@@ -21942,11 +22331,32 @@
 				}
 			}
 	
-			"ApplyModifier"
+			
+	
+			"ActOnTargets"
 			{
-				"ModifierName"		"modifier_laguna_blade_datadriven"
-				"Target"			"TARGET"
+				"Target"
+				{
+					"Center"  	"TARGET"
+					"Line"
+					{
+						"Length"	"600"
+						"Thickness"	"300"
+					}
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+			
+				"Action"    
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_laguna_blade_datadriven"
+						"Target"			"TARGET"
+					}
+				}
 			}
+			
 		}
 	
 		"Modifiers"

@@ -28,7 +28,7 @@
 		"Ability3"	"keeper_of_the_light_chakra_magic_datadriven"
 		"Ability4"	"keeper_of_the_light_recall_datadriven"
 		"Ability5"	"keeper_of_the_light_blinding_light_datadriven"
-		"Ability6"	"lion_finger_of_death_datadriven"
+		"Ability6"	"lina_laguna_blade_datadriven"
 	}
 	//End of file test_dummy_ranged.txt
 }
