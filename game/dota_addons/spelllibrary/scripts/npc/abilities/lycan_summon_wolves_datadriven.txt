@@ -13,8 +13,8 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"precache"
 	{
-		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"		
-		"particle"		""		
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"
+		"particle"		"particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"			
 	}	
 	
 	// Casting
@@ -58,7 +58,7 @@
 			"var_type"					"FIELD_INTEGER"
 			"wolf_hp"					"200 240 280 320"
 		}
-		"06"
+		"06" // Extra variables for "SpawnUnit" to decide which level of wolves will be used
 		{
 			"var_type"					"FIELD_INTEGER"
 			"wolf_1_count"				"2 0 0 0"
@@ -78,6 +78,11 @@
 			"var_type"					"FIELD_INTEGER"
 			"wolf_4_count"				"0 0 0 2"
 		}
+		"10"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"spawn_distance"			"150"	
+		}
 	}
 
 	"OnSpellStart"
@@ -88,71 +93,194 @@
 			"Target"		"CASTER"
 		}
 
+		"AttachEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"
+			"EffectName"	"start_at_customorigin"
+			"Target"		"CASTER"	
+		}	
+
 		"RunScript"
 		{
 			"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
 			"Function"		"KillWolves"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"npc_dota_lycan_wolf1"
 			"Target"
-	        {
-	        	"Center"  				"CASTER"
-	        	"Radius" 				"GLOBAL"
-	        	"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	        	"Types" 				"DOTA_UNIT_TARGET_BASIC"
-	        }
+			{
+				"Center"	"CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+					"Function"	"GetSummonPoints"
+					"Target"	"CASTER"
+					"Count"	"2"
+					"distance"	"%spawn_distance"
+				}
+			}
 
-			"wolf_name1"	"npc_dota_lycan_wolf1"
-			"wolf_name2"	"npc_dota_lycan_wolf2"
-			"wolf_name3"	"npc_dota_lycan_wolf3"
-			"wolf_name4"	"npc_dota_lycan_wolf4"
+			"Duration"	"%wolf_duration"
+			"UnitCount"	"%wolf_1_count / 2" 
+			"UnitLimit"	"2"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+					"Function"		"SetUnitsMoveForward"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_summon_wolves_datadriven"
+					"Target"		"TARGET"
+					"Duration"		"%duration"
+				}
+			}
 		}
 
 		"SpawnUnit"
 		{
-			"UnitName"	"npc_dota_lycan_wolf1"
-			"UnitCount"	"%wolf_1_count"
-			"Target"	"CASTER"
-			"Duration"	"%wolf_duration"
+			"UnitName"		"npc_dota_lycan_wolf2"
+			"Target"
+			{
+				"Center"	"CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+					"Function"	"GetSummonPoints"
+					"Target"	"CASTER"
+					"Count"	"2"
+					"distance"	"%spawn_distance"
+				}
+			}
 
+			"Duration"	"%wolf_duration"
+			"UnitCount"	"%wolf_2_count / 2" 
+			"UnitLimit"	"2"
 			"GrantsGold"	"1"
-			"GrantsXP"		"1"			
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+					"Function"		"SetUnitsMoveForward"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_summon_wolves_datadriven"
+					"Target"		"TARGET"
+					"Duration"		"%duration"
+				}
+			}
 		}
 
 		"SpawnUnit"
 		{
-			"UnitName"	"npc_dota_lycan_wolf2"
-			"UnitCount"	"%wolf_2_count"			
-			"Target"	"CASTER"
-			"Duration"	"%wolf_duration"
+			"UnitName"		"npc_dota_lycan_wolf3"
+			"Target"
+			{
+				"Center"	"CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+					"Function"	"GetSummonPoints"
+					"Target"	"CASTER"
+					"Count"	"2"
+					"distance"	"%spawn_distance"
+				}
+			}
 
+			"Duration"	"%wolf_duration"
+			"UnitCount"	"%wolf_3_count / 2" 
+			"UnitLimit"	"2"
 			"GrantsGold"	"1"
-			"GrantsXP"		"1"			
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+					"Function"		"SetUnitsMoveForward"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_summon_wolves_datadriven"
+					"Target"		"TARGET"
+					"Duration"		"%duration"
+				}
+			}
 		}
 
 		"SpawnUnit"
 		{
-			"UnitName"	"npc_dota_lycan_wolf3"
-			"UnitCount"	"%wolf_3_count"			
-			"Target"	"CASTER"
+			"UnitName"		"npc_dota_lycan_wolf4"
+			"Target"
+			{
+				"Center"	"CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+					"Function"	"GetSummonPoints"
+					"Target"	"CASTER"
+					"Count"	"2"
+					"distance"	"%spawn_distance"
+				}
+			}
+
 			"Duration"	"%wolf_duration"
-
+			"UnitCount"	"%wolf_4_count / 2" 
+			"UnitLimit"	"2"
 			"GrantsGold"	"1"
-			"GrantsXP"		"1"			
-		}
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+					"Function"		"SetUnitsMoveForward"
+				}
 
-		"SpawnUnit"
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_summon_wolves_datadriven"
+					"Target"		"TARGET"
+					"Duration"		"%duration"
+				}
+			}
+		}				
+	}
+
+	"Modifiers"
+	{
+		"modifier_summon_wolves_datadriven"
 		{
-			"UnitName"	"npc_dota_lycan_wolf4"
-			"UnitCount"	"%wolf_4_count"			
-			"Target"	"CASTER"
-			"Duration"	"%wolf_duration"
+			"Passive" "0"
+			"IsHidden" "1"
+			"IsDebuff" "0"
 
-			"GrantsGold"	"1"
-			"GrantsXP"		"1"			
+			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"EffectName" "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
+					"EffectAttachType" "follow_origin"
+					"Target" "TARGET"
+				}
+			}
 		}
-
-
-
-
 	}
 }
 
