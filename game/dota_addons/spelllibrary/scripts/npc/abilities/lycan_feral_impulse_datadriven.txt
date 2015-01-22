@@ -1,9 +1,14 @@
+// Rewrite of the Lycan Feral Impulse
+// Author: chrislotix
+// Date: 22.01.2015.
+
 "lycan_feral_impulse_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"lycan_feral_impulse"
 	
 	// Casting
 	"AbilitySpecial"
@@ -24,5 +29,34 @@
 			"bonus_damage"			"15 20 25 30"
 		}
 	}
+
+	"Modifiers"
+	{
+		"modifier_feral_impulse_datadriven"
+		{
+			"Passive" "1"
+			"IsPurgable" "0"
+			"IsHidden" "0"
+			"Aura" "modifier_feral_impulse_effect_datadriven"
+			"Aura_Radius" "%radius"
+			"Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types" "DOTA_UNIT_TARGET_BASIC"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage"				
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+			}
+		}
+
+		"modifier_feral_impulse_effect_datadriven"
+		{
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage"							
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+			}
+		}
+	}	
 }
 

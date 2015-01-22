@@ -1,4 +1,4 @@
-// Rewrite of the Lycan Summon Wolves
+// Rewrite of the Lycan Howl
 // Author: chrislotix
 // Date: 22.01.2015.
 // NOTE: Wonky cast Howl particle (doesnt play one part)
