@@ -119,7 +119,7 @@
 				{
 				 	"EffectName"		"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
 				 	"EffectAttachType"	"follow_origin"
-				 	"Target"			"UNIT"
+				 	"Target"			"TARGET"
 				 	"ControlPointEntities"
 		            {
 		                "TARGET"    "attach_origin"
@@ -130,7 +130,7 @@
 				"RunScript"
 				{
 					"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
-					"Function"		"EndShield"
+					"Function"		"EndShieldParticle"
 				}
 
 				"Damage"

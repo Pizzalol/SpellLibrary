@@ -72,11 +72,11 @@
 		}
 	}
 
-	"OnAbilityStart"
+	"OnSpellStart"
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"heroes/death_knight/death_coil.lua"
+			"ScriptFile"	"heroes/hero_abaddon/death_coil.lua"
 			"Function"		"DeathCoil"
 		}
 	}

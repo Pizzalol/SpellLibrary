@@ -1,3 +1,6 @@
+// Rewrite of Brewmaster Primal Split
+// Author: Noya
+// Date: 21.01.2015.
 "brewmaster_primal_split_datadriven"
 {
 	// General
@@ -36,5 +39,153 @@
 			"split_duration"			"0.6"
 		}
 	}
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_brewmaster/brewmaster_drunken_brawler_crit.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_earth_ambient.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_storm_ambient.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_fire_ambient.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_storm_death.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_earth_death.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_fire_death.vpcf"
+		"particle"	"particles/units/heroes/hero_brewmaster/brewmaster_storm_attack.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+		"model"		"models/heroes/brewmaster/brewmaster_earthspirit.vmdl"
+		"model"		"models/heroes/brewmaster/brewmaster_firespirit.vmdl"
+		"model"		"models/heroes/brewmaster/brewmaster_windspirit.vmdl"
+
+		// Sub ability particles
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_hurl_boulder.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_pulverize.vpcf"
+
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_cyclone.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_windwalk.vpcf"
+
+		"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_fire_immolation_child.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_primal_split_delay"
+			"Target" 		"CASTER"
+			"Duration"		"%split_duration"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Brewmaster.PrimalSplit.Cast"
+			"Target" 		"CASTER"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_primal_split_delay"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"0"
+	
+			"States"
+			{
+				"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+	
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_primal_split.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+				}
+			}
+
+			"OnDestroy"			
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Brewmaster.PrimalSplit.Spawn"
+					"Target" 		"CASTER"
+				}
+				
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_primal_split_duration"
+					"Target" 		"CASTER"
+					"Duration"		"%duration"
+				}
+			}
+		}
+
+		"modifier_primal_split_duration"
+		{
+			"IsHidden"			"0"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		   "MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnCreated"
+			{
+				// If you want to change the unit names, make sure to have one for each level, with the rank number at the end.
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_brewmaster/primal_split.lua"
+					"Function"			"PrimalSplit"
+					"unit_name_earth"	"npc_dota_brewmaster_earth_"
+					"unit_name_storm"	"npc_dota_brewmaster_storm_"
+					"unit_name_fire"	"npc_dota_brewmaster_fire_"
+				}			
+			}
+
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_brewmaster/primal_split.lua"
+					"Function"		"PrimalSplitAuraMove"
+				}				
+			}			
+
+			"OnDestroy"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Brewmaster.PrimalSplit.Return"
+					"Target" 		"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_brewmaster/primal_split.lua"
+					"Function"		"PrimalSplitEnd"
+				}			
+			}	
+		}
+
+		"modifier_split_unit"
+		{
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_brewmaster/primal_split.lua"
+					"Function"		"SplitUnitDied"
+				}				
+			}			
+		}
+	}	
 }
 

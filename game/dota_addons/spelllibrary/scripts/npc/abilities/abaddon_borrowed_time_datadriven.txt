@@ -1,8 +1,7 @@
 // Rewrite of Abaddon Borrowed Time
 // Author: Noya
 // Date: 9.1.2015.
-// Notes: Strong Dispel mechanic is missing for now
-// 		  The damage isn't really prevented, just healed twice so it looks like every damage instance is a heal.
+// Notes: The damage isn't really prevented, just healed twice so it looks like every damage instance is a heal.
 //	  	  This is not consistent with the Dota 2 mechanics for damage absorb, which has effects like denying lifesteal
 "abaddon_borrowed_time_datadriven"
 {
@@ -70,12 +69,21 @@
 		{
 			"Target" 		"CASTER"
 			"ModifierName"	"modifier_borrowed_time"
+			"Duration"		"%duration"
 		}
+		
 		"FireSound"
 		{
 			"Target" 		"CASTER"
 			"EffectName"	"Hero_Abaddon.BorrowedTime"	
 		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_abaddon/borrowed_time.lua"
+			"Function"		"BorrowedTimePurge"
+		}
+		
 	}
 
 	"Modifiers"
