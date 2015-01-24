@@ -125,7 +125,7 @@
 					{
 					 	"EffectName"		"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
 					 	"EffectAttachType"	"follow_origin"
-					 	"Target"			"UNIT"
+					 	"Target"			"TARGET"
 					 	"ControlPointEntities"
 			            {
 			                "TARGET"    "attach_origin"
@@ -136,7 +136,7 @@
 					"RunScript"
 					{
 						"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
-						"Function"		"EndShield"
+						"Function"		"EndShieldParticle"
 					}
 	
 					"Damage"
@@ -163,8 +163,7 @@
 	// Rewrite of Abaddon Borrowed Time
 	// Author: Noya
 	// Date: 9.1.2015.
-	// Notes: Strong Dispel mechanic is missing for now
-	// 		  The damage isn't really prevented, just healed twice so it looks like every damage instance is a heal.
+	// Notes: The damage isn't really prevented, just healed twice so it looks like every damage instance is a heal.
 	//	  	  This is not consistent with the Dota 2 mechanics for damage absorb, which has effects like denying lifesteal
 	"abaddon_borrowed_time_datadriven"
 	{
@@ -232,12 +231,21 @@
 			{
 				"Target" 		"CASTER"
 				"ModifierName"	"modifier_borrowed_time"
+				"Duration"		"%duration"
 			}
+			
 			"FireSound"
 			{
 				"Target" 		"CASTER"
 				"EffectName"	"Hero_Abaddon.BorrowedTime"	
 			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_abaddon/borrowed_time.lua"
+				"Function"		"BorrowedTimePurge"
+			}
+			
 		}
 	
 		"Modifiers"
@@ -359,11 +367,11 @@
 			}
 		}
 	
-		"OnAbilityStart"
+		"OnSpellStart"
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"heroes/death_knight/death_coil.lua"
+				"ScriptFile"	"heroes/hero_abaddon/death_coil.lua"
 				"Function"		"DeathCoil"
 			}
 		}
@@ -5372,6 +5380,9 @@
 
 
 	//Start of file brewmaster_primal_split_datadriven.txt
+	// Rewrite of Brewmaster Primal Split
+	// Author: Noya
+	// Date: 21.01.2015.
 	"brewmaster_primal_split_datadriven"
 	{
 		// General
@@ -5410,6 +5421,154 @@
 				"split_duration"			"0.6"
 			}
 		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_brewmaster/brewmaster_drunken_brawler_crit.vpcf"
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_earth_ambient.vpcf"
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_storm_ambient.vpcf"
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_fire_ambient.vpcf"
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_storm_death.vpcf"
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_earth_death.vpcf"
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_fire_death.vpcf"
+			"particle"	"particles/units/heroes/hero_brewmaster/brewmaster_storm_attack.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+			"model"		"models/heroes/brewmaster/brewmaster_earthspirit.vmdl"
+			"model"		"models/heroes/brewmaster/brewmaster_firespirit.vmdl"
+			"model"		"models/heroes/brewmaster/brewmaster_windspirit.vmdl"
+	
+			// Sub ability particles
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_hurl_boulder.vpcf"
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_pulverize.vpcf"
+	
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_cyclone.vpcf"
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_dispel_magic.vpcf"
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_windwalk.vpcf"
+	
+			"particle"  "particles/units/heroes/hero_brewmaster/brewmaster_fire_immolation_child.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_primal_split_delay"
+				"Target" 		"CASTER"
+				"Duration"		"%split_duration"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"	"Hero_Brewmaster.PrimalSplit.Cast"
+				"Target" 		"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_primal_split_delay"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+		
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_primal_split.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+					}
+				}
+	
+				"OnDestroy"			
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Brewmaster.PrimalSplit.Spawn"
+						"Target" 		"CASTER"
+					}
+					
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_primal_split_duration"
+						"Target" 		"CASTER"
+						"Duration"		"%duration"
+					}
+				}
+			}
+	
+			"modifier_primal_split_duration"
+			{
+				"IsHidden"			"0"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		   "MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnCreated"
+				{
+					// If you want to change the unit names, make sure to have one for each level, with the rank number at the end.
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_brewmaster/primal_split.lua"
+						"Function"			"PrimalSplit"
+						"unit_name_earth"	"npc_dota_brewmaster_earth_"
+						"unit_name_storm"	"npc_dota_brewmaster_storm_"
+						"unit_name_fire"	"npc_dota_brewmaster_fire_"
+					}			
+				}
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_brewmaster/primal_split.lua"
+						"Function"		"PrimalSplitAuraMove"
+					}				
+				}			
+	
+				"OnDestroy"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Brewmaster.PrimalSplit.Return"
+						"Target" 		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_brewmaster/primal_split.lua"
+						"Function"		"PrimalSplitEnd"
+					}			
+				}	
+			}
+	
+			"modifier_split_unit"
+			{
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_brewmaster/primal_split.lua"
+						"Function"		"SplitUnitDied"
+					}				
+				}			
+			}
+		}	
 	}
 	
 	//End of file brewmaster_primal_split_datadriven.txt
@@ -19138,16 +19297,34 @@
 
 
 	//Start of file keeper_of_the_light_illuminate_datadriven.txt
+	// Rewrite of the Keeper of the Light Illuminate ability
+	// Author: Pizzalol
+	// Date: 24.01.2015.
+	// NOTE: This ability is used together with the "keeper_of_the_light_illuminate_end_datadriven" ability
+	// NOTE2: The projectile visual is always that of the level 1 Illuminate
 	"keeper_of_the_light_illuminate_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"keeper_of_the_light_illuminate"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge.vpcf"
+			"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+			
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -19222,23 +19399,201 @@
 				"var_type"					"FIELD_INTEGER"
 				"channel_vision_step"		"150"
 			}
+			// Extra
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"channel_count_interval"	"0.0333"
+			}
 		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Charge"
+				"Target" 		"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+				"Function"		"IlluminateStart"
+				"sub_ability_name"	"keeper_of_the_light_illuminate_end_datadriven"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_illuminate_vision_field_timer_datadriven"
+				"Target" 		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_illuminate_channel_timer_datadriven"
+				"Target" 		"CASTER"
+			}				
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"keeper_of_the_light_illuminate_end_datadriven"
+			}
+		}
+	
+		"OnChannelFinish"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Discharge"
+				"Target" 		"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+				"Function"		"IlluminateEnd"
+				"modifier_channel_count"	"modifier_illuminate_channel_count_datadriven"
+				"projectile_name"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+				"Function"		"IlluminateSwapEnd"
+				"sub_ability_name"	"keeper_of_the_light_illuminate_end_datadriven"
+			}
+	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_illuminate_channel_timer_datadriven"
+				"Target" 		"CASTER"
+			}
+	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_illuminate_vision_field_timer_datadriven"
+				"Target" 		"CASTER"
+			}		
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Target"
+				"Target" 		"TARGET"
+			}
+			
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+				"Function"		"IlluminateProjectileHit"
+			}		
+		}
+		
+		
+		
+		"Modifiers"
+		{
+			"modifier_illuminate_vision_field_timer_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+		
+				"ThinkInterval"  "%channel_vision_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+						"Function"		"IlluminateVisionFields"
+					}				
+				}			
+			}
+	
+			"modifier_illuminate_channel_timer_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge.vpcf"
+				"EffectAttachType"	"attach_attack1"
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_illuminate_channel_count_datadriven"
+						"Target" 		"CASTER"
+					}
+					
+				}			
+	
+				"ThinkInterval"  "%channel_count_interval"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_illuminate_channel_count_datadriven"
+						"Target" 		"CASTER"
+					}				
+				}				
+			}
+	
+			"modifier_illuminate_channel_count_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsDebuff"			"0"
+	
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+			}
+		}	
 	}
 	
 	//End of file keeper_of_the_light_illuminate_datadriven.txt
 
 
 	//Start of file keeper_of_the_light_illuminate_end_datadriven.txt
+	// Rewrite of the Keeper of the Illuminate end ability
+	// Author: Pizzalol
+	// Date: 24.01.2015.
+	// NOTE: This ability is used together with the "keeper_of_the_light_illuminate_datadriven" ability
 	"keeper_of_the_light_illuminate_end_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName"			"keeper_of_the_light_illuminate_end"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+				"Function"		"IlluminateStop"
+			}
+		}
+		
 	}
 	
 	//End of file keeper_of_the_light_illuminate_end_datadriven.txt
@@ -22331,32 +22686,11 @@
 				}
 			}
 	
-			
-	
-			"ActOnTargets"
+			"ApplyModifier"
 			{
-				"Target"
-				{
-					"Center"  	"TARGET"
-					"Line"
-					{
-						"Length"	"600"
-						"Thickness"	"300"
-					}
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-			
-				"Action"    
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_laguna_blade_datadriven"
-						"Target"			"TARGET"
-					}
-				}
+				"ModifierName"		"modifier_laguna_blade_datadriven"
+				"Target"			"TARGET"
 			}
-			
 		}
 	
 		"Modifiers"
@@ -24108,12 +24442,17 @@
 
 
 	//Start of file lycan_feral_impulse_datadriven.txt
+	// Rewrite of the Lycan Feral Impulse
+	// Author: chrislotix
+	// Date: 22.01.2015.
+	
 	"lycan_feral_impulse_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"lycan_feral_impulse"
 		
 		// Casting
 		"AbilitySpecial"
@@ -24134,18 +24473,62 @@
 				"bonus_damage"			"15 20 25 30"
 			}
 		}
+	
+		"Modifiers"
+		{
+			"modifier_feral_impulse_datadriven"
+			{
+				"Passive" "1"
+				"IsPurgable" "0"
+				"IsHidden" "0"
+				"Aura" "modifier_feral_impulse_effect_datadriven"
+				"Aura_Radius" "%radius"
+				"Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types" "DOTA_UNIT_TARGET_BASIC"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage"				
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				}
+			}
+	
+			"modifier_feral_impulse_effect_datadriven"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage"							
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				}
+			}
+		}	
 	}
 	
 	//End of file lycan_feral_impulse_datadriven.txt
 
 
 	//Start of file lycan_howl_datadriven.txt
+	// Rewrite of the Lycan Howl
+	// Author: chrislotix
+	// Date: 22.01.2015.
+	// NOTE: Wonky cast Howl particle (doesnt play one part)
+	
 	"lycan_howl_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityTextureName"			"lycan_howl"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"		
+			"particle"		"particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf"
+			"particle"		"particles/units/heroes/hero_lycan/lycan_howl_buff.vpcf"		
+		}	
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -24182,6 +24565,96 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"unit_bonus_damage"	"5 10 15 20"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aura_radius"		"9000"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lycan.Howl"
+				"Target"	"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_howl_hero_datadriven"
+				"Target"		"CASTER"			
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_howl_unit_datadriven"
+				"Target"		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf"
+				"EffectAttachType"	"attach_hitloc"
+				"Target"		"CASTER"		
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_howl_hero_datadriven"
+			{
+				"Duration"	"%howl_duration"
+				"IsHidden"	"1"
+			
+	
+				"Aura"			"modifier_howl_hero_aura_datadriven"
+				"Aura_Radius"	"%aura_radius"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_HERO"
+				"Aura_ApplyToCaster" "1"
+					
+			}
+	
+			"modifier_howl_hero_aura_datadriven"
+			{
+				"IsBuff"	"1"
+				"EffectName"	"particles/units/heroes/hero_lycan/lycan_howl_buff.vpcf"
+				"EffectAttachType"	"follow_hitloc"
+				"Target"		"TARGET"	
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%hero_bonus_damage"
+				}
+			}
+	
+			"modifier_howl_unit_datadriven"
+			{
+				"Duration"	"%howl_duration"
+				"IsHidden"	"0"
+				
+	
+				"Aura"			"modifier_howl_unit_aura_datadriven"
+				"Aura_Radius"	"%aura_radius"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_BASIC"
+	
+				
+			}
+	
+			"modifier_howl_unit_aura_datadriven"
+			{
+	
+				"IsBuff"	"1"
+				"EffectName"	"particles/units/heroes/hero_lycan/lycan_howl_buff.vpcf"
+				"EffectAttachType"	"follow_hitloc"	
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%unit_bonus_damage"
+				}
 			}
 		}
 	}
@@ -24293,8 +24766,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"		
-			"particle"		""		
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"
+			"particle"		"particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"			
 		}	
 		
 		// Casting
@@ -24338,7 +24811,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"wolf_hp"					"200 240 280 320"
 			}
-			"06"
+			"06" // Extra variables for "SpawnUnit" to decide which level of wolves will be used
 			{
 				"var_type"					"FIELD_INTEGER"
 				"wolf_1_count"				"2 0 0 0"
@@ -24358,6 +24831,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"wolf_4_count"				"0 0 0 2"
 			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spawn_distance"			"150"	
+			}
 		}
 	
 		"OnSpellStart"
@@ -24368,71 +24846,194 @@
 				"Target"		"CASTER"
 			}
 	
+			"AttachEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"
+				"EffectName"	"start_at_customorigin"
+				"Target"		"CASTER"	
+			}	
+	
 			"RunScript"
 			{
 				"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
 				"Function"		"KillWolves"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"npc_dota_lycan_wolf1"
 				"Target"
-		        {
-		        	"Center"  				"CASTER"
-		        	"Radius" 				"GLOBAL"
-		        	"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		        	"Types" 				"DOTA_UNIT_TARGET_BASIC"
-		        }
+				{
+					"Center"	"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+						"Function"	"GetSummonPoints"
+						"Target"	"CASTER"
+						"Count"	"2"
+						"distance"	"%spawn_distance"
+					}
+				}
 	
-				"wolf_name1"	"npc_dota_lycan_wolf1"
-				"wolf_name2"	"npc_dota_lycan_wolf2"
-				"wolf_name3"	"npc_dota_lycan_wolf3"
-				"wolf_name4"	"npc_dota_lycan_wolf4"
+				"Duration"	"%wolf_duration"
+				"UnitCount"	"%wolf_1_count / 2" 
+				"UnitLimit"	"2"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+						"Function"		"SetUnitsMoveForward"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_summon_wolves_datadriven"
+						"Target"		"TARGET"
+						"Duration"		"%duration"
+					}
+				}
 			}
 	
 			"SpawnUnit"
 			{
-				"UnitName"	"npc_dota_lycan_wolf1"
-				"UnitCount"	"%wolf_1_count"
-				"Target"	"CASTER"
-				"Duration"	"%wolf_duration"
+				"UnitName"		"npc_dota_lycan_wolf2"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+						"Function"	"GetSummonPoints"
+						"Target"	"CASTER"
+						"Count"	"2"
+						"distance"	"%spawn_distance"
+					}
+				}
 	
+				"Duration"	"%wolf_duration"
+				"UnitCount"	"%wolf_2_count / 2" 
+				"UnitLimit"	"2"
 				"GrantsGold"	"1"
-				"GrantsXP"		"1"			
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+						"Function"		"SetUnitsMoveForward"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_summon_wolves_datadriven"
+						"Target"		"TARGET"
+						"Duration"		"%duration"
+					}
+				}
 			}
 	
 			"SpawnUnit"
 			{
-				"UnitName"	"npc_dota_lycan_wolf2"
-				"UnitCount"	"%wolf_2_count"			
-				"Target"	"CASTER"
-				"Duration"	"%wolf_duration"
+				"UnitName"		"npc_dota_lycan_wolf3"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+						"Function"	"GetSummonPoints"
+						"Target"	"CASTER"
+						"Count"	"2"
+						"distance"	"%spawn_distance"
+					}
+				}
 	
+				"Duration"	"%wolf_duration"
+				"UnitCount"	"%wolf_3_count / 2" 
+				"UnitLimit"	"2"
 				"GrantsGold"	"1"
-				"GrantsXP"		"1"			
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+						"Function"		"SetUnitsMoveForward"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_summon_wolves_datadriven"
+						"Target"		"TARGET"
+						"Duration"		"%duration"
+					}
+				}
 			}
 	
 			"SpawnUnit"
 			{
-				"UnitName"	"npc_dota_lycan_wolf3"
-				"UnitCount"	"%wolf_3_count"			
-				"Target"	"CASTER"
+				"UnitName"		"npc_dota_lycan_wolf4"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+						"Function"	"GetSummonPoints"
+						"Target"	"CASTER"
+						"Count"	"2"
+						"distance"	"%spawn_distance"
+					}
+				}
+	
 				"Duration"	"%wolf_duration"
-	
+				"UnitCount"	"%wolf_4_count / 2" 
+				"UnitLimit"	"2"
 				"GrantsGold"	"1"
-				"GrantsXP"		"1"			
-			}
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_lycan/summon_wolves.lua"
+						"Function"		"SetUnitsMoveForward"
+					}
 	
-			"SpawnUnit"
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_summon_wolves_datadriven"
+						"Target"		"TARGET"
+						"Duration"		"%duration"
+					}
+				}
+			}				
+		}
+	
+		"Modifiers"
+		{
+			"modifier_summon_wolves_datadriven"
 			{
-				"UnitName"	"npc_dota_lycan_wolf4"
-				"UnitCount"	"%wolf_4_count"			
-				"Target"	"CASTER"
-				"Duration"	"%wolf_duration"
+				"Passive" "0"
+				"IsHidden" "1"
+				"IsDebuff" "0"
 	
-				"GrantsGold"	"1"
-				"GrantsXP"		"1"			
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"EffectName" "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
+						"EffectAttachType" "follow_origin"
+						"Target" "TARGET"
+					}
+				}
 			}
-	
-	
-	
-	
 		}
 	}
 	

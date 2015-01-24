@@ -1,13 +1,31 @@
+// Rewrite of the Keeper of the Light Illuminate ability
+// Author: Pizzalol
+// Date: 24.01.2015.
+// NOTE: This ability is used together with the "keeper_of_the_light_illuminate_end_datadriven" ability
+// NOTE2: The projectile visual is always that of the level 1 Illuminate
 "keeper_of_the_light_illuminate_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"keeper_of_the_light_illuminate"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
+		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge.vpcf"
+		"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+		
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -82,6 +100,169 @@
 			"var_type"					"FIELD_INTEGER"
 			"channel_vision_step"		"150"
 		}
+		// Extra
+		"12"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"channel_count_interval"	"0.0333"
+		}
 	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Charge"
+			"Target" 		"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+			"Function"		"IlluminateStart"
+			"sub_ability_name"	"keeper_of_the_light_illuminate_end_datadriven"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_illuminate_vision_field_timer_datadriven"
+			"Target" 		"CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_illuminate_channel_timer_datadriven"
+			"Target" 		"CASTER"
+		}				
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"keeper_of_the_light_illuminate_end_datadriven"
+		}
+	}
+
+	"OnChannelFinish"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Discharge"
+			"Target" 		"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+			"Function"		"IlluminateEnd"
+			"modifier_channel_count"	"modifier_illuminate_channel_count_datadriven"
+			"projectile_name"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+			"Function"		"IlluminateSwapEnd"
+			"sub_ability_name"	"keeper_of_the_light_illuminate_end_datadriven"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_illuminate_channel_timer_datadriven"
+			"Target" 		"CASTER"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_illuminate_vision_field_timer_datadriven"
+			"Target" 		"CASTER"
+		}		
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"0"
+		"FireSound"
+		{
+			"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Target"
+			"Target" 		"TARGET"
+		}
+		
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "TARGET"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+			"Function"		"IlluminateProjectileHit"
+		}		
+	}
+	
+	
+	
+	"Modifiers"
+	{
+		"modifier_illuminate_vision_field_timer_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+	
+			"ThinkInterval"  "%channel_vision_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+					"Function"		"IlluminateVisionFields"
+				}				
+			}			
+		}
+
+		"modifier_illuminate_channel_timer_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge.vpcf"
+			"EffectAttachType"	"attach_attack1"
+
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_illuminate_channel_count_datadriven"
+					"Target" 		"CASTER"
+				}
+				
+			}			
+
+			"ThinkInterval"  "%channel_count_interval"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_illuminate_channel_count_datadriven"
+					"Target" 		"CASTER"
+				}				
+			}				
+		}
+
+		"modifier_illuminate_channel_count_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			"IsDebuff"			"0"
+
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+		}
+	}	
 }
 
