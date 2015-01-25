@@ -19,7 +19,6 @@
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
 		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf"
 		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf"
-		"particle"  		""
 		
 	}
 

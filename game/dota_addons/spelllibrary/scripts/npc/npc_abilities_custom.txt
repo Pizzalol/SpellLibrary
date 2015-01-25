@@ -3042,7 +3042,7 @@
 	
 			"ApplyModifier"
 			{
-				"ModifierName"	""modifier_nightmare_invul_datadriven""
+				"ModifierName"	"modifier_nightmare_invul_datadriven"
 				"Target"		"TARGET"
 			}
 		}
@@ -19621,7 +19621,6 @@
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
 			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf"
 			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf"
-			"particle"  		""
 			
 		}
 	
@@ -20108,7 +20107,7 @@
 	
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"250" // 400 500 600"
+		"AbilityDamage"					"250" // "400 500 600"
 	
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------

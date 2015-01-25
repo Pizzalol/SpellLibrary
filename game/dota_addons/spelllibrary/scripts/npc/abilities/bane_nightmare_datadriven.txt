@@ -99,7 +99,7 @@
 
 		"ApplyModifier"
 		{
-			"ModifierName"	""modifier_nightmare_invul_datadriven""
+			"ModifierName"	"modifier_nightmare_invul_datadriven"
 			"Target"		"TARGET"
 		}
 	}
