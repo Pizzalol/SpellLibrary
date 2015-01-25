@@ -1,0 +1,122 @@
+// Rewrite of Ghost Scepter
+// Author: Rook
+// Date: January 25, 2015
+
+"item_ghost_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1037"  //Valve's version of this item uses the ID "37".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_ghost"
+	"FightRecapLevel"				"1"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"              "0"
+	"AbilityCooldown"				"30"
+	"AbilityManaCost"				"0"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1600"
+	"ItemShopTags"					"int;agi;str;hard_to_tag"
+	"ItemQuality"					"component"
+	"ItemAliases"					"ghost scepter"
+
+	"ItemKillable"					"1"
+	"ItemSellable"					"1"
+	"ItemPurchasable"				"1"
+	"ItemDroppable"					"1"
+	"ItemShareability"				"ITEM_NOT_SHAREABLE"
+	"ItemStackable"					"0"
+	"ItemPermanent"					"0"
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+	"ItemAlertable"					"1"
+
+	"SideShop"						"0"
+	"SecretShop"					"0"
+	
+	"AbilitySpecial"  //Update derived items if these values are altered.
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_all_stats"				"7"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"duration"						"4.0"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"extra_spell_damage_percent"	"-40"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"item_ghost_modifier_active"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"		"DOTA_Item.GhostScepter.Activate"
+			"Target"			"CASTER"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"item_ghost_modifier"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+			}
+		}
+		"item_ghost_modifier_active"
+		{
+			"Duration"              	"%duration"
+			"Passive"					"0"
+			"IsHidden"					"0"
+			"IsBuff"					"1"
+			"IsDebuff"					"0"
+			"IsPurgable"				"1"
+			"TextureName"				"item_ghost"
+			"StatusEffectName" 			"particles/status_fx/status_effect_ghost.vpcf"
+			"StatusEffectPriority" 		"15"
+			"EffectName"            	"particles/items_fx/ghost.vpcf"
+			"EffectAttachType"      	"PATTACH_ABSORIGIN"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
+				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%extra_spell_damage_percent"
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_ATTACK_IMMUNE" 			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_DISARMED"				"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}
