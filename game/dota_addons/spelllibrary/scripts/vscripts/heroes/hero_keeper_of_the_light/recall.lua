@@ -1,5 +1,7 @@
 --[[Author: Pizzalol
 	Date: 19.01.2015.
+	Changed: 25.01.2015.
+	Reason: Fixed error case
 	Finds the closest unit to the selected point and then applies the Recall modifier]]
 function Recall( keys )
 	-- Variables
@@ -15,6 +17,14 @@ function Recall( keys )
 
 	-- Find the closest target
 	local targets = FindUnitsInRadius(caster:GetTeam(), point, nil, FIND_UNITS_EVERYWHERE, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_CLOSEST, false)
+	
+	-- In case the caster is the only one available then it stops the sound
+	if #targets < 2 then
+		Timers:CreateTimer(0.03, function()
+			StopSoundOn(sound_caster, caster)
+		end)
+		return
+	end
 
 	-- Apply the modifier to the closest target
 	for _,v in ipairs(targets) do

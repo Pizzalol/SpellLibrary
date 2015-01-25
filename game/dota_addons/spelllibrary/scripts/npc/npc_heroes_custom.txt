@@ -28,8 +28,10 @@
 		"Ability3"	"keeper_of_the_light_chakra_magic_datadriven"
 		"Ability4"	"keeper_of_the_light_recall_datadriven"
 		"Ability5"	"keeper_of_the_light_blinding_light_datadriven"
-		"Ability6"	"lina_laguna_blade_datadriven"
+		"Ability6"	"keeper_of_the_light_spirit_form_datadriven"
 		"Ability7"	"keeper_of_the_light_illuminate_end_datadriven"
+		"Ability8"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
+		"Ability9"	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
 	}
 	//End of file test_dummy_ranged.txt
 }

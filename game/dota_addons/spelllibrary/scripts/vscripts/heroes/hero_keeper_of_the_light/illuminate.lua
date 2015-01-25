@@ -116,6 +116,7 @@ function IlluminateProjectileHit( keys )
 end
 
 --[[Author: Noya
+	Used by: Pizzalol
 	Date: 24.01.2015.
 	Swaps the abilities back]]
 function IlluminateSwapEnd( keys )
@@ -140,7 +141,8 @@ end
 
 --[[
 	Author: Noya
-	Date: 16.01.2015.
+	Used by: Pizzalol
+	Date: 24.01.2015.
 	Levels up the ability_name to the same level of the ability that runs this
 ]]
 function LevelUpAbility( event )
