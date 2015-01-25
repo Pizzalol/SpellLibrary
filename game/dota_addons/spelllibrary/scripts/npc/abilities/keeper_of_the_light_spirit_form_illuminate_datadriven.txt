@@ -1,13 +1,34 @@
+// Rewrite of the Keeper of the Light Spirit Form Illuminate ability
+// Author: Pizzalol
+// Date: 25.01.2015.
+// NOTE: This ability REQUIRES the following abilities to work
+// 			keeper_of_the_light_spirit_form_datadriven
+// 			keeper_of_the_light_spirit_form_illuminate_end_datadriven
+// 
+// NOTE2: The horses are missing from the projectile visual
+
 "keeper_of_the_light_spirit_form_illuminate_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"keeper_of_the_light_spirit_form_illuminate"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_spiritform.vpcf"
+		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge_spirit_form.vpcf"
+		"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"		
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -80,6 +101,206 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"channel_vision_step"		"150"
+		}
+		// Extra
+		"12"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"channel_count_interval"	"0.0333"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+			"Function"		"SpiritFormIlluminateInitialize"
+			"dummy_modifier"	"modifier_spirit_form_illuminate_dummy_datadriven"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+			"Function"		"SwapAbilities"
+			"main_ability_name"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
+			"sub_ability_name"	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"0"
+		"FireSound"
+		{
+			"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Target"
+			"Target" 		"TARGET"
+		}
+		
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "TARGET"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+			"Function"		"SpiritFormIlluminateProjectileHit"
+		}		
+	}
+
+	"Modifiers"
+	{
+		"modifier_spirit_form_illuminate_dummy_datadriven"
+		{
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Charge"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+					}
+				}
+				
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_spirit_form_illuminate_vision_field_timer_datadriven"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+					}
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_spirit_form_illuminate_channel_timer_datadriven"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+					}
+				}				
+			}
+
+			"OnDestroy"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Discharge"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+					}
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+					"Function"		"SpiritFormIlluminateEnd"
+					"modifier_channel_count"	"modifier_spirit_form_illuminate_channel_count_datadriven"
+					"projectile_name" 			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_spiritform.vpcf"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+					"Function"		"SwapAbilities"
+					"main_ability_name"	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
+					"sub_ability_name"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
+				}
+			}			
+
+			"States"
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+			}			
+		}
+
+		"modifier_spirit_form_illuminate_vision_field_timer_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+
+			"Attributes"		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+	
+			"ThinkInterval"  "%channel_vision_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+					"Function"		"SpiritFormIlluminateVisionFields"
+				}				
+			}			
+		}
+
+		"modifier_spirit_form_illuminate_channel_timer_datadriven"
+		{
+			"IsHidden"		"0"
+			"IsPurgable"	"0"
+
+			"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+			"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge_spirit_form.vpcf"
+			"EffectAttachType"	"attach_origin"
+
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_spirit_form_illuminate_channel_count_datadriven"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+					}
+				}
+				
+			}			
+
+			"ThinkInterval"  "%channel_count_interval"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_spirit_form_illuminate_channel_count_datadriven"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+					}
+				}				
+			}				
+		}
+
+		"modifier_spirit_form_illuminate_channel_count_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"0"
+
+			"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE | MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 		}
 	}
 }

@@ -1,11 +1,15 @@
 // Rewrite of the Keeper of the Light Spirit Form ability
 // Author: Pizzalol
 // Date: 25.01.2015.
-// NOTE: This ability REQUIRES the following abilities and any of their sub abilities
+// NOTE: This ability REQUIRES the following abilities and all of their sub abilities
 //		keeper_of_the_light_illuminate_datadriven
 //		keeper_of_the_light_recall_datadriven
 //		keeper_of_the_light_blinding_light_datadriven
 //		keeper_of_the_light_spirit_form_illuminate_datadriven
+// 
+// NOTE2: The Spirit Form sub abilities are set to level 0 after Spirit Form ends
+// and they are set to the Spirit Form level when it starts instead of being set as
+// enabled/disabled
 "keeper_of_the_light_spirit_form_datadriven"
 {
 	// General
@@ -22,9 +26,7 @@
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
 		"particle"			"particles/status_fx/status_effect_keeper_spirit_form.vpcf"
 		"particle"  "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_cast.vpcf"
-		"particle"  "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_ambient.vpcf"
-		
-				
+		"particle"  "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_ambient.vpcf"				
 	}
 
 	// Time		
@@ -63,8 +65,7 @@
 			"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_cast.vpcf"
 			"EffectAttachType"  "follow_origin"
 			"Target"            "CASTER"
-		}
-		
+		}		
 		
 		"ApplyModifier"
 		{
@@ -150,11 +151,6 @@
 				}
 			}			
 		}
-	}
-
-	// level up spirit form illuminate on spirit form start
-	// level up normal illuminate on spirit form end
-	// on spirit form level up, level the 2 sub abilities
-	
+	}	
 }
 

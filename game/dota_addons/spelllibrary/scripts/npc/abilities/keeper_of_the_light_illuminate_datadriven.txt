@@ -2,7 +2,7 @@
 // Author: Pizzalol
 // Date: 24.01.2015.
 // NOTE: This ability is used together with the "keeper_of_the_light_illuminate_end_datadriven" ability
-// NOTE2: The projectile visual is always that of the level 1 Illuminate
+// NOTE2: The projectile visual is missing horses
 "keeper_of_the_light_illuminate_datadriven"
 {
 	// General
@@ -24,7 +24,6 @@
 		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
 		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge.vpcf"
 		"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
-		
 	}
 
 	// Casting

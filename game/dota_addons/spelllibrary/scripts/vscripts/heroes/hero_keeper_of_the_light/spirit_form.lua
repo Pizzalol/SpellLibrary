@@ -68,7 +68,7 @@ function SpiritFormEnd( keys )
 	recall:SetLevel(0)
 	blinding_light:SetLevel(0)
 
-	if caster.spirit_form_illuminate and IsValidEntity(caster.spirit_form_illuminate) then
-		caster.spirit_form_illuminate:RemoveSelf() 
+	if caster.spirit_form_illuminate_dummy and IsValidEntity(caster.spirit_form_illuminate_dummy) then
+		caster.spirit_form_illuminate_dummy:RemoveModifierByName("modifier_spirit_form_illuminate_dummy_datadriven")
 	end
 end
