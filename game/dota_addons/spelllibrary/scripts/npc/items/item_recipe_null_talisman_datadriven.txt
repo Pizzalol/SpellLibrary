@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Null Talisman
+// Author: Rook
+// Date: January 25, 2015
+
+"item_recipe_null_talisman_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1076"  //Valve's version of this item uses the ID "76".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"155"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_null_talisman_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_circlet_datadriven;item_mantle_datadriven"
+	}
+}

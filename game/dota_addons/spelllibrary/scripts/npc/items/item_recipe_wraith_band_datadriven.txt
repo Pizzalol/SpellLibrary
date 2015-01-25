@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Wraith Band
+// Author: Rook
+// Date: January 25, 2015
+
+"item_recipe_wraith_band_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1074"  //Valve's version of this item uses the ID "74".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"170"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_wraith_band_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_circlet_datadriven;item_slippers_datadriven"
+	}
+}

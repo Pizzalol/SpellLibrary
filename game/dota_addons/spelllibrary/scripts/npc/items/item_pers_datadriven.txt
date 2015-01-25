@@ -1,0 +1,76 @@
+// Rewrite of Perseverance
+// Author: Rook
+// Date: January 25, 2015
+
+"item_pers_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1069"  //Valve's version of this item uses the ID "69".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_pers"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1750"
+	"ItemShopTags"					"damage;regen_health;regen_mana"		
+	"ItemQuality"					"common"
+	"ItemAliases"					"perseverance"
+	
+	"ItemKillable"					"1"
+	"ItemSellable"					"1"
+	"ItemPurchasable"				"1"
+	"ItemDroppable"					"1"
+	"ItemShareability"				"ITEM_PARTIALLY_SHAREABLE"
+	"ItemStackable"					"0"
+	"ItemPermanent"					"0"
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+	"ItemAlertable"					"1"
+
+	"SideShop"						"0"
+	"SecretShop"					"0"
+		
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_damage"						"10"
+		}
+		"02"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_health_regen"				"5"
+		}
+		"03"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_mana_regen_percentage"		"125"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"item_pers_modifier"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+				"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_percentage"
+			}
+		}
+	}
+}

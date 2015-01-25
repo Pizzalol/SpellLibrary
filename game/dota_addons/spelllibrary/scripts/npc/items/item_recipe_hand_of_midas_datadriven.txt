@@ -1,0 +1,28 @@
+// Rewrite of Recipe: Hand of Midas
+// Author: Rook
+// Date: January 25, 2015
+
+"item_recipe_hand_of_midas_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1064"  //Valve's version of this item uses the ID "64".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1550"	
+	"ItemShopTags"					""
+	"ItemAliases"					"hom"
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_hand_of_midas_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_gloves_datadriven"
+	}
+}

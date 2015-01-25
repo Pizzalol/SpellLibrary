@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Oblivion Staff
+// Author: Rook
+// Date: January 25, 2015
+
+"item_recipe_oblivion_staff_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1066"  //Valve's version of this item uses the ID "66".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_oblivion_staff_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_quarterstaff_datadriven;item_sobi_mask_datadriven;item_robe_datadriven"
+	}
+}

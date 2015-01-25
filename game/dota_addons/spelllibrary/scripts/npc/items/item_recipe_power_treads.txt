@@ -1,0 +1,29 @@
+// Rewrite of Recipe: Power Treads
+// Author: Rook
+// Date: January 25, 2015
+
+"item_recipe_power_treads_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1062"  //Valve's version of this item uses the ID "62".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_power_treads_strength_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_gloves_datadriven;item_boots_datadriven;item_belt_of_strength_datadriven"
+		"02"						"item_gloves_datadriven;item_boots_datadriven;item_robe_datadriven"		
+		"03"						"item_gloves_datadriven;item_boots_datadriven;item_boots_of_elves_datadriven"
+	}
+}
