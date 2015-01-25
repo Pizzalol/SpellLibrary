@@ -1,0 +1,64 @@
+// Rewrite of Hyperstone
+// Author: Rook
+// Date: January 25, 2015
+
+"item_hyperstone_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1055"  //Valve's version of this item uses the ID "55".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_hyperstone"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2000"
+	"ItemShopTags"					"attack_speed"
+	"ItemQuality"					"secret_shop"
+	"ItemAliases"					"hyperstone"
+	
+	"ItemKillable"					"1"
+	"ItemSellable"					"1"
+	"ItemPurchasable"				"1"
+	"ItemDroppable"					"1"
+	"ItemShareability"				"ITEM_NOT_SHAREABLE"
+	"ItemStackable"					"0"
+	"ItemPermanent"					"0"
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+	"ItemAlertable"					"1"
+
+	"SideShop"						"0"
+	"SecretShop"					"1"
+
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_attack_speed"	"55"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"item_hyperstone_modifier"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
+			}
+		}
+	}
+}
