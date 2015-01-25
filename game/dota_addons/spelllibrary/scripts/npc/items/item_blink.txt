@@ -1,0 +1,105 @@
+// Rewrite of Blink Dagger
+// Author: Rook
+// Date: January 25, 2015
+// Known bugs:
+	// Double-tapping the item currently does not blink the unit toward their fountain.
+	// When damage is taken, the value before reductions is used to determine whether the item should be put on a brief cooldown, not the value after reductions like it should be.
+
+"item_blink"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"Model"							"models/props_gameplay/red_box.vmdl"
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_blink"
+	"FightRecapLevel"				"1"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"0"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"12.0"
+	"AbilityManaCost"				"0"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2250"
+	"ItemShopTags"					"teleport"
+	"ItemQuality"					"component"
+	"ItemAliases"					"blink dagger"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	"ItemKillable"					"1"
+	"ItemSellable"					"1"
+	"ItemPurchasable"				"1"
+	"ItemDroppable"					"1"
+	"ItemShareability"				"ITEM_NOT_SHAREABLE"
+	"ItemStackable"					"0"
+	"ItemPermanent"					"0"
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+	"ItemAlertable"					"1"
+
+	"SideShop"						"1"
+	"SecretShop"					"0"
+
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"max_blink_range"				"1200"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"blink_range_clamp"				"960"  //When attempting to blink a distance greater than max_blink_range, the caster blinks this distance in the targeted direction.
+		}
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"blink_damage_cooldown"			"3"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"items/item_blink.lua"
+			"Function"			"item_blink_on_spell_start"
+			"Target"			"POINT"
+			"MaxBlinkRange"		"%max_blink_range"
+			"BlinkRangeClamp"	"%blink_range_clamp"
+		}
+	}
+	
+	"Modifiers"
+	{
+		//When the unit takes damage, Blink Dagger is put on cooldown.
+		"item_blink_modifier_damage_cooldown"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"OnTakeDamage"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_blink.lua"
+					"Function"				"item_blink_on_take_damage"
+					"BlinkDamageCooldown"	"%blink_damage_cooldown"
+					"Damage"				"%attack_damage"
+				}
+			}
+		}
+	}
+}
