@@ -2,7 +2,6 @@
 // Author: Rook
 // Date: January 25, 2015
 
-
 "item_helm_of_iron_will_datadriven"
 {
 	// General

@@ -1,24 +1,24 @@
-// Rewrite of Broadsword
+// Rewrite of Band of Elvenskin
 // Author: Rook
 // Date: January 25, 2015
 
-"item_broadsword_datadriven"
+"item_boots_of_elves_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"						"item_datadriven"
-	"ID"							"1003"  //Valve's version of this item uses the ID "3".
+	"ID"							"1018"  //Valve's version of this item uses the ID "18".
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"Model"							"models/props_gameplay/red_box.vmdl" 
 	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-	"AbilityTextureName"			"item_broadsword"
+	"AbilityTextureName"			"item_boots_of_elves"
 	
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
-	"ItemCost"						"1200"
-	"ItemShopTags"					"damage"
+	"ItemCost"						"450"
+	"ItemShopTags"					"agi"
 	"ItemQuality"					"component"
-	"ItemAliases"					"broadsword"
+	"ItemAliases"					"band of elvenskin"
 	
 	"ItemKillable"					"1"
 	"ItemSellable"					"1"
@@ -32,7 +32,7 @@
 
 	"SideShop"						"1"
 	"SecretShop"					"0"
-
+		
 	// Special	
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
@@ -40,13 +40,13 @@
 		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_damage"			"18"
+			"bonus_agility"			"6"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"item_broadsword_modifier"
+		"item_boots_of_elves_modifier"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
@@ -57,7 +57,7 @@
 			
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agility"
 			}
 		}
 	}

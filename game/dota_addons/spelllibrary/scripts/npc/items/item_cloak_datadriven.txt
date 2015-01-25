@@ -1,25 +1,25 @@
-// Rewrite of Broadsword
+// Rewrite of Cloak
 // Author: Rook
 // Date: January 25, 2015
 
-"item_broadsword_datadriven"
+"item_cloak_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"						"item_datadriven"
-	"ID"							"1003"  //Valve's version of this item uses the ID "3".
+	"ID"							"1031"  //Valve's version of this item uses the ID "31".
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"Model"							"models/props_gameplay/red_box.vmdl" 
 	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-	"AbilityTextureName"			"item_broadsword"
+	"AbilityTextureName"			"item_cloak"
 	
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
-	"ItemCost"						"1200"
-	"ItemShopTags"					"damage"
+	"ItemCost"						"550"
+	"ItemShopTags"					"magic_resist"
 	"ItemQuality"					"component"
-	"ItemAliases"					"broadsword"
-	
+	"ItemAliases"					"cloak"
+
 	"ItemKillable"					"1"
 	"ItemSellable"					"1"
 	"ItemPurchasable"				"1"
@@ -39,14 +39,14 @@
 	{
 		"01"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"bonus_damage"			"18"
+			"var_type"							"FIELD_INTEGER"
+			"bonus_magic_resist_percentage"		"15"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"item_broadsword_modifier"
+		"item_cloak_modifier"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
@@ -57,7 +57,7 @@
 			
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%bonus_magic_resist_percentage"
 			}
 		}
 	}

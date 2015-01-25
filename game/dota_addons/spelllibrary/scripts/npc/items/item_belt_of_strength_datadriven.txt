@@ -2,7 +2,6 @@
 // Author: Rook
 // Date: January 25, 2015
 
-
 "item_belt_of_strength_datadriven"
 {
 	// General

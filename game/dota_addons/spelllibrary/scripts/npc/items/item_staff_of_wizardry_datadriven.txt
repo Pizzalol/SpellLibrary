@@ -2,7 +2,6 @@
 // Author: Rook
 // Date: January 25, 2015
 
-
 "item_staff_of_wizardry_datadriven"
 {
 	// General

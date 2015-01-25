@@ -1,24 +1,24 @@
-// Rewrite of Broadsword
+// Rewrite of Gloves of Haste
 // Author: Rook
 // Date: January 25, 2015
 
-"item_broadsword_datadriven"
+"item_gloves_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"						"item_datadriven"
-	"ID"							"1003"  //Valve's version of this item uses the ID "3".
+	"ID"							"1025"  //Valve's version of this item uses the ID "25".
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"Model"							"models/props_gameplay/red_box.vmdl" 
 	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-	"AbilityTextureName"			"item_broadsword"
+	"AbilityTextureName"			"item_gloves"
 	
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
-	"ItemCost"						"1200"
-	"ItemShopTags"					"damage"
+	"ItemCost"						"500"
+	"ItemShopTags"					"attack_speed"
 	"ItemQuality"					"component"
-	"ItemAliases"					"broadsword"
+	"ItemAliases"					"gloves of haste"
 	
 	"ItemKillable"					"1"
 	"ItemSellable"					"1"
@@ -37,16 +37,16 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
 	{
-		"01"
+		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_damage"			"18"
+			"bonus_attack_speed"	"15"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"item_broadsword_modifier"
+		"item_gloves_modifier"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
@@ -57,7 +57,7 @@
 			
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
 			}
 		}
 	}
