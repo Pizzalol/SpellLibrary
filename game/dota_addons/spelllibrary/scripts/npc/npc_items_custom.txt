@@ -1,56 +1,44 @@
+//Generated using Dota Custom File Generator by cris9696
 "DOTAAbilities"
 {
-	//=================================================================================================================
-	// Recipe: Arcane Boots
-	//=================================================================================================================
-	"item_recipe_arcane_boots2"
-	{
-		"ID"							"1005"
 
-		"BaseClass"						"item_recipe_arcane_boots"
 
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_arcane_boots2"
-		"ItemRequirements"
-		{
-			"01"						"item_energy_booster;item_arcane_boots"
-		}
-	}
+	//Start of file item_belt_of_strength_datadriven.txt
+	// Rewrite of Belt of Strength
+	// Author: Rook
+	// Date: January 25, 2015
 	
-	//=================================================================================================================
-	// Arcane Boots II
-	//=================================================================================================================
-	"item_arcane_boots2"
+	"item_belt_of_strength_datadriven"
 	{
-		"ID"							"1006"
-
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"BaseClass"						"item_arcane_boots"
-
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"55.0"
-
+		"BaseClass"						"item_datadriven"
+		"ID"							"1017"  //Valve's version of this item uses the ID "17".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_belt_of_strength"
+		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25"
-		"ItemCost"						"2450"
-		"ItemShopTags"					"move_speed;boost_mana;mana_pool"
-		"ItemQuality"					"rare"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_SPECTATORS"
-		"ItemDisassembleRule"			"0"
-		"ItemAlertable"					"1"
-		"ItemAliases"					"mana;mb"
+		"ItemCost"						"450"
+		"ItemShopTags"					"str"
+		"ItemQuality"					"component"
+		"ItemAliases"					"belt of strength"
 		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+			
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -58,23 +46,2779 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement"		"75"
+				"bonus_strength"		"6"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_belt_of_strength_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+				}
+			}
+		}
+	}
+	//End of file item_belt_of_strength_datadriven.txt
+
+
+	//Start of file item_blades_of_attack_datadriven.txt
+	// Rewrite of Blades of Attack
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_blades_of_attack_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1002"  //Valve's version of this item uses the ID "2".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_blades_of_attack"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"450"
+		"ItemShopTags"					"damage;tutorial"
+		"ItemQuality"					"component"
+		"ItemAliases"					"blades of attack"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"9"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_blades_of_attack_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				}
+			}
+		}
+	}
+	//End of file item_blades_of_attack_datadriven.txt
+
+
+	//Start of file item_blade_of_alacrity_datadriven.txt
+	// Rewrite of Blade of Alacrity
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_blade_of_alacrity_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1022"  //Valve's version of this item uses the ID "22".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_blade_of_alacrity"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1000"
+		"ItemShopTags"					"agi"
+		"ItemQuality"					"component"
+		"ItemAliases"					"blade of alacrity"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"10"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_blade_of_alacrity_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agility"
+				}
+			}
+		}
+	}
+	//End of file item_blade_of_alacrity_datadriven.txt
+
+
+	//Start of file item_blink_datadriven.txt
+	// Rewrite of Blink Dagger
+	// Author: Rook
+	// Date: January 25, 2015
+	// Known bugs:
+	//     Double-tapping the item currently does not blink the unit toward their fountain.
+	//     When damage is taken, the value before reductions is used to determine whether the item should be put on a brief cooldown, not the value after reductions like it should be.
+	
+	"item_blink_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1001"  //Valve's version of this item uses the ID "1".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"Model"							"models/props_gameplay/red_box.vmdl"
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_blink"
+		"FightRecapLevel"				"1"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"12.0"
+		"AbilityManaCost"				"0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2250"
+		"ItemShopTags"					"teleport"
+		"ItemQuality"					"component"
+		"ItemAliases"					"blink dagger"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_blink_range"				"1200"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"blink_range_clamp"				"960"  //When attempting to blink a distance greater than max_blink_range, the caster blinks this distance in the targeted direction.
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"blink_damage_cooldown"			"3"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_blink.lua"
+				"Function"				"item_blink_on_spell_start"
+				"Target"				"POINT"
+				"MaxBlinkRange"			"%max_blink_range"
+				"BlinkRangeClamp"		"%blink_range_clamp"
+			}
+		}
+		
+		"Modifiers"
+		{
+			//When the unit takes damage, Blink Dagger is put on cooldown.
+			"item_blink_modifier_damage_cooldown"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_blink.lua"
+						"Function"				"item_blink_on_take_damage"
+						"BlinkDamageCooldown"	"%blink_damage_cooldown"
+						"Damage"				"%attack_damage"
+					}
+				}
+			}
+		}
+	}
+	//End of file item_blink_datadriven.txt
+
+
+	//Start of file item_boots_datadriven.txt
+	// Rewrite of Boots of Speed
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_boots_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1029"  //Valve's version of this item uses the ID "29".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/boots_of_speed.mdl"
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_boots"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"450"
+		"ItemShopTags"					"move_speed"
+		"ItemQuality"					"component"
+		"ItemAliases"					"boots of speed"
+			
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_movement_speed"			"50"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_boots_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE"		"%bonus_movement_speed"
+				}
+			}
+		}
+	}
+	//End of file item_boots_datadriven.txt
+
+
+	//Start of file item_boots_of_elves_datadriven.txt
+	// Rewrite of Band of Elvenskin
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_boots_of_elves_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1018"  //Valve's version of this item uses the ID "18".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_boots_of_elves"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"450"
+		"ItemShopTags"					"agi"
+		"ItemQuality"					"component"
+		"ItemAliases"					"band of elvenskin"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"6"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_boots_of_elves_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agility"
+				}
+			}
+		}
+	}
+	//End of file item_boots_of_elves_datadriven.txt
+
+
+	//Start of file item_branches_datadriven.txt
+	// Rewrite of Iron Branch
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_branches_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1016"  //Valve's version of this item uses the ID "16".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/branch.mdl"
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_branches"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"50"
+		"ItemShopTags"					"agi;int;str"
+		"ItemQuality"					"component"
+		"ItemAliases"					"gg branch;iron branch"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"1"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_branches_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				}
+			}
+		}
+	}
+	//End of file item_branches_datadriven.txt
+
+
+	//Start of file item_broadsword_datadriven.txt
+	// Rewrite of Broadsword
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_broadsword_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1003"  //Valve's version of this item uses the ID "3".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_broadsword"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1200"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"component"
+		"ItemAliases"					"broadsword"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"18"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_broadsword_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				}
+			}
+		}
+	}
+	//End of file item_broadsword_datadriven.txt
+
+
+	//Start of file item_chainmail_datadriven.txt
+	// Rewrite of Chainmail
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_chainmail_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1004"  //Valve's version of this item uses the ID "4".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_chainmail"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"550"
+		"ItemShopTags"					"armor"
+		"ItemQuality"					"component"
+		"ItemAliases"					"chainmail"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"5"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_chainmail_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+				}
+			}
+		}
+	}
+	//End of file item_chainmail_datadriven.txt
+
+
+	//Start of file item_cheese_datadriven.txt
+	// Rewrite of Cheese
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_cheese_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1033"  //Valve's version of this item uses the ID "33".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"Model"							"models/props_gameplay/cheese.mdl"
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_cheese"
+		"FightRecapLevel"				"2"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40.0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1000"
+		"ItemShopTags"					""
+		"ItemQuality"					"epic"
+	
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"0"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemStackable"					"1"
+		"ItemPermanent"					"0"
+		"ItemInitialCharges"			"1"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_restore"		"2500"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"500"
+				"mana_restore"			"1000"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_cheese.lua"
+				"Function"				"item_cheese_on_spell_start"
+				"HealthRestore"			"%health_restore"
+				"ManaRestore"			"%mana_restore"
+			}
+		}
+	}
+	//End of file item_cheese_datadriven.txt
+
+
+	//Start of file item_circlet_datadriven.txt
+	// Rewrite of Circlet
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_circlet_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1020"  //Valve's version of this item uses the ID "20".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/branch.mdl"
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_circlet"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"165"
+		"ItemShopTags"					"agi;int;str"
+		"ItemQuality"					"component"
+		"ItemAliases"					"circlet"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"2"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_circlet_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				}
+			}
+		}
+	}
+	//End of file item_circlet_datadriven.txt
+
+
+	//Start of file item_clarity_datadriven.txt
+	// Rewrite of Clarity
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_clarity_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1038"  //Valve's version of this item uses the ID "38".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"Model"							"models/props_gameplay/clarity.mdl"	
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_clarity"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"              "0"
+		"AbilityCooldown"				"30"
+		"AbilityManaCost"				"0"
+		"AbilityCastRange"				"100"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"50"
+		"ItemShopTags"					"consumable"
+		"ItemQuality"					"consumable"
+		"ItemAliases"					"clarity"
+	
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"1"
+		"ItemPermanent"					"0"
+		"ItemInitialCharges"			"1"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"buff_duration"			"40"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"total_mana_regen"		"150"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"regen_interval"		".03"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_clarity.lua"
+				"Function"				"item_clarity_on_spell_start"
+			}
+					
+			"ApplyModifier"
+			{
+				"Target"			"TARGET"
+				"ModifierName"		"item_clarity_modifier_active"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"		"DOTA_Item.ClarityPotion.Activate"
+				"Target"			"TARGET"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_clarity_modifier_active"
+			{
+				"Duration"              	"%buff_duration"
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsDebuff"					"0"
+				"IsPurgable"				"1"
+				"TextureName"				"item_clarity"
+				"EffectName"            	"particles/items_fx/healing_clarity.vpcf"
+				"EffectAttachType"      	"PATTACH_ABSORIGIN"
+				
+				"ThinkInterval" 			"%regen_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_clarity.lua"
+						"Function"				"item_clarity_modifier_active_on_interval_think"
+						"RegenInterval"			"%regen_interval"
+						"BuffDuration"			"%buff_duration"
+						"TotalManaRegen"		"%total_mana_regen"
+					}
+				}
+				
+				"OnTakeDamage"
+				{
+					"RemoveModifier"
+					{
+						"Target"			"UNIT"
+						"ModifierName"		"item_clarity_modifier_active"
+					}
+				}
+			}
+		}
+	}
+	//End of file item_clarity_datadriven.txt
+
+
+	//Start of file item_cloak_datadriven.txt
+	// Rewrite of Cloak
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_cloak_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1031"  //Valve's version of this item uses the ID "31".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_cloak"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"550"
+		"ItemShopTags"					"magic_resist"
+		"ItemQuality"					"component"
+		"ItemAliases"					"cloak"
+	
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_magic_resist_percentage"		"15"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_cloak_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%bonus_magic_resist_percentage"
+				}
+			}
+		}
+	}
+	//End of file item_cloak_datadriven.txt
+
+
+	//Start of file item_flask_datadriven.txt
+	// Rewrite of Healing Salve
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_flask_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1039"  //Valve's version of this item uses the ID "39".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"Model"							"models/props_gameplay/salve.mdl"
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_flask"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"              "0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+		"AbilityCastRange"				"100"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"110"
+		"ItemShopTags"					"consumable"
+		"ItemQuality"					"consumable"
+		"ItemAliases"					"healing salve"
+	
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"1"
+		"ItemPermanent"					"0"
+		"ItemInitialCharges"			"1"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"buff_duration"			"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"total_health_regen"	"400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"regen_interval"		".03"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_flask.lua"
+				"Function"				"item_flask_on_spell_start"
+			}
+					
+			"ApplyModifier"
+			{
+				"Target"			"TARGET"
+				"ModifierName"		"item_flask_modifier_active"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"		"DOTA_Item.HealingSalve.Activate"
+				"Target"			"TARGET"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_flask_modifier_active"
+			{
+				"Duration"              	"%buff_duration"
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsDebuff"					"0"
+				"IsPurgable"				"1"
+				"TextureName"				"item_flask"
+				"EffectName"            	"particles/items_fx/healing_flask.vpcf"
+				"EffectAttachType"      	"PATTACH_ABSORIGIN"
+				
+				"ThinkInterval" 			"%regen_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_flask.lua"
+						"Function"				"item_flask_modifier_active_on_interval_think"
+						"RegenInterval"			"%regen_interval"
+						"BuffDuration"			"%buff_duration"
+						"TotalHealthRegen"		"%total_health_regen"
+					}
+				}
+				
+				"OnTakeDamage"
+				{
+					"RemoveModifier"
+					{
+						"Target"			"UNIT"
+						"ModifierName"		"item_flask_modifier_active"
+					}
+				}
+			}
+		}
+	}
+	//End of file item_flask_datadriven.txt
+
+
+	//Start of file item_gauntlets_datadriven.txt
+	// Rewrite of Gauntlets
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_gauntlets_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1013"  //Valve's version of this item uses the ID "13".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_gauntlets"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"150"
+		"ItemShopTags"					"str"
+		"ItemQuality"					"component"
+		"ItemAliases"					"gauntlets of strength"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"3"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_gauntlets_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+				}
+			}
+		}
+	}
+	//End of file item_gauntlets_datadriven.txt
+
+
+	//Start of file item_ghost_datadriven.txt
+	// Rewrite of Ghost Scepter
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_ghost_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1037"  //Valve's version of this item uses the ID "37".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_ghost"
+		"FightRecapLevel"				"1"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"              "0"
+		"AbilityCooldown"				"30"
+		"AbilityManaCost"				"0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1600"
+		"ItemShopTags"					"int;agi;str;hard_to_tag"
+		"ItemQuality"					"component"
+		"ItemAliases"					"ghost scepter"
+	
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+		
+		"AbilitySpecial"  //Update derived items if these values are altered.
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_all_stats"				"7"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"4.0"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"extra_spell_damage_percent"	"-40"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"item_ghost_modifier_active"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"		"DOTA_Item.GhostScepter.Activate"
+				"Target"			"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_ghost_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				}
+			}
+			"item_ghost_modifier_active"
+			{
+				"Duration"              	"%duration"
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsDebuff"					"0"
+				"IsPurgable"				"1"
+				"TextureName"				"item_ghost"
+				"StatusEffectName" 			"particles/status_fx/status_effect_ghost.vpcf"
+				"StatusEffectPriority" 		"15"
+				"EffectName"            	"particles/items_fx/ghost.vpcf"
+				"EffectAttachType"      	"PATTACH_ABSORIGIN"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%extra_spell_damage_percent"
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_ATTACK_IMMUNE" 			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	//End of file item_ghost_datadriven.txt
+
+
+	//Start of file item_gloves_datadriven.txt
+	// Rewrite of Gloves of Haste
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_gloves_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1025"  //Valve's version of this item uses the ID "25".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_gloves"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"500"
+		"ItemShopTags"					"attack_speed"
+		"ItemQuality"					"component"
+		"ItemAliases"					"gloves of haste"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"15"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_gloves_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
+				}
+			}
+		}
+	}
+	//End of file item_gloves_datadriven.txt
+
+
+	//Start of file item_helm_of_iron_will_datadriven.txt
+	// Rewrite of Helm of Iron Will
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_helm_of_iron_will_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1006"  //Valve's version of this item uses the ID "6".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_helm_of_iron_will"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"950"
+		"ItemShopTags"					"armor;regen_health"
+		"ItemQuality"					"component"
+		"ItemAliases"					"helm of iron will"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"3"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_helm_of_iron_will_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+				}
+			}
+		}
+	}
+	//End of file item_helm_of_iron_will_datadriven.txt
+
+
+	//Start of file item_javelin_datadriven.txt
+	// Rewrite of Javelin
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_javelin_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1007"  //Valve's version of this item uses the ID "7".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_javelin"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1500"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"component"
+		"ItemAliases"					"javelin"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"21"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_chance"			"20"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"replenish_radius"		"600"
+				"bonus_chance_damage"	"40"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_javelin_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				}
+				
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"		"%bonus_chance"
+						"OnSuccess"
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+								"Damage"		"%bonus_chance_damage"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	//End of file item_javelin_datadriven.txt
+
+
+	//Start of file item_lifesteal_datadriven.txt
+	// Rewrite of Morbid Mask
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_lifesteal_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1026"  //Valve's version of this item uses the ID "26".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_lifesteal"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"900"
+		"ItemShopTags"					"unique"
+		"ItemQuality"					"component"
+		"ItemAliases"					"morbid mask"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lifesteal_percent"		"15"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_lifesteal_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"OnAttackLanded"
+				{
+					"Lifesteal"
+					{
+						"Target"					"CASTER"
+						"LifestealPercent"			"%lifesteal_percent"
+					}
+				}
+			}
+		}
+	}
+	//End of file item_lifesteal_datadriven.txt
+
+
+	//Start of file item_magic_stick_datadriven.txt
+	// Rewrite of Magic Stick
+	// Author: Rook
+	// Date: January 25, 2015
+	// Known Bugs:
+	//     All abilities grant Magic Stick a charge, regardless of their "AbilityProcsMagicStick" key.
+	//     Magic Stick and Magic Wand will both gain charges if a unit has one or more of each in their inventory.
+	
+	"item_magic_stick_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1034"  //Valve's version of this item uses the ID "34".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"Model"							"models/props_gameplay/magic_wand.mdl"
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_magic_stick"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13.0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityManaCost"				"0"
+		"AbilitySharedCooldown"			"magicwand"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"200"
+		"ItemShopTags"					"regen_health;regen_mana;boost_health;boost_mana"
+		"ItemQuality"					"component"
+		"ItemAliases"					"magic stick"
+	
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"1"
+		"ItemRequiresCharges"			"1"
+		"ItemDisplayCharges"			"1"
+		"ItemInitialCharges"			"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_radius"			"1200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"restore_per_charge"	"15"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_magic_stick.lua"
+				"Function"				"item_magic_stick_on_spell_start"
+				"RestorePerCharge"		"%restore_per_charge"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_magic_stick_modifier_aura_emitter"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"0"
+				"IsDebuff"				"0"
+				"IsPurgable"			"0"
+				
+				"Aura" 					"item_magic_stick_modifier_aura"
+				"Aura_Radius" 			"%charge_radius"
+				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO"
+				"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster" 	"0"
+			}
+			"item_magic_stick_modifier_aura"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_magic_stick.lua"
+						"Function"				"item_magic_stick_modifier_aura_on_ability_executed"
+						"MaxCharges"			"%max_charges"
+					}
+				}
+			}
+		}
+	}
+	//End of file item_magic_stick_datadriven.txt
+
+
+	//Start of file item_magic_wand_datadriven.txt
+	// Rewrite of Magic Wand
+	// Author: Rook
+	// Date: January 25, 2015
+	// Known Bugs:
+	//     All abilities grant Magic Wand a charge, regardless of their "AbilityProcsMagicStick" key.
+	//     Charges do not carry over when upgraded from Magic Stick.
+	//     Magic Stick and Magic Wand will both gain charges if a unit has one or more of each in their inventory.
+	
+	"item_magic_wand_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1036"  //Valve's version of this item uses the ID "36".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"Model"							"models/props_gameplay/magic_wand.mdl"
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_magic_stick"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13.0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityManaCost"				"0"
+		"AbilitySharedCooldown"			"magicwand"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"500"
+		"ItemShopTags"					"regen_health;regen_mana;boost_health;boost_mana;int;agi;str"
+		"ItemQuality"					"common"
+		"ItemAliases"					"magic wand"
+	
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"1"
+		"ItemRequiresCharges"			"1"
+		"ItemDisplayCharges"			"1"
+		"ItemInitialCharges"			"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"17"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_radius"			"1200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"3"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"replenish_amount"		"250"
+				"restore_per_charge"	"15"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_magic_wand.lua"
+				"Function"				"item_magic_wand_on_spell_start"
+				"RestorePerCharge"		"%restore_per_charge"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_magic_wand_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				}
+			}
+			"item_magic_wand_modifier_aura_emitter"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"0"
+				"IsDebuff"				"0"
+				"IsPurgable"			"0"
+				
+				"Aura" 					"item_magic_wand_modifier_aura"
+				"Aura_Radius" 			"%charge_radius"
+				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO"
+				"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster" 	"0"
+			}
+			"item_magic_wand_modifier_aura"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_magic_wand.lua"
+						"Function"				"item_magic_wand_modifier_aura_on_ability_executed"
+						"MaxCharges"			"%max_charges"
+					}
+				}
 			}
 		}
 	}
+	//End of file item_magic_wand_datadriven.txt
+
+
+	//Start of file item_mantle_datadriven.txt
+	// Rewrite of Mantle of Intelligence
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_mantle_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1015"  //Valve's version of this item uses the ID "15".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_mantle"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"150"
+		"ItemShopTags"					"int"
+		"ItemQuality"					"component"
+		"ItemAliases"					"mantle of intelligence"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intelligence"	"3"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_mantle_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
+				}
+			}
+		}
+	}
+	//End of file item_mantle_datadriven.txt
+
+
+	//Start of file item_mithril_hammer_datadriven.txt
+	// Rewrite of Mithril Hammer
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_mithril_hammer_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1008"  //Valve's version of this item uses the ID "8".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_mithril_hammer"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1600"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"component"
+		"ItemAliases"					"mithril hammer"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"24"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_mithril_hammer_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				}
+			}
+		}
+	}
+	//End of file item_mithril_hammer_datadriven.txt
+
+
+	//Start of file item_ogre_axe_datadriven.txt
+	// Rewrite of Ogre Club
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_ogre_axe_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1021"  //Valve's version of this item uses the ID "21".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_ogre_axe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1000"
+		"ItemShopTags"					"str"
+		"ItemQuality"					"component"
+		"ItemAliases"					"ogre club"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"10"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_ogre_axe_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+				}
+			}
+		}
+	}
+	//End of file item_ogre_axe_datadriven.txt
+
+
+	//Start of file item_platemail_datadriven.txt
+	// Rewrite of Platemail
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_platemail_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1009"  //Valve's version of this item uses the ID "9".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_platemail"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1400"
+		"ItemShopTags"					"armor"
+		"ItemQuality"					"component"
+		"ItemAliases"					"platemail"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"10"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_platemail_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+				}
+			}
+		}
+	}
+	//End of file item_platemail_datadriven.txt
+
+
+	//Start of file item_quarterstaff_datadriven.txt
+	// Rewrite of Quarterstaff
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_quarterstaff_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1010"  //Valve's version of this item uses the ID "10".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_quarterstaff"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"900"
+		"ItemShopTags"					"damage;attack_speed"
+		"ItemQuality"					"component"
+		"ItemAliases"					"quarterstaff"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"10"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_quarterstaff_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%bonus_damage"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
+				}
+			}
+		}
+	}
+	//End of file item_quarterstaff_datadriven.txt
+
+
+	//Start of file item_recipe_magic_wand_datadriven.txt
+	// Rewrite of Recipe: Magic Wand
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_recipe_magic_wand_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1035"  //Valve's version of this item uses the ID "35".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"150"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_magic_wand_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_magic_stick_datadriven;item_branches_datadriven;item_branches_datadriven;item_branches_datadriven"
+		}
+	}
+	//End of file item_recipe_magic_wand_datadriven.txt
+
+
+	//Start of file item_ring_of_protection_datadriven.txt
+	// Rewrite of Ring of Protection
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_ring_of_protection_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1012"  //Valve's version of this item uses the ID "12".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_ring_of_protection"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"200"
+		"ItemShopTags"					"armor"
+		"ItemQuality"					"component"
+		"ItemAliases"					"rop;ring of protection"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+		
+		// Sound
+		//-------------------------------------------------------------------------------------------------------------			
+		"UIPickupSound"					"Item.PickUpRingShop"
+		"UIDropSound"					"Item.DropRingShop"
+		"WorldDropSound"				"Item.DropRingWorld"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"3"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_platemail_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+				}
+			}
+		}
+	}
+	//End of file item_ring_of_protection_datadriven.txt
+
+
+	//Start of file item_ring_of_regen_datadriven.txt
+	// Rewrite of Ring of Regen
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_ring_of_regen_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1027"  //Valve's version of this item uses the ID "27".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_ring_of_regen"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"350"
+		"ItemShopTags"					"regen_health"
+		"ItemQuality"					"component"
+		"ItemAliases"					"ring of regen;ror"
+			
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_PARTIALLY_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+		
+		// Sound
+		//-------------------------------------------------------------------------------------------------------------			
+		"UIPickupSound"					"Item.PickUpRingShop"
+		"UIDropSound"					"Item.DropRingShop"
+		"WorldDropSound"				"Item.DropRingWorld"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"2"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_ring_of_regen_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+				}
+			}
+		}
+	}
+	//End of file item_ring_of_regen_datadriven.txt
+
+
+	//Start of file item_robe_datadriven.txt
+	// Rewrite of Robe of the Magi
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_robe_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1019"  //Valve's version of this item uses the ID "19".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_robe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"450"
+		"ItemShopTags"					"int"
+		"ItemQuality"					"component"
+		"ItemAliases"					"robe of the magi"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intelligence"	"7"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_robe_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
+				}
+			}
+		}
+	}
+	//End of file item_robe_datadriven.txt
+
+
+	//Start of file item_slippers_datadriven.txt
+	// Rewrite of Slippers of Agility
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_slippers_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1014"  //Valve's version of this item uses the ID "14".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_slippers"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"150"
+		"ItemShopTags"					"agi"
+		"ItemQuality"					"component"
+		"ItemAliases"					"slippers of agility"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"3"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_slippers_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agility"
+				}
+			}
+		}
+	}
+	//End of file item_slippers_datadriven.txt
+
+
+	//Start of file item_sobi_mask_datadriven.txt
+	// Rewrite of Sage's Mask
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_sobi_mask_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1028"  //Valve's version of this item uses the ID "28".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_sobi_mask"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"325"
+		"ItemShopTags"					"regen_mana"
+		"ItemQuality"					"component"
+		"ItemAliases"					"sage's mask"
+			
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_mana_regen_percentage"		"50"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_sobi_mask_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_percentage"
+				}
+			}
+		}
+	}
+	//End of file item_sobi_mask_datadriven.txt
+
+
+	//Start of file item_staff_of_wizardry_datadriven.txt
+	// Rewrite of Staff of Wizardry
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_staff_of_wizardry_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1023"  //Valve's version of this item uses the ID "23".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_staff_of_wizardry"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1000"
+		"ItemShopTags"					"int"
+		"ItemQuality"					"component"
+		"ItemAliases"					"staff of wizardry"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intelligence"	"10"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_staff_of_wizardry_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
+				}
+			}
+		}
+	}
+	//End of file item_staff_of_wizardry_datadriven.txt
+
+
+	//Start of file item_talisman_of_evasion_datadriven.txt
+	// Rewrite of Talisman of Evasion
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_talisman_of_evasion_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1032"  //Valve's version of this item uses the ID "32".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_talisman_of_evasion"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1800"
+		"ItemShopTags"					"evasion"
+		"ItemQuality"					"component"
+		"ItemAliases"					"talisman of evasion"
+	
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"0"
+		"SecretShop"					"0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_evasion"			"25"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_talisman_of_evasion_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"		"%bonus_evasion"
+				}
+			}
+		}
+	}
+	//End of file item_talisman_of_evasion_datadriven.txt
+
+
+	//Start of file item_ultimate_orb_datadriven.txt
+	// Rewrite of Ultimate Orb
+	// Author: Rook
+	// Date: January 25, 2015
+	
+	"item_ultimate_orb_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1024"  //Valve's version of this item uses the ID "24".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/branch.mdl"
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_ultimate_orb"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2100"
+		"ItemShopTags"					"agi;int;str"
+		"ItemQuality"					"component"
+		"ItemAliases"					"ultimate orb"
+		
+		"ItemKillable"					"1"
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemAlertable"					"1"
+	
+		"SideShop"						"1"
+		"SecretShop"					"0"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"10"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_ultimate_orb_modifier"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				}
+			}
+		}
+	}
+	//End of file item_ultimate_orb_datadriven.txt
 }

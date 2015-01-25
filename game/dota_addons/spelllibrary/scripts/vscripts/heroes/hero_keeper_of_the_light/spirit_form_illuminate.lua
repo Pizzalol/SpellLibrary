@@ -14,7 +14,7 @@ function SpiritFormIlluminateInitialize( keys )
 
 	local dummy_modifier = keys.dummy_modifier
 
-	local max_channel_time = ability:GetLevelSpecialValueFor("max_channel_time", (ability:GetLevel() - 1))
+	local max_channel_time = ability:GetLevelSpecialValueFor("max_channel_time", (ability:GetLevel() - 1)) + 0.03
 
 	caster.spirit_form_illuminate_dummy = CreateUnitByName("npc_dummy_blank", caster_location, false, caster, caster, caster:GetTeam())
 	caster.spirit_form_illuminate_dummy:SetForwardVector(caster_direction)
@@ -100,9 +100,6 @@ function SpiritFormIlluminateEnd( keys )
 	caster.spirit_form_illuminate_channel_time = caster.spirit_form_illuminate_channel_time * channel_count_interval
 	caster.spirit_form_illuminate_damage = caster.spirit_form_illuminate_channel_time * damage_per_second
 
-	print("DAMAGE: " .. caster.spirit_form_illuminate_damage)
-	print("CHANNEL TIME: " .. caster.spirit_form_illuminate_channel_time)
-
 	-- Create projectile
 	local projectileTable =
 	{
@@ -136,8 +133,6 @@ function SpiritFormIlluminateProjectileHit( keys )
 	local ability = keys.ability
 	local target = keys.target
 
-	print(caster.spirit_form_illuminate_damage)
-
 	local damage_table = {}
 
 	damage_table.attacker = caster
@@ -163,6 +158,9 @@ function SwapAbilities( keys )
 	caster:SwapAbilities(main_ability_name, sub_ability_name, false, true)
 end
 
+--[[Author: Pizzalol
+	Date: 25.01.2015.
+	Stops the dummy channeling]]
 function SpiritFormIlluminateStop( keys )
 	local caster = keys.caster
 	local ability = keys.ability

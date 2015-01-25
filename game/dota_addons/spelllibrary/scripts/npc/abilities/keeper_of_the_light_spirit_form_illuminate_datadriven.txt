@@ -6,7 +6,9 @@
 // 			keeper_of_the_light_spirit_form_illuminate_end_datadriven
 // 
 // NOTE2: The horses are missing from the projectile visual
-
+// NOTE3: Uses the normal illuminate projectile instead of the spirit form one, as it is bugged
+// NOTE4: The charge up animation is just a horse with the energy gathering part, the rider is part of
+// the projectile that we are not using
 "keeper_of_the_light_spirit_form_illuminate_datadriven"
 {
 	// General
@@ -25,7 +27,7 @@
 	"precache"
 	{
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
-		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_spiritform.vpcf"
+		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
 		"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge_spirit_form.vpcf"
 		"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"		
 	}
@@ -215,7 +217,7 @@
 					"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
 					"Function"		"SpiritFormIlluminateEnd"
 					"modifier_channel_count"	"modifier_spirit_form_illuminate_channel_count_datadriven"
-					"projectile_name" 			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_spiritform.vpcf"
+					"projectile_name" 			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
 				}
 
 				"RunScript"
@@ -232,6 +234,7 @@
 				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"		"MODIFIER_STATE_VALUE_ENABLED"
 			}			
 		}
 
@@ -262,9 +265,6 @@
 
 			"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
-			"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge_spirit_form.vpcf"
-			"EffectAttachType"	"attach_origin"
-
 			"OnCreated"
 			{
 				"ApplyModifier"
@@ -276,7 +276,22 @@
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 				}
-				
+
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge_spirit_form.vpcf"
+					"EffectAttachType"  "start_at_customorigin"
+					"Target"            "CASTER"
+
+					"ControlPointEntities"
+					{
+						"CASTER"	"attach_origin"
+						"CASTER"	"attach_origin"
+						"CASTER"	"attach_origin"
+						"CASTER"	"attach_origin"
+						"CASTER"	"attach_origin"
+					}
+				}				
 			}			
 
 			"ThinkInterval"  "%channel_count_interval"
