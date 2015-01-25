@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Magic Wand
+// Author: Rook
+// Date: January 25, 2015
+
+"item_recipe_magic_wand_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1035"  //Valve's version of this item uses the ID "35".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"150"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_magic_wand_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_magic_stick_datadriven;item_branches_datadriven;item_branches_datadriven;item_branches_datadriven"
+	}
+}

@@ -1,0 +1,117 @@
+// Rewrite of Magic Stick
+// Author: Rook
+// Date: January 25, 2015
+// Known Bugs:
+//     All abilities grant Magic Stick a charge, regardless of their "AbilityProcsMagicStick" key.
+//     Magic Stick and Magic Wand will both gain charges if a unit has one or more of each in their inventory.
+
+"item_magic_stick_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1034"  //Valve's version of this item uses the ID "34".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"Model"							"models/props_gameplay/magic_wand.mdl"
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_magic_stick"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"13.0"
+	"AbilityCastPoint"				"0.0"
+	"AbilityManaCost"				"0"
+	"AbilitySharedCooldown"			"magicwand"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"200"
+	"ItemShopTags"					"regen_health;regen_mana;boost_health;boost_mana"
+	"ItemQuality"					"component"
+	"ItemAliases"					"magic stick"
+
+	"ItemKillable"					"1"
+	"ItemSellable"					"1"
+	"ItemPurchasable"				"1"
+	"ItemDroppable"					"1"
+	"ItemShareability"				"ITEM_NOT_SHAREABLE"
+	"ItemStackable"					"0"
+	"ItemPermanent"					"1"
+	"ItemRequiresCharges"			"1"
+	"ItemDisplayCharges"			"1"
+	"ItemInitialCharges"			"0"
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+	"ItemAlertable"					"1"
+
+	"SideShop"						"1"
+	"SecretShop"					"0"
+
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"max_charges"			"10"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"charge_radius"			"1200"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"restore_per_charge"	"15"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"items/item_magic_stick.lua"
+			"Function"				"item_magic_stick_on_spell_start"
+			"RestorePerCharge"		"%restore_per_charge"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"item_magic_stick_modifier_aura_emitter"
+		{
+			"Passive"				"1"
+			"IsHidden"				"1"
+			"IsBuff"				"0"
+			"IsDebuff"				"0"
+			"IsPurgable"			"0"
+			
+			"Aura" 					"item_magic_stick_modifier_aura"
+			"Aura_Radius" 			"%charge_radius"
+			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO"
+			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			"Aura_ApplyToCaster" 	"0"
+		}
+		"item_magic_stick_modifier_aura"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"OnAbilityExecuted"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_magic_stick.lua"
+					"Function"				"item_magic_stick_modifier_aura_on_ability_executed"
+					"MaxCharges"			"%max_charges"
+				}
+			}
+		}
+	}
+}

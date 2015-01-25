@@ -1,0 +1,67 @@
+// Rewrite of Cheese
+// Author: Rook
+// Date: January 25, 2015
+
+"item_cheese_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1033"  //Valve's version of this item uses the ID "33".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"Model"							"models/props_gameplay/cheese.mdl"
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_cheese"
+	"FightRecapLevel"				"2"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"40.0"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1000"
+	"ItemShopTags"					""
+	"ItemQuality"					"epic"
+
+	"ItemKillable"					"1"
+	"ItemSellable"					"1"
+	"ItemPurchasable"				"0"
+	"ItemDroppable"					"1"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+	"ItemStackable"					"1"
+	"ItemPermanent"					"0"
+	"ItemInitialCharges"			"1"
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+	"ItemAlertable"					"1"
+
+	"SideShop"						"0"
+	"SecretShop"					"0"
+
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"health_restore"		"2500"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mana_restore"			"1000"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"items/item_cheese.lua"
+			"Function"				"item_cheese_on_spell_start"
+			"HealthRestore"			"%health_restore"
+			"ManaRestore"			"%mana_restore"
+		}
+	}
+}
