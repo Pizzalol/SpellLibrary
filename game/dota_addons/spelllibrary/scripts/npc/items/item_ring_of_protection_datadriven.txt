@@ -1,25 +1,25 @@
-// Rewrite of Quarterstaff
+// Rewrite of Ring of Protection
 // Author: Rook
 // Date: January 25, 2015
 
 
-"item_quarterstaff_datadriven"
+"item_ring_of_protection_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"						"item_datadriven"
-	"ID"							"1010"  //Valve's version of this item uses the ID "10".
+	"ID"							"1012"  //Valve's version of this item uses the ID "12".
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"Model"							"models/props_gameplay/red_box.vmdl" 
 	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-	"AbilityTextureName"			"item_quarterstaff"
+	"AbilityTextureName"			"item_ring_of_protection"
 	
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
-	"ItemCost"						"900"
-	"ItemShopTags"					"damage;attack_speed"
+	"ItemCost"						"200"
+	"ItemShopTags"					"armor"
 	"ItemQuality"					"component"
-	"ItemAliases"					"quarterstaff"
+	"ItemAliases"					"rop;ring of protection"
 	
 	"ItemKillable"					"1"
 	"ItemSellable"					"1"
@@ -31,9 +31,15 @@
 	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 	"ItemAlertable"					"1"
 
-	"SideShop"						"1"
+	"SideShop"						"0"
 	"SecretShop"					"0"
-
+	
+	// Sound
+	//-------------------------------------------------------------------------------------------------------------			
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+		
 	// Special	
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
@@ -41,18 +47,13 @@
 		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_damage"			"10"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bonus_attack_speed"	"10"
+			"bonus_armor"			"3"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"item_quarterstaff_modifier"
+		"item_platemail_modifier"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
@@ -63,8 +64,7 @@
 			
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%bonus_damage"
-				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
 			}
 		}
 	}

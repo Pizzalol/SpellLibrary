@@ -39,7 +39,7 @@
 	"ItemShareability"				"ITEM_NOT_SHAREABLE"
 	"ItemStackable"					"0"
 	"ItemPermanent"					"0"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 	"ItemAlertable"					"1"
 
 	"SideShop"						"1"
