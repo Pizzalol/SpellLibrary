@@ -5,12 +5,12 @@
 	// Double-tapping the item currently does not blink the unit toward their fountain.
 	// When damage is taken, the value before reductions is used to determine whether the item should be put on a brief cooldown, not the value after reductions like it should be.
 
-"item_blink"
+"item_blink_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"						"item_datadriven"
-	"ID"							"1"
+	"ID"							"1000"  //Valve's item_blink uses the ID "1".
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 	"Model"							"models/props_gameplay/red_box.vmdl"
 	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
@@ -70,11 +70,11 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"		"items/item_blink.lua"
-			"Function"			"item_blink_on_spell_start"
-			"Target"			"POINT"
-			"MaxBlinkRange"		"%max_blink_range"
-			"BlinkRangeClamp"	"%blink_range_clamp"
+			"ScriptFile"			"items/item_blink.lua"
+			"Function"				"item_blink_on_spell_start"
+			"Target"				"POINT"
+			"MaxBlinkRange"			"%max_blink_range"
+			"BlinkRangeClamp"		"%blink_range_clamp"
 		}
 	}
 	
