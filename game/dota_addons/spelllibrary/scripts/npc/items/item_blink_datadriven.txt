@@ -2,15 +2,15 @@
 // Author: Rook
 // Date: January 25, 2015
 // Known bugs:
-	// Double-tapping the item currently does not blink the unit toward their fountain.
-	// When damage is taken, the value before reductions is used to determine whether the item should be put on a brief cooldown, not the value after reductions like it should be.
+//     Double-tapping the item currently does not blink the unit toward their fountain.
+//     When damage is taken, the value before reductions is used to determine whether the item should be put on a brief cooldown, not the value after reductions like it should be.
 
 "item_blink_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"						"item_datadriven"
-	"ID"							"1000"  //Valve's item_blink uses the ID "1".
+	"ID"							"1001"  //Valve's version of this item uses the ID "1".
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 	"Model"							"models/props_gameplay/red_box.vmdl"
 	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
