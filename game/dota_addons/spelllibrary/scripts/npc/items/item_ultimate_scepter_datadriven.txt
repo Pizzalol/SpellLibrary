@@ -1,0 +1,85 @@
+// Rewrite of Aghanim's Scepter
+// Author: Rook
+// Date: January 25, 2015
+
+"item_ultimate_scepter_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1108"  //Valve's version of this item uses the ID "108".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl"
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_ultimate_scepter"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"4200"
+	"ItemShopTags"					"int;str;agi;mana_pool;health_pool;hard_to_tag"
+	"ItemQuality"					"rare"
+	"ItemAliases"					"ultimate;aghanim's scepter"
+	//"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"  //Heroes for whom this is a problem (Ogre Magi, Meepo) should have it solved in their code.
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_all_stats"		"10"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"200"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"150"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"item_ultimate_scepter_datadriven_modifier"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
+				"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
+			}
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_ultimate_scepter.lua"
+					"Function"			"item_ultimate_scepter_datadriven_on_created"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_ultimate_scepter.lua"
+					"Function"			"item_ultimate_scepter_datadriven_on_destroy"
+				}
+			}
+		}
+	}
+}

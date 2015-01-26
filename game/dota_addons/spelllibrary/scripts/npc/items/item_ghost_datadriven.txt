@@ -40,7 +40,7 @@
 	"SideShop"						"0"
 	"SecretShop"					"0"
 	
-	"AbilitySpecial"  //Update derived items if these values are altered.
+	"AbilitySpecial"
 	{
 		"01"
 		{

@@ -24,7 +24,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"Model"							"models/props_gameplay/red_box.vmdl" 
 	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-	"AbilityTextureName"			"item_power_treads"
+	"AbilityTextureName"			"item_power_treads_str"
 	
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
@@ -107,7 +107,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"Model"							"models/props_gameplay/red_box.vmdl" 
 	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-	"AbilityTextureName"			"item_power_treads"
+	"AbilityTextureName"			"item_power_treads_agi"
 	
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
@@ -118,7 +118,7 @@
 	
 	"ItemKillable"					"1"
 	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
+	"ItemPurchasable"				"0"
 	"ItemDroppable"					"1"
 	"ItemShareability"				"ITEM_NOT_SHAREABLE"
 	"ItemStackable"					"0"
@@ -191,7 +191,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"Model"							"models/props_gameplay/red_box.vmdl" 
 	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-	"AbilityTextureName"			"item_power_treads"
+	"AbilityTextureName"			"item_power_treads_int"
 	
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
@@ -202,7 +202,7 @@
 	
 	"ItemKillable"					"1"
 	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
+	"ItemPurchasable"				"0"
 	"ItemDroppable"					"1"
 	"ItemShareability"				"ITEM_NOT_SHAREABLE"
 	"ItemStackable"					"0"

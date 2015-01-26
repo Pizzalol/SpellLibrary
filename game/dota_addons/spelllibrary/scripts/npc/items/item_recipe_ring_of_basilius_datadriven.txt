@@ -1,0 +1,33 @@
+// Rewrite of Recipe: Ring of Basilius
+// Author: Rook
+// Date: January 26, 2015
+
+"item_recipe_ring_of_basilius_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1087"  //Valve's version of this item uses the ID "87".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"	
+	"ItemShopTags"					""
+	
+	// Sound
+	//-------------------------------------------------------------------------------------------------------------			
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_ring_of_basilius_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_sobi_mask_datadriven;item_ring_of_protection_datadriven"
+	}
+}

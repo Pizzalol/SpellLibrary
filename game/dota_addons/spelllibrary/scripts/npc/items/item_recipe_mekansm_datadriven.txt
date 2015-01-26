@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Mekansm
+// Author: Rook
+// Date: January 26, 2015
+
+"item_recipe_mekansm_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1078"  //Valve's version of this item uses the ID "78".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"900"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_mekansm_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_headdress_datadriven;item_buckler_datadriven"
+	}
+}

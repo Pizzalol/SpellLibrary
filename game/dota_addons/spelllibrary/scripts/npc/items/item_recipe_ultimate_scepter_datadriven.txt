@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Aghanim's Scepter
+// Author: Rook
+// Date: January 26, 2015
+
+"item_recipe_ultimate_scepter_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1107"  //Valve's version of this item uses the ID "107".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_ultimate_scepter_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_point_booster_datadriven;item_staff_of_wizardry_datadriven;item_ogre_axe_datadriven;item_blade_of_alacrity_datadriven"
+	}
+}
