@@ -6,8 +6,6 @@
 
 	"Ability1"	"vengefulspirit_magic_missile_datadriven"
 	"Ability2"	"keeper_of_the_light_mana_leak_datadriven"
-	"Ability3"	"keeper_of_the_light_chakra_magic_datadriven"
-	"Ability4"	"keeper_of_the_light_recall_datadriven"
-	"Ability5"	"keeper_of_the_light_blinding_light_datadriven"
-	"Ability6"	"vengefulspirit_nether_swap_datadriven"
+	"Ability3"	"vengefulspirit_command_aura_datadriven"
+	"Ability4"	"vengefulspirit_nether_swap_datadriven"
 }

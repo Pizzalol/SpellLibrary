@@ -53,6 +53,15 @@
 		}
 	}
 
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile" "heroes/hero_vengefulspirit/nether_swap.lua"
+			"Function" "NetherSwapPreCast"
+		}
+	}
+
 	"OnSpellStart"
 	{
 		"FireSound"

@@ -1,3 +1,6 @@
+// Rewrite of the Vengeful Spirit Command Aura ability
+// Author: Pizzalol
+// Date: 26.01.2015.
 "vengefulspirit_command_aura_datadriven"
 {
 	// General
@@ -5,7 +8,14 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	
+	"AbilityTextureName"			"vengefulspirit_command_aura"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf"
+	}	
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -25,7 +35,103 @@
 			"var_type"			"FIELD_INTEGER"
 			"aura_radius"		"900"
 		}
-		
+		// Extra
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"negative_damage_pct"	"-12 -20 -28 -36"
+		}		
 	}
+
+	"Modifiers"
+	{
+		"modifier_command_aura_caster_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsDebuff"			"0"
+	
+			"Aura"					"modifier_command_aura_friendly_datadriven"
+			"Aura_Radius"			"%aura_radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
+
+			"OnRespawn"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_vengefulspirit/command_aura.lua"
+					"Function"		"CommandAuraRespawn"
+					"modifier"		"modifier_command_aura_attacker_datadriven"
+				}				
+			}
+			
+
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_vengefulspirit/command_aura.lua"
+					"Function"		"CommandAuraDeath"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_command_aura_attacker_datadriven"
+					"Target"
+					{
+						"Center"	"ATTACKER"
+						"Types"		"DOTA_UNIT_TARGET_HERO"
+						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					}
+				}
+
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf"
+					"EffectAttachType"  "start_at_customorigin"
+
+					"ControlPointEntities"
+					{
+						"ATTACKER"	"follow_origin"
+						"CASTER"	"follow_origin"
+					}
+				}
+												
+			}			
+		}
+
+		"modifier_command_aura_friendly_datadriven"
+		{
+			"IsBuff"	"1"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_pct" 
+			}			
+		}
+
+		"modifier_command_aura_attacker_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			"IsDebuff"			"1"
+	
+			"Aura"					"modifier_command_aura_enemy_datadriven"
+			"Aura_Radius"			"%aura_radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
+		}
+
+		"modifier_command_aura_enemy_datadriven"
+		{
+			"IsDebuff"	"1"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%negative_damage_pct" 
+			}			
+		}
+	}	
 }
 

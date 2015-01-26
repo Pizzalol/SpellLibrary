@@ -5,10 +5,13 @@ function ManaLeakInit( keys )
 	local target = keys.target
 	local target_location = target:GetAbsOrigin()
 	local target_mana = target:GetMana()
+	local ability = keys.ability
 
+	print(target_mana)
 	-- Extra variables
 	local sound = keys.sound
 	local modifier = keys.modifier
+	local stun_duration = ability:GetLevelSpecialValueFor("stun_duration", (ability:GetLevel() - 1))
 
 	-- Initial mana check
 	if target_mana <= 0 then
