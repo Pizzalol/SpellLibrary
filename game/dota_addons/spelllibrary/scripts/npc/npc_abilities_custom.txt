@@ -47296,6 +47296,9 @@
 
 
 	//Start of file vengefulspirit_magic_missile_datadriven.txt
+	// Rewrite of the Vengeful Spirit Magic Missile ability
+	// Author: Pizzalol
+	// Date: 26.01.2015.
 	"vengefulspirit_magic_missile_datadriven"
 	{
 		// General
@@ -47397,6 +47400,9 @@
 
 
 	//Start of file vengefulspirit_nether_swap_datadriven.txt
+	// Rewrite of the Vengeful Spirit Nether Swap ability
+	// Author: Pizzalol
+	// Date: 26.01.2015.
 	"vengefulspirit_nether_swap_datadriven"
 	{
 		// General
@@ -47404,11 +47410,21 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"vengefulspirit_nether_swap"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
+			"particle"			"particles/units/heroes/hero_vengeful/vengeful_nether_swap.vpcf"
+			"particle"  		"particles/units/heroes/hero_vengeful/vengeful_nether_swap_pink.vpcf"
+							
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -47438,6 +47454,51 @@
 				"nether_swap_cooldown_scepter"	"10"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_VengefulSpirit.NetherSwap"
+				"Target" 		"TARGET"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"	"Hero_VengefulSpirit.NetherSwap"
+				"Target" 		"CASTER"
+			}
+			
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_vengeful/vengeful_nether_swap.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				
+				"ControlPointEntities"
+				{
+					"TARGET"	"follow_origin"
+					"CASTER"	"follow_origin"
+				}
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_vengeful/vengeful_nether_swap_pink.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				
+				"ControlPointEntities"
+				{
+					"CASTER"	"follow_origin"
+					"TARGET"	"follow_origin"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_vengefulspirit/nether_swap.lua"
+				"Function"		"NetherSwap"
+			}						
+		}	
 	}
 	
 	//End of file vengefulspirit_nether_swap_datadriven.txt

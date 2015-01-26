@@ -1,3 +1,6 @@
+// Rewrite of the Vengeful Spirit Nether Swap ability
+// Author: Pizzalol
+// Date: 26.01.2015.
 "vengefulspirit_nether_swap_datadriven"
 {
 	// General
@@ -5,8 +8,8 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"vengefulspirit_nether_swap"
@@ -16,7 +19,9 @@
 	"precache"
 	{
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
-		"particle"			"particles/units/heroes/hero_vengeful/vengeful_nether_swap.vpcf"		
+		"particle"			"particles/units/heroes/hero_vengeful/vengeful_nether_swap.vpcf"
+		"particle"  		"particles/units/heroes/hero_vengeful/vengeful_nether_swap_pink.vpcf"
+						
 	}
 
 	// Casting
@@ -69,12 +74,28 @@
 			
 			"ControlPointEntities"
 			{
+				"TARGET"	"follow_origin"
+				"CASTER"	"follow_origin"
+			}
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_vengeful/vengeful_nether_swap_pink.vpcf"
+			"EffectAttachType"  "start_at_customorigin"
+			
+			"ControlPointEntities"
+			{
 				"CASTER"	"follow_origin"
 				"TARGET"	"follow_origin"
 			}
 		}
-		
-	}
-	
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_vengefulspirit/nether_swap.lua"
+			"Function"		"NetherSwap"
+		}						
+	}	
 }
 
