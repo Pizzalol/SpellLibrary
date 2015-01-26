@@ -1,0 +1,123 @@
+// Rewrite of Recipe: Dagon
+// Author: Rook
+// Date: January 26, 2015
+
+"item_recipe_dagon_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1103"  //Valve's version of this item uses the ID "103".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1250"
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_dagon_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_staff_of_wizardry_datadriven;item_null_talisman_datadriven"
+	}
+}
+
+"item_recipe_dagon_2_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1197"  //Valve's version of this item uses the ID "197".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_dagon_2_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_dagon_datadriven;item_recipe_dagon_datadriven"
+	}
+}
+
+"item_recipe_dagon_3_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1198"  //Valve's version of this item uses the ID "198".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_dagon_3_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_dagon_2_datadriven;item_recipe_dagon_datadriven"
+	}
+}
+
+"item_recipe_dagon_4_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1199"  //Valve's version of this item uses the ID "199".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_dagon_4_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_dagon_3_datadriven;item_recipe_dagon_datadriven"
+	}
+}
+
+"item_recipe_dagon_5_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1200"  //Valve's version of this item uses the ID "200".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_dagon_5_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_dagon_4_datadriven;item_recipe_dagon_datadriven"
+	}
+}

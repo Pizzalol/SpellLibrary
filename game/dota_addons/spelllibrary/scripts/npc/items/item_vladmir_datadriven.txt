@@ -63,7 +63,7 @@
 		"05"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"mana_regen_aura"			"0.8"  //This value is unused due to an obscure engine bug.
+			"mana_regen_aura"			"0.8"  //This variable is unused due to an obscure engine bug.
 		}
 		"06"
 		{

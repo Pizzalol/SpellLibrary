@@ -118,7 +118,7 @@
 	
 	"ItemKillable"					"1"
 	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
+	"ItemPurchasable"				"0"
 	"ItemDroppable"					"1"
 	"ItemShareability"				"ITEM_NOT_SHAREABLE"
 	"ItemStackable"					"0"
@@ -202,7 +202,7 @@
 	
 	"ItemKillable"					"1"
 	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
+	"ItemPurchasable"				"0"
 	"ItemDroppable"					"1"
 	"ItemShareability"				"ITEM_NOT_SHAREABLE"
 	"ItemStackable"					"0"

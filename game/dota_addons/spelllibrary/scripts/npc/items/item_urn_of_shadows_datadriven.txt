@@ -1,0 +1,247 @@
+// Rewrite of Urn of Shadows
+// Author: Rook
+// Date: January 26, 2015
+// Known bugs:
+//     All players within range of a kill that have Urns will gain a charge; only the closest Urn is supposed to.
+
+"item_urn_of_shadows_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1092"  //Valve's version of this item uses the ID "92".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_urn_of_shadows"
+	
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"950"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"7.0"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"875"
+	"ItemShopTags"					"regen_mana;str;boost_health"
+	"ItemQuality"					"rare"
+	"ItemAliases"					"urn of shadows"
+		
+	
+	"ItemRequiresCharges"			"1"
+	"ItemDisplayCharges"			"1"
+	"ItemStackable"					"0"
+	"ItemPermanent"					"1"
+	"ItemInitialCharges"			"0"
+	
+	"ItemKillable"					"1"
+	"ItemSellable"					"1"
+	"ItemPurchasable"				"1"
+	"ItemDroppable"					"1"
+	"ItemShareability"				"ITEM_NOT_SHAREABLE"
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+	"ItemAlertable"					"1"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+
+	"SideShop"						"0"
+	"SecretShop"					"0"
+		
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mana_regen_percent"	"50"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_strength"		"6"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"soul_radius"			"1400"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"soul_initial_charge"	"2"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"soul_additional_charges"	"1"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"soul_heal_interval"	"0.25"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"soul_damage_interval"	"1"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"soul_heal_amount"		"400"
+		}	
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"soul_damage_amount"	"150"
+		}
+		"10"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"soul_heal_duration"	"8.0"
+		}
+		"11"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"soul_damage_duration"	"8.0"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"items/item_urn_of_shadows.lua"
+			"Function"			"item_urn_of_shadows_on_spell_start"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"item_urn_of_shadows_modifier"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+				"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen_percent"
+			}
+		}
+		"item_urn_of_shadows_modifier_aura_emitter"
+		{
+			"Passive"				"1"
+			"IsHidden"				"1"
+			"IsBuff"				"0"
+			"IsDebuff"				"0"
+			"IsPurgable"			"0"
+			
+			"Aura" 					"item_urn_of_shadows_modifier_aura"
+			"Aura_Radius" 			"%soul_radius"
+			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO"
+			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			"Aura_ApplyToCaster" 	"0"
+			
+			"OnKill"  //Killing an enemy hero grants Urn charges even if they are not in range.
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_urn_of_shadows.lua"
+					"Function"				"item_urn_of_shadows_on_hero_killed"
+				}
+			}
+		}
+		"item_urn_of_shadows_modifier_aura"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"TextureName"		"item_urn_of_shadows_rook"
+			
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_urn_of_shadows.lua"
+					"Function"			"item_urn_of_shadows_modifier_aura_on_death"
+				}
+			}
+		}
+		"item_urn_of_shadows_modifier_heal"
+		{
+			"Duration"			"%soul_heal_duration"
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"1"
+			"IsDebuff"			"0"
+			"IsPurgable"		"1"
+			"TextureName"		"item_urn_of_shadows"
+			
+			"EffectName"			"particles/items2_fx/urn_of_shadows_heal.vpcf"
+			"EffectAttachType"		"follow_origin"
+			
+			"ThinkInterval" 		"%soul_heal_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_urn_of_shadows.lua"
+					"Function"			"item_urn_of_shadows_modifier_heal_on_interval_think"
+					"TotalHeal"			"%soul_heal_amount"
+					"TotalDuration"		"%soul_heal_duration"
+					"Interval"			"%soul_heal_interval"
+				}
+			}
+			
+			"OnTakeDamage"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_urn_of_shadows.lua"
+					"Function"			"item_urn_of_shadows_modifier_heal_on_take_damage"
+					"Damage"			"%attack_damage"
+				}
+			}
+		}
+		"item_urn_of_shadows_modifier_damage"
+		{
+			"Damage"			"%soul_damage_duration"
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+			"IsPurgable"		"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"TextureName"		"item_urn_of_shadows"
+			
+			"EffectName"			"particles/items2_fx/urn_of_shadows_damage.vpcf"
+			"EffectAttachType"		"follow_origin"
+			
+			"ThinkInterval" 		"%soul_damage_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_urn_of_shadows.lua"
+					"Function"			"item_urn_of_shadows_modifier_damage_on_interval_think"
+					"TotalDamage"		"%soul_damage_amount"
+					"TotalDuration"		"%soul_damage_duration"
+					"Interval"			"%soul_damage_interval"
+				}
+			}
+		}
+	}
+}

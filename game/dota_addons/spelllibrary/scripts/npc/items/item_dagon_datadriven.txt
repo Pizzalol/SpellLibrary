@@ -1,0 +1,494 @@
+// Rewrite of Dagon
+// Author: Rook
+// Date: January 26, 2015
+
+"item_dagon_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1104"  //Valve's version of this item uses the ID "104".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_dagon"
+	"FightRecapLevel"				"1"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"600 650 700 750 800"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"35.0 30.0 25.0 20.0 15.0"
+	"AbilityManaCost"				"180"
+	
+	"AbilitySharedCooldown"			"dagon"
+	"MaxUpgradeLevel"				"5"
+	"ItemBaseLevel"					"1"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2800"
+	"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
+	"ItemQuality"					"rare"	
+	"ItemAliases"					"dagon 1"
+	
+	"UpgradesItems"					"item_dagon;item_dagon_2;item_dagon_3;item_dagon_4"
+	"UpgradeRecipe"					"item_recipe_dagon"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_intellect"		"13 16 19 22 25"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_all_stats"		"3"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"9"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"400 500 600 700 800"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"range_tooltip"			"600 650 700 750 800"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"items/item_dagon.lua"
+			"Function"			"item_dagon_on_spell_start"
+			"Damage"			"%damage"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"item_dagon_modifier"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intellect"
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+			}
+		}
+	}
+}
+
+
+"item_dagon_2_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1201"  //Valve's version of this item uses the ID "201".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_dagon_2"
+	"FightRecapLevel"				"1"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"600 650 700 750 800"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"35.0 30.0 25.0 20.0 15.0"
+	"AbilityManaCost"				"180"
+	
+	"AbilitySharedCooldown"			"dagon"
+	"MaxUpgradeLevel"				"5"
+	"ItemBaseLevel"					"2"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2800"
+	"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
+	"ItemQuality"					"rare"	
+	"ItemAliases"					"dagon 2"
+	
+	"UpgradesItems"					"item_dagon_2;item_dagon_3;item_dagon_4"
+	"UpgradeRecipe"					"item_recipe_dagon"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_intellect"		"13 16 19 22 25"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_all_stats"		"3"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"9"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"400 500 600 700 800"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"range_tooltip"			"600 650 700 750 800"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"items/item_dagon.lua"
+			"Function"			"item_dagon_on_spell_start"
+			"Damage"			"%damage"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"item_dagon_2_modifier"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intellect"
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+			}
+		}
+	}
+}
+
+
+"item_dagon_3_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1202"  //Valve's version of this item uses the ID "202".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_dagon_3"
+	"FightRecapLevel"				"1"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"600 650 700 750 800"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"35.0 30.0 25.0 20.0 15.0"
+	"AbilityManaCost"				"180"
+	
+	"AbilitySharedCooldown"			"dagon"
+	"MaxUpgradeLevel"				"5"
+	"ItemBaseLevel"					"3"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2800"
+	"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
+	"ItemQuality"					"rare"	
+	"ItemAliases"					"dagon 3"
+	
+	"UpgradesItems"					"item_dagon_3;item_dagon_4"
+	"UpgradeRecipe"					"item_recipe_dagon"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_intellect"		"13 16 19 22 25"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_all_stats"		"3"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"9"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"400 500 600 700 800"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"range_tooltip"			"600 650 700 750 800"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"items/item_dagon.lua"
+			"Function"			"item_dagon_on_spell_start"
+			"Damage"			"%damage"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"item_dagon_3_modifier"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intellect"
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+			}
+		}
+	}
+}
+
+
+"item_dagon_4_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1203"  //Valve's version of this item uses the ID "203".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_dagon_4"
+	"FightRecapLevel"				"1"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"600 650 700 750 800"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"35.0 30.0 25.0 20.0 15.0"
+	"AbilityManaCost"				"180"
+	
+	"AbilitySharedCooldown"			"dagon"
+	"MaxUpgradeLevel"				"5"
+	"ItemBaseLevel"					"4"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2800"
+	"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
+	"ItemQuality"					"rare"	
+	"ItemAliases"					"dagon 4"
+	
+	"UpgradesItems"					"item_dagon_4"
+	"UpgradeRecipe"					"item_recipe_dagon"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_intellect"		"13 16 19 22 25"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_all_stats"		"3"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"9"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"400 500 600 700 800"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"range_tooltip"			"600 650 700 750 800"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"items/item_dagon.lua"
+			"Function"			"item_dagon_on_spell_start"
+			"Damage"			"%damage"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"item_dagon_4_modifier"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intellect"
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+			}
+		}
+	}
+}
+
+
+"item_dagon_5_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1204"  //Valve's version of this item uses the ID "204".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_dagon_5"
+	"FightRecapLevel"				"1"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"600 650 700 750 800"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"35.0 30.0 25.0 20.0 15.0"
+	"AbilityManaCost"				"180"
+	
+	"AbilitySharedCooldown"			"dagon"
+	"MaxUpgradeLevel"				"5"
+	"ItemBaseLevel"					"5"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2800"
+	"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
+	"ItemQuality"					"rare"	
+	"ItemAliases"					"dagon 5"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_intellect"		"13 16 19 22 25"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_all_stats"		"3"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"9"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"400 500 600 700 800"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"range_tooltip"			"600 650 700 750 800"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"items/item_dagon.lua"
+			"Function"			"item_dagon_on_spell_start"
+			"Damage"			"%damage"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"item_dagon_5_modifier"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intellect"
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+			}
+		}
+	}
+}

@@ -1,0 +1,90 @@
+// Rewrite of Headdress
+// Author: Rook
+// Date: January 26, 2015
+
+"item_headdress_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1094"  //Valve's version of this item uses the ID "94".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_headdress"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"600"
+	"ItemShopTags"					"str;int;agi;regen_health"
+	"ItemQuality"					"rare"
+	"ItemAliases"					"headdress"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_all_stats"		"2"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"aura_radius"			"750"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"aura_health_regen"		"3"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"item_headdress_modifier"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+			}
+		}
+		"item_headdress_modifier_aura_emitter"
+		{
+			"Passive"				"1"
+			"IsHidden"				"1"
+			"IsBuff"				"0"
+			"IsDebuff"				"0"
+			"IsPurgable"			"0"
+			
+			"Aura" 					"item_headdress_modifier_aura"
+			"Aura_Radius" 			"%aura_radius"
+			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			"Aura_ApplyToCaster" 	"1"
+		}
+		"item_headdress_modifier_aura"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"1"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"TextureName"		"item_headdress"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%aura_health_regen"
+			}
+		}
+	}
+}

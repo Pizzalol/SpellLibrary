@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Urn of Shadows
+// Author: Rook
+// Date: January 26, 2015
+
+"item_recipe_urn_of_shadows_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1091"  //Valve's version of this item uses the ID "91".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"250"
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_urn_of_shadows_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_sobi_mask_datadriven;item_gauntlets_datadriven;item_gauntlets_datadriven"
+	}
+}
