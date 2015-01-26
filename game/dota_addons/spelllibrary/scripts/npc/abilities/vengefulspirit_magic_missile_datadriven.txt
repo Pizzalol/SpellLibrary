@@ -1,3 +1,6 @@
+// Rewrite of the Vengeful Spirit Magic Missile ability
+// Author: Pizzalol
+// Date: 26.01.2015.
 "vengefulspirit_magic_missile_datadriven"
 {
 	// General
@@ -10,6 +13,14 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"vengefulspirit_magic_missile"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
+		"particle"			"particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"		
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -43,5 +54,47 @@
 			"magic_missile_stun"	"1.45 1.55 1.65 1.75"
 		}
 	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_VengefulSpirit.MagicMissile"
+			"Target" 		"CASTER"
+		}
+		
+		"TrackingProjectile"
+		{
+			"Target"           	"TARGET"
+			"EffectName"		"particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
+			"Dodgeable"			"1"
+			"ProvidesVision"	"0"
+			"MoveSpeed"        	"%magic_missile_speed"
+			"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+		}		
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"1"
+		"FireSound"
+		{
+			"EffectName"	"Hero_VengefulSpirit.MagicMissileImpact"
+			"Target" 		"TARGET"
+		}
+		
+		"Stun"
+		{
+			"Duration"   "%magic_missile_stun"
+			"Target" 	 "TARGET"
+		}
+
+		"Damage"
+		{
+			"Target"		"TARGET"
+			"Type"			"DAMAGE_TYPE_MAGICAL"
+			"Damage"		"%AbilityDamage"
+		}						
+	}	
 }
 

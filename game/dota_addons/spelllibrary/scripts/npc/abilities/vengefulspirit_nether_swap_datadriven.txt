@@ -11,6 +11,14 @@
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"vengefulspirit_nether_swap"
 
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
+		"particle"			"particles/units/heroes/hero_vengeful/vengeful_nether_swap.vpcf"		
+	}
+
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"700 950 1200"
@@ -39,5 +47,34 @@
 			"nether_swap_cooldown_scepter"	"10"
 		}
 	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_VengefulSpirit.NetherSwap"
+			"Target" 		"TARGET"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_VengefulSpirit.NetherSwap"
+			"Target" 		"CASTER"
+		}
+		
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_vengeful/vengeful_nether_swap.vpcf"
+			"EffectAttachType"  "start_at_customorigin"
+			
+			"ControlPointEntities"
+			{
+				"CASTER"	"follow_origin"
+				"TARGET"	"follow_origin"
+			}
+		}
+		
+	}
+	
 }
 
