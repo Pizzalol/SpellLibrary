@@ -59,6 +59,93 @@
 			"var_type"				"FIELD_INTEGER"
 			"speed"					"1300"
 		}
+		// Extra variable
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"timer_upper_bound"		"0.4"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"tree_radius"			"200"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"					"particles/units/heroes/hero_ember_spirit/ember_spirit_remnant_dash.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"				"CASTER"
+			"ModifierName"			"modifier_activate_fire_remnant_buff_datadriven"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_ember_spirit/fire_remnant.lua"
+			"Function"				"fire_remnant_activate"
+			"Target"				"POINT"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_activate_fire_remnant_buff_datadriven"
+		{
+			"IsHidden"				"0"
+			"IsPurgable"			"0"
+			
+			"EffectName"			"particles/units/heroes/hero_ember_spirit/ember_spirit_remnant_dash.vpcf"
+			"EffectAttachType"		"follow_origin"
+			
+			"ThinkInterval"			"0.04"
+			"OnIntervalThink"
+			{
+				"RemoveModifier"
+				{
+					"Target"		"TARGET"
+					"ModifierName"	"modifier_activate_fire_remnant_destroy_tree_datadriven"
+				}
+			
+				"ApplyModifier"
+				{
+					"Target"		"TARGET"
+					"ModifierName"	"modifier_activate_fire_remnant_destroy_tree_datadriven"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_FLYING"							"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ROOTED"							"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		
+		"modifier_activate_fire_remnant_destroy_tree_datadriven"
+		{
+			"IsHidden"				"1"
+			"IsPurgable"			"0"
+			"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Duration"				"0.04"
+		
+			"OnCreated"
+			{
+				"DestroyTrees"
+				{
+					"Target"		"TARGET"
+					"Radius"		"%tree_radius"
+				}
+			}
+		}
 	}
 }
-
