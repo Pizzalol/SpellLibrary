@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Vladmir's Offering
+// Author: Rook
+// Date: January 26, 2015
+
+"item_recipe_vladmir_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1080"  //Valve's version of this item uses the ID "80".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"300"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_vladmir_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_ring_of_regen_datadriven;item_ring_of_basilius_datadriven;item_lifesteal_datadriven"
+	}
+}
