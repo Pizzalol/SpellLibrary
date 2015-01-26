@@ -9,7 +9,7 @@
 	"BaseClass"						"item_datadriven"
 	"ID"							"1020"  //Valve's version of this item uses the ID "20".
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"Model"							"models/props_gameplay/branch.mdl"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
 	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 	"AbilityTextureName"			"item_circlet"
 	

@@ -1,6 +1,8 @@
 // Rewrite of Morbid Mask
 // Author: Rook
 // Date: January 25, 2015
+// Known bugs:
+//     Lifesteal triggers when attacking structures.
 
 "item_lifesteal_datadriven"
 {

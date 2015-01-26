@@ -1,0 +1,89 @@
+// Rewrite of Refresher Orb
+// Author: Rook
+// Date: January 26, 2015
+
+"item_refresher_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1110"  //Valve's version of this item uses the ID "110".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_refresher"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"195.0"
+	"AbilityManaCost"				"375"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"5225"
+	"ItemShopTags"					"regen_health;regen_mana;damage;hard_to_tag"
+	"ItemQuality"					"rare"
+	"ItemAliases"					"refresher orb"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_health_regen"				"5"
+		}
+		"02"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_mana_regen_percentage"		"200"
+		}
+		"03"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_damage"						"40"
+		}
+		"04"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_intelligence"				"6"
+		}
+		"05"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_attack_speed"				"10"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"items/item_refresher.lua"
+			"Function"			"item_refresher_datadriven_on_spell_start"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"item_refresher_datadriven_modifier"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%bonus_damage"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"			"%bonus_intelligence"
+				"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"			"%bonus_mana_regen_percentage"
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%bonus_health_regen"
+			}
+		}
+	}
+}
