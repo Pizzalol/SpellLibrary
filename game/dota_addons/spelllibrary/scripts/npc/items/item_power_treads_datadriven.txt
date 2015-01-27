@@ -32,20 +32,7 @@
 	"ItemShopTags"					"attack_speed;move_speed;int;agi;str"
 	"ItemQuality"					"common"
 	"ItemAliases"					"power treads"
-	
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"0"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 	"ItemDeclarations"				"DECLARE_PURCHASES_TO_SPECTATORS"
-	"ItemAlertable"					"1"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
 		
 	// Special	
 	//-------------------------------------------------------------------------------------------------------------
@@ -73,19 +60,16 @@
 		"RunScript"
 		{
 			"ScriptFile"			"items/item_power_treads.lua"
-			"Function"				"item_power_treads_strength_on_spell_start"
+			"Function"				"item_power_treads_strength_datadriven_on_spell_start"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"item_power_treads_strength_modifier"
+		"modifier_item_power_treads_strength_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"
@@ -115,21 +99,9 @@
 	"ItemShopTags"					"attack_speed;move_speed;int;agi;str"
 	"ItemQuality"					"common"
 	"ItemAliases"					"power treads"
-	
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"0"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"0"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 	"ItemDeclarations"				"DECLARE_PURCHASES_TO_SPECTATORS"
-	"ItemAlertable"					"1"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
-		
+	"ItemPurchasable"				"0"
+	
 	// Special	
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
@@ -156,19 +128,16 @@
 		"RunScript"
 		{
 			"ScriptFile"			"items/item_power_treads.lua"
-			"Function"				"item_power_treads_agility_on_spell_start"
+			"Function"				"item_power_treads_agility_datadriven_on_spell_start"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"item_power_treads_agility_modifier"
+		"modifier_item_power_treads_agility_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"
@@ -199,20 +168,8 @@
 	"ItemShopTags"					"attack_speed;move_speed;int;agi;str"
 	"ItemQuality"					"common"
 	"ItemAliases"					"power treads"
-	
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"0"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"0"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 	"ItemDeclarations"				"DECLARE_PURCHASES_TO_SPECTATORS"
-	"ItemAlertable"					"1"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
+	"ItemPurchasable"				"0"
 		
 	// Special	
 	//-------------------------------------------------------------------------------------------------------------
@@ -240,19 +197,16 @@
 		"RunScript"
 		{
 			"ScriptFile"			"items/item_power_treads.lua"
-			"Function"				"item_power_treads_intelligence_on_spell_start"
+			"Function"				"item_power_treads_intelligence_datadriven_on_spell_start"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"item_power_treads_intelligence_modifier"
+		"modifier_item_power_treads_intelligence_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"

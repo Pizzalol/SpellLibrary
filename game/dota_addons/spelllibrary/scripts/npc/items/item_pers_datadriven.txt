@@ -19,19 +19,8 @@
 	"ItemShopTags"					"damage;regen_health;regen_mana"		
 	"ItemQuality"					"common"
 	"ItemAliases"					"perseverance"
-	
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_PARTIALLY_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"0"
 	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
-	"ItemAlertable"					"1"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
+	"ItemShareability"				"ITEM_PARTIALLY_SHAREABLE"
 		
 	// Special	
 	//-------------------------------------------------------------------------------------------------------------
@@ -56,13 +45,10 @@
 	
 	"Modifiers"
 	{
-		"item_pers_modifier"
+		"modifier_item_pers_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"

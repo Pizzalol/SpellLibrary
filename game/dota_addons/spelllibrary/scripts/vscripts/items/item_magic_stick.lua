@@ -4,7 +4,7 @@
 	Called when Magic Stick is cast.  Restores health and mana to the caster.
 	Additional parameters: keys.RestorePerCharge
 ================================================================================================================= ]]
-function item_magic_stick_on_spell_start(keys)
+function item_magic_stick_datadriven_on_spell_start(keys)
 	keys.caster:EmitSound("DOTA_Item.MagicStick.Activate")
 	
 	local amount_to_restore = keys.ability:GetCurrentCharges() * keys.RestorePerCharge
@@ -25,7 +25,7 @@ end
 	this code cannot use ProcsMagicStick() to determine if Magic Stick should gain a charge.  For now, every cast
 	ability awards a charge.
 ================================================================================================================= ]]
-function item_magic_stick_modifier_aura_on_ability_executed(keys)
+function modifier_item_magic_stick_datadriven_aura_on_ability_executed(keys)
 	if keys.caster:GetTeam() ~= keys.unit:GetTeam() and keys.caster:CanEntityBeSeenByMyTeam(keys.unit) then
 		 --Search for a Magic Stick in the aura creator's inventory.  If there are multiple Magic Sticks in the player's inventory,
 		 --the oldest one that's not full receives a charge.

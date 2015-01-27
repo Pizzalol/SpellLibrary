@@ -19,6 +19,7 @@
 	"AbilityCastPoint"              "0"
 	"AbilityCooldown"				"30"
 	"AbilityManaCost"				"0"
+	"AbilitySharedCooldown"			"ethereal"
 	
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
@@ -26,19 +27,6 @@
 	"ItemShopTags"					"int;agi;str;hard_to_tag"
 	"ItemQuality"					"component"
 	"ItemAliases"					"ghost scepter"
-
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"0"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-	"ItemAlertable"					"1"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
 	
 	"AbilitySpecial"
 	{
@@ -64,7 +52,7 @@
 		"ApplyModifier"
 		{
 			"Target"			"CASTER"
-			"ModifierName"		"item_ghost_modifier_active"
+			"ModifierName"		"modifier_item_ghost_datadriven_active"
 		}
 		
 		"FireSound"
@@ -76,13 +64,10 @@
 	
 	"Modifiers"
 	{
-		"item_ghost_modifier"
+		"modifier_item_ghost_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"
@@ -92,7 +77,7 @@
 				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
 			}
 		}
-		"item_ghost_modifier_active"
+		"modifier_item_ghost_datadriven_active"
 		{
 			"Duration"              	"%duration"
 			"Passive"					"0"
@@ -100,7 +85,6 @@
 			"IsBuff"					"1"
 			"IsDebuff"					"0"
 			"IsPurgable"				"1"
-			"TextureName"				"item_ghost"
 			"StatusEffectName" 			"particles/status_fx/status_effect_ghost.vpcf"
 			"StatusEffectPriority" 		"15"
 			"EffectName"            	"particles/items_fx/ghost.vpcf"

@@ -20,23 +20,16 @@
 	
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
-	"ItemCost"						"1000"
-	"ItemShopTags"					""
-	"ItemQuality"					"epic"
-
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"0"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
-	"ItemStackable"					"1"
-	"ItemPermanent"					"0"
-	"ItemInitialCharges"			"1"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-	"ItemAlertable"					"1"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
+	"ItemCost"									"1000"
+	"ItemShopTags"								""
+	"ItemQuality"								"epic"
+	"ItemPurchasable"							"0"
+	"ItemStackable"								"1"
+	"ItemShareability"							"ITEM_FULLY_SHAREABLE"
+	"ItemPermanent"								"0"
+	"ItemInitialCharges"						"1"
+	"ItemDeclarations"							"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+	"ItemContributesToNetWorthWhenDropped"		"0"
 
 	// Special	
 	//-------------------------------------------------------------------------------------------------------------
@@ -59,7 +52,7 @@
 		"RunScript"
 		{
 			"ScriptFile"			"items/item_cheese.lua"
-			"Function"				"item_cheese_on_spell_start"
+			"Function"				"item_cheese_datadriven_on_spell_start"
 			"HealthRestore"			"%health_restore"
 			"ManaRestore"			"%mana_restore"
 		}

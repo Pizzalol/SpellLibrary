@@ -19,19 +19,7 @@
 	"ItemShopTags"					"armor"
 	"ItemQuality"					"component"
 	"ItemAliases"					"chainmail"
-	
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"0"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-	"ItemAlertable"					"1"
-
 	"SideShop"						"1"
-	"SecretShop"					"0"
 
 	// Special	
 	//-------------------------------------------------------------------------------------------------------------
@@ -46,13 +34,10 @@
 	
 	"Modifiers"
 	{
-		"item_chainmail_modifier"
+		"modifier_item_chainmail_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"

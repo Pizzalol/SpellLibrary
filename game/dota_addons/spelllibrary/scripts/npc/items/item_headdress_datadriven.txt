@@ -41,13 +41,10 @@
 	
 	"Modifiers"
 	{
-		"item_headdress_modifier"
+		"modifier_item_headdress_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"
@@ -57,29 +54,22 @@
 				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
 			}
 		}
-		"item_headdress_modifier_aura_emitter"
+		"modifier_item_headdress_datadriven_aura_emitter"
 		{
 			"Passive"				"1"
 			"IsHidden"				"1"
-			"IsBuff"				"0"
-			"IsDebuff"				"0"
-			"IsPurgable"			"0"
 			
-			"Aura" 					"item_headdress_modifier_aura"
+			"Aura" 					"modifier_item_headdress_datadriven_aura"
 			"Aura_Radius" 			"%aura_radius"
 			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 			"Aura_ApplyToCaster" 	"1"
 		}
-		"item_headdress_modifier_aura"
+		"modifier_item_headdress_datadriven_aura"
 		{
 			"Passive"			"0"
 			"IsHidden"			"0"
-			"IsBuff"			"1"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
-			"TextureName"		"item_headdress"
 			
 			"Properties"
 			{

@@ -3,6 +3,8 @@
 // Date: January 26, 2015
 // Known bugs:
 //     All players within range of a kill that have Urns will gain a charge; only the closest Urn is supposed to.
+//     If multiple Urns are in a player's inventory, the one with the least amount of charges will gain a charge;
+//          this may work differently in the standard Dota 2 mode.
 
 "item_urn_of_shadows_datadriven"
 {
@@ -30,25 +32,13 @@
 	"ItemShopTags"					"regen_mana;str;boost_health"
 	"ItemQuality"					"rare"
 	"ItemAliases"					"urn of shadows"
-		
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
 	
 	"ItemRequiresCharges"			"1"
 	"ItemDisplayCharges"			"1"
 	"ItemStackable"					"0"
 	"ItemPermanent"					"1"
-	"ItemInitialCharges"			"0"
-	
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-	"ItemAlertable"					"1"
-	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
+	"ItemInitialCharges"			"0"	
 		
 	// Special	
 	//-------------------------------------------------------------------------------------------------------------
@@ -116,19 +106,16 @@
 		"RunScript"
 		{
 			"ScriptFile"		"items/item_urn_of_shadows.lua"
-			"Function"			"item_urn_of_shadows_on_spell_start"
+			"Function"			"item_urn_of_shadows_datadriven_on_spell_start"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"item_urn_of_shadows_modifier"
+		"modifier_item_urn_of_shadows_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"
@@ -137,15 +124,12 @@
 				"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen_percent"
 			}
 		}
-		"item_urn_of_shadows_modifier_aura_emitter"
+		"modifier_item_urn_of_shadows_datadriven_aura_emitter"
 		{
 			"Passive"				"1"
 			"IsHidden"				"1"
-			"IsBuff"				"0"
-			"IsDebuff"				"0"
-			"IsPurgable"			"0"
 			
-			"Aura" 					"item_urn_of_shadows_modifier_aura"
+			"Aura" 					"modifier_item_urn_of_shadows_datadriven_aura"
 			"Aura_Radius" 			"%soul_radius"
 			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO"
@@ -157,30 +141,26 @@
 				"RunScript"
 				{
 					"ScriptFile"			"items/item_urn_of_shadows.lua"
-					"Function"				"item_urn_of_shadows_on_hero_killed"
+					"Function"				"modifier_item_urn_of_shadows_datadriven_aura_emitter_on_kill"
 				}
 			}
 		}
-		"item_urn_of_shadows_modifier_aura"
+		"modifier_item_urn_of_shadows_datadriven_aura"
 		{
 			"Passive"			"0"
 			"IsHidden"			"0"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			"TextureName"		"item_urn_of_shadows_rook"
 			
 			"OnDeath"
 			{
 				"RunScript"
 				{
 					"ScriptFile"		"items/item_urn_of_shadows.lua"
-					"Function"			"item_urn_of_shadows_modifier_aura_on_death"
+					"Function"			"modifier_item_urn_of_shadows_datadriven_aura_on_death"
 				}
 			}
 		}
-		"item_urn_of_shadows_modifier_heal"
+		"modifier_item_urn_of_shadows_datadriven_heal"
 		{
 			"Duration"			"%soul_heal_duration"
 			"Passive"			"0"
@@ -188,7 +168,6 @@
 			"IsBuff"			"1"
 			"IsDebuff"			"0"
 			"IsPurgable"		"1"
-			"TextureName"		"item_urn_of_shadows"
 			
 			"EffectName"			"particles/items2_fx/urn_of_shadows_heal.vpcf"
 			"EffectAttachType"		"follow_origin"
@@ -199,7 +178,7 @@
 				"RunScript"
 				{
 					"ScriptFile"		"items/item_urn_of_shadows.lua"
-					"Function"			"item_urn_of_shadows_modifier_heal_on_interval_think"
+					"Function"			"modifier_item_urn_of_shadows_datadriven_heal_on_interval_think"
 					"TotalHeal"			"%soul_heal_amount"
 					"TotalDuration"		"%soul_heal_duration"
 					"Interval"			"%soul_heal_interval"
@@ -211,12 +190,12 @@
 				"RunScript"
 				{
 					"ScriptFile"		"items/item_urn_of_shadows.lua"
-					"Function"			"item_urn_of_shadows_modifier_heal_on_take_damage"
+					"Function"			"modifier_item_urn_of_shadows_datadriven_heal_on_take_damage"
 					"Damage"			"%attack_damage"
 				}
 			}
 		}
-		"item_urn_of_shadows_modifier_damage"
+		"modifier_item_urn_of_shadows_datadriven_damage"
 		{
 			"Damage"			"%soul_damage_duration"
 			"Passive"			"0"
@@ -225,7 +204,6 @@
 			"IsDebuff"			"1"
 			"IsPurgable"		"1"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			"TextureName"		"item_urn_of_shadows"
 			
 			"EffectName"			"particles/items2_fx/urn_of_shadows_damage.vpcf"
 			"EffectAttachType"		"follow_origin"
@@ -236,7 +214,7 @@
 				"RunScript"
 				{
 					"ScriptFile"		"items/item_urn_of_shadows.lua"
-					"Function"			"item_urn_of_shadows_modifier_damage_on_interval_think"
+					"Function"			"modifier_item_urn_of_shadows_datadriven_damage_on_interval_think"
 					"TotalDamage"		"%soul_damage_amount"
 					"TotalDuration"		"%soul_damage_duration"
 					"Interval"			"%soul_damage_interval"

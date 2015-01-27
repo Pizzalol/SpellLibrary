@@ -20,23 +20,10 @@
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
 	"ItemCost"						"2075"
-	"ItemShopTags"					"lifesteal;damage;armor;regen_mana;regen_health"
+	"ItemShopTags"					"lifesteal;damage;armor;regen_mana"
 	"ItemQuality"					"rare"
 	"ItemAliases"					"vladmir's offering;vlads"
-
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"0"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-	"ItemAlertable"					"1"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
 	
 	"AbilitySpecial"
 	{
@@ -74,13 +61,10 @@
 	
 	"Modifiers"
 	{
-		"item_vladmir_modifier"
+		"modifier_item_vladmir_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"
@@ -88,60 +72,46 @@
 				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%hp_regen"
 			}
 		}
-		"item_vladmir_modifier_general_aura_emitter"  //We use two aura emitters because the lifsteal part only affects melee units.
+		"modifier_item_vladmir_datadriven_general_aura_emitter"  //We use two aura emitters because the lifesteal part only affects melee units.
 		{
 			"Passive"				"1"
 			"IsHidden"				"1"
-			"IsBuff"				"0"
-			"IsDebuff"				"0"
-			"IsPurgable"			"0"
 			
-			"Aura" 					"item_vladmir_modifier_general_aura"
+			"Aura" 					"modifier_item_vladmir_datadriven_general_aura"
 			"Aura_Radius" 			"%aura_radius"
 			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 			"Aura_ApplyToCaster" 	"1"
 		}
-		"item_vladmir_modifier_general_aura"
+		"modifier_item_vladmir_datadriven_general_aura"
 		{
 			"Passive"			"0"
 			"IsHidden"			"0"
-			"IsBuff"			"1"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
-			"TextureName"		"item_vladmir"
 			
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"			"%damage_aura_percent"
 				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE"				"%armor_aura"
-				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"						"0.8"  //This is hardcoded in due to an obscure engine bug.
+				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"						"0.8"  //This is hardcoded due to an obscure engine bug.
 			}
 		}
-		"item_vladmir_modifier_lifesteal_aura_emitter"  //We use two aura emitters because the lifesteal part only affects melee units.
+		"modifier_item_vladmir_datadriven_lifesteal_aura_emitter"  //We use two aura emitters because the lifesteal part only affects melee units.
 		{
 			"Passive"				"1"
 			"IsHidden"				"1"
-			"IsBuff"				"0"
-			"IsDebuff"				"0"
-			"IsPurgable"			"0"
 			
-			"Aura" 					"item_vladmir_modifier_lifesteal_aura"
+			"Aura" 					"modifier_item_vladmir_datadriven_lifesteal_aura"
 			"Aura_Radius" 			"%aura_radius"
 			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
 			"Aura_ApplyToCaster" 	"1"
 		}
-		"item_vladmir_modifier_lifesteal_aura"
+		"modifier_item_vladmir_datadriven_lifesteal_aura"
 		{
 			"Passive"			"0"
 			"IsHidden"			"1"
-			"IsBuff"			"1"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
-			"TextureName"		"item_vladmir"
 			
 			"OnAttackLanded"
 			{

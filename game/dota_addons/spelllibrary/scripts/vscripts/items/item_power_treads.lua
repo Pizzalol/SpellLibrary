@@ -27,7 +27,7 @@ end
 	Date: January 25, 2015
 	Called when Power Treads (Strength) is cast.  Swaps the item to Power Treads (Intelligence).
 ================================================================================================================= ]]
-function item_power_treads_strength_on_spell_start(keys)
+function item_power_treads_strength_datadriven_on_spell_start(keys)
 	swap_to_item(keys, "item_power_treads_intelligence_datadriven")
 end
 
@@ -37,7 +37,7 @@ end
 	Date: January 25, 2015
 	Called when Power Treads (Agility) is cast.  Swaps the item to Power Treads (Strength).
 ================================================================================================================= ]]
-function item_power_treads_agility_on_spell_start(keys)
+function item_power_treads_agility_datadriven_on_spell_start(keys)
 	swap_to_item(keys, "item_power_treads_strength_datadriven")
 end
 
@@ -47,6 +47,6 @@ end
 	Date: January 25, 2015
 	Called when Power Treads (Intelligence) is cast.  Swaps the item to Power Treads (Agility).
 ================================================================================================================= ]]
-function item_power_treads_intelligence_on_spell_start(keys)
+function item_power_treads_intelligence_datadriven_on_spell_start(keys)
 	swap_to_item(keys, "item_power_treads_agility_datadriven")
 end

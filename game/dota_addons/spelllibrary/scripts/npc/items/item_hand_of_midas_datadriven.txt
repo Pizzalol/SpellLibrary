@@ -29,20 +29,7 @@
 	"ItemShopTags"					"attack_speed;hard_to_tag"
 	"ItemQuality"					"common"
 	"ItemAliases"					"hand of midas"
-
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"0"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-	"ItemAlertable"					"1"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
 	
 	"AbilitySpecial"
 	{
@@ -68,7 +55,7 @@
 		"RunScript"
 		{
 			"ScriptFile"			"items/item_hand_of_midas.lua"
-			"Function"				"item_hand_of_midas_on_spell_start"
+			"Function"				"item_hand_of_midas_datadriven_on_spell_start"
 			"BonusGold"				"%bonus_gold"
 			"XPMultiplier"			"%xp_multiplier"
 		}
@@ -76,13 +63,10 @@
 	
 	"Modifiers"
 	{
-		"item_hand_of_midas_modifier"
+		"modifier_item_hand_of_midas_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"

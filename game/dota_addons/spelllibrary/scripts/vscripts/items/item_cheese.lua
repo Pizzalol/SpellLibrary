@@ -4,7 +4,7 @@
 	Called when Cheese is cast.  Restores health and mana to the caster.
 	Additional parameters: keys.HealthRestore and keys.ManaRestore
 ================================================================================================================= ]]
-function item_cheese_on_spell_start(keys)
+function item_cheese_datadriven_on_spell_start(keys)
 	keys.caster:Heal(keys.HealthRestore, keys.caster)
 	keys.caster:GiveMana(keys.ManaRestore)
 	

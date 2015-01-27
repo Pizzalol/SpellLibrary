@@ -27,7 +27,7 @@ end
 	Date: January 26, 2015
 	Called when Ring of Basilius (active) is cast.  Toggles the item to an inactive state.
 ================================================================================================================= ]]
-function item_ring_of_basilius_on_spell_start(keys)
+function item_ring_of_basilius_datadriven_on_spell_start(keys)
 	swap_to_item(keys, "item_ring_of_basilius_inactive_datadriven")
 end
 
@@ -37,6 +37,6 @@ end
 	Date: January 26, 2015
 	Called when Ring of Basilius (inactive) is cast.  Toggles the item to an active state.
 ================================================================================================================= ]]
-function item_ring_of_basilius_inactive_on_spell_start(keys)
+function item_ring_of_basilius_inactive_datadriven_on_spell_start(keys)
 	swap_to_item(keys, "item_ring_of_basilius_datadriven")
 end

@@ -45,13 +45,10 @@
 	
 	"Modifiers"
 	{
-		"item_ultimate_scepter_datadriven_modifier"
+		"modifier_item_ultimate_scepter_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"
@@ -68,7 +65,7 @@
 				"RunScript"
 				{
 					"ScriptFile"		"items/item_ultimate_scepter.lua"
-					"Function"			"item_ultimate_scepter_datadriven_on_created"
+					"Function"			"modifier_item_ultimate_scepter_datadriven_on_created"
 				}
 			}
 			
@@ -77,7 +74,7 @@
 				"RunScript"
 				{
 					"ScriptFile"		"items/item_ultimate_scepter.lua"
-					"Function"			"item_ultimate_scepter_datadriven_on_destroy"
+					"Function"			"modifier_item_ultimate_scepter_datadriven_on_destroy"
 				}
 			}
 		}

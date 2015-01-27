@@ -4,7 +4,7 @@
 	Called when Hand of Midas is cast.  Kills the target and awards XP and gold.
 	Additional parameters: keys.BonusGold and keys.XPMultiplier
 ================================================================================================================= ]]
-function item_hand_of_midas_on_spell_start(keys)
+function item_hand_of_midas_datadriven_on_spell_start(keys)
 	keys.caster:ModifyGold(keys.BonusGold, true, 0)  --Give the player a flat amount of reliable gold.
 	keys.caster:AddExperience(keys.target:GetDeathXP() * keys.XPMultiplier, false, false)  --Give the player some XP.
 	

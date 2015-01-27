@@ -25,20 +25,6 @@
 	"ItemShopTags"					"armor;boost_armor"
 	"ItemQuality"					"rare"
 	"ItemAliases"					"buckler"
-
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"0"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-	"ItemAlertable"					"1"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
 	
 	"AbilitySpecial"
 	{
@@ -79,7 +65,7 @@
 		"RunScript"
 		{
 			"ScriptFile"			"items/item_buckler.lua"
-			"Function"				"item_buckler_on_spell_start"
+			"Function"				"item_buckler_datadriven_on_spell_start"
 			"ActiveDurationUnit"	"%active_duration_unit"
 			"ActiveDurationHero"	"%active_duration_hero"
 			"ActiveRadius"			"%active_radius"
@@ -88,13 +74,10 @@
 	
 	"Modifiers"
 	{
-		"item_buckler_modifier"
+		"modifier_item_buckler_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"
@@ -104,7 +87,7 @@
 				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
 			}
 		}
-		"item_buckler_modifier_active"
+		"modifier_item_buckler_datadriven_active"
 		{
 			"Passive"				"0"
 			"IsHidden"				"0"

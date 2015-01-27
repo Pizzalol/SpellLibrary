@@ -4,7 +4,7 @@
 	Called when Dagon is cast.  Damages the target.
 	Additional parameters: keys.Damage
 ================================================================================================================= ]]
-function item_dagon_on_spell_start(keys)
+function item_dagon_datadriven_on_spell_start(keys)
 	local dagon_level = keys.ability:GetLevel()
 	
 	local dagon_particle = ParticleManager:CreateParticle("particles/items_fx/dagon.vpcf",  PATTACH_ABSORIGIN_FOLLOW, keys.caster)

@@ -67,13 +67,10 @@
 	
 	"Modifiers"
 	{
-		"item_refresher_datadriven_modifier"
+		"modifier_item_refresher_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"

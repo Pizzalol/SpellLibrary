@@ -33,20 +33,13 @@
 	"ItemShopTags"					"damage;regen_mana;armor"
 	"ItemQuality"					"rare"
 	"ItemAliases"					"rob;ring of basilius"
-
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"0"
 	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
-	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-	"ItemAlertable"					"1"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
+	
+	// Sound
+	//-------------------------------------------------------------------------------------------------------------			
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
 	
 	"AbilitySpecial"
 	{
@@ -82,19 +75,16 @@
 		"RunScript"
 		{
 			"ScriptFile"			"items/item_ring_of_basilius.lua"
-			"Function"				"item_ring_of_basilius_on_spell_start"
+			"Function"				"item_ring_of_basilius_datadriven_on_spell_start"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"item_ring_of_basililus_modifier"
+		"modifier_item_ring_of_basilius_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"
@@ -103,34 +93,27 @@
 				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
 			}
 		}
-		"item_ring_of_basilius_modifier_aura_emitter"
+		"modifier_item_ring_of_basilius_datadriven_aura_emitter"
 		{
 			"Passive"				"1"
 			"IsHidden"				"1"
-			"IsBuff"				"0"
-			"IsDebuff"				"0"
-			"IsPurgable"			"0"
 			
-			"Aura" 					"item_ring_of_basilius_modifier_aura"
+			"Aura" 					"modifier_item_ring_of_basilius_datadriven_aura"
 			"Aura_Radius" 			"%aura_radius"
 			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 			"Aura_ApplyToCaster" 	"1"
 		}
-		"item_ring_of_basilius_modifier_aura"
+		"modifier_item_ring_of_basilius_datadriven_aura"
 		{
 			"Passive"			"0"
 			"IsHidden"			"0"
-			"IsBuff"			"1"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
-			"TextureName"		"item_ring_of_basilius_active"
 			
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE"				"%armor_aura"
-				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"						"0.65"  //This is hardcoded in due to an obscure engine bug.
+				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"						"0.65"  //This is hardcoded due to an obscure engine bug.
 			}
 		}
 	}
@@ -154,21 +137,15 @@
 	"ItemShopTags"					"damage;regen_mana;armor"
 	"ItemQuality"					"rare"
 	"ItemAliases"					"rob;ring of basilius"
-
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
+	//"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 	"ItemPurchasable"				"0"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"0"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
-	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-	"ItemAlertable"					"1"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
 	
+	// Sound
+	//-------------------------------------------------------------------------------------------------------------			
+	"UIPickupSound"					"Item.PickUpRingShop"
+	"UIDropSound"					"Item.DropRingShop"
+	"WorldDropSound"				"Item.DropRingWorld"
+		
 	"AbilitySpecial"
 	{
 		"01"
@@ -203,19 +180,16 @@
 		"RunScript"
 		{
 			"ScriptFile"			"items/item_ring_of_basilius.lua"
-			"Function"				"item_ring_of_basilius_inactive_on_spell_start"
+			"Function"				"item_ring_of_basilius_inactive_datadriven_on_spell_start"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"item_ring_of_basililus_inactive_modifier"
+		"modifier_item_ring_of_basilius_inactive_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"
@@ -224,34 +198,27 @@
 				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
 			}
 		}
-		"item_ring_of_basilius_inactive_modifier_aura_emitter"
+		"modifier_item_ring_of_basilius_inactive_datadriven_aura_emitter"
 		{
 			"Passive"				"1"
 			"IsHidden"				"1"
-			"IsBuff"				"0"
-			"IsDebuff"				"0"
-			"IsPurgable"			"0"
 			
-			"Aura" 					"item_ring_of_basilius_inactive_modifier_aura"
+			"Aura" 					"modifier_item_ring_of_basilius_inactive_datadriven_aura"
 			"Aura_Radius" 			"%aura_radius"
 			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO"
 			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 			"Aura_ApplyToCaster" 	"1"
 		}
-		"item_ring_of_basilius_inactive_modifier_aura"
+		"modifier_item_ring_of_basilius_inactive_datadriven_aura"
 		{
 			"Passive"			"0"
 			"IsHidden"			"0"
-			"IsBuff"			"1"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
-			"TextureName"		"item_ring_of_basilius"
 			
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE"				"%armor_aura"
-				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"						"0.65"  //This is hardcoded in due to an obscure engine bug.
+				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"						"0.65"  //This is hardcoded due to an obscure engine bug.
 			}
 		}
 	}

@@ -30,22 +30,11 @@
 	"ItemShopTags"					"regen_health;regen_mana;boost_health;boost_mana;int;agi;str"
 	"ItemQuality"					"common"
 	"ItemAliases"					"magic wand"
-
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"1"
 	"ItemRequiresCharges"			"1"
 	"ItemDisplayCharges"			"1"
+	"ItemPermanent"					"1"
 	"ItemInitialCharges"			"0"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-	"ItemAlertable"					"1"
 
-	"SideShop"						"0"
-	"SecretShop"					"0"
 
 	// Special	
 	//-------------------------------------------------------------------------------------------------------------
@@ -78,20 +67,17 @@
 		"RunScript"
 		{
 			"ScriptFile"			"items/item_magic_wand.lua"
-			"Function"				"item_magic_wand_on_spell_start"
+			"Function"				"item_magic_wand_datadriven_on_spell_start"
 			"RestorePerCharge"		"%restore_per_charge"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"item_magic_wand_modifier"
+		"modifier_item_magic_wand_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"
@@ -101,28 +87,22 @@
 				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
 			}
 		}
-		"item_magic_wand_modifier_aura_emitter"
+		modifier_item_magic_wand_datadriven_aura_emitter"
 		{
 			"Passive"				"1"
 			"IsHidden"				"1"
-			"IsBuff"				"0"
-			"IsDebuff"				"0"
-			"IsPurgable"			"0"
 			
-			"Aura" 					"item_magic_wand_modifier_aura"
+			"Aura" 					"modifier_item_magic_wand_datadriven_aura"
 			"Aura_Radius" 			"%charge_radius"
 			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO"
 			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 			"Aura_ApplyToCaster" 	"0"
 		}
-		"item_magic_wand_modifier_aura"
+		"modifier_item_magic_wand_datadriven_aura"
 		{
 			"Passive"			"0"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"OnAbilityExecuted"
@@ -130,7 +110,7 @@
 				"RunScript"
 				{
 					"ScriptFile"			"items/item_magic_wand.lua"
-					"Function"				"item_magic_wand_modifier_aura_on_ability_executed"
+					"Function"				"modifier_item_magic_wand_datadriven_aura_on_ability_executed"
 					"MaxCharges"			"%max_charges"
 				}
 			}

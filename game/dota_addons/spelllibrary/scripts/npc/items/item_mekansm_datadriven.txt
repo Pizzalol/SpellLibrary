@@ -26,20 +26,8 @@
 	"ItemShopTags"					"agi;int;str;armor;boost_health"
 	"ItemQuality"					"rare"
 	"ItemAliases"					"mechanism;mekansm"
-
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"0"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
 	"ItemAlertable"					"1"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
 	
 	"AbilitySpecial"
 	{
@@ -90,7 +78,7 @@
 		"RunScript"
 		{
 			"ScriptFile"			"items/item_mekansm.lua"
-			"Function"				"item_mekansm_on_spell_start"
+			"Function"				"item_mekansm_datadriven_on_spell_start"
 			"HealAmount"			"%heal_amount"
 			"HealRadius"			"%heal_radius"
 		}
@@ -98,13 +86,10 @@
 	
 	"Modifiers"
 	{
-		"item_mekansm_modifier"
+		"modifier_item_mekansm_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"Properties"
@@ -115,36 +100,29 @@
 				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
 			}
 		}
-		"item_mekansm_modifier_aura_emitter"
+		"modifier_item_mekansm_datadriven_aura_emitter"
 		{
 			"Passive"				"1"
 			"IsHidden"				"1"
-			"IsBuff"				"0"
-			"IsDebuff"				"0"
-			"IsPurgable"			"0"
 			
-			"Aura" 					"item_mekansm_modifier_aura"
+			"Aura" 					"modifier_item_mekansm_datadriven_aura"
 			"Aura_Radius" 			"%aura_radius"
 			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 			"Aura_ApplyToCaster" 	"1"
 		}
-		"item_mekansm_modifier_aura"
+		"modifier_item_mekansm_datadriven_aura"
 		{
 			"Passive"			"0"
 			"IsHidden"			"0"
-			"IsBuff"			"1"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
-			"TextureName"		"item_mekansm"
 			
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%aura_health_regen"
 			}
 		}
-		"item_mekansm_modifier_heal_armor"
+		"modifier_item_mekansm_datadriven_heal_armor"
 		{
 			"Duration"			"heal_armor_duration"
 			"Passive"			"0"
@@ -161,7 +139,7 @@
 		}
 		//Placed onto units when healed by Mekansm, and prevents further heals from Mekansm while it exists.
 		//A separate modifier is used because the armor buff from Restore can be dispelled, but this can't.
-		"item_mekansm_modifier_heal_debuff"
+		"imodifier_item_mekansm_datadriven_heal_debuff"
 		{
 			"Duration"			"heal_armor_duration"
 			"Passive"			"0"

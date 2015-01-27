@@ -30,20 +30,8 @@
 	"ItemShopTags"					"teleport"
 	"ItemQuality"					"component"
 	"ItemAliases"					"blink dagger"
-	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-	
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
-	"ItemStackable"					"0"
-	"ItemPermanent"					"0"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-	"ItemAlertable"					"1"
-
 	"SideShop"						"1"
-	"SecretShop"					"0"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 	// Special	
 	//-------------------------------------------------------------------------------------------------------------
@@ -71,7 +59,7 @@
 		"RunScript"
 		{
 			"ScriptFile"			"items/item_blink.lua"
-			"Function"				"item_blink_on_spell_start"
+			"Function"				"item_blink_datadriven_on_spell_start"
 			"Target"				"POINT"
 			"MaxBlinkRange"			"%max_blink_range"
 			"BlinkRangeClamp"		"%blink_range_clamp"
@@ -81,13 +69,10 @@
 	"Modifiers"
 	{
 		//When the unit takes damage, Blink Dagger is put on cooldown.
-		"item_blink_modifier_damage_cooldown"
+		"modifier_item_blink_datadriven_damage_cooldown"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"IsBuff"			"0"
-			"IsDebuff"			"0"
-			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 			"OnTakeDamage"
@@ -95,7 +80,7 @@
 				"RunScript"
 				{
 					"ScriptFile"			"items/item_blink.lua"
-					"Function"				"item_blink_on_take_damage"
+					"Function"				"modifier_item_blink_datadriven_damage_cooldown_on_take_damage"
 					"BlinkDamageCooldown"	"%blink_damage_cooldown"
 					"Damage"				"%attack_damage"
 				}

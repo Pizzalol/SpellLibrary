@@ -28,20 +28,9 @@
 	"ItemShopTags"					"consumable"
 	"ItemQuality"					"consumable"
 	"ItemAliases"					"healing salve"
-
-	"ItemKillable"					"1"
-	"ItemSellable"					"1"
-	"ItemPurchasable"				"1"
-	"ItemDroppable"					"1"
-	"ItemShareability"				"ITEM_NOT_SHAREABLE"
 	"ItemStackable"					"1"
 	"ItemPermanent"					"0"
 	"ItemInitialCharges"			"1"
-	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-	"ItemAlertable"					"1"
-
-	"SideShop"						"0"
-	"SecretShop"					"0"
 	
 	"AbilitySpecial"
 	{
@@ -67,25 +56,25 @@
 		"RunScript"
 		{
 			"ScriptFile"			"items/item_flask.lua"
-			"Function"				"item_flask_on_spell_start"
+			"Function"				"item_flask_datadriven_on_spell_start"
 		}
 				
 		"ApplyModifier"
 		{
-			"Target"			"TARGET"
-			"ModifierName"		"item_flask_modifier_active"
+			"Target"				"TARGET"
+			"ModifierName"			"modifier_item_flask_datadriven_active"
 		}
 		
 		"FireSound"
 		{
-			"EffectName"		"DOTA_Item.HealingSalve.Activate"
-			"Target"			"TARGET"
+			"EffectName"			"DOTA_Item.HealingSalve.Activate"
+			"Target"				"TARGET"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"item_flask_modifier_active"
+		"modifier_item_flask_datadriven_active"
 		{
 			"Duration"              	"%buff_duration"
 			"Passive"					"0"
@@ -103,7 +92,7 @@
 				"RunScript"
 				{
 					"ScriptFile"			"items/item_flask.lua"
-					"Function"				"item_flask_modifier_active_on_interval_think"
+					"Function"				"modifier_item_flask_datadriven_active_on_interval_think"
 					"RegenInterval"			"%regen_interval"
 					"BuffDuration"			"%buff_duration"
 					"TotalHealthRegen"		"%total_health_regen"
@@ -115,7 +104,7 @@
 				"RemoveModifier"
 				{
 					"Target"			"UNIT"
-					"ModifierName"		"item_flask_modifier_active"
+					"ModifierName"		"modifier_item_flask_datadriven_active"
 				}
 			}
 		}
