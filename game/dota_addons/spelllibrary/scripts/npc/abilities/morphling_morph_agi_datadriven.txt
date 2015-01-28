@@ -1,14 +1,27 @@
+// Rewrite of Morphling's Morph (Agility)
+// Author: Rook
+// Date: January 28, 2015
+
 "morphling_morph_agi_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-
+	"AbilityTextureName"			"morphling_morph_agi"
+	"FightRecapLevel"				"1"
+	"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCooldown"				"0.0"
 
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_morphling/morphling_morph_agi.vpcf"
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_morphling.vsndevts"
+	}
+	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
@@ -16,7 +29,7 @@
 		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"mana_cost"				"30 30 30 30"
+			"mana_cost_per_second"	"30 30 30 30"
 		}
 		"02"
 		{
@@ -26,12 +39,83 @@
 		"03"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"morph_cooldown"		"1.0 0.5 0.33 0.2"
+			"shift_rate"			"1.0 0.5 0.33 0.2"
 		}
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_attributes"		"3 4 5 6"
+			"bonus_agility"			"3 4 5 6"
+		}
+	}
+	
+	"OnToggleOn"
+	{
+		"RunScript"
+		{
+			"ScriptFile"        	"heroes/hero_morphling/morph_agi.lua"
+			"Function"         		"morphling_morph_agi_datadriven_on_toggle_on"
+		}
+	}
+	
+	"OnToggleOff"
+	{
+		"RunScript"
+		{
+			"ScriptFile"        	"heroes/hero_morphling/morph_agi.lua"
+			"Function"         		"morphling_morph_agi_datadriven_on_toggle_off"
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"        	"heroes/hero_morphling/morph_agi.lua"
+			"Function"         		"morphling_morph_agi_datadriven_on_upgrade"
+		}
+	}
+	
+	"OnOwnerDied"
+	{
+		"RunScript"
+		{
+			"ScriptFile"        	"heroes/hero_morphling/morph_agi.lua"
+			"Function"         		"morphling_morph_agi_datadriven_on_owner_died"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_morphling_morph_agi_datadriven"
+		{
+			"Passive"				"1"
+			"IsHidden"				"1"
+			"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agility"
+			}
+		}
+		"modifier_morphling_morph_agi_datadriven_toggled_on"
+		{
+			"Passive"				"0"
+			"IsHidden"				"0"
+			"EffectName"            "particles/units/heroes/hero_morphling/morphling_morph_agi.vpcf"
+			"EffectAttachType"      "follow_origin"
+			
+			"ThinkInterval"			"%shift_rate"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"        	"heroes/hero_morphling/morph_agi.lua"
+					"Function"         		"modifier_morphling_morph_agi_datadriven_on_interval_think"
+					"PointsPerTick"			"%points_per_tick"
+					"ManaCostPerSecond"		"%mana_cost_per_second"
+					"ShiftRate"				"%shift_rate"
+				}
+			}
 		}
 	}
 }
