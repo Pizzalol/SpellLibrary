@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Assault Cuirass
+// Author: Rook
+// Date: January 28, 2015
+
+"item_recipe_assault_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1111"  //Valve's version of this item uses the ID "111".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1300"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_assault_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_platemail_datadriven;item_hyperstone_datadriven;item_chainmail_datadriven"
+	}
+}

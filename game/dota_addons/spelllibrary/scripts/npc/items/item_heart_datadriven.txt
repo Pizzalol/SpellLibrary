@@ -1,0 +1,115 @@
+// Rewrite of Heart of Tarrasque
+// Author: Rook
+// Date: January 28, 2015
+
+"item_heart_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1114"  //Valve's version of this item uses the ID "114".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_heart"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"6.0"
+		
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"5500"
+	"ItemShopTags"					"str;regen_health;health_pool"
+	"ItemQuality"					"epic"
+	"ItemAliases"					"hot;heart of tarrasque"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_strength"					"40"
+		}
+		"02"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_health"						"300"
+		}
+		"03"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"health_regen_percent_per_second"	"2"
+		}
+		"04"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"cooldown_melee"					"4"
+		}
+		"05"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"heal_interval"						".03"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_heart_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+				"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
+			}
+		}
+		"modifier_item_heart_datadriven_regen"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			
+			"ThinkInterval" 		"%heal_interval"
+			"OnIntervalThink"  //Heal the unit if the item is not on cooldown.
+			{
+				"RunScript"
+				{
+					"ScriptFile"					"items/item_heart.lua"
+					"Function"						"modifier_item_heart_datadriven_regen_on_interval_think"
+					"HealthRegenPercentPerSecond"	"%health_regen_percent_per_second"
+					"HealInterval"					"%heal_interval"
+				}
+			}
+			
+			"OnTakeDamage"  //Put the item on cooldown if the damage came from Roshan or a hero.
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_heart.lua"
+					"Function"			"modifier_item_heart_datadriven_regen_on_take_damage"
+					"CooldownMelee"		"%cooldown_melee"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_heart.lua"
+					"Function"			"modifier_item_heart_datadriven_regen_on_destroy"
+				}
+			}
+		}
+		"modifier_item_heart_datadriven_regen_visible"  //A modifier that will appear on the unit's modifier bar while they are being healed.
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+		}
+	}
+}

@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Heart of Tarrasque
+// Author: Rook
+// Date: January 26, 2015
+
+"item_recipe_refresher_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1113"  //Valve's version of this item uses the ID "113".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1200"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_heart_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_reaver_datadriven;item_vitality_booster_datadriven"
+	}
+}

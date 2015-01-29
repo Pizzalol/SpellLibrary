@@ -4,7 +4,6 @@
 // Known bugs:
 //     MODIFIER_PROPERTY_MANA_REGEN_CONSTANT does not accept FIELD_FLOAT AbilitySpecial values.  Because of this, the
 //         mana_regen_aura value is currently hardcoded so it will work.
-//     Lifesteal triggers when attacking structures.
 
 "item_vladmir_datadriven"
 {

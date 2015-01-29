@@ -1,0 +1,158 @@
+// Rewrite of Assault Cuirass
+// Author: Rook
+// Date: January 28, 2015
+
+"item_assault_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1112"  //Valve's version of this item uses the ID "112".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_assault"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"5250"
+	"ItemShopTags"					"attack_speed;armor;hard_to_tag"
+	"ItemQuality"					"epic"
+	"ItemAliases"					"ac;assault cuirass"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_attack_speed"	"35"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"10"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"aura_radius"			"900"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"aura_attack_speed"		"20"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"aura_positive_armor"	"5"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"aura_negative_armor"	"-5"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_assault_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%bonus_armor"
+			}
+		}
+		"modifier_item_assault_datadriven_ally_aura_emitter"
+		{
+			"Passive"				"1"
+			"IsHidden"				"1"
+			
+			"Aura" 					"modifier_item_assault_datadriven_ally_aura"
+			"Aura_Radius" 			"%aura_radius"
+			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+			"Aura_ApplyToCaster" 	"1"
+		}
+		"modifier_item_assault_datadriven_ally_aura"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%aura_attack_speed"
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%aura_positive_armor"
+			}
+		}
+		"modifier_item_assault_datadriven_enemy_aura_emitter"
+		{
+			"Passive"				"1"
+			"IsHidden"				"1"
+			
+			"Aura" 					"modifier_item_assault_datadriven_enemy_aura"
+			"Aura_Radius" 			"%aura_radius"
+			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+			"Aura_ApplyToCaster" 	"0"
+		}
+		"modifier_item_assault_datadriven_enemy_aura"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%aura_negative_armor"
+			}
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_assault.lua"
+					"Function"			"modifier_item_assault_datadriven_enemy_aura_on_interval_think"
+				}
+			}
+			
+			"ThinkInterval"			".03"
+			//This debuff aura is invisible to enemies unless its emitting unit is visible to them,
+			//so regularly check to see if the modifier should be visible.
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_assault.lua"
+					"Function"			"modifier_item_assault_datadriven_enemy_aura_on_interval_think"
+				}
+			}
+			
+			"OnDestroy"  //Remove the visible modifier, if it is currently on the unit.
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_assault.lua"
+					"Function"			"modifier_item_assault_datadriven_enemy_aura_on_destroy"
+				}
+			}
+		}
+		//A visible modifier that should appear to enemies only if they are affected by the debuff aura and its emitter
+		//is visible to their team.
+		"modifier_item_assault_datadriven_enemy_aura_visible"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+			"IsPurgable"		"0"
+		}
+	}
+}
