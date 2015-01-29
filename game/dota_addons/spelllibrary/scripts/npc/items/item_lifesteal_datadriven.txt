@@ -44,10 +44,24 @@
 			
 			"OnAttackLanded"
 			{
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_lifesteal.lua"
+					"Function"				"modifier_item_lifesteal_datadriven_on_attack_landed"
+				}
+			}
+		}
+		"modifier_item_lifesteal_datadriven_lifesteal"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			
+			"OnDealDamage"
+			{
 				"Lifesteal"
 				{
-					"Target"					"CASTER"
-					"LifestealPercent"			"%lifesteal_percent"
+					"Target"			"ATTACKER"
+					"LifestealPercent"	"%lifesteal_percent"
 				}
 			}
 		}

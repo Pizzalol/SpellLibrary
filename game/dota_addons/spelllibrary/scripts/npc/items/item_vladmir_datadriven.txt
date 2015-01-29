@@ -115,10 +115,24 @@
 			
 			"OnAttackLanded"
 			{
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_lifesteal.lua"
+					"Function"				"modifier_item_vladmir_datadriven_lifesteal_aura_on_attack_landed"
+				}
+			}
+		}
+		"modifier_item_vladmir_datadriven_lifesteal_aura_lifesteal"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			
+			"OnDealDamage"
+			{
 				"Lifesteal"
 				{
-					"Target"				"ATTACKER"
-					"LifestealPercent"		"%lifesteal_aura_percent"
+					"Target"			"ATTACKER"
+					"LifestealPercent"	"%lifesteal_aura_percent"
 				}
 			}
 		}
