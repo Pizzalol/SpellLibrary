@@ -1,7 +1,9 @@
 // Rewrite of the Obsidian Destroyer Astral Imprisonment
 // Author: chrislotix
 // Date: 06.01.2015.
-
+// Changed: 29.01.2015.
+// Changed by: Pizzalol
+// Reason: Fixed AI not hiding the unit
 "obsidian_destroyer_astral_imprisonment_datadriven"
 {
 	// General
@@ -92,9 +94,7 @@
 				"Center" "TARGET"
 				"Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 			}
-		}
-
-		
+		}		
 
 		"ApplyModifier"
 		{
@@ -125,6 +125,22 @@
 				"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
 
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
+					"Function"	"SwapModelStart"
+					"model"		"models/development/invisiblebox.vmdl"					
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"		"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
+					"Function"			"HideWearables"
+				}
+			}
+
 			"OnDestroy"
 			{
 				"RunScript"
@@ -137,7 +153,18 @@
 				{
 					"EffectName"	"Hero_ObsidianDestroyer.AstralImprisonment.End"
 					"Target"	"TARGET"
+				}
 
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
+					"Function"	"SwapModelEnd"					
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"		"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
+					"Function"			"ShowWearables"
 				}
 			}				
 		}

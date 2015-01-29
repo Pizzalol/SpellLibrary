@@ -24,7 +24,7 @@
 		"AbilityLayout"	"6"
 	
 		"Ability1"	"vengefulspirit_magic_missile_datadriven"
-		"Ability2"	"keeper_of_the_light_mana_leak_datadriven"
+		"Ability2"	"obsidian_destroyer_astral_imprisonment_datadriven"
 		"Ability3"	"vengefulspirit_command_aura_datadriven"
 		"Ability4"	"vengefulspirit_nether_swap_datadriven"
 	}

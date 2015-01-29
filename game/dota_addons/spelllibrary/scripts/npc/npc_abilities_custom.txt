@@ -12889,13 +12889,101 @@
 				"var_type"				"FIELD_INTEGER"
 				"speed"					"1300"
 			}
+			// Extra variable
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"timer_upper_bound"		"0.4"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tree_radius"			"200"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_ember_spirit/ember_spirit_remnant_dash.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_activate_fire_remnant_buff_datadriven"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_ember_spirit/fire_remnant.lua"
+				"Function"				"fire_remnant_activate"
+				"Target"				"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_activate_fire_remnant_buff_datadriven"
+			{
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+				
+				"EffectName"			"particles/units/heroes/hero_ember_spirit/ember_spirit_remnant_dash.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"ThinkInterval"			"0.04"
+				"OnIntervalThink"
+				{
+					"RemoveModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"modifier_activate_fire_remnant_destroy_tree_datadriven"
+					}
+				
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"modifier_activate_fire_remnant_destroy_tree_datadriven"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING"							"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"							"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_activate_fire_remnant_destroy_tree_datadriven"
+			{
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Duration"				"0.04"
+			
+				"OnCreated"
+				{
+					"DestroyTrees"
+					{
+						"Target"		"TARGET"
+						"Radius"		"%tree_radius"
+					}
+				}
+			}
 		}
 	}
-	
 	//End of file ember_spirit_activate_fire_remnant_datadriven.txt
 
 
 	//Start of file ember_spirit_fire_remnant_datadriven.txt
+	// NOTE: Particles for remnant is wrong
 	"ember_spirit_fire_remnant_datadriven"
 	{
 		// General
@@ -12905,6 +12993,7 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"ember_spirit_fire_remnant"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -12926,8 +13015,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"speed_multiplier"				"250"
+				"var_type"				"FIELD_FLOAT"
+				"speed_multiplier"				"2.5"
 			}
 			"02"
 			{
@@ -12954,9 +13043,87 @@
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"45.0"
 			}
+			// Extra variables
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"400"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_ember_spirit/ember_spirit_fire_remnant.vpcf"
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_ember_spirit/fire_remnant.lua"
+				"Function"				"fire_remnant_upgrade"
+				"ability_name"			"ember_spirit_activate_fire_remnant_datadriven"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_ember_spirit/fire_remnant.lua"
+				"Function"				"fire_remnant_charge"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_ember_spirit/fire_remnant.lua"
+				"Function"				"fire_remnant_add_location"
+				"Target"				"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_fire_remnant_counter_datadriven"
+			{
+				"Purgable"				"0"
+			}
+			
+			"modifier_fire_remnant_counter_cooldown_datadriven"
+			{
+				"Purgable"				"0"
+				"Duration"				"%duration"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+		
+			// Modifiers for remnant
+			"modifier_fire_remnant_dummy_animation_override_datadriven"
+			{
+				"OverrideAnimation"		"ACT_DOTA_RUN"
+			}
+		
+			"modifier_fire_remnant_dummy_buff_datadriven"
+			{
+				"Duration"				"%duration"
+				
+				"EffectName"			"particles/units/heroes/hero_ember_spirit/ember_spirit_fire_remnant.vpcf"
+				"EffectAttachType"		"follow_origin"
+			
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING"							"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"						"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
-	
 	//End of file ember_spirit_fire_remnant_datadriven.txt
 
 
@@ -27078,17 +27245,30 @@
 
 
 	//Start of file morphling_morph_agi_datadriven.txt
+	// Rewrite of Morphling's Morph (Agility)
+	// Author: Rook
+	// Date: January 28, 2015
+	
 	"morphling_morph_agi_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-	
+		"AbilityTextureName"			"morphling_morph_agi"
+		"FightRecapLevel"				"1"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"0.0"
 	
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_morphling/morphling_morph_agi.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_morphling.vsndevts"
+		}
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -27096,7 +27276,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_cost"				"30 30 30 30"
+				"mana_cost_per_second"	"30 30 30 30"
 			}
 			"02"
 			{
@@ -27106,40 +27286,88 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"morph_cooldown"		"1.0 0.5 0.33 0.2"
+				"shift_rate"			"1.0 0.5 0.33 0.2"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attributes"		"3 4 5 6"
+				"bonus_agility"			"3 4 5 6"
+			}
+		}
+		
+		"OnToggleOn"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        	"heroes/hero_morphling/morph_agi.lua"
+				"Function"         		"morphling_morph_agi_datadriven_on_toggle_on"
+			}
+		}
+		
+		"OnToggleOff"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        	"heroes/hero_morphling/morph_agi.lua"
+				"Function"         		"morphling_morph_agi_datadriven_on_toggle_off"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        	"heroes/hero_morphling/morph_agi.lua"
+				"Function"         		"morphling_morph_agi_datadriven_on_upgrade"
+			}
+		}
+		
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        	"heroes/hero_morphling/morph_agi.lua"
+				"Function"         		"morphling_morph_agi_datadriven_on_owner_died"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_morphling_morph_agi_datadriven"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agility"
+				}
+			}
+			"modifier_morphling_morph_agi_datadriven_toggled_on"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"EffectName"            "particles/units/heroes/hero_morphling/morphling_morph_agi.vpcf"
+				"EffectAttachType"      "follow_origin"
+				
+				"ThinkInterval"			"%shift_rate"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"        	"heroes/hero_morphling/morph_agi.lua"
+						"Function"         		"modifier_morphling_morph_agi_datadriven_on_interval_think"
+						"PointsPerTick"			"%points_per_tick"
+						"ManaCostPerSecond"		"%mana_cost_per_second"
+						"ShiftRate"				"%shift_rate"
+					}
+				}
 			}
 		}
 	}
 	
 	//End of file morphling_morph_agi_datadriven.txt
-
-
-	//Start of file morphling_morph_datadriven.txt
-	"morphling_morph_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attributes"		"3 4 5 6"
-			}
-		}
-	}
-	
-	//End of file morphling_morph_datadriven.txt
 
 
 	//Start of file morphling_morph_replicate_datadriven.txt
@@ -27161,16 +27389,29 @@
 
 
 	//Start of file morphling_morph_str_datadriven.txt
+	// Rewrite of Morphling's Morph (Strength)
+	// Author: Rook
+	// Date: January 28, 2015
+	
 	"morphling_morph_str_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-	
+		"AbilityTextureName"			"morphling_morph_str"
+		"FightRecapLevel"				"1"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"0.0"
+		
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_morphling/morphling_morph_str.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_morphling.vsndevts"
+		}
 	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27179,7 +27420,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_cost"				"30 30 30 30"
+				"mana_cost_per_second"	"30 30 30 30"
 			}
 			"02"
 			{
@@ -27189,12 +27430,83 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"morph_cooldown"		"1.0 0.5 0.33 0.2"
+				"shift_rate"			"1.0 0.5 0.33 0.2"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attributes"		"3 4 5 6"
+				"bonus_strength"		"3 4 5 6"
+			}
+		}
+		
+		"OnToggleOn"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        	"heroes/hero_morphling/morph_str.lua"
+				"Function"         		"morphling_morph_str_datadriven_on_toggle_on"
+			}
+		}
+		
+		"OnToggleOff"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        	"heroes/hero_morphling/morph_str.lua"
+				"Function"         		"morphling_morph_str_datadriven_on_toggle_off"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        	"heroes/hero_morphling/morph_str.lua"
+				"Function"         		"morphling_morph_str_datadriven_on_upgrade"
+			}
+		}
+		
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        	"heroes/hero_morphling/morph_str.lua"
+				"Function"         		"morphling_morph_str_datadriven_on_owner_died"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_morphling_morph_str_datadriven"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+				}
+			}
+			"modifier_morphling_morph_str_datadriven_toggled_on"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"EffectName"            "particles/units/heroes/hero_morphling/morphling_morph_str.vpcf"
+				"EffectAttachType"      "follow_origin"
+				
+				"ThinkInterval"			"%shift_rate"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"        	"heroes/hero_morphling/morph_str.lua"
+						"Function"         		"modifier_morphling_morph_str_datadriven_on_interval_think"
+						"PointsPerTick"			"%points_per_tick"
+						"ManaCostPerSecond"		"%mana_cost_per_second"
+						"ShiftRate"				"%shift_rate"
+					}
+				}
 			}
 		}
 	}
@@ -29673,7 +29985,9 @@
 	// Rewrite of the Obsidian Destroyer Astral Imprisonment
 	// Author: chrislotix
 	// Date: 06.01.2015.
-	
+	// Changed: 29.01.2015.
+	// Changed by: Pizzalol
+	// Reason: Fixed AI not hiding the unit
 	"obsidian_destroyer_astral_imprisonment_datadriven"
 	{
 		// General
@@ -29764,9 +30078,7 @@
 					"Center" "TARGET"
 					"Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 				}
-			}
-	
-			
+			}		
 	
 			"ApplyModifier"
 			{
@@ -29797,6 +30109,22 @@
 					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
+						"Function"	"SwapModelStart"
+						"model"		"models/development/invisiblebox.vmdl"					
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"		"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
+						"Function"			"HideWearables"
+					}
+				}
+	
 				"OnDestroy"
 				{
 					"RunScript"
@@ -29809,7 +30137,18 @@
 					{
 						"EffectName"	"Hero_ObsidianDestroyer.AstralImprisonment.End"
 						"Target"	"TARGET"
+					}
 	
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
+						"Function"	"SwapModelEnd"					
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"		"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
+						"Function"			"ShowWearables"
 					}
 				}				
 			}
@@ -40783,13 +41122,18 @@
 
 
 	//Start of file slark_essence_shift_datadriven.txt
+	// Rewrite of Slark's Essence Shift
+	// Author: Rook
+	// Date: January 28, 2015
+	
 	"slark_essence_shift_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName" 			"slark_essence_shift"
 	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -40803,12 +41147,91 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stat_loss"				"1"
+				"stat_loss"				"-1"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"15 30 60 120"
+			}
+		}
+		
+		
+		"Modifiers"
+		{
+			"modifier_slark_essence_shift_datadriven"  //This modifier is always on Slark and simply triggers a script when an autoattack lands on an enemy.
+			{
+				"Passive"   "1"
+				"IsHidden"  "1"
+				
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"        		"heroes/hero_slark/essence_shift.lua"
+						"Function"         			"modifier_slark_essence_shift_datadriven_on_attack_landed"
+						"StatLoss"					"%stat_loss"
+					}
+				}
+			}
+			"modifier_slark_essence_shift_datadriven_buff_counter"  //A visible counter that will appear in Slark's modifier bar.
+			{
+				"Duration"			"%duration"
+				"Passive"			"0"
+				"IsHidden"			"0"
+			}
+			"modifier_slark_essence_shift_datadriven_debuff_counter"  //A visible counter that will appear in Slark's target's modifier bar.
+			{
+				"Duration"			"%duration"
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"0"
+			}
+			"modifier_slark_essence_shift_datadriven_buff"
+			{
+				"Duration"				"%duration"
+				"Passive"				"0"
+				"IsHidden"  			"1"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%agi_gain"
+				}
+				
+				"OnDestroy"  //Decrement the visible counter.
+				{
+					"RunScript"
+					{
+						"ScriptFile"        		"heroes/hero_slark/essence_shift.lua"
+						"Function"         			"modifier_slark_essence_shift_datadriven_buff_on_destroy"
+					}
+				}
+			}
+			"modifier_slark_essence_shift_datadriven_debuff"
+			{
+				"Duration"				"%duration"
+				"Passive"				"0"
+				"IsHidden"  			"1"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%stat_loss"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%stat_loss"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%stat_loss"
+				}
+				
+				"OnDestroy"  //Decrement the visible counter.
+				{
+					"RunScript"
+					{
+						"ScriptFile"        		"heroes/hero_slark/essence_shift.lua"
+						"Function"         			"modifier_slark_essence_shift_datadriven_debuff_on_destroy"
+					}
+				}
 			}
 		}
 	}
