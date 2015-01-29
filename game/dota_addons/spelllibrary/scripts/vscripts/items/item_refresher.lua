@@ -1,7 +1,7 @@
 --[[ ============================================================================================================
 	Author: Rook
 	Date: January 26, 2015
-	Called when Refresher Orb Rook is cast.  Takes the player's abilities and items off cooldown.
+	Called when Refresher Orb is cast.  Takes the player's abilities and items off cooldown.
 ================================================================================================================= ]]
 function item_refresher_datadriven_on_spell_start(keys)
 	--Refresh all abilities on the caster.

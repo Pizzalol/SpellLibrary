@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Black King Bar
+// Author: Rook
+// Date: January 25, 2015
+
+"item_recipe_black_king_bar_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1115"  //Valve's version of this item uses the ID "115".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1375"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_black_king_bar_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_ogre_axe_datadriven;item_mithril_hammer_datadriven"
+	}
+}
