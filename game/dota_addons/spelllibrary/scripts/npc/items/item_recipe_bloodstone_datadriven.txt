@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Bloodstone
+// Author: Rook
+// Date: January 29, 2015
+
+"item_recipe_bloodstone_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1120"  //Valve's version of this item uses the ID "120".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"800"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_bloodstone_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_soul_ring_datadriven;item_soul_booster_datadriven"
+	}
+}
