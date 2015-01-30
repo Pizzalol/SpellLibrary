@@ -66,6 +66,174 @@
 			"var_type"					"FIELD_INTEGER"
 			"slow_movement_speed_pct"	"-25"
 		}
+		// Extra variables
+		"09"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"dash_duration"			"2"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+		"particle"					"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
+		"particle"					"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Phoenix.FireSpirits.Cast"
+			"Target"			"CASTER"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"		"CASTER"
+			"ModifierName"	"modifier_icarus_dive_caster_datadriven"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_phoenix/icarus_dive.lua"
+			"Function"			"CastIcarusDive"
+			
+			"hp_cost"			"%hp_cost_perc"
+			"dash_length"		"%dash_length"
+			"dash_width"		"%dash_width"
+			"dash_duration"		"%dash_duration"
+			
+			"modifier_caster_name"	"modifier_icarus_dive_caster_datadriven"
+			"sub_ability_name"		"phoenix_icarus_dive_stop_datadriven"
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_phoenix/icarus_dive.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"phoenix_icarus_dive_stop_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_icarus_dive_caster_datadriven"
+		{
+			"IsHidden"	"1"
+			
+			"Duration"		"%dash_duration"
+			
+			"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
+			"Aura"			"modifier_icarus_dive_check_to_burn_datadriven"
+			"Aura_Radius"	"%hit_radius"
+			"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+			
+			"States"
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			
+			"OnStateChanged"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_phoenix/icarus_dive.lua"
+					"Function"			"CheckToInterrupt"
+					
+					"modifier_caster_name"	"modifier_icarus_dive_caster_datadriven"
+				}
+			}
+			
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"Target"		"CASTER"
+					"ModifierName"	"modifier_ignore_turn_rate_limit_datadriven"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_phoenix/icarus_dive.lua"
+					"Function"			"EndIcarusDive"
+					
+					"sub_ability_name"	"phoenix_icarus_dive_stop_datadriven"
+				}
+				
+				"RemoveModifier"
+				{
+					"Target"		"CASTER"
+					"ModifierName"	"modifier_ignore_turn_rate_limit_datadriven"
+				}
+				
+				"FireSound"
+				{
+					"EffectName"		"Hero_Phoenix.FireSpirits.Stop"
+					"Target"			"CASTER"
+				}
+			}
+		}
+		
+		"modifier_icarus_dive_check_to_burn_datadriven"
+		{
+			"Duration"		"0.1"
+		
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_phoenix/icarus_dive.lua"
+					"Function"			"CheckToBurn"
+					"Target"			"TARGET"
+					
+					"modifier_burn_name"	"modifier_icarus_dive_burn_datadriven"
+				}
+			}
+		}
+		
+		"modifier_icarus_dive_burn_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%burn_duration"
+			
+			"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
+			"ThinkInterval"		"%burn_tick_interval"
+
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%damage_per_second * %burn_tick_interval"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed_pct"
+			}
+		}
+		
+		"modifier_ignore_turn_rate_limit_datadriven"
+		{
+			"IsHidden"	"1"
+		}
 	}
 }
 
