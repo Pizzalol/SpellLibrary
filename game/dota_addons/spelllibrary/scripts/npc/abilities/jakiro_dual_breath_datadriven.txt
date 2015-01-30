@@ -1,3 +1,6 @@
+// Author: Ractidous
+// Date: 26.01.2015.
+// NOTE: This ability requires Jakiro Dual Breath Fiery (datadriven version) for full functionality
 "jakiro_dual_breath_datadriven"
 {
 	// General
@@ -88,6 +91,123 @@
 			"var_type"				"FIELD_INTEGER"
 			"speed_fire"			"850"
 		}
-	}		
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+		"particle"					"particles/units/heroes/hero_jakiro/jakiro_dual_breath_ice.vpcf"
+		"particle"					"particles/units/heroes/hero_jakiro/jakiro_dual_breath_fire.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Jakiro.DualBreath"
+			"Target"			"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"Target"			"POINT"
+			"ScriptFile"		"heroes/hero_jakiro/dual_breath.lua"
+			"Function"			"Launch_IcyBreath"
+			
+			"distance"			"%range"
+			"start_radius"		"%start_radius"
+			"end_radius"		"%end_radius"
+			"speed"				"%speed_fire"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_dual_breath_pre_launch_fiery_breath_datadriven"
+		}
+		
+		"DelayedAction"
+		{
+			"Delay"	"%fire_delay"
+			"Action"
+			{
+				"RunScript"
+				{
+					"Target"			"POINT"
+					"ScriptFile"		"heroes/hero_jakiro/dual_breath.lua"
+					"Function"			"Launch_FieryBreath"
+					
+					"fiery_ability_name"	"jakiro_dual_breath_fiery_datadriven"	
+					"distance"			"%range"
+					"start_radius"		"%start_radius"
+					"end_radius"		"%end_radius"
+					"speed"				"%speed_fire"
+				}
+			}
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"		"0"
+		
+		"ApplyModifier"
+		{
+			"Target"		"TARGET"
+			"ModifierName"	"modifier_dual_breath_slow_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_dual_breath_pre_launch_fiery_breath_datadriven"
+		{
+			"IsHidden"		"1"
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"Duration"		"%fire_delay"
+			
+			"States"
+			{
+				"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		
+		"modifier_dual_breath_slow_datadriven"
+		{
+			"IsHidden"		"0"
+			"IsDebuff"		"1"
+			"IsPurgable"	"1"
+			
+			"Duration"		"%AbilityDuration"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed_pct"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed_pct"
+			}
+		}
+		
+		"modifier_dual_breath_burn_datadriven"
+		{
+			"IsHidden"		"0"
+			"IsDebuff"		"1"
+			"IsPurgable"	"1"
+			
+			"Duration"		"%AbilityDuration"
+			"ThinkInterval"	"0.5"
+			
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%burn_damage / 2"
+				}
+			}
+		}
+	}
 }
 

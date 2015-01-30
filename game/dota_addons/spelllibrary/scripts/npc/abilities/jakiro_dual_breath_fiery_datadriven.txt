@@ -1,0 +1,45 @@
+// Author: Ractidous
+// Date: 26.01.2015.
+// NOTE: This spell is part of the Jakiro Dual Breath ability
+"jakiro_dual_breath_fiery_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"MaxLevel"						"1"
+	"AbilityTextureName"			"jakiro_dual_breath"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"		"0"
+		
+		"FireSound"
+		{
+			"EffectName"		"Hero_Jakiro.DualBreath.Burn"
+			"Target"			"TARGET"
+		}
+		
+		"RunScript"
+		{
+			"Target"			"TARGET"
+			"ScriptFile"		"heroes/hero_jakiro/dual_breath.lua"
+			"Function"			"OnProjectileHit_Fiery"
+			
+			"main_ability_name"	"jakiro_dual_breath_datadriven"
+			"modifier_name"		"modifier_dual_breath_burn_datadriven"
+		}
+	}
+}
