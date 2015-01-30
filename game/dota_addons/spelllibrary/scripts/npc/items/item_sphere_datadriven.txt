@@ -1,0 +1,151 @@
+// Rewrite of Linken's Sphere
+// Author: Rook
+// Date: January 30, 2015
+// Note: This implementation utilizes the built-in modifier_item_sphere_target, which will block Valve-made spells as well as any
+//     datadriven spells that specifically check if the target has that modifier (see the is_spell_blocked_by_linkens_sphere() function).
+// Known bugs:
+//     The blue spherical particle effect appears around the caster whenever Linken's Sphere's effect is available, as a side effect of
+//         using the built-in modifier_item_sphere_target.
+//     Linken's Sphere cannot be self-casted.
+//     The spell block effect does not stack, both when a unit has multiple Linken's Spheres in their inventory and when multiple units
+//         cast the active on the same unit.  This can be fixed if/when functions like HasModifierByNameAndCaster() or 
+//         GetModifierCountByNameAndCaster() are made available.
+
+"item_sphere_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1123"  //Valve's version of this item uses the ID "123".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_sphere"
+	"FightRecapLevel"				"1"
+	
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.0"
+	"AbilityCastRange"				"700"
+	"AbilityCooldown"				"17.0"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"5175"
+	"ItemShopTags"					"regen_health;regen_mana;str;agi;int;hard_to_tag"
+	"ItemQuality"					"epic"
+	"ItemAliases"					"ls;linken's sphere"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_all_stats"			"15"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_health_regen"		"6"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_mana_regen_percent"	"150"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"block_cooldown"			"17.0"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_damage"				"10"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"items/item_sphere.lua"
+			"Function"			"item_sphere_datadriven_on_spell_start"
+			"Duration"			"%block_cooldown"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_sphere_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+				"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_percentage"
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+			}
+			
+			"OnCreated"
+			{			
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_sphere.lua"
+					"Function"			"modifier_item_sphere_datadriven_on_created"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_sphere.lua"
+					"Function"			"modifier_item_sphere_datadriven_on_destroy"
+				}
+			}
+			
+			"ThinkInterval" 		".03"
+			"OnIntervalThink"
+			{
+				//Check if the caster has the correct number of Linken's modifiers on them.  If they have less than they are
+				//supposed to, we can assume that a sphere was popped due to an enemy's targeted spell, and put the player's 
+				//Linken's Spheres on cooldown.
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_sphere.lua"
+					"Function"				"modifier_item_sphere_datadriven_on_interval_think"
+				}
+			}
+		}
+		//A modifier that is applied to a unit when they receive the modifier_item_sphere_target modifier.
+		//So long as they still have that modifier, this one will remain and provide a public face on the modifier icon bar.
+		//This modifier deletes itself when modifier_item_sphere_target no longer exists on the unit.
+		"modifier_item_sphere_datadriven_icon"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			
+			"ThinkInterval" 		".03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_sphere.lua"
+					"Function"				"modifier_item_sphere_datadriven_icon_on_interval_think"
+				}
+			}
+		}
+	}
+}

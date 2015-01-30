@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Linken's Sphere
+// Author: Rook
+// Date: January 29, 2015
+
+"item_recipe_sphere_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1122"  //Valve's version of this item uses the ID "122".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1325"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_sphere_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_ultimate_orb_datadriven;item_pers_datadriven"
+	}
+}
