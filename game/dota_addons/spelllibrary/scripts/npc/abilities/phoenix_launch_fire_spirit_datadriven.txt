@@ -8,6 +8,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"phoenix_launch_fire_spirit"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -70,6 +71,113 @@
 		{
 			"var_type"			"FIELD_FLOAT"
 			"tick_interval"		"1.0"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Phoenix.FireSpirits.Launch"
+			"Target"			"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_phoenix/fire_spirits.lua"
+			"Function"			"LaunchFireSpirit"
+			
+			"modifier_stack_name"	"modifier_fire_spirit_stack_datadriven"
+			"main_ability_name"		"phoenix_fire_spirits_datadriven"
+		}
+		
+		"LinearProjectile"
+		{
+			"Target"			"POINT"
+			"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_launch.vpcf"
+			"MoveSpeed"			"%spirit_speed"
+			"StartPosition"		"attach_attack1"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"		"0"
+	}
+	
+	"OnProjectileFinish"
+	{
+		"FireEffect"
+		{
+			"TargetPoint"		"POINT"
+			"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+			"EffectAttachType"	"world_origin"
+			
+			"ControlPoints"
+			{
+				"01" "%radius 0 0"
+			}
+		}
+		
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"	"POINT"
+				"Radius"	"%radius"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+				"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			}
+			
+			"Action"
+			{
+				"ApplyModifier"
+				{
+					"Target"		"TARGET"
+					"ModifierName"	"modifier_fire_spirit_damage_datadriven"
+				}
+			}
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_phoenix/fire_spirits.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"phoenix_fire_spirits_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_fire_spirit_damage_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+
+			"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"ThinkInterval"		"%tick_interval"
+
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%dps * %tick_interval"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attackspeed_slow"
+			}
 		}
 	}
 }

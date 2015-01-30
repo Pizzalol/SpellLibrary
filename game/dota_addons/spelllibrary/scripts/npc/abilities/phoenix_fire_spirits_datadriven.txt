@@ -72,5 +72,74 @@
 			"tick_interval"		"1.0"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+		"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirits.vpcf"
+		"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_launch.vpcf"
+		"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+		"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf"
+		"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn_creep.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Phoenix.FireSpirits.Cast"
+			"Target"			"CASTER"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_fire_spirit_stack_datadriven"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_phoenix/fire_spirits.lua"
+			"Function"			"CastFireSpirits"
+			
+			"hp_cost_perc"		"%hp_cost_perc"
+			"spirit_count"		"%spirit_count"
+			
+			"modifier_stack_name"	"modifier_fire_spirit_stack_datadriven"
+			"sub_ability_name"		"phoenix_launch_fire_spirit_datadriven"
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_phoenix/fire_spirits.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"phoenix_launch_fire_spirit_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_fire_spirit_stack_datadriven"
+		{
+			"IsBuff"	"1"
+			"Duration"	"%spirit_duration"
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_phoenix/fire_spirits.lua"
+					"Function"			"RemoveFireSpirits"
+					
+					"sub_ability_name"	"phoenix_launch_fire_spirit_datadriven"
+				}
+			}
+		}
+	}
 }
 
