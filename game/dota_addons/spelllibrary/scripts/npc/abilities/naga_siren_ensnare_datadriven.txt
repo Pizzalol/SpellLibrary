@@ -47,5 +47,96 @@
 			"fake_ensnare_distance"		"900 900 900 900"	
 		}
 	}
+
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
+		"particle"					"particles/units/heroes/hero_siren/siren_net.vpcf"
+		"particle"					"particles/units/heroes/hero_siren/siren_net_projectile.vpcf"
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_naga_siren/ensnare.lua"
+			"Function"				"Ensnare_PlayFakeAnimation"
+			"Target"				"TARGET"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"TrackingProjectile"
+		{
+			"Target"				"TARGET"
+			"EffectName"			"particles/units/heroes/hero_siren/siren_net_projectile.vpcf"
+			"Dodgeable"				"1"
+			"ProvidesVision"		"1"
+			"VisionRadius"			"0"
+			"MoveSpeed"				"%net_speed"
+			"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+		}
+
+		"FireSound"
+		{
+			"EffectName"			"Hero_NagaSiren.Ensnare.Cast"
+			"Target"				"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_naga_siren/ensnare.lua"
+			"Function"				"Ensnare_CastFakeNets"
+			"Target"				"TARGET"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"1"
+
+		"FireSound"
+		{
+			"EffectName"			"Hero_NagaSiren.Ensnare.Target"
+			"Target"				"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"Target"				"TARGET"
+			"ModifierName"			"modifier_ensnare_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_ensnare_datadriven"
+		{
+			"IsHidden"		"0"
+			"IsDebuff"		"1"
+			"IsPurgable"	"0"
+
+			"Duration"		"%duration"
+
+			"States"
+			{
+				"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+			}
+
+			"EffectName"			"particles/units/heroes/hero_siren/siren_net.vpcf"
+			"EffectAttachType"		"follow_origin"
+		}
+
+		"modifier_ensnare_fake_datadriven"
+		{
+			"IsHidden"			"1"
+		//	"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_2"
+			"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_1"
+		}
+	}
 }	
 
