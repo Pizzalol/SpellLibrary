@@ -45,5 +45,68 @@
 			"duration"					"8.0 8.0 8.0 8.0"
 		}
 	}
+
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
+		"particle"					"particles/units/heroes/hero_siren/naga_siren_riptide.vpcf"
+		"particle"					"particles/units/heroes/hero_siren/naga_siren_riptide_debuff.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_naga_siren/rip_tide.lua"
+			"Function"				"RipTide"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_rip_tide_dummy_datadriven"
+		{
+			"IsHidden"	"1"
+
+			"OnCreated"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"	"CASTER"
+						"Radius"	"%radius"
+						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Type"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					}
+
+					"Action"
+					{
+						"RunScript"
+						{
+							"ScriptFile"			"heroes/hero_naga_siren/rip_tide.lua"
+							"Function"				"RipTide_MarkAsVictim"
+						}
+					}
+				}
+			}
+		}
+
+		"modifier_rip_tide_datadriven"
+		{
+			"IsHidden"	"0"
+			"IsDebuff"	"1"
+
+			"Duration"	"%duration"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_reduction"
+			}
+		}
+	}
 }	
 
