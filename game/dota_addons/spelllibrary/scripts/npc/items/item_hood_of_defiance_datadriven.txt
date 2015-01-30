@@ -1,0 +1,55 @@
+// Rewrite of Hood of Defiance
+// Author: Rook
+// Date: January 30, 2015
+
+"item_hood_of_defiance_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1131"  //Valve's version of this item uses the ID "131".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_hood_of_defiance"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2125"
+	"ItemShopTags"					"regen_health;magic_resist"
+	"ItemQuality"					"epic"
+	"ItemAliases"					"hood of defiance"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_magic_resist_percentage"		"30"
+		}
+		"02"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_health_regen"				"9"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_hood_of_defiance_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%bonus_magic_resist_percentage"
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%bonus_health_regen"
+			}
+		}
+	}
+}

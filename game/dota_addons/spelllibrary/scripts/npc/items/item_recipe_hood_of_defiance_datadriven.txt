@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Hood of Defiance
+// Author: Rook
+// Date: January 30, 2015
+
+"item_recipe_hood_of_defiance_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1130"  //Valve's version of this item uses the ID "130".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_hood_of_defiance_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_ring_of_health_datadriven;item_cloak_datadriven;item_ring_of_regen_datadriven;item_ring_of_regen_datadriven"
+	}
+}

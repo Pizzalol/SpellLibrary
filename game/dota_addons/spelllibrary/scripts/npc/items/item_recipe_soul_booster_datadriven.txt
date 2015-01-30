@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Soul Booster
+// Author: Rook
+// Date: January 30, 2015
+
+"item_recipe_soul_booster_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1128"  //Valve's version of this item uses the ID "128".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_soul_booster_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_vitality_booster_datadriven;item_energy_booster_datadriven;item_point_booster_datadriven"
+	}
+}

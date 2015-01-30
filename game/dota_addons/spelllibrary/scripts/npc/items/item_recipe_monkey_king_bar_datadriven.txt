@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Monkey King Bar
+// Author: Rook
+// Date: January 30, 2015
+
+"item_recipe_monkey_king_bar_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1134"  //Valve's version of this item uses the ID "134".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_monkey_king_bar_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_demon_edge_datadriven;item_javelin_datadriven;item_javelin_datadriven"
+	}
+}
