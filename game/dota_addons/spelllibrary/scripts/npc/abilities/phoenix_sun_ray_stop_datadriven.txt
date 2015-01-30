@@ -4,9 +4,35 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityTextureName"			"phoenix_sun_ray_stop"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+	
+	"OnSpellStart"
+	{
+		"RemoveModifier"
+		{
+			"Target"		"CASTER"
+			"ModifierName"	"modifier_sun_ray_caster_datadriven"
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_phoenix/sun_ray.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"phoenix_sun_ray_datadriven"
+		}
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_phoenix/sun_ray.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"phoenix_sun_ray_toggle_move_datadriven"
+		}
+	}
 }
 

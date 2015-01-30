@@ -83,6 +83,237 @@
 			"var_type"			"FIELD_INTEGER"
 			"tooltip_duration"	"6"
 		}
+		// Extra variables
+		"12"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"num_thinkers"		"9"
+		}
+		"13"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"thinker_step"		"150"
+		}
+		"14"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"thinker_radius"	"192"
+		}
+		"15"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"initial_turn_max_duration"	"0.75"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+		"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray.vpcf"
+		"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray_beam_friend.vpcf"
+		"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray_beam_enemy.vpcf"
+		"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray_debuff.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Phoenix.SunRay.Cast"
+			"Target"			"CASTER"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"		"Hero_Phoenix.SunRay.Loop"
+			"Target"			"CASTER"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"		"CASTER"
+			"ModifierName"	"modifier_sun_ray_caster_datadriven"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_phoenix/sun_ray.lua"
+			"Function"			"CastSunRay"
+			
+			"hp_cost_perc_per_second"	"%hp_cost_perc_per_second"
+			
+			"path_length"				"%beam_range"
+			"num_thinkers"				"%num_thinkers"
+			"thinker_step"				"%thinker_step"
+			"thinker_radius"			"%thinker_radius"
+			
+			"turn_rate_initial"			"%turn_rate_initial"
+			"turn_rate"					"%turn_rate"
+			"initial_turn_max_duration"	"%initial_turn_max_duration"
+			"forward_move_speed"		"%forward_move_speed"
+			
+			"modifier_caster_name"					"modifier_sun_ray_caster_datadriven"
+			"modifier_thinker_name"					"modifier_sun_ray_thinker_datadriven"
+			"modifier_ignore_turn_rate_limit_name"	"modifier_ignore_turn_rate_limit_datadriven"
+			
+			"sub_ability_name"					"phoenix_sun_ray_stop_datadriven"
+			"toggle_move_empty_ability_name"	"phoenix_sun_ray_toggle_move_empty_datadriven"
+			"toggle_move_ability_name"			"phoenix_sun_ray_toggle_move_datadriven"
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_phoenix/sun_ray.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"phoenix_sun_ray_stop_datadriven"
+		}
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_phoenix/sun_ray.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"phoenix_sun_ray_toggle_move_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_sun_ray_caster_datadriven"
+		{
+			"IsPurgable"	"true"
+		
+			"Duration"	"%AbilityDuration"
+			
+			"States"
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			
+			"OnStateChanged"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_phoenix/sun_ray.lua"
+					"Function"			"CheckToInterrupt"
+					
+					"modifier_caster_name"	"modifier_sun_ray_caster_datadriven"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_phoenix/sun_ray.lua"
+					"Function"			"StopSound"
+					"sound_name"		"Hero_Phoenix.SunRay.Loop"
+				}
+			
+				"FireSound"
+				{
+					"EffectName"		"Hero_Phoenix.SunRay.Stop"
+					"Target"			"CASTER"
+				}
+				
+				"RemoveModifier"
+				{
+					"Target"			"CASTER"
+					"ModifierName"		"modifier_sun_ray_caster_move_datadriven"
+				}
+			
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_phoenix/sun_ray.lua"
+					"Function"			"EndSunRay"
+					
+					"sub_ability_name"			"phoenix_sun_ray_stop_datadriven"
+					"toggle_move_empty_ability_name"	"phoenix_sun_ray_toggle_move_empty_datadriven"
+					"toggle_move_ability_name"			"phoenix_sun_ray_toggle_move_datadriven"
+				}
+			}
+			
+			"ThinkInterval"		"%tick_interval"
+
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_phoenix/sun_ray.lua"
+					"Function"			"SpendHPCost"
+					
+					"tick_interval"				"%tick_interval"
+					"hp_cost_perc_per_second"	"%hp_cost_perc_per_second"
+				}
+			}
+		}
+		
+		"modifier_sun_ray_caster_move_datadriven"
+		{
+			"IsHidden"	"1"
+		}
+		
+		"modifier_sun_ray_thinker_datadriven"
+		{
+			"Duration"	"%AbilityDuration"
+			
+			"Aura"			"modifier_sun_ray_check_datadriven"
+			"Aura_Radius"	"%thinker_radius"
+			"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_BOTH"
+			"Aura_Types"	"DOTA_UNIT_TARGET_HERO"
+			
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"Target"		"TARGET"
+					"ModifierName"	"modifier_phased"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_PROVIDES_VISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		
+		"modifier_sun_ray_check_datadriven"
+		{
+			"IsHidden"	"1"
+			
+			"ThinkInterval"		"%tick_interval"
+
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_phoenix/sun_ray.lua"
+					"Function"			"CheckForCollision"
+					
+					"path_length"		"%beam_range"
+					"path_radius"		"%radius"
+					
+					"tick_interval"		"%tick_interval"
+					"base_dmg"			"%base_dmg"
+					"hp_perc_dmg"		"%hp_perc_dmg"
+					"ally_heal"			"%ally_heal"
+					
+					"particle_burn_name"	"particles/units/heroes/hero_phoenix/phoenix_sunray_beam_enemy.vpcf"
+					"particle_heal_name"	"particles/units/heroes/hero_phoenix/phoenix_sunray_beam_friend.vpcf"
+				}
+			}
+		}
 	}
 }
 
