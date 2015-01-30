@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Radiance
+// Author: Rook
+// Date: January 30, 2015
+
+"item_recipe_radiance_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1136"  //Valve's version of this item uses the ID "136".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1350"
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_radiance_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_relic_datadriven"
+	}
+}

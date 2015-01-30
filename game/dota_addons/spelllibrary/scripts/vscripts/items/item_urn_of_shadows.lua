@@ -58,7 +58,7 @@ end
 	Author: Rook
 	Date: January 26, 2015
 	Called regularly while an enemy has Urn of Shadows' damaging modifier on them.  Damages them.
-	Additional parameters: keys.TotalDamage keys.TotalDuration, and keys.Interval
+	Additional parameters: keys.TotalDamage, keys.TotalDuration, and keys.Interval
 ================================================================================================================= ]]
 function modifier_item_urn_of_shadows_datadriven_damage_on_interval_think(keys)
 	local damage_to_deal = keys.TotalDamage / keys.TotalDuration   --This gives us the damage per second.
