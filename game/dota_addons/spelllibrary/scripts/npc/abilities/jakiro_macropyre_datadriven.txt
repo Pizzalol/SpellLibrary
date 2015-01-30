@@ -74,6 +74,89 @@
 			"var_type"					"FIELD_INTEGER"
 			"cast_range_scepter"		"1800"
 		}
-	}	
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+		"particle"					"particles/units/heroes/hero_jakiro/jakiro_macropyre.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Jakiro.Macropyre.Cast"
+			"Target"			"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_jakiro/macropyre.lua"
+			"Function"			"FireMacropyre"
+			
+			"cast_range"		"%cast_range"
+			"path_radius"		"%path_radius"
+			"duration"			"%duration"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"		"0"
+		
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_jakiro/macropyre.lua"
+			"Function"			"ApplyDummyModifier"
+			"Target"			"TARGET"
+			
+			"modifier_name"		"modifier_macropyre_check_range_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_macropyre_check_range_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			
+			"ThinkInterval"	"%burn_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_jakiro/macropyre.lua"
+					"Function"			"CheckMacropyre"
+					"Target"			"TARGET"
+					
+					"path_radius"		"%path_radius"
+					"damage"			"%damage / 2"
+				}
+			}
+		}
+		
+		"modifier_macropyre_destroy_tree_datadriven"
+		{
+			"OnCreated"
+			{
+				"DestroyTrees"
+				{
+					"Target"		"TARGET"
+					"Radius"		"%path_radius"
+				}
+				
+				"ApplyModifier"
+				{
+					"Target"		"TARGET"
+					"ModifierName"	"modifier_kill"
+					"Duration"		"0.1"
+				}
+			}
+		}
+	}
 }
 
