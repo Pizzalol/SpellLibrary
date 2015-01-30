@@ -41,6 +41,165 @@
 			"var_type"					"FIELD_FLOAT"
 			"animation_rate"				"0.55 0.55 0.55"
 		}
+		// Extra variables
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"linger_duration"			"0.5 0.5 0.5"
+		}
+	}
+
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
+		"particle"					"particles/units/heroes/hero_siren/naga_siren_siren_song_cast.vpcf"
+		"particle"					"particles/units/heroes/hero_siren/naga_siren_siren_song_end.vpcf"
+		"particle"					"particles/units/heroes/hero_siren/naga_siren_song_aura.vpcf"
+		"particle"					"particles/units/heroes/hero_siren/naga_siren_song_debuff.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_naga_siren/song_of_the_siren.lua"
+			"Function"				"StartSinging"
+			"sub_ability_name"		"naga_siren_song_of_the_siren_cancel_datadriven"
+		}
+
+		"AttachEffect"
+		{
+			"EffectName"			"particles/units/heroes/hero_siren/naga_siren_siren_song_cast.vpcf"
+			"EffectAttachType"		"follow_origin"
+			"Target"				"CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"Target"				"CASTER"
+			"ModifierName"			"modifier_song_of_the_siren_caster_datadriven"
+		}
+
+		"ApplyModifier"
+		{
+			"Target"				"CASTER"
+			"ModifierName"			"modifier_song_of_the_siren_aura_datadriven"
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_naga_siren/song_of_the_siren.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"naga_siren_song_of_the_siren_cancel_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_song_of_the_siren_caster_datadriven"
+		{
+			"IsBuff"		"1"
+
+			"Duration"		"%duration"
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_naga_siren/song_of_the_siren.lua"
+					"Function"			"EndSinging"
+					"sub_ability_name"	"naga_siren_song_of_the_siren_cancel_datadriven"
+				}
+			}
+
+			"EffectName"			"particles/units/heroes/hero_siren/naga_siren_song_aura.vpcf"
+			"EffectAttachType"		"attach_mouth"
+		//	"EffectAttachType"		"follow_overhead"	// If the caster has no attach_mouth bone.
+			"EffectRadius"			"%radius"
+		}
+
+		"modifier_song_of_the_siren_aura_datadriven"
+		{
+			"IsHidden"		"1"
+
+			"Duration"		"%duration"
+
+			"Aura"			"modifier_song_of_the_siren_datadriven"
+			"Aura_Radius"	"%radius"
+			"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_MECHANICAL"
+			"Aura_Flags"	"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		}
+
+		"modifier_song_of_the_siren_datadriven"
+		{
+			"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			"IsDebuff"		"1"
+
+			"OnCreated"
+			{
+				"RemoveModifier"
+				{
+					"Target"		"TARGET"
+					"ModifierName"	"modifier_song_of_the_siren_linger_datadriven"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"Target"		"TARGET"
+					"ModifierName"	"modifier_song_of_the_siren_linger_datadriven"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"%animation_rate"
+			}
+
+			"OverrideAnimation"		"ACT_DOTA_DISABLED"
+
+			"EffectName"			"particles/units/heroes/hero_siren/naga_siren_song_debuff.vpcf"
+			"EffectAttachType"		"follow_origin"
+		}
+
+		"modifier_song_of_the_siren_linger_datadriven"
+		{
+			"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			"IsHidden"		"0"
+			"IsDebuff"		"1"
+
+			"Duration"		"%linger_duration"
+
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"%animation_rate"
+			}
+
+			"OverrideAnimation"		"ACT_DOTA_DISABLED"
+
+			"EffectName"			"particles/units/heroes/hero_siren/naga_siren_song_debuff.vpcf"
+			"EffectAttachType"		"follow_origin"
+		}
 	}
 }
 

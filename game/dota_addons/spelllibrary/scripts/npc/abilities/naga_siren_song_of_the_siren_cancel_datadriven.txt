@@ -6,6 +6,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 	"MaxLevel"						"1"
+	"AbilityTextureName"			"naga_siren_song_of_the_siren_cancel"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -14,5 +15,45 @@
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCooldown"				"1.0 1.0 1.0"
+
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_naga_siren/song_of_the_siren.lua"
+			"Function"				"CancelSinging"
+		}
+
+		"RemoveModifier"
+		{
+			"Target"				"CASTER"
+			"ModifierName"			"modifier_song_of_the_siren_caster_datadriven"
+		}
+
+		"RemoveModifier"
+		{
+			"Target"				"CASTER"
+			"ModifierName"			"modifier_song_of_the_siren_aura_datadriven"
+		}
+
+		"AttachEffect"
+		{
+			"EffectName"			"particles/units/heroes/hero_siren/naga_siren_siren_song_end.vpcf"
+			"EffectAttachType"		"follow_origin"
+			"Target"				"CASTER"
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_naga_siren/song_of_the_siren.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"naga_siren_song_of_the_siren_datadriven"
+		}
+	}
 }
 
