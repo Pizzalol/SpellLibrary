@@ -52,6 +52,121 @@
 			"var_type"					"FIELD_INTEGER"
 			"damage"					"50"
 		}
-	}		
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+		"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path.vpcf"
+		"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
+	//	"particle"					"particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Jakiro.IcePath"
+			"Target"			"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_jakiro/ice_path.lua"
+			"Function"			"FireEffect_IcePath"
+			
+			"path_delay"		"%path_delay"
+			"duration"			"%duration"
+			"path_radius"		"%path_radius"
+		}
+		
+		"DelayedAction"
+		{
+			"Delay"		"0.1"
+			"Action"
+			{
+				"FireSound"
+				{
+					"EffectName"		"Hero_Jakiro.IcePath.Cast"
+					"Target"			"CASTER"
+				}
+			}
+		}
+		
+		"DelayedAction"
+		{
+			"Delay"		"%path_delay"
+			"Action"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_jakiro/ice_path.lua"
+					"Function"			"FireEffect_Destroy_IcePath_A"
+				}
+			}
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"		"0"
+		
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_jakiro/ice_path.lua"
+			"Function"			"ApplyDummyModifier"
+			"Target"			"TARGET"
+			
+			"modifier_name"		"modifier_ice_path_check_range_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_ice_path_check_range_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			
+			"ThinkInterval"	"0.1"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_jakiro/ice_path.lua"
+					"Function"			"CheckIcePath"
+					"Target"			"TARGET"
+					
+					"path_radius"		"%path_radius"
+				}
+			}
+		}
+		
+		"modifier_ice_path_stun_datadriven"
+		{
+			"IsDebuff" 		"1"
+			"OverrideAnimation"		"ACT_DOTA_DISABLED"
+
+			"EffectName" "particles/generic_gameplay/generic_stunned.vpcf"
+        	"EffectAttachType" "follow_overhead"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			
+			"OnCreated"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%damage"
+				}
+			}
+		}
+	}
 }
 
