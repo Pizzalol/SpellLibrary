@@ -5,6 +5,11 @@
 
 	Note: The positions weren't random in the original ability. Fix later
 ]]
+--[[
+	Author: Ractidous
+	Date: 27.01.2015.
+	Fixed the random spawn positions.
+]]
 function MirrorImage( event )
 	local caster = event.caster
 	local player = caster:GetPlayerID()
@@ -15,31 +20,54 @@ function MirrorImage( event )
 	local outgoingDamage = ability:GetLevelSpecialValueFor( "illusion_outgoing_damage", ability:GetLevel() - 1 )
 	local incomingDamage = ability:GetLevelSpecialValueFor( "illusion_incoming_damage", ability:GetLevel() - 1 )
 
+	local casterOrigin = caster:GetAbsOrigin()
+	local casterAngles = caster:GetAngles()
+
 	-- Initialize the illusion table to keep track of the units created by the spell
-	if not caster.illusions then
-		caster.illusions = {}
+	if not caster.mirror_image_illusions then
+		caster.mirror_image_illusions = {}
 	end
 
 	-- Kill the old images
-	for k,v in pairs(caster.illusions) do
+	for k,v in pairs(caster.mirror_image_illusions) do
 		if v and IsValidEntity(v) then 
 			v:ForceKill(false)
 		end
 	end
 
 	-- Start a clean illusion table
-	caster.illusions = {}
+	caster.mirror_image_illusions = {}
 
-	-- Spawn many illusions
-	for i=1,images_count do
+	-- Setup a table of potential spawn positions
+	local vRandomSpawnPos = {
+		Vector( 72, 0, 0 ),		-- North
+		Vector( 0, 72, 0 ),		-- East
+		Vector( -72, 0, 0 ),	-- South
+		Vector( 0, -72, 0 ),	-- West
+	}
 
-		-- Get a random position to create the illusion in
-		local origin = caster:GetAbsOrigin() + RandomVector(100)
+	for i=#vRandomSpawnPos, 2, -1 do	-- Simply shuffle them
+		local j = RandomInt( 1, i )
+		vRandomSpawnPos[i], vRandomSpawnPos[j] = vRandomSpawnPos[j], vRandomSpawnPos[i]
+	end
+
+	-- Insert the center position and make sure that at least one of the units will be spawned on there.
+	table.insert( vRandomSpawnPos, RandomInt( 1, images_count+1 ), Vector( 0, 0, 0 ) )
+
+	-- At first, move the main hero to one of the random spawn positions.
+	FindClearSpaceForUnit( caster, casterOrigin + table.remove( vRandomSpawnPos, 1 ), true )
+
+	-- Spawn illusions
+	for i=1, images_count do
+
+		local origin = casterOrigin + table.remove( vRandomSpawnPos, 1 )
 
 		-- handle_UnitOwner needs to be nil, else it will crash the game.
 		local illusion = CreateUnitByName(unit_name, origin, true, caster, nil, caster:GetTeamNumber())
 		illusion:SetPlayerID(caster:GetPlayerID())
 		illusion:SetControllableByPlayer(player, true)
+
+		illusion:SetAngles( casterAngles.x, casterAngles.y, casterAngles.z )
 		
 		-- Level Up the unit to the casters level
 		local casterLevel = caster:GetLevel()
@@ -77,11 +105,7 @@ function MirrorImage( event )
 		illusion:MakeIllusion()
 
 		-- Add the illusion created to a table within the caster handle, to remove the illusions on the next cast if necessary
-		table.insert(caster.illusions, illusion)
+		table.insert(caster.mirror_image_illusions, illusion)
+
 	end
-
-	-- Repositionate the main hero somewhere
-	local new_hero_position = caster:GetAbsOrigin() + RandomVector(100)
-	FindClearSpaceForUnit(caster, new_hero_position, true)
-
 end

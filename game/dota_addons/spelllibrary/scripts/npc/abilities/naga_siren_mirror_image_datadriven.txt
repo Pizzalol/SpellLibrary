@@ -4,6 +4,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityTextureName"			"naga_siren_mirror_image"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -57,6 +58,14 @@
 			"invuln_duration"			"0.3"
 		}			
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
+		"particle"					"particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
+	}
 
 	"OnSpellStart"
 	{
@@ -94,7 +103,7 @@
 
 				"FireSound"
 				{
-					"EffectName"	"DOTA_Item.Manta.Activate"
+					"EffectName"	"Hero_NagaSiren.MirrorImage"
 					"Target"		"CASTER"
 				}
 		    }
