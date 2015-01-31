@@ -531,6 +531,230 @@
 	//End of file item_blink_datadriven.txt
 
 
+	//Start of file item_bloodstone_datadriven.txt
+	// Rewrite of Bloodstone
+	// Author: Rook
+	// Date: January 29, 2015
+	// Known bugs:
+	//     Buying back does not prematurely end the vision in the spot the hero died at.
+	//     Dying with a Bloodstone in your inventory, then moving the Bloodstone out of your inventory will halt the experience
+	//         gained in the area of your death.
+	// Note: The "entity_killed" engine event is listened to for this item.  Ideally, an engine event should only be
+	//     listened to one time per mod.
+	
+	"item_bloodstone_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1121"  //Valve's version of this item uses the ID "121".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_bloodstone"
+		"FightRecapLevel"				"2"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"150"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"300.0"
+		"AbilityManaCost"				"0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4900"
+		"ItemShopTags"					"regen_health;regen_mana;mana_pool;health_pool"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"bs;bloodstone"
+		"ItemInitialCharges"			"8"
+		"ItemDisplayCharges"			"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_health"						"500"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_mana"						"400"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_health_regen"				"9"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_mana_regen_percentage"		"200"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"charge_range"						"1600"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"heal_on_death_range"				"1675"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"heal_on_death_base"				"500"
+			}
+			"08"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"heal_on_death_per_charge"			"30"
+			}
+			"09"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"vision_on_death_radius"			"1800"
+			}
+			"10"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"respawn_time_reduction_per_charge"	"4.0"
+			}
+			"11"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"death_gold_reduction_per_charge"	"-25"
+			}
+			"12"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"on_death_charge_percent"			"0.67" //33% gone.
+			}
+			"13"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_mana_regen_per_charge"		"1"
+			}
+			"14"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"experience_on_death_range"			"1200"  //This value is hardcoded into modifier_item_bloodstone_datadriven_aura_emitter_on_death().
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"					"items/item_bloodstone.lua"
+				"Function"						"item_bloodstone_datadriven_on_spell_start"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_bloodstone_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_percentage"
+				}
+			}
+			"modifier_item_bloodstone_datadriven_aura_emitter"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				
+				"Aura" 					"modifier_item_bloodstone_datadriven_aura"
+				"Aura_Radius" 			"%charge_range"
+				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO"
+				"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster" 	"0"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_bloodstone.lua"
+						"Function"				"item_bloodstone_datadriven_recalculate_charge_bonuses"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_bloodstone.lua"
+						"Function"				"item_bloodstone_datadriven_recalculate_charge_bonuses"
+					}
+				}
+				
+				"OnKill"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_bloodstone.lua"
+						"Function"				"modifier_item_bloodstone_datadriven_aura_emitter_on_hero_kill"
+					}
+				}
+				
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"						"items/item_bloodstone.lua"
+						"Function"							"modifier_item_bloodstone_datadriven_aura_emitter_on_death"
+						"HealOnDeathRange"					"%heal_on_death_range"
+						"HealOnDeathBase"					"%heal_on_death_base"
+						"HealOnDeathPerCharge"				"%heal_on_death_per_charge"
+						"VisionOnDeathRadius"				"%vision_on_death_radius"
+						"OnDeathChargePercent"				"%on_death_charge_percent"
+						"RespawnTimeReductionPerCharge"		"%respawn_time_reduction_per_charge"
+					}
+				}
+			}
+			"modifier_item_bloodstone_datadriven_aura"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_bloodstone.lua"
+						"Function"			"modifier_item_bloodstone_datadriven_aura_on_death"
+					}
+				}
+			}
+			"modifier_item_bloodstone_datadriven_charge"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DEATHGOLDCOST"			"%death_gold_reduction_per_charge"
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%bonus_mana_regen_per_charge"
+				}
+			}
+		}
+	}
+	//End of file item_bloodstone_datadriven.txt
+
+
 	//Start of file item_boots_datadriven.txt
 	// Rewrite of Boots of Speed
 	// Author: Rook
@@ -2211,7 +2435,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"02"
+			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_attack_speed"	"15"
@@ -2578,6 +2802,65 @@
 		}
 	}
 	//End of file item_helm_of_iron_will_datadriven.txt
+
+
+	//Start of file item_hood_of_defiance_datadriven.txt
+	// Rewrite of Hood of Defiance
+	// Author: Rook
+	// Date: January 30, 2015
+	
+	"item_hood_of_defiance_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1131"  //Valve's version of this item uses the ID "131".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_hood_of_defiance"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2125"
+		"ItemShopTags"					"regen_health;magic_resist"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"hood of defiance"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_magic_resist_percentage"		"30"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_health_regen"				"9"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_hood_of_defiance_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%bonus_magic_resist_percentage"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%bonus_health_regen"
+				}
+			}
+		}
+	}
+	//End of file item_hood_of_defiance_datadriven.txt
 
 
 	//Start of file item_hyperstone_datadriven.txt
@@ -3270,6 +3553,132 @@
 		}
 	}
 	//End of file item_mithril_hammer_datadriven.txt
+
+
+	//Start of file item_monkey_king_bar_datadriven.txt
+	// Rewrite of Monkey King Bar
+	// Author: Rook
+	// Date: January 30, 2015
+	
+	"item_monkey_king_bar_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1135"  //Valve's version of this item uses the ID "135".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_monkey_king_bar"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"5400"
+		"ItemShopTags"					"damage;attack_speed;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"mkb;monkey king bar"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"88"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"15"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_chance"			"35"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_damage"			"100"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bash_stun"				"0.01"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_monkey_king_bar_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_CANNOT_MISS"			"MODIFIER_STATE_VALUE_ENABLED"  //When attacking uphill, cannot miss units but can still miss buildings.
+				}
+				
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"		"%bash_chance"
+						"OnSuccess"
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+								"Damage"		"%bash_damage"
+							}
+							
+							"ApplyModifier"
+							{
+								"Target"			"TARGET"
+								"ModifierName"		"modifier_item_monkey_king_bar_datadriven_bash"
+							}
+							
+							"FireSound"
+							{
+								"EffectName"		"DOTA_Item.MKB.Minibash"
+								"Target"			"TARGET"
+							}
+						}
+					}
+				}
+			}
+			"modifier_item_monkey_king_bar_datadriven_bash"
+			{
+				"Duration"              "%bash_stun"
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsBuff"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
+				
+				"EffectName"            "particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"      "follow_overhead"
+				"OverrideAnimation"     "ACT_DOTA_DISABLED"
+				
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED" 		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	//End of file item_monkey_king_bar_datadriven.txt
 
 
 	//Start of file item_mystic_staff_datadriven.txt
@@ -4095,6 +4504,201 @@
 	//End of file item_quarterstaff_datadriven.txt
 
 
+	//Start of file item_radiance_datadriven.txt
+	// Rewrite of Radiance
+	// Author: Rook
+	// Date: January 30, 2015
+	// Known bugs:
+	//     Since there is currently no way to alter the item's texture on the fly, Radiance is split up into two items.
+	//     Toggling Radiance activates the 10-second window in which it can be sold for full price.
+	
+	//A dummy item that is used to take up item slots in the swap_to_item() Lua function.
+	"item_dummy_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"                            "2001"
+		"BaseClass"                     "item_datadriven"
+		"ItemBaseLevel"                 "1"
+	}
+	
+	"item_radiance_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1137"  //Valve's version of this item uses the ID "137".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_radiance"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"5150"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"radiance"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"65"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_radius"				"700"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_damage_per_second"	"50"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_damage_interval"		"1"
+			}
+		}
+		
+		"OnSpellStart"  //Switch to the inactive version of Radiance.
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_radiance.lua"
+				"Function"				"item_radiance_datadriven_on_spell_start"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_radiance_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				}
+			}
+			"modifier_item_radiance_datadriven_aura_emitter"
+			{
+				"Passive"				"1"
+				"IsHidden"				"0"
+				"EffectName"			"particles/items2_fx/radiance_owner.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"Aura" 					"modifier_item_radiance_datadriven_aura"
+				"Aura_Radius" 			"%aura_radius"
+				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster" 	"0"
+			}
+			"modifier_item_radiance_datadriven_aura"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"0"
+				"EffectName"			"particles/items2_fx/radiance.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"ThinkInterval" 		"%aura_damage_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_radiance.lua"
+						"Function"				"modifier_item_radiance_datadriven_aura_on_interval_think"
+						"AuraDamageInterval"	"%aura_damage_interval"
+						"AuraDamagePerSecond"	"%aura_damage_per_second"
+					}
+				}
+				
+			}
+		}
+	}
+	
+	
+	"item_radiance_inactive_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"2005"  //Valve's version of this item uses the ID "137".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_radiance_inactive"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"5150"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"radiance"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemPurchasable"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"65"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_radius"				"700"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_damage_per_second"	"50"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_damage_interval"		"1"
+			}
+		}
+		
+		"OnSpellStart"  //Switch to the active version of Radiance.
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_radiance.lua"
+				"Function"				"item_radiance_inactive_datadriven_on_spell_start"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_radiance_inactive_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				}
+			}
+		}
+	}
+	//End of file item_radiance_datadriven.txt
+
+
 	//Start of file item_reaver_datadriven.txt
 	// Rewrite of Reaver
 	// Author: Rook
@@ -4208,6 +4812,37 @@
 		}
 	}
 	//End of file item_recipe_black_king_bar_datadriven.txt
+
+
+	//Start of file item_recipe_bloodstone_datadriven.txt
+	// Rewrite of Recipe: Bloodstone
+	// Author: Rook
+	// Date: January 29, 2015
+	
+	"item_recipe_bloodstone_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1120"  //Valve's version of this item uses the ID "120".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"800"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_bloodstone_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_soul_ring_datadriven;item_soul_booster_datadriven"
+		}
+	}
+	//End of file item_recipe_bloodstone_datadriven.txt
 
 
 	//Start of file item_recipe_bracer_datadriven.txt
@@ -4493,6 +5128,37 @@
 	//End of file item_recipe_heart_datadriven.txt
 
 
+	//Start of file item_recipe_hood_of_defiance_datadriven.txt
+	// Rewrite of Recipe: Hood of Defiance
+	// Author: Rook
+	// Date: January 30, 2015
+	
+	"item_recipe_hood_of_defiance_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1130"  //Valve's version of this item uses the ID "130".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_hood_of_defiance_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_ring_of_health_datadriven;item_cloak_datadriven;item_ring_of_regen_datadriven;item_ring_of_regen_datadriven"
+		}
+	}
+	//End of file item_recipe_hood_of_defiance_datadriven.txt
+
+
 	//Start of file item_recipe_magic_wand_datadriven.txt
 	// Rewrite of Recipe: Magic Wand
 	// Author: Rook
@@ -4553,6 +5219,37 @@
 		}
 	}
 	//End of file item_recipe_mekansm_datadriven.txt
+
+
+	//Start of file item_recipe_monkey_king_bar_datadriven.txt
+	// Rewrite of Recipe: Monkey King Bar
+	// Author: Rook
+	// Date: January 30, 2015
+	
+	"item_recipe_monkey_king_bar_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1134"  //Valve's version of this item uses the ID "134".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_monkey_king_bar_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_demon_edge_datadriven;item_javelin_datadriven;item_javelin_datadriven"
+		}
+	}
+	//End of file item_recipe_monkey_king_bar_datadriven.txt
 
 
 	//Start of file item_recipe_null_talisman_datadriven.txt
@@ -4712,6 +5409,37 @@
 	//End of file item_recipe_power_treads_datadriven.txt
 
 
+	//Start of file item_recipe_radiance_datadriven.txt
+	// Rewrite of Recipe: Radiance
+	// Author: Rook
+	// Date: January 30, 2015
+	
+	"item_recipe_radiance_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1136"  //Valve's version of this item uses the ID "136".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1350"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_radiance_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_relic_datadriven"
+		}
+	}
+	//End of file item_recipe_radiance_datadriven.txt
+
+
 	//Start of file item_recipe_refresher_datadriven.txt
 	// Rewrite of Recipe: Refresher Orb
 	// Author: Rook
@@ -4778,6 +5506,68 @@
 		}
 	}
 	//End of file item_recipe_ring_of_basilius_datadriven.txt
+
+
+	//Start of file item_recipe_soul_booster_datadriven.txt
+	// Rewrite of Recipe: Soul Booster
+	// Author: Rook
+	// Date: January 30, 2015
+	
+	"item_recipe_soul_booster_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1128"  //Valve's version of this item uses the ID "128".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_soul_booster_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_vitality_booster_datadriven;item_energy_booster_datadriven;item_point_booster_datadriven"
+		}
+	}
+	//End of file item_recipe_soul_booster_datadriven.txt
+
+
+	//Start of file item_recipe_sphere_datadriven.txt
+	// Rewrite of Recipe: Linken's Sphere
+	// Author: Rook
+	// Date: January 29, 2015
+	
+	"item_recipe_sphere_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1122"  //Valve's version of this item uses the ID "122".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1325"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_sphere_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_ultimate_orb_datadriven;item_pers_datadriven"
+		}
+	}
+	//End of file item_recipe_sphere_datadriven.txt
 
 
 	//Start of file item_recipe_ultimate_scepter_datadriven.txt
@@ -5613,6 +6403,231 @@
 		}
 	}
 	//End of file item_sobi_mask_datadriven.txt
+
+
+	//Start of file item_soul_booster_datadriven.txt
+	// Rewrite of Soul Booster
+	// Author: Rook
+	// Date: January 30, 2015
+	
+	"item_soul_booster_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1129"  //Valve's version of this item uses the ID "129".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_soul_booster"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"3300"
+		"ItemShopTags"					"regen_health;regen_mana;health_pool;mana_pool"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"soul booster"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_health"						"450"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_mana"						"400"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_health_regen"				"4"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_mana_regen_percentage"		"100"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_soul_booster_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_percentage"
+				}
+			}
+		}
+	}
+	//End of file item_soul_booster_datadriven.txt
+
+
+	//Start of file item_sphere_datadriven.txt
+	// Rewrite of Linken's Sphere
+	// Author: Rook
+	// Date: January 30, 2015
+	// Note: This implementation utilizes the built-in modifier_item_sphere_target, which will block Valve-made spells as well as any
+	//     datadriven spells that specifically check if the target has that modifier (see the is_spell_blocked_by_linkens_sphere() function).
+	// Known bugs:
+	//     The blue spherical particle effect appears around the caster whenever Linken's Sphere's effect is available, as a side effect of
+	//         using the built-in modifier_item_sphere_target.
+	//     Linken's Sphere cannot be self-casted.
+	//     The spell block effect does not stack, both when a unit has multiple Linken's Spheres in their inventory and when multiple units
+	//         cast the active on the same unit.  This can be fixed if/when functions like HasModifierByNameAndCaster() or 
+	//         GetModifierCountByNameAndCaster() are made available.
+	
+	"item_sphere_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1123"  //Valve's version of this item uses the ID "123".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_sphere"
+		"FightRecapLevel"				"1"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"700"
+		"AbilityCooldown"				"17.0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"5175"
+		"ItemShopTags"					"regen_health;regen_mana;str;agi;int;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"ls;linken's sphere"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_all_stats"			"15"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_health_regen"		"6"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_mana_regen_percent"	"150"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"block_cooldown"			"17.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"10"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"items/item_sphere.lua"
+				"Function"			"item_sphere_datadriven_on_spell_start"
+				"Duration"			"%block_cooldown"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_sphere_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_percentage"
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				}
+				
+				"OnCreated"
+				{			
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_sphere.lua"
+						"Function"			"modifier_item_sphere_datadriven_on_created"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_sphere.lua"
+						"Function"			"modifier_item_sphere_datadriven_on_destroy"
+					}
+				}
+				
+				"ThinkInterval" 		".03"
+				"OnIntervalThink"
+				{
+					//Check if the caster has the correct number of Linken's modifiers on them.  If they have less than they are
+					//supposed to, we can assume that a sphere was popped due to an enemy's targeted spell, and put the player's 
+					//Linken's Spheres on cooldown.
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_sphere.lua"
+						"Function"				"modifier_item_sphere_datadriven_on_interval_think"
+					}
+				}
+			}
+			//A modifier that is applied to a unit when they receive the modifier_item_sphere_target modifier.
+			//So long as they still have that modifier, this one will remain and provide a public face on the modifier icon bar.
+			//This modifier deletes itself when modifier_item_sphere_target no longer exists on the unit.
+			"modifier_item_sphere_datadriven_icon"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				
+				"ThinkInterval" 		".03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_sphere.lua"
+						"Function"				"modifier_item_sphere_datadriven_icon_on_interval_think"
+					}
+				}
+			}
+		}
+	}
+	//End of file item_sphere_datadriven.txt
 
 
 	//Start of file item_staff_of_wizardry_datadriven.txt

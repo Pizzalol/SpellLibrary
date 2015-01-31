@@ -18690,6 +18690,9 @@
 
 
 	//Start of file jakiro_dual_breath_datadriven.txt
+	// Author: Ractidous
+	// Date: 26.01.2015.
+	// NOTE: This ability requires Jakiro Dual Breath Fiery (datadriven version) for full functionality
 	"jakiro_dual_breath_datadriven"
 	{
 		// General
@@ -18780,10 +18783,176 @@
 				"var_type"				"FIELD_INTEGER"
 				"speed_fire"			"850"
 			}
-		}		
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_dual_breath_ice.vpcf"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_dual_breath_fire.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Jakiro.DualBreath"
+				"Target"			"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"Target"			"POINT"
+				"ScriptFile"		"heroes/hero_jakiro/dual_breath.lua"
+				"Function"			"Launch_IcyBreath"
+				
+				"distance"			"%range"
+				"start_radius"		"%start_radius"
+				"end_radius"		"%end_radius"
+				"speed"				"%speed_fire"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"modifier_dual_breath_pre_launch_fiery_breath_datadriven"
+			}
+			
+			"DelayedAction"
+			{
+				"Delay"	"%fire_delay"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"			"POINT"
+						"ScriptFile"		"heroes/hero_jakiro/dual_breath.lua"
+						"Function"			"Launch_FieryBreath"
+						
+						"fiery_ability_name"	"jakiro_dual_breath_fiery_datadriven"	
+						"distance"			"%range"
+						"start_radius"		"%start_radius"
+						"end_radius"		"%end_radius"
+						"speed"				"%speed_fire"
+					}
+				}
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"		"0"
+			
+			"ApplyModifier"
+			{
+				"Target"		"TARGET"
+				"ModifierName"	"modifier_dual_breath_slow_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_dual_breath_pre_launch_fiery_breath_datadriven"
+			{
+				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Duration"		"%fire_delay"
+				
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_dual_breath_slow_datadriven"
+			{
+				"IsHidden"		"0"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+				
+				"Duration"		"%AbilityDuration"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed_pct"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed_pct"
+				}
+			}
+			
+			"modifier_dual_breath_burn_datadriven"
+			{
+				"IsHidden"		"0"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+				
+				"Duration"		"%AbilityDuration"
+				"ThinkInterval"	"0.5"
+				
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%burn_damage / 2"
+					}
+				}
+			}
+		}
 	}
 	
 	//End of file jakiro_dual_breath_datadriven.txt
+
+
+	//Start of file jakiro_dual_breath_fiery_datadriven.txt
+	// Author: Ractidous
+	// Date: 26.01.2015.
+	// NOTE: This spell is part of the Jakiro Dual Breath ability
+	"jakiro_dual_breath_fiery_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"jakiro_dual_breath"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"		"0"
+			
+			"FireSound"
+			{
+				"EffectName"		"Hero_Jakiro.DualBreath.Burn"
+				"Target"			"TARGET"
+			}
+			
+			"RunScript"
+			{
+				"Target"			"TARGET"
+				"ScriptFile"		"heroes/hero_jakiro/dual_breath.lua"
+				"Function"			"OnProjectileHit_Fiery"
+				
+				"main_ability_name"	"jakiro_dual_breath_datadriven"
+				"modifier_name"		"modifier_dual_breath_burn_datadriven"
+			}
+		}
+	}
+	//End of file jakiro_dual_breath_fiery_datadriven.txt
 
 
 	//Start of file jakiro_ice_path_datadriven.txt
@@ -18841,7 +19010,122 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"50"
 			}
-		}		
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path.vpcf"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
+		//	"particle"					"particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Jakiro.IcePath"
+				"Target"			"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_jakiro/ice_path.lua"
+				"Function"			"FireEffect_IcePath"
+				
+				"path_delay"		"%path_delay"
+				"duration"			"%duration"
+				"path_radius"		"%path_radius"
+			}
+			
+			"DelayedAction"
+			{
+				"Delay"		"0.1"
+				"Action"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Jakiro.IcePath.Cast"
+						"Target"			"CASTER"
+					}
+				}
+			}
+			
+			"DelayedAction"
+			{
+				"Delay"		"%path_delay"
+				"Action"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_jakiro/ice_path.lua"
+						"Function"			"FireEffect_Destroy_IcePath_A"
+					}
+				}
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"		"0"
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_jakiro/ice_path.lua"
+				"Function"			"ApplyDummyModifier"
+				"Target"			"TARGET"
+				
+				"modifier_name"		"modifier_ice_path_check_range_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_ice_path_check_range_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+				
+				"ThinkInterval"	"0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_jakiro/ice_path.lua"
+						"Function"			"CheckIcePath"
+						"Target"			"TARGET"
+						
+						"path_radius"		"%path_radius"
+					}
+				}
+			}
+			
+			"modifier_ice_path_stun_datadriven"
+			{
+				"IsDebuff" 		"1"
+				"OverrideAnimation"		"ACT_DOTA_DISABLED"
+	
+				"EffectName" "particles/generic_gameplay/generic_stunned.vpcf"
+	        	"EffectAttachType" "follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%damage"
+					}
+				}
+			}
+		}
 	}
 	
 	//End of file jakiro_ice_path_datadriven.txt
@@ -18859,6 +19143,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"jakiro_liquid_fire"
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -18895,7 +19180,124 @@
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_duration"			"5 5 5 5"
 			}
-		}		
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_base_attack_fire.vpcf"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_ready.vpcf"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_explosion.vpcf"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_debuff.vpcf"
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_jakiro/liquid_fire.lua"
+				"Function"		"CheckOrbModifier"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_liquid_fire_orb_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				
+				"EffectName"		"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_ready.vpcf"
+				"EffectAttachType"	"attach_attack1"
+			//	"EffectAttachType"	"attach_attack2"
+	
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"	"particles/units/heroes/hero_jakiro/jakiro_base_attack_fire.vpcf"
+					"CastAttack"		"1"
+				}
+				
+				"OnOrbFire"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Jakiro.Attack"
+						"Target"		"CASTER"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_jakiro/liquid_fire.lua"
+						"Function"		"StartCooldown"
+					}
+				}
+				
+				"OnOrbImpact"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Radius"	"%radius"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+							"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+						}
+	
+						"Action"
+						{
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_liquid_fire_debuff_datadriven"
+								"Target"		"TARGET"
+							}
+						}
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Jakiro.LiquidFire"
+						"Target"		"TARGET"
+					}
+					
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_explosion.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+					}
+				}
+			}
+	
+			"modifier_liquid_fire_debuff_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%AbilityDuration"
+	
+				"EffectName"		"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"ThinkInterval"		"0.5"
+	
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%damage / 2"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed_pct"
+				}
+			}
+		}
 	}
 	
 	//End of file jakiro_liquid_fire_datadriven.txt
@@ -18978,7 +19380,90 @@
 				"var_type"					"FIELD_INTEGER"
 				"cast_range_scepter"		"1800"
 			}
-		}	
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_macropyre.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Jakiro.Macropyre.Cast"
+				"Target"			"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_jakiro/macropyre.lua"
+				"Function"			"FireMacropyre"
+				
+				"cast_range"		"%cast_range"
+				"path_radius"		"%path_radius"
+				"duration"			"%duration"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"		"0"
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_jakiro/macropyre.lua"
+				"Function"			"ApplyDummyModifier"
+				"Target"			"TARGET"
+				
+				"modifier_name"		"modifier_macropyre_check_range_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_macropyre_check_range_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+				
+				"ThinkInterval"	"%burn_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_jakiro/macropyre.lua"
+						"Function"			"CheckMacropyre"
+						"Target"			"TARGET"
+						
+						"path_radius"		"%path_radius"
+						"damage"			"%damage / 2"
+					}
+				}
+			}
+			
+			"modifier_macropyre_destroy_tree_datadriven"
+			{
+				"OnCreated"
+				{
+					"DestroyTrees"
+					{
+						"Target"		"TARGET"
+						"Radius"		"%path_radius"
+					}
+					
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"modifier_kill"
+						"Duration"		"0.1"
+					}
+				}
+			}
+		}
 	}
 	
 	//End of file jakiro_macropyre_datadriven.txt
@@ -27678,6 +28163,97 @@
 				"fake_ensnare_distance"		"900 900 900 900"	
 			}
 		}
+	
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
+			"particle"					"particles/units/heroes/hero_siren/siren_net.vpcf"
+			"particle"					"particles/units/heroes/hero_siren/siren_net_projectile.vpcf"
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_naga_siren/ensnare.lua"
+				"Function"				"Ensnare_PlayFakeAnimation"
+				"Target"				"TARGET"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"particles/units/heroes/hero_siren/siren_net_projectile.vpcf"
+				"Dodgeable"				"1"
+				"ProvidesVision"		"1"
+				"VisionRadius"			"0"
+				"MoveSpeed"				"%net_speed"
+				"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"			"Hero_NagaSiren.Ensnare.Cast"
+				"Target"				"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_naga_siren/ensnare.lua"
+				"Function"				"Ensnare_CastFakeNets"
+				"Target"				"TARGET"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"1"
+	
+			"FireSound"
+			{
+				"EffectName"			"Hero_NagaSiren.Ensnare.Target"
+				"Target"				"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"Target"				"TARGET"
+				"ModifierName"			"modifier_ensnare_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_ensnare_datadriven"
+			{
+				"IsHidden"		"0"
+				"IsDebuff"		"1"
+				"IsPurgable"	"0"
+	
+				"Duration"		"%duration"
+	
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+				}
+	
+				"EffectName"			"particles/units/heroes/hero_siren/siren_net.vpcf"
+				"EffectAttachType"		"follow_origin"
+			}
+	
+			"modifier_ensnare_fake_datadriven"
+			{
+				"IsHidden"			"1"
+			//	"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_2"
+				"OverrideAnimation"	"ACT_DOTA_CAST_ABILITY_1"
+			}
+		}
 	}	
 	
 	//End of file naga_siren_ensnare_datadriven.txt
@@ -27690,6 +28266,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"naga_siren_mirror_image"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -27743,6 +28320,14 @@
 				"invuln_duration"			"0.3"
 			}			
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
+			"particle"					"particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf"
+		}
 	
 		"OnSpellStart"
 		{
@@ -27780,7 +28365,7 @@
 	
 					"FireSound"
 					{
-						"EffectName"	"DOTA_Item.Manta.Activate"
+						"EffectName"	"Hero_NagaSiren.MirrorImage"
 						"Target"		"CASTER"
 					}
 			    }
@@ -27848,6 +28433,69 @@
 				"duration"					"8.0 8.0 8.0 8.0"
 			}
 		}
+	
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
+			"particle"					"particles/units/heroes/hero_siren/naga_siren_riptide.vpcf"
+			"particle"					"particles/units/heroes/hero_siren/naga_siren_riptide_debuff.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_naga_siren/rip_tide.lua"
+				"Function"				"RipTide"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_rip_tide_dummy_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"OnCreated"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"	"CASTER"
+							"Radius"	"%radius"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Type"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+	
+						"Action"
+						{
+							"RunScript"
+							{
+								"ScriptFile"			"heroes/hero_naga_siren/rip_tide.lua"
+								"Function"				"RipTide_MarkAsVictim"
+							}
+						}
+					}
+				}
+			}
+	
+			"modifier_rip_tide_datadriven"
+			{
+				"IsHidden"	"0"
+				"IsDebuff"	"1"
+	
+				"Duration"	"%duration"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_reduction"
+				}
+			}
+		}
 	}	
 	
 	//End of file naga_siren_rip_tide_datadriven.txt
@@ -27862,6 +28510,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"MaxLevel"						"1"
+		"AbilityTextureName"			"naga_siren_song_of_the_siren_cancel"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -27870,6 +28519,46 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"1.0 1.0 1.0"
+	
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_naga_siren/song_of_the_siren.lua"
+				"Function"				"CancelSinging"
+			}
+	
+			"RemoveModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_song_of_the_siren_caster_datadriven"
+			}
+	
+			"RemoveModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_song_of_the_siren_aura_datadriven"
+			}
+	
+			"AttachEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_siren/naga_siren_siren_song_end.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Target"				"CASTER"
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_naga_siren/song_of_the_siren.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"naga_siren_song_of_the_siren_datadriven"
+			}
+		}
 	}
 	
 	//End of file naga_siren_song_of_the_siren_cancel_datadriven.txt
@@ -27918,6 +28607,165 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"animation_rate"				"0.55 0.55 0.55"
+			}
+			// Extra variables
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"linger_duration"			"0.5 0.5 0.5"
+			}
+		}
+	
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
+			"particle"					"particles/units/heroes/hero_siren/naga_siren_siren_song_cast.vpcf"
+			"particle"					"particles/units/heroes/hero_siren/naga_siren_siren_song_end.vpcf"
+			"particle"					"particles/units/heroes/hero_siren/naga_siren_song_aura.vpcf"
+			"particle"					"particles/units/heroes/hero_siren/naga_siren_song_debuff.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_naga_siren/song_of_the_siren.lua"
+				"Function"				"StartSinging"
+				"sub_ability_name"		"naga_siren_song_of_the_siren_cancel_datadriven"
+			}
+	
+			"AttachEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_siren/naga_siren_siren_song_cast.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Target"				"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_song_of_the_siren_caster_datadriven"
+			}
+	
+			"ApplyModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_song_of_the_siren_aura_datadriven"
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_naga_siren/song_of_the_siren.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"naga_siren_song_of_the_siren_cancel_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_song_of_the_siren_caster_datadriven"
+			{
+				"IsBuff"		"1"
+	
+				"Duration"		"%duration"
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_naga_siren/song_of_the_siren.lua"
+						"Function"			"EndSinging"
+						"sub_ability_name"	"naga_siren_song_of_the_siren_cancel_datadriven"
+					}
+				}
+	
+				"EffectName"			"particles/units/heroes/hero_siren/naga_siren_song_aura.vpcf"
+				"EffectAttachType"		"attach_mouth"
+			//	"EffectAttachType"		"follow_overhead"	// If the caster has no attach_mouth bone.
+				"EffectRadius"			"%radius"
+			}
+	
+			"modifier_song_of_the_siren_aura_datadriven"
+			{
+				"IsHidden"		"1"
+	
+				"Duration"		"%duration"
+	
+				"Aura"			"modifier_song_of_the_siren_datadriven"
+				"Aura_Radius"	"%radius"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_Flags"	"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+			}
+	
+			"modifier_song_of_the_siren_datadriven"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				"IsDebuff"		"1"
+	
+				"OnCreated"
+				{
+					"RemoveModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"modifier_song_of_the_siren_linger_datadriven"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"modifier_song_of_the_siren_linger_datadriven"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"%animation_rate"
+				}
+	
+				"OverrideAnimation"		"ACT_DOTA_DISABLED"
+	
+				"EffectName"			"particles/units/heroes/hero_siren/naga_siren_song_debuff.vpcf"
+				"EffectAttachType"		"follow_origin"
+			}
+	
+			"modifier_song_of_the_siren_linger_datadriven"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				"IsHidden"		"0"
+				"IsDebuff"		"1"
+	
+				"Duration"		"%linger_duration"
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"%animation_rate"
+				}
+	
+				"OverrideAnimation"		"ACT_DOTA_DISABLED"
+	
+				"EffectName"			"particles/units/heroes/hero_siren/naga_siren_song_debuff.vpcf"
+				"EffectAttachType"		"follow_origin"
 			}
 		}
 	}
@@ -32264,6 +33112,75 @@
 				"tick_interval"		"1.0"
 			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirits.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_launch.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn_creep.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Phoenix.FireSpirits.Cast"
+				"Target"			"CASTER"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"modifier_fire_spirit_stack_datadriven"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_phoenix/fire_spirits.lua"
+				"Function"			"CastFireSpirits"
+				
+				"hp_cost_perc"		"%hp_cost_perc"
+				"spirit_count"		"%spirit_count"
+				
+				"modifier_stack_name"	"modifier_fire_spirit_stack_datadriven"
+				"sub_ability_name"		"phoenix_launch_fire_spirit_datadriven"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_phoenix/fire_spirits.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"phoenix_launch_fire_spirit_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_fire_spirit_stack_datadriven"
+			{
+				"IsBuff"	"1"
+				"Duration"	"%spirit_duration"
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phoenix/fire_spirits.lua"
+						"Function"			"RemoveFireSpirits"
+						
+						"sub_ability_name"	"phoenix_launch_fire_spirit_datadriven"
+					}
+				}
+			}
+		}
 	}
 	
 	//End of file phoenix_fire_spirits_datadriven.txt
@@ -32338,6 +33255,174 @@
 				"var_type"					"FIELD_INTEGER"
 				"slow_movement_speed_pct"	"-25"
 			}
+			// Extra variables
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"dash_duration"			"2"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Phoenix.FireSpirits.Cast"
+				"Target"			"CASTER"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_icarus_dive_caster_datadriven"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_phoenix/icarus_dive.lua"
+				"Function"			"CastIcarusDive"
+				
+				"hp_cost"			"%hp_cost_perc"
+				"dash_length"		"%dash_length"
+				"dash_width"		"%dash_width"
+				"dash_duration"		"%dash_duration"
+				
+				"modifier_caster_name"	"modifier_icarus_dive_caster_datadriven"
+				"sub_ability_name"		"phoenix_icarus_dive_stop_datadriven"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_phoenix/icarus_dive.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"phoenix_icarus_dive_stop_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_icarus_dive_caster_datadriven"
+			{
+				"IsHidden"	"1"
+				
+				"Duration"		"%dash_duration"
+				
+				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"Aura"			"modifier_icarus_dive_check_to_burn_datadriven"
+				"Aura_Radius"	"%hit_radius"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+				
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				
+				"OnStateChanged"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phoenix/icarus_dive.lua"
+						"Function"			"CheckToInterrupt"
+						
+						"modifier_caster_name"	"modifier_icarus_dive_caster_datadriven"
+					}
+				}
+				
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_ignore_turn_rate_limit_datadriven"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phoenix/icarus_dive.lua"
+						"Function"			"EndIcarusDive"
+						
+						"sub_ability_name"	"phoenix_icarus_dive_stop_datadriven"
+					}
+					
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_ignore_turn_rate_limit_datadriven"
+					}
+					
+					"FireSound"
+					{
+						"EffectName"		"Hero_Phoenix.FireSpirits.Stop"
+						"Target"			"CASTER"
+					}
+				}
+			}
+			
+			"modifier_icarus_dive_check_to_burn_datadriven"
+			{
+				"Duration"		"0.1"
+			
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phoenix/icarus_dive.lua"
+						"Function"			"CheckToBurn"
+						"Target"			"TARGET"
+						
+						"modifier_burn_name"	"modifier_icarus_dive_burn_datadriven"
+					}
+				}
+			}
+			
+			"modifier_icarus_dive_burn_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%burn_duration"
+				
+				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"ThinkInterval"		"%burn_tick_interval"
+	
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%damage_per_second * %burn_tick_interval"
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed_pct"
+				}
+			}
+			
+			"modifier_ignore_turn_rate_limit_datadriven"
+			{
+				"IsHidden"	"1"
+			}
 		}
 	}
 	
@@ -32351,10 +33436,32 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName"			"phoenix_icarus_dive_stop"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RemoveModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_icarus_dive_caster_datadriven"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_phoenix/icarus_dive.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"phoenix_icarus_dive_datadriven"
+			}
+		}
 	}
 	
 	//End of file phoenix_icarus_dive_stop_datadriven.txt
@@ -32371,6 +33478,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"phoenix_launch_fire_spirit"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -32433,6 +33541,113 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"tick_interval"		"1.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Phoenix.FireSpirits.Launch"
+				"Target"			"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_phoenix/fire_spirits.lua"
+				"Function"			"LaunchFireSpirit"
+				
+				"modifier_stack_name"	"modifier_fire_spirit_stack_datadriven"
+				"main_ability_name"		"phoenix_fire_spirits_datadriven"
+			}
+			
+			"LinearProjectile"
+			{
+				"Target"			"POINT"
+				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_launch.vpcf"
+				"MoveSpeed"			"%spirit_speed"
+				"StartPosition"		"attach_attack1"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"		"0"
+		}
+		
+		"OnProjectileFinish"
+		{
+			"FireEffect"
+			{
+				"TargetPoint"		"POINT"
+				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+				"EffectAttachType"	"world_origin"
+				
+				"ControlPoints"
+				{
+					"01" "%radius 0 0"
+				}
+			}
+			
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+					"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				}
+				
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"modifier_fire_spirit_damage_datadriven"
+					}
+				}
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_phoenix/fire_spirits.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"phoenix_fire_spirits_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_fire_spirit_damage_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+	
+				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"ThinkInterval"		"%tick_interval"
+	
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%dps * %tick_interval"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attackspeed_slow"
+				}
 			}
 		}
 	}
@@ -32526,6 +33741,237 @@
 				"var_type"			"FIELD_INTEGER"
 				"tooltip_duration"	"6"
 			}
+			// Extra variables
+			"12"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"num_thinkers"		"9"
+			}
+			"13"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"thinker_step"		"150"
+			}
+			"14"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"thinker_radius"	"192"
+			}
+			"15"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"initial_turn_max_duration"	"0.75"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray_beam_friend.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray_beam_enemy.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray_debuff.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Phoenix.SunRay.Cast"
+				"Target"			"CASTER"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"		"Hero_Phoenix.SunRay.Loop"
+				"Target"			"CASTER"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_sun_ray_caster_datadriven"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_phoenix/sun_ray.lua"
+				"Function"			"CastSunRay"
+				
+				"hp_cost_perc_per_second"	"%hp_cost_perc_per_second"
+				
+				"path_length"				"%beam_range"
+				"num_thinkers"				"%num_thinkers"
+				"thinker_step"				"%thinker_step"
+				"thinker_radius"			"%thinker_radius"
+				
+				"turn_rate_initial"			"%turn_rate_initial"
+				"turn_rate"					"%turn_rate"
+				"initial_turn_max_duration"	"%initial_turn_max_duration"
+				"forward_move_speed"		"%forward_move_speed"
+				
+				"modifier_caster_name"					"modifier_sun_ray_caster_datadriven"
+				"modifier_thinker_name"					"modifier_sun_ray_thinker_datadriven"
+				"modifier_ignore_turn_rate_limit_name"	"modifier_ignore_turn_rate_limit_datadriven"
+				
+				"sub_ability_name"					"phoenix_sun_ray_stop_datadriven"
+				"toggle_move_empty_ability_name"	"phoenix_sun_ray_toggle_move_empty_datadriven"
+				"toggle_move_ability_name"			"phoenix_sun_ray_toggle_move_datadriven"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_phoenix/sun_ray.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"phoenix_sun_ray_stop_datadriven"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_phoenix/sun_ray.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"phoenix_sun_ray_toggle_move_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_sun_ray_caster_datadriven"
+			{
+				"IsPurgable"	"true"
+			
+				"Duration"	"%AbilityDuration"
+				
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				
+				"OnStateChanged"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phoenix/sun_ray.lua"
+						"Function"			"CheckToInterrupt"
+						
+						"modifier_caster_name"	"modifier_sun_ray_caster_datadriven"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phoenix/sun_ray.lua"
+						"Function"			"StopSound"
+						"sound_name"		"Hero_Phoenix.SunRay.Loop"
+					}
+				
+					"FireSound"
+					{
+						"EffectName"		"Hero_Phoenix.SunRay.Stop"
+						"Target"			"CASTER"
+					}
+					
+					"RemoveModifier"
+					{
+						"Target"			"CASTER"
+						"ModifierName"		"modifier_sun_ray_caster_move_datadriven"
+					}
+				
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phoenix/sun_ray.lua"
+						"Function"			"EndSunRay"
+						
+						"sub_ability_name"			"phoenix_sun_ray_stop_datadriven"
+						"toggle_move_empty_ability_name"	"phoenix_sun_ray_toggle_move_empty_datadriven"
+						"toggle_move_ability_name"			"phoenix_sun_ray_toggle_move_datadriven"
+					}
+				}
+				
+				"ThinkInterval"		"%tick_interval"
+	
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phoenix/sun_ray.lua"
+						"Function"			"SpendHPCost"
+						
+						"tick_interval"				"%tick_interval"
+						"hp_cost_perc_per_second"	"%hp_cost_perc_per_second"
+					}
+				}
+			}
+			
+			"modifier_sun_ray_caster_move_datadriven"
+			{
+				"IsHidden"	"1"
+			}
+			
+			"modifier_sun_ray_thinker_datadriven"
+			{
+				"Duration"	"%AbilityDuration"
+				
+				"Aura"			"modifier_sun_ray_check_datadriven"
+				"Aura_Radius"	"%thinker_radius"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_BOTH"
+				"Aura_Types"	"DOTA_UNIT_TARGET_HERO"
+				
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"modifier_phased"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_PROVIDES_VISION"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_sun_ray_check_datadriven"
+			{
+				"IsHidden"	"1"
+				
+				"ThinkInterval"		"%tick_interval"
+	
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phoenix/sun_ray.lua"
+						"Function"			"CheckForCollision"
+						
+						"path_length"		"%beam_range"
+						"path_radius"		"%radius"
+						
+						"tick_interval"		"%tick_interval"
+						"base_dmg"			"%base_dmg"
+						"hp_perc_dmg"		"%hp_perc_dmg"
+						"ally_heal"			"%ally_heal"
+						
+						"particle_burn_name"	"particles/units/heroes/hero_phoenix/phoenix_sunray_beam_enemy.vpcf"
+						"particle_heal_name"	"particles/units/heroes/hero_phoenix/phoenix_sunray_beam_friend.vpcf"
+					}
+				}
+			}
 		}
 	}
 	
@@ -32539,10 +33985,36 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"phoenix_sun_ray_stop"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		
+		"OnSpellStart"
+		{
+			"RemoveModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_sun_ray_caster_datadriven"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_phoenix/sun_ray.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"phoenix_sun_ray_datadriven"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_phoenix/sun_ray.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"phoenix_sun_ray_toggle_move_datadriven"
+			}
+		}
 	}
 	
 	//End of file phoenix_sun_ray_stop_datadriven.txt
@@ -32555,10 +34027,37 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"phoenix_sun_ray_toggle_move"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_phoenix/sun_ray.lua"
+				"Function"		"ToggleMove"
+				"modifier_name"	"modifier_sun_ray_caster_move_datadriven"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_phoenix/sun_ray.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"phoenix_sun_ray_datadriven"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_phoenix/sun_ray.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"phoenix_sun_ray_stop_datadriven"
+			}
+		}
 	}
 	
 	//End of file phoenix_sun_ray_toggle_move_datadriven.txt
@@ -32572,6 +34071,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"0"
+		"AbilityTextureName"			"phoenix_sun_ray_toggle_move_empty"
 	}
 	
 	//End of file phoenix_sun_ray_toggle_move_empty_datadriven.txt
@@ -32641,6 +34141,245 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"cast_range_tooltip_scepter"	"500"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_death.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_hit.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance_creep.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_reborn.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_start.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Phoenix.SuperNova.Cast"
+				"Target"			"CASTER"
+			}
+			
+			"AttachEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_supernova_start.vpcf"
+				"EffectAttachType"	"PATTACH_ABSORIGIN"
+				"Target"			"CASTER"
+			}
+			
+			"SpawnUnit"
+			{
+				"UnitName"		"npc_dota_phoenix_sun"
+				"UnitCount"		"1"
+				"SpawnRadius"	"0"
+				"Target"		"CASTER"
+	
+			//	"Duration"		"%AbilityDuration"
+				
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"modifier_supernova_sun_form_egg_datadriven"
+					}
+					
+					"FireSound"
+					{
+						"EffectName"		"Hero_Phoenix.SuperNova.Begin"
+						"Target"			"TARGET"
+					}
+				}
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_supernova_sun_form_caster_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_supernova_sun_form_caster_datadriven"
+			{
+				"IsBuff"	"1"
+				
+				"Duration"	"%AbilityDuration"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phoenix/supernova.lua"
+						"Function"			"HideCaster"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phoenix/supernova.lua"
+						"Function"			"ShowCaster"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_supernova_sun_form_egg_datadriven"
+			{
+				"IsBuff"	"1"
+				
+				"Duration"	"%AbilityDuration"
+				
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DISABLE_HEALING"				"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"	"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"	"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"		"1"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"0"
+				}
+				
+				"OverrideAnimation"		"ACT_DOTA_IDLE"	// egg_cast_supernova
+				
+				"Aura"			"modifier_supernova_burn_datadriven"
+				"Aura_Radius"	"%aura_radius"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf"
+						"EffectAttachType"	"PATTACH_ABSORIGIN_FOLLOW"
+						"Target"			"TARGET"
+						
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_hitloc"
+						}
+					}
+				}
+				
+				"OnAttacked"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_supernova_hit.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_hitloc"
+							"TARGET"	"attach_hitloc"
+						}
+					}
+				
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phoenix/supernova.lua"
+						"Function"			"OnAttackedEgg"
+						"Target"			"TARGET"
+						"max_hero_attacks"	"%max_hero_attacks"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phoenix/supernova.lua"
+						"Function"			"OnDestroyEgg"
+						"Target"			"TARGET"
+					}
+				}
+			}
+			
+			"modifier_supernova_egg_explode_datadriven"
+			{
+				"IsHidden"	"1"
+				
+				"OnCreated"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Radius"	"%aura_radius"
+							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+						
+						"Action"
+						{
+							"Stun"
+							{
+								"Duration"	"%stun_duration"
+								"Target"	"TARGET"
+							}
+						}
+					}
+				}
+			}
+			
+			"modifier_supernova_burn_datadriven"
+			{
+				"IsDebuff"	"1"
+				
+				"ThinkInterval"		"1.0"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_hitloc"
+							"CASTER"	"follow_origin"
+						}
+					}
+				}
+	
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%damage_per_sec"
+					}
+				}
 			}
 		}
 	}
@@ -48043,6 +49782,9 @@
 
 
 	//Start of file vengefulspirit_wave_of_terror_datadriven.txt
+	// Rewrite of the Vengeful Spirit Wave of Terror ability
+	// Author: Pizzalol
+	// Date: 31.01.2015.
 	"vengefulspirit_wave_of_terror_datadriven"
 	{
 		// General
@@ -48051,6 +49793,16 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"vengefulspirit_wave_of_terror"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
+			"particle"			"particles/units/heroes/hero_vengeful/vengeful_wave_of_terror_recipient.vpcf"
+			"particle"  		"particles/units/heroes/hero_vengeful/vengeful_wave_of_terror.vpcf"		
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -48104,7 +49856,81 @@
 				"var_type"			"FIELD_FLOAT"
 				"vision_duration"	"3.0 3.0 3.0 3.0"
 			}
-			
+			// Extra
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"wave_range"		"1400"
+			}		
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_VengefulSpirit.WaveOfTerror"
+				"Target" 		"CASTER"
+			}
+	
+			"LinearProjectile"
+			{
+			    "Target"      	 "POINT"
+				"EffectName"	 "particles/units/heroes/hero_vengeful/vengeful_wave_of_terror.vpcf"
+				"MoveSpeed"		 "%wave_speed"
+				"StartRadius"	 "%wave_width"
+				"StartPosition"  "attach_attack1"
+				"EndRadius"      "%wave_width"
+				"HasFrontalCone" "0"
+				"FixedDistance"  "%wave_range"
+				"TargetTeams"	 "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes"	 "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				"TargetFlags"	 "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"						
+			    "ProvidesVision" "1"
+			    "VisionRadius" 	 "%vision_aoe"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_vengefulspirit/wave_of_terror.lua"
+				"Function"		"WaveOfTerrorVision"
+				"Target"		"POINT"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_wave_of_terror_datadriven"
+				"Target" 		"TARGET"
+				"Duration"		"%tooltip_duration"
+			}
+	
+			"Damage"
+			{
+				"Target"		"TARGET"
+				"Type"			"DAMAGE_TYPE_PURE"
+				"Damage"		"%AbilityDamage"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_wave_of_terror_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+		
+				"EffectName"		"particles/units/heroes/hero_vengeful/vengeful_wave_of_terror_recipient.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_reduction"
+				}
+			}
 		}
 	}
 	
