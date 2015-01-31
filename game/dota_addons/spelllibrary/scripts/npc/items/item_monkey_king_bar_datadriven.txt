@@ -66,6 +66,11 @@
 				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
 			}
 			
+			"States"
+			{
+				"MODIFIER_STATE_CANNOT_MISS"			"MODIFIER_STATE_VALUE_ENABLED"  //When attacking uphill, cannot miss units but can still miss buildings.
+			}
+			
 			"OnAttackLanded"
 			{
 				"Random"
