@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"vengefulspirit_magic_missile_datadriven"
+	"Ability1"	"dazzle_shallow_grave_datadriven"
 	"Ability2"	"vengefulspirit_wave_of_terror_datadriven"
 	"Ability3"	"vengefulspirit_command_aura_datadriven"
-	"Ability4"	"vengefulspirit_nether_swap_datadriven"
+	"Ability4"	"phantom_assassin_coup_de_grace_datadriven"
 }

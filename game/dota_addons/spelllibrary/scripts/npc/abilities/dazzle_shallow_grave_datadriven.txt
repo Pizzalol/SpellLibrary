@@ -1,3 +1,6 @@
+// Rewrite of the Dazzle Shallow Grave ability
+// Author: Pizzalol
+// Date: 01.02.2015.
 "dazzle_shallow_grave_datadriven"
 {
 	// General
@@ -9,6 +12,14 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"dazzle_shallow_grave"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+		"particle"			"particles/units/heroes/hero_dazzle/dazzle_shallow_grave.vpcf"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -38,6 +49,48 @@
 		{	
 			"var_type"			"FIELD_INTEGER"
 			"range_tooltip"		"550 700 850 1000"
+		}
+		// Extra
+		"03"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"min_health"		"1"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Dazzle.Shallow_Grave"
+			"Target" 		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shallow_grave_datadriven"
+			"Target" 		"TARGET"
+			"Duration"		"%duration_tooltip"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_shallow_grave_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"IsBuff"			"1"
+
+			"EffectName"		"particles/units/heroes/hero_dazzle/dazzle_shallow_grave.vpcf"
+			"EffectAttachType"	"follow_origin"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MIN_HEALTH" "%min_health" 
+			}
 		}
 	}
 }

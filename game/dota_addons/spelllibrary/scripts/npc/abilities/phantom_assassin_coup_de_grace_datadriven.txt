@@ -1,7 +1,9 @@
 // Rewrite of the Phantom Assassin Coup de Grace ability
 // Author: Pizzalol
 // Date: 21.12.2014.
-// NOTE: Attachment point is wrong?
+// Changed: 01.02.2015.
+// Reason: Fixed attachment point for particle
+// NOTE: Orientation is wrong
 "phantom_assassin_coup_de_grace_datadriven"
 {
 	// General
@@ -90,8 +92,13 @@
 				"FireEffect"
 				{
 					"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
-					"EffectAttachType"	"attach_origin"
-					"Target"		"TARGET"
+					"EffectAttachType"	"start_at_customorigin"
+					
+					"ControlPointEntities"
+					{
+						"TARGET"	"follow_origin"
+						"TARGET"	"follow_origin"
+					}
 				}
 
 				"FireSound"
