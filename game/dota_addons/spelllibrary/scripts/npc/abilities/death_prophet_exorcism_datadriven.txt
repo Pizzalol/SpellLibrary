@@ -1,3 +1,8 @@
+// Rewrite of Death Prophet Exorcism
+// Author: Noya
+// Date: 01.02.2015.
+// Note: The Targeting & Movement AI is "smarter" than the original ability, so the overall DPS is way higher when all spirits focus the same target
+// To go around this, there is a min_time_between_attacks value which if it isn't reached after returning to the hero, the spirit will idle
 "death_prophet_exorcism_datadriven"
 {
 	// General
@@ -5,6 +10,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"FightRecapLevel"				"2"
@@ -71,6 +77,162 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"average_damage"		"55 55 55"
+		}
+		// Extra
+		"10"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"30"	//Always have a duration AbilitySpecial, don't believe Valves lies.
+		}
+		"11"	
+		{
+			"var_type"					"FIELD_FLOAT"
+			"delay_between_spirits"		"0.1"
+		}
+		"12"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"min_time_between_attacks"	"3.0"
+		}
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_death_prophet/death_prophet_spirit_model.vpcf"
+		"particle"  "particles/units/heroes/hero_death_prophet/death_prophet_exorcism_attack.vpcf"
+		"particle"  "particles/units/heroes/hero_death_prophet/death_prophet_exorcism_attack_building.vpcf"
+		"particle"  "particles/units/heroes/hero_death_prophet/death_prophet_spirit_glow.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_death_prophet/exorcism.lua"
+			"Function"		"ExorcismDeath"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_exorcism"
+			"Target" 		"CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_exorcism"
+			"Target" 		"CASTER"
+			"Duration"		"%AbilityDuration"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_DeathProphet.Exorcism.Cast"
+			"Target" 		"CASTER"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_exorcism"
+		{	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_death_prophet/exorcism.lua"
+					"Function"		"ExorcismStart"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_DeathProphet.Exorcism"
+					"Target" 		"CASTER"
+				}
+			}
+
+			"OnAttackStart"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_death_prophet/exorcism.lua"
+					"Function"		"ExorcismAttack"
+				}
+			}
+
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_death_prophet/exorcism.lua"
+					"Function"		"ExorcismDeath"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_DeathProphet.Death"
+					"Target" 		"CASTER"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_death_prophet/exorcism.lua"
+					"Function"		"ExorcismEnd"
+				}
+			}
+		}
+
+		"modifier_exorcism_spirit"
+		{	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_death_prophet/exorcism.lua"
+					"Function"		"ExorcismPhysics"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_spirit_glow.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_origin"
+						"CASTER"	"attach_origin"
+					}
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_spirit_model.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_origin"
+						"TARGET"	"attach_origin"
+						"TARGET"	"attach_origin"
+						"TARGET"	"attach_origin"
+					}
+				}
+			}
+	
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }	
