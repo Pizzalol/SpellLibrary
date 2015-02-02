@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Butterfly
+// Author: Rook
+// Date: January 31, 2015
+
+"item_recipe_butterfly_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1138"  //Valve's version of this item uses the ID "138".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_butterfly_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_talisman_of_evasion_datadriven;item_quarterstaff_datadriven;item_eagle_datadriven"
+	}
+}

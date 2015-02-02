@@ -1,0 +1,42 @@
+--[[ ============================================================================================================
+	Author: Rook
+	Date: February 1, 2015
+	Called when Butterfly is cast.  Removes the evasion from all Butterflies in the player's inventory and replaces
+	it with a single instance of bonus movespeed.
+================================================================================================================= ]]
+function item_butterfly_datadriven_on_spell_start(keys)
+	--Remove all evasion granted by Butterflies in the caster's inventory.
+	while keys.caster:HasModifier("modifier_item_butterfly_datadriven_evasion") do
+		keys.caster:RemoveModifierByName("modifier_item_butterfly_datadriven_evasion")
+	end
+
+	keys.caster:EmitSound("DOTA_Item.Butterfly")
+	keys.ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_item_butterfly_datadriven_movespeed", nil)
+end
+
+
+--[[ ============================================================================================================
+	Author: Rook
+	Date: February 1, 2015
+	Called when the movespeed modifier expires, or when a Butterfly is acquired	or dropped.  Ensures that the caster
+	has one stack of evasion for every Butterfly in their inventory (so long as they have not been recently casted).
+================================================================================================================= ]]
+function item_butterfly_datadriven_recalculate_evasion(keys)
+	if not keys.caster:HasModifier("modifier_item_butterfly_datadriven_movespeed") then
+		Timers:CreateTimer({callback = function()
+			--Reset all evasion granted by Butterflies in the caster's inventory before adding it back, just to be sure we end up with the right amount.
+			while keys.caster:HasModifier("modifier_item_butterfly_datadriven_evasion") do
+				keys.caster:RemoveModifierByName("modifier_item_butterfly_datadriven_evasion")
+			end
+
+			for i=0, 5, 1 do
+				local current_item = keys.caster:GetItemInSlot(i)
+				if current_item ~= nil then
+					if current_item:GetName() == "item_butterfly_datadriven" then
+						keys.ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_item_butterfly_datadriven_evasion", {duration = -1})
+					end
+				end
+			end
+		end })
+	end
+end
