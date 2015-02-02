@@ -1,6 +1,6 @@
 --[[
 	Author: Noya, physics by BMD
-	Date: 01.01.2015.
+	Date: 02.02.2015.
 	Spawns spirits for exorcism and applies the modifier that takes care of its logic
 ]]
 function ExorcismStart( event )
@@ -12,6 +12,18 @@ function ExorcismStart( event )
 	local spirits = ability:GetLevelSpecialValueFor( "spirits", ability:GetLevel() - 1 )
 	local delay_between_spirits = ability:GetLevelSpecialValueFor( "delay_between_spirits", ability:GetLevel() - 1 )
 	local unit_name = "npc_dummy_blank"
+
+	-- Witchcraft level
+	local witchcraft_ability = caster:FindAbilityByName("death_prophet_witchcraft_datadriven")
+	if not witchcraft_ability then
+		caster:FindAbilityByName("death_prophet_witchcraft")
+	end
+
+	-- If witchcraft ability found, get the number of extra spirits and increase
+	if witchcraft_ability then
+		local extra_spirits = witchcraft_ability:GetLevelSpecialValueFor( "exorcism_1_extra_spirits", witchcraft_ability:GetLevel() - 1 )
+		spirits = spirits + extra_spirits
+	end
 
 	-- Initialize the table to keep track of all spirits
 	caster.spirits = {}
@@ -89,7 +101,7 @@ function ExorcismPhysics( event )
 	unit.last_attack_time = GameRules:GetGameTime() - min_time_between_attacks
 
 	-- Color Debugging for points and paths. Turn it false later!
-	local Debug = true
+	local Debug = false
 	local pathColor = Vector(255,255,255) -- White to draw path
 	local targetColor = Vector(255,0,0) -- Red for enemy targets
 	local idleColor = Vector(0,255,0) -- Green for moving to idling points
@@ -167,7 +179,7 @@ function ExorcismPhysics( event )
 
 			-- This is to prevent attacking the same target very fast
 			local time_between_last_attack = GameRules:GetGameTime() - unit.last_attack_time
-			print("Time Between Last Attack: "..time_between_last_attack)
+			--print("Time Between Last Attack: "..time_between_last_attack)
 
 			-- If enough time has passed since the last attack, attempt to acquire an enemy
 			if time_between_last_attack >= min_time_between_attacks then
@@ -176,12 +188,12 @@ function ExorcismPhysics( event )
 											  abilityTargetType, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 				-- Check the possible enemies
-				-- Focus the last attacked target if there's any, focus_priority chance
+				-- Focus the last attacked target if there's any
 				local last_targeted = caster.last_targeted
 				local target_enemy = nil
 				for _,enemy in pairs(enemies) do
 
-					-- If the caster has a last_targeted and this is in range of the ghost acquisition, give some priority to attack it
+					-- If the caster has a last_targeted and this is in range of the ghost acquisition, set to attack it
 					if last_targeted and enemy == last_targeted then
 						target_enemy = enemy
 					end
