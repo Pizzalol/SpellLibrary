@@ -1,0 +1,180 @@
+// Rewrite of Abyssal Blade
+// Author: Rook
+// Date: February 1, 2015
+
+"item_abyssal_blade_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1208"  //Valve's version of this item uses the ID "208".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_abyssal_blade"
+	
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"60"
+	"AbilityCastRange"				"140"
+	"AbilityCastPoint"				"0.0"
+	"AbilityManaCost"				"150"
+
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"6750"
+	"ItemShopTags"					"damage;str;hard_to_tag"
+	"ItemQuality"					"epic"
+	"ItemAliases"					"abyssal blade"
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"100"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_strength"		"10"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bash_chance_melee"		"25"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bash_chance_ranged"	"10"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"bash_duration"			"1.4"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"bash_cooldown"			"2.0"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"stun_duration"			"2"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"items/item_abyssal_blade.lua"
+			"Function"				"item_abyssal_blade_datadriven_on_spell_start"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_abyssal_blade_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+			}
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_abyssal_blade.lua"
+					"Function"				"modifier_item_abyssal_blade_datadriven_recalculate_bash_chance"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_abyssal_blade.lua"
+					"Function"				"modifier_item_abyssal_blade_datadriven_recalculate_bash_chance"
+				}
+			}
+		}
+		//Bash chance does not stack, so attach it to a non-MULTIPLE modifier.
+		"modifier_item_abyssal_blade_datadriven_bash_chance"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_abyssal_blade.lua"
+					"Function"				"modifier_item_abyssal_blade_datadriven_bash_chance_on_attack_landed"
+					"BashChanceMelee"		"%bash_chance_melee"
+					"BashChanceRanged"		"%bash_chance_ranged"
+				}
+			}
+		}
+		"modifier_item_abyssal_blade_datadriven_bash"
+		{
+			"Duration"              "%bash_duration"
+			"Passive"				"0"
+			"IsHidden"				"0"
+			"IsBuff"				"0"
+			"IsDebuff"				"1"
+			"IsPurgable"			"1"
+			"TextureName"			"item_basher"
+			
+			"EffectName"            "particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"      "follow_overhead"
+			"OverrideAnimation"     "ACT_DOTA_DISABLED"
+			
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED" 		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		"modifier_item_abyssal_blade_datadriven_active"
+		{
+			"Duration"              "%stun_duration"
+			"Passive"				"0"
+			"IsHidden"				"0"
+			"IsBuff"				"0"
+			"IsDebuff"				"1"
+			"IsPurgable"			"1"
+			
+			"EffectName"            "particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"      "follow_overhead"
+			"OverrideAnimation"     "ACT_DOTA_DISABLED"
+			
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED" 		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		//A sort of dummy modifier that is placed on the caster when they bash a target.  While a unit has this modifier on them, 
+		//they cannot bash, so this modifier acts as an internal bash cooldown for Skull Basher and Abyssal Blade.
+		"bash_cooldown_modifier"
+		{
+			"Duration"              "%bash_cooldown"
+			"Passive"				"0"
+			"IsHidden"				"1"
+		}
+	}
+}

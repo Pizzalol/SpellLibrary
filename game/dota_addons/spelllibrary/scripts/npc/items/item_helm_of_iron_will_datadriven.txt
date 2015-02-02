@@ -39,7 +39,7 @@
 	
 	"Modifiers"
 	{
-		"modifier_item_helm_of_iron_will_datdriven"
+		"modifier_item_helm_of_iron_will_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"

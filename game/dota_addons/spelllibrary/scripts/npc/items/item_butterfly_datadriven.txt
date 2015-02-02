@@ -92,7 +92,7 @@
 				"RunScript"
 				{
 					"ScriptFile"		"items/item_butterfly.lua"
-					"Function"			"item_butterfly_datadriven_recalculate_evasion"
+					"Function"			"modifier_item_butterfly_datadriven_on_created"
 				}
 			}
 			
@@ -101,7 +101,7 @@
 				"RunScript"
 				{
 					"ScriptFile"		"items/item_butterfly.lua"
-					"Function"			"item_butterfly_datadriven_recalculate_evasion"
+					"Function"			"modifier_item_butterfly_datadriven_on_destroy"
 				}
 			}
 		}
@@ -134,7 +134,7 @@
 				"RunScript"
 				{
 					"ScriptFile"		"items/item_butterfly.lua"
-					"Function"			"item_butterfly_datadriven_recalculate_evasion"
+					"Function"			"modifier_item_butterfly_datadriven_movespeed_on_destroy"
 				}
 			}
 		}

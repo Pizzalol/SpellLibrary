@@ -75,7 +75,8 @@
 			{
 				"Random"
 				{
-					"Chance"		"%bash_chance"
+					"Chance"			"%bash_chance"
+					"PseudoRandom"		"DOTA_PSEUDO_RANDOM_ITEM_MKB"
 					"OnSuccess"
 					{
 						"Damage"

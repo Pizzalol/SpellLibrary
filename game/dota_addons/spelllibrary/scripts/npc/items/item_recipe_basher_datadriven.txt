@@ -1,0 +1,28 @@
+// Rewrite of Recipe: Skull Basher
+// Author: Rook
+// Date: February 1, 2015
+
+"item_recipe_basher_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1142"  //Valve's version of this item uses the ID "142".
+	"InvalidHeroes"					"npc_dota_hero_spirit_breaker;npc_dota_hero_faceless_void;npc_dota_hero_slardar;npc_dota_hero_troll_warlord"
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1000"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_basher_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_belt_of_strength_datadriven;item_javelin_datadriven"
+	}
+}
