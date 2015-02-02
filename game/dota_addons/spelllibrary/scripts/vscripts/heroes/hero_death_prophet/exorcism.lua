@@ -22,7 +22,9 @@ function ExorcismStart( event )
 	-- If witchcraft ability found, get the number of extra spirits and increase
 	if witchcraft_ability then
 		local extra_spirits = witchcraft_ability:GetLevelSpecialValueFor( "exorcism_1_extra_spirits", witchcraft_ability:GetLevel() - 1 )
-		spirits = spirits + extra_spirits
+		if extra_spirits then
+			spirits = spirits + extra_spirits
+		end
 	end
 
 	-- Initialize the table to keep track of all spirits
