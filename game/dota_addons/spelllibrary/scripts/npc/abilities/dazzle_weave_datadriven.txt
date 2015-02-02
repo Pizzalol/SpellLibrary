@@ -1,3 +1,6 @@
+// Rewrite of the Dazzle Weave ability
+// Author: Pizzalol
+// Date: 02.02.2015.
 "dazzle_weave_datadriven"
 {
 	// General
@@ -8,6 +11,17 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"dazzle_weave"
+	"AOERadius"						"%radius"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+		"particle"			"particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
+		"particle"			"particles/units/heroes/hero_dazzle/dazzle_armor_friend.vpcf"
+		"particle"			"particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -60,6 +74,202 @@
 		{	
 			"var_type"					"FIELD_FLOAT"
 			"armor_per_second_scepter"	"1.25 1.5 1.75"
+		}
+		// Extra
+		"08"
+		{	
+			"var_type"					"FIELD_FLOAT"
+			"negative_armor_per_second"			"-0.75 -1 -1.25"
+		}
+		"09"
+		{	
+			"var_type"					"FIELD_FLOAT"
+			"tick_interval"				"1.0"
+		}
+		"10"
+		{	
+			"var_type"					"FIELD_FLOAT"
+			"vision_duration"				"8.0"
+		}
+
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Dazzle.Weave"
+			"Target" 		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
+			"EffectAttachType"  "start_at_customorigin"
+			"TargetPoint"            "POINT"
+
+			"ControlPoints"
+			{
+				"01"	"%radius 0 0"
+			}
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"  	"POINT"
+				"Radius" 	"%radius"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+				"Types" 	"DOTA_UNIT_TARGET_HERO"
+			}
+		
+			"Action"    
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_weave_friendly_datadriven"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					}
+					"Duration"		"%duration"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_weave_enemy_datadriven"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					}
+					"Duration"		"%duration"
+				}
+			}
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+			"Function"		"WeaveVision"
+			"Target"		"POINT"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_weave_friendly_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+					"Function"		"WeavePositiveParticle"
+					"particle_name"		"particles/units/heroes/hero_dazzle/dazzle_armor_friend.vpcf"
+				}
+			}
+
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+			"ThinkInterval"  "%tick_interval"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_weave_positive_datadriven"
+					"Target" 		"TARGET"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+					"Function"		"WeaveRemovePositive"
+					"modifier"		"modifier_weave_positive_datadriven"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+					"Function"		"EndWeavePositiveParticle"
+				}
+			}
+		}
+
+		"modifier_weave_enemy_datadriven"
+		{
+			"IsDebuff"			"1"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
+					"EffectAttachType"  "follow_overhead"
+					"Target"            "TARGET"
+
+					"ControlPointEntities"
+					{
+						"TARGET"	"follow_overhead"
+						"TARGET"	"follow_origin"
+					}
+				}
+			}
+
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+			"ThinkInterval"  "%tick_interval"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_weave_negative_datadriven"
+					"Target" 		"TARGET"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+					"Function"		"WeaveRemoveNegative"
+					"modifier"		"modifier_weave_negative_datadriven"
+				}
+			}
+		}
+
+		"modifier_weave_positive_datadriven"
+		{
+			"IsHidden"		"1"
+
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_per_second" 
+			}
+		}
+
+		"modifier_weave_negative_datadriven"
+		{
+			"IsHidden"		"1"
+
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%negative_armor_per_second" 
+			}
 		}
 	}
 }

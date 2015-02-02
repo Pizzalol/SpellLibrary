@@ -9640,6 +9640,9 @@
 
 
 	//Start of file dazzle_weave_datadriven.txt
+	// Rewrite of the Dazzle Weave ability
+	// Author: Pizzalol
+	// Date: 02.02.2015.
 	"dazzle_weave_datadriven"
 	{
 		// General
@@ -9650,6 +9653,17 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"dazzle_weave"
+		"AOERadius"						"%radius"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+			"particle"			"particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
+			"particle"			"particles/units/heroes/hero_dazzle/dazzle_armor_friend.vpcf"
+			"particle"			"particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -9702,6 +9716,202 @@
 			{	
 				"var_type"					"FIELD_FLOAT"
 				"armor_per_second_scepter"	"1.25 1.5 1.75"
+			}
+			// Extra
+			"08"
+			{	
+				"var_type"					"FIELD_FLOAT"
+				"negative_armor_per_second"			"-0.75 -1 -1.25"
+			}
+			"09"
+			{	
+				"var_type"					"FIELD_FLOAT"
+				"tick_interval"				"1.0"
+			}
+			"10"
+			{	
+				"var_type"					"FIELD_FLOAT"
+				"vision_duration"				"8.0"
+			}
+	
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Dazzle.Weave"
+				"Target" 		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				"TargetPoint"            "POINT"
+	
+				"ControlPoints"
+				{
+					"01"	"%radius 0 0"
+				}
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  	"POINT"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+					"Types" 	"DOTA_UNIT_TARGET_HERO"
+				}
+			
+				"Action"    
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_weave_friendly_datadriven"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+						}
+						"Duration"		"%duration"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_weave_enemy_datadriven"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						}
+						"Duration"		"%duration"
+					}
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+				"Function"		"WeaveVision"
+				"Target"		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_weave_friendly_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"1"
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+						"Function"		"WeavePositiveParticle"
+						"particle_name"		"particles/units/heroes/hero_dazzle/dazzle_armor_friend.vpcf"
+					}
+				}
+	
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+				"ThinkInterval"  "%tick_interval"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_weave_positive_datadriven"
+						"Target" 		"TARGET"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+						"Function"		"WeaveRemovePositive"
+						"modifier"		"modifier_weave_positive_datadriven"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+						"Function"		"EndWeavePositiveParticle"
+					}
+				}
+			}
+	
+			"modifier_weave_enemy_datadriven"
+			{
+				"IsDebuff"			"1"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
+						"EffectAttachType"  "follow_overhead"
+						"Target"            "TARGET"
+	
+						"ControlPointEntities"
+						{
+							"TARGET"	"follow_overhead"
+							"TARGET"	"follow_origin"
+						}
+					}
+				}
+	
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+				"ThinkInterval"  "%tick_interval"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_weave_negative_datadriven"
+						"Target" 		"TARGET"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+						"Function"		"WeaveRemoveNegative"
+						"modifier"		"modifier_weave_negative_datadriven"
+					}
+				}
+			}
+	
+			"modifier_weave_positive_datadriven"
+			{
+				"IsHidden"		"1"
+	
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_per_second" 
+				}
+			}
+	
+			"modifier_weave_negative_datadriven"
+			{
+				"IsHidden"		"1"
+	
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%negative_armor_per_second" 
+				}
 			}
 		}
 	}
@@ -9819,10 +10029,442 @@
 		}
 	}
 	
+	// Ability Copies for Witchcraft.
+	//"carrion_swarm_mana_cost_adjust"		"-10 -15 -20 -25"
+	//"carrion_swarm_cooldown_adjust"		"-1.0 -2.0 -3.0 -4.0"
+	
+	//Level 1.
+	"death_prophet_carrion_swarm_datadriven_witchcraft1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"death_prophet_carrion_swarm"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"7.0 7.0 7.0 7.0" //-1
+	
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"75 150 225 300"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"95 110 130 155" //-10	
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_radius"				"110 110 110 110"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"end_radius"				"300 300 300 300"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range"						"810 810 810 810"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"1100 1100 1100 1100"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_carrion_swarm.vpcf"	//Can't attach the bats
+			"particle"	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+			    "Target"		 	"POINT"
+			    "EffectName"     	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+			    "MoveSpeed"      	"%speed"
+			    "StartRadius"    	"%start_radius"
+			    "EndRadius"      	"%end_radius"
+			    "StartPosition"  	"attach_attack1"
+			    "FixedDistance"  	"%range"
+			    "TargetTeams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			    "HasFrontalCone" 	"1"
+			    "ProvidesVision" 	"0"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.CarrionSwarm"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"FireSound"
+	        {
+	        	"EffectName" 	   	"Hero_DeathProphet.CarrionSwarm.Damage"
+	            "Target" 			"TARGET"
+	        }
+	
+	        "Damage"
+	        {
+	        	"Target"		 "TARGET"
+	        	"Type"			 "DAMAGE_TYPE_MAGICAL"
+	        	"Damage"		 "%AbilityDamage"
+	        }
+		}
+	}
+	
+	//Level 2
+	"death_prophet_carrion_swarm_datadriven_witchcraft2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"death_prophet_carrion_swarm"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"6.0 6.0 6.0 6.0" //-2
+	
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"75 150 225 300"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90 105 125 150" //-15	
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_radius"				"110 110 110 110"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"end_radius"				"300 300 300 300"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range"						"810 810 810 810"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"1100 1100 1100 1100"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_carrion_swarm.vpcf"	//Can't attach the bats
+			"particle"	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+			    "Target"		 	"POINT"
+			    "EffectName"     	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+			    "MoveSpeed"      	"%speed"
+			    "StartRadius"    	"%start_radius"
+			    "EndRadius"      	"%end_radius"
+			    "StartPosition"  	"attach_attack1"
+			    "FixedDistance"  	"%range"
+			    "TargetTeams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			    "HasFrontalCone" 	"1"
+			    "ProvidesVision" 	"0"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.CarrionSwarm"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"FireSound"
+	        {
+	        	"EffectName" 	   	"Hero_DeathProphet.CarrionSwarm.Damage"
+	            "Target" 			"TARGET"
+	        }
+	
+	        "Damage"
+	        {
+	        	"Target"		 "TARGET"
+	        	"Type"			 "DAMAGE_TYPE_MAGICAL"
+	        	"Damage"		 "%AbilityDamage"
+	        }
+		}
+	}
+	
+	//Level 3
+	"death_prophet_carrion_swarm_datadriven_witchcraft3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"death_prophet_carrion_swarm"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5.0 5.0 5.0 5.0" //-3
+	
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"75 150 225 300"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"85 100 120 145" //-20	
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_radius"				"110 110 110 110"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"end_radius"				"300 300 300 300"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range"						"810 810 810 810"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"1100 1100 1100 1100"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_carrion_swarm.vpcf"	//Can't attach the bats
+			"particle"	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+			    "Target"		 	"POINT"
+			    "EffectName"     	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+			    "MoveSpeed"      	"%speed"
+			    "StartRadius"    	"%start_radius"
+			    "EndRadius"      	"%end_radius"
+			    "StartPosition"  	"attach_attack1"
+			    "FixedDistance"  	"%range"
+			    "TargetTeams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			    "HasFrontalCone" 	"1"
+			    "ProvidesVision" 	"0"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.CarrionSwarm"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"FireSound"
+	        {
+	        	"EffectName" 	   	"Hero_DeathProphet.CarrionSwarm.Damage"
+	            "Target" 			"TARGET"
+	        }
+	
+	        "Damage"
+	        {
+	        	"Target"		 "TARGET"
+	        	"Type"			 "DAMAGE_TYPE_MAGICAL"
+	        	"Damage"		 "%AbilityDamage"
+	        }
+		}
+	}
+	
+	//Level 4
+	"death_prophet_carrion_swarm_datadriven_witchcraft4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"death_prophet_carrion_swarm"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"4.0 4.0 4.0 4.0" //-4
+	
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"75 150 225 300"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"80 95 115 140" //-25	
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_radius"				"110 110 110 110"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"end_radius"				"300 300 300 300"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range"						"810 810 810 810"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"1100 1100 1100 1100"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_carrion_swarm.vpcf"	//Can't attach the bats
+			"particle"	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+			    "Target"		 	"POINT"
+			    "EffectName"     	"particles/econ/items/death_prophet/death_prophet_acherontia/death_prophet_acher_swarm.vpcf"
+			    "MoveSpeed"      	"%speed"
+			    "StartRadius"    	"%start_radius"
+			    "EndRadius"      	"%end_radius"
+			    "StartPosition"  	"attach_attack1"
+			    "FixedDistance"  	"%range"
+			    "TargetTeams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			    "HasFrontalCone" 	"1"
+			    "ProvidesVision" 	"0"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.CarrionSwarm"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"FireSound"
+	        {
+	        	"EffectName" 	   	"Hero_DeathProphet.CarrionSwarm.Damage"
+	            "Target" 			"TARGET"
+	        }
+	
+	        "Damage"
+	        {
+	        	"Target"		 "TARGET"
+	        	"Type"			 "DAMAGE_TYPE_MAGICAL"
+	        	"Damage"		 "%AbilityDamage"
+	        }
+		}
+	}
 	//End of file death_prophet_carrion_swarm_datadriven.txt
 
 
 	//Start of file death_prophet_exorcism_datadriven.txt
+	// Rewrite of Death Prophet Exorcism
+	// Author: Noya
+	// Date: 01.02.2015.
+	// Note: The Targeting & Movement AI is "smarter" than the original ability, so the overall DPS is way higher when all spirits focus the same target
+	// To go around this, there is a min_time_between_attacks value which if it isn't reached after returning to the hero, the spirit will idle
 	"death_prophet_exorcism_datadriven"
 	{
 		// General
@@ -9830,6 +10472,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
@@ -9897,6 +10540,162 @@
 				"var_type"				"FIELD_INTEGER"
 				"average_damage"		"55 55 55"
 			}
+			// Extra
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"30"	//Always have a duration AbilitySpecial, don't believe Valves lies.
+			}
+			"11"	
+			{
+				"var_type"					"FIELD_FLOAT"
+				"delay_between_spirits"		"0.1"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"min_time_between_attacks"	"3.0"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_death_prophet/death_prophet_spirit_model.vpcf"
+			"particle"  "particles/units/heroes/hero_death_prophet/death_prophet_exorcism_attack.vpcf"
+			"particle"  "particles/units/heroes/hero_death_prophet/death_prophet_exorcism_attack_building.vpcf"
+			"particle"  "particles/units/heroes/hero_death_prophet/death_prophet_spirit_glow.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_death_prophet/exorcism.lua"
+				"Function"		"ExorcismDeath"
+			}
+	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_exorcism"
+				"Target" 		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_exorcism"
+				"Target" 		"CASTER"
+				"Duration"		"%AbilityDuration"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.Exorcism.Cast"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_exorcism"
+			{	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_death_prophet/exorcism.lua"
+						"Function"		"ExorcismStart"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_DeathProphet.Exorcism"
+						"Target" 		"CASTER"
+					}
+				}
+	
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_death_prophet/exorcism.lua"
+						"Function"		"ExorcismAttack"
+					}
+				}
+	
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_death_prophet/exorcism.lua"
+						"Function"		"ExorcismDeath"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_DeathProphet.Death"
+						"Target" 		"CASTER"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_death_prophet/exorcism.lua"
+						"Function"		"ExorcismEnd"
+					}
+				}
+			}
+	
+			"modifier_exorcism_spirit"
+			{	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_death_prophet/exorcism.lua"
+						"Function"		"ExorcismPhysics"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_spirit_glow.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"CASTER"	"attach_origin"
+						}
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_spirit_model.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+						}
+					}
+				}
+		
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}	
 	
@@ -9904,6 +10703,9 @@
 
 
 	//Start of file death_prophet_silence_datadriven.txt
+	// Rewrite of Death Prophet Silence
+	// Author: Noya
+	// Date: 02.02.2015.
 	"death_prophet_silence_datadriven"
 	{
 		// General
@@ -9911,6 +10713,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"death_prophet_silence"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -9925,6 +10728,8 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"80 80 80 80"
+	
+		"AOERadius"						"%radius"
 	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9941,18 +10746,569 @@
 				"duration"					"3.0 4.0 5.0 6.0"
 			}
 		}
-	}	
 	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+			"particle"	"particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_silenced"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%duration"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+				"EffectAttachType"  "world_origin"
+				"TargetPoint"       "POINT"
+				"ControlPoints"
+				{
+					"01"	"%radius 0 0"
+				}
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+				"EffectAttachType"  "follow_overhead"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"ControlPoints"
+				{
+					"00"	"1 0 0"
+				}				
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.Silence"
+				"TargetPoint" 	"POINT"	// This works but its actually fired at the caster
+			}				
+		}
+	
+		//modifier_silence is a Built-In modifier, _silenced is custom
+		"Modifiers"
+		{
+			"modifier_silenced"
+			{
+				"IsDebuff"			"1"
+	
+				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}			
+			}
+		}
+	}
+	
+	// Ability Copies for Witchcraft.
+	//"silence_mana_cost_adjust"			"-10 -15 -20 -25"
+	//"silence_cooldown_adjust"			"-1.0 -2.0 -3.0 -4.0"
+	
+	// Level 1
+	"death_prophet_silence_datadriven_witchcraft1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"death_prophet_silence"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"14.0 14.0 14.0 14.0" //-1
+		"AbilityDuration"				"3.0 4.0 5.0 6.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70 70 70 70" //-10
+	
+		"AOERadius"						"%radius"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"425"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.0 4.0 5.0 6.0"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+			"particle"	"particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_silenced"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%duration"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+				"EffectAttachType"  "world_origin"
+				"TargetPoint"       "POINT"
+				"ControlPoints"
+				{
+					"01"	"%radius 0 0"
+				}
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+				"EffectAttachType"  "follow_overhead"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"ControlPoints"
+				{
+					"00"	"1 0 0"
+				}				
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.Silence"
+				"TargetPoint" 	"POINT"	// This works but its actually fired at the caster
+			}				
+		}
+	
+		//modifier_silence is a Built-In modifier, _silenced is custom
+		"Modifiers"
+		{
+			"modifier_silenced"
+			{
+				"IsDebuff"			"1"
+	
+				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}			
+			}
+		}
+	}
+	
+	// Level 2
+	"death_prophet_silence_datadriven_witchcraft2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"death_prophet_silence"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13.0 13.0 13.0 13.0" //-2
+		"AbilityDuration"				"3.0 4.0 5.0 6.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"65 65 65 65" //-15
+	
+		"AOERadius"						"%radius"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"425"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.0 4.0 5.0 6.0"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+			"particle"	"particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_silenced"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%duration"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+				"EffectAttachType"  "world_origin"
+				"TargetPoint"       "POINT"
+				"ControlPoints"
+				{
+					"01"	"%radius 0 0"
+				}
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+				"EffectAttachType"  "follow_overhead"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"ControlPoints"
+				{
+					"00"	"1 0 0"
+				}				
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.Silence"
+				"TargetPoint" 	"POINT"	// This works but its actually fired at the caster
+			}				
+		}
+	
+		//modifier_silence is a Built-In modifier, _silenced is custom
+		"Modifiers"
+		{
+			"modifier_silenced"
+			{
+				"IsDebuff"			"1"
+	
+				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}			
+			}
+		}
+	}
+	
+	// Level 3
+	"death_prophet_silence_datadriven_witchcraft3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"death_prophet_silence"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13.0 13.0 13.0 13.0" //-3
+		"AbilityDuration"				"3.0 4.0 5.0 6.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60 60 60 60" //-20
+	
+		"AOERadius"						"%radius"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"425"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.0 4.0 5.0 6.0"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+			"particle"	"particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_silenced"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%duration"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+				"EffectAttachType"  "world_origin"
+				"TargetPoint"       "POINT"
+				"ControlPoints"
+				{
+					"01"	"%radius 0 0"
+				}
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+				"EffectAttachType"  "follow_overhead"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"ControlPoints"
+				{
+					"00"	"1 0 0"
+				}				
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.Silence"
+				"TargetPoint" 	"POINT"	// This works but its actually fired at the caster
+			}				
+		}
+	
+		//modifier_silence is a Built-In modifier, _silenced is custom
+		"Modifiers"
+		{
+			"modifier_silenced"
+			{
+				"IsDebuff"			"1"
+	
+				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}			
+			}
+		}
+	}
+	
+	// Level 4
+	"death_prophet_silence_datadriven_witchcraft4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"death_prophet_silence"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"60.0 60.0 60.0 60.0" //-4
+		"AbilityDuration"				"3.0 4.0 5.0 6.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"55 55 55 55" //-10
+	
+		"AOERadius"						"%radius"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"425"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.0 4.0 5.0 6.0"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+			"particle"	"particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_silenced"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%duration"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+				"EffectAttachType"  "world_origin"
+				"TargetPoint"       "POINT"
+				"ControlPoints"
+				{
+					"01"	"%radius 0 0"
+				}
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+				"EffectAttachType"  "follow_overhead"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"ControlPoints"
+				{
+					"00"	"1 0 0"
+				}				
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.Silence"
+				"TargetPoint" 	"POINT"	// This works but its actually fired at the caster
+			}				
+		}
+	
+		//modifier_silence is a Built-In modifier, _silenced is custom
+		"Modifiers"
+		{
+			"modifier_silenced"
+			{
+				"IsDebuff"			"1"
+	
+				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}			
+			}
+		}
+	}
 	//End of file death_prophet_silence_datadriven.txt
 
 
 	//Start of file death_prophet_witchcraft_datadriven.txt
+	// Rewrite of Death Prophet Witchcraft
+	// Author: Noya
+	// Date: 02.02.2015.
+	// Note: There is nothing exposed to change cooldowns and mana which reflects on the UI directly. 
+	// The only way of doing this at the moment is making new copies of the abilities with reduced cd-mana and swap them OnUpgrade.
 	"death_prophet_witchcraft_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"death_prophet_witchcraft"
 				
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9997,6 +11353,33 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"exorcism_3_extra_spirits"			"3 4 5 6"
+			}
+		}
+	
+		// Update other abilities
+		// exorcism_datadriven just directly checks the level of this ability on cast
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_death_prophet/witchcraft.lua"
+				"Function"		"WitchCraft"
+				"Ability1Name"	"death_prophet_carrion_swarm_datadriven"
+				"Ability2Name"	"death_prophet_silence_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_witchcraft"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
+				}
 			}
 		}
 	}
