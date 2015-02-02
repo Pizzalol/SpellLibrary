@@ -1,3 +1,6 @@
+// Rewrite of Death Prophet Silence
+// Author: Noya
+// Date: 02.02.2015.
 "death_prophet_silence_datadriven"
 {
 	// General
@@ -5,6 +8,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"death_prophet_silence"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -20,6 +24,8 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityManaCost"				"80 80 80 80"
 
+	"AOERadius"						"%radius"
+
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
@@ -33,6 +39,80 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"duration"					"3.0 4.0 5.0 6.0"
+		}
+	}
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+		"particle"	"particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_silenced"
+			"Target"
+			{
+				"Center"	"POINT"
+				"Radius"	"%radius"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+			"Duration"		"%duration"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+			"EffectAttachType"  "world_origin"
+			"TargetPoint"       "POINT"
+			"ControlPoints"
+			{
+				"01"	"%radius 0 0"
+			}
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_death_prophet/death_prophet_silence_impact.vpcf"
+			"EffectAttachType"  "follow_overhead"
+			"Target"
+			{
+				"Center"	"POINT"
+				"Radius"	"%radius"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+			"ControlPoints"
+			{
+				"00"	"1 0 0"
+			}				
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_DeathProphet.Silence"
+			"TargetPoint" 	"POINT"	// This works but its actually fired at the caster
+		}				
+	}
+
+	//modifier_silence is a Built-In modifier, _silenced is custom
+	"Modifiers"
+	{
+		"modifier_silenced"
+		{
+			"IsDebuff"			"1"
+
+			"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
+			"EffectAttachType"	"follow_overhead"
+
+			"States"
+			{
+				"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}			
 		}
 	}
 }	
