@@ -1,0 +1,135 @@
+// Rewrite of Battle Fury
+// Author: Rook
+// Date: February 2, 2015
+
+"item_bfury_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1145"  //Valve's version of this item uses the ID "145".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_bfury"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"4350"
+	"ItemShopTags"					"damage;health_regen;mana_regen;hard_to_tag"
+	"ItemQuality"					"epic"
+	"ItemAliases"					"bf;battle fury"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_damage"					"65"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_health_regen"			"6"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_mana_regen_percentage"	"150"
+		}
+		"04"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"cleave_damage_percent"			"35"
+		}
+		"05"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"cleave_radius"					"250"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_bfury_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+				"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_percentage"
+			}
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_bfury.lua"
+					"Function"			"modifier_item_bfury_datadriven_on_created"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_bfury.lua"
+					"Function"			"modifier_item_bfury_datadriven_on_destroy"
+				}
+			}
+			
+			//Continually check to see if the hero this modifier is on has switched from ranged
+			//to melee, in which case they should be given cleave modifier(s).
+			"ThinkInterval" ".03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_bfury.lua"
+					"Function"			"modifier_item_bfury_datadriven_on_interval_think"
+				}
+			}
+		}
+		"modifier_item_bfury_datadriven_cleave"  //Only melee units can cleave, so only melee units should get this modifier.
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"OnAttackLanded"
+			{
+				"CleaveAttack"
+				{
+					"CleavePercent"		"%cleave_damage_percent"
+					"CleaveRadius"		"%cleave_radius"
+					"CleaveEffect"		"particles/items_fx/battlefury_cleave.vpcf"
+				}
+				
+				"FireSound"
+				{
+					"EffectName"				"DOTA_Item.BattleFury"
+					"Target"					"TARGET"
+				}
+			}
+			
+			//Continually check to see if the hero this modifier is on is still melee 
+			//(since some units, like Troll Warlord, can switch between ranged/melee forms).
+			"ThinkInterval" ".03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_bfury.lua"
+					"Function"			"modifier_item_bfury_datadriven_cleave_on_interval_think"
+				}
+			}
+		}
+	}
+}

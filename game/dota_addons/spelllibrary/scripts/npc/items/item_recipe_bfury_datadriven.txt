@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Battle Fury
+// Author: Rook
+// Date: February 2, 2015
+
+"item_recipe_bfury_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1144"  //Valve's version of this item uses the ID "144".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_bfury_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_broadsword;item_claymore;item_pers"
+	}
+}
