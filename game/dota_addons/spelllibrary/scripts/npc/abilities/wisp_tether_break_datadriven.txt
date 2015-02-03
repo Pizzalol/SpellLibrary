@@ -5,6 +5,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"MaxLevel"						"1"
+	"AbilityTextureName"			"wisp_tether_break"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -13,5 +14,26 @@
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCooldown"				"1.0 1.0 1.0 1.0"
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"OnSpellStart"
+	{
+		"RemoveModifier"
+		{
+			"Target"		"CASTER"
+			"ModifierName"	"modifier_tether_caster_datadriven"
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_wisp/tether.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"wisp_tether_datadriven"
+		}
+	}
 }
 
