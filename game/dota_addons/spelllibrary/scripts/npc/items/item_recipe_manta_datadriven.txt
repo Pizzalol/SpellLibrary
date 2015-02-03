@@ -1,0 +1,28 @@
+// Rewrite of Recipe: Manta Style
+// Author: Rook
+// Date: February 2, 2015
+
+"item_recipe_manta_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1146"  //Valve's version of this item uses the ID "146".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	"FightRecapLevel"				"1"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"800"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_manta_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_yasha;item_ultimate_orb"
+	}
+}
