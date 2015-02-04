@@ -1,0 +1,145 @@
+// Rewrite of Shadow Blade
+// Author: Rook
+// Date: February 3, 2015
+// Known bugs:
+//     Invisibility is lost upon the hero's autoattack projectile connecting with a unit, not when it is created like it should be.
+
+"item_invis_sword_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1152"  //Valve's version of this item uses the ID "152".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_invis_sword"
+	"FightRecapLevel"				"1"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"28.0"
+	"AbilityManaCost"				"75"
+	"AbilityCastPoint"              "0"
+
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2800"
+	"ItemShopTags"					"damage;attack_speed;movespeed;hard_to_tag"
+	"ItemQuality"					"epic"
+	"ItemAliases"					"sb;invis;shadow blade"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"									"FIELD_INTEGER"
+			"bonus_damage"								"22"
+		}
+		"02"
+		{
+			"var_type"									"FIELD_INTEGER"
+			"bonus_attack_speed"						"30"
+		}
+		"03"
+		{
+			"var_type"									"FIELD_FLOAT"
+			"windwalk_duration"							"14.0"
+		}
+		"04"
+		{
+			"var_type"									"FIELD_INTEGER"
+			"windwalk_bonus_movement_speed_percentage"	"20"
+		}
+		"05"
+		{
+			"var_type"									"FIELD_FLOAT"
+			"windwalk_fade_time"						"0.3"
+		}
+		"06"
+		{
+			"var_type"									"FIELD_INTEGER"
+			"windwalk_bonus_damage"						"175"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"items/item_invis_sword.lua"
+			"Function"				"item_invis_sword_datadriven_on_spell_start"
+			"WindwalkFadeTime"		"%windwalk_fade_time"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_invis_sword_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+			}
+		}
+		"modifier_item_invis_sword_datadriven_active"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"1"
+			"IsDebuff"			"0"
+			"IsPurgable"		"1"
+			"Duration"			"%windwalk_duration"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%windwalk_bonus_movement_speed_percentage"
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			
+			"OnAbilityExecuted"  //Remove this modifier from the unit, since they should no longer be invis.
+			{
+				"RemoveModifier"
+				{
+					"Target"			"CASTER"
+					"ModifierName"		"modifier_item_invis_sword_datadriven_active"
+				}
+			}
+			
+			//Remove this modifier and deal extra damage to the target.  Note: For parity, the invisibility should be 
+			//removed when the autoattack projectile appears, but there is currently no event that can be used for this.
+			"OnAttackLanded" 
+			{				
+				"RunScript"
+				{
+					"ScriptFile"				"items/item_invis_sword.lua"
+					"Function"					"modifier_item_invis_sword_datadriven_active_on_attack_landed"
+					"WindwalkBonusDamage"		"%windwalk_bonus_damage"
+				}
+			}
+			
+			"ThinkInterval" 		".03"
+			//Repeatedly apply the stock modifier_invisible for the sole purpose of making the unit have a transparent texture.
+			//This can be gotten rid of when we discover how to apply a translucent texture manually.
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_invis_sword.lua"
+					"Function"			"modifier_item_invis_sword_datadriven_active_on_interval_think"
+				}
+			}
+		}
+	}
+}

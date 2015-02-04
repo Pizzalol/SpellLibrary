@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Shadow Blade
+// Author: Rook
+// Date: February 3, 2015
+
+"item_recipe_invis_sword_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1183"  //Valve's version of this item uses the ID "183".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_invis_sword_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_shadow_amulet_datadriven;item_claymore_datadriven"
+	}
+}
