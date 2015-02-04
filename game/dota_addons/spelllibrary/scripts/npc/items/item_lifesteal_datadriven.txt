@@ -1,8 +1,6 @@
 // Rewrite of Morbid Mask
 // Author: Rook
 // Date: January 25, 2015
-// Known bugs:
-//     Lifesteal triggers when attacking structures.
 
 "item_lifesteal_datadriven"
 {
@@ -42,7 +40,12 @@
 			"IsHidden"			"1"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
-			"OnAttackLanded"
+			"Orb"
+			{
+				"Priority"		"DOTA_ORB_PRIORITY_ITEM"
+			}
+
+			"OnOrbImpact"
 			{
 				"RunScript"
 				{

@@ -1,0 +1,128 @@
+// Rewrite of Sange and Yasha
+// Author: Rook
+// Date: February 3, 2015
+
+"item_sange_and_yasha_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1154"  //Valve's version of this item uses the ID "154".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_sange_and_yasha"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"4100"
+	"ItemShopTags"					"damage;str;agi;attack_speed;unique"
+	"ItemQuality"					"artifact"
+	"ItemAliases"					"sny;s&y;sy;sange and yasha"
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"maim_chance"					"16"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"maim_slow_movement"			"-32"
+		}			
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"maim_slow_attack"				"-32"
+		}
+		"04"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_damage"					"16"
+		}
+		"05"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_strength"				"16"
+		}
+		"06"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_agility"					"16"
+		}			
+		"07"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_attack_speed"			"16"
+		}
+		"08"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"movement_speed_percent_bonus"	"16"
+		}			
+		"09"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"maim_duration"					"5.0"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_sange_and_yasha_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"						"%bonus_damage"
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"						"%bonus_strength"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"							"%bonus_agility"
+				
+				//Attack speed from Yasha-derived items affect your illusions.
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT_SECONDARY"		"%bonus_attack_speed"
+				
+				//Movement speed from Yasha-derived items does not stack with itself but does stack with other percentage-based movement speed bonuses.
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"			"%movement_speed_percent_bonus"
+			}
+			
+			"OnAttackLanded"
+			{
+				"Random"
+				{
+					"Chance"		"%maim_chance"
+					"OnSuccess"
+					{
+						"RunScript"
+						{
+							"ScriptFile"			"items/item_sange_and_yasha.lua"
+							"Function"				"modifier_item_sange_and_yasha_datadriven_on_attack_landed_random_on_success"
+						}
+					}
+				}
+			}
+		}
+		"modifier_item_sange_and_yasha_datadriven_greater_maim"
+		{
+			"Duration"				"%maim_duration"
+			"Passive"				"0"
+			"IsHidden"				"0"
+			"EffectName"            "particles/items2_fx/sange_maim.vpcf"
+			"EffectAttachType"      "PATTACH_ABSORIGIN"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%maim_slow_attack"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%maim_slow_movement"
+			}
+		}
+	}
+}

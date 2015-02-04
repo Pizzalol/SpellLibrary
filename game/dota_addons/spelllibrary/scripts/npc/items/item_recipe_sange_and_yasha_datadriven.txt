@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Sange and Yasha
+// Author: Rook
+// Date: February 3, 2015
+
+"item_recipe_sange_and_yasha_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1153"  //Valve's version of this item uses the ID "153".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_sange_and_yasha_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_yasha_datadriven;item_sange_datadriven"
+	}
+}
