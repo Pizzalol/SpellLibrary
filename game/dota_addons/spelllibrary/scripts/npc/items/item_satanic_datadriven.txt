@@ -1,0 +1,137 @@
+// Rewrite of Satanic
+// Author: Rook
+// Date: February 3, 2015
+
+"item_satanic_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1156"  //Valve's version of this item uses the ID "156".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_satanic"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"35.0"
+	"AbilityManaCost"				"0.0"
+
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"6150"
+	"ItemShopTags"					"damage;str;armor;unique;hard_to_tag"
+	"ItemQuality"					"artifact"
+	"ItemAliases"					"satanic"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_damage"				"20"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_strength"			"25"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_armor"				"5"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"lifesteal_percent"			"25"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"unholy_lifesteal_percent"	"175"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"unholy_duration"			"3.5"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_item_satanic_datadriven_unholy_rage"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_satanic_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+			}
+			
+			"Orb"
+			{
+				"Priority"		"DOTA_ORB_PRIORITY_ITEM"
+			}
+
+			"OnOrbImpact"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_satanic.lua"
+					"Function"				"modifier_item_satanic_datadriven_on_attack_landed"
+				}
+			}
+		}
+		"modifier_item_satanic_datadriven_unholy_rage"
+		{
+			"Duration"			"%unholy_duration"
+			"Passive"			"0"
+			"IsHidden"			"0"
+		}
+		"modifier_item_satanic_datadriven_lifesteal"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			
+			"OnDealDamage"
+			{
+				"Lifesteal"
+				{
+					"Target"			"ATTACKER"
+					"LifestealPercent"	"%lifesteal_percent"
+				}
+			}
+		}
+		"modifier_item_satanic_datadriven_unholy_rage_lifesteal"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			
+			"OnDealDamage"
+			{
+				"Lifesteal"
+				{
+					"Target"			"ATTACKER"
+					"LifestealPercent"	"%unholy_lifesteal_percent"
+				}
+			}
+		}
+	}
+}
