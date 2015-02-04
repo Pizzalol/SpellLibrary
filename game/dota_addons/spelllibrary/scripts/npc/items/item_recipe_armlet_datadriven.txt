@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Armlet of Mordiggian
+// Author: Rook
+// Date: February 3, 2015
+
+"item_recipe_armlet_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1150"  //Valve's version of this item uses the ID "150".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"500"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_armlet_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_helm_of_iron_will_datadriven;item_gloves_datadriven;item_blades_of_attack_datadriven"
+	}
+}

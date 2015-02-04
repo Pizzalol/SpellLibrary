@@ -77,6 +77,7 @@ function item_manta_datadriven_on_spell_start(keys)
 	
 	--The caster is briefly made invulnerable and disappears, while ground vision is supplied nearby.
 	keys.ability:CreateVisibilityNode(keys.caster:GetAbsOrigin(), keys.VisionRadius, keys.InvulnerabilityDuration)
+	keys.caster:AddNoDraw()
 	keys.ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_item_manta_datadriven_invulnerability", nil)
 end
 
@@ -171,6 +172,8 @@ function modifier_item_manta_datadriven_invulnerability_on_destroy(keys)
 		end
 	end
 	
+	keys.caster:RemoveNoDraw()
+	
 	--Set the health and mana values to those of the real hero.
 	local caster_health = keys.caster:GetHealth()
 	local caster_mana = keys.caster:GetMana()
@@ -178,95 +181,4 @@ function modifier_item_manta_datadriven_invulnerability_on_destroy(keys)
 	illusion1:SetMana(caster_mana)
 	illusion2:SetHealth(caster_health)
 	illusion2:SetMana(caster_mana)
-	
-	keys.caster:Stop()  --Start playing the idle animation.
-end
-		
-
---[[ ============================================================================================================
-	Author: Noya
-	Date: February 2, 2015
-	Swaps the model with the given model.  Used when Manta Style is cast in order to briefly hide the caster.
-	Additional parameters: keys.model
-================================================================================================================= ]]
-function SwapModelStart( keys )
-	local target = keys.target
-	local model = keys.model
-
-	if target.target_model == nil then
-		target.target_model = target:GetModelName()
-	end
-
-	target:SetOriginalModel(model)
-end
-
-
---[[ ============================================================================================================
-	Author: Noya
-	Date: February 2, 2015
-	Reverts the model to the original.  Used when Manta Style is cast in order to briefly hide the caster.
-================================================================================================================= ]]
-function SwapModelEnd( keys )
-	local target = keys.target
-
-	-- Checking for errors
-	if target.target_model ~= nil then
-		target:SetModel(target.target_model)
-		target:SetOriginalModel(target.target_model)
-	end
-end
-
-
---[[ ============================================================================================================
-	Author: Noya
-	Date: February 2, 2015
-	Hides hats.  Used when Manta Style is cast in order to briefly hide the caster.
-================================================================================================================= ]]
-function HideWearables( event )
-	local hero = event.target
-	local ability = event.ability
-	print("Hiding Wearables")
-	--hero:AddNoDraw() -- Doesn't work on classname dota_item_wearable
-
-	hero.wearableNames = {} -- In here we'll store the wearable names to revert the change
-	hero.hiddenWearables = {} -- Keep every wearable handle in a table, as its way better to iterate than in the MovePeer system
-    local model = hero:FirstMoveChild()
-    while model ~= nil do
-        if model:GetClassname() ~= "" and model:GetClassname() == "dota_item_wearable" then
-            local modelName = model:GetModelName()
-            if string.find(modelName, "invisiblebox") == nil then
-            	-- Add the original model name to revert later
-            	table.insert(hero.wearableNames,modelName)
-            	print("Hidden "..modelName.."")
-
-            	-- Set model invisible
-            	model:SetModel("models/development/invisiblebox.vmdl")
-            	table.insert(hero.hiddenWearables,model)
-            end
-        end
-        model = model:NextMovePeer()
-        if model ~= nil then
-        	print("Next Peer:" .. model:GetModelName())
-        end
-    end
-end
-
---[[ ============================================================================================================
-	Author: Noya
-	Date: February 2, 2015
-	Shows the hidden hero wearables.  Used when Manta Style is cast in order to briefly hide the caster.
-================================================================================================================= ]]
-function ShowWearables( event )
-	local hero = event.target
-	print("Showing Wearables on ".. hero:GetModelName())
-
-	-- Iterate on both tables to set each item back to their original modelName
-	for i,v in ipairs(hero.hiddenWearables) do
-		for index,modelName in ipairs(hero.wearableNames) do
-			if i==index then
-				print("Changed "..v:GetModelName().. " back to "..modelName)
-				v:SetModel(modelName)
-			end
-		end
-	end
 end

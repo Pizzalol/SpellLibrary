@@ -1,0 +1,311 @@
+// Rewrite of Armlet of Mordiggian
+// Author: Rook
+// Date: February 3, 2015
+// Known bugs:
+//     Since there is currently no way to alter the item's texture on the fly, Armlet is split up into two items.
+//     Toggling Armlet activates the 10-second window in which it can be sold for full price.
+//     This implementation only supports one Armlet being active at a time.
+
+
+"item_dummy_datadriven"  //A dummy item that is used to take up item slots in the swap_to_item() Lua function.
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"ID"                            "2001"
+	"BaseClass"                     "item_datadriven"
+	"ItemBaseLevel"                 "1"
+}
+
+"item_armlet_datadriven"  //The inactive version of Armlet.
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1151"  //Valve's version of this item uses the ID "151".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_armlet"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"0"
+	"AbilityManaCost"				"0"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2400"
+	"ItemShopTags"					"damage;attack_speed;armor;regen_health;hard_to_tag"
+	"ItemQuality"					"epic"
+	"ItemAliases"					"armlet of mordiggian"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_damage"					"9"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_attack_speed"			"15"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_armor"					"5"
+		}
+		"04"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_health_regen"			"7"
+		}
+		"05"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"unholy_bonus_damage"			"31"
+		}
+		"06"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"unholy_bonus_attack_speed"		"10"
+		}
+		"07"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"unholy_bonus_strength"			"25"
+		}
+		"08"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"unholy_health_drain"			"40"
+		}
+		"09"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"toggle_cooldown"				"0.036f"
+		}	
+	}
+	
+	"OnSpellStart"  //Switch to the active version of Armlet.
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"items/item_armlet.lua"
+			"Function"				"item_armlet_datadriven_on_spell_start"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"				"DOTA_Item.Armlet.Activate"
+			"Target"					"CASTER"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_armlet_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+			}
+		}
+	}
+}
+
+
+"item_armlet_active_datadriven"  //The active version of Armlet.
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"2151"  //Valve's version of this item uses the ID "151".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_armlet_active"
+
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"0"
+	"AbilityManaCost"				"0"
+		
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2400"
+	"ItemShopTags"					"damage;attack_speed;armor;regen_health;hard_to_tag"
+	"ItemQuality"					"epic"
+	"ItemAliases"					"armlet of mordiggian"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	"ItemPurchasable"				"0"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_damage"						"9"
+		}
+		"02"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_attack_speed"				"15"
+		}
+		"03"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_armor"						"5"
+		}
+		"04"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"bonus_health_regen"				"7"
+		}
+		"05"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"unholy_bonus_damage"				"31"
+		}
+		"06"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"unholy_bonus_attack_speed"			"10"
+		}
+		"07"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"unholy_bonus_strength"				"25"  //The ratio of %unholy_bonus_strength to %unholy_ticks_to_full_effect is currently hardcoded in modifier_item_armlet_active_datadriven_tick for technical reasons.
+		}
+		"08"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"unholy_health_drain_per_second"	"40"
+		}
+		"09"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"unholy_health_drain_interval"		".1"
+		}
+		"10"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"unholy_ticks_to_full_effect"		"7"  //The ratio of %unholy_bonus_strength to %unholy_ticks_to_full_effect is currently hardcoded in modifier_item_armlet_active_datadriven_tick for technical reasons.
+		}
+		"11"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"unholy_tick_interval"				".1"  //This is the interval at which the caster will gain Strength immediately after Armlet is toggled on.
+		}
+	}
+	
+	"OnSpellStart"  //Switch to the inactive version of Armlet.
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"items/item_armlet.lua"
+			"Function"				"item_armlet_active_datadriven_on_spell_start"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"			"DOTA_Item.Armlet.DeActivate"
+			"Target"				"CASTER"
+		}
+	}
+	
+	"OnUnequip"
+	{		
+		"RunScript"
+		{
+			"ScriptFile"					"items/item_armlet.lua"
+			"Function"						"item_armlet_active_datadriven_on_unequip"
+			"UnholyTicksToFullEffect"		"%unholy_ticks_to_full_effect"
+			"UnholyBonusStrength"			"%unholy_bonus_strength"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_item_armlet_active_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"EffectName"			"particles/items_fx/armlet.vpcf"
+			"EffectAttachType"		"follow_origin"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+			}
+			
+			"ThinkInterval" 		"%unholy_health_drain_interval"
+			"OnIntervalThink"  //Damage the caster while Armlet is toggled on.
+			{
+				"RunScript"
+				{
+					"ScriptFile"					"items/item_armlet.lua"
+					"Function"						"modifier_item_armlet_active_datadriven_on_interval_think_damage"
+					"UnholyHealthDrainPerSecond"	"%unholy_health_drain_per_second"
+					"UnholyHealthDrainInterval"		"%unholy_health_drain_interval"
+				}
+			}
+		}
+		//The acquisition of Strength is delayed until after the first %unholy_tick_interval seconds.  Regularly add
+		//more Strength so long as the caster doesn't have as many Strength ticks as they should.
+		"modifier_item_armlet_active_datadriven_apply_tick_strength"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%unholy_bonus_damage"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%unholy_bonus_attack_speed"
+			}
+			
+			"ThinkInterval" 		"%unholy_tick_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"					"items/item_armlet.lua"
+					"Function"						"modifier_item_armlet_active_datadriven_apply_tick_strength_on_interval_think"
+					"UnholyTicksToFullEffect"		"%unholy_ticks_to_full_effect"
+					"UnholyBonusStrength"			"%unholy_bonus_strength"
+				}
+			}
+		}
+		//Strength is gained every %unholy_tick_interval seconds a total of %unholy_ticks_to_full_effect times, so 
+		//for the default values, add one of these modifiers every .1 seconds until there are 7 on the caster.
+		"modifier_item_armlet_active_datadriven_tick"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"3.57"  //This value is %unholy_bonus_strength / %unholy_ticks_to_full_effect and is hardcoded here for technical reasons.
+			}
+		}
+	}
+}

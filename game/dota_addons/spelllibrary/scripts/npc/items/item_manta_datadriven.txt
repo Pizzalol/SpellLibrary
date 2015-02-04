@@ -179,36 +179,8 @@
 				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
 			}
 
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"		"items/item_manta.lua"
-					"Function"			"SwapModelStart"
-					"model"				"models/development/invisiblebox.vmdl"			
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"		"items/item_manta.lua"
-					"Function"			"HideWearables"
-				}
-			}
-
 			"OnDestroy"
 			{
-				"RunScript"
-				{
-					"ScriptFile"		"items/item_manta.lua"
-					"Function"			"SwapModelEnd"					
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"		"items/item_manta.lua"
-					"Function"			"ShowWearables"
-				}
-				
 				"RunScript"
 				{
 					"ScriptFile"		"items/item_manta.lua"
