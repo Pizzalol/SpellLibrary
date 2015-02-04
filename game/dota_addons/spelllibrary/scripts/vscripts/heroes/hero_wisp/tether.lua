@@ -60,6 +60,29 @@ end
 
 --[[
 	Author: Ractidous
+	Date: 04.02.2015.
+	Check for tether break distance.
+]]
+function CheckDistance( event )
+	local caster = event.caster
+	local ability = event.ability
+
+	-- Now on latching, so we don't need to break tether.
+	if caster:HasModifier( event.latch_modifier ) then
+		return
+	end
+
+	local distance = ( ability.tether_ally:GetAbsOrigin() - caster:GetAbsOrigin() ):Length2D()
+	if distance <= event.radius then
+		return
+	end
+
+	-- Break tether
+	caster:RemoveModifierByName( event.caster_modifier )
+end
+
+--[[
+	Author: Ractidous
 	Date: 03.02.2015.
 	Remove tether from the ally, then swap the abilities back to the original states.
 ]]
@@ -113,7 +136,7 @@ end
 
 --[[
 	Author: Ractidous
-	Date: 03.02.2015.
+	Date: 04.02.2015.
 	Give mana to the tethered ally.
 ]]
 function GiveManaToAlly( event )
@@ -122,8 +145,13 @@ function GiveManaToAlly( event )
 	local target	= ability.tether_ally
 
 	local manaGained = caster:GetMana() - caster.tether_lastMana
+	if manaGained < 0 then
+		return
+	end
 
-	target:GiveMana( manaGained )
+	print( caster.tether_lastMana )
+
+	target:GiveMana( manaGained * event.tether_heal_amp )
 end
 
 --[[

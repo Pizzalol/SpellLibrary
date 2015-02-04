@@ -271,6 +271,12 @@
 				"RunScript"
 				{
 					"ScriptFile"	"heroes/hero_wisp/tether.lua"
+					"Function"		"GiveManaToAlly"
+					"tether_heal_amp"	"%tether_heal_amp"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_wisp/tether.lua"
 					"Function"		"TrackCurrentMana"
 				}
 			}
@@ -281,6 +287,7 @@
 				{
 					"ScriptFile"	"heroes/hero_wisp/tether.lua"
 					"Function"		"GiveManaToAlly"
+					"tether_heal_amp"	"%tether_heal_amp"
 				}
 			
 				"RunScript"
@@ -298,10 +305,19 @@
 					"ScriptFile"	"heroes/hero_wisp/tether.lua"
 					"Function"		"TrackCurrentHealth"
 				}
+			//	"RunScript"
+			//	{
+			//		"ScriptFile"	"heroes/hero_wisp/tether.lua"
+			//		"Function"		"TrackCurrentMana"
+			//	}
 				"RunScript"
 				{
 					"ScriptFile"	"heroes/hero_wisp/tether.lua"
-					"Function"		"TrackCurrentMana"
+					"Function"		"CheckDistance"
+					
+					"radius"			"%radius"
+					"caster_modifier"	"modifier_tether_caster_datadriven"
+					"latch_modifier"	"modifier_tether_caster_latching_datadriven"
 				}
 			}
 		}
@@ -331,6 +347,15 @@
 			{
 				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			
+			"OnDestroy"
+			{
+				"DestroyTrees"
+				{
+					"Target"		"TARGET"
+					"Radius"		"%latch_destroy_tree_radius"
+				}
 			}
 		}
 		
