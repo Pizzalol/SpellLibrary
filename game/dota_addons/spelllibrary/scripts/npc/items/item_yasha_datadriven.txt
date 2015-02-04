@@ -1,0 +1,64 @@
+// Rewrite of Yasha
+// Author: Rook
+// Date: February 4, 2015
+
+"item_yasha_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1170"  //Valve's version of this item uses the ID "170".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_yasha"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2050"
+	"ItemShopTags"					"agi;attack_speed;move_speed"
+	"ItemQuality"					"artifact"
+	"ItemAliases"					"yasha"
+		
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_agility"					"16"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_attack_speed"			"15"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"movement_speed_percent_bonus"	"10"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_yasha_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"							"%bonus_agility"
+				
+				//Attack speed from Yasha-derived items affect your illusions.
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT_SECONDARY"		"%bonus_attack_speed"
+				
+				//Movement speed from Yasha-derived items does not stack with itself but does stack with other percentage-based movement speed bonuses.
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"			"%movement_speed_percent_bonus"
+			}
+		}
+	}
+}

@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Yasha
+// Author: Rook
+// Date: February 4, 2015
+
+"item_recipe_yasha_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1169"  //Valve's version of this item uses the ID "169".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"600"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_yasha_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_blade_of_alacrity_datadriven;item_boots_of_elves_datadriven"
+	}
+}

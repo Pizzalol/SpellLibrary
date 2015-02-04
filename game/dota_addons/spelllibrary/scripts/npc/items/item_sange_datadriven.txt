@@ -1,0 +1,104 @@
+// Rewrite of Sange
+// Author: Rook
+// Date: February 4, 2015
+
+"item_sange_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1162"  //Valve's version of this item uses the ID "162".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_sange"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2050"
+	"ItemShopTags"					"damage;str;unique"
+	"ItemQuality"					"artifact"
+	"ItemAliases"					"sange"
+		
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"maim_chance"			"15"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"maim_movement_speed"	"-20"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"maim_attack_speed"		"-20"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"maim_duration"			"4.0"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"10"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_strength"		"16"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_sange_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"						"%bonus_damage"
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"						"%bonus_strength"
+			}
+			
+			"OnAttackLanded"
+			{
+				"Random"
+				{
+					"Chance"		"%maim_chance"
+					"OnSuccess"
+					{
+						"RunScript"
+						{
+							"ScriptFile"			"items/item_sange.lua"
+							"Function"				"modifier_item_sange_datadriven_on_attack_landed_random_on_success"
+						}
+					}
+				}
+			}
+		}
+		"modifier_item_sange_datadriven_lesser_maim"
+		{
+			"Duration"				"%maim_duration"
+			"Passive"				"0"
+			"IsHidden"				"0"
+			"EffectName"            "particles/items2_fx/sange_maim.vpcf"
+			"EffectAttachType"      "PATTACH_ABSORIGIN"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%maim_attack_speed"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%maim_movement_speed"
+			}
+		}
+	}
+}

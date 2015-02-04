@@ -1,0 +1,92 @@
+// Rewrite of Desolator
+// Author: Rook
+// Date: February 4, 2015
+
+"item_desolator_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1168"  //Valve's version of this item uses the ID "168".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_desolator"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"4100"
+	"ItemShopTags"					"damage;unique"
+	"ItemQuality"					"artifact"
+	"ItemAliases"					"desolator"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"60"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"corruption_armor"		"-7"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"corruption_duration"	"15.0"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_desolator_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"						"%bonus_damage"
+			}
+			
+			"Orb"
+			{
+				"Priority"				"DOTA_ORB_PRIORITY_ITEM"
+				"ProjectileName"		"particles/items_fx/desolator_projectile.vpcf"
+				"CastAttack"			"0"
+			}
+
+			"OnOrbImpact"
+			{
+				"ApplyModifier"
+				{
+					"Target"			"TARGET"
+					"ModifierName"		"modifier_item_desolator_datadriven_corruption"
+				}
+				
+				"FireSound"
+				{
+					"EffectName"		"Item_Desolator.Target"
+					"Target"			"TARGET"
+				}
+			}
+		}
+		"modifier_item_desolator_datadriven_corruption"
+		{
+			"Duration"				"%corruption_duration"
+			"Passive"				"0"
+			"IsHidden"				"0"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%corruption_armor"
+			}
+		}
+	}
+}
