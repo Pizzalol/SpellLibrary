@@ -1,0 +1,118 @@
+// Rewrite of Eye of Skadi
+// Author: Rook
+// Date: February 4, 2015
+// Known bugs:
+//     For some reason, this implementation of Skadi's orb effect only stacks with lifesteal if you pick up a lifesteal item first and then a Skadi afterwards.
+
+"item_skadi_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1160"  //Valve's version of this item uses the ID "160".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_skadi"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"5675"
+	"ItemShopTags"					"agi;str;int;hard_to_tag;mana_pool;health_pool;unique"
+	"ItemQuality"					"artifact"
+	"ItemAliases"					"eos;eye of skadi"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_all_stats"		"25"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"250"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"250"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"cold_movement_speed"	"-35"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"cold_attack_speed"		"-45"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"cold_duration_melee"	"5.0"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"cold_duration_ranged"	"3.0"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_skadi_datadriven"
+		{
+			"Passive"				"1"
+			"IsHidden"				"1"
+			"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
+				"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
+			}
+			
+			"Orb"
+			{
+				"Priority"				"DOTA_ORB_PRIORITY_ITEM"
+				"Label"					"DOTA_ORB_LABEL_SKADI"  //This does not currently seem to have an effect.  "Label" may not be the right key.
+				"ProjectileName"		"particles/items2_fx/skadi_projectile.vpcf"
+				"CastAttack"			"0"
+			}
+
+			"OnOrbImpact"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_skadi.lua"
+					"Function"				"modifier_item_skadi_datadriven_on_orb_impact"
+					"ColdDurationMelee"		"%cold_duration_melee"
+					"ColdDurationRanged"	"%cold_duration_ranged"
+				}
+			}
+		}
+		"modifier_item_skadi_datadriven_cold_attack"
+		{
+			"Passive"				"0"
+			"IsHidden"				"0"
+			
+			"StatusEffectName"     "particles/status_fx/status_effect_frost.vpcf"
+			"StatusEffectPriority" "10"
+				
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%cold_attack_speed"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%cold_movement_speed"
+			}
+		}
+	}
+}
