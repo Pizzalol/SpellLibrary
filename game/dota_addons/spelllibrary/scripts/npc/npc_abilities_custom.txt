@@ -9389,6 +9389,9 @@
 
 
 	//Start of file dazzle_poison_touch_datadriven.txt
+	// Rewrite of the Dazzle Poison Touch ability
+	// Author: Pizzalol
+	// Date: 05.02.2015.
 	"dazzle_poison_touch_datadriven"
 	{
 		// General
@@ -9401,6 +9404,16 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"dazzle_poison_touch"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+			"particle"			"particles/units/heroes/hero_dazzle/dazzle_poison_touch.vpcf"
+			"particle"			"particles/units/heroes/hero_dazzle/dazzle_poison_debuff.vpcf"
+			"particle"			"particles/status_fx/status_effect_poison_dazzle.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -9461,12 +9474,193 @@
 			"07"
 			{	
 				"var_type"			"FIELD_FLOAT"
-				"stun_duration"		"1"
+				"stun_duration"		"0 0 0 1"
 			}
 			"08"
 			{	
 				"var_type"			"FIELD_FLOAT"
 				"duration_tooltip"		"10"
+			}
+			// Extra
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow_1_duration"	"3 2 1 1"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow_2_duration"	"0 1 1 1"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow_3_duration"	"0 0 1 0"
+			}
+			"12"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_duration"	"7"
+			}
+			"13"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"tick_interval"		"1"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Dazzle.Poison_Cast"
+				"Target" 		"CASTER"
+			}
+	
+			"TrackingProjectile"
+			{
+				"Target"           	"TARGET"
+				"EffectName"		"particles/units/heroes/hero_dazzle/dazzle_poison_touch.vpcf"
+				"Dodgeable"			"1"
+				"ProvidesVision"	"0"
+				"MoveSpeed"        	"%projectile_speed"
+				"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"1"
+			
+			"FireSound"
+			{
+				"EffectName"	"Hero_Dazzle.Poison_Touch"
+				"Target" 		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_poison_touch_slow_1_datadriven"
+				"Target" 		"TARGET"
+				"Duration"		"%slow_1_duration"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_poison_touch_debuff_datadriven"
+				"Target" 		"TARGET"
+				"Duration"		"%duration_tooltip"
+			}
+	
+			"DelayedAction"
+			{
+				"Delay"     "%set_time"
+				"Action"    
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_poison_touch_damage_datadriven"
+						"Target" 		"TARGET"
+						"Duration"		"%damage_duration"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_poison_touch_debuff_datadriven"
+			{
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+	
+				"EffectName"		"particles/units/heroes/hero_dazzle/dazzle_poison_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+	
+			"modifier_poison_touch_damage_datadriven"
+			{
+				"IsHidden"		"1"
+	
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_PHYSICAL"
+						"Damage"		"%AbilityDamage"
+					}
+				}
+	
+				"ThinkInterval"  "%tick_interval"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_PHYSICAL"
+						"Damage"		"%AbilityDamage"
+					}
+				}
+			}
+	
+			"modifier_poison_touch_slow_1_datadriven"
+			{
+				"IsHidden"		"1"
+	
+				"StatusEffectName" 		"particles/status_fx/status_effect_poison_dazzle.vpcf" 	   
+				"StatusEffectPriority"  "10"
+	
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_poison_touch_slow_2_datadriven"
+						"Target" 		"TARGET"
+						"Duration"		"%slow_2_duration"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_1" 
+				}
+			}
+	
+			"modifier_poison_touch_slow_2_datadriven"
+			{
+				"IsHidden"		"1"
+	
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_poison_touch_slow_3_datadriven"
+						"Target" 		"TARGET"
+						"Duration"		"%slow_3_duration"
+					}
+	
+					"Stun"
+					{
+						"Duration"   "%stun_duration"
+						"Target" 	 "TARGET"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_2" 
+				}
+			}
+	
+			"modifier_poison_touch_slow_3_datadriven"
+			{
+				"IsHidden"		"1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_3" 
+				}
 			}
 		}
 	}
