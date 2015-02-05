@@ -1,0 +1,127 @@
+// Rewrite of Mask of Madness
+// Author: Rook
+// Date: February 4, 2015
+
+"item_mask_of_madness_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1172"  //Valve's version of this item uses the ID "172".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_mask_of_madness"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"25.0"
+	"AbilityManaCost"				"25"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1800"
+	"ItemShopTags"					"unique;hard_to_tag"
+	"ItemQuality"					"artifact"
+	"ItemAliases"					"mom;mask of madness"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"										"FIELD_INTEGER"
+			"lifesteal_percent"								"20"
+		}
+		"02"
+		{
+			"var_type"										"FIELD_INTEGER"
+			"berserk_bonus_attack_speed"					"100"
+		}
+		"03"
+		{
+			"var_type"										"FIELD_INTEGER"
+			"berserk_bonus_movement_speed_percentage"		"30"
+		}
+		"04"
+		{
+			"var_type"										"FIELD_INTEGER"
+			"berserk_extra_incoming_damage_percentage"		"30"
+		}
+		"05"
+		{
+			"var_type"										"FIELD_FLOAT"
+			"berserk_duration"								"12.0"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"			"CASTER"
+			"ModifierName"		"modifier_item_mask_of_madness_datadriven_berserk"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"		"DOTA_Item.MaskOfMadness.Activate"
+			"Target"			"CASTER"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_mask_of_madness_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Orb"
+			{
+				"Priority"		"DOTA_ORB_PRIORITY_ITEM"
+			}
+
+			"OnOrbImpact"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_mask_of_madness.lua"
+					"Function"				"modifier_item_mask_of_madness_datadriven_on_orb_impact"
+				}
+			}
+		}
+		"modifier_item_mask_of_madness_datadriven_berserk"
+		{
+			"Duration"			"%berserk_duration"
+			"Passive"			"0"
+			"IsHidden"			"0"
+			
+			"EffectName"			"particles/items2_fx/mask_of_madness.vpcf"
+			"EffectAttachType"		"follow_origin"
+				
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%berserk_bonus_movement_speed_percentage"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%berserk_bonus_attack_speed"
+				"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%berserk_extra_incoming_damage_percentage"
+			}
+		}
+		"modifier_item_mask_of_madness_datadriven_lifesteal"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			
+			"OnDealDamage"
+			{
+				"Lifesteal"
+				{
+					"Target"			"ATTACKER"
+					"LifestealPercent"	"%lifesteal_percent"
+				}
+			}
+		}
+	}
+}

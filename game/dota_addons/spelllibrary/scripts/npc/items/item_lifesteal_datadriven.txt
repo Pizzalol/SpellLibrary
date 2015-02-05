@@ -50,7 +50,7 @@
 				"RunScript"
 				{
 					"ScriptFile"			"items/item_lifesteal.lua"
-					"Function"				"modifier_item_lifesteal_datadriven_on_attack_landed"
+					"Function"				"modifier_item_lifesteal_datadriven_on_orb_impact"
 				}
 			}
 		}

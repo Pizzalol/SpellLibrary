@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Mask of Madness
+// Author: Rook
+// Date: February 4, 2015
+
+"item_recipe_mask_of_madness_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1171"  //Valve's version of this item uses the ID "171".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"900"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_mask_of_madness_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_lifesteal_datadriven"
+	}
+}

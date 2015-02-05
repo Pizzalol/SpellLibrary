@@ -1,0 +1,82 @@
+// Rewrite of Arcane Boots
+// Author: Rook
+// Date: February 4, 2015
+
+"item_arcane_boots_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1180"  //Valve's version of this item uses the ID "180".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_arcane_boots"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"              "0"
+	"AbilityCooldown"				"55.0"
+	"AbilityManaCost"				"35"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1450"
+	"ItemShopTags"					"move_speed;boost_mana;mana_pool"
+	"ItemQuality"					"rare"
+	"ItemAliases"					"mana;mb;arcane boots"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+	"ItemAlertable"					"1"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_movement"		"55"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana"			"250"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"replenish_radius"		"600"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"replenish_amount"		"135"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"items/item_arcane_boots.lua"
+			"Function"				"item_arcane_boots_datadriven_on_spell_start"
+			"ReplenishRadius"		"%replenish_radius"
+			"ReplenishAmount"		"%replenish_amount"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_arcane_boots_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE"		"%bonus_movement"
+				"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
+			}
+		}
+	}
+}
