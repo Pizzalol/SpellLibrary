@@ -1,0 +1,28 @@
+// Rewrite of Recipe: Drum of Endurance
+// Author: Rook
+// Date: February 4, 2015
+
+"item_recipe_ancient_janggo_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1184"  //Valve's version of this item uses the ID "184".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"875"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_ancient_janggo_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_bracer_datadriven;item_robe_datadriven"
+		"02"						"item_ancient_janggo_datadriven"
+	}
+}

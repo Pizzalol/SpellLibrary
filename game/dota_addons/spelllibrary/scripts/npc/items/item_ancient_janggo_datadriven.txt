@@ -1,0 +1,151 @@
+// Rewrite of Drum of Endurance
+// Author: Rook
+// Date: February 4, 2015
+
+"item_ancient_janggo_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1185"  //Valve's version of this item uses the ID "185".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_ancient_janggo"
+	"ItemPermanent"					"1"
+	"FightRecapLevel"				"1"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"30"
+	"AbilityManaCost"				"0"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1875"
+	"ItemShopTags"					"str;agi;int;damage;move_speed;attack_speed;hard_to_tag"
+	"ItemQuality"					"rare"
+	"ItemAliases"					"drum of endurance"
+	"ItemInitialCharges"			"6"
+	"ItemDisplayCharges"			"1"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"								"FIELD_INTEGER"
+			"bonus_stats"							"9"
+		}
+		"02"
+		{
+			"var_type"								"FIELD_INTEGER"
+			"bonus_damage"							"3"
+		}
+		"03"
+		{
+			"var_type"								"FIELD_INTEGER"
+			"aura_bonus_attack_speed"				"5"
+		}
+		"04"
+		{
+			"var_type"								"FIELD_INTEGER"
+			"aura_bonus_movement_speed_pct"			"5"
+		}
+		"05"
+		{
+			"var_type"								"FIELD_INTEGER"
+			"endurance_bonus_attack_speed"			"10"
+		}
+		"06"
+		{
+			"var_type"								"FIELD_INTEGER"
+			"endurance_bonus_movement_speed_pct"	"10"
+		}
+		"07"
+		{
+			"var_type"								"FIELD_FLOAT"
+			"endurance_duration"					"6.0"
+		}
+		"08"
+		{
+			"var_type"								"FIELD_INTEGER"
+			"aura_radius"							"900"
+		}
+		"09"
+		{
+			"var_type"								"FIELD_INTEGER"
+			"endurance_radius"						"900"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"items/item_ancient_janggo.lua"
+			"Function"				"item_ancient_janggo_datadriven_on_spell_start"
+			"EnduranceRadius"		"%endurance_radius"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_ancient_janggo_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_stats"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_stats"
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+			}
+		}
+		"modifier_item_ancient_janggo_datadriven_aura_emitter"
+		{
+			"Passive"				"1"
+			"IsHidden"				"1"
+			
+			"Aura" 					"modifier_item_ancient_janggo_datadriven_aura"
+			"Aura_Radius" 			"%aura_radius"
+			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+			"Aura_ApplyToCaster" 	"1"
+		}
+		"modifier_item_ancient_janggo_datadriven_aura"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%aura_bonus_attack_speed"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%aura_bonus_movement_speed_pct"
+			}
+		}
+		"modifier_item_ancient_janggo_datadriven_endurance"
+		{
+			"Duration"			"%endurance_duration"
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"1"
+			"IsDebuff"			"0"
+			"IsPurgable"		"1"
+			
+			"EffectName"			"particles/items_fx/drum_of_endurance_buff.vpcf"
+			"EffectAttachType"		"follow_origin"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%endurance_bonus_attack_speed"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%endurance_bonus_movement_speed_pct"
+			}
+		}
+	}
+}

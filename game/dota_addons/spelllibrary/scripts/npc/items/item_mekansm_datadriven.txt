@@ -124,7 +124,7 @@
 		}
 		"modifier_item_mekansm_datadriven_heal_armor"
 		{
-			"Duration"			"heal_armor_duration"
+			"Duration"			"%heal_armor_duration"
 			"Passive"			"0"
 			"IsHidden"			"0"
 			"IsBuff"			"1"

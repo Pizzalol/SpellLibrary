@@ -1,0 +1,134 @@
+// Rewrite of Orb of Venom
+// Author: Rook
+// Date: February 4, 2015
+// Known bugs:
+//     For some reason, this implementation of Orb of Venom's orb effect only stacks with lifesteal if you pick up
+//         a lifesteal item first and then an Orb of Venom afterwards.
+
+"item_orb_of_venom_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1181"  //Valve's version of this item uses the ID "181".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_orb_of_venom"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"275"
+	"ItemShopTags"					"hard_to_tag"
+	"ItemQuality"					"secret_shop"
+	"ItemAliases"					"orb of venom"
+	"SecretShop"					"1"	
+	"SideShop"						"1"
+		
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"poison_movement_speed_melee"		"-12"
+		}
+		"02"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"poison_movement_speed_ranged"		"-4"
+		}
+		"03"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"poison_duration"					"4.0"
+		}
+		"04"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"poison_damage_per_second"			"3.0"
+		}
+		"05"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"poison_damage_interval"			"1.0"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_orb_of_venom_datadriven"
+		{
+			"Passive"				"1"
+			"IsHidden"				"1"
+			"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Orb"
+			{
+				"Priority"				"DOTA_ORB_PRIORITY_ITEM"
+				"Label"					"DOTA_ORB_LABEL_SKADI"  //This does not currently seem to have an effect.  "Label" may not be the right key.
+				"CastAttack"			"0"
+			}
+
+			"OnOrbImpact"
+			{
+				"RunScript"
+				{
+					"ScriptFile"			"items/item_orb_of_venom.lua"
+					"Function"				"modifier_item_orb_of_venom_datadriven_on_orb_impact"
+				}
+			}
+		}
+		"modifier_item_orb_of_venom_datadriven_poison_attack_melee"
+		{
+			"Duration"				"%poison_duration"
+			"Passive"				"0"
+			"IsHidden"				"0"
+			"EffectName"			"particles/items2_fx/orb_of_venom.vpcf"
+			"EffectAttachType"		"follow_origin"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%poison_movement_speed_melee"
+			}
+			
+			"ThinkInterval" 		"%poison_damage_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"					"items/item_orb_of_venom.lua"
+					"Function"						"modifier_item_orb_of_venom_datadriven_poison_attack_on_interval_think"
+					"PoisonDamagePerSecond"			"%poison_damage_per_second"
+					"PoisonDamageInterval"			"%poison_damage_interval"
+				}
+			}
+		}
+		"modifier_item_orb_of_venom_datadriven_poison_attack_ranged"
+		{
+			"Duration"				"%poison_duration"
+			"Passive"				"0"
+			"IsHidden"				"0"
+			"EffectName"			"particles/items2_fx/orb_of_venom.vpcf"
+			"EffectAttachType"		"follow_origin"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%poison_movement_speed_ranged"
+			}
+			
+			"ThinkInterval" 		"%poison_damage_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"					"items/item_orb_of_venom.lua"
+					"Function"						"modifier_item_orb_of_venom_datadriven_poison_attack_on_interval_think"
+					"PoisonDamagePerSecond"			"%poison_damage_per_second"
+					"PoisonDamageInterval"			"%poison_damage_interval"
+				}
+			}
+		}
+	}
+}
