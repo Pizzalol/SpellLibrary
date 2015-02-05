@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Rod of Atos
+// Author: Rook
+// Date: February 4, 2015
+
+"item_recipe_rod_of_atos_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1205"  //Valve's version of this item uses the ID "205".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_rod_of_atos_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_staff_of_wizardry_datadriven;item_staff_of_wizardry_datadriven;item_vitality_booster_datadriven"
+	}
+}

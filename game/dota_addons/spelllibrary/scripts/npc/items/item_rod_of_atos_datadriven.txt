@@ -1,0 +1,107 @@
+// Rewrite of Rod of Atos
+// Author: Rook
+// Date: February 4, 2015
+
+"item_rod_of_atos_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1206"  //Valve's version of this item uses the ID "206".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_rod_of_atos"
+	"FightRecapLevel"				"1"
+	
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"10"
+	"AbilityCastRange"				"1200"
+	"AbilityCastPoint"				"0.0"
+	"AbilityManaCost"				"50"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"3100"
+	"ItemShopTags"					"int;armor;regen_health"
+	"ItemQuality"					"rare"
+	"ItemAliases"					"rod of atos"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_intelligence"			"25"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_health"					"350"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"cripple_movespeed_slow_pct"	"-60"
+		}
+		"04"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"duration"						"4"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"DOTA_Item.RodOfAtos.Activate"
+			"Target"			"TARGET"
+		}
+			
+		"ApplyModifier"
+		{
+			"Target"			"TARGET"
+			"ModifierName"		"modifier_item_rod_of_atos_datadriven_cripple"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_rod_of_atos_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
+				"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
+			}
+		}
+		"modifier_item_rod_of_atos_datadriven_cripple"
+		{
+			"Duration"			"%duration"
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+			"IsPurgable"		"1"
+			
+			"EffectName"			"particles/items2_fx/rod_of_atos.vpcf"
+			"EffectAttachType"		"follow_origin"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%cripple_movespeed_slow_pct"
+			}
+		}
+	}
+}
