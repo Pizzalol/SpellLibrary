@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Veil of Discord
+// Author: Rook
+// Date: February 4, 2015
+
+"item_recipe_veil_of_discord_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1189"  //Valve's version of this item uses the ID "189".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1250"
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_veil_of_discord_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_helm_of_iron_will_datadriven;item_null_talisman_datadriven"
+	}
+}

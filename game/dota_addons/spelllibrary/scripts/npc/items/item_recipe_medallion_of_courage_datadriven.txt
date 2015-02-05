@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Medallion of Courage
+// Author: Rook
+// Date: February 4, 2015
+
+"item_recipe_medallion_of_courage_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1186"  //Valve's version of this item uses the ID "186".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"325"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_medallion_of_courage_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_chainmail_datadriven;item_sobi_mask_datadriven"
+	}
+}

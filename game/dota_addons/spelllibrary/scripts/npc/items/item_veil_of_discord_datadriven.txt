@@ -1,0 +1,147 @@
+// Rewrite of Veil of Discord
+// Author: Rook
+// Date: February 4, 2015
+
+"item_veil_of_discord_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1190"  //Valve's version of this item uses the ID "190".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_veil_of_discord"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"30"
+	"AbilityCastRange"				"1000"
+	"AbilityCastPoint"				"0.0"
+	"AbilityManaCost"				"75"
+	"AOEradius"						"600"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"2675"
+	"ItemShopTags"					"int;armor;regen_health;hard_to_tag"
+	"ItemQuality"					"rare"
+	"ItemAliases"					"vod;veil of discord"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_health_regen"		"6"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_stats"				"6"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_damage"				"6"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_armor"				"6"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"debuff_radius"				"600"  //Be sure to change AOEradius if debuff_radius is.
+		}
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"resist_debuff_duration"	"25.0"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"resist_debuff"				"-25"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"			"DOTA_Item.VeilofDiscord.Activate"
+			"Target"				"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"TargetPoint"			"POINT"
+			"EffectName"			"particles/items2_fx/veil_of_discord.vpcf"
+			"EffectAttachType"		"world_origin"
+			"ControlPoints"
+			{
+				"01"				"%debuff_radius %debuff_radius %debuff_radius"
+			}
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+            {
+				"Center"			"POINT"
+                "Radius"			"%debuff_radius"
+                "Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+                "Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+            }
+
+            "Action"
+            {
+            	"ApplyModifier"
+				{
+					"Target"			"TARGET"
+					"ModifierName"		"modifier_item_veil_of_discord_datadriven_magic_weakness"
+				}
+            }
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_veil_of_discord_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"			"%bonus_stats"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"				"%bonus_stats"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"			"%bonus_stats"
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%bonus_health_regen"
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%bonus_damage"
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%bonus_armor"
+			}
+		}
+		"modifier_item_veil_of_discord_datadriven_magic_weakness"
+		{
+			"Duration"			"%resist_debuff_duration"
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+			"IsPurgable"		"1"
+			
+			"EffectName"			"particles/items2_fx/veil_of_discord_debuff.vpcf"
+			"EffectAttachType"		"follow_origin"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%resist_debuff"
+			}
+		}
+	}
+}

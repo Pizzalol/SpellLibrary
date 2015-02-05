@@ -1,0 +1,123 @@
+// Rewrite of Medallion of Courage
+// Author: Rook
+// Date: February 4, 2015
+
+"item_medallion_of_courage_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1187"  //Valve's version of this item uses the ID "187".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_medallion_of_courage"
+	"FightRecapLevel"				"1"
+	
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1000"
+	"AbilityCastPoint"				"0.0"
+	"AbilityCooldown"				"7.0"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"1200"
+	"ItemShopTags"					"armor;regen_mana;hard_to_tag"
+	"ItemQuality"					"rare"
+	"ItemAliases"					"medallion of courage"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_armor"			"7"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_mana_regen_pct"	"50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"armor_debuff"			"-7"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"armor_buff"			"7"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"7.0"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"items/item_medallion_of_courage.lua"
+			"Function"			"item_medallion_of_courage_datadriven_on_spell_start"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_medallion_of_courage_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+				"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_pct"
+			}
+		}
+		"modifier_item_medallion_of_courage_datadriven_debuff"  //Placed onto the caster and enemies.
+		{
+			"Duration"			"%duration"
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+			"IsPurgable"		"1"
+			
+			"EffectName"			"particles/items2_fx/medallion_of_courage.vpcf"
+			"EffectAttachType"		"follow_overhead"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_debuff"
+			}
+		}
+		"modifier_item_medallion_of_courage_datadriven_buff"  //Placed onto allies.
+		{
+			"Duration"			"%duration"
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"1"
+			"IsDebuff"			"0"
+			"IsPurgable"		"1"
+			
+			"EffectName"			"particles/items2_fx/medallion_of_courage.vpcf"
+			"EffectAttachType"		"follow_overhead"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_buff"
+			}
+		}
+	}
+}
