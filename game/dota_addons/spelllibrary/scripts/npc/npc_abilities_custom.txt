@@ -9815,6 +9815,7 @@
 						"ScriptFile"	"heroes/hero_dazzle/weave.lua"
 						"Function"		"WeavePositiveParticle"
 						"particle_name"		"particles/units/heroes/hero_dazzle/dazzle_armor_friend.vpcf"
+						"modifier"		"modifier_weave_friendly_datadriven"
 					}
 				}
 	
@@ -9843,6 +9844,7 @@
 					{
 						"ScriptFile"	"heroes/hero_dazzle/weave.lua"
 						"Function"		"EndWeavePositiveParticle"
+						"modifier"		"modifier_weave_friendly_datadriven"
 					}
 				}
 			}
@@ -9853,17 +9855,12 @@
 	
 				"OnCreated"
 				{
-					"AttachEffect"
+					"RunScript"
 					{
-						"EffectName"        "particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
-						"EffectAttachType"  "follow_overhead"
-						"Target"            "TARGET"
-	
-						"ControlPointEntities"
-						{
-							"TARGET"	"follow_overhead"
-							"TARGET"	"follow_origin"
-						}
+						"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+						"Function"		"WeaveNegativeParticle"
+						"particle_name"		"particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
+						"modifier"		"modifier_weave_enemy_datadriven"
 					}
 				}
 	
@@ -9887,6 +9884,14 @@
 						"Function"		"WeaveRemoveNegative"
 						"modifier"		"modifier_weave_negative_datadriven"
 					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+						"Function"		"EndWeaveNegativeParticle"
+						"modifier"		"modifier_weave_enemy_datadriven"
+					}
+	
 				}
 			}
 	
@@ -54496,6 +54501,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"MaxLevel"						"1"
+		"AbilityTextureName"			"wisp_tether_break"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -54504,6 +54510,27 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"1.0 1.0 1.0 1.0"
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RemoveModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_tether_caster_datadriven"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_wisp/tether.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"wisp_tether_datadriven"
+			}
+		}
 	}
 	
 	//End of file wisp_tether_break_datadriven.txt
@@ -54517,8 +54544,9 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"wisp_tether"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -54585,6 +54613,367 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"0.75 1.25 1.75 2.25"
+			}
+			// Extra variables
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"latch_distance_to_target"	"300"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"latch_destroy_tree_radius"	"350"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"latch_tick_interval"		"0.03"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tether_line_radius"		"32"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tether_line_tick_interval"	"0.03"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_tether.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_tether_hit.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_tether_slow.vpcf"
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_wisp/tether.lua"
+				"Function"		"TetherPreCast"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_tether_caster_datadriven"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"		"TARGET"
+				"ModifierName"	"modifier_tether_ally_datadriven"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_wisp/tether.lua"
+				"Function"			"CastTether"
+				"Target"			"TARGET"
+				
+				"latch_distance"	"%latch_distance"
+				"latch_modifier"	"modifier_tether_caster_latching_datadriven"
+				
+				"sub_ability_name"	"wisp_tether_break_datadriven"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_wisp/tether.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"wisp_tether_break_datadriven"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_wisp/tether.lua"
+				"Function"			"OnProjectileHit"
+				"Target"			"TARGET"
+				
+				"slow_modifier"		"modifier_tether_slow_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_tether_caster_datadriven"
+			{
+				"IsBuff"	"1"
+				"Duration"	"%tether_duration"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed"
+				}
+				
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Wisp.Tether"	// a loop sound
+						"Target"			"CASTER"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"Target"			"CASTER"
+						"ModifierName"		"modifier_tether_caster_latching_datadriven"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/tether.lua"
+						"Function"			"EndTether"
+						
+						"ally_modifier"		"modifier_tether_ally_datadriven"
+						"sub_ability_name"	"wisp_tether_break_datadriven"
+					}
+				
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/tether.lua"
+						"Function"			"StopSound"
+						"sound_name"		"Hero_Wisp.Tether"
+					}
+					
+					"FireSound"
+					{
+						"EffectName"		"Hero_Wisp.Tether.Stop"
+						"Target"			"CASTER"
+					}
+				}
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/tether.lua"
+						"Function"		"TrackCurrentHealth"
+					}
+				}
+				
+				"OnHealReceived"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/tether.lua"
+						"Function"		"HealAlly"
+						"tether_heal_amp"	"%tether_heal_amp"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/tether.lua"
+						"Function"		"TrackCurrentHealth"
+					}
+				}
+				
+				"OnHealthGained"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/tether.lua"
+						"Function"		"HealAlly"
+						"tether_heal_amp"	"%tether_heal_amp"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/tether.lua"
+						"Function"		"TrackCurrentHealth"
+					}
+				}
+				
+				"OnSpentMana"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/tether.lua"
+						"Function"		"GiveManaToAlly"
+						"tether_heal_amp"	"%tether_heal_amp"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/tether.lua"
+						"Function"		"TrackCurrentMana"
+					}
+				}
+				
+				"OnManaGained"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/tether.lua"
+						"Function"		"GiveManaToAlly"
+						"tether_heal_amp"	"%tether_heal_amp"
+					}
+				
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/tether.lua"
+						"Function"		"TrackCurrentMana"
+					}
+				}
+				
+				"ThinkInterval"		"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/tether.lua"
+						"Function"		"TrackCurrentHealth"
+					}
+				//	"RunScript"
+				//	{
+				//		"ScriptFile"	"heroes/hero_wisp/tether.lua"
+				//		"Function"		"TrackCurrentMana"
+				//	}
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/tether.lua"
+						"Function"		"CheckDistance"
+						
+						"radius"			"%radius"
+						"caster_modifier"	"modifier_tether_caster_datadriven"
+						"latch_modifier"	"modifier_tether_caster_latching_datadriven"
+					}
+				}
+			}
+			
+			"modifier_tether_caster_latching_datadriven"
+			{
+				"IsHidden"	"1"
+				
+				"Duration"	"%tether_duration"
+				
+				"ThinkInterval"		"%latch_tick_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/tether.lua"
+						"Function"			"Latch"
+						
+						"tick_interval"				"%latch_tick_interval"
+						"latch_speed"				"%latch_speed"
+						"latch_distance_to_target"	"%latch_distance_to_target"
+						"latch_modifier"			"modifier_tether_caster_latching_datadriven"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				
+				"OnDestroy"
+				{
+					"DestroyTrees"
+					{
+						"Target"		"TARGET"
+						"Radius"		"%latch_destroy_tree_radius"
+					}
+				}
+			}
+			
+			"modifier_tether_ally_datadriven"
+			{
+				"IsBuff"	"1"
+				"Duration"	"%tether_duration"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed"
+				}
+				
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Wisp.Tether.Target"
+						"Target"			"TARGET"
+					}
+					
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_wisp/wisp_tether.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+						
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_hitloc"
+							"TARGET"	"attach_hitloc"
+						}
+					}
+				}
+				
+				"ThinkInterval"			"%tether_line_tick_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/tether.lua"
+						"Function"			"FireTetherProjectile"
+						"Target"			"TARGET"
+						
+						"tether_line_radius"	"%tether_line_radius"
+						"tick_interval"			"%tether_line_tick_interval"
+					}
+				}
+			}
+			
+			"modifier_tether_slow_datadriven"
+			{
+				"IsDebuff"	"1"
+			
+				"Duration"	"%stun_duration"
+				
+				"EffectName"		"particles/units/heroes/hero_wisp/wisp_tether_slow.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
+				}
+				
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_wisp/wisp_tether_slow.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+					}
+					
+					"FireSound"
+					{
+						"EffectName"	"Hero_Wisp.Tether.Stun"
+						"Target"		"TARGET"
+					}
+				}
 			}
 		}
 	}

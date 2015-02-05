@@ -173,6 +173,7 @@
 					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
 					"Function"		"WeavePositiveParticle"
 					"particle_name"		"particles/units/heroes/hero_dazzle/dazzle_armor_friend.vpcf"
+					"modifier"		"modifier_weave_friendly_datadriven"
 				}
 			}
 
@@ -201,6 +202,7 @@
 				{
 					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
 					"Function"		"EndWeavePositiveParticle"
+					"modifier"		"modifier_weave_friendly_datadriven"
 				}
 			}
 		}
@@ -211,17 +213,12 @@
 
 			"OnCreated"
 			{
-				"AttachEffect"
+				"RunScript"
 				{
-					"EffectName"        "particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
-					"EffectAttachType"  "follow_overhead"
-					"Target"            "TARGET"
-
-					"ControlPointEntities"
-					{
-						"TARGET"	"follow_overhead"
-						"TARGET"	"follow_origin"
-					}
+					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+					"Function"		"WeaveNegativeParticle"
+					"particle_name"		"particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
+					"modifier"		"modifier_weave_enemy_datadriven"
 				}
 			}
 
@@ -245,6 +242,14 @@
 					"Function"		"WeaveRemoveNegative"
 					"modifier"		"modifier_weave_negative_datadriven"
 				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+					"Function"		"EndWeaveNegativeParticle"
+					"modifier"		"modifier_weave_enemy_datadriven"
+				}
+
 			}
 		}
 

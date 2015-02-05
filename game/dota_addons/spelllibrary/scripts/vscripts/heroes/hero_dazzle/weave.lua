@@ -60,33 +60,82 @@ end
 
 --[[
 	Author: Noya, Pizzalol
-	Date: 02.02.2015.
+	Date: 05.02.2015.
 	Shows the dazzle friendly armor particle
 ]]
 function WeavePositiveParticle( event )
 	local target = event.target
 	local location = target:GetAbsOrigin()
 	local particleName = event.particle_name
+	local modifier = event.modifier
 
-	local particle_table = {}
-	particle_table.target = target
+	-- Count the number of weave modifiers
+	local count = 0
 
-	if target.WeavePositiveParticle ~= nil then
-		EndWeavePositiveParticle(particle_table)
+	for i = 0, target:GetModifierCount() do
+		if target:GetModifierNameByIndex(i) == modifier then
+			count = count + 1
+		end
 	end
-	-- Particle. Need to wait one frame for the older particle to be destroyed
-	Timers:CreateTimer(0.01, function() 
+
+	-- If its the first one then apply the particle
+	if count == 1 then 
 		target.WeavePositiveParticle = ParticleManager:CreateParticle(particleName, PATTACH_OVERHEAD_FOLLOW, target)
 		ParticleManager:SetParticleControl(target.WeavePositiveParticle, 0, target:GetAbsOrigin())
 		ParticleManager:SetParticleControl(target.WeavePositiveParticle, 1, target:GetAbsOrigin())
 
 		ParticleManager:SetParticleControlEnt(target.WeavePositiveParticle, 1, target, PATTACH_OVERHEAD_FOLLOW, "attach_overhead", target:GetAbsOrigin(), true)
-	end)
+	end
 end
 
--- Destroys the particle when the modifier is destroyed
+-- Destroys the particle when the modifier is destroyed, only when the target doesnt have the modifier
 function EndWeavePositiveParticle( event )
 	local target = event.target
-	ParticleManager:DestroyParticle(target.WeavePositiveParticle,false)
-	target.WeavePositiveParticle = nil
+	local particleName = event.particle_name
+	local modifier = event.modifier
+
+	if not target:HasModifier(modifier) then
+		ParticleManager:DestroyParticle(target.WeavePositiveParticle,false)
+	end
+end
+
+--[[
+	Author: Noya, Pizzalol
+	Date: 05.02.2015.
+	Shows the dazzle enemy armor particle
+]]
+function WeaveNegativeParticle( event )
+	local target = event.target
+	local location = target:GetAbsOrigin()
+	local particleName = event.particle_name
+	local modifier = event.modifier
+
+	-- Count the number of weave modifiers
+	local count = 0
+
+	for i = 0, target:GetModifierCount() do
+		if target:GetModifierNameByIndex(i) == modifier then
+			count = count + 1
+		end
+	end
+
+	-- If its the first one then apply the particle
+	if count == 1 then 
+		target.WeaveNegativeParticle = ParticleManager:CreateParticle(particleName, PATTACH_OVERHEAD_FOLLOW, target)
+		ParticleManager:SetParticleControl(target.WeaveNegativeParticle, 0, target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(target.WeaveNegativeParticle, 1, target:GetAbsOrigin())
+
+		ParticleManager:SetParticleControlEnt(target.WeaveNegativeParticle, 1, target, PATTACH_OVERHEAD_FOLLOW, "attach_overhead", target:GetAbsOrigin(), true)
+	end
+end
+
+-- Destroys the particle when the modifier is destroyed, only when the target doesnt have the modifier
+function EndWeaveNegativeParticle( event )
+	local target = event.target
+	local particleName = event.particle_name
+	local modifier = event.modifier
+
+	if not target:HasModifier(modifier) then
+		ParticleManager:DestroyParticle(target.WeaveNegativeParticle,false)
+	end
 end

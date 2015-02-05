@@ -187,6 +187,562 @@
 	//End of file item_abyssal_blade_datadriven.txt
 
 
+	//Start of file item_ancient_janggo_datadriven.txt
+	// Rewrite of Drum of Endurance
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_ancient_janggo_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1185"  //Valve's version of this item uses the ID "185".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_ancient_janggo"
+		"ItemPermanent"					"1"
+		"FightRecapLevel"				"1"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"30"
+		"AbilityManaCost"				"0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1875"
+		"ItemShopTags"					"str;agi;int;damage;move_speed;attack_speed;hard_to_tag"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"drum of endurance"
+		"ItemInitialCharges"			"6"
+		"ItemDisplayCharges"			"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_stats"							"9"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_damage"							"3"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"aura_bonus_attack_speed"				"5"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"aura_bonus_movement_speed_pct"			"5"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"endurance_bonus_attack_speed"			"10"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"endurance_bonus_movement_speed_pct"	"10"
+			}
+			"07"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"endurance_duration"					"6.0"
+			}
+			"08"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"aura_radius"							"900"
+			}
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"endurance_radius"						"900"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_ancient_janggo.lua"
+				"Function"				"item_ancient_janggo_datadriven_on_spell_start"
+				"EnduranceRadius"		"%endurance_radius"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_ancient_janggo_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_stats"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_stats"
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				}
+			}
+			"modifier_item_ancient_janggo_datadriven_aura_emitter"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				
+				"Aura" 					"modifier_item_ancient_janggo_datadriven_aura"
+				"Aura_Radius" 			"%aura_radius"
+				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				"Aura_ApplyToCaster" 	"1"
+			}
+			"modifier_item_ancient_janggo_datadriven_aura"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%aura_bonus_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%aura_bonus_movement_speed_pct"
+				}
+			}
+			"modifier_item_ancient_janggo_datadriven_endurance"
+			{
+				"Duration"			"%endurance_duration"
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"1"
+				"IsDebuff"			"0"
+				"IsPurgable"		"1"
+				
+				"EffectName"			"particles/items_fx/drum_of_endurance_buff.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%endurance_bonus_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%endurance_bonus_movement_speed_pct"
+				}
+			}
+		}
+	}
+	//End of file item_ancient_janggo_datadriven.txt
+
+
+	//Start of file item_arcane_boots_datadriven.txt
+	// Rewrite of Arcane Boots
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_arcane_boots_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1180"  //Valve's version of this item uses the ID "180".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_arcane_boots"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"              "0"
+		"AbilityCooldown"				"55.0"
+		"AbilityManaCost"				"35"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1450"
+		"ItemShopTags"					"move_speed;boost_mana;mana_pool"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"mana;mb;arcane boots"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemAlertable"					"1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement"		"55"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"250"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replenish_radius"		"600"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replenish_amount"		"135"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_arcane_boots.lua"
+				"Function"				"item_arcane_boots_datadriven_on_spell_start"
+				"ReplenishRadius"		"%replenish_radius"
+				"ReplenishAmount"		"%replenish_amount"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_arcane_boots_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE"		"%bonus_movement"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
+				}
+			}
+		}
+	}
+	//End of file item_arcane_boots_datadriven.txt
+
+
+	//Start of file item_armlet_datadriven.txt
+	// Rewrite of Armlet of Mordiggian
+	// Author: Rook
+	// Date: February 3, 2015
+	// Known bugs:
+	//     Since there is currently no way to alter the item's texture on the fly, Armlet is split up into two items.
+	//     Toggling Armlet activates the 10-second window in which it can be sold for full price.
+	//     This implementation only supports one Armlet being active at a time.
+	
+	
+	"item_dummy_datadriven"  //A dummy item that is used to take up item slots in the swap_to_item() Lua function.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"                            "2001"
+		"BaseClass"                     "item_datadriven"
+		"ItemBaseLevel"                 "1"
+	}
+	
+	"item_armlet_datadriven"  //The inactive version of Armlet.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1151"  //Valve's version of this item uses the ID "151".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_armlet"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2400"
+		"ItemShopTags"					"damage;attack_speed;armor;regen_health;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"armlet of mordiggian"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"9"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_attack_speed"			"15"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_armor"					"5"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_health_regen"			"7"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"unholy_bonus_damage"			"31"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"unholy_bonus_attack_speed"		"10"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"unholy_bonus_strength"			"25"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"unholy_health_drain"			"40"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"toggle_cooldown"				"0.036f"
+			}	
+		}
+		
+		"OnSpellStart"  //Switch to the active version of Armlet.
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_armlet.lua"
+				"Function"				"item_armlet_datadriven_on_spell_start"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"				"DOTA_Item.Armlet.Activate"
+				"Target"					"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_armlet_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+				}
+			}
+		}
+	}
+	
+	
+	"item_armlet_active_datadriven"  //The active version of Armlet.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"2151"  //Valve's version of this item uses the ID "151".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_armlet_active"
+	
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+			
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2400"
+		"ItemShopTags"					"damage;attack_speed;armor;regen_health;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"armlet of mordiggian"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		"ItemPurchasable"				"0"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_damage"						"9"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_attack_speed"				"15"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_armor"						"5"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_health_regen"				"7"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"unholy_bonus_damage"				"31"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"unholy_bonus_attack_speed"			"10"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"unholy_bonus_strength"				"25"  //The ratio of %unholy_bonus_strength to %unholy_ticks_to_full_effect is currently hardcoded in modifier_item_armlet_active_datadriven_tick for technical reasons.
+			}
+			"08"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"unholy_health_drain_per_second"	"40"
+			}
+			"09"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"unholy_health_drain_interval"		".1"
+			}
+			"10"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"unholy_ticks_to_full_effect"		"7"  //The ratio of %unholy_bonus_strength to %unholy_ticks_to_full_effect is currently hardcoded in modifier_item_armlet_active_datadriven_tick for technical reasons.
+			}
+			"11"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"unholy_tick_interval"				".1"  //This is the interval at which the caster will gain Strength immediately after Armlet is toggled on.
+			}
+		}
+		
+		"OnSpellStart"  //Switch to the inactive version of Armlet.
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_armlet.lua"
+				"Function"				"item_armlet_active_datadriven_on_spell_start"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"			"DOTA_Item.Armlet.DeActivate"
+				"Target"				"CASTER"
+			}
+		}
+		
+		"OnUnequip"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"					"items/item_armlet.lua"
+				"Function"						"item_armlet_active_datadriven_on_unequip"
+				"UnholyTicksToFullEffect"		"%unholy_ticks_to_full_effect"
+				"UnholyBonusStrength"			"%unholy_bonus_strength"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_item_armlet_active_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"EffectName"			"particles/items_fx/armlet.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+				}
+				
+				"ThinkInterval" 		"%unholy_health_drain_interval"
+				"OnIntervalThink"  //Damage the caster while Armlet is toggled on.
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"items/item_armlet.lua"
+						"Function"						"modifier_item_armlet_active_datadriven_on_interval_think_damage"
+						"UnholyHealthDrainPerSecond"	"%unholy_health_drain_per_second"
+						"UnholyHealthDrainInterval"		"%unholy_health_drain_interval"
+					}
+				}
+			}
+			//The acquisition of Strength is delayed until after the first %unholy_tick_interval seconds.  Regularly add
+			//more Strength so long as the caster doesn't have as many Strength ticks as they should.
+			"modifier_item_armlet_active_datadriven_apply_tick_strength"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%unholy_bonus_damage"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%unholy_bonus_attack_speed"
+				}
+				
+				"ThinkInterval" 		"%unholy_tick_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"items/item_armlet.lua"
+						"Function"						"modifier_item_armlet_active_datadriven_apply_tick_strength_on_interval_think"
+						"UnholyTicksToFullEffect"		"%unholy_ticks_to_full_effect"
+						"UnholyBonusStrength"			"%unholy_bonus_strength"
+					}
+				}
+			}
+			//Strength is gained every %unholy_tick_interval seconds a total of %unholy_ticks_to_full_effect times, so 
+			//for the default values, add one of these modifiers every .1 seconds until there are 7 on the caster.
+			"modifier_item_armlet_active_datadriven_tick"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"3.57"  //This value is %unholy_bonus_strength / %unholy_ticks_to_full_effect and is hardcoded here for technical reasons.
+				}
+			}
+		}
+	}
+	//End of file item_armlet_datadriven.txt
+
+
 	//Start of file item_assault_datadriven.txt
 	// Rewrite of Assault Cuirass
 	// Author: Rook
@@ -544,6 +1100,145 @@
 		}
 	}
 	//End of file item_belt_of_strength_datadriven.txt
+
+
+	//Start of file item_bfury_datadriven.txt
+	// Rewrite of Battle Fury
+	// Author: Rook
+	// Date: February 2, 2015
+	
+	"item_bfury_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1145"  //Valve's version of this item uses the ID "145".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_bfury"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4350"
+		"ItemShopTags"					"damage;health_regen;mana_regen;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"bf;battle fury"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"65"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_health_regen"			"6"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_mana_regen_percentage"	"150"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cleave_damage_percent"			"35"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cleave_radius"					"250"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_bfury_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_percentage"
+				}
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_bfury.lua"
+						"Function"			"modifier_item_bfury_datadriven_on_created"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_bfury.lua"
+						"Function"			"modifier_item_bfury_datadriven_on_destroy"
+					}
+				}
+				
+				//Continually check to see if the hero this modifier is on has switched from ranged
+				//to melee, in which case they should be given cleave modifier(s).
+				"ThinkInterval" ".03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_bfury.lua"
+						"Function"			"modifier_item_bfury_datadriven_on_interval_think"
+					}
+				}
+			}
+			"modifier_item_bfury_datadriven_cleave"  //Only melee units can cleave, so only melee units should get this modifier.
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"OnAttackLanded"
+				{
+					"CleaveAttack"
+					{
+						"CleavePercent"		"%cleave_damage_percent"
+						"CleaveRadius"		"%cleave_radius"
+						"CleaveEffect"		"particles/items_fx/battlefury_cleave.vpcf"
+					}
+					
+					"FireSound"
+					{
+						"EffectName"				"DOTA_Item.BattleFury"
+						"Target"					"TARGET"
+					}
+				}
+				
+				//Continually check to see if the hero this modifier is on is still melee 
+				//(since some units, like Troll Warlord, can switch between ranged/melee forms).
+				"ThinkInterval" ".03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_bfury.lua"
+						"Function"			"modifier_item_bfury_datadriven_cleave_on_interval_think"
+					}
+				}
+			}
+		}
+	}
+	//End of file item_bfury_datadriven.txt
 
 
 	//Start of file item_black_king_bar_datadriven.txt
@@ -1907,6 +2602,58 @@
 	//End of file item_clarity_datadriven.txt
 
 
+	//Start of file item_claymore_datadriven.txt
+	// Rewrite of Claymore
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_claymore_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1005"  //Valve's version of this item uses the ID "5".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_claymore"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1400"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"component"
+		"ItemAliases"					"claymore"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"21"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_claymore_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				}
+			}
+		}
+	}
+	//End of file item_claymore_datadriven.txt
+
+
 	//Start of file item_cloak_datadriven.txt
 	// Rewrite of Cloak
 	// Author: Rook
@@ -2494,6 +3241,102 @@
 		}
 	}
 	//End of file item_demon_edge_datadriven.txt
+
+
+	//Start of file item_desolator_datadriven.txt
+	// Rewrite of Desolator
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_desolator_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1168"  //Valve's version of this item uses the ID "168".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_desolator"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4100"
+		"ItemShopTags"					"damage;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"desolator"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"corruption_armor"		"-7"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"corruption_duration"	"15.0"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_desolator_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"						"%bonus_damage"
+				}
+				
+				"Orb"
+				{
+					"Priority"				"DOTA_ORB_PRIORITY_ITEM"
+					"ProjectileName"		"particles/items_fx/desolator_projectile.vpcf"
+					"CastAttack"			"0"
+				}
+	
+				"OnOrbImpact"
+				{
+					"ApplyModifier"
+					{
+						"Target"			"TARGET"
+						"ModifierName"		"modifier_item_desolator_datadriven_corruption"
+					}
+					
+					"FireSound"
+					{
+						"EffectName"		"Item_Desolator.Target"
+						"Target"			"TARGET"
+					}
+				}
+			}
+			"modifier_item_desolator_datadriven_corruption"
+			{
+				"Duration"				"%corruption_duration"
+				"Passive"				"0"
+				"IsHidden"				"0"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%corruption_armor"
+				}
+			}
+		}
+	}
+	//End of file item_desolator_datadriven.txt
 
 
 	//Start of file item_eagle_datadriven.txt
@@ -3390,6 +4233,155 @@
 	//End of file item_hyperstone_datadriven.txt
 
 
+	//Start of file item_invis_sword_datadriven.txt
+	// Rewrite of Shadow Blade
+	// Author: Rook
+	// Date: February 3, 2015
+	// Known bugs:
+	//     Invisibility is lost upon the hero's autoattack projectile connecting with a unit, not when it is created like it should be.
+	
+	"item_invis_sword_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1152"  //Valve's version of this item uses the ID "152".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_invis_sword"
+		"FightRecapLevel"				"1"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"28.0"
+		"AbilityManaCost"				"75"
+		"AbilityCastPoint"              "0"
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2800"
+		"ItemShopTags"					"damage;attack_speed;movespeed;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"sb;invis;shadow blade"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"									"FIELD_INTEGER"
+				"bonus_damage"								"22"
+			}
+			"02"
+			{
+				"var_type"									"FIELD_INTEGER"
+				"bonus_attack_speed"						"30"
+			}
+			"03"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"windwalk_duration"							"14.0"
+			}
+			"04"
+			{
+				"var_type"									"FIELD_INTEGER"
+				"windwalk_bonus_movement_speed_percentage"	"20"
+			}
+			"05"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"windwalk_fade_time"						"0.3"
+			}
+			"06"
+			{
+				"var_type"									"FIELD_INTEGER"
+				"windwalk_bonus_damage"						"175"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_invis_sword.lua"
+				"Function"				"item_invis_sword_datadriven_on_spell_start"
+				"WindwalkFadeTime"		"%windwalk_fade_time"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_invis_sword_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				}
+			}
+			"modifier_item_invis_sword_datadriven_active"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"1"
+				"IsDebuff"			"0"
+				"IsPurgable"		"1"
+				"Duration"			"%windwalk_duration"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%windwalk_bonus_movement_speed_percentage"
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				
+				"OnAbilityExecuted"  //Remove this modifier from the unit, since they should no longer be invis.
+				{
+					"RemoveModifier"
+					{
+						"Target"			"CASTER"
+						"ModifierName"		"modifier_item_invis_sword_datadriven_active"
+					}
+				}
+				
+				//Remove this modifier and deal extra damage to the target.  Note: For parity, the invisibility should be 
+				//removed when the autoattack projectile appears, but there is currently no event that can be used for this.
+				"OnAttackLanded" 
+				{				
+					"RunScript"
+					{
+						"ScriptFile"				"items/item_invis_sword.lua"
+						"Function"					"modifier_item_invis_sword_datadriven_active_on_attack_landed"
+						"WindwalkBonusDamage"		"%windwalk_bonus_damage"
+					}
+				}
+				
+				"ThinkInterval" 		".03"
+				//Repeatedly apply the stock modifier_invisible for the sole purpose of making the unit have a transparent texture.
+				//This can be gotten rid of when we discover how to apply a translucent texture manually.
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_invis_sword.lua"
+						"Function"			"modifier_item_invis_sword_datadriven_active_on_interval_think"
+					}
+				}
+			}
+		}
+	}
+	//End of file item_invis_sword_datadriven.txt
+
+
 	//Start of file item_javelin_datadriven.txt
 	// Rewrite of Javelin
 	// Author: Rook
@@ -3473,8 +4465,6 @@
 	// Rewrite of Morbid Mask
 	// Author: Rook
 	// Date: January 25, 2015
-	// Known bugs:
-	//     Lifesteal triggers when attacking structures.
 	
 	"item_lifesteal_datadriven"
 	{
@@ -3514,12 +4504,17 @@
 				"IsHidden"			"1"
 				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
-				"OnAttackLanded"
+				"Orb"
+				{
+					"Priority"		"DOTA_ORB_PRIORITY_ITEM"
+				}
+	
+				"OnOrbImpact"
 				{
 					"RunScript"
 					{
 						"ScriptFile"			"items/item_lifesteal.lua"
-						"Function"				"modifier_item_lifesteal_datadriven_on_attack_landed"
+						"Function"				"modifier_item_lifesteal_datadriven_on_orb_impact"
 					}
 				}
 			}
@@ -3769,6 +4764,207 @@
 	//End of file item_magic_wand_datadriven.txt
 
 
+	//Start of file item_manta_datadriven.txt
+	// Rewrite of Manta Style
+	// Author: Rook
+	// Date: February 2, 2015
+	// Note: The number of illusions spawned is currently hardcoded in at 2.
+	
+	"item_manta_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1147"  //Valve's version of this item uses the ID "147".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_manta"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"50.0"  //This is the cooldown when used by ranged units.
+		"AbilityCastPoint"				"0.0"
+		"AbilityManaCost"				"165"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4950"
+		"ItemShopTags"					"agi;str;int;attack_speed;move_speed;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"manta style"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"bonus_strength"									"10"
+			}
+			"02"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"bonus_agility"										"26"
+			}
+			"03"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"bonus_intelligence"								"10"
+			}
+			"04"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"bonus_attack_speed"								"15"
+			}
+			"05"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"bonus_movement_speed_percentage"					"10"
+			}
+			"06"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"images_count"										"2"  //This value is currently hardcoded in item_manta.lua.
+			}
+			"07"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"illusion_duration"									"20"
+			}
+			"08"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"illusion_damage_percent_outgoing_melee"			"-67"
+			}
+			"09"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"illusion_damage_percent_outgoing_melee_tooltip"	"33"
+			}	
+			"10"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"illusion_damage_percent_incoming_melee"			"250"
+			}
+			"11"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"illusion_damage_percent_incoming_melee_tooltip"	"350"
+			}			
+			"12"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"illusion_damage_percent_outgoing_ranged"			"-72"
+			}
+			"13"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"illusion_damage_percent_outgoing_ranged_tooltip"	"28"
+			}
+			"14"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"illusion_damage_percent_incoming_ranged"			"300"
+			}
+			"15"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"illusion_damage_percent_incoming_ranged_tooltip"	"400"
+			}
+			"16"
+			{
+				"var_type"											"FIELD_FLOAT"
+				"cooldown_melee"									"35.0"  //The cooldown for a ranged caster is the AbilityCooldown value.
+			}
+			"17"
+			{
+				"var_type"											"FIELD_FLOAT"
+				"invulnerability_duration"							"0.1"
+			}
+			"18"
+			{
+				"var_type"											"FIELD_INTEGER"
+				"vision_radius"										"1000"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"					"items/item_manta.lua"
+				"Function"						"item_manta_datadriven_on_spell_start"
+				"CooldownMelee"					"%cooldown_melee"
+				"InvulnerabilityDuration"		"%invulnerability_duration"
+				"VisionRadius"					"%vision_radius"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_manta_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"						"%bonus_strength"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"							"%bonus_agility"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"						"%bonus_intelligence"
+					
+					//Attack speed from Yasha-derived items affect your illusions.
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT_SECONDARY"		"%bonus_attack_speed"
+					
+					//Movement speed from Yasha-derived items does not stack with itself but does stack with other percentage-based movement speed bonuses.
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"			"%bonus_movement_speed_percentage"
+				}
+			}
+			
+			"modifier_item_manta_datadriven_spawning_animation"
+			{
+				"Duration"			".1"
+				"Passive"			"0"
+				"IsHidden"			"1"
+				
+				"OverrideAnimation"     "ACT_DOTA_SPAWN"
+			}
+			"modifier_item_manta_datadriven_invulnerability"
+			{
+				"Duration"	"%invulnerability_duration"
+				"Passive"	"0"
+				"IsHidden"	"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_manta.lua"
+						"Function"			"modifier_item_manta_datadriven_invulnerability_on_destroy"
+						"IllusionOutgoingDamageMelee"	"%illusion_damage_percent_outgoing_melee"
+						"IllusionIncomingDamageMelee"	"%illusion_damage_percent_incoming_melee"
+						"IllusionOutgoingDamageRanged"	"%illusion_damage_percent_outgoing_ranged"
+						"IllusionIncomingDamageRanged"	"%illusion_damage_percent_incoming_ranged"
+						"IllusionDuration"				"%illusion_duration"
+					}
+				}				
+			}
+		}
+	}
+	//End of file item_manta_datadriven.txt
+
+
 	//Start of file item_mantle_datadriven.txt
 	// Rewrite of Mantle of Intelligence
 	// Author: Rook
@@ -3819,6 +5015,265 @@
 		}
 	}
 	//End of file item_mantle_datadriven.txt
+
+
+	//Start of file item_mask_of_madness_datadriven.txt
+	// Rewrite of Mask of Madness
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_mask_of_madness_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1172"  //Valve's version of this item uses the ID "172".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_mask_of_madness"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"25.0"
+		"AbilityManaCost"				"25"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1800"
+		"ItemShopTags"					"unique;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"mom;mask of madness"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"										"FIELD_INTEGER"
+				"lifesteal_percent"								"20"
+			}
+			"02"
+			{
+				"var_type"										"FIELD_INTEGER"
+				"berserk_bonus_attack_speed"					"100"
+			}
+			"03"
+			{
+				"var_type"										"FIELD_INTEGER"
+				"berserk_bonus_movement_speed_percentage"		"30"
+			}
+			"04"
+			{
+				"var_type"										"FIELD_INTEGER"
+				"berserk_extra_incoming_damage_percentage"		"30"
+			}
+			"05"
+			{
+				"var_type"										"FIELD_FLOAT"
+				"berserk_duration"								"12.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"modifier_item_mask_of_madness_datadriven_berserk"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"		"DOTA_Item.MaskOfMadness.Activate"
+				"Target"			"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_mask_of_madness_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Orb"
+				{
+					"Priority"		"DOTA_ORB_PRIORITY_ITEM"
+				}
+	
+				"OnOrbImpact"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_mask_of_madness.lua"
+						"Function"				"modifier_item_mask_of_madness_datadriven_on_orb_impact"
+					}
+				}
+			}
+			"modifier_item_mask_of_madness_datadriven_berserk"
+			{
+				"Duration"			"%berserk_duration"
+				"Passive"			"0"
+				"IsHidden"			"0"
+				
+				"EffectName"			"particles/items2_fx/mask_of_madness.vpcf"
+				"EffectAttachType"		"follow_origin"
+					
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%berserk_bonus_movement_speed_percentage"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%berserk_bonus_attack_speed"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%berserk_extra_incoming_damage_percentage"
+				}
+			}
+			"modifier_item_mask_of_madness_datadriven_lifesteal"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				
+				"OnDealDamage"
+				{
+					"Lifesteal"
+					{
+						"Target"			"ATTACKER"
+						"LifestealPercent"	"%lifesteal_percent"
+					}
+				}
+			}
+		}
+	}
+	//End of file item_mask_of_madness_datadriven.txt
+
+
+	//Start of file item_medallion_of_courage_datadriven.txt
+	// Rewrite of Medallion of Courage
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_medallion_of_courage_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1187"  //Valve's version of this item uses the ID "187".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_medallion_of_courage"
+		"FightRecapLevel"				"1"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"7.0"
+		"AbilityManaCost"				"0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1200"
+		"ItemShopTags"					"armor;regen_mana;hard_to_tag"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"medallion of courage"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"7"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen_pct"	"50"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_debuff"			"-7"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_buff"			"7"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"7.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"items/item_medallion_of_courage.lua"
+				"Function"			"item_medallion_of_courage_datadriven_on_spell_start"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_medallion_of_courage_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_pct"
+				}
+			}
+			"modifier_item_medallion_of_courage_datadriven_debuff"  //Placed onto the caster and enemies.
+			{
+				"Duration"			"%duration"
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+				
+				"EffectName"			"particles/items2_fx/medallion_of_courage.vpcf"
+				"EffectAttachType"		"follow_overhead"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_debuff"
+				}
+			}
+			"modifier_item_medallion_of_courage_datadriven_buff"  //Placed onto allies.
+			{
+				"Duration"			"%duration"
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"1"
+				"IsDebuff"			"0"
+				"IsPurgable"		"1"
+				
+				"EffectName"			"particles/items2_fx/medallion_of_courage.vpcf"
+				"EffectAttachType"		"follow_overhead"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_buff"
+				}
+			}
+		}
+	}
+	//End of file item_medallion_of_courage_datadriven.txt
 
 
 	//Start of file item_mekansm_datadriven.txt
@@ -3948,7 +5403,7 @@
 			}
 			"modifier_item_mekansm_datadriven_heal_armor"
 			{
-				"Duration"			"heal_armor_duration"
+				"Duration"			"%heal_armor_duration"
 				"Passive"			"0"
 				"IsHidden"			"0"
 				"IsBuff"			"1"
@@ -4399,6 +5854,144 @@
 		}
 	}
 	//End of file item_ogre_axe_datadriven.txt
+
+
+	//Start of file item_orb_of_venom_datadriven.txt
+	// Rewrite of Orb of Venom
+	// Author: Rook
+	// Date: February 4, 2015
+	// Known bugs:
+	//     For some reason, this implementation of Orb of Venom's orb effect only stacks with lifesteal if you pick up
+	//         a lifesteal item first and then an Orb of Venom afterwards.
+	
+	"item_orb_of_venom_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1181"  //Valve's version of this item uses the ID "181".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_orb_of_venom"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"275"
+		"ItemShopTags"					"hard_to_tag"
+		"ItemQuality"					"secret_shop"
+		"ItemAliases"					"orb of venom"
+		"SecretShop"					"1"	
+		"SideShop"						"1"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"poison_movement_speed_melee"		"-12"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"poison_movement_speed_ranged"		"-4"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"poison_duration"					"4.0"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"poison_damage_per_second"			"3.0"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"poison_damage_interval"			"1.0"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_orb_of_venom_datadriven"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Orb"
+				{
+					"Priority"				"DOTA_ORB_PRIORITY_ITEM"
+					"Label"					"DOTA_ORB_LABEL_SKADI"  //This does not currently seem to have an effect.  "Label" may not be the right key.
+					"CastAttack"			"0"
+				}
+	
+				"OnOrbImpact"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_orb_of_venom.lua"
+						"Function"				"modifier_item_orb_of_venom_datadriven_on_orb_impact"
+					}
+				}
+			}
+			"modifier_item_orb_of_venom_datadriven_poison_attack_melee"
+			{
+				"Duration"				"%poison_duration"
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"EffectName"			"particles/items2_fx/orb_of_venom.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%poison_movement_speed_melee"
+				}
+				
+				"ThinkInterval" 		"%poison_damage_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"items/item_orb_of_venom.lua"
+						"Function"						"modifier_item_orb_of_venom_datadriven_poison_attack_on_interval_think"
+						"PoisonDamagePerSecond"			"%poison_damage_per_second"
+						"PoisonDamageInterval"			"%poison_damage_interval"
+					}
+				}
+			}
+			"modifier_item_orb_of_venom_datadriven_poison_attack_ranged"
+			{
+				"Duration"				"%poison_duration"
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"EffectName"			"particles/items2_fx/orb_of_venom.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%poison_movement_speed_ranged"
+				}
+				
+				"ThinkInterval" 		"%poison_damage_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"items/item_orb_of_venom.lua"
+						"Function"						"modifier_item_orb_of_venom_datadriven_poison_attack_on_interval_think"
+						"PoisonDamagePerSecond"			"%poison_damage_per_second"
+						"PoisonDamageInterval"			"%poison_damage_interval"
+					}
+				}
+			}
+		}
+	}
+	//End of file item_orb_of_venom_datadriven.txt
 
 
 	//Start of file item_pers_datadriven.txt
@@ -5258,6 +6851,100 @@
 	//End of file item_recipe_abyssal_blade_datadriven.txt
 
 
+	//Start of file item_recipe_ancient_janggo_datadriven.txt
+	// Rewrite of Recipe: Drum of Endurance
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_recipe_ancient_janggo_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1184"  //Valve's version of this item uses the ID "184".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"875"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_ancient_janggo_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_bracer_datadriven;item_robe_datadriven"
+			"02"						"item_ancient_janggo_datadriven"
+		}
+	}
+	//End of file item_recipe_ancient_janggo_datadriven.txt
+
+
+	//Start of file item_recipe_arcane_boots_datadriven.txt
+	// Rewrite of Recipe: Arcane Boots
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_recipe_arcane_boots_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1179"  //Valve's version of this item uses the ID "179".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_arcane_boots_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_energy_booster_datadriven;item_boots_datadriven"
+		}
+	}
+	//End of file item_recipe_arcane_boots_datadriven.txt
+
+
+	//Start of file item_recipe_armlet_datadriven.txt
+	// Rewrite of Recipe: Armlet of Mordiggian
+	// Author: Rook
+	// Date: February 3, 2015
+	
+	"item_recipe_armlet_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1150"  //Valve's version of this item uses the ID "150".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"500"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_armlet_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_helm_of_iron_will_datadriven;item_gloves_datadriven;item_blades_of_attack_datadriven"
+		}
+	}
+	//End of file item_recipe_armlet_datadriven.txt
+
+
 	//Start of file item_recipe_assault_datadriven.txt
 	// Rewrite of Recipe: Assault Cuirass
 	// Author: Rook
@@ -5319,6 +7006,37 @@
 		}
 	}
 	//End of file item_recipe_basher_datadriven.txt
+
+
+	//Start of file item_recipe_bfury_datadriven.txt
+	// Rewrite of Recipe: Battle Fury
+	// Author: Rook
+	// Date: February 2, 2015
+	
+	"item_recipe_bfury_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1144"  //Valve's version of this item uses the ID "144".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_bfury_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_broadsword;item_claymore;item_pers"
+		}
+	}
+	//End of file item_recipe_bfury_datadriven.txt
 
 
 	//Start of file item_recipe_black_king_bar_datadriven.txt
@@ -5603,6 +7321,37 @@
 	//End of file item_recipe_dagon_datadriven.txt
 
 
+	//Start of file item_recipe_desolator_datadriven.txt
+	// Rewrite of Recipe: Desolator
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_recipe_desolator_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1167"  //Valve's version of this item uses the ID "167".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"900"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_desolator_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_mithril_hammer_datadriven;item_mithril_hammer_datadriven"
+		}
+	}
+	//End of file item_recipe_desolator_datadriven.txt
+
+
 	//Start of file item_recipe_hand_of_midas_datadriven.txt
 	// Rewrite of Recipe: Hand of Midas
 	// Author: Rook
@@ -5728,6 +7477,37 @@
 	//End of file item_recipe_hood_of_defiance_datadriven.txt
 
 
+	//Start of file item_recipe_invis_sword_datadriven.txt
+	// Rewrite of Recipe: Shadow Blade
+	// Author: Rook
+	// Date: February 3, 2015
+	
+	"item_recipe_invis_sword_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1183"  //Valve's version of this item uses the ID "183".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_invis_sword_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_shadow_amulet_datadriven;item_claymore_datadriven"
+		}
+	}
+	//End of file item_recipe_invis_sword_datadriven.txt
+
+
 	//Start of file item_recipe_magic_wand_datadriven.txt
 	// Rewrite of Recipe: Magic Wand
 	// Author: Rook
@@ -5757,6 +7537,100 @@
 		}
 	}
 	//End of file item_recipe_magic_wand_datadriven.txt
+
+
+	//Start of file item_recipe_manta_datadriven.txt
+	// Rewrite of Recipe: Manta Style
+	// Author: Rook
+	// Date: February 2, 2015
+	
+	"item_recipe_manta_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1146"  //Valve's version of this item uses the ID "146".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		"FightRecapLevel"				"1"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"800"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_manta_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_yasha;item_ultimate_orb"
+		}
+	}
+	//End of file item_recipe_manta_datadriven.txt
+
+
+	//Start of file item_recipe_mask_of_madness_datadriven.txt
+	// Rewrite of Recipe: Mask of Madness
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_recipe_mask_of_madness_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1171"  //Valve's version of this item uses the ID "171".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"900"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_mask_of_madness_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_lifesteal_datadriven"
+		}
+	}
+	//End of file item_recipe_mask_of_madness_datadriven.txt
+
+
+	//Start of file item_recipe_medallion_of_courage_datadriven.txt
+	// Rewrite of Recipe: Medallion of Courage
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_recipe_medallion_of_courage_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1186"  //Valve's version of this item uses the ID "186".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"325"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_medallion_of_courage_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_chainmail_datadriven;item_sobi_mask_datadriven"
+		}
+	}
+	//End of file item_recipe_medallion_of_courage_datadriven.txt
 
 
 	//Start of file item_recipe_mekansm_datadriven.txt
@@ -5939,7 +7813,7 @@
 		"ItemResult"					"item_phase_boots_datadriven"
 		"ItemRequirements"
 		{
-			"01"						"item_boots;item_blades_of_attack;item_blades_of_attack"
+			"01"						"item_boots_datadriven;item_blades_of_attack_datadriven;item_blades_of_attack_datadriven"
 		}
 	}
 	//End of file item_recipe_phase_boots_datadriven.txt
@@ -6077,6 +7951,161 @@
 	//End of file item_recipe_ring_of_basilius_datadriven.txt
 
 
+	//Start of file item_recipe_rod_of_atos_datadriven.txt
+	// Rewrite of Recipe: Rod of Atos
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_recipe_rod_of_atos_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1205"  //Valve's version of this item uses the ID "205".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_rod_of_atos_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_staff_of_wizardry_datadriven;item_staff_of_wizardry_datadriven;item_vitality_booster_datadriven"
+		}
+	}
+	//End of file item_recipe_rod_of_atos_datadriven.txt
+
+
+	//Start of file item_recipe_sange_and_yasha_datadriven.txt
+	// Rewrite of Recipe: Sange and Yasha
+	// Author: Rook
+	// Date: February 3, 2015
+	
+	"item_recipe_sange_and_yasha_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1153"  //Valve's version of this item uses the ID "153".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_sange_and_yasha_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_yasha_datadriven;item_sange_datadriven"
+		}
+	}
+	//End of file item_recipe_sange_and_yasha_datadriven.txt
+
+
+	//Start of file item_recipe_sange_datadriven.txt
+	// Rewrite of Recipe: Sange
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_recipe_sange_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1161"  //Valve's version of this item uses the ID "161".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"600"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_sange_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_ogre_axe_datadriven;item_belt_of_strength_datadriven"
+		}
+	}
+	//End of file item_recipe_sange_datadriven.txt
+
+
+	//Start of file item_recipe_satanic_datadriven.txt
+	// Rewrite of Recipe: Satanic
+	// Author: Rook
+	// Date: February 3, 2015
+	
+	"item_recipe_satanic_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1155"  //Valve's version of this item uses the ID "155".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1100"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_satanic_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_reaver_datadriven;item_helm_of_the_dominator_datadriven"
+		}
+	}
+	//End of file item_recipe_satanic_datadriven.txt
+
+
+	//Start of file item_recipe_skadi_datadriven.txt
+	// Rewrite of Recipe: Eye of Skadi
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_recipe_skadi_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1159"  //Valve's version of this item uses the ID "159".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_skadi_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_ultimate_orb_datadriven;item_ultimate_orb_datadriven;item_point_booster_datadriven;item_orb_of_venom_datadriven"
+		}
+	}
+	//End of file item_recipe_skadi_datadriven.txt
+
+
 	//Start of file item_recipe_soul_booster_datadriven.txt
 	// Rewrite of Recipe: Soul Booster
 	// Author: Rook
@@ -6201,6 +8230,37 @@
 	//End of file item_recipe_urn_of_shadows_datadriven.txt
 
 
+	//Start of file item_recipe_veil_of_discord_datadriven.txt
+	// Rewrite of Recipe: Veil of Discord
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_recipe_veil_of_discord_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1189"  //Valve's version of this item uses the ID "189".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1250"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_veil_of_discord_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_helm_of_iron_will_datadriven;item_null_talisman_datadriven"
+		}
+	}
+	//End of file item_recipe_veil_of_discord_datadriven.txt
+
+
 	//Start of file item_recipe_vladmir_datadriven.txt
 	// Rewrite of Recipe: Vladmir's Offering
 	// Author: Rook
@@ -6261,6 +8321,37 @@
 		}
 	}
 	//End of file item_recipe_wraith_band_datadriven.txt
+
+
+	//Start of file item_recipe_yasha_datadriven.txt
+	// Rewrite of Recipe: Yasha
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_recipe_yasha_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1169"  //Valve's version of this item uses the ID "169".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"600"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_yasha_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_blade_of_alacrity_datadriven;item_boots_of_elves_datadriven"
+		}
+	}
+	//End of file item_recipe_yasha_datadriven.txt
 
 
 	//Start of file item_refresher_datadriven.txt
@@ -6865,6 +8956,620 @@
 		}
 	}
 	//End of file item_robe_datadriven.txt
+
+
+	//Start of file item_rod_of_atos_datadriven.txt
+	// Rewrite of Rod of Atos
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_rod_of_atos_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1206"  //Valve's version of this item uses the ID "206".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_rod_of_atos"
+		"FightRecapLevel"				"1"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10"
+		"AbilityCastRange"				"1200"
+		"AbilityCastPoint"				"0.0"
+		"AbilityManaCost"				"50"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"3100"
+		"ItemShopTags"					"int;armor;regen_health"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"rod of atos"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_intelligence"			"25"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_health"					"350"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cripple_movespeed_slow_pct"	"-60"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"4"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"DOTA_Item.RodOfAtos.Activate"
+				"Target"			"TARGET"
+			}
+				
+			"ApplyModifier"
+			{
+				"Target"			"TARGET"
+				"ModifierName"		"modifier_item_rod_of_atos_datadriven_cripple"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_rod_of_atos_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
+				}
+			}
+			"modifier_item_rod_of_atos_datadriven_cripple"
+			{
+				"Duration"			"%duration"
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+				
+				"EffectName"			"particles/items2_fx/rod_of_atos.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%cripple_movespeed_slow_pct"
+				}
+			}
+		}
+	}
+	//End of file item_rod_of_atos_datadriven.txt
+
+
+	//Start of file item_sange_and_yasha_datadriven.txt
+	// Rewrite of Sange and Yasha
+	// Author: Rook
+	// Date: February 3, 2015
+	
+	"item_sange_and_yasha_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1154"  //Valve's version of this item uses the ID "154".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_sange_and_yasha"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4100"
+		"ItemShopTags"					"damage;str;agi;attack_speed;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"sny;s&y;sy;sange and yasha"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"maim_chance"					"16"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"maim_slow_movement"			"-32"
+			}			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"maim_slow_attack"				"-32"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"16"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_strength"				"16"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_agility"					"16"
+			}			
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_attack_speed"			"16"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"movement_speed_percent_bonus"	"16"
+			}			
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"maim_duration"					"5.0"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_sange_and_yasha_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"						"%bonus_damage"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"						"%bonus_strength"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"							"%bonus_agility"
+					
+					//Attack speed from Yasha-derived items affect your illusions.
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT_SECONDARY"		"%bonus_attack_speed"
+					
+					//Movement speed from Yasha-derived items does not stack with itself but does stack with other percentage-based movement speed bonuses.
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"			"%movement_speed_percent_bonus"
+				}
+				
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"		"%maim_chance"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"			"items/item_sange_and_yasha.lua"
+								"Function"				"modifier_item_sange_and_yasha_datadriven_on_attack_landed_random_on_success"
+							}
+						}
+					}
+				}
+			}
+			"modifier_item_sange_and_yasha_datadriven_greater_maim"
+			{
+				"Duration"				"%maim_duration"
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"EffectName"            "particles/items2_fx/sange_maim.vpcf"
+				"EffectAttachType"      "PATTACH_ABSORIGIN"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%maim_slow_attack"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%maim_slow_movement"
+				}
+			}
+		}
+	}
+	//End of file item_sange_and_yasha_datadriven.txt
+
+
+	//Start of file item_sange_datadriven.txt
+	// Rewrite of Sange
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_sange_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1162"  //Valve's version of this item uses the ID "162".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_sange"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2050"
+		"ItemShopTags"					"damage;str;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"sange"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maim_chance"			"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maim_movement_speed"	"-20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maim_attack_speed"		"-20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"maim_duration"			"4.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"10"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"16"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_sange_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"						"%bonus_damage"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"						"%bonus_strength"
+				}
+				
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"		"%maim_chance"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"			"items/item_sange.lua"
+								"Function"				"modifier_item_sange_datadriven_on_attack_landed_random_on_success"
+							}
+						}
+					}
+				}
+			}
+			"modifier_item_sange_datadriven_lesser_maim"
+			{
+				"Duration"				"%maim_duration"
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"EffectName"            "particles/items2_fx/sange_maim.vpcf"
+				"EffectAttachType"      "PATTACH_ABSORIGIN"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%maim_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%maim_movement_speed"
+				}
+			}
+		}
+	}
+	//End of file item_sange_datadriven.txt
+
+
+	//Start of file item_satanic_datadriven.txt
+	// Rewrite of Satanic
+	// Author: Rook
+	// Date: February 3, 2015
+	
+	"item_satanic_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1156"  //Valve's version of this item uses the ID "156".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_satanic"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"35.0"
+		"AbilityManaCost"				"0.0"
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"6150"
+		"ItemShopTags"					"damage;str;armor;unique;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"satanic"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"20"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_strength"			"25"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_armor"				"5"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"lifesteal_percent"			"25"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"unholy_lifesteal_percent"	"175"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"unholy_duration"			"3.5"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"modifier_item_satanic_datadriven_unholy_rage"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_satanic_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+				}
+				
+				"Orb"
+				{
+					"Priority"		"DOTA_ORB_PRIORITY_ITEM"
+				}
+	
+				"OnOrbImpact"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_satanic.lua"
+						"Function"				"modifier_item_satanic_datadriven_on_attack_landed"
+					}
+				}
+			}
+			"modifier_item_satanic_datadriven_unholy_rage"
+			{
+				"Duration"			"%unholy_duration"
+				"Passive"			"0"
+				"IsHidden"			"0"
+			}
+			"modifier_item_satanic_datadriven_lifesteal"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				
+				"OnDealDamage"
+				{
+					"Lifesteal"
+					{
+						"Target"			"ATTACKER"
+						"LifestealPercent"	"%lifesteal_percent"
+					}
+				}
+			}
+			"modifier_item_satanic_datadriven_unholy_rage_lifesteal"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				
+				"OnDealDamage"
+				{
+					"Lifesteal"
+					{
+						"Target"			"ATTACKER"
+						"LifestealPercent"	"%unholy_lifesteal_percent"
+					}
+				}
+			}
+		}
+	}
+	//End of file item_satanic_datadriven.txt
+
+
+	//Start of file item_skadi_datadriven.txt
+	// Rewrite of Eye of Skadi
+	// Author: Rook
+	// Date: February 4, 2015
+	// Known bugs:
+	//     For some reason, this implementation of Skadi's orb effect only stacks with lifesteal if you pick up a lifesteal item first and then a Skadi afterwards.
+	
+	"item_skadi_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1160"  //Valve's version of this item uses the ID "160".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_skadi"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"5675"
+		"ItemShopTags"					"agi;str;int;hard_to_tag;mana_pool;health_pool;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"eos;eye of skadi"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"25"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"250"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"250"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cold_movement_speed"	"-35"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cold_attack_speed"		"-45"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cold_duration_melee"	"5.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cold_duration_ranged"	"3.0"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_skadi_datadriven"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
+				}
+				
+				"Orb"
+				{
+					"Priority"				"DOTA_ORB_PRIORITY_ITEM"
+					"Label"					"DOTA_ORB_LABEL_SKADI"  //This does not currently seem to have an effect.  "Label" may not be the right key.
+					"ProjectileName"		"particles/items2_fx/skadi_projectile.vpcf"
+					"CastAttack"			"0"
+				}
+	
+				"OnOrbImpact"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_skadi.lua"
+						"Function"				"modifier_item_skadi_datadriven_on_orb_impact"
+						"ColdDurationMelee"		"%cold_duration_melee"
+						"ColdDurationRanged"	"%cold_duration_ranged"
+					}
+				}
+			}
+			"modifier_item_skadi_datadriven_cold_attack"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				
+				"StatusEffectName"     "particles/status_fx/status_effect_frost.vpcf"
+				"StatusEffectPriority" "10"
+					
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%cold_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%cold_movement_speed"
+				}
+			}
+		}
+	}
+	//End of file item_skadi_datadriven.txt
 
 
 	//Start of file item_slippers_datadriven.txt
@@ -7673,6 +10378,157 @@
 	//End of file item_urn_of_shadows_datadriven.txt
 
 
+	//Start of file item_veil_of_discord_datadriven.txt
+	// Rewrite of Veil of Discord
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_veil_of_discord_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1190"  //Valve's version of this item uses the ID "190".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_veil_of_discord"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30"
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.0"
+		"AbilityManaCost"				"75"
+		"AOEradius"						"600"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2675"
+		"ItemShopTags"					"int;armor;regen_health;hard_to_tag"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"vod;veil of discord"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_health_regen"		"6"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_stats"				"6"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"6"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_armor"				"6"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"debuff_radius"				"600"  //Be sure to change AOEradius if debuff_radius is.
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"resist_debuff_duration"	"25.0"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"resist_debuff"				"-25"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"DOTA_Item.VeilofDiscord.Activate"
+				"Target"				"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"TargetPoint"			"POINT"
+				"EffectName"			"particles/items2_fx/veil_of_discord.vpcf"
+				"EffectAttachType"		"world_origin"
+				"ControlPoints"
+				{
+					"01"				"%debuff_radius %debuff_radius %debuff_radius"
+				}
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+	            {
+					"Center"			"POINT"
+	                "Radius"			"%debuff_radius"
+	                "Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+	                "Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            }
+	
+	            "Action"
+	            {
+	            	"ApplyModifier"
+					{
+						"Target"			"TARGET"
+						"ModifierName"		"modifier_item_veil_of_discord_datadriven_magic_weakness"
+					}
+	            }
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_veil_of_discord_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"			"%bonus_stats"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"				"%bonus_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"			"%bonus_stats"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%bonus_health_regen"
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%bonus_damage"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%bonus_armor"
+				}
+			}
+			"modifier_item_veil_of_discord_datadriven_magic_weakness"
+			{
+				"Duration"			"%resist_debuff_duration"
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+				
+				"EffectName"			"particles/items2_fx/veil_of_discord_debuff.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%resist_debuff"
+				}
+			}
+		}
+	}
+	//End of file item_veil_of_discord_datadriven.txt
+
+
 	//Start of file item_vitality_booster_datadriven.txt
 	// Rewrite of Vitality Booster
 	// Author: Rook
@@ -7991,4 +10847,72 @@
 		}
 	}
 	//End of file item_wraith_band_datadriven.txt
+
+
+	//Start of file item_yasha_datadriven.txt
+	// Rewrite of Yasha
+	// Author: Rook
+	// Date: February 4, 2015
+	
+	"item_yasha_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1170"  //Valve's version of this item uses the ID "170".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_yasha"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2050"
+		"ItemShopTags"					"agi;attack_speed;move_speed"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"yasha"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_agility"					"16"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_attack_speed"			"15"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"movement_speed_percent_bonus"	"10"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_yasha_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"							"%bonus_agility"
+					
+					//Attack speed from Yasha-derived items affect your illusions.
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT_SECONDARY"		"%bonus_attack_speed"
+					
+					//Movement speed from Yasha-derived items does not stack with itself but does stack with other percentage-based movement speed bonuses.
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"			"%movement_speed_percent_bonus"
+				}
+			}
+		}
+	}
+	//End of file item_yasha_datadriven.txt
 }
