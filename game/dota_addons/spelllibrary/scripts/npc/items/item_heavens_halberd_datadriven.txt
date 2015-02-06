@@ -1,0 +1,174 @@
+// Rewrite of Heaven's Halberd
+// Author: Rook
+// Date: February 5, 2015
+
+"item_heavens_halberd_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1210"  //Valve's version of this item uses the ID "210".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_heavens_halberd"
+	"FightRecapLevel"				"1"
+
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"30"
+	"AbilityCastRange"				"600"
+	"AbilityCastPoint"				"0.0"
+	"AbilityManaCost"				"100"
+
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"3850"
+	"ItemShopTags"					"str;damage;evasion"
+	"ItemQuality"					"artifact"
+	"ItemAliases"					"heaven's halberd"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_evasion"				"25"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"maim_chance"				"15"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"maim_movement_speed"		"-20"
+		}			
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"maim_attack_speed"			"-20"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_damage"				"25"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_strength"			"20"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"maim_duration"				"4.0"
+		}			
+		"08"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"disarm_duration_ranged"	"4.5"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"disarm_duration_melee"		"3.0"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"				"items/item_heavens_halberd.lua"
+			"Function"					"item_heavens_halberd_datadriven_on_spell_start"
+			"DisarmDurationRanged"		"%disarm_duration_ranged"
+			"DisarmDurationMelee"		"%disarm_duration_melee"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_heavens_halberd_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%bonus_damage"
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"			"%bonus_strength"
+				"MODIFIER_PROPERTY_EVASION_CONSTANT"				"%bonus_evasion"
+			}
+			
+			"OnAttackLanded"
+			{
+				"Random"
+				{
+					"Chance"		"%maim_chance"
+					"OnSuccess"
+					{
+						"RunScript"
+						{
+							"ScriptFile"			"items/item_heavens_halberd.lua"
+							"Function"				"modifier_item_heavens_halberd_datadriven_on_attack_landed_random_on_success"
+						}
+					}
+				}
+			}
+		}
+		"modifier_item_heavens_halberd_datadriven_lesser_maim"
+		{
+			"Duration"				"%maim_duration"
+			"Passive"				"0"
+			"IsHidden"				"0"
+			"IsBuff"				"0"
+			"IsDebuff"				"1"
+			"IsPurgable"			"1"
+			
+			"EffectName"            "particles/items2_fx/sange_maim.vpcf"
+			"EffectAttachType"      "PATTACH_ABSORIGIN"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%maim_attack_speed"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%maim_movement_speed"
+			}
+		}
+		"modifier_item_heavens_halberd_datadriven_disarm"
+		{
+			"Passive"				"0"
+			"IsHidden"				"0"
+			"IsBuff"				"0"
+			"IsDebuff"				"1"
+			"IsPurgable"			"0"
+			
+			"EffectName"            "particles/items2_fx/heavens_halberd.vpcf"
+			"EffectAttachType"      "PATTACH_ABSORIGIN"
+			
+			"States"
+			{
+				"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+			
+			//Apply the generic disarm particle overhead, which is not included in particles/items2_fx/heavens_halberd.vpcf.
+			"OnCreated"
+            {
+                "AttachEffect"
+                {
+                    "Target"			"TARGET"
+                    "EffectName"		"particles/generic_gameplay/generic_disarm.vpcf"
+                    "EffectAttachType"	"follow_overhead"
+                }
+            }
+		}
+	}
+}

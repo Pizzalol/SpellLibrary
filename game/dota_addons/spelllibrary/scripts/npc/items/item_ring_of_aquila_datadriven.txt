@@ -1,11 +1,11 @@
-// Rewrite of Ring of Basilius
+// Rewrite of Ring of Aquila
 // Author: Rook
-// Date: January 26, 2015
+// Date: February 5, 2015
 // Known bugs:
-//     Since there is currently no way to alter the item's texture on the fly, Ring of Basilius is split up into two items.
-//     Toggling Ring of Basilius activates the 10-second window in which it can be sold for full price.
+//     Since there is currently no way to alter the item's texture on the fly, Ring of Aquila is split up into two items.
+//     Toggling Ring of Aquila activates the 10-second window in which it can be sold for full price.
 //     Due to the half-second aura stickiness, rapidly toggling this item will grant twice the aura's effects to nearby heroes.
-//     The aura currently stacks with Ring of Aquila's and Vladmir's Offering's.
+//     The aura currently stacks with Ring of Basilius' and Vladmir's Offering's.
 
 //A dummy item that is used to take up item slots in the swap_to_item() Lua function.
 "item_dummy_datadriven"
@@ -17,23 +17,24 @@
 	"ItemBaseLevel"                 "1"
 }
 
-"item_ring_of_basilius_datadriven"
+"item_ring_of_aquila_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"						"item_datadriven"
-	"ID"							"1088"  //Valve's version of this item uses the ID "88".
+	"ID"							"1212"  //Valve's version of this item uses the ID "212".
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	"Model"							"models/props_gameplay/red_box.vmdl" 
 	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-	"AbilityTextureName"			"item_ring_of_basilius_active"
+	"AbilityTextureName"			"item_ring_of_aquila"
 	
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
-	"ItemCost"						"525"
-	"ItemShopTags"					"damage;regen_mana;armor"
+	"ItemCost"						"1010"
+	"ItemShopTags"					""
 	"ItemQuality"					"rare"
-	"ItemAliases"					"rob;ring of basilius"
+	"ItemAliases"					"roa;ring of aquila"
+	"ItemShareability"				""		
 	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 	
 	// Sound
@@ -47,42 +48,57 @@
 		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_damage"			"6"
+			"bonus_damage"			"9"
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_armor"			"1"
+			"bonus_strength"		"3"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"aura_radius"			"900"
+			"bonus_agility"			"9"
 		}
 		"04"
 		{
-			"var_type"				"FIELD_FLOAT"
-			"aura_mana_regen"		"0.65"  //This variable is unused due to an obscure engine bug.
+			"var_type"				"FIELD_INTEGER"
+			"bonus_intelligence"	"3"
 		}
 		"05"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"aura_bonus_armor"		"2"
+			"bonus_armor"			"1"
 		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"aura_radius"			"900"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"aura_mana_regen"		"0.65"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"aura_bonus_armor"		"2"
+		}		
 	}
 	
-	"OnSpellStart"  //Switch to the inactive version of Ring of Basilius.
+	"OnSpellStart"  //Switch to the inactive version of Ring of Aquila.
 	{
 		"RunScript"
 		{
-			"ScriptFile"			"items/item_ring_of_basilius.lua"
-			"Function"				"item_ring_of_basilius_datadriven_on_spell_start"
+			"ScriptFile"			"items/item_ring_of_aquila.lua"
+			"Function"				"item_ring_of_aquila_datadriven_on_spell_start"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"modifier_item_ring_of_basilius_datadriven"
+		"modifier_item_ring_of_aquila_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
@@ -92,21 +108,24 @@
 			{
 				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
 				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_agility"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
 			}
 		}
-		"modifier_item_ring_of_basilius_datadriven_aura_emitter"
+		"modifier_item_ring_of_aquila_datadriven_aura_emitter"
 		{
 			"Passive"				"1"
 			"IsHidden"				"1"
 			
-			"Aura" 					"modifier_item_ring_of_basilius_datadriven_aura"
+			"Aura" 					"modifier_item_ring_of_aquila_datadriven_aura"
 			"Aura_Radius" 			"%aura_radius"
 			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 			"Aura_ApplyToCaster" 	"1"
 		}
-		"modifier_item_ring_of_basilius_datadriven_aura"
+		"modifier_item_ring_of_aquila_datadriven_aura"
 		{
 			"Passive"			"0"
 			"IsHidden"			"0"
@@ -121,24 +140,25 @@
 }
 
 
-"item_ring_of_basilius_inactive_datadriven"
+"item_ring_of_aquila_inactive_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"						"item_datadriven"
-	"ID"							"2004"  //Valve's version of this item uses the ID "88".
+	"ID"							"2212"  //Valve's version of this item uses the ID "212".
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 	"Model"							"models/props_gameplay/red_box.vmdl" 
 	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-	"AbilityTextureName"			"item_ring_of_basilius"
+	"AbilityTextureName"			"item_ring_of_aquila_active"  //Despite the name, this is the inactive icon.
 	
 	// Item Info
 	//-------------------------------------------------------------------------------------------------------------
-	"ItemCost"						"525"
-	"ItemShopTags"					"damage;regen_mana;armor"
+	"ItemCost"						"1010"
+	"ItemShopTags"					""
 	"ItemQuality"					"rare"
-	"ItemAliases"					"rob;ring of basilius"
-	//"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+	"ItemAliases"					"roa;ring of aquila"
+	"ItemShareability"				""		
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 	"ItemPurchasable"				"0"
 	
 	// Sound
@@ -152,42 +172,57 @@
 		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_damage"			"6"
+			"bonus_damage"			"9"
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_armor"			"1"
+			"bonus_strength"		"3"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"aura_radius"			"900"
+			"bonus_agility"			"9"
 		}
 		"04"
 		{
-			"var_type"				"FIELD_FLOAT"
-			"aura_mana_regen"		"0.65"  //This variable is unused due to an obscure engine bug.
+			"var_type"				"FIELD_INTEGER"
+			"bonus_intelligence"	"3"
 		}
 		"05"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"aura_bonus_armor"		"2"
+			"bonus_armor"			"1"
 		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"aura_radius"			"900"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"aura_mana_regen"		"0.65"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"aura_bonus_armor"		"2"
+		}	
 	}
 	
-	"OnSpellStart"  //Switch to the active version of Ring of Basilius.
+	"OnSpellStart"  //Switch to the active version of Ring of Aquila.
 	{
 		"RunScript"
 		{
-			"ScriptFile"			"items/item_ring_of_basilius.lua"
-			"Function"				"item_ring_of_basilius_inactive_datadriven_on_spell_start"
+			"ScriptFile"			"items/item_ring_of_aquila.lua"
+			"Function"				"item_ring_of_aquila_inactive_datadriven_on_spell_start"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"modifier_item_ring_of_basilius_inactive_datadriven"
+		"modifier_item_ring_of_aquila_inactive_datadriven"
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
@@ -197,21 +232,24 @@
 			{
 				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
 				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_agility"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
 			}
 		}
-		"modifier_item_ring_of_basilius_inactive_datadriven_aura_emitter"
+		"modifier_item_ring_of_aquila_inactive_datadriven_aura_emitter"
 		{
 			"Passive"				"1"
 			"IsHidden"				"1"
 			
-			"Aura" 					"modifier_item_ring_of_basilius_inactive_datadriven_aura"
+			"Aura" 					"modifier_item_ring_of_aquila_inactive_datadriven_aura"
 			"Aura_Radius" 			"%aura_radius"
 			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO"
 			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 			"Aura_ApplyToCaster" 	"1"
 		}
-		"modifier_item_ring_of_basilius_inactive_datadriven_aura"
+		"modifier_item_ring_of_aquila_inactive_datadriven_aura"
 		{
 			"Passive"			"0"
 			"IsHidden"			"0"
