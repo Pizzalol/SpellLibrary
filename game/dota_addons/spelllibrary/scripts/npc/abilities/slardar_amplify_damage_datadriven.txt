@@ -2,6 +2,7 @@
 // Author: chrislotix
 // Date: 01.01.2015.
 // Changed: 14.01.2015 - Fixed particle attachment in Lua
+// Changed: 07.02.2015. - Amplify Damage reveals invisible units properly
 "slardar_amplify_damage_datadriven"
 {
 	// General
@@ -111,6 +112,23 @@
 				}
 			}
 
+			"ThinkInterval"  "0.5"
+			"OnIntervalThink"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_amplify_damage_reveal_datadriven"
+					"Target" 		"TARGET"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_amplify_damage_reveal_datadriven"
+					"Target" 		"TARGET"
+					"Duration"		"0.5"
+				}
+			}
+
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_reduction"				
@@ -118,11 +136,19 @@
 
 			"States"
 			{
-				"MODIFIER_STATE_INVISIBLE" 			"MODIFIER_STATE_VALUE_DISABLED"
 				"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
 
+		"modifier_amplify_damage_reveal_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE" 			"MODIFIER_STATE_VALUE_DISABLED"
+			}
+		}
 	}
 }
 

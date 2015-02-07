@@ -17,7 +17,7 @@
 	
 		"Ability1"	"dazzle_poison_touch_datadriven"
 		"Ability2"	"dazzle_shallow_grave_datadriven"
-		"Ability3"	"vengefulspirit_command_aura_datadriven"
+		"Ability3"	"bounty_hunter_track_datadriven"
 		"Ability4"	"dazzle_weave_datadriven"
 	}
 }

@@ -2,6 +2,7 @@
 // Author: Pizzalol/chrislotix
 // Date: 02.01.2015.
 // NOTE: Doesnt have the smokey trail particle
+// Changed: 07.02.2015. - Track reveals invisible units properly
 "bounty_hunter_track_datadriven"
 {
 	// General
@@ -131,9 +132,25 @@
 			"Aura_Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 			"Aura_ApplyToCaster"	"1"
 
+			"ThinkInterval"  "0.5"
+			"OnIntervalThink"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_track_reveal_datadriven"
+					"Target" 		"TARGET"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_track_reveal_datadriven"
+					"Target" 		"TARGET"
+					"Duration"		"0.5"
+				}
+			}
+
 			"States"
 			{
-				"MODIFIER_STATE_INVISIBLE" 			"MODIFIER_STATE_VALUE_DISABLED"
 				"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
@@ -166,6 +183,16 @@
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_move_speed_pct"
+			}
+		}
+
+		"modifier_track_reveal_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE" 			"MODIFIER_STATE_VALUE_DISABLED"
 			}
 		}
 	}

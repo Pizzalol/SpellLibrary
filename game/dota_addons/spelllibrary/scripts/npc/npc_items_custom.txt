@@ -3479,6 +3479,103 @@
 			}
 		}
 	}
+	// Rewrite of Gem of True Sight
+	// Author: Noya
+	// Date: February 7, 2015
+	
+	"item_gem_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1030"  //Valve's version of this item uses the ID "30".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/gem01.vmdl"
+		"Effect"						"particles/generic_gameplay/dropped_gem.vpcf"
+		"AbilityTextureName"			"item_gem"
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"900"
+		"ItemShopTags"					"see_invis"
+		"ItemQuality"					"component"
+		"ItemAliases"					"gem of true sight"
+		"ItemSellable"					"0"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemStockMax"					"1"
+		"ItemStockTime"					"600.0"
+		"ItemSupport"					"1"
+		"ItemKillable"					"0"
+		"ItemContributesToNetWorthWhenDropped"	"0"
+		
+		// Sound
+		//-------------------------------------------------------------------------------------------------------------			
+		"UIPickupSound"					"Item.PickUpGemShop"
+		"UIDropSound"					"Item.DropGemShop"
+		"WorldDropSound"				"Item.DropGemWorld"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1100"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_truesight_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					
+						"Action"    
+						{
+							"RemoveModifier"
+							{
+								"ModifierName"	"modifier_truesight_reveal"
+								"Target" 		"TARGET"
+							}
+	
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_truesight_reveal"
+								"Target" 		"TARGET"
+							}
+						}
+					}			
+				}		
+			}
+	
+			"modifier_truesight_reveal"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.5"	//The True Sight effect lingers for 0.5 seconds.
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+				}
+			}
+		}
+	}
+	
 	// Rewrite of Ghost Scepter
 	// Author: Rook
 	// Date: January 25, 2015
@@ -3904,6 +4001,180 @@
 			{
 				"Passive"			"0"
 				"IsHidden"			"0"
+			}
+		}
+	}
+	// Rewrite of Heaven's Halberd
+	// Author: Rook
+	// Date: February 5, 2015
+	
+	"item_heavens_halberd_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1210"  //Valve's version of this item uses the ID "210".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_heavens_halberd"
+		"FightRecapLevel"				"1"
+	
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30"
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.0"
+		"AbilityManaCost"				"100"
+	
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"3850"
+		"ItemShopTags"					"str;damage;evasion"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"heaven's halberd"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+			
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_evasion"				"25"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"maim_chance"				"15"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"maim_movement_speed"		"-20"
+			}			
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"maim_attack_speed"			"-20"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"25"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_strength"			"20"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"maim_duration"				"4.0"
+			}			
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"disarm_duration_ranged"	"4.5"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"disarm_duration_melee"		"3.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"items/item_heavens_halberd.lua"
+				"Function"					"item_heavens_halberd_datadriven_on_spell_start"
+				"DisarmDurationRanged"		"%disarm_duration_ranged"
+				"DisarmDurationMelee"		"%disarm_duration_melee"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_heavens_halberd_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%bonus_damage"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"			"%bonus_strength"
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"				"%bonus_evasion"
+				}
+				
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"		"%maim_chance"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"			"items/item_heavens_halberd.lua"
+								"Function"				"modifier_item_heavens_halberd_datadriven_on_attack_landed_random_on_success"
+							}
+						}
+					}
+				}
+			}
+			"modifier_item_heavens_halberd_datadriven_lesser_maim"
+			{
+				"Duration"				"%maim_duration"
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsBuff"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
+				
+				"EffectName"            "particles/items2_fx/sange_maim.vpcf"
+				"EffectAttachType"      "PATTACH_ABSORIGIN"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%maim_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%maim_movement_speed"
+				}
+			}
+			"modifier_item_heavens_halberd_datadriven_disarm"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsBuff"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
+				
+				"EffectName"            "particles/items2_fx/heavens_halberd.vpcf"
+				"EffectAttachType"      "PATTACH_ABSORIGIN"
+				
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				
+				//Apply the generic disarm particle overhead, which is not included in particles/items2_fx/heavens_halberd.vpcf.
+				"OnCreated"
+	            {
+	                "AttachEffect"
+	                {
+	                    "Target"			"TARGET"
+	                    "EffectName"		"particles/generic_gameplay/generic_disarm.vpcf"
+	                    "EffectAttachType"	"follow_overhead"
+	                }
+	            }
 			}
 		}
 	}
@@ -5712,6 +5983,10 @@
 				"Duration"				"%poison_duration"
 				"Passive"				"0"
 				"IsHidden"				"0"
+				"IsBuff"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
+				
 				"EffectName"			"particles/items2_fx/orb_of_venom.vpcf"
 				"EffectAttachType"		"follow_origin"
 				
@@ -5737,6 +6012,10 @@
 				"Duration"				"%poison_duration"
 				"Passive"				"0"
 				"IsHidden"				"0"
+				"IsBuff"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
+				
 				"EffectName"			"particles/items2_fx/orb_of_venom.vpcf"
 				"EffectAttachType"		"follow_origin"
 				
@@ -7111,6 +7390,33 @@
 			"01"						"item_reaver_datadriven;item_vitality_booster_datadriven"
 		}
 	}
+	// Rewrite of Recipe: Heaven's Halberd
+	// Author: Rook
+	// Date: February 5, 2015
+	
+	"item_recipe_heavens_halberd_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1209"  //Valve's version of this item uses the ID "209".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_heavens_halberd_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_sange_datadriven;item_talisman_of_evasion_datadriven"
+		}
+	}
 	// Rewrite of Recipe: Hood of Defiance
 	// Author: Rook
 	// Date: January 30, 2015
@@ -7517,6 +7823,33 @@
 		"ItemRequirements"
 		{
 			"01"						"item_oblivion_staff_datadriven;item_pers_datadriven"
+		}
+	}
+	// Rewrite of Recipe: Ring of Aquila
+	// Author: Rook
+	// Date: February 5, 2015
+	
+	"item_recipe_ring_of_aquila_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1211"  //Valve's version of this item uses the ID "211".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_ring_of_aquila_datadriven"
+		"ItemRequirements"
+		{
+			"01"						"item_wraith_band_datadriven;item_ring_of_basilius_datadriven"
 		}
 	}
 	// Rewrite of Recipe: Ring of Basilius
@@ -8038,6 +8371,270 @@
 			}
 		}
 	}
+	// Rewrite of Ring of Aquila
+	// Author: Rook
+	// Date: February 5, 2015
+	// Known bugs:
+	//     Since there is currently no way to alter the item's texture on the fly, Ring of Aquila is split up into two items.
+	//     Toggling Ring of Aquila activates the 10-second window in which it can be sold for full price.
+	//     Due to the half-second aura stickiness, rapidly toggling this item will grant twice the aura's effects to nearby heroes.
+	//     The aura currently stacks with Ring of Basilius' and Vladmir's Offering's.
+	
+	//A dummy item that is used to take up item slots in the swap_to_item() Lua function.
+	"item_dummy_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"                            "2001"
+		"BaseClass"                     "item_datadriven"
+		"ItemBaseLevel"                 "1"
+	}
+	
+	"item_ring_of_aquila_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1212"  //Valve's version of this item uses the ID "212".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_ring_of_aquila"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1010"
+		"ItemShopTags"					""
+		"ItemQuality"					"rare"
+		"ItemAliases"					"roa;ring of aquila"
+		"ItemShareability"				""		
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		
+		// Sound
+		//-------------------------------------------------------------------------------------------------------------			
+		"UIPickupSound"					"Item.PickUpRingShop"
+		"UIDropSound"					"Item.DropRingShop"
+		"WorldDropSound"				"Item.DropRingWorld"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"9"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"9"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intelligence"	"3"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"1"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"900"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aura_mana_regen"		"0.65"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_bonus_armor"		"2"
+			}		
+		}
+		
+		"OnSpellStart"  //Switch to the inactive version of Ring of Aquila.
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_ring_of_aquila.lua"
+				"Function"				"item_ring_of_aquila_datadriven_on_spell_start"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_ring_of_aquila_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_agility"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
+				}
+			}
+			"modifier_item_ring_of_aquila_datadriven_aura_emitter"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				
+				"Aura" 					"modifier_item_ring_of_aquila_datadriven_aura"
+				"Aura_Radius" 			"%aura_radius"
+				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster" 	"1"
+			}
+			"modifier_item_ring_of_aquila_datadriven_aura"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE"				"%armor_aura"
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"						"0.65"  //This is hardcoded due to an obscure engine bug.
+				}
+			}
+		}
+	}
+	
+	
+	"item_ring_of_aquila_inactive_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"2212"  //Valve's version of this item uses the ID "212".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_ring_of_aquila_active"  //Despite the name, this is the inactive icon.
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1010"
+		"ItemShopTags"					""
+		"ItemQuality"					"rare"
+		"ItemAliases"					"roa;ring of aquila"
+		"ItemShareability"				""		
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemPurchasable"				"0"
+		
+		// Sound
+		//-------------------------------------------------------------------------------------------------------------			
+		"UIPickupSound"					"Item.PickUpRingShop"
+		"UIDropSound"					"Item.DropRingShop"
+		"WorldDropSound"				"Item.DropRingWorld"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"9"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"9"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intelligence"	"3"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"1"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"900"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aura_mana_regen"		"0.65"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_bonus_armor"		"2"
+			}	
+		}
+		
+		"OnSpellStart"  //Switch to the active version of Ring of Aquila.
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_ring_of_aquila.lua"
+				"Function"				"item_ring_of_aquila_inactive_datadriven_on_spell_start"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_ring_of_aquila_inactive_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_agility"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
+				}
+			}
+			"modifier_item_ring_of_aquila_inactive_datadriven_aura_emitter"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				
+				"Aura" 					"modifier_item_ring_of_aquila_inactive_datadriven_aura"
+				"Aura_Radius" 			"%aura_radius"
+				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO"
+				"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster" 	"1"
+			}
+			"modifier_item_ring_of_aquila_inactive_datadriven_aura"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE"				"%armor_aura"
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"						"0.65"  //This is hardcoded due to an obscure engine bug.
+				}
+			}
+		}
+	}
 	// Rewrite of Ring of Basilius
 	// Author: Rook
 	// Date: January 26, 2015
@@ -8045,6 +8642,7 @@
 	//     Since there is currently no way to alter the item's texture on the fly, Ring of Basilius is split up into two items.
 	//     Toggling Ring of Basilius activates the 10-second window in which it can be sold for full price.
 	//     Due to the half-second aura stickiness, rapidly toggling this item will grant twice the aura's effects to nearby heroes.
+	//     The aura currently stacks with Ring of Aquila's and Vladmir's Offering's.
 	
 	//A dummy item that is used to take up item slots in the swap_to_item() Lua function.
 	"item_dummy_datadriven"
@@ -8703,6 +9301,10 @@
 				"Duration"				"%maim_duration"
 				"Passive"				"0"
 				"IsHidden"				"0"
+				"IsBuff"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
+				
 				"EffectName"            "particles/items2_fx/sange_maim.vpcf"
 				"EffectAttachType"      "PATTACH_ABSORIGIN"
 				
@@ -8807,6 +9409,10 @@
 				"Duration"				"%maim_duration"
 				"Passive"				"0"
 				"IsHidden"				"0"
+				"IsBuff"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
+				
 				"EffectName"            "particles/items2_fx/sange_maim.vpcf"
 				"EffectAttachType"      "PATTACH_ABSORIGIN"
 				
@@ -10045,6 +10651,7 @@
 	// Known bugs:
 	//     MODIFIER_PROPERTY_MANA_REGEN_CONSTANT does not accept FIELD_FLOAT AbilitySpecial values.  Because of this, the
 	//         mana_regen_aura value is currently hardcoded so it will work.
+	//     The aura currently stacks with Ring of Basilius' and Ring of Aquila's.
 	
 	"item_vladmir_datadriven"
 	{
