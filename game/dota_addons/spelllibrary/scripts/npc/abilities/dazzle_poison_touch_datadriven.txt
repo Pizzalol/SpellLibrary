@@ -83,7 +83,7 @@
 		"07"
 		{	
 			"var_type"			"FIELD_FLOAT"
-			"stun_duration"		"0 0 0 1"
+			"stun_duration"		"1"
 		}
 		"08"
 		{	
@@ -249,10 +249,10 @@
 					"Duration"		"%slow_3_duration"
 				}
 
-				"Stun"
+				"RunScript"
 				{
-					"Duration"   "%stun_duration"
-					"Target" 	 "TARGET"
+					"ScriptFile"	"heroes/hero_dazzle/poison_touch.lua"
+					"Function"		"PoisonTouchStun"
 				}
 			}
 

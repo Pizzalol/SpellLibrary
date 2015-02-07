@@ -1,9 +1,5 @@
-//Generated using Dota Custom File Generator by cris9696
 "DOTAHeroes"
 {
-
-
-	//Start of file test_dummy_melee.txt
 	"npc_dota_hero_antimage_datadriven"
 	{
 		"override_hero" "npc_dota_hero_abaddon"
@@ -13,10 +9,6 @@
 		"Ability3" "bounty_hunter_wind_walk_datadriven"
 		"Ability4" "dragon_knight_elder_dragon_form_datadriven"
 	}
-	//End of file test_dummy_melee.txt
-
-
-	//Start of file test_dummy_ranged.txt
 	"npc_dota_hero_ancient_apparition_datadriven"
 	{
 		"override_hero" "npc_dota_hero_ancient_apparition"
@@ -28,5 +20,4 @@
 		"Ability3"	"vengefulspirit_command_aura_datadriven"
 		"Ability4"	"dazzle_weave_datadriven"
 	}
-	//End of file test_dummy_ranged.txt
 }
