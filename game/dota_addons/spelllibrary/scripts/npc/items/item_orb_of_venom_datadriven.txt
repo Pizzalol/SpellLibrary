@@ -85,6 +85,10 @@
 			"Duration"				"%poison_duration"
 			"Passive"				"0"
 			"IsHidden"				"0"
+			"IsBuff"				"0"
+			"IsDebuff"				"1"
+			"IsPurgable"			"1"
+			
 			"EffectName"			"particles/items2_fx/orb_of_venom.vpcf"
 			"EffectAttachType"		"follow_origin"
 			
@@ -110,6 +114,10 @@
 			"Duration"				"%poison_duration"
 			"Passive"				"0"
 			"IsHidden"				"0"
+			"IsBuff"				"0"
+			"IsDebuff"				"1"
+			"IsPurgable"			"1"
+			
 			"EffectName"			"particles/items2_fx/orb_of_venom.vpcf"
 			"EffectAttachType"		"follow_origin"
 			

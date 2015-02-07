@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Ring of Aquila
+// Author: Rook
+// Date: February 5, 2015
+
+"item_recipe_ring_of_aquila_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1211"  //Valve's version of this item uses the ID "211".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_ring_of_aquila_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_wraith_band_datadriven;item_ring_of_basilius_datadriven"
+	}
+}

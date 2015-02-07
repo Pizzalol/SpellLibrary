@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Heaven's Halberd
+// Author: Rook
+// Date: February 5, 2015
+
+"item_recipe_heavens_halberd_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1209"  //Valve's version of this item uses the ID "209".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"0"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_heavens_halberd_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_sange_datadriven;item_talisman_of_evasion_datadriven"
+	}
+}

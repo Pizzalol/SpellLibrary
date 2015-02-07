@@ -1,0 +1,97 @@
+// Rewrite of Gem of True Sight
+// Author: Noya
+// Date: February 7, 2015
+
+"item_gem_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1030"  //Valve's version of this item uses the ID "30".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"Model"							"models/props_gameplay/gem01.vmdl"
+	"Effect"						"particles/generic_gameplay/dropped_gem.vpcf"
+	"AbilityTextureName"			"item_gem"
+
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"900"
+	"ItemShopTags"					"see_invis"
+	"ItemQuality"					"component"
+	"ItemAliases"					"gem of true sight"
+	"ItemSellable"					"0"
+	"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+	"ItemStockMax"					"1"
+	"ItemStockTime"					"600.0"
+	"ItemSupport"					"1"
+	"ItemKillable"					"0"
+	"ItemContributesToNetWorthWhenDropped"	"0"
+	
+	// Sound
+	//-------------------------------------------------------------------------------------------------------------			
+	"UIPickupSound"					"Item.PickUpGemShop"
+	"UIDropSound"					"Item.DropGemShop"
+	"WorldDropSound"				"Item.DropGemWorld"
+	
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"1100"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_truesight_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				
+					"Action"    
+					{
+						"RemoveModifier"
+						{
+							"ModifierName"	"modifier_truesight_reveal"
+							"Target" 		"TARGET"
+						}
+
+						"ApplyModifier"
+						{
+							"ModifierName"	"modifier_truesight_reveal"
+							"Target" 		"TARGET"
+						}
+					}
+				}			
+			}		
+		}
+
+		"modifier_truesight_reveal"
+		{
+			"IsHidden"			"1"
+			"Duration"			"0.5"	//The True Sight effect lingers for 0.5 seconds.
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+			}
+		}
+	}
+}
+
