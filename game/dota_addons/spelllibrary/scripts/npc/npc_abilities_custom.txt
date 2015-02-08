@@ -9194,6 +9194,16 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"dazzle_shadow_wave"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+			"particle"			"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf"
+			"particle"			"particles/units/heroes/hero_dazzle/dazzle_shadow_wave_impact_damage.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -9240,6 +9250,35 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"damage"			"80 100 120 140"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Dazzle.Shadow_Wave"
+				"Target" 		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_attack1"
+					"TARGET"	"follow_origin"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_dazzle/shadow_wave.lua"
+				"Function"		"ShadowWave"
+				"shadow_wave_particle"	"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf"
+				"damage_particle"		"particles/units/heroes/hero_dazzle/dazzle_shadow_wave_impact_damage.vpcf"
 			}
 		}
 	}
