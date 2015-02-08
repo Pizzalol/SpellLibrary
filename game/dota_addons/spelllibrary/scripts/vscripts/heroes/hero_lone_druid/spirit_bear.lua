@@ -22,7 +22,7 @@ function SpiritBearSpawn( event )
 	end
 
 	-- Check if the bear is alive, heals and spawns them near the caster if it is
-	if caster.bear and caster.bear:IsAlive() then
+	if caster.bear and and IsValidEntity(caster.bear) and caster.bear:IsAlive() then
 		FindClearSpaceForUnit(caster.bear, origin, true)
 		caster.bear:SetHealth(caster.bear:GetMaxHealth())
 	
