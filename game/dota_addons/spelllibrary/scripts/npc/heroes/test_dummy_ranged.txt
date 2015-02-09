@@ -4,7 +4,7 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"dazzle_poison_touch_datadriven"
+	"Ability1"	"axe_berserkers_call_datadriven"
 	"Ability2"	"dazzle_shallow_grave_datadriven"
 	"Ability3"	"dazzle_shadow_wave_datadriven"
 	"Ability4"	"dazzle_weave_datadriven"

@@ -2189,6 +2189,9 @@
 		}		
 	}
 	
+	// Rewrite of the Axe Berserkers Call ability
+	// Author: Pizzalol
+	// Date: 09.02.2015.
 	"axe_berserkers_call_datadriven"
 	{
 		// General
@@ -2198,6 +2201,15 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"axe_berserkers_call"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
+			"particle"			"particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
+			"particle"			"particles/status_fx/status_effect_beserkers_call.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -2222,7 +2234,6 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-	
 				"radius"				"300"
 			}
 			"02"
@@ -2235,6 +2246,99 @@
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"2.0 2.4 2.8 3.2"
 			}	
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Axe.Berserkers_Call"
+				"Target" 		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+	
+				"ControlPointEntities"
+				{
+					"CASTER"	"follow_origin"
+					"CASTER"	"follow_origin"
+					"CASTER"	"follow_origin"
+				}
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_berserkers_call_caster_datadriven"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  	"CASTER"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				}
+			
+				"Action"    
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_beserkers_call_enemy_datadriven"
+						"Target" 		"TARGET"
+						"Duration"		"%duration"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_berserkers_call_caster_datadriven"
+			{
+				"IsPurgable"		"0"
+				"IsBuff"			"1"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
+				}
+			}
+	
+			"modifier_beserkers_call_enemy_datadriven"
+			{
+				"IsPurgable"		"0"
+				"IsDebuff"			"1"
+	
+				"StatusEffectName" 		"particles/status_fx/status_effect_beserkers_call.vpcf" 	   
+				"StatusEffectPriority"  "10"
+	
+				"ThinkInterval"  "0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_axe/berserkers_call.lua"
+						"Function"		"BerserkersCall"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_axe/berserkers_call.lua"
+						"Function"		"BerserkersCallEnd"
+					}
+				}
+			}
 		}
 	}
 	
