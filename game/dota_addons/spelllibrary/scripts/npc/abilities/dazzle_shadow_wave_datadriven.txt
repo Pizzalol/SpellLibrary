@@ -1,3 +1,6 @@
+// Rewrite of the Dazzle Shadow Wave ability
+// Author: Pizzalol
+// Date: 09.02.2015.
 "dazzle_shadow_wave_datadriven"
 {
 	// General
