@@ -4,8 +4,11 @@
 	A helper method that switches the keys.ability item to one with the inputted name.
 ================================================================================================================= ]]
 function swap_to_item(keys, ItemName)
-	while keys.caster:HasAnyAvailableInventorySpace() do  --Fill all empty slots in the player's inventory with "dummy" items.
-		keys.caster:AddItem(CreateItem("item_dummy_datadriven", keys.caster, keys.caster))
+	for i=0, 5, 1 do  --Fill all empty slots in the player's inventory with "dummy" items.
+		local current_item = keys.caster:GetItemInSlot(i)
+		if current_item == nil then
+			keys.caster:AddItem(CreateItem("item_dummy", keys.caster, keys.caster))
+		end
 	end
 	
 	keys.caster:RemoveItem(keys.ability)
