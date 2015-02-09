@@ -5,9 +5,33 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	"MaxLevel"						"1"
+	"AbilityTextureName"			"wisp_spirits_out"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastPoint"				"0 0 0 0"
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"OnToggleOn"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_wisp/spirits.lua"
+			"Function"		"ToggleOn"
+			
+			"spirit_movement"	"1"
+			"opposite_ability"	"wisp_spirits_in_datadriven"
+		}
+	}
+	
+	"OnToggleOff"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_wisp/spirits.lua"
+			"Function"		"ToggleOff"
+		}
+	}
 }
 

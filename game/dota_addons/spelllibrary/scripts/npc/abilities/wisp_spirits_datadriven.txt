@@ -6,6 +6,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"wisp_spirits"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -78,6 +79,316 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"spirit_duration"			"19.0 19.0 19.0 19.0"
+		}
+		// Extra variables
+		"13"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"num_spirits"				"5"
+		}
+		"14"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"spirit_summon_interval"	"1.0"
+		}
+		"15"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"spirit_turn_rate"			"150"
+		}
+		"16"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"vision_duration"			"3.0"
+		}
+		"17"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"think_interval"			"0.03"
+		}
+		"18"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"creep_damage_interval"		"0.48"		// == 360 / %spirit_turn_rate / %num_spirits
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+		"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_.vpcf"
+		"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
+		"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_explosion_small.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"			"Hero_Wisp.Spirits.Cast"
+			"Target"				"CASTER"
+		}
+		
+		"RemoveModifier"
+		{
+			"ModifierName"			"modifier_spirits_caster_datadriven"
+			"Target"				"CASTER"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"			"modifier_spirits_caster_datadriven"
+			"Target"				"CASTER"
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_wisp/spirits.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"wisp_spirits_in_datadriven"
+		}
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_wisp/spirits.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"wisp_spirits_out_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_spirits_caster_datadriven"
+		{
+			"Duration"		"%spirit_duration"
+		
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_wisp/spirits.lua"
+					"Function"			"CastSpirits"
+					
+					"default_radius"	"%default_radius"
+					
+					"empty1_ability"		"wisp_empty1_datadriven"
+					"empty2_ability"		"wisp_empty2_datadriven"
+					"spirits_in_ability"	"wisp_spirits_in_datadriven"
+					"spirits_out_ability"	"wisp_spirits_out_datadriven"
+				}
+				
+				"FireSound"
+				{
+					"EffectName"		"Hero_Wisp.Spirits.Loop"
+					"Target"			"CASTER"
+				}
+			}
+			
+			"ThinkInterval"		"%think_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_wisp/spirits.lua"
+					"Function"			"ThinkSpirits"
+					
+					"think_interval"			"%think_interval"
+					
+					"num_spirits"				"%num_spirits"
+					"spirit_summon_interval"	"%spirit_summon_interval"
+					"spirit_turn_rate"			"%spirit_turn_rate"
+					
+					"min_range"					"%min_range"
+					"max_range"					"%max_range"
+					"spirit_movement_rate"		"%spirit_movement_rate"
+					
+					"caster_modifier"			"modifier_spirits_caster_datadriven"
+					
+					"spirit_particle_name"		"particles/units/heroes/hero_wisp/wisp_guardian_.vpcf"
+					"spirit_modifier"			"modifier_spirits_spirit_datadriven"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_wisp/spirits.lua"
+					"Function"			"EndSpirits"
+					
+					"spirit_modifier"	"modifier_spirits_spirit_datadriven"
+					
+					"empty1_ability"		"wisp_empty1_datadriven"
+					"empty2_ability"		"wisp_empty2_datadriven"
+					"spirits_in_ability"	"wisp_spirits_in_datadriven"
+					"spirits_out_ability"	"wisp_spirits_out_datadriven"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_wisp/spirits.lua"
+					"Function"			"StopSound"
+					"sound_name"		"Hero_Wisp.Spirits.Loop"
+				}
+			}
+		}
+		
+		"modifier_spirits_spirit_datadriven"
+		{
+			"Aura"			"modifier_spirits_creep_damage_datadriven"
+			"Aura_Radius"	"%hit_radius"
+			"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"	"DOTA_UNIT_TARGET_BASIC"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_wisp/spirits.lua"
+					"Function"			"OnCreatedSpirit"
+					
+					"additionalModifier"	"modifier_spirits_spirit_collision_with_hero_datadriven"
+				}
+			}
+		
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_spirits_spirit_collision_with_hero_datadriven"
+					"Target"		"TARGET"
+				}
+			
+				"FireEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
+					"EffectAttachType"	"attach_origin"
+					"Target"			"TARGET"
+				}
+				
+				"FireSound"
+				{
+					"EffectName"		"Hero_Wisp.Spirits.Destroy"
+					"Target"			"TARGET"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_wisp/spirits.lua"
+					"Function"			"OnDestroySpirit"
+					"Target"			"TARGET"
+					
+					"vision_radius"		"%explode_radius"
+					"vision_duration"	"%vision_duration"
+				}
+				
+				"Damage"
+				{
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%explode_radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%hero_damage"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		
+		"modifier_spirits_spirit_collision_with_hero_datadriven"
+		{
+			"Aura"			"modifier_spirits_trigger_explode_datadriven"
+			"Aura_Radius"	"%hero_hit_radius"
+			"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"	"DOTA_UNIT_TARGET_HERO"
+		}
+		
+		"modifier_spirits_creep_damage_datadriven"
+		{
+			"Duration"	"0.03"
+			"IsHidden"	"1"
+			
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"		"Hero_Wisp.Spirits.TargetCreep"
+					"Target"			"TARGET"
+				}
+				
+				"FireEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_wisp/wisp_guardian_explosion_small.vpcf"
+					"EffectAttachType"	"attach_hitloc"
+					"Target"			"TARGET"
+				}
+				
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%creep_damage"
+				}
+			}
+			
+			"ThinkInterval"		"%creep_damage_interval"
+			"OnIntervalThink"
+			{
+				"FireSound"
+				{
+					"EffectName"		"Hero_Wisp.Spirits.TargetCreep"
+					"Target"			"TARGET"
+				}
+				
+				"FireEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_wisp/wisp_guardian_explosion_small.vpcf"
+					"EffectAttachType"	"attach_hitloc"
+					"Target"			"TARGET"
+				}
+				
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%creep_damage"
+				}
+			}
+		}
+		
+		"modifier_spirits_trigger_explode_datadriven"
+		{
+			"Duration"	"0.03"
+			"IsHidden"	"1"
+			
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_wisp/spirits.lua"
+					"Function"		"ExplodeSpirit"
+					
+					"spirit_modifier"	"modifier_spirits_spirit_datadriven"
+					"explosion_sound"	"Hero_Wisp.Spirits.Target"
+				}
+			}
 		}
 	}
 }	
