@@ -2450,6 +2450,9 @@
 		}
 	}
 	
+	// Rewrite of the Axe Counter Helix ability
+	// Author: Pizzalol
+	// Date: 09.02.2015.
 	"axe_counter_helix_datadriven"
 	{
 		// General
@@ -2458,6 +2461,15 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"axe_counter_helix"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
+			"particle"			"particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf"
+		}
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -2485,6 +2497,110 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"cooldown"					"0.45 0.4 0.35 0.3"
+			}
+			// Extra
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"trigger_radius"			"1000"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_counter_helix_aura_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"Aura" 			"modifier_counter_helix_enemy_datadriven"
+				"Aura_Radius" 	"%trigger_radius"
+				"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+			}
+	
+			"modifier_counter_helix_enemy_datadriven"
+			{
+				"IsHidden"			"1"
+	
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"			"%trigger_chance"
+						"PseudoRandom" 		"DOTA_PSEUDO_RANDOM_JUGG_CRIT"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"	"heroes/hero_axe/counter_helix.lua"
+								"Function"		"CounterHelix"
+								"helix_modifier"	"modifier_counter_helix_datadriven"
+							}
+						}
+					}
+				}
+			}
+	
+			"modifier_counter_helix_datadriven"
+			{
+				"Duration"		"%cooldown"
+				"IsHidden"		"1"
+	
+				"EffectName"	"particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf"
+				"EffectAttachType"	"follow_origin"			
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Axe.CounterHelix"
+						"Target" 		"CASTER"
+					}
+	
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"CASTER"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+						}
+					
+						"Action"    
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Type"			"DAMAGE_TYPE_PHYSICAL"
+								"Damage"		"%AbilityDamage"
+							}
+						}
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_counter_helix_rotate_datadriven"
+						"Target" 		"CASTER"
+						"Duration"		"0.15"
+					}
+				}
+			}
+	
+			"modifier_counter_helix_rotate_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"Rotate"
+					{
+						"Target"	"CASTER"
+						"PitchYawRoll"	"0 72 0"
+					}
+				}
 			}
 		}
 	}
