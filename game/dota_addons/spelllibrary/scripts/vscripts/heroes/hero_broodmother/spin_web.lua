@@ -1,4 +1,4 @@
---[[Author: kritth/Pizzalol
+--[[Author: kritth,Pizzalol
 	Date: 18.01.2015.
 	Keeps track of the current charges and replenishes them accordingly]]
 function web_start_charge( keys )
@@ -85,7 +85,7 @@ function web_start_cooldown( caster, charge_replenish_time )
 end
 
 --[[
-	Author: kritth/Pizzalol
+	Author: kritth,Pizzalol
 	Date: 18.01.2015.
 	Main: Check/Reduce charge, spawn dummy and do web logic
 ]]

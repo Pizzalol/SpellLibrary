@@ -10,6 +10,7 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"AbilityTextureName"			"axe_counter_helix"
+	"AOERadius"						"%radius"
 
 	// Precache
 	//-------------------------------------------------------------------------------------------------------------

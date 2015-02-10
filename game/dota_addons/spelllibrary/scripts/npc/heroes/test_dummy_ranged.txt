@@ -7,5 +7,5 @@
 	"Ability1"	"axe_berserkers_call_datadriven"
 	"Ability2"	"axe_battle_hunger_datadriven"
 	"Ability3"	"axe_counter_helix_datadriven"
-	"Ability4"	"dazzle_weave_datadriven"
+	"Ability4"	"axe_culling_blade_datadriven"
 }

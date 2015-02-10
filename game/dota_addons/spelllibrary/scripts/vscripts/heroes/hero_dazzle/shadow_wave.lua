@@ -47,6 +47,10 @@ function ShadowWave( keys )
 		local units_to_damage = FindUnitsInRadius(caster:GetTeam(), caster_location, nil, damage_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType(), 0, 0, false)
 
 		for _,v in pairs(units_to_damage) do
+			-- Play the particle
+			local damage_particle = ParticleManager:CreateParticle(shadow_wave_damage_particle, PATTACH_CUSTOMORIGIN, caster)
+			ParticleManager:SetParticleControlEnt(damage_particle, 0, v, PATTACH_POINT_FOLLOW, "attach_hitloc", v:GetAbsOrigin(), true)
+			ParticleManager:ReleaseParticleIndex(damage_particle)
 			damage_table.victim = v
 			ApplyDamage(damage_table)
 		end

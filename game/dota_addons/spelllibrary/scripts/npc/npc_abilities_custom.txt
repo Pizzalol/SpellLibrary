@@ -2462,6 +2462,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"axe_counter_helix"
+		"AOERadius"						"%radius"
 	
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -2605,6 +2606,11 @@
 		}
 	}
 	
+	// Rewrite of the Axe Culling Blade ability
+	// Author: Pizzalol
+	// Date: 10.02.2015.
+	// NOTE: You need to specify the modifiers that need to be removed (only if they cant be purged)
+	// which would otherwise prevent death in the culling_blade.lua file
 	"axe_culling_blade_datadriven"
 	{
 		// General
@@ -2619,6 +2625,17 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"axe_culling_blade"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
+			"particle"			"particles/units/heroes/hero_axe/axe_culling_blade.vpcf"
+			"particle"			"particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf"
+			"particle"			"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
+			"particle"			"particles/units/heroes/hero_axe/axe_cullingblade_sprint.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -2679,6 +2696,58 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"speed_duration_scepter"	"10"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_axe/axe_culling_blade.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_axe/culling_blade.lua"
+				"Function"			"CullingBlade"
+				"sound_fail"		"Hero_Axe.Culling_Blade_Fail"
+				"sound_success"		"Hero_Axe.Culling_Blade_Success"
+				"particle_kill"		"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
+				"modifier_sprint"	"modifier_culling_blade_sprint_datadriven"	
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_culling_blade_sprint_datadriven"
+			{
+				"IsBuff"	"1"
+		
+				"EffectName"		"particles/units/heroes/hero_axe/axe_cullingblade_sprint.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						
+						"ControlPointEntities"
+						{
+							"TARGET"	"follow_origin"
+							"TARGET"	"follow_origin"
+						}
+					}
+				}
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%speed_bonus"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_bonus" 
+				}
 			}
 		}
 	}	
