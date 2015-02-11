@@ -1687,6 +1687,9 @@
 		"AbilityCooldown"				"1.0 1.0 1.0"
 	}
 	
+	// Rewrite of the Ancient Apparition Ice Vortex ability
+	// Author: Pizzalol
+	// Date: 11.02.2015.
 	"ancient_apparition_ice_vortex_datadriven"
 	{
 		// General
@@ -1694,6 +1697,17 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"ancient_apparition_ice_vortex"
+		"AOERadius"						"%radius"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts"
+			"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_ice_vortex.vpcf"
+			"particle"			"particles/status_fx/status_effect_frost_armor.vpcf"		
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -1732,6 +1746,94 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"vision_aoe"		"200 200 200 200"
+			}
+			// Extra
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"16"
+			}
+		}
+	
+		"OnSpellStart"
+		{	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Ancient_Apparition.IceVortexCast"
+				"Target" 		"CASTER"
+			}
+	
+			"CreateThinker"
+			{
+				"ModifierName"	"modifier_ice_vortex_thinker_datadriven"
+				"Target" 		"POINT"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_ancient_apparition/ice_vortex.lua"
+				"Function"		"IceVortexVision"
+				"Target"		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_ice_vortex_thinker_datadriven"
+			{
+				"Duration"			"%duration"
+	
+				"Aura"					"modifier_ice_vortex_datadriven"
+				"Aura_Radius"			"%radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Ancient_Apparition.IceVortex"
+						"Target" 		"TARGET"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_ancient_apparition/ancient_ice_vortex.vpcf"
+						"EffectAttachType"  "follow_overhead"
+						"Target"            "TARGET"
+	
+						"ControlPoints"
+						{
+							"01"	"%radius 0 0"
+							"05"	"%radius 0 0"
+						}
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_ancient_apparition/ice_vortex.lua"
+						"Function"		"IceVortexStopSound"
+						"sound"			"Hero_Ancient_Apparition.IceVortex"
+					}
+				}
+			}
+	
+			"modifier_ice_vortex_datadriven"
+			{
+				"IsDebuff"		"1"
+	
+				"StatusEffectName" 		"particles/status_fx/status_effect_frost_armor.vpcf" 	   
+				"StatusEffectPriority"  "10"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"%spell_resist_pct"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed_pct" 
+				}
 			}
 		}
 	}
@@ -52342,6 +52444,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityTextureName"			"wisp_overcharge"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -52379,6 +52482,172 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"drain_pct_tooltip"			"4.5 4.5 4.5 4.5"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+		}
+		
+		"OnToggleOn"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_overcharge_drain_datadriven"
+				"Target"		"CASTER"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_overcharge_check_tether_datadriven"
+				"Target"		"CASTER"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_overcharge_buff_datadriven"
+				"Target"		"CASTER"
+			}
+		}
+		
+		"OnToggleOff"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_overcharge_drain_datadriven"
+				"Target"		"CASTER"
+			}
+			
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_overcharge_check_tether_datadriven"
+				"Target"		"CASTER"
+			}
+			
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_overcharge_buff_datadriven"
+				"Target"		"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_overcharge_drain_datadriven"
+			{
+				"IsHidden"	"1"
+			
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Wisp.Overcharge"
+						"Target"		"CASTER"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/overcharge.lua"
+						"Function"			"StopSound"
+						"sound_name"		"Hero_Wisp.Overcharge"
+					}
+				}
+				
+				"ThinkInterval"		"%drain_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/overcharge.lua"
+						"Function"			"TickDrain"
+						
+						"drain_interval"	"%drain_interval"
+						"drain_pct"			"%drain_pct"
+					}
+				}
+			}
+			
+			"modifier_overcharge_check_tether_datadriven"
+			{
+				"IsHidden"	"1"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/overcharge.lua"
+						"Function"			"GrabTetherAbility"
+						
+						"tether_ability_name"	"wisp_tether_datadriven"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/overcharge.lua"
+						"Function"			"CheckTetheredAlly"
+						
+						"tether_ally_property_name"		"tether_ally"		// We can access the tethered ally through "tether_ability[tether_ally_property_name]"
+						"buff_modifier"					"modifier_overcharge_buff_datadriven"
+					}
+				}
+				
+				"ThinkInterval"		"0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/overcharge.lua"
+						"Function"			"CheckTetheredAlly"
+						
+						"tether_ally_property_name"		"tether_ally"
+						"buff_modifier"					"modifier_overcharge_buff_datadriven"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/overcharge.lua"
+						"Function"			"RemoveOverchargeFromAlly"
+						
+						"buff_modifier"		"modifier_overcharge_buff_datadriven"
+					}
+				}
+			}
+		
+			"modifier_overcharge_buff_datadriven"
+			{
+				"IsBuff"	"1"
+				"Duration"	"-1"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+						
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_hitloc"
+						}
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%bonus_damage_pct"
+				}
 			}
 		}
 	}	

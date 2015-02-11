@@ -15,8 +15,8 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"axe_berserkers_call_datadriven"
-		"Ability2"	"axe_battle_hunger_datadriven"
+		"Ability1"	"ancient_apparition_ice_vortex"
+		"Ability2"	"ancient_apparition_ice_vortex_datadriven"
 		"Ability3"	"axe_counter_helix_datadriven"
 		"Ability4"	"axe_culling_blade_datadriven"
 	}
