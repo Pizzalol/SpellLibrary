@@ -4,6 +4,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+	"AbilityTextureName"			"wisp_overcharge"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -41,6 +42,172 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"drain_pct_tooltip"			"4.5 4.5 4.5 4.5"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+		"particle"					"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+	}
+	
+	"OnToggleOn"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_overcharge_drain_datadriven"
+			"Target"		"CASTER"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_overcharge_check_tether_datadriven"
+			"Target"		"CASTER"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_overcharge_buff_datadriven"
+			"Target"		"CASTER"
+		}
+	}
+	
+	"OnToggleOff"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_overcharge_drain_datadriven"
+			"Target"		"CASTER"
+		}
+		
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_overcharge_check_tether_datadriven"
+			"Target"		"CASTER"
+		}
+		
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_overcharge_buff_datadriven"
+			"Target"		"CASTER"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_overcharge_drain_datadriven"
+		{
+			"IsHidden"	"1"
+		
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Wisp.Overcharge"
+					"Target"		"CASTER"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_wisp/overcharge.lua"
+					"Function"			"StopSound"
+					"sound_name"		"Hero_Wisp.Overcharge"
+				}
+			}
+			
+			"ThinkInterval"		"%drain_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_wisp/overcharge.lua"
+					"Function"			"TickDrain"
+					
+					"drain_interval"	"%drain_interval"
+					"drain_pct"			"%drain_pct"
+				}
+			}
+		}
+		
+		"modifier_overcharge_check_tether_datadriven"
+		{
+			"IsHidden"	"1"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_wisp/overcharge.lua"
+					"Function"			"GrabTetherAbility"
+					
+					"tether_ability_name"	"wisp_tether_datadriven"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_wisp/overcharge.lua"
+					"Function"			"CheckTetheredAlly"
+					
+					"tether_ally_property_name"		"tether_ally"		// We can access the tethered ally through "tether_ability[tether_ally_property_name]"
+					"buff_modifier"					"modifier_overcharge_buff_datadriven"
+				}
+			}
+			
+			"ThinkInterval"		"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_wisp/overcharge.lua"
+					"Function"			"CheckTetheredAlly"
+					
+					"tether_ally_property_name"		"tether_ally"
+					"buff_modifier"					"modifier_overcharge_buff_datadriven"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_wisp/overcharge.lua"
+					"Function"			"RemoveOverchargeFromAlly"
+					
+					"buff_modifier"		"modifier_overcharge_buff_datadriven"
+				}
+			}
+		}
+	
+		"modifier_overcharge_buff_datadriven"
+		{
+			"IsBuff"	"1"
+			"Duration"	"-1"
+			
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+					"EffectAttachType"	"attach_hitloc"
+					"Target"			"TARGET"
+					
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_hitloc"
+					}
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%bonus_damage_pct"
+			}
 		}
 	}
 }	

@@ -91,6 +91,7 @@ function EndTether( event )
 	local ability = event.ability
 
 	ability.tether_ally:RemoveModifierByName( event.ally_modifier )
+	ability.tether_ally = nil
 
 	caster:SwapAbilities( ability:GetAbilityName(), event.sub_ability_name, true, false )
 end
@@ -149,7 +150,7 @@ function GiveManaToAlly( event )
 		return
 	end
 
-	print( caster.tether_lastMana )
+	--print( caster.tether_lastMana )
 
 	target:GiveMana( manaGained * event.tether_heal_amp )
 end
