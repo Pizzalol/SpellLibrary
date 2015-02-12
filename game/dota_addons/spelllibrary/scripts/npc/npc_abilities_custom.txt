@@ -3288,6 +3288,10 @@
 	
 	//need lua for mana drain and for stoping loop sound
 	
+	// Rewrite of the Bane Nightmare ability
+	// Author: Pizzalol, chrislotix
+	// Date: 12.02.2015.
+	// NOTE: This ability requires the bane_nightmare_end_datadriven ability to fully function!
 	"bane_nightmare_datadriven"
 	{
 		// General
@@ -3380,18 +3384,6 @@
 				"ModifierName"	"modifier_nightmare_datadriven"
 				"Target"		"TARGET"
 			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_nightmare_aura_datadriven"
-				"Target"		"TARGET"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_nightmare_invul_datadriven"
-				"Target"		"TARGET"
-			}
 		}
 	
 		"Modifiers"
@@ -3400,68 +3392,161 @@
 			{
 				"Duration"	"%duration"
 				"IsDebuff"	"1"
-				"EffectName"    "particles/units/heroes/hero_bane/bane_nightmare.vpcf"
-	            "EffectAttachType"      "attach_overhead"
-	            "ThinkInterval" "%nightmare_dot_interval"
 	
+				"EffectName"    		"particles/units/heroes/hero_bane/bane_nightmare.vpcf"
+	            "EffectAttachType"      "follow_overhead"
+	
+	            "OverrideAnimation"     "ACT_DOTA_FLAIL"
+	            // Doesnt work for modifiers it seems
+	            "AnimationPlaybackRate"	"%animation_rate"
+	
+	            "OnTakeDamage"
+	            {
+	            	"RemoveModifier"
+	            	{
+	            		"ModifierName"	"modifier_nightmare_datadriven"
+	            		"Target" 		"UNIT"
+	            	}
+	            }
+	
+	            "OnCreated"
+	            {
+	            	"FireSound"
+	            	{
+	            		"EffectName"	"Hero_Bane.Nightmare.Loop"
+	            		"Target" 		"TARGET"
+	            	}
+	
+	            	"ApplyModifier"
+	            	{
+	            		"ModifierName"	"modifier_nightmare_damage_datadriven"
+	            		"Target" 		"TARGET"
+	            		"Duration"		"%duration"
+	            	}
+	
+	            	"ApplyModifier"
+	            	{
+	            		"ModifierName"	"modifier_nightmare_invul_datadriven"
+	            		"Target" 		"TARGET"
+	            		"Duration"		"%nightmare_invuln_time"
+	            	}
+	
+	            	"RunScript"
+	            	{
+	            		"ScriptFile"		"scripts/vscripts/heroes/hero_bane/nightmare.lua"
+	            		"Function"			"NightmareCasterCheck"
+	            		"main_ability_name"	"bane_nightmare_datadriven"
+	            		"sub_ability_name"	"bane_nightmare_end_datadriven"
+	            		"check_ability"		"bane_nightmare_datadriven"
+	            	}
+	            }
+	
+	            "OnDestroy"
+	            {
+	            	"FireSound"
+	               	{
+	              		"EffectName"	"Hero_Bane.Nightmare.End"
+	               		"Target"
+	               		{
+	               			"Center"	"TARGET"
+	               			"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	               		}
+	               	}
+	
+	               	"RemoveModifier"
+	            	{
+	            		"ModifierName"	"modifier_nightmare_damage_datadriven"
+	            		"Target"
+	               		{
+	               			"Center"	"TARGET"
+	               			"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	               		}
+	            	}
+	
+	               	"RunScript"
+	            	{
+	            		"ScriptFile"	"scripts/vscripts/heroes/hero_bane/nightmare.lua"
+	            		"Function"		"NightmareStopSound"
+	            		"sound"			"Hero_Bane.Nightmare.Loop"
+	            	}            	
+	
+	            	"RunScript"
+	            	{
+	            		"ScriptFile"		"scripts/vscripts/heroes/hero_bane/nightmare.lua"
+	            		"Function"			"NightmareCasterCheck"
+	            		"sub_ability_name"	"bane_nightmare_datadriven"
+	            		"main_ability_name"	"bane_nightmare_end_datadriven"
+	            		"check_ability"		"bane_nightmare_datadriven"
+	            	}
+	            }         
+	
+	            "ThinkInterval"  "0.1"
+	            "OnIntervalThink"
+	            {
+	            	"RunScript"
+	            	{
+	            		"ScriptFile"	"scripts/vscripts/heroes/hero_bane/nightmare.lua"
+	            		"Function"		"NightmareAura"
+	            		"modifier"		"modifier_nightmare_debuff_datadriven"
+	            	}
+	            }			 
+	
+	            "States"
+	            {
+		           	"MODIFIER_STATE_NIGHTMARED"     		"MODIFIER_STATE_VALUE_ENABLED"
+		            "MODIFIER_STATE_STUNNED"        		"MODIFIER_STATE_VALUE_ENABLED"
+		            "MODIFIER_STATE_SPECIALLY_DENIABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+		            "MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"		
+	            }
+			}
+	
+			"modifier_nightmare_damage_datadriven"
+			{
+				"IsHidden"		"1"
+	
+				"ThinkInterval" "%nightmare_dot_interval"
 	            "OnIntervalThink"
 	            {
 	            	"RunScript"
 	            	{
 	            		"ScriptFile"	"scripts/vscripts/heroes/hero_bane/nightmare.lua"
 	            		"Function"		"NightmareDamage"
-	            		"Target"		"TARGET"
 	            	}
-	            } 
-	
-	            "States"
-	            {
-		           	"MODIFIER_STATE_NIGHTMARED"     "MODIFIER_STATE_VALUE_ENABLED"
-		            "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
-		            "MODIFIER_STATE_SPECIALLY_DENIABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-		            "MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"		
 	            }
-			}
-	
-			"modifier_nightmare_aura_datadriven"
-			{
-				"Duration"	"%duration"
-				"IsHidden"	"0"
-	
-				"Aura"			"modifier_nightmare_debuff_datadriven"
-				"Aura_Radius"	"%aura_radius"
-				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"	"DOTA_UNIT_TARGET_HERO"
 			}
 	
 			"modifier_nightmare_debuff_datadriven"
 			{
-				"IsHidden"	"0"
+				"IsHidden"	"1"
 				"IsDebuff"	"1"
 	
 				"OnAttackStart"
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_bane/nightmare.lua"
-						"Function"		"NightmareBreak"
-						"Target"		"TARGET"
+						"ScriptFile"			"scripts/vscripts/heroes/hero_bane/nightmare.lua"
+						"Function"				"NightmareBreak"
+						"nightmare_modifier"	"modifier_nightmare_datadriven"
 					}
 				}
 			}
 	
 			"modifier_nightmare_invul_datadriven"
 			{
-				"Duration"	"%nightmare_invuln_time"
 				"IsDebuff"	"1"
 	
 				"States"
 				{
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
 	}	
+	// Rewrite of the Bane Nightmare End ability
+	// Author: Pizzalol
+	// Date: 12.02.2015.
+	// NOTE: This ability is part of the bane_nightmare_datadriven ability and it will NOT function without it
 	"bane_nightmare_end_datadriven"
 	{
 		// General
@@ -3469,6 +3554,36 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"MaxLevel"						"1"
+		"AbilityTextureName"			"bane_nightmare_end"
+	
+		"OnToggleOn"
+		{
+			"RemoveModifier"
+	        {
+	        	"ModifierName"	"modifier_nightmare_datadriven"
+	        	"Target"
+	        	{
+	        		"Center"	"CASTER"
+	        		"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	        	}
+	        }
+	
+	        "RemoveModifier"
+	        {
+	        	"ModifierName"	"modifier_nightmare_invul_datadriven"
+	        	"Target"
+	        	{
+	        		"Center"	"CASTER"
+	        		"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	        	}
+	        }
+	
+			"RunScript"
+	        {
+	        	"ScriptFile"		"scripts/vscripts/heroes/hero_bane/nightmare.lua"
+	            "Function"			"NightmareCasterEnd"
+	        }
+		}
 	}
 	
 	"batrider_firefly_datadriven"

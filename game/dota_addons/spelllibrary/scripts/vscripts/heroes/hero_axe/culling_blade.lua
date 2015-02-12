@@ -88,8 +88,10 @@ function CullingBlade( keys )
 			ability:ApplyDataDrivenModifier(caster, v, modifier_sprint, {duration = speed_duration})
 		end
 
-		-- Reset the ability cooldown
-		ability:EndCooldown()		
+		-- Reset the ability cooldown if its a hero
+		if target:IsRealHero() then
+			ability:EndCooldown()
+		end				
 	else
 		-- If its not equal or below the threshold then play the failure sound and deal normal damage
 		caster:EmitSound(sound_fail)

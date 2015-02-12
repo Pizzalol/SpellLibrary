@@ -1,3 +1,7 @@
+// Rewrite of the Bane Nightmare End ability
+// Author: Pizzalol
+// Date: 12.02.2015.
+// NOTE: This ability is part of the bane_nightmare_datadriven ability and it will NOT function without it
 "bane_nightmare_end_datadriven"
 {
 	// General
@@ -5,5 +9,35 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 	"MaxLevel"						"1"
+	"AbilityTextureName"			"bane_nightmare_end"
+
+	"OnToggleOn"
+	{
+		"RemoveModifier"
+        {
+        	"ModifierName"	"modifier_nightmare_datadriven"
+        	"Target"
+        	{
+        		"Center"	"CASTER"
+        		"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+        	}
+        }
+
+        "RemoveModifier"
+        {
+        	"ModifierName"	"modifier_nightmare_invul_datadriven"
+        	"Target"
+        	{
+        		"Center"	"CASTER"
+        		"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+        	}
+        }
+
+		"RunScript"
+        {
+        	"ScriptFile"		"scripts/vscripts/heroes/hero_bane/nightmare.lua"
+            "Function"			"NightmareCasterEnd"
+        }
+	}
 }
 
