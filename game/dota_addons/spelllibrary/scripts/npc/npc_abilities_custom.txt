@@ -1530,6 +1530,9 @@
 		}
 	}
 	
+	// Rewrite of the Ancient Apparition Cold Feet ability
+	// Author: Pizzalol
+	// Date: 13.02.2015.
 	"ancient_apparition_cold_feet_datadriven"
 	{
 		// General
@@ -1542,6 +1545,17 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"ancient_apparition_cold_feet"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts"
+			"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet.vpcf"
+			"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_frozen.vpcf"
+			"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_marker.vpcf"
+			"particle"  		"particles/generic_gameplay/generic_stunned.vpcf"	
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -1579,6 +1593,171 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"			"1.25 2.0 2.75 3.5"
+			}
+			// Extra
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_interval"		"0.8"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"leash_interval"		"0.1"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Ancient_Apparition.ColdFeetCast"
+				"Target" 		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_cold_feet_debuff_datadriven"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_ancient_apparition/cold_feet.lua"
+				"Function"		"ColdFeetInitializeCaster"
+			}
+	
+			"CreateThinker"
+			{
+				"ModifierName"	"modifier_cold_feet_thinker_datadriven"
+				"Target" 		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_cold_feet_thinker_datadriven"
+			{
+				"Duration"			"%duration"
+		
+				"EffectName"		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_marker.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_ancient_apparition/cold_feet.lua"
+						"Function"		"ColdFeetInitializeThinker"
+					}
+				}
+	
+				"ThinkInterval"  "%leash_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_ancient_apparition/cold_feet.lua"
+						"Function"		"ColdFeetLeashCheck"
+						"modifier"		"modifier_cold_feet_debuff_datadriven"
+					}
+				}
+			}
+	
+			"modifier_cold_feet_damage_datadriven"
+			{
+				"IsHidden"		"1"
+	
+				"ThinkInterval"  "%damage_interval"
+				"OnIntervalThink"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Ancient_Apparition.ColdFeetTick"
+						"Target" 		"TARGET"
+					}
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%damage"
+					}
+				}
+			}
+	
+			"modifier_cold_feet_debuff_datadriven"
+			{
+				"IsDebuff"		"1"
+	
+				"EffectName"	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_cold_feet_damage_datadriven"
+						"Target" 		"TARGET"
+						"Duration"		"%duration"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_cold_feet_damage_datadriven"
+						"Target" 		"TARGET"
+					}
+				}
+	
+				"ThinkInterval"  "%duration"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_cold_feet_stun_datadriven"
+						"Target" 		"TARGET"
+						"Duration"		"%stun_duration"
+					}
+				}
+			}
+	
+			"modifier_cold_feet_stun_datadriven"
+			{
+				"IsDebuff"		"1"
+				"IsPurgable"	"0"
+	
+				"EffectName"	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_frozen.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Ancient_Apparition.ColdFeetFreeze"
+						"Target" 		"TARGET"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+						"EffectAttachType"  "follow_overhead"
+						"Target"            "TARGET"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FROZEN"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -15926,7 +16105,8 @@
 				"States"
 				{
 					"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
@@ -15957,6 +16137,7 @@
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FROZEN"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 	
@@ -16102,6 +16283,7 @@
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FROZEN"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -52802,6 +52984,257 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"return_time"				"12.0 12.0 12.0"
+			}
+			// Extra variables
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"destroy_tree_radius"		"300"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vision_radius"				"64"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"extra_tether_duration"		"2.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_channel.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_marker.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_marker_endpoint.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_timer.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Wisp.Relocate"
+				"Target"			"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_wisp/relocate.lua"
+				"Function"			"CastRelocate"
+				"Target"			"POINT"
+				
+				"tether_ability"				"wisp_tether_datadriven"
+				"tether_modifier"				"modifier_tether_caster_datadriven"
+				"tether_ally_property_name"		"tether_ally"		// We can access the tethered ally through "tether_ability[tether_ally_property_name]"
+				"tether_ally_modifier"			"modifier_tether_ally_datadriven"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_relocate_channel_datadriven"
+				"Target"			"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_relocate_channel_datadriven"
+			{
+				"Duration"	"%cast_delay"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_wisp/wisp_relocate_channel.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+						
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_hitloc"
+						}
+					}
+				
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"CreateMarkerEndpoint"
+						
+						"endpoint_particle"		"particles/units/heroes/hero_wisp/wisp_relocate_marker_endpoint.vpcf"
+						
+						"vision_radius"			"%vision_radius"
+						"vision_duration"		"%cast_delay"
+					}
+				}
+				
+				"OnStateChanged"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/relocate.lua"
+						"Function"			"CheckToInterrupt"
+						
+						"channel_modifier"	"modifier_relocate_channel_datadriven"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"DestroyMarkerEndpoint"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"TryToTeleport"
+						
+						"timer_modifier"	"modifier_relocate_timer_datadriven"
+					}
+				}
+			}
+			
+			"modifier_relocate_return_datadriven"
+			{
+				// Visible from otheres as compared with modifier_relocate_timer_datadriven
+			}
+			
+			"modifier_relocate_timer_datadriven"
+			{
+				"IsHidden"	"1"
+				"Duration"	"%return_time"		// Timer should be hidden
+				
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_relocate_return_datadriven"
+						"Target"		"TARGET"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"Teleportation_PreDestroyTree"
+						
+						"tether_ability"				"wisp_tether_datadriven"
+						"tether_modifier"				"modifier_tether_caster_datadriven"
+						"tether_ally_property_name"		"tether_ally"
+						"tether_ally_modifier"			"modifier_tether_ally_datadriven"
+						"tether_duration"				"%return_time + %extra_tether_duration"
+						
+						"teleport_particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+					}
+					
+					"DestroyTrees"
+					{
+						"Target"		"CASTER"
+						"Radius"		"%destroy_tree_radius"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"Teleportation_PostDestroyTree"
+						
+						"return_time"		"%return_time"
+						
+						"marker_particle"	"particles/units/heroes/hero_wisp/wisp_relocate_marker.vpcf"
+						"timer_particle"	"particles/units/heroes/hero_wisp/wisp_relocate_timer.vpcf"
+					}
+					
+					"FireSound"
+					{
+						"EffectName"	"Hero_Wisp.ReturnCounter"
+						"Target"		"CASTER"
+					}
+				}
+				
+				"ThinkInterval"		"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"UpdateTimer"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"TryReturningTeleportation"
+						
+						"returning_modifier"	"modifier_relocate_returning_teleport_datadriven"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/relocate.lua"
+						"Function"			"StopSound"
+						"Target"			"CASTER"
+						"sound_name"		"Hero_Wisp.ReturnCounter"
+					}
+					
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_relocate_return_datadriven"
+						"Target"		"TARGET"
+					}
+				}
+			}
+			
+			"modifier_relocate_returning_teleport_datadriven"
+			{
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"ReturningTeleportation_PreDestroyTree"
+						
+						"tether_ability"				"wisp_tether_datadriven"
+						"tether_modifier"				"modifier_tether_caster_datadriven"
+						"tether_ally_property_name"		"tether_ally"
+						
+						"teleport_particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+					}
+					
+					"DestroyTrees"
+					{
+						"Target"		"CASTER"
+						"Radius"		"%destroy_tree_radius"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"ReturningTeleportation_PostDestroyTree"
+					}
+					
+					"FireSound"
+					{
+						"EffectName"	"Hero_Wisp.Return"
+						"Target"		"CASTER"
+					}
+					
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_relocate_returning_teleport_datadriven"
+						"Target"		"CASTER"
+					}
+				}
 			}
 		}
 	}

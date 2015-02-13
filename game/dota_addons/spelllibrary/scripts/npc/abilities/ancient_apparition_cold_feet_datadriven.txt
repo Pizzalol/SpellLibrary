@@ -1,3 +1,6 @@
+// Rewrite of the Ancient Apparition Cold Feet ability
+// Author: Pizzalol
+// Date: 13.02.2015.
 "ancient_apparition_cold_feet_datadriven"
 {
 	// General
@@ -10,6 +13,17 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"ancient_apparition_cold_feet"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts"
+		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet.vpcf"
+		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_frozen.vpcf"
+		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_marker.vpcf"
+		"particle"  		"particles/generic_gameplay/generic_stunned.vpcf"	
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -47,6 +61,171 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"stun_duration"			"1.25 2.0 2.75 3.5"
+		}
+		// Extra
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damage_interval"		"0.8"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"leash_interval"		"0.1"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"4.0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Ancient_Apparition.ColdFeetCast"
+			"Target" 		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_cold_feet_debuff_datadriven"
+			"Target" 		"TARGET"
+			"Duration"		"%duration"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_ancient_apparition/cold_feet.lua"
+			"Function"		"ColdFeetInitializeCaster"
+		}
+
+		"CreateThinker"
+		{
+			"ModifierName"	"modifier_cold_feet_thinker_datadriven"
+			"Target" 		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_cold_feet_thinker_datadriven"
+		{
+			"Duration"			"%duration"
+	
+			"EffectName"		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_marker.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_ancient_apparition/cold_feet.lua"
+					"Function"		"ColdFeetInitializeThinker"
+				}
+			}
+
+			"ThinkInterval"  "%leash_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_ancient_apparition/cold_feet.lua"
+					"Function"		"ColdFeetLeashCheck"
+					"modifier"		"modifier_cold_feet_debuff_datadriven"
+				}
+			}
+		}
+
+		"modifier_cold_feet_damage_datadriven"
+		{
+			"IsHidden"		"1"
+
+			"ThinkInterval"  "%damage_interval"
+			"OnIntervalThink"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Ancient_Apparition.ColdFeetTick"
+					"Target" 		"TARGET"
+				}
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%damage"
+				}
+			}
+		}
+
+		"modifier_cold_feet_debuff_datadriven"
+		{
+			"IsDebuff"		"1"
+
+			"EffectName"	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet.vpcf"
+			"EffectAttachType"	"follow_overhead"
+
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_cold_feet_damage_datadriven"
+					"Target" 		"TARGET"
+					"Duration"		"%duration"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_cold_feet_damage_datadriven"
+					"Target" 		"TARGET"
+				}
+			}
+
+			"ThinkInterval"  "%duration"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_cold_feet_stun_datadriven"
+					"Target" 		"TARGET"
+					"Duration"		"%stun_duration"
+				}
+			}
+		}
+
+		"modifier_cold_feet_stun_datadriven"
+		{
+			"IsDebuff"		"1"
+			"IsPurgable"	"0"
+
+			"EffectName"	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_frozen.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Ancient_Apparition.ColdFeetFreeze"
+					"Target" 		"TARGET"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+					"EffectAttachType"  "follow_overhead"
+					"Target"            "TARGET"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_FROZEN"			"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }

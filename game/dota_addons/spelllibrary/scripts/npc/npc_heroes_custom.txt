@@ -15,8 +15,8 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"ancient_apparition_ice_vortex"
-		"Ability2"	"ancient_apparition_ice_vortex_datadriven"
+		"Ability1"	"ancient_apparition_cold_feet"
+		"Ability2"	"ancient_apparition_cold_feet_datadriven"
 		"Ability3"	"bane_nightmare_datadriven"
 		"Ability4"	"axe_culling_blade_datadriven"
 		"Ability5"	"bane_nightmare_end_datadriven"
