@@ -20,13 +20,13 @@ function web_start_charge( keys )
 	local charge_replenish_time = ability:GetLevelSpecialValueFor( "charge_restore_time", ( ability:GetLevel() - 1 ) )
 	
 	-- Initialize stack
-	caster:SetModifierStackCount( modifierName, caster, 0 )
+	caster:SetModifierStackCount( modifierName, ability, 0 )
 	caster.web_charges = caster.web_maximum_charges
 	caster.start_charge = false
 	caster.web_cooldown = 0.0
 	
 	ability:ApplyDataDrivenModifier( caster, caster, modifierName, {} )
-	caster:SetModifierStackCount( modifierName, caster, caster.web_maximum_charges )
+	caster:SetModifierStackCount( modifierName, ability, caster.web_maximum_charges )
 	
 	-- create timer to restore stack
 	Timers:CreateTimer( function()
@@ -42,7 +42,7 @@ function web_start_charge( keys )
 					ability:ApplyDataDrivenModifier( caster, caster, modifierName, {} )
 					caster.start_charge = false
 				end
-				caster:SetModifierStackCount( modifierName, caster, next_charge )
+				caster:SetModifierStackCount( modifierName, ability, next_charge )
 				
 				-- Update stack
 				caster.web_charges = next_charge
@@ -136,7 +136,7 @@ function spin_web( keys )
 			ability:ApplyDataDrivenModifier( caster, caster, stack_modifier, { Duration = charge_replenish_time } )
 			web_start_cooldown( caster, charge_replenish_time )
 		end
-		caster:SetModifierStackCount( stack_modifier, caster, next_charge )
+		caster:SetModifierStackCount( stack_modifier, ability, next_charge )
 		caster.web_charges = next_charge
 		
 		-- Check if stack is 0, display ability cooldown

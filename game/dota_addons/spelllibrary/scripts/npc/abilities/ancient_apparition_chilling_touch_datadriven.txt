@@ -1,3 +1,7 @@
+// Rewrite of the Ancient Apparition Chilling Touch ability
+// Author: Pizzalol
+// Date: 14.02.2015.
+// NOTE: Cast particle is missing the falling snow
 "ancient_apparition_chilling_touch_datadriven"
 {
 	// General
@@ -6,6 +10,17 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"ancient_apparition_chilling_touch"
+	"AOERadius"						"%radius"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts"
+		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_chilling_touch.vpcf"
+		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_chilling_touch_buff.vpcf"	
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -44,6 +59,136 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"attack_speed_pct"		"-20"
+		}
+		// Extra
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"30.0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Ancient_Apparition.ChillingTouchCast" 
+			"Target" 		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_ancient_apparition/ancient_apparition_chilling_touch.vpcf"
+			"EffectAttachType"  "start_at_customorigin"
+			"TargetPoint"       "POINT"
+
+			"ControlPoints"
+			{
+				"01"	"%radius 0 0"
+			}
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"  	"POINT"
+				"Radius" 	"%radius"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO"
+			}
+		
+			"Action"    
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_chilling_touch_stack_datadriven"
+					"Target" 		"TARGET"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_chilling_touch_stack_datadriven"
+					"Target" 		"TARGET"
+					"Duration"		"%duration"
+				}
+			}
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_chilling_touch_stack_datadriven"
+			"Target" 		"CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_chilling_touch_stack_datadriven"
+			"Target" 		"CASTER"
+			"Duration"		"%duration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_chilling_touch_stack_datadriven"
+		{
+			"IsBuff"			"1"
+	
+			"EffectName"		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_chilling_touch_buff.vpcf"
+			"EffectAttachType"	"attach_attack1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_ancient_apparition/chilling_touch.lua"
+					"Function"		"ChillingTouchInitialize"
+					"modifier_stack"	"modifier_chilling_touch_stack_datadriven"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_chilling_touch_attack_speed_datadriven"
+					"Target" 		"TARGET"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_chilling_touch_attack_speed_datadriven"
+					"Target" 		"TARGET"
+				}
+			}
+
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_ancient_apparition/chilling_touch.lua"
+					"Function"		"ChillingTouchDecrement"
+					"modifier_stack"	"modifier_chilling_touch_stack_datadriven"
+				}
+
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%bonus_damage"
+				}
+			}			
+		}
+
+		"modifier_chilling_touch_attack_speed_datadriven"
+		{
+			"IsHidden"		"1"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_pct"
+			}
 		}
 	}
 }

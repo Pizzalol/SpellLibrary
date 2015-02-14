@@ -4,9 +4,9 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"ancient_apparition_cold_feet"
-	"Ability2"	"ancient_apparition_cold_feet_datadriven"
-	"Ability3"	"bane_nightmare_datadriven"
+	"Ability1"	"ancient_apparition_chilling_touch"
+	"Ability2"	"ancient_apparition_chilling_touch_datadriven"
+	"Ability3"	"broodmother_spin_web_datadriven"
 	"Ability4"	"axe_culling_blade_datadriven"
-	"Ability5"	"bane_nightmare_end_datadriven"
+	"Ability5"	"broodmother_destroy_spin_web_datadriven"
 }
