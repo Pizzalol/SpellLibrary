@@ -1,0 +1,209 @@
+// Rewrite of Shiva's Guard
+// Author: Rook
+// Date: February 15, 2015
+// Known bugs:
+//     This implementation only supports one blast radiating outwards from the same unit at a time (the debuff 
+//     will be applied to units within the most recently emitted blast's radius).  This should only be an
+//         issue when Refresher Orb or Tinker's Rearm are involved.
+//     Blast damage is only dealt if the affected unit does not already have a blast debuff on them.  The duration
+//         is also not refreshed if the affected unit already has a blast debuff on them.  Once a function such as
+//         HasModifierByNameAndCaster() is exposed, this bug can be resolved (for now, it is only an issue when
+//         multiple players have a Shiva's Guard or when Shiva's Guard's cooldown gets refreshed.
+//     The particle effect does not seem to have 100% visual parity.
+//     The vision provided when Shiva's Guard is cast should be flying vision, not ground vision.
+
+"item_shivas_guard_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1119"  //Valve's version of this item uses the ID "119".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_shivas_guard"
+	"FightRecapLevel"				"1"
+
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"30"
+	"AbilityManaCost"				"100"
+	"AbilityCastPoint"				"0.0"
+
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"4700"
+	"ItemShopTags"					"int;armor;hard_to_tag"
+	"ItemQuality"					"epic"
+	"ItemAliases"					"shiva's guard"
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_intellect"				"30"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_armor"					"15"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"aura_radius"					"900"
+		}
+		"04"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"aura_attack_speed"				"-40"
+		}
+		"05"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"blast_final_radius"			"900"
+		}
+		"06"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"blast_speed_per_second"		"350"
+		}
+		"07"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"blast_damage"					"200"
+		}
+		"08"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"blast_movement_speed_debuff"	"-40"
+		}
+		"09"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"blast_debuff_duration"			"4"
+		}
+		"10"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"blast_vision_radius"			"800"
+		}
+		"11"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"blast_vision_duration"			"2"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"					"items/item_shivas_guard.lua"
+			"Function"						"item_shivas_guard_datadriven_on_spell_start"
+			"BlastFinalRadius"				"%blast_final_radius"
+			"BlastSpeedPerSecond"			"%blast_speed_per_second"
+			"BlastDamage"					"%blast_damage"
+			"BlastVisionRadius"				"%blast_vision_radius"
+			"BlastVisionDuration"			"%blast_vision_duration"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_shivas_guard_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+			}
+		}
+		"modifier_item_shivas_guard_datadriven_enemy_aura_emitter"
+		{
+			"Passive"				"1"
+			"IsHidden"				"1"
+			
+			"Aura" 					"modifier_item_shivas_guard_datadriven_enemy_aura"
+			"Aura_Radius" 			"%aura_radius"
+			"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+			"Aura_Flags" 			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+			"Aura_ApplyToCaster" 	"0"
+		}
+		"modifier_item_shivas_guard_datadriven_enemy_aura"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"			"%aura_attack_speed"
+			}
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_shivas_guard.lua"
+					"Function"			"modifier_item_shivas_guard_datadriven_enemy_aura_on_interval_think"
+				}
+			}
+			
+			"ThinkInterval"			".03"
+			//This debuff aura is invisible to enemies unless its emitting unit is visible to them,
+			//so regularly check to see if the modifier should be visible.
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_shivas_guard.lua"
+					"Function"			"modifier_item_shivas_guard_datadriven_enemy_aura_on_interval_think"
+				}
+			}
+			
+			"OnDestroy"  //Remove the visible modifier, if it is currently on the unit.
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_shivas_guard.lua"
+					"Function"			"modifier_item_shivas_guard_datadriven_enemy_aura_on_destroy"
+				}
+			}
+		}
+		//A visible modifier that should appear to enemies only if they are affected by the debuff aura and its emitter
+		//is visible to their team.
+		"modifier_item_shivas_guard_datadriven_enemy_aura_visible"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+			"IsPurgable"		"0"
+		}
+		"modifier_item_shivas_guard_datadriven_blast_debuff"
+		{
+			"Duration"			"%blast_debuff_duration"
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+			"IsPurgable"		"1"
+			
+			"StatusEffectName"     "particles/status_fx/status_effect_frost.vpcf"
+			"StatusEffectPriority" "10"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%blast_movement_speed_debuff"
+			}
+		}
+	}
+}

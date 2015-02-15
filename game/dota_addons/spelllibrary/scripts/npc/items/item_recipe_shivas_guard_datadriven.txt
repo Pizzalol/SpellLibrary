@@ -1,0 +1,27 @@
+// Rewrite of Recipe: Shiva's Guard
+// Author: Rook
+// Date: February 15, 2015
+
+"item_recipe_shivas_guard_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1118"  //Valve's version of this item uses the ID "118".
+	"Model"							"models/props_gameplay/recipe.mdl"
+	"AbilityTextureName"			"item_recipe"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"600"	
+	"ItemShopTags"					""
+	
+	// Recipe
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemRecipe"					"1"
+	"ItemResult"					"item_shivas_guard_datadriven"
+	"ItemRequirements"
+	{
+		"01"						"item_platemail_datadriven;item_mystic_staff_datadriven"
+	}
+}
