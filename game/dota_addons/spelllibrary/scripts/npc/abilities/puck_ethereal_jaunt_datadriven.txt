@@ -4,9 +4,39 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityTextureName"			"puck_ethereal_jaunt"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"OnSpellStart"
+	{
+		"AttachEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_puck/puck_illusory_orb_blink_out.vpcf"
+			"EffectAttachType"	"attach_hitloc"
+			"Target"			"CASTER"
+			
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_hitloc"
+			}
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_puck/illusory_orb.lua"
+			"Function"		"CastEtherealJaunt"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"		"Hero_Puck.EtherealJaunt"
+			"Target"			"CASTER"
+		}
+	}
 }
 

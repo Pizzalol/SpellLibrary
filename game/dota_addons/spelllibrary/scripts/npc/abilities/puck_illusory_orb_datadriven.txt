@@ -55,6 +55,105 @@
 			"var_type"					"FIELD_FLOAT"
 			"vision_duration"			"3.34 3.34 3.34 3.34"
 		}
+		// Extra variables
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"num_extra_visions"			"4"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+		"particle"					"particles/units/heroes/hero_puck/puck_illusory_orb.vpcf"
+		"particle"					"particles/units/heroes/hero_puck/puck_illusory_orb_blink_out.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_puck/illusory_orb.lua"
+			"Function"		"CastIllusoryOrb"
+			"Target"		"POINT"
+			
+			"radius"			"%radius"
+			"max_distance"		"%max_distance"
+			"orb_speed"			"%orb_speed"
+			"orb_vision"		"%orb_vision"
+			"vision_duration"	"%vision_duration"
+			"num_extra_visions"	"%num_extra_visions"
+			
+			"proj_particle"		"particles/units/heroes/hero_puck/puck_illusory_orb.vpcf"
+			"proj_modifier"		"modifier_illusory_orb_projectile_datadriven"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"		"0"
+		
+		"Damage"
+		{
+			"Target"	"TARGET"
+			"Type"		"DAMAGE_TYPE_MAGICAL"
+			"Damage"	"%AbilityDamage"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Puck.Illusory_Orb_Damage"
+			"Target"		"TARGET"
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_puck/illusory_orb.lua"
+			"Function"		"OnUpgrade"
+			
+			"sub_ability"	"puck_ethereal_jaunt_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_illusory_orb_projectile_datadriven"
+		{
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Puck.Illusory_Orb"
+					"Target"		"TARGET"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_puck/illusory_orb.lua"
+					"Function"		"StopSound"
+					"Target"		"TARGET"
+					"sound_name"	"Hero_Puck.Illusory_Orb"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
 	}
 }
 
