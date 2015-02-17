@@ -40,5 +40,77 @@
 			"silence_duration"			"0.75 1.5 2.25 3.0"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+		"particle"					"particles/units/heroes/hero_puck/puck_waning_rift.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"Damage"
+		{
+			"Target"
+			{
+				"Center"	"CASTER"
+				"Radius"	"%radius"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+			"Type"		"DAMAGE_TYPE_MAGICAL"
+			"Damage"	"%AbilityDamage"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_silenced"
+			"Target"
+			{
+				"Center"	"CASTER"
+				"Radius"	"%radius"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_HERO"
+			}
+			"Duration"		"%silence_duration"
+		}
+		
+		"AttachEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_puck/puck_waning_rift.vpcf"
+			"EffectAttachType"  "attach_origin"
+			"Target"       		"CASTER"
+			"ControlPoints"
+			{
+				"01"	"%radius %radius %radius"
+			}
+		}
+		
+		"FireSound"
+		{
+			"EffectName"		"Hero_Puck.Waning_Rift"
+			"Target"			"CASTER"
+		}
+	}
+	
+	//(copied from death_prophet_silence_datadriven.txt)
+	//modifier_silence is a Built-In modifier, _silenced is custom
+	"Modifiers"
+	{
+		"modifier_silenced"
+		{
+			"IsDebuff"			"1"
+
+			"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
+			"EffectAttachType"	"follow_overhead"
+
+			"States"
+			{
+				"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
 }
 
