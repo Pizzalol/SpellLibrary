@@ -18,7 +18,7 @@
 		"Ability1"	"ancient_apparition_chilling_touch"
 		"Ability2"	"ancient_apparition_chilling_touch_datadriven"
 		"Ability3"	"broodmother_spin_web_datadriven"
-		"Ability4"	"axe_culling_blade_datadriven"
+		"Ability4"	"ancient_apparition_ice_blast_datadriven"
 		"Ability5"	"broodmother_destroy_spin_web_datadriven"
 	}
 }

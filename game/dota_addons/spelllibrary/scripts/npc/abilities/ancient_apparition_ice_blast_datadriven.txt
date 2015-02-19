@@ -1,3 +1,6 @@
+// Rewrite of the Ancient Apparition Cold Feet ability
+// Author: Pizzalol
+// Date: 13.02.2015.
 "ancient_apparition_ice_blast_datadriven"
 {
 	// General
@@ -9,6 +12,21 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"ancient_apparition_ice_blast"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts"
+		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial.vpcf"	// Start projectile
+		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial_explode.vpcf"
+		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_final.vpcf"	// End projectile
+		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_explode.vpcf"
+		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_debuff.vpcf"
+		"particle"  		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_death.vpcf"
+		"particle"  		"particles/status_fx/status_effect_iceblast_half.vpcf"
+		"particle"  		"particles/status_fx/status_effect_iceblast.vpcf"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -80,6 +98,26 @@
 		{	
 			"var_type"				"FIELD_FLOAT"
 			"frostbite_duration_scepter"	"17"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_ancient_apparition/ice_blast.lua"
+			"Function"			"ice_blast_launch"
+			"Target"			"POINT"
+			"dummy_modifier"	"modifier_dummy"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_dummy"
+		{	
+			"EffectName"		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial.vpcf"
+			"EffectAttachType"	"follow_origin"
 		}
 	}
 }

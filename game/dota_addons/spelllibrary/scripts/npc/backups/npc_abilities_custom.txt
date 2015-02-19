@@ -1480,6 +1480,10 @@
 		}
 	}
 	
+	// Rewrite of the Ancient Apparition Chilling Touch ability
+	// Author: Pizzalol
+	// Date: 14.02.2015.
+	// NOTE: Cast particle is missing the falling snow
 	"ancient_apparition_chilling_touch_datadriven"
 	{
 		// General
@@ -1903,6 +1907,9 @@
 		}
 	}
 	
+	// Rewrite of the Ancient Apparition Cold Feet ability
+	// Author: Pizzalol
+	// Date: 13.02.2015.
 	"ancient_apparition_ice_blast_datadriven"
 	{
 		// General
@@ -1914,6 +1921,21 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"ancient_apparition_ice_blast"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts"
+			"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial.vpcf"	// Start projectile
+			"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial_explode.vpcf"
+			"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_final.vpcf"	// End projectile
+			"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_explode.vpcf"
+			"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_debuff.vpcf"
+			"particle"  		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_death.vpcf"
+			"particle"  		"particles/status_fx/status_effect_iceblast_half.vpcf"
+			"particle"  		"particles/status_fx/status_effect_iceblast.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -1985,6 +2007,25 @@
 			{	
 				"var_type"				"FIELD_FLOAT"
 				"frostbite_duration_scepter"	"17"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_ancient_apparition/ice_blast.lua"
+				"Function"		"ice_blast_launch"
+				"dummy_modifier"	"modifier_dummy"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_dummy"
+			{	
+				"EffectName"		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial.vpcf"
+				"EffectAttachType"	"follow_origin"
 			}
 		}
 	}
@@ -35428,10 +35469,40 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName"			"puck_ethereal_jaunt"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"AttachEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_puck/puck_illusory_orb_blink_out.vpcf"
+				"EffectAttachType"	"attach_hitloc"
+				"Target"			"CASTER"
+				
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_hitloc"
+				}
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_puck/illusory_orb.lua"
+				"Function"		"CastEtherealJaunt"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"		"Hero_Puck.EtherealJaunt"
+				"Target"			"CASTER"
+			}
+		}
 	}
 	
 	"puck_illusory_orb_datadriven"
@@ -35490,6 +35561,105 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"vision_duration"			"3.34 3.34 3.34 3.34"
+			}
+			// Extra variables
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"num_extra_visions"			"4"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+			"particle"					"particles/units/heroes/hero_puck/puck_illusory_orb.vpcf"
+			"particle"					"particles/units/heroes/hero_puck/puck_illusory_orb_blink_out.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_puck/illusory_orb.lua"
+				"Function"		"CastIllusoryOrb"
+				"Target"		"POINT"
+				
+				"radius"			"%radius"
+				"max_distance"		"%max_distance"
+				"orb_speed"			"%orb_speed"
+				"orb_vision"		"%orb_vision"
+				"vision_duration"	"%vision_duration"
+				"num_extra_visions"	"%num_extra_visions"
+				
+				"proj_particle"		"particles/units/heroes/hero_puck/puck_illusory_orb.vpcf"
+				"proj_modifier"		"modifier_illusory_orb_projectile_datadriven"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"		"0"
+			
+			"Damage"
+			{
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%AbilityDamage"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"	"Hero_Puck.Illusory_Orb_Damage"
+				"Target"		"TARGET"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_puck/illusory_orb.lua"
+				"Function"		"OnUpgrade"
+				
+				"sub_ability"	"puck_ethereal_jaunt_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_illusory_orb_projectile_datadriven"
+			{
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Puck.Illusory_Orb"
+						"Target"		"TARGET"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_puck/illusory_orb.lua"
+						"Function"		"StopSound"
+						"Target"		"TARGET"
+						"sound_name"	"Hero_Puck.Illusory_Orb"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -35566,6 +35736,78 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"silence_duration"			"0.75 1.5 2.25 3.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+			"particle"					"particles/units/heroes/hero_puck/puck_waning_rift.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"Damage"
+			{
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%AbilityDamage"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_silenced"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+				"Duration"		"%silence_duration"
+			}
+			
+			"AttachEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_puck/puck_waning_rift.vpcf"
+				"EffectAttachType"  "attach_origin"
+				"Target"       		"CASTER"
+				"ControlPoints"
+				{
+					"01"	"%radius %radius %radius"
+				}
+			}
+			
+			"FireSound"
+			{
+				"EffectName"		"Hero_Puck.Waning_Rift"
+				"Target"			"CASTER"
+			}
+		}
+		
+		//(copied from death_prophet_silence_datadriven.txt)
+		//modifier_silence is a Built-In modifier, _silenced is custom
+		"Modifiers"
+		{
+			"modifier_silenced"
+			{
+				"IsDebuff"			"1"
+	
+				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
