@@ -6,6 +6,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 	"MaxLevel"						"1"
+	"AbilityTextureName"			"ancient_apparition_ice_blast_release"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -14,5 +15,39 @@
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCooldown"				"1.0 1.0 1.0"
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_ancient_apparition/ice_blast.lua"
+			"Function"		"ice_blast_release"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_ancient_apparition/ice_blast.lua"
+			"Function"		"SwitchAbilities"
+			"sub_ability_name"	"ancient_apparition_ice_blast_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_ice_blast_release_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_ancient_apparition/ice_blast.lua"
+					"Function"		"ice_blast_release"
+				}
+			}
+		}
+	}
 }
 

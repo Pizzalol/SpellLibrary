@@ -24,6 +24,8 @@
 		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_explode.vpcf"
 		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_debuff.vpcf"
 		"particle"  		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_death.vpcf"
+		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_sphere_b.vpcf"
+		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial_grid.vpcf"
 		"particle"  		"particles/status_fx/status_effect_iceblast_half.vpcf"
 		"particle"  		"particles/status_fx/status_effect_iceblast.vpcf"
 	}
@@ -99,25 +101,177 @@
 			"var_type"				"FIELD_FLOAT"
 			"frostbite_duration_scepter"	"17"
 		}
+		// Extra
+		"11"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"min_time"				"2"
+		}
+		"12"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"base_speed"			"750"	// This is the actual projectile, not the tracer
+		}
+		"13"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"travel_vision"			"500"
+		}
+		"14"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"travel_vision_duration"	"3.0"
+		}
+		"15"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"area_vision"			"650"
+		}
+		"16"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"area_vision_duration"	"4.0"
+		}
 	}
 
 	"OnSpellStart"
 	{
 		"RunScript"
 		{
+			"ScriptFile"	"heroes/hero_ancient_apparition/ice_blast.lua"
+			"Function"		"SwitchAbilities"
+			"sub_ability_name"	"ancient_apparition_ice_blast_release_datadriven"
+		}
+
+		"RunScript"
+		{
 			"ScriptFile"		"heroes/hero_ancient_apparition/ice_blast.lua"
 			"Function"			"ice_blast_launch"
 			"Target"			"POINT"
-			"dummy_modifier"	"modifier_dummy"
+			"projectile_particle"	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_final.vpcf"
+			"tracer_modifier"	"modifier_dummy_tracer"
+			"tracer_sphere"		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_sphere_b.vpcf"
+			"tracer_grid"		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial_grid.vpcf"
 		}
+	}
+
+	"OnUpgrade"
+	{
+		"LevelUpAbility"
+		{
+			"Target" 		"CASTER"
+			"AbilityName"	"ancient_apparition_ice_blast_release_datadriven"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"0"
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_ice_blast_debuff_datadriven"
+			"Target" 		"TARGET"
+			"Duration"		"%frostbite_duration"
+		}
+	}
+
+	"OnProjectileFinish"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_ancient_apparition/ice_blast.lua"
+			"Function"		"ice_blast_explode"
+			"modifier"		"modifier_ice_blast_debuff_datadriven"
+		}
+		// Kill the tracer 
 	}
 
 	"Modifiers"
 	{
-		"modifier_dummy"
-		{	
-			"EffectName"		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial.vpcf"
-			"EffectAttachType"	"follow_origin"
+		"modifier_dummy_tracer"
+		{
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial_grid.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+
+					"ControlPointEntities"
+					{
+						"TARGET"	"follow_origin"
+						"TARGET"	"follow_origin"
+						"TARGET"	"follow_origin"
+						"TARGET"	"follow_origin"
+					}
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_sphere_b.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+
+					"ControlPointEntities"
+					{
+						"TARGET"	"follow_origin"
+						"TARGET"	"follow_origin"
+						"TARGET"	"follow_origin"
+						"TARGET"	"follow_origin"
+					}
+				}
+			}
+			"OnDestroy"
+			{
+				// Apply the area modifier
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_FLYING"					"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVISIBLE"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_PROVIDES_VISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_OUT_OF_GAME"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BONUS_DAY_VISION" 	"%target_sight_radius"
+			    "MODIFIER_PROPERTY_BONUS_NIGHT_VISION"	"%target_sight_radius" 
+			}
+		}
+
+		"modifier_ice_blast_debuff_datadriven"
+		{
+			"IsDebuff"		"1"
+			"IsPurgable"	"0"
+
+			"ThinkInterval"  "%think_interval"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%dot_damage"
+				}
+			}
+
+			"OnTakeDamage"
+			// "%attack_damage" is set to the damage value after mitigation
+			{
+				// Run the kill script
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_DISABLE_HEALING" "1" 
+			}
 		}
 	}
 }
