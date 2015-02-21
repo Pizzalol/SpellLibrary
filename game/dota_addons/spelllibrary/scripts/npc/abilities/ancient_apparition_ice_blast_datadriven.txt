@@ -1,6 +1,10 @@
-// Rewrite of the Ancient Apparition Cold Feet ability
+// Rewrite of the Ancient Apparition Ice Blast ability
 // Author: Pizzalol
-// Date: 13.02.2015.
+// Date: 21.02.2015.
+// NOTE: --------------------------- THIS ABILITY REQUIRES THE ancient_apparition_ice_blast_release_datadriven ABILITY TO WORK PROPERLY -------------------------
+// NOTE2: Tracer projectile is teal instead of blue
+// NOTE3: Hail particles arent working so there is no marker particle and the original tracer projectile
+// is used as the hail projectile instead
 "ancient_apparition_ice_blast_datadriven"
 {
 	// General
@@ -19,14 +23,15 @@
 	{
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts"
 		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial.vpcf"	// Start projectile
-		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial_explode.vpcf"
-		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_final.vpcf"	// End projectile
+		//"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_final.vpcf"	// End projectile
 		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_explode.vpcf"
-		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_debuff.vpcf"
+		//"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_debuff.vpcf"
 		"particle"  		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_death.vpcf"
 		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_sphere_b.vpcf"
 		"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial_grid.vpcf"
-		"particle"  		"particles/status_fx/status_effect_iceblast_half.vpcf"
+		//"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_main.vpcf"
+		//"particle"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_marker.vpcf"
+		//"particle"  			"particles/status_fx/status_effect_iceblast_half.vpcf"
 		"particle"  		"particles/status_fx/status_effect_iceblast.vpcf"
 	}
 
@@ -132,15 +137,19 @@
 			"var_type"				"FIELD_FLOAT"
 			"area_vision_duration"	"4.0"
 		}
+		"17"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"think_interval"		"1.0"
+		}
 	}
 
 	"OnSpellStart"
 	{
-		"RunScript"
+		"FireSound"
 		{
-			"ScriptFile"	"heroes/hero_ancient_apparition/ice_blast.lua"
-			"Function"		"SwitchAbilities"
-			"sub_ability_name"	"ancient_apparition_ice_blast_release_datadriven"
+			"EffectName"	"Hero_Ancient_Apparition.IceBlast.Tracker" 
+			"Target" 		"CASTER"
 		}
 
 		"RunScript"
@@ -148,10 +157,12 @@
 			"ScriptFile"		"heroes/hero_ancient_apparition/ice_blast.lua"
 			"Function"			"ice_blast_launch"
 			"Target"			"POINT"
-			"projectile_particle"	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_final.vpcf"
+			"projectile_particle"	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial.vpcf"
 			"tracer_modifier"	"modifier_dummy_tracer"
 			"tracer_sphere"		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_sphere_b.vpcf"
 			"tracer_grid"		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial_grid.vpcf"
+			"main_ability_name"	"ancient_apparition_ice_blast_datadriven"
+			"sub_ability_name"	"ancient_apparition_ice_blast_release_datadriven"
 		}
 	}
 
@@ -177,14 +188,15 @@
 	}
 
 	"OnProjectileFinish"
-	{
+	{		
 		"RunScript"
 		{
 			"ScriptFile"	"heroes/hero_ancient_apparition/ice_blast.lua"
 			"Function"		"ice_blast_explode"
 			"modifier"		"modifier_ice_blast_debuff_datadriven"
+			"sound"			"Hero_Ancient_Apparition.IceBlast.Target"
+			"explosion_particle"	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_explode.vpcf"
 		}
-		// Kill the tracer 
 	}
 
 	"Modifiers"
@@ -223,19 +235,14 @@
 					}
 				}
 			}
-			"OnDestroy"
-			{
-				// Apply the area modifier
-			}
 
 			"States"
 			{
 				"MODIFIER_STATE_FLYING"					"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_INVISIBLE"				"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_PROVIDES_VISION"		"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_OUT_OF_GAME"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
 			}
 
@@ -251,9 +258,18 @@
 			"IsDebuff"		"1"
 			"IsPurgable"	"0"
 
+			"StatusEffectName" 		"particles/status_fx/status_effect_iceblast.vpcf" 	   
+			"StatusEffectPriority"  "10"
+
 			"ThinkInterval"  "%think_interval"
 			"OnIntervalThink"
 			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Ancient_Apparition.IceBlastRelease.Tick"
+					"Target" 		"TARGET"
+				}
+
 				"Damage"
 				{
 					"Target"		"TARGET"
@@ -263,9 +279,22 @@
 			}
 
 			"OnTakeDamage"
-			// "%attack_damage" is set to the damage value after mitigation
 			{
-				// Run the kill script
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_ancient_apparition/ice_blast.lua"
+					"Function"		"ice_blast_frostbite"
+				}
+			}
+
+			"OnDeath"
+			{
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_death.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "UNIT"
+				}
 			}
 
 			"Properties"

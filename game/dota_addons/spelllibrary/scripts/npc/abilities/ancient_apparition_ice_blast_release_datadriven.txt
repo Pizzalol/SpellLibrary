@@ -1,3 +1,7 @@
+// Rewrite of the Ancient Apparition Ice Blast Release ability
+// Author: Pizzalol
+// Date: 21.02.2015.
+// NOTE: ------------------------- THIS ABILITY IS PART OF THE ancient_apparition_ice_blast_datadriven ABILITY ---------------------
 "ancient_apparition_ice_blast_release_datadriven"
 {
 	// General
@@ -18,17 +22,16 @@
 
 	"OnSpellStart"
 	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Ancient_Apparition.IceBlastRelease.Cast"
+			"Target" 		"CASTER"
+		}
+		
 		"RunScript"
 		{
 			"ScriptFile"	"heroes/hero_ancient_apparition/ice_blast.lua"
 			"Function"		"ice_blast_release"
-		}
-
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/hero_ancient_apparition/ice_blast.lua"
-			"Function"		"SwitchAbilities"
-			"sub_ability_name"	"ancient_apparition_ice_blast_datadriven"
 		}
 	}
 
