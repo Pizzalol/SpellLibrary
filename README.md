@@ -9,9 +9,9 @@ Emails: [martinnoya@gmail.com](martinnoya@gmail.com) / [dario.siprak@gmail.com](
 
 If you wish to contribute then it would be nice to do it in a way that would be readable and recognizable like this http://yrrep.me/dota/dota-standards.html
 
-Forum thread - https://moddota.com/forums/discussion/23/spell-library
+[Forum thread](https://moddota.com/forums/discussion/23/spell-library)
 
-Progress spreadsheet - https://docs.google.com/spreadsheets/d/1oNoqMW2_PZ57TEonAQgMF-9JlApbt3LPNFtx72RhS8Y/edit#gid=0
+[Progress spreadsheet](https://docs.google.com/spreadsheets/d/1oNoqMW2_PZ57TEonAQgMF-9JlApbt3LPNFtx72RhS8Y/edit#gid=0)
 
 Guidelines
 ==========
