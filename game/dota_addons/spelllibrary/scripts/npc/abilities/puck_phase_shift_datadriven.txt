@@ -4,6 +4,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+	"AbilityTextureName"			"puck_phase_shift"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -26,6 +27,86 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"duration"					"0.75 1.50 2.25 3.25"
+		}
+	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+		"particle"					"particles/units/heroes/hero_puck/puck_phase_shift.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_phase_shift_datadriven"
+			"Target"		"CASTER"
+		}
+	}
+	
+	"OnChannelFinish"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_phase_shift_datadriven"
+			"Target"		"CASTER"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_phase_shift_datadriven"
+		{
+			"Duration"		"%duration"
+			
+			"EffectName"		"particles/units/heroes/hero_puck/puck_phase_shift.vpcf"
+			"EffectAttachType"	"attach_origin"
+			
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Puck.Phase_Shift"
+					"Target"		"TARGET"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_puck/phase_shift.lua"
+					"Function"			"HideCaster"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_puck/phase_shift.lua"
+					"Function"		"StopSound"
+					"Target"		"TARGET"
+					"sound_name"	"Hero_Puck.Phase_Shift"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_puck/phase_shift.lua"
+					"Function"			"ShowCaster"
+				}
+			}
+			
+			"States"
+			{
+			//	"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"	// Don't use these state for a channeling ability.
+			//	"MODIFIER_STATE_OUT_OF_GAME"			"MODIFIER_STATE_VALUE_ENABLED"
+			
+				"MODIFIER_STATE_ATTACK_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }
