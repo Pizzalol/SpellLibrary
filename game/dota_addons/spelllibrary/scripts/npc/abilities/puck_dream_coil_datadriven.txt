@@ -82,6 +82,162 @@
 			"coil_stun_duration_scepter"		"1.5 3 4.5"
 		}
 	}
+	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+		"particle"					"particles/units/heroes/hero_puck/puck_dreamcoil.vpcf"
+		"particle"					"particles/units/heroes/hero_puck/puck_dreamcoil_emit.vpcf"
+		"particle"					"particles/units/heroes/hero_puck/puck_dreamcoil_tether.vpcf"
+	}
+	
+	"OnSpellStart"
+	{
+		"CreateThinker"
+		{
+			"ModifierName"	"modifier_dream_coil_thinker_datadriven"
+			"Target" 		"POINT"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_dream_coil_thinker_datadriven"
+		{
+			"Duration"	"%coil_duration"
+			
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Puck.Dream_Coil"
+					"Target"		"TARGET"
+				}
+				
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_puck/puck_dreamcoil.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"			"TARGET"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_puck/dream_coil.lua"
+					"Function"		"Thinker_StoreCaster"
+					"Target"		"TARGET"
+				}
+				
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Radius"	"%coil_radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO"
+					}
+					
+					"Action"
+					{
+						"Damage"
+						{
+							"Type"		"DAMAGE_TYPE_MAGICAL"
+							"Damage"	"%coil_init_damage_tooltip"
+							"Target"	"TARGET"
+						}
+						
+						"Stun"
+						{
+							"Duration"	"%stun_duration"
+							"Target"	"TARGET"
+						}
+						
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_puck/dream_coil.lua"
+							"Function"		"Thinker_ApplyModifierToEnemy"
+							"Target"		"TARGET"
+							
+							"modifier_name"	"modifier_dream_coil_tether_datadriven"
+						}
+					}
+				}
+			}
+		}
+		
+		"modifier_dream_coil_tether_datadriven"
+		{
+			"Duration"	"%coil_duration"
+			"IsDebuff"	"1"
+			
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_puck/puck_dreamcoil_tether.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"CASTER"
+					
+					"ControlPointEntities"
+					{
+						"CASTER"	"follow_origin"
+						"TARGET"	"attach_hitloc"
+					}
+				}
+			}
+			
+			"ThinkInterval"		"0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_puck/dream_coil.lua"
+					"Function"		"CheckCoilBreak"
+					"Target"		"TARGET"
+					
+					"coil_break_radius"		"%coil_break_radius"
+					"coil_break_modifier"	"modifier_dream_coil_break_datadriven"
+					"coil_tether_modifier"	"modifier_dream_coil_tether_datadriven"
+				}
+			}
+		}
+		
+		"modifier_dream_coil_break_datadriven"
+		{
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Puck.Dream_Coil_Snap"
+					"Target"		"TARGET"
+				}
+				
+				"Damage"
+				{
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%coil_break_damage"
+					"Target"	"TARGET"
+				}
+				
+				"Stun"
+				{
+					"Duration"	"%coil_stun_duration"
+					"Target"	"TARGET"
+				}
+				
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_dream_coil_break_datadriven"
+					"Target"		"TARGET"
+				}
+			}
+		}
+	}
 }
 
 
