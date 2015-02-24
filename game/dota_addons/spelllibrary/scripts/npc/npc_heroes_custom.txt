@@ -16,9 +16,8 @@
 		"AbilityLayout"	"4"
 	
 		"Ability1"	"lina_dragon_slave_datadriven"
-		"Ability2"	"ancient_apparition_chilling_touch_datadriven"
+		"Ability2"	"doom_bringer_scorched_earth_datadriven"
 		"Ability3"	"ancient_apparition_ice_blast"
 		"Ability4"	"ancient_apparition_ice_blast_datadriven"
-		"Ability5"	"ancient_apparition_ice_blast_release_datadriven"
 	}
 }

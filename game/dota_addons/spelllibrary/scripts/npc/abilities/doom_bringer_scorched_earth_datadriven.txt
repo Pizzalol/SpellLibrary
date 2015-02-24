@@ -1,3 +1,6 @@
+// Rewrite of the Doom Scorched Earth ability
+// Author: Pizzalol
+// Date: 24.02.2015.
 "doom_bringer_scorched_earth_datadriven"
 {
 	// General
@@ -8,6 +11,16 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"doom_bringer_scorched_earth"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
+		"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_scorched_earth_buff.vpcf"
+		"particle"			"particles/units/heroes/hero_doom_bringer/doom_scorched_earth.vpcf"
+		"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_scorched_earth_debuff.vpcf"				
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -45,6 +58,106 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"duration"				"10.0 12.0 14.0 16.0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_DoomBringer.ScorchedEarthAura"
+			"Target" 		"CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_scorched_earth_datadriven"
+			"Target" 		"CASTER"
+			"Duration"		"%duration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_scorched_earth_datadriven"
+		{
+			"IsBuff"			"1"
+			"IsPurgable"		"0"
+	
+			"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_scorched_earth.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"ControlPoints"
+			{
+				"01"	"%radius 0 0"
+			}
+	
+			"Aura"          	"modifier_scorched_earth_check_datadriven"
+			"Aura_Radius"   	"%radius"
+			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
+			"Aura_ApplyToCaster" "1"
+
+			"ThinkInterval"  "1.0"
+			"OnIntervalThink"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  	"CASTER"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				
+					"Action"    
+					{
+						"Damage"
+						{
+							"Target"		"TARGET"
+							"Type"			"DAMAGE_TYPE_MAGICAL"
+							"Damage"		"%damage_per_second"
+						}
+					}
+				}
+			}
+		}
+
+		"modifier_scorched_earth_check_datadriven"
+		{
+			"IsHidden"	"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_doom_bringer/scorched_earth.lua"
+					"Function"		"ScorchedEarthCheck"
+					"modifier"		"modifier_scorched_earth_buff_datadriven"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_scorched_earth_buff_datadriven"
+					"Target" 		"TARGET"
+				}
+			}
+		}
+
+		"modifier_scorched_earth_buff_datadriven"
+		{
+			"IsHidden"	"1"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%damage_per_second"
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed_pct" 
+			}
 		}
 	}
 }
