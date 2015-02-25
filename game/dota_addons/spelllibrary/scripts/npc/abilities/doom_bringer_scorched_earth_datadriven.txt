@@ -63,12 +63,6 @@
 
 	"OnSpellStart"
 	{
-		"FireSound"
-		{
-			"EffectName"	"Hero_DoomBringer.ScorchedEarthAura"
-			"Target" 		"CASTER"
-		}
-
 		"ApplyModifier"
 		{
 			"ModifierName"	"modifier_scorched_earth_datadriven"
@@ -84,12 +78,19 @@
 			"IsBuff"			"1"
 			"IsPurgable"		"0"
 	
-			"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_scorched_earth.vpcf"
-			"EffectAttachType"	"follow_origin"
-
-			"ControlPoints"
+			"OnCreated"
 			{
-				"01"	"%radius 0 0"
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_scorched_earth.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"TARGET"
+
+					"ControlPoints"
+					{
+						"01"	"%radius 0 0"
+					}
+				}
 			}
 	
 			"Aura"          	"modifier_scorched_earth_check_datadriven"
@@ -152,6 +153,25 @@
 		"modifier_scorched_earth_buff_datadriven"
 		{
 			"IsHidden"	"1"
+
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_DoomBringer.ScorchedEarthAura"
+					"Target" 		"TARGET"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_doom_bringer/scorched_earth.lua"
+					"Function"		"StopSound"
+					"sound"			"Hero_DoomBringer.ScorchedEarthAura"
+				}
+			}
 
 			"Properties"
 			{
