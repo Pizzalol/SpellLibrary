@@ -1,3 +1,6 @@
+// Rewrite of the Doom Lvl Death ability
+// Author: Pizzalol
+// Date: 25.02.2015.
 "doom_bringer_lvl_death_datadriven"
 {
 	// General
@@ -10,6 +13,15 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"doom_bringer_lvl_death"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
+		"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf"
+		"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death_bonus.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -46,6 +58,36 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"lvl_bonus_multiple"	"6 5 4 3"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_DoomBringer.LvlDeath"
+			"Target" 		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "TARGET"
+		}
+
+		"Damage"
+		{
+			"Target"		"TARGET"
+			"Type"			"DAMAGE_TYPE_MAGICAL"
+			"Damage"		"%damage"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_doom_bringer/lvl_death.lua"
+			"Function"		"LvlDeath"
+			"bonus_particle"	"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death_bonus.vpcf"
 		}
 	}
 }
