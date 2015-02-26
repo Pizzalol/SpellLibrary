@@ -59,6 +59,12 @@
 			"var_type"				"FIELD_INTEGER"
 			"lvl_bonus_multiple"	"6 5 4 3"
 		}
+		// Extra
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"stun_duration"			"0.01"
+		}
 	}
 
 	"OnSpellStart"
@@ -74,6 +80,12 @@
 			"EffectName"        "particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf"
 			"EffectAttachType"  "follow_origin"
 			"Target"            "TARGET"
+		}
+
+		"Stun"
+		{
+			"Duration"   "%stun_duration"
+			"Target" 	 "TARGET"
 		}
 
 		"Damage"

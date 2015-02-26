@@ -1,3 +1,6 @@
+// Rewrite of the Doom Doom ability
+// Author: Pizzalol
+// Date: 25.02.2015.
 "doom_bringer_doom_datadriven"
 {
 	// General
@@ -12,6 +15,15 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"doom_bringer_doom"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
+		"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_doom_ring.vpcf"
+		"particle"			"particles/status_fx/status_effect_doom.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -54,6 +66,132 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"deniable_pct"			"25 25 25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_DoomBringer.Doom"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_doom_bringer/doom.lua"
+			"Function"		"DoomPurge"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_doom_datadriven"
+			"Target" 
+			{
+				"Center"	"TARGET"
+				"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+			"Duration"		"%duration"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_doom_deny_check_datadriven"
+			"Target" 
+			{
+				"Center"	"TARGET"
+				"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+			"Duration"		"%duration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_doom_datadriven"
+		{
+			"IsDebuff"			"1"
+			"IsPurgable"		"0"
+	
+			"StatusEffectName" 		"particles/status_fx/status_effect_doom.vpcf" 	   
+			"StatusEffectPriority"  "10"
+	
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					}
+
+					"ControlPoints"
+					{
+						"04"	"TARGET"
+					}
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_doom_bringer/doom.lua"
+					"Function"		"StopSound"
+					"sound"			"Hero_DoomBringer.Doom"
+				}
+			}
+
+			"ThinkInterval"  "1.0"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_PURE"
+					"Damage"		"%damage"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_doom_deny_check_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_doom_bringer/doom.lua"
+					"Function"		"DoomDenyCheck"
+					"modifier"		"modifier_doom_deny_datadriven"
+				}
+			}
+		}
+
+		"modifier_doom_deny_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+
+			"States"
+			{
+				"MODIFIER_STATE_SPECIALLY_DENIABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }
