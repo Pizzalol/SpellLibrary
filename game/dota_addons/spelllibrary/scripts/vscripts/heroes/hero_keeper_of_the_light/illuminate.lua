@@ -8,6 +8,7 @@ function IlluminateStart( keys )
 	caster.illuminate_position = caster:GetAbsOrigin()
 	caster.illuminate_vision_position = caster.illuminate_position
 	caster.illuminate_direction = caster:GetForwardVector()
+	caster.illuminate_start_time = GameRules:GetGameTime()
 
 	-- Swap sub_ability
 	local sub_ability_name = keys.sub_ability_name
@@ -36,18 +37,15 @@ end
 
 --[[Author: Pizzalol
 	Date: 24.01.2015.
-	Calculates the channel time according to the modifiers on the caster, removes the modifiers afterwards
+	Calculates the channel time according to the starting time and current time
 	Calculates the damage according to the channel time
 	Creates a projectile based on the casters starting channeling position]]
 function IlluminateEnd( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 
-	-- Ability variables
-	caster.illuminate_channel_time = 0
+	-- Ability variables	
 	caster.illuminate_damage = 0
-	local modifier_channel_count = keys.modifier_channel_count
-	local channel_count_interval = ability:GetLevelSpecialValueFor("channel_count_interval", (ability:GetLevel() - 1))
 	local damage_per_second = ability:GetLevelSpecialValueFor("damage_per_second", (ability:GetLevel() - 1))
 
 	-- Projectile variables
@@ -58,23 +56,9 @@ function IlluminateEnd( keys )
 
 
 	-- Calculating the Illuminate channel time and damage
-	local modifier_count = caster:GetModifierCount()
-
-	for i = 0, modifier_count do
-		if caster:GetModifierNameByIndex(i) == modifier_channel_count then
-			caster.illuminate_channel_time = caster.illuminate_channel_time + 1
-		end
-	end
-
-	caster.illuminate_channel_time = caster.illuminate_channel_time * channel_count_interval
+	caster.illuminate_channel_time = GameRules:GetGameTime() - caster.illuminate_start_time
 	caster.illuminate_damage = caster.illuminate_channel_time * damage_per_second
 
-	-- Removing all the modifiers we used to calculate the channel time
-	for i = 0, modifier_count do
-		if caster:GetModifierNameByIndex(i) == modifier_channel_count then
-			caster:RemoveModifierByName(modifier_channel_count)
-		end
-	end
 
 	-- Create projectile
 	local projectileTable =

@@ -1,7 +1,7 @@
 
 --[[Author: Pizzalol
 	Date: 25.01.2015.
-	Initializes the dummy unit, channeling tie and all the necessary positions and modifiers]]
+	Initializes the dummy unit, channeling time and all the necessary positions and modifiers]]
 function SpiritFormIlluminateInitialize( keys )
 	local caster = keys.caster
 	local ability = keys.ability
@@ -14,13 +14,14 @@ function SpiritFormIlluminateInitialize( keys )
 
 	local dummy_modifier = keys.dummy_modifier
 
-	local max_channel_time = ability:GetLevelSpecialValueFor("max_channel_time", (ability:GetLevel() - 1)) + 0.03
+	local max_channel_time = ability:GetLevelSpecialValueFor("max_channel_time", (ability:GetLevel() - 1)) + 0.03 -- Apply it for 1 frame longer than the duration
 
 	caster.spirit_form_illuminate_dummy = CreateUnitByName("npc_dummy_blank", caster_location, false, caster, caster, caster:GetTeam())
 	caster.spirit_form_illuminate_dummy:SetForwardVector(caster_direction)
 	caster.spirit_form_illuminate_dummy.spirit_form_illuminate_vision_position = caster_location
 	caster.spirit_form_illuminate_dummy.spirit_form_illuminate_position = caster_location
 	caster.spirit_form_illuminate_dummy.spirit_form_illuminate_direction = caster_direction
+	caster.spirit_form_illuminate_dummy.spirit_form_illuminate_start_time = GameRules:GetGameTime()
 	ability:ApplyDataDrivenModifier(caster, caster.spirit_form_illuminate_dummy, dummy_modifier, {duration = max_channel_time})
 end
 
@@ -76,10 +77,7 @@ function SpiritFormIlluminateEnd( keys )
 	local ability = keys.ability
 
 	-- Ability variables
-	caster.spirit_form_illuminate_channel_time = 0
 	caster.spirit_form_illuminate_damage = 0
-	local modifier_channel_count = keys.modifier_channel_count
-	local channel_count_interval = ability:GetLevelSpecialValueFor("channel_count_interval", (ability:GetLevel() - 1))
 	local damage_per_second = ability:GetLevelSpecialValueFor("damage_per_second", (ability:GetLevel() - 1))
 
 	-- Projectile variables
@@ -89,15 +87,7 @@ function SpiritFormIlluminateEnd( keys )
 	local projectile_radius = ability:GetLevelSpecialValueFor("radius", (ability:GetLevel() - 1))
 
 	-- Calculating the Illuminate channel time and damage
-	local modifier_count = target:GetModifierCount()
-
-	for i = 0, modifier_count do
-		if target:GetModifierNameByIndex(i) == modifier_channel_count then
-			caster.spirit_form_illuminate_channel_time = caster.spirit_form_illuminate_channel_time + 1
-		end
-	end
-
-	caster.spirit_form_illuminate_channel_time = caster.spirit_form_illuminate_channel_time * channel_count_interval
+	caster.spirit_form_illuminate_channel_time = GameRules:GetGameTime() - caster.spirit_form_illuminate_dummy.spirit_form_illuminate_start_time
 	caster.spirit_form_illuminate_damage = caster.spirit_form_illuminate_channel_time * damage_per_second
 
 	-- Create projectile

@@ -104,12 +104,6 @@
 			"var_type"					"FIELD_INTEGER"
 			"channel_vision_step"		"150"
 		}
-		// Extra
-		"12"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"channel_count_interval"	"0.0333"
-		}
 	}
 
 	"OnSpellStart"
@@ -187,17 +181,7 @@
 						"Center"	"TARGET"
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
-				}
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_spirit_form_illuminate_channel_timer_datadriven"
-					"Target"
-					{
-						"Center"	"TARGET"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-					}
-				}				
+				}			
 			}
 
 			"OnDestroy"
@@ -216,7 +200,6 @@
 				{
 					"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
 					"Function"		"SpiritFormIlluminateEnd"
-					"modifier_channel_count"	"modifier_spirit_form_illuminate_channel_count_datadriven"
 					"projectile_name" 			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
 				}
 
@@ -246,6 +229,29 @@
 			"IsPurgable"		"0"
 
 			"Attributes"		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge_spirit_form.vpcf"
+					"EffectAttachType"  "start_at_customorigin"
+					"Target"
+					{
+						"Center"	"CASTER"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+					}
+
+					"ControlPointEntities"
+					{
+						"CASTER"	"attach_origin"
+						"CASTER"	"attach_origin"
+						"CASTER"	"attach_origin"
+						"CASTER"	"attach_origin"
+						"CASTER"	"attach_origin"
+					}
+				}	
+			}
 	
 			"ThinkInterval"  "%channel_vision_interval"
 			"OnIntervalThink"
@@ -256,66 +262,6 @@
 					"Function"		"SpiritFormIlluminateVisionFields"
 				}				
 			}			
-		}
-
-		"modifier_spirit_form_illuminate_channel_timer_datadriven"
-		{
-			"IsHidden"		"0"
-			"IsPurgable"	"0"
-
-			"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-			"OnCreated"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_spirit_form_illuminate_channel_count_datadriven"
-					"Target"
-					{
-						"Center"	"TARGET"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-					}
-				}
-
-				"AttachEffect"
-				{
-					"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge_spirit_form.vpcf"
-					"EffectAttachType"  "start_at_customorigin"
-					"Target"            "CASTER"
-
-					"ControlPointEntities"
-					{
-						"CASTER"	"attach_origin"
-						"CASTER"	"attach_origin"
-						"CASTER"	"attach_origin"
-						"CASTER"	"attach_origin"
-						"CASTER"	"attach_origin"
-					}
-				}				
-			}			
-
-			"ThinkInterval"  "%channel_count_interval"
-			"OnIntervalThink"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_spirit_form_illuminate_channel_count_datadriven"
-					"Target"
-					{
-						"Center"	"TARGET"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-					}
-				}				
-			}				
-		}
-
-		"modifier_spirit_form_illuminate_channel_count_datadriven"
-		{
-			"Passive"			"0"
-			"IsHidden"			"0"
-			"IsDebuff"			"0"
-
-			"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE | MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 		}
 	}
 }

@@ -99,12 +99,6 @@
 			"var_type"					"FIELD_INTEGER"
 			"channel_vision_step"		"150"
 		}
-		// Extra
-		"12"
-		{
-			"var_type"					"FIELD_FLOAT"
-			"channel_count_interval"	"0.0333"
-		}
 	}
 
 	"OnSpellStart"
@@ -125,12 +119,6 @@
 		"ApplyModifier"
 		{
 			"ModifierName"	"modifier_illuminate_vision_field_timer_datadriven"
-			"Target" 		"CASTER"
-		}
-
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_illuminate_channel_timer_datadriven"
 			"Target" 		"CASTER"
 		}				
 	}
@@ -157,7 +145,6 @@
 		{
 			"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
 			"Function"		"IlluminateEnd"
-			"modifier_channel_count"	"modifier_illuminate_channel_count_datadriven"
 			"projectile_name"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
 		}
 
@@ -166,12 +153,6 @@
 			"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
 			"Function"		"IlluminateSwapEnd"
 			"sub_ability_name"	"keeper_of_the_light_illuminate_end_datadriven"
-		}
-
-		"RemoveModifier"
-		{
-			"ModifierName"	"modifier_illuminate_channel_timer_datadriven"
-			"Target" 		"CASTER"
 		}
 
 		"RemoveModifier"
@@ -214,6 +195,9 @@
 			"IsHidden"			"1"
 			"IsDebuff"			"0"
 			"IsPurgable"		"0"
+
+			"EffectName"		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge.vpcf"
+			"EffectAttachType"	"attach_attack1"
 	
 			"ThinkInterval"  "%channel_vision_interval"
 			"OnIntervalThink"
@@ -224,45 +208,7 @@
 					"Function"		"IlluminateVisionFields"
 				}				
 			}			
-		}
-
-		"modifier_illuminate_channel_timer_datadriven"
-		{
-			"IsHidden"		"1"
-			"IsPurgable"	"0"
-			
-			"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge.vpcf"
-			"EffectAttachType"	"attach_attack1"
-
-			"OnCreated"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_illuminate_channel_count_datadriven"
-					"Target" 		"CASTER"
-				}
-				
-			}			
-
-			"ThinkInterval"  "%channel_count_interval"
-			"OnIntervalThink"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_illuminate_channel_count_datadriven"
-					"Target" 		"CASTER"
-				}				
-			}				
-		}
-
-		"modifier_illuminate_channel_count_datadriven"
-		{
-			"Passive"			"0"
-			"IsHidden"			"1"
-			"IsDebuff"			"0"
-
-			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-		}
+		}		
 	}	
 }
 
