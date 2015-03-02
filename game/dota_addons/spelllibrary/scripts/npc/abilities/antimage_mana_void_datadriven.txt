@@ -1,7 +1,6 @@
 // Rewrite of the Antimage Mana Void ability
 // Author: Pizzalol
 // Date: 17.12.2014.
-// NOTE: Currently the ministun does not go through magic immunity
 "antimage_mana_void_datadriven"
 {
 	// General
@@ -71,7 +70,11 @@
 		"FireSound"
 		{
 			"EffectName"		"Hero_Antimage.ManaVoidCast"
-			"Target"			"TARGET"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
 		}
 	}
 
@@ -80,14 +83,22 @@
 		"FireSound"
 		{
 			"EffectName"		"Hero_Antimage.ManaVoid"
-			"Target"			"TARGET"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
 		}
 
 		"AttachEffect"
 		{
-			"Target"			"TARGET"
 			"EffectName"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
 			"EffectAttachType"	"attach_hitloc"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
 
 			"ControlPoints"
 			{
@@ -99,7 +110,11 @@
 		"ApplyModifier"
 		{
 			"ModifierName"	"modifier_mana_void_ministun_datadriven"
-			"Target"		"TARGET"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
 		}
 
 		"RunScript"
@@ -116,7 +131,7 @@
 		{
 			"Duration"	"%mana_void_ministun"
 			"IsDebuff"	"1"
-			"Properties"
+			"States"
 			{
 				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
 			}

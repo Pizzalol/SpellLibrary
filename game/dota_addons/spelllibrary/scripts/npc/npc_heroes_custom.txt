@@ -15,10 +15,9 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"lina_dragon_slave_datadriven"
+		"Ability1"	"pudge_meat_hook_datadriven"
 		"Ability2"	"doom_bringer_scorched_earth_datadriven"
 		"Ability3"	"doom_bringer_lvl_death_datadriven"
-		"Ability4"	"ancient_apparition_ice_blast_datadriven"
-		"Ability5"	"ancient_apparition_ice_blast_release_datadriven"
+		"Ability4"	"antimage_mana_void_datadriven"
 	}
 }

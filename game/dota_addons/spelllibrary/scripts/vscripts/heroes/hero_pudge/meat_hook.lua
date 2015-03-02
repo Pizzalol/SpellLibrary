@@ -17,6 +17,7 @@ function RetractMeatHook( keys )
 	local casterLocation = caster:GetAbsOrigin()
 	local targetLocation = target:GetAbsOrigin() 
 	local distance = (targetLocation - casterLocation):Length2D()
+	local direction = (casterLocation - targetLocation):Normalized()
 
 	-- Modifier
 	local meat_hook_modifier = keys.meat_hook_modifier
@@ -43,6 +44,9 @@ function RetractMeatHook( keys )
 
 		ApplyDamage(damageTable)
 	end
+
+	-- Make the target face the caster
+	target:SetForwardVector(direction)
 
 	-- For retracting the hook
 	hookTable[caster].bHitUnit = true
