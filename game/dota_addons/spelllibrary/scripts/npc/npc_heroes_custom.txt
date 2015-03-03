@@ -16,7 +16,7 @@
 		"AbilityLayout"	"6"
 	
 		"Ability1"	"keeper_of_the_light_illuminate_datadriven"
-		"Ability2"	"doom_bringer_scorched_earth_datadriven"
+		"Ability2"	"doom_bringer_devour_datadriven"
 		"Ability3"	"doom_bringer_lvl_death_datadriven"
 		"Ability4"	"keeper_of_the_light_blinding_light_datadriven"
 		"Ability5"	"keeper_of_the_light_recall_datadriven"

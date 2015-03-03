@@ -4,9 +4,19 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+	"AbilityTextureName"			"doom_bringer_devour"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
+		"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_devour.vpcf"
+		"particle"			"particles/generic_gameplay/lasthit_coins.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -34,6 +44,51 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"health_per_second"		"20 20 20 20"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_DoomBringer.DevourCast"
+			"Target" 		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_doom_bringer/doom_bringer_devour.vpcf"
+			"EffectAttachType"  "follow_origin"
+			
+			"ControlPointEntities"
+			{
+				"TARGET"	"attach_origin"
+				"CASTER"	"attach_origin"
+			}
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_doom_bringer/devour.lua"
+			"Function"		"Devour"
+			"modifier"		"modifier_devour_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_devour_datadriven"
+		{
+			"IsDebuff"			"1"
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_doom_bringer/devour.lua"
+					"Function"		"DevourGold"
+				}				
+			}
 		}
 	}
 }
