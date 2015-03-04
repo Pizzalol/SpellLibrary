@@ -1,10 +1,27 @@
+// Rewrite of the Medusa Split Shot ability
+// Author: Pizzalol
+// Date: 04.03.2015.
 "medusa_split_shot_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+	"AbilityUnitTargetFlag"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"medusa_split_shot"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_medusa.vsndevts"
+		"particle"			"particles/units/heroes/hero_medusa/medusa_bow_split_shot_cast.vpcf"
+		"particle"			"particles/units/heroes/hero_medusa/medusa_base_attack.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -43,6 +60,84 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"projectile_speed"		"1200"
+		}
+	}
+
+	"OnToggleOn"
+	{
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_medusa/medusa_bow_split_shot_cast.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_split_shot_datadriven"
+			"Target" 		"CASTER"
+		}
+	}
+
+	"OnToggleOff"
+	{
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_medusa/medusa_bow_split_shot_cast.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_split_shot_datadriven"
+			"Target"
+			{
+				"Center"	"CASTER"
+				"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+			}
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"	"1"
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Medusa.AttackSplit"
+			"Target" 		"TARGET"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_medusa/split_shot.lua"
+			"Function"		"SplitShotDamage"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_split_shot_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"0"
+	
+			"OnAttack"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_medusa/split_shot.lua"
+					"Function"		"SplitShotLaunch"
+					"split_shot_projectile"	"particles/units/heroes/hero_medusa/medusa_base_attack.vpcf"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE" "%damage_modifier" 
+			}
 		}
 	}
 }
