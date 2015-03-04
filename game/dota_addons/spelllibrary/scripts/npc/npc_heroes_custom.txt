@@ -17,7 +17,7 @@
 	
 		"Ability1"	"medusa_split_shot_datadriven"
 		"Ability2"	"doom_bringer_scorched_earth_datadriven"
-		"Ability3"	"doom_bringer_lvl_death_datadriven"
+		"Ability3"	"medusa_mana_shield_datadriven"
 		"Ability4"	"doom_bringer_empty1_datadriven"
 		"Ability5"	"doom_bringer_empty2_datadriven"
 		"Ability6"	"doom_bringer_doom_datadriven"

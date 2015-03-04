@@ -1,6 +1,6 @@
 --[[Author: Pizzalol
 	Date: 04.03.2015.
-	Creates additional attack projectiles for units within the casters attack range]]
+	Creates additional attack projectiles for units within the specified radius around the caster]]
 function SplitShotLaunch( keys )
 	local caster = keys.caster
 	local caster_location = caster:GetAbsOrigin()

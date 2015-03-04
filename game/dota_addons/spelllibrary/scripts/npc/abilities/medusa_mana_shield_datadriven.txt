@@ -1,9 +1,25 @@
+// Rewrite of the Medusa Mana Shield ability
+// Author: Pizzalol, Noya
+// Date: 04.03.2015.
+// NOTE: This is a POST DAMAGE REDUCTION Mana Shield
 "medusa_mana_shield_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityTextureName"			"medusa_mana_shield"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_medusa.vsndevts"
+		"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+		"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield_cast.vpcf"
+		"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield_end.vpcf"
+		"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -22,8 +38,95 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"absorption_tooltip"		"60"
+		}	
+	}
+
+	"OnToggleOn"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Medusa.ManaShield.On" 
+			"Target" 		"CASTER"
 		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_medusa/medusa_mana_shield_cast.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_mana_shield_datadriven"
+			"Target" 		"CASTER"
+		}
+	}
+
+	"OnToggleOff"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Medusa.ManaShield.Off"
+			"Target" 		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_medusa/medusa_mana_shield_end.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_mana_shield_datadriven"
+			"Target"
+			{
+				"Center"	"CASTER"
+				"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_mana_shield_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"0"
 	
+			"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+			"EffectAttachType"	"follow_origin"
+	
+			"OnTakeDamage"
+			// "%attack_damage" is set to the damage value after mitigation
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Medusa.ManaShield.Proc"
+					"Target" 		"TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_medusa/mana_shield.lua"
+					"Function"		"ManaShield"
+					"Damage"		"%attack_damage"
+				}
+			}
+
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_medusa/mana_shield.lua"
+					"Function"		"ManaShieldHealth"
+				}
+			}
+		}
 	}
 }
 
