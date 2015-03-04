@@ -12561,6 +12561,12 @@
 		}
 	}
 	
+	// Rewrite of the Doom Devour ability
+	// Author: Pizzalol
+	// Date: 04.03.2015.
+	// NOTE: ---------------------------- THIS ABILITY REQUIRES doom_bringer_empty1_datadriven and
+	// doom_bringer_empty2_datadriven TO WORK CORRECTLY ----------------------------------------------
+	// NOTE2: You have to add the specific units in the Lua table to be able to steal their abilities
 	"doom_bringer_devour_datadriven"
 	{
 		// General
@@ -12578,7 +12584,6 @@
 		{
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
 			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_devour.vpcf"
-			"particle"			"particles/generic_gameplay/lasthit_coins.vpcf"
 		}
 		
 		// Casting
@@ -12610,6 +12615,16 @@
 			}
 		}
 	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_doom_bringer/devour.lua"
+				"Function"		"DevourCheck"
+				"modifier"		"modifier_devour_datadriven"
+			}
+		}
+	
 		"OnSpellStart"
 		{
 			"FireSound"
@@ -12635,6 +12650,8 @@
 				"ScriptFile"	"heroes/hero_doom_bringer/devour.lua"
 				"Function"		"Devour"
 				"modifier"		"modifier_devour_datadriven"
+				"doom_empty1"	"doom_bringer_empty1_datadriven"
+				"doom_empty2"	"doom_bringer_empty2_datadriven"
 			}
 		}
 	

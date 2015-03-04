@@ -15,14 +15,11 @@
 	
 		"AbilityLayout"	"6"
 	
-		"Ability1"	"keeper_of_the_light_illuminate_datadriven"
-		"Ability2"	"doom_bringer_devour_datadriven"
+		"Ability1"	"doom_bringer_devour_datadriven"
+		"Ability2"	"doom_bringer_scorched_earth_datadriven"
 		"Ability3"	"doom_bringer_lvl_death_datadriven"
-		"Ability4"	"keeper_of_the_light_blinding_light_datadriven"
-		"Ability5"	"keeper_of_the_light_recall_datadriven"
-		"Ability6"	"keeper_of_the_light_spirit_form_datadriven"
-		"Ability7"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
-		"Ability8"	"keeper_of_the_light_illuminate_end_datadriven"
-		"Ability9"	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
+		"Ability4"	"doom_bringer_empty1_datadriven"
+		"Ability5"	"doom_bringer_empty2_datadriven"
+		"Ability6"	"doom_bringer_doom_datadriven"
 	}
 }
