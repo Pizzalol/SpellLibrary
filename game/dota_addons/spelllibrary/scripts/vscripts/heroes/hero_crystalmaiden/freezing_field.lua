@@ -65,7 +65,7 @@ function freezing_field_explode( keys )
 	elseif directionConstraint == 1 then		-- NE
 		attackPoint = Vector( casterLocation.x + dx, casterLocation.y + dy, casterLocation.z )
 	elseif directionConstraint == 2 then		-- SE
-		attackPoint = Vector( casterLocation.x - dx, casterLocation.y - dy, casterLocation.z )
+		attackPoint = Vector( casterLocation.x + dx, casterLocation.y - dy, casterLocation.z )
 	else										-- SW
 		attackPoint = Vector( casterLocation.x - dx, casterLocation.y - dy, casterLocation.z )
 	end

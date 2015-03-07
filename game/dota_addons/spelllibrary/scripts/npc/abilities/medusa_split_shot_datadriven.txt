@@ -121,7 +121,7 @@
 		"modifier_split_shot_datadriven"
 		{
 			"Passive"			"0"
-			"IsHidden"			"0"
+			"IsHidden"			"1"
 			"IsDebuff"			"0"
 	
 			"OnAttack"

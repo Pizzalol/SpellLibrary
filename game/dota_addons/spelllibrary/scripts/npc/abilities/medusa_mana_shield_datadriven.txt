@@ -106,7 +106,7 @@
 				"FireSound"
 				{
 					"EffectName"	"Hero_Medusa.ManaShield.Proc"
-					"Target" 		"TARGET"
+					"Target" 		"UNIT"
 				}
 
 				"RunScript"

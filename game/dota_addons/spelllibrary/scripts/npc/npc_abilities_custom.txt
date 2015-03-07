@@ -28217,7 +28217,7 @@
 					"FireSound"
 					{
 						"EffectName"	"Hero_Medusa.ManaShield.Proc"
-						"Target" 		"TARGET"
+						"Target" 		"UNIT"
 					}
 	
 					"RunScript"
@@ -28437,7 +28437,7 @@
 			"modifier_split_shot_datadriven"
 			{
 				"Passive"			"0"
-				"IsHidden"			"0"
+				"IsHidden"			"1"
 				"IsDebuff"			"0"
 		
 				"OnAttack"
@@ -28458,6 +28458,9 @@
 		}
 	}
 	
+	// Rewrite of the Medusa Stone Gaze ability
+	// Author: Pizzalol
+	// Date: 07.03.2015.
 	"medusa_stone_gaze_datadriven"
 	{
 		// General
@@ -28469,6 +28472,18 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"medusa_stone_gaze"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_medusa.vsndevts"
+			"particle"			"particles/units/heroes/hero_medusa/medusa_stone_gaze_active.vpcf"
+			"particle"			"particles/units/heroes/hero_medusa/medusa_stone_gaze_debuff.vpcf"
+			"particle"			"particles/units/heroes/hero_medusa/medusa_stone_gaze_facing.vpcf"
+			"particle"			"particles/units/heroes/hero_medusa/medusa_stone_gaze_debuff_stoned.vpcf"
+			"particle"			"particles/status_fx/status_effect_medusa_stone_gaze.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -28500,7 +28515,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow"						"50"
+				"slow"						"-50"
 			}
 			"04"
 			{
@@ -28515,12 +28530,208 @@
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"vision_cone"				"0.08715"		// 85 degree cone
+				"vision_cone"				"85"		// 85 degree cone
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_physical_damage"		"30 40 50"
+			}
+			// Extra
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_magic_resist"		"100"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Medusa.StoneGaze.Cast"
+				"Target" 		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_stone_gaze_datadriven"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_medusa/stone_gaze.lua"
+				"Function"		"StoneGazeStart"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_stone_gaze_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_medusa/medusa_stone_gaze_active.vpcf"
+						"EffectAttachType"	"follow_hitloc"
+						"Target"			"TARGET"
+	
+						"ControlPointEntities"
+						{
+							"TARGET"	"follow_hitloc"
+							"TARGET"	"follow_hitloc"
+						}
+					}
+				}
+		
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"CASTER"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+						}
+					
+						"Action"    
+						{
+							"RunScript"
+							{
+								"ScriptFile"		"heroes/hero_medusa/stone_gaze.lua"
+								"Function"			"StoneGaze"
+								"modifier_slow"		"modifier_stone_gaze_slow_datadriven"
+								"modifier_facing"	"modifier_stone_gaze_facing_datadriven"
+							}
+						}
+					}			
+				}
+			}
+	
+			"modifier_stone_gaze_slow_datadriven"
+			{
+				"IsDebuff"	"1"
+	
+				"ThinkInterval"  "0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_medusa/stone_gaze.lua"
+						"Function"		"StoneGazeSlow"
+						"modifier_caster"	"modifier_stone_gaze_datadriven"
+						"modifier_target"	"modifier_stone_gaze_slow_datadriven"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
+				    "MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"		"%slow" 
+				}
+			}
+	
+			"modifier_stone_gaze_facing_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_medusa/medusa_stone_gaze_debuff.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+						}
+						
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"CASTER"	"attach_origin"
+						}
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_medusa/medusa_stone_gaze_facing.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+						}
+	
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"CASTER"	"attach_origin"
+						}
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_medusa/medusa_stone_gaze_debuff_stoned.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+						}
+	
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"CASTER"	"attach_origin"
+						}
+					}
+				}
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_medusa/stone_gaze.lua"
+						"Function"		"StoneGazeFacing"
+						"modifier_stone"	"modifier_stone_gaze_stone_datadriven"
+					}
+				}
+			}
+	
+			"modifier_stone_gaze_stone_datadriven"
+			{
+				"IsDebuff"		"1"
+				"IsPurgable"	"0"
+	
+				"StatusEffectName" 		"particles/status_fx/status_effect_medusa_stone_gaze.vpcf" 	   
+				"StatusEffectPriority"  "10"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FROZEN"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 			"%bonus_magic_resist"
+				    "MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_PERCENTAGE" "%bonus_physical_damage" 
+				}
 			}
 		}
 	}
