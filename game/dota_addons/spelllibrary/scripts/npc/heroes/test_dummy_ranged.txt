@@ -5,7 +5,7 @@
 	"AbilityLayout"	"4"
 
 	"Ability1"	"medusa_split_shot_datadriven"
-	"Ability2"	"doom_bringer_scorched_earth_datadriven"
+	"Ability2"	"medusa_mystic_snake_datadriven"
 	"Ability3"	"medusa_mana_shield_datadriven"
 	"Ability4"	"medusa_stone_gaze_datadriven"
 }
