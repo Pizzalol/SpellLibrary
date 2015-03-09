@@ -28241,6 +28241,10 @@
 		}
 	}
 	
+	// Rewrite of the Medusa Mystic Snake ability
+	// Author: Pizzalol
+	// Date: 07.03.2015.
+	// NOTE: Uses a global counter for all snakes cast by the same caster
 	"medusa_mystic_snake_datadriven"
 	{
 		// General

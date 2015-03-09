@@ -115,7 +115,6 @@ function MysticSnake( keys )
 
 					-- If it wasnt then launch a new snake at it
 					if not hit_check then
-						print("Hello")
 						local projectile_info = 
 						{
 							EffectName = mystic_snake_projectile,
@@ -159,7 +158,7 @@ function MysticSnake( keys )
 			-- Check the helper variable to determine if we have to send the snake back to the caster
 			-- Happens only in the case where we find only targets that we hit before but havent reached
 			-- the jump limit
-			if hit_all then
+			if hit_helper then
 				local projectile_info = 
 				{
 					EffectName = mystic_snake_projectile,

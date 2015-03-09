@@ -51,7 +51,7 @@ function StoneGaze( keys )
 	local direction = (caster_location - target_location):Normalized()
 	local forward_vector = target:GetForwardVector()
 	local angle = math.abs(RotationDelta((VectorToAngles(direction)), VectorToAngles(forward_vector)).y)
-	print("Angle: " .. angle)
+	--print("Angle: " .. angle)
 
 	-- Facing check
 	if angle <= vision_cone/2 then
