@@ -49599,6 +49599,9 @@
 		}
 	}
 	
+	// Rewrite of the Troll Warlord Battle Trance ability
+	// Author: Pizzalol
+	// Date: 09.03.2015.
 	"troll_warlord_battle_trance_datadriven"
 	{
 		// General
@@ -49609,6 +49612,14 @@
 		"MaxLevel"						"3"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"troll_warlord_battle_trance"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_buff.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -49635,6 +49646,59 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"attack_speed"		"60 120 180"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_TrollWarlord.BattleTrance.Cast"
+				"Target" 		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_TrollWarlord.BattleTrance.Cast.Team"
+				"Target" 		"CASTER"
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  	"CASTER"
+					"Radius" 	"GLOBAL"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO"
+				}
+			
+				"Action"    
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_battle_trance_datadriven"
+						"Target" 		"TARGET"
+						"Duration"		"%trance_duration"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_battle_trance_datadriven"
+			{
+				"IsBuff"			"1"
+				"IsPurgable"		"0"
+		
+				"EffectName"		"particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed"
+				}
 			}
 		}
 	}

@@ -1,4 +1,6 @@
-
+--[[Author: Pizzalol
+	Date: 10.01.2015.
+	Creates a dummy at the target location that acts as the Chronosphere]]
 function Chronosphere( keys )
 	-- Variables
 	local caster = keys.caster
