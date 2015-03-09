@@ -122,7 +122,7 @@ function powershot_start_traverse( keys )
 	-- Traverse
 	Timers:CreateTimer( function()
 			-- Traverse the point
-			caster.powershot_currentPos = caster.powershot_currentPos + ( caster.powershot_forwardVec * caster.powershot_percent_movespeed )
+			caster.powershot_currentPos = caster.powershot_currentPos + ( caster.powershot_forwardVec * caster.powershot_percent_movespeed * caster.powershot_movespeed )
 			
 			-- Loop through the units array
 			for k, v in pairs( caster.powershot_units_array ) do
@@ -168,7 +168,7 @@ function powershot_start_traverse( keys )
 				ProjectileManager:DestroyLinearProjectile( caster.powershot_projectileID )
 				return nil
 			else
-				return 1.0 / caster.powershot_movespeed
+				return 0.03
 			end	
 		end
 	)
