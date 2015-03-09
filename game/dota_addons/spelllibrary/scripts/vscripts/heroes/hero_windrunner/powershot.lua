@@ -51,6 +51,7 @@ end
 	Main: Start traversing upon timer while providing vision, reducing damage and speed per units hit, and also destroy trees
 	Changes:
 	09.01.2015 - Minor cleanup
+	08.03.2015 - Minor fix for extremely fast speed
 ]]
 function powershot_start_traverse( keys )
 	-- Variables
@@ -122,7 +123,7 @@ function powershot_start_traverse( keys )
 	-- Traverse
 	Timers:CreateTimer( function()
 			-- Traverse the point
-			caster.powershot_currentPos = caster.powershot_currentPos + ( caster.powershot_forwardVec * caster.powershot_percent_movespeed * caster.powershot_movespeed )
+			caster.powershot_currentPos = caster.powershot_currentPos + ( caster.powershot_forwardVec * caster.powershot_percent_movespeed * caster.powershot_movespeed * 0.03 )
 			
 			-- Loop through the units array
 			for k, v in pairs( caster.powershot_units_array ) do
