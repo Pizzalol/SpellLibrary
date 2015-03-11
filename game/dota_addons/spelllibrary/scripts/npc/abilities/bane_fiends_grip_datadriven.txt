@@ -1,6 +1,9 @@
-// Rewrite of the Bane Nightmare
-// Author: chrislotix
+// Rewrite of the Bane Fiends Grip
+// Author: chrislotix, Pizzalol
 // Date: 11.01.2015.
+// Changed: 11.03.2015.
+// Changed by: Pizzalol
+// Reason: Fixed a few issues, optimized code
 "bane_fiends_grip_datadriven"
 {
 	// General
@@ -33,7 +36,6 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityChannelTime"			"5.0 5.0 5.0"
 	"AbilityCooldown"				"100.0 100.0 100.0"
-
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
@@ -82,25 +84,38 @@
 
 	"OnSpellStart"
 	{
-
-		"FireSound"
-		{
-			"EffectName"	"Hero_Bane.FiendsGrip.Cast"
-			"Target"	"TARGET"	
-		}
-
 		"Damage"
 		{
 			"Target"	"TARGET"
 			"Type"		"DAMAGE_TYPE_MAGICAL"
 			"Damage"	"%fiend_grip_damage"
 		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Bane.FiendsGrip.Cast"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}	
+		}
 
 		"ApplyModifier"
 		{
 			"ModifierName"	"modifier_fiends_grip_datadriven"
-			"Target"	"TARGET"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
 		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_fiends_grip_caster_datadriven"
+			"Target" 		"CASTER"
+		}			
 	}
 
 	"OnChannelInterrupted"
@@ -108,21 +123,41 @@
 		"RemoveModifier"
 		{
 			"ModifierName"	"modifier_fiends_grip_datadriven"
-			"Target"	"TARGET"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_fiends_grip_invis_datadriven"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_fiends_grip_caster_datadriven"
+			"Target" 		"CASTER"
 		}
 
 		"RunScript"
 		{
-			"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
-			"Function"		"FiendsGripStopLoop"
-			"Target"		"TARGET"
+			"ScriptFile"	"heroes/hero_bane/fiends_grip.lua"
+			"Function"		"FiendsGripStopSound"
+			"sound"			"Hero_Bane.FiendsGrip"
 		}
 
 		"RunScript"
 		{
-			"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
-			"Function"		"FiendsGripCastStopLoop"
-			"Target"		"TARGET"
+			"ScriptFile"	"heroes/hero_bane/fiends_grip.lua"
+			"Function"		"FiendsGripStopSound"
+			"sound"			"Hero_Bane.FiendsGrip.Cast"
 		}
 	}
 
@@ -131,21 +166,41 @@
 		"RemoveModifier"
 		{
 			"ModifierName"	"modifier_fiends_grip_datadriven"
-			"Target"	"TARGET"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_fiends_grip_invis_datadriven"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_fiends_grip_caster_datadriven"
+			"Target" 		"CASTER"
 		}
 
 		"RunScript"
 		{
-			"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
-			"Function"		"FiendsGripStopLoop"
-			"Target"		"TARGET"
+			"ScriptFile"	"heroes/hero_bane/fiends_grip.lua"
+			"Function"		"FiendsGripStopSound"
+			"sound"			"Hero_Bane.FiendsGrip"
 		}
 
 		"RunScript"
 		{
-			"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
-			"Function"		"FiendsGripCastStopLoop"
-			"Target"		"TARGET"
+			"ScriptFile"	"heroes/hero_bane/fiends_grip.lua"
+			"Function"		"FiendsGripStopSound"
+			"sound"			"Hero_Bane.FiendsGrip.Cast"
 		}
 	}
 
@@ -154,45 +209,70 @@
 		"modifier_fiends_grip_datadriven"
 		{
 			"IsDebuff"	"1"
-			"ThinkInterval"	"%fiend_grip_tick_interval"
+			
 			"EffectName"	"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
 			"EffectAttachType"	"attach_origin"
 
 			"OverrideAnimation" "ACT_DOTA_FLAIL"
-
-			"OnIntervalThink"
-			{
-				"Damage"
-				{
-					"Target"	"TARGET"
-					"Type"		"DAMAGE_TYPE_MAGICAL"
-					"Damage"	"%fiend_grip_damage"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
-					"Function"		"ManaDrain"
-					"Target"		"TARGET"
-				}				
-			}
 
 			"OnCreated"
 			{
 				"FireSound"
 				{
 					"EffectName"	"Hero_Bane.FiendsGrip"
-					"Target"	"TARGET"
+					"Target"		"TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_bane/fiends_grip.lua"
+					"Function"		"FiendsGripInvisCheck"
+					"modifier_reveal"	"modifier_fiend_grip_invis_datadriven"
 				}
 			}
+
+			"ThinkInterval"	"%fiend_grip_tick_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_bane/fiends_grip.lua"
+					"Function"		"ManaDrain"
+					"Target"		"TARGET"
+				}
+
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%fiend_grip_damage"
+				}								
+			}			
 			
 			"States"
 			{
-				"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_STUNNED" 	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_fiends_grip_caster_datadriven"
+		{
+			"IsHidden"	"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_fiend_grip_invis_datadriven"
+		{
+			"IsHidden"	"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBILITY"	"MODIFIER_STATE_VALUE_DISABLED"
 			}
 		}
 	}
 }
-
-//need lua for mana drain and for stoping loop sound
-
