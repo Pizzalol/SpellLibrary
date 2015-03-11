@@ -1,9 +1,13 @@
+// Rewrite of the Troll Warlord Fervor ability
+// Author: Pizzalol
+// Date: 11.03.2015.
 "troll_warlord_fervor_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"troll_warlord_fervor"
 	
 	// Casting
 	"AbilitySpecial"
@@ -17,6 +21,37 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"attack_speed"			"16 22 28 34"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_fervor_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsDebuff"			"0"
+
+			"OnAttack"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_troll_warlord/fervor.lua"
+					"Function"		"Fervor"
+					"modifier"		"modifier_fervor_stack_datadriven"
+				}
+			}
+		}
+
+		"modifier_fervor_stack_datadriven"
+		{
+			"IsBuff"		"1"
+			"IsPurgable"	"0"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed" 
+			}
 		}
 	}
 }
