@@ -5,7 +5,7 @@
 	"AbilityLayout"	"4"
 
 	"Ability1"	"medusa_split_shot_datadriven"
-	"Ability2"	"medusa_mystic_snake_datadriven"
+	"Ability2"	"troll_warlord_whirling_axes_ranged_datadriven"
 	"Ability3"	"troll_warlord_fervor_datadriven"
 	"Ability4"	"troll_warlord_battle_trance_datadriven"
 }

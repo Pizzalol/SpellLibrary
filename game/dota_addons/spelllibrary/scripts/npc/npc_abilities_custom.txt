@@ -50011,6 +50011,10 @@
 		}
 	}
 	
+	// Rewrite of the Troll Warlord Whirling Axes Ranged ability
+	// Author: Pizzalol
+	// Date: 14.03.2015.
+	// NOTE: Currently missing the residual vision at at the end
 	"troll_warlord_whirling_axes_ranged_datadriven"
 	{
 		// General
@@ -50023,6 +50027,14 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_ranged.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -50070,7 +50082,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_speed"			"30"
+				"movement_speed"			"-30"
 			}
 			"07"
 			{
@@ -50081,6 +50093,68 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"axe_count"					"5"
+			}
+			// Extra
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_radius"				"900"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_duration"			"3.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_TrollWarlord.WhirlingAxes.Ranged"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_troll_warlord/whirling_axes_ranged.lua"
+				"Function"		"WhirlingAxesRanged"
+				"Target"		"POINT"
+				"axe_projectile"	"particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_ranged.vpcf"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_whirling_axes_ranged_datadriven"
+				"Target" 		"TARGET"
+				"Duration"		"%axe_slow_duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_whirling_axes_ranged_datadriven"
+			{
+				"IsDebuff"			"1"
+		
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%axe_damage"
+					}
+				}
+	
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed" 
+				}
 			}
 		}
 	}
