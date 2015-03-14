@@ -1,4 +1,3 @@
-
 --[[Author: Noya
 	Used by: Pizzalol
 	Date: 25.01.2015.

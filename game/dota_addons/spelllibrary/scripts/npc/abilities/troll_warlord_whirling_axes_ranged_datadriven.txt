@@ -2,6 +2,7 @@
 // Author: Pizzalol
 // Date: 14.03.2015.
 // NOTE: Currently missing the residual vision at at the end
+// NOTE2: ----------------------- REQUIRES troll_warlord_whirling_axes_melee_datadriven TO FUNCTION PROPERLY ------------------------
 "troll_warlord_whirling_axes_ranged_datadriven"
 {
 	// General
@@ -91,6 +92,16 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"vision_duration"			"3.0"
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_troll_warlord/whirling_axes_ranged.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"troll_warlord_whirling_axes_melee_datadriven"
 		}
 	}
 

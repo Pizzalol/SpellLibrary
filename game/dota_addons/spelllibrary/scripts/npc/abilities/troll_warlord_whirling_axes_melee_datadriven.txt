@@ -62,5 +62,15 @@
 			"whirl_duration"			"3.0"
 		}
 	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_troll_warlord/whirling_axes_melee.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"troll_warlord_whirling_axes_ranged_datadriven"
+		}
+	}
 }
 

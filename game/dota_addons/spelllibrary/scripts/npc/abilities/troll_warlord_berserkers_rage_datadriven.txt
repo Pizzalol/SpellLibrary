@@ -1,9 +1,22 @@
+// Rewrite of the Troll Warlord Berserkers Rage ability
+// Author: Pizzalol
+// Date: 14.03.2015.
+// NOTE: --------------------------------------------- THIS ABILITY REQUIRES troll_warlord_whirling_axes_ranged_datadriven AND troll_warlord_whirling_axes_melee_datadriven TO WORK CORRECTLY ---------------------------------
 "troll_warlord_berserkers_rage_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityDamageType"				"DAMAGE_TYPE_PHYSICAL"
+	"AbilityTextureName"			"troll_warlord_berserkers_rage"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -26,7 +39,7 @@
 		"03"
 		{	
 			"var_type"				"FIELD_INTEGER"
-			"bonus_range"			"372"
+			"bonus_range"			"-372"
 		}
 		"04"
 		{
@@ -46,7 +59,7 @@
 		"07"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bash_chance"			"10"
+			"bash_chance"			"100"
 		}
 		"08"
 		{
@@ -57,6 +70,116 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"bash_damage"			"20 30 40 50"
+		}
+	}
+
+	"OnToggleOn"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_TrollWarlord.BerserkersRage.Toggle"
+			"Target" 		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_troll_warlord/berserkers_rage.lua"
+			"Function"		"BerserkersRageAttackCapability"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_berserkers_rage_datadriven"
+			"Target" 		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_troll_warlord/berserkers_rage.lua"
+			"Function"		"SwapAbilities"
+			"main_ability_name"	"troll_warlord_whirling_axes_ranged_datadriven"
+			"sub_ability_name"	"troll_warlord_whirling_axes_melee_datadriven"
+		}
+	}
+
+	"OnToggleOff"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_TrollWarlord.BerserkersRage.Toggle"
+			"Target" 		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_troll_warlord/berserkers_rage.lua"
+			"Function"		"BerserkersRageAttackCapability"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_berserkers_rage_datadriven"
+			"Target" 		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_troll_warlord/berserkers_rage.lua"
+			"Function"		"SwapAbilities"
+			"main_ability_name"	"troll_warlord_whirling_axes_melee_datadriven"
+			"sub_ability_name"	"troll_warlord_whirling_axes_ranged_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_berserkers_rage_datadriven"
+		{
+			"IsHidden"			"1"
+			"IsPurgable"		"0"
+	
+			"OnAttackLanded"
+			// "%attack_damage" is set to the damage value before mitigation
+			{
+				"Random"
+				{
+					"Chance"			"%bash_chance"
+					"OnSuccess"
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_troll_warlord/berserkers_rage.lua"
+							"Function"		"BerserkersRageBash"
+							"sound"			"Hero_TrollWarlord.BerserkersRage.Stun"
+						}
+					}
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_move_speed"
+			    "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" 			"%bonus_range"
+			    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+			    "MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"	"%base_attack_time"
+			    "MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_hp"
+			    "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+			}
+		}
+
+		"modifier_berserkers_rage_track_datadriven"
+		{
+			"IsHidden"		"1"
+			"Passive"		"1"
+
+			"OnAttack"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_troll_warlord/berserkers_rage.lua"
+					"Function"		"BerserkersRageTrack"
+				}
+			}
 		}
 	}
 }
