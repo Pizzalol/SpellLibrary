@@ -8,6 +8,14 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"troll_warlord_whirling_axes_melee"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+		"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_melee.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -70,6 +78,42 @@
 			"ScriptFile"	"heroes/hero_troll_warlord/whirling_axes_melee.lua"
 			"Function"		"LevelUpAbility"
 			"ability_name"	"troll_warlord_whirling_axes_ranged_datadriven"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_TrollWarlord.WhirlingAxes.Melee"
+			"Target" 		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_troll_warlord/whirling_axes_melee.lua"
+			"Function"		"WhirlingAxesMelee"
+			"axe_projectile"	"particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_melee.vpcf"
+			"axe_modifier"		"modifier_whirling_axes_melee_think_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_whirling_axes_melee_think_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+
+			"ThinkInterval"  "0.06"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_troll_warlord/whirling_axes_melee.lua"
+					"Function"		"WhirlingAxesMeleeThink"
+				}
+			}
 		}
 	}
 }

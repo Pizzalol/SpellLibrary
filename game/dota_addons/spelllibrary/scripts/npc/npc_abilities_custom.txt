@@ -14274,6 +14274,7 @@
 		}
 	}
 	
+	// Author: kritth
 	// Note: Constraint is that agility never go above 2841
 	"drow_ranger_trueshot_datadriven"
 	{
@@ -14347,6 +14348,7 @@
 				"Aura_Radius"			"%global_radius"
 				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
 			}
 			
 			"modifier_trueshot_effect_datadriven"
@@ -49793,7 +49795,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityDamageType"				"DAMAGE_TYPE_PHYSICAL"
+		"AbilityDamageType"				"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"troll_warlord_berserkers_rage"
 	
 		// Precache
@@ -49844,7 +49846,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"100"
+				"bash_chance"			"10"
 			}
 			"08"
 			{
@@ -50037,6 +50039,14 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"troll_warlord_whirling_axes_melee"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_melee.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -50099,6 +50109,42 @@
 				"ScriptFile"	"heroes/hero_troll_warlord/whirling_axes_melee.lua"
 				"Function"		"LevelUpAbility"
 				"ability_name"	"troll_warlord_whirling_axes_ranged_datadriven"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_TrollWarlord.WhirlingAxes.Melee"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_troll_warlord/whirling_axes_melee.lua"
+				"Function"		"WhirlingAxesMelee"
+				"axe_projectile"	"particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_melee.vpcf"
+				"axe_modifier"		"modifier_whirling_axes_melee_think_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_whirling_axes_melee_think_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"ThinkInterval"  "0.06"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_troll_warlord/whirling_axes_melee.lua"
+						"Function"		"WhirlingAxesMeleeThink"
+					}
+				}
 			}
 		}
 	}

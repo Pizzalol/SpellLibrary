@@ -8,7 +8,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	"AbilityDamageType"				"DAMAGE_TYPE_PHYSICAL"
+	"AbilityDamageType"				"DAMAGE_TYPE_MAGICAL"
 	"AbilityTextureName"			"troll_warlord_berserkers_rage"
 
 	// Precache
@@ -59,7 +59,7 @@
 		"07"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bash_chance"			"100"
+			"bash_chance"			"10"
 		}
 		"08"
 		{

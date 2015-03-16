@@ -1,3 +1,5 @@
+// Author: kritth
+// Date: 3.1.2015.
 // Note: Constraint is that agility never go above 2841
 "drow_ranger_trueshot_datadriven"
 {
@@ -58,7 +60,7 @@
 			
 			"Aura"					"modifier_trueshot_effect_datadriven"
 			"Aura_Radius"			"%global_radius"
-			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
 		}
 		
@@ -69,8 +71,9 @@
 			
 			"Aura"					"modifier_trueshot_effect_datadriven"
 			"Aura_Radius"			"%global_radius"
-			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
+			"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
 		}
 		
 		"modifier_trueshot_effect_datadriven"
