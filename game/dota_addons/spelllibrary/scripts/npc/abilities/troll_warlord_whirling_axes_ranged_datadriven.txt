@@ -131,6 +131,13 @@
 			"Target" 		"TARGET"
 			"Duration"		"%axe_slow_duration"
 		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_troll_warlord/whirling_axes_ranged.lua"
+			"Function"		"WhirlingAxesRangedHit"
+			"sound"			"Hero_TrollWarlord.WhirlingAxes.Target"
+		}
 	}
 
 	"Modifiers"
@@ -138,16 +145,6 @@
 		"modifier_whirling_axes_ranged_datadriven"
 		{
 			"IsDebuff"			"1"
-	
-			"OnCreated"
-			{
-				"Damage"
-				{
-					"Target"		"TARGET"
-					"Type"			"DAMAGE_TYPE_MAGICAL"
-					"Damage"		"%axe_damage"
-				}
-			}
 
 			"Properties"
 			{

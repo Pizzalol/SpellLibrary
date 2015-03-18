@@ -1,3 +1,6 @@
+// Rewrite of the Troll Warlord Whirling Axes Melee ability
+// Author: Pizzalol
+// Date: 18.03.2015.
 "troll_warlord_whirling_axes_melee_datadriven"
 {
 	// General
@@ -69,6 +72,22 @@
 			"var_type"					"FIELD_FLOAT"
 			"whirl_duration"			"3.0"
 		}
+		// Extra
+		"08"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"axe_turn_rate"				"360"
+		}
+		"09"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"start_radius"				"1"
+		}
+		"10"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"think_interval"			"0.06"
+		}
 	}
 
 	"OnUpgrade"
@@ -105,7 +124,14 @@
 			"IsHidden"		"1"
 			"IsPurgable"	"0"
 
-			"ThinkInterval"  "0.06"
+			"Aura"          	"modifier_whirling_axes_melee_aura_datadriven"
+			"Aura_Radius"   	"%hit_radius"
+			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
+			"Aura_ApplyToCaster" "0"
+
+			"ThinkInterval"  "%think_interval"
 			"OnIntervalThink"
 			{
 				"RunScript"
@@ -113,6 +139,41 @@
 					"ScriptFile"	"heroes/hero_troll_warlord/whirling_axes_melee.lua"
 					"Function"		"WhirlingAxesMeleeThink"
 				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_whirling_axes_melee_aura_datadriven"
+		{
+			"IsHidden"	"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_troll_warlord/whirling_axes_melee.lua"
+					"Function"		"WhirlingAxesMeleeHit"
+					"modifier"		"modifier_whirling_axes_melee_blind_datadriven"
+					"sound"			"Hero_TrollWarlord.WhirlingAxes.Target"
+				}
+			}
+		}
+
+		"modifier_whirling_axes_melee_blind_datadriven"
+		{
+			"IsDebuff"		"1"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MISS_PERCENTAGE" "%blind_pct"
 			}
 		}
 	}

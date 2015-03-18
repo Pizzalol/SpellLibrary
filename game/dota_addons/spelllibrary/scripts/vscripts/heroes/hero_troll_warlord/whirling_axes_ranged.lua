@@ -15,6 +15,7 @@ function WhirlingAxesRanged( keys )
 	local axe_spread = ability:GetLevelSpecialValueFor("axe_spread", ability_level) 
 	local axe_count = ability:GetLevelSpecialValueFor("axe_count", ability_level)
 	local axe_projectile = keys.axe_projectile
+	caster.whirling_axes_ranged_hit_table = {}
 
 	-- Vision
 	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level)
@@ -138,5 +139,46 @@ function LevelUpAbility( event )
 	-- Check to not enter a level up loop
 	if ability_level ~= this_abilityLevel then
 		ability_handle:SetLevel(this_abilityLevel)
+	end
+end
+
+--[[Author: Pizzalol
+	Date: 18.03.2015.
+	Checks if the target has been hit before and then does logic according to that]]
+function WhirlingAxesRangedHit( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local sound = keys.sound
+
+	local axe_damage = ability:GetLevelSpecialValueFor("axe_damage", ability_level)
+
+	-- Check if the target has been hit before
+	local hit_check = false
+
+	for _,unit in ipairs(caster.whirling_axes_ranged_hit_table) do
+		if unit == target then
+			hit_check = true
+			break
+		end
+	end
+
+	-- If the target hasnt been hit before then insert it into the hit table to keep track of it
+	if not hit_check then
+		table.insert(caster.whirling_axes_ranged_hit_table, target)
+
+		-- Play the sound
+		EmitSoundOn(sound, target)
+
+		-- Initialize the damage table and deal damage to the target
+		local damage_table = {}
+		damage_table.attacker = caster
+		damage_table.victim = target
+		damage_table.ability = ability
+		damage_table.damage_type = ability:GetAbilityDamageType() 
+		damage_table.damage = axe_damage
+
+		ApplyDamage(damage_table)
 	end
 end

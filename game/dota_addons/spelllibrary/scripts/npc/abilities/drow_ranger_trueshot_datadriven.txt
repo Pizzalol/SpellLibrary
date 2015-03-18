@@ -62,6 +62,7 @@
 			"Aura_Radius"			"%global_radius"
 			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 			"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
+			"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
 		}
 		
 		"modifier_trueshot_aura_creep_datadriven"
