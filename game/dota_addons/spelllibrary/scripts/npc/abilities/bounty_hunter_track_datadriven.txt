@@ -1,8 +1,9 @@
 // Rewrite of the Bounty Hunter Track ability
-// Author: Pizzalol/chrislotix
+// Author: Pizzalol, chrislotix
 // Date: 02.01.2015.
 // NOTE: Doesnt have the smokey trail particle
 // Changed: 07.02.2015. - Track reveals invisible units properly
+// Changed: 19.03.2015. - Fixed and added all the required particles
 "bounty_hunter_track_datadriven"
 {
 	// General
@@ -21,7 +22,8 @@
 		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
 		"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track.vpcf"
 		"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
-		"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"  
+		"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"
+		"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
 	}
 	
 	// Unit Targeting
@@ -123,8 +125,28 @@
 			"Duration"	"%duration"
 			"IsDebuff"	"1"
 
-			"EffectName"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
-			"EffectAttachType"	"follow_origin"
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_origin"
+						"TARGET"	"attach_hitloc"
+					}
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
+					"EffectAttachType"  "follow_overhead"
+					"Target"            "TARGET"
+				}
+			}
 
 			"Aura" 			"modifier_track_speed_datadriven"
 			"Aura_Radius" 	"%aura_radius"

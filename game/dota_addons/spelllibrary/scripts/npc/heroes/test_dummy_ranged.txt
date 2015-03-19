@@ -7,6 +7,5 @@
 	"Ability1"	"troll_warlord_berserkers_rage_datadriven"
 	"Ability2"	"troll_warlord_whirling_axes_ranged_datadriven"
 	"Ability3"	"troll_warlord_fervor_datadriven"
-	"Ability4"	"troll_warlord_battle_trance_datadriven"
-	"ability5"	"troll_warlord_whirling_axes_melee_datadriven"
+	"Ability4"	"bounty_hunter_track_datadriven"
 }
