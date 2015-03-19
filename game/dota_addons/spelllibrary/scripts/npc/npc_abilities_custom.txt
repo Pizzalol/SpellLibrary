@@ -43395,6 +43395,21 @@
 			"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
 			"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
 			"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+			"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_attack2"
+				}
+			}
 		}
 	
 		"OnSpellStart"
@@ -43407,7 +43422,7 @@
 			    "ProvidesVision"   	"0"
 			    "VisionRadius"     	"0"
 			    "MoveSpeed"        	"%blast_speed"
-			    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_2"
 			}
 	
 			"FireSound"

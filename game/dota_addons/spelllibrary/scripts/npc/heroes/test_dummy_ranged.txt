@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"troll_warlord_berserkers_rage_datadriven"
-	"Ability2"	"troll_warlord_whirling_axes_ranged_datadriven"
+	"Ability1"	"skeleton_king_hellfire_blast_datadriven"
+	"Ability2"	"skeleton_king_hellfire_blast"
 	"Ability3"	"troll_warlord_fervor_datadriven"
 	"Ability4"	"bounty_hunter_track_datadriven"
 }
