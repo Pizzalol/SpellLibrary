@@ -1,7 +1,6 @@
 // Rewrite of the Lycan Howl
 // Author: chrislotix, Pizzalol
 // Date: 24.03.2015.
-// NOTE: Wonky cast Howl particle (doesnt play one part)
 "lycan_howl_datadriven"
 {
 	// General
