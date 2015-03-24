@@ -12,7 +12,7 @@ function BorrowedTimeActivate( event )
 	local dur = ability:GetLevelSpecialValueFor( "duration" , ability:GetLevel() - 1  )
 
 	-- Apply the modifier
-	if caster:GetHealth() < 400 then
+	if caster:GetHealth() < 400 and ability:GetCooldownTimeRemaining() == 0 then
 		BorrowedTimePurge( event )
 		ability:ApplyDataDrivenModifier( caster, caster, "modifier_borrowed_time", { duration = dur })
 		ability:StartCooldown( cooldown )
