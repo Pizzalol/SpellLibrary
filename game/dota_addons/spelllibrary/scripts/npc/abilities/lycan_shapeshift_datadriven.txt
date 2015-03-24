@@ -1,3 +1,6 @@
+// Rewrite of the Lycan Shapeshift ability
+// Author: Pizzalol
+// Date: 24.03.2015.
 "lycan_shapeshift_datadriven"
 {
 	// General
@@ -7,6 +10,17 @@
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"lycan_shapeshift"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"		
+		"particle"		"particles/units/heroes/hero_lycan/lycan_shapeshift_buff.vpcf"
+		"particle"		"particles/units/heroes/hero_lycan/lycan_shapeshift_cast.vpcf"
+		"particle"		"particles/units/heroes/hero_lycan/lycan_shapeshift_revert.vpcf"
+		"model"			"models/heroes/lycan/lycan_wolf.vmdl"	
+	}
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
@@ -28,7 +42,7 @@
 		"02"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"speed"				"650"
+			"speed"						"650"
 		}
 		"03"
 		{
@@ -49,7 +63,229 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"transformation_time"		"1.5"
-		}			
+		}
+		// Extra
+		"07"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"aura_interval"				"0.1"
+		}	
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lycan.Shapeshift.Cast"
+			"Target" 		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_lycan/lycan_shapeshift_cast.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shapeshift_transform_datadriven"
+			"Target" 		"CASTER"
+			"Duration"		"%transformation_time"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_shapeshift_transform_datadriven"
+		{
+			"IsBuff"		"1"
+			"IsPurgable"	"0"
+
+			"ThinkInterval"  "%transformation_time"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_shapeshift_datadriven"
+					"Target" 		"TARGET"
+					"Duration"		"%duration"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_shapeshift_datadriven"
+		{
+			"IsBuff"		"1"
+			"IsPurgable"	"0"
+
+			"OnCreated"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  	"CASTER"
+						"Radius" 	"GLOBAL"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC"
+					}
+				
+					"Action"    
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_lycan/shapeshift.lua"
+							"Function"		"ShapeshiftHaste"
+							"modifier"		"modifier_shapeshift_haste_datadriven"
+						}
+					}
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_lycan/lycan_shapeshift_buff.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_origin"
+						"TARGET"	"attach_hitloc"
+					}
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_lycan/shapeshift.lua"
+					"Function"				"ModelSwapStart"
+					"model"					"models/heroes/lycan/lycan_wolf.vmdl"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_lycan/shapeshift.lua"
+					"Function"				"HideWearables"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_lycan/lycan_shapeshift_revert.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_lycan/shapeshift.lua"
+					"Function"				"ModelSwapEnd"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"			"heroes/hero_lycan/shapeshift.lua"
+					"Function"				"ShowWearables"
+				}
+			}
+
+			"ThinkInterval"  "%aura_interval"
+			"OnIntervalThink"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  	"CASTER"
+						"Radius" 	"GLOBAL"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC"
+					}
+				
+					"Action"    
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_lycan/shapeshift.lua"
+							"Function"		"ShapeshiftHaste"
+							"modifier"		"modifier_shapeshift_haste_datadriven"
+						}
+					}
+				}
+			}
+
+			"OnAttackStart"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_shapeshift_crit_datadriven"
+					"Target"		"CASTER"
+				}
+
+				"Random"
+				{
+					"Chance"		"%crit_chance"
+					"PseudoRandom"	"DOTA_PSEUDO_RANDOM_LYCAN_CRIT"
+
+					"OnSuccess"
+					{
+						"ApplyModifier"
+						{
+							"ModifierName"	"modifier_shapeshift_crit_datadriven"
+							"Target"		"CASTER"
+						}
+					}
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BONUS_NIGHT_VISION" 		"%bonus_night_vision"
+				"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"		"%speed"
+			}
+		}
+
+		"modifier_shapeshift_crit_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+
+			"OnAttackLanded"
+			// "%attack_damage" is set to the damage value before mitigation
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_shapeshift_crit_datadriven"
+					"Target" 		"CASTER"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
+			}
+		}
+
+		"modifier_shapeshift_haste_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+
+			"EffectName"	"particles/units/heroes/hero_lycan/lycan_shapeshift_buff.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"		"%speed"
+			}
+		}
 	}
 }
 

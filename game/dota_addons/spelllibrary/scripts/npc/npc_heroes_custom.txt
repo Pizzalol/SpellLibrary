@@ -18,6 +18,6 @@
 		"Ability1"	"lycan_summon_wolves_datadriven"
 		"Ability2"	"lycan_howl_datadriven"
 		"Ability3"	"lycan_feral_impulse_datadriven"
-		"Ability4"	"bounty_hunter_track_datadriven"
+		"Ability4"	"lycan_shapeshift_datadriven"
 	}
 }
