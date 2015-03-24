@@ -1,8 +1,7 @@
 // Rewrite of the Lycan Howl
-// Author: chrislotix
-// Date: 22.01.2015.
+// Author: chrislotix, Pizzalol
+// Date: 24.03.2015.
 // NOTE: Wonky cast Howl particle (doesnt play one part)
-
 "lycan_howl_datadriven"
 {
 	// General
@@ -56,10 +55,16 @@
 			"var_type"			"FIELD_INTEGER"
 			"unit_bonus_damage"	"5 10 15 20"
 		}
+		// Extra
 		"04"
 		{
 			"var_type"			"FIELD_INTEGER"
 			"aura_radius"		"9000"
+		}
+		"05"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"think_interval"	"0.5"
 		}
 	}
 
@@ -71,79 +76,114 @@
 			"Target"	"CASTER"
 		}
 
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_howl_hero_datadriven"
-			"Target"		"CASTER"			
-		}
-
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_howl_unit_datadriven"
-			"Target"		"CASTER"
-		}
-
 		"FireEffect"
 		{
 			"EffectName"	"particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf"
-			"EffectAttachType"	"attach_hitloc"
-			"Target"		"CASTER"		
+			"EffectAttachType"	"start_at_customorigin"
+			
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_origin"
+				"CASTER"	"attach_hitloc"
+				"CASTER"	"attach_hitloc"
+			}
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_howl_datadriven"
+			"Target" 		"CASTER"
+			"Duration"		"%howl_duration"
 		}
 	}
 
 	"Modifiers"
 	{
-		"modifier_howl_hero_datadriven"
+		"modifier_howl_datadriven"
 		{
-			"Duration"	"%howl_duration"
-			"IsHidden"	"1"
-		
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
 
-			"Aura"			"modifier_howl_hero_aura_datadriven"
-			"Aura_Radius"	"%aura_radius"
-			"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-			"Aura_Types"	"DOTA_UNIT_TARGET_HERO"
+			"Aura"          	"modifier_howl_hero_datadriven"
+			"Aura_Radius"   	"%aura_radius"
+			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types"    	"DOTA_UNIT_TARGET_HERO"
+			"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
 			"Aura_ApplyToCaster" "1"
+
+			"OnCreated"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  	"CASTER"
+						"Radius" 	"%aura_radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC"
+					}
 				
+					"Action"    
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_lycan/howl.lua"
+							"Function"		"Howl"
+							"modifier"		"modifier_howl_unit_datadriven"
+						}
+					}
+				}
+			}
+
+			"ThinkInterval"  "%think_interval"
+			"OnIntervalThink"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  	"CASTER"
+						"Radius" 	"%aura_radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+						"Types" 	"DOTA_UNIT_TARGET_BASIC"
+					}
+				
+					"Action"    
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_lycan/howl.lua"
+							"Function"		"Howl"
+							"modifier"		"modifier_howl_unit_datadriven"
+						}
+					}
+				}
+			}
 		}
 
-		"modifier_howl_hero_aura_datadriven"
+		"modifier_howl_hero_datadriven"
 		{
 			"IsBuff"	"1"
+
 			"EffectName"	"particles/units/heroes/hero_lycan/lycan_howl_buff.vpcf"
-			"EffectAttachType"	"follow_hitloc"
-			"Target"		"TARGET"	
+			"EffectAttachType"	"attach_attack"
 
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%hero_bonus_damage"
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%hero_bonus_damage" 
 			}
 		}
 
 		"modifier_howl_unit_datadriven"
 		{
-			"Duration"	"%howl_duration"
-			"IsHidden"	"0"
-			
-
-			"Aura"			"modifier_howl_unit_aura_datadriven"
-			"Aura_Radius"	"%aura_radius"
-			"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-			"Aura_Types"	"DOTA_UNIT_TARGET_BASIC"
-
-			
-		}
-
-		"modifier_howl_unit_aura_datadriven"
-		{
-
 			"IsBuff"	"1"
+
 			"EffectName"	"particles/units/heroes/hero_lycan/lycan_howl_buff.vpcf"
-			"EffectAttachType"	"follow_hitloc"	
+			"EffectAttachType"	"attach_attack"
 
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%unit_bonus_damage"
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%unit_bonus_damage" 
 			}
 		}
 	}

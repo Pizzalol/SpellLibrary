@@ -15,8 +15,8 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"skeleton_king_hellfire_blast_datadriven"
-		"Ability2"	"skeleton_king_hellfire_blast"
+		"Ability1"	"lycan_summon_wolves_datadriven"
+		"Ability2"	"lycan_howl_datadriven"
 		"Ability3"	"troll_warlord_fervor_datadriven"
 		"Ability4"	"bounty_hunter_track_datadriven"
 	}
