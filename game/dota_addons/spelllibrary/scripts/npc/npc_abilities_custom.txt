@@ -47571,6 +47571,9 @@
 			
 		}
 	}
+	// Rewrite of the Techies Land Mines ability
+	// Author: Pizzalol
+	// Date: 24.03.2015.
 	"techies_land_mines_datadriven"
 	{
 		// General
@@ -47579,6 +47582,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"techies_land_mines"
 		"AOERadius"						"%small_radius"
 	
 		// Precache
@@ -47642,7 +47646,18 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"fade_time"					"2.0"
-			}		
+			}
+			// Extra
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_radius"				"300"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_duration"			"1.0"
+			}
 		}
 	
 		"OnSpellStart"
@@ -47660,6 +47675,8 @@
 				"Target"		"POINT"
 				"modifier_land_mine"	"modifier_land_mine_datadriven"
 				"modifier_tracker"		"modifier_land_mine_tracker_datadriven"
+				"modifier_caster"		"modifier_land_mine_caster_datadriven"
+				"modifier_land_mine_invisibility"	"modifier_land_mine_invisibility_datadriven"
 			}
 		}
 	
@@ -47672,20 +47689,16 @@
 	
 				"OnDeath"
 				{
-					"FireSound"
+					"CreateThinker"
 					{
-						"EffectName"	"Hero_Techies.LandMine.Detonate"
-						"Target"
-						{
-							"Center"	"UNIT"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-					}
+						"ModifierName"	"modifier_land_mine_thinker"
+						"Target" 		"UNIT"
+					}				
 	
 					"FireEffect"
 					{
 						"EffectName"        "particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"
-						"EffectAttachType"  "follow_origin"
+						"EffectAttachType"  "follow_hitloc"
 						"Target"
 						{
 							"Center"	"UNIT"
@@ -47701,13 +47714,18 @@
 							"Radius" 	"%small_radius"
 							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 						}
 					
 						"Action"    
 						{
 							"Damage"
 							{
-								"Target"		"TARGET"
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+								}
 								"Type"			"DAMAGE_TYPE_PHYSICAL"
 								"Damage"		"%damage / 2"
 							}
@@ -47722,17 +47740,29 @@
 							"Radius" 	"%big_radius"
 							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 						}
 					
 						"Action"    
 						{
 							"Damage"
 							{
-								"Target"		"TARGET"
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+								}
 								"Type"			"DAMAGE_TYPE_PHYSICAL"
 								"Damage"		"%damage / 2"
 							}
 						}
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_techies/land_mines.lua"
+						"Function"		"LandMinesDeath"
+						"modifier_caster"	"modifier_land_mine_caster_datadriven"
 					}
 				}
 	
@@ -47753,7 +47783,45 @@
 				"ThinkInterval"  "0.1"
 				"OnIntervalThink"
 				{
-					// Check units
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_techies/land_mines.lua"
+						"Function"		"LandMinesTracker"
+					}
+				}
+			}
+	
+			"modifier_land_mine_caster_datadriven"
+			{
+				"IsBuff"		"1"
+				"IsPurgable"	"0"
+			}
+	
+			"modifier_land_mine_invisibility_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_land_mine_thinker"
+			{
+				"Duration"	"0.03"
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Techies.LandMine.Detonate"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
 				}
 			}
 		}
