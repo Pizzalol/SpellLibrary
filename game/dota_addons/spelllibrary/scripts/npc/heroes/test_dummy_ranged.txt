@@ -4,7 +4,7 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"lycan_summon_wolves_datadriven"
+	"Ability1"	"techies_land_mines_datadriven"
 	"Ability2"	"lycan_howl_datadriven"
 	"Ability3"	"lycan_feral_impulse_datadriven"
 	"Ability4"	"lycan_shapeshift_datadriven"

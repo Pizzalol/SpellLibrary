@@ -7350,7 +7350,6 @@
 	// Rewrite of the Broodmother Spawn Spiderlings ability
 	// Author: Pizzalol
 	// Date: 14.01.2015.
-	// NOTE: Spawn effect and sound will play for every spiderling
 	// NOTE2: ------------------ Uses the normal dota spiderlings NOT custom ones -----------------
 	"broodmother_spawn_spiderlings_datadriven"
 	{
@@ -7473,6 +7472,27 @@
 	
 				"OnDeath"
 				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Broodmother.SpawnSpiderlings"
+						"Target"
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+	
 					"SpawnUnit"
 					{
 						"UnitName"	"npc_dota_broodmother_spiderling"
@@ -7492,19 +7512,6 @@
 								"ModifierName"	"modifier_phased"
 								"Target"		"TARGET"
 								"Duration"		"0.03"
-							}
-	
-							"FireSound"
-							{
-								"EffectName"	"Hero_Broodmother.SpawnSpiderlings"
-								"Target"		"TARGET"
-							}
-	
-							"FireEffect"
-							{
-								"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
-								"EffectAttachType"	"attach_origin"
-								"Target"		"TARGET"
 							}
 						}
 	
@@ -27810,6 +27817,8 @@
 				"IsBuff"		"1"
 				"IsPurgable"	"0"
 	
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+	
 				"OnCreated"
 				{
 					"ActOnTargets"
@@ -47570,6 +47579,17 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AOERadius"						"%small_radius"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"		
+			"particle"		"particles/units/heroes/hero_techies/techies_land_mine.vpcf"
+			"particle"		"particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"
+			"model"			"models/heroes/techies/fx_techiesfx_mine.vmdl"	
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -47623,6 +47643,119 @@
 				"var_type"					"FIELD_FLOAT"
 				"fade_time"					"2.0"
 			}		
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Techies.LandMine.Plant"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_techies/land_mines.lua"
+				"Function"		"LandMinesPlant"
+				"Target"		"POINT"
+				"modifier_land_mine"	"modifier_land_mine_datadriven"
+				"modifier_tracker"		"modifier_land_mine_tracker_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_land_mine_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"OnDeath"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Techies.LandMine.Detonate"
+						"Target"
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+	
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"UNIT"
+							"Radius" 	"%small_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+						}
+					
+						"Action"    
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Type"			"DAMAGE_TYPE_PHYSICAL"
+								"Damage"		"%damage / 2"
+							}
+						}
+					}
+	
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"UNIT"
+							"Radius" 	"%big_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+						}
+					
+						"Action"    
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Type"			"DAMAGE_TYPE_PHYSICAL"
+								"Damage"		"%damage / 2"
+							}
+						}
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_land_mine_tracker_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"EffectName"	"particles/units/heroes/hero_techies/techies_land_mine.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"ThinkInterval"  "0.1"
+				"OnIntervalThink"
+				{
+					// Check units
+				}
+			}
 		}
 	}
 	

@@ -1,7 +1,6 @@
 // Rewrite of the Broodmother Spawn Spiderlings ability
 // Author: Pizzalol
 // Date: 14.01.2015.
-// NOTE: Spawn effect and sound will play for every spiderling
 // NOTE2: ------------------ Uses the normal dota spiderlings NOT custom ones -----------------
 "broodmother_spawn_spiderlings_datadriven"
 {
@@ -124,6 +123,27 @@
 
 			"OnDeath"
 			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Broodmother.SpawnSpiderlings"
+					"Target"
+					{
+						"Center"	"UNIT"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+				}
+
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"
+					{
+						"Center"	"UNIT"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+				}
+
 				"SpawnUnit"
 				{
 					"UnitName"	"npc_dota_broodmother_spiderling"
@@ -143,19 +163,6 @@
 							"ModifierName"	"modifier_phased"
 							"Target"		"TARGET"
 							"Duration"		"0.03"
-						}
-
-						"FireSound"
-						{
-							"EffectName"	"Hero_Broodmother.SpawnSpiderlings"
-							"Target"		"TARGET"
-						}
-
-						"FireEffect"
-						{
-							"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
-							"EffectAttachType"	"attach_origin"
-							"Target"		"TARGET"
 						}
 					}
 

@@ -124,6 +124,8 @@
 			"IsBuff"		"1"
 			"IsPurgable"	"0"
 
+			"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+
 			"OnCreated"
 			{
 				"ActOnTargets"
