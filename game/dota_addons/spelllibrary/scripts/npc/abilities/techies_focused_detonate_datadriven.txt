@@ -1,10 +1,16 @@
+// Rewrite of the Techies Focused Detonate ability
+// Author: Pizzalol
+// Date: 25.03.2015.
+// NOTE: THIS ABILITY IS USED WITH techies_remote_mines_datadriven 
 "techies_focused_detonate_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityTextureName"			"techies_focused_detonate"
+	"AOERadius"						"%radius"	
 	
 	"AbilityCastRange"				"0"
 	"MaxLevel"				"1"
@@ -18,8 +24,17 @@
 		"01"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"radius"				"700"
+			"radius"					"700"
+		}		
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_techies/remote_mines.lua"
+			"Function"		"RemoteMinesFocusedDetonate"
+			"Target"		"POINT"
 		}
-		
 	}
 }

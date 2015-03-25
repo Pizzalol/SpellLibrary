@@ -47546,13 +47546,19 @@
 		}
 	}
 	
+	// Rewrite of the Techies Focused Detonate ability
+	// Author: Pizzalol
+	// Date: 25.03.2015.
+	// NOTE: THIS ABILITY IS USED WITH techies_remote_mines_datadriven 
 	"techies_focused_detonate_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"techies_focused_detonate"
+		"AOERadius"						"%radius"	
 		
 		"AbilityCastRange"				"0"
 		"MaxLevel"				"1"
@@ -47566,9 +47572,18 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"				"700"
+				"radius"					"700"
+			}		
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_techies/remote_mines.lua"
+				"Function"		"RemoteMinesFocusedDetonate"
+				"Target"		"POINT"
 			}
-			
 		}
 	}
 	// Rewrite of the Techies Land Mines ability
@@ -47827,6 +47842,12 @@
 		}
 	}
 	
+	// Rewrite of the Techies Remote Mines ability
+	// Author: Pizzalol
+	// Date: 25.03.2015.
+	// NOTE: THIS ABILITY REQUIRES THE FOLLOWING ABILITIES
+	// "techies_focused_detonate_datadriven"
+	// "techies_remote_mines_self_detonate_datadriven"
 	"techies_remote_mines_datadriven"
 	{
 		// General
@@ -47836,6 +47857,18 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"techies_remote_mines"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"		
+			"particle"		"particles/units/heroes/hero_techies/techies_remote_mine.vpcf"
+			"particle"		"particles/units/heroes/hero_techies/techies_remote_mine_plant.vpcf"
+			"particle"		"particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
+			"model"			"models/heroes/techies/fx_techies_remotebomb.vmdl"	
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -47915,16 +47948,157 @@
 				"model_scale"				"0 10 20"     // Percentage over model scale
 			}
 		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_techies/remote_mines.lua"
+				"Function"		"RemoteMinesUpgrade"
+				"ability_name"	"techies_focused_detonate_datadriven"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Techies.RemoteMine.Toss"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Techies.RemoteMine.Plant"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_techies/remote_mines.lua"
+				"Function"		"RemoteMinesPlant"
+				"Target"		"POINT"
+				"modifier_remote_mine"	"modifier_remote_mine_datadriven"
+				"modifier_remote_mine_invisibility"	"modifier_remote_mine_invisibility_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_remote_mine_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_techies/techies_remote_mine.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+					}
+				}
+	
+				"OnDeath"
+				{
+					"CreateThinker"
+					{
+						"ModifierName"	"modifier_remote_mine_thinker"
+						"Target" 		"UNIT"
+					}				
+	
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
+						"EffectAttachType"  "follow_hitloc"
+						"Target"
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+	
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"UNIT"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					
+						"Action"    
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+								"Damage"		"%damage"
+							}
+						}
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_techies/remote_mines.lua"
+						"Function"		"RemoteMinesDeath"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_remote_mine_invisibility_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_remote_mine_thinker"
+			{
+				"Duration"	"0.03"
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Techies.RemoteMine.Detonate"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	
+	// Rewrite of the Techies Remote Mines Self Detonate ability
+	// Author: Pizzalol
+	// Date: 25.03.2015.
+	// NOTE: THIS ABILITY IS USED WITH techies_remote_mines_datadriven 
 	"techies_remote_mines_self_detonate_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"techies_remote_mines_self_detonate"
 		
 		"AbilityCastRange"				"0"
 		"MaxLevel"						"1"
@@ -47938,6 +48112,15 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"400 410 425"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_techies/remote_mines.lua"
+				"Function"		"RemoteMinesSelfDetonate"
 			}
 		}
 	}

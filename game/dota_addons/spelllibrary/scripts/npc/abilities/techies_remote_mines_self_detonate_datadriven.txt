@@ -1,10 +1,15 @@
+// Rewrite of the Techies Remote Mines Self Detonate ability
+// Author: Pizzalol
+// Date: 25.03.2015.
+// NOTE: THIS ABILITY IS USED WITH techies_remote_mines_datadriven 
 "techies_remote_mines_self_detonate_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityTextureName"			"techies_remote_mines_self_detonate"
 	
 	"AbilityCastRange"				"0"
 	"MaxLevel"						"1"
@@ -18,6 +23,15 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"radius"					"400 410 425"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_techies/remote_mines.lua"
+			"Function"		"RemoteMinesSelfDetonate"
 		}
 	}
 }
