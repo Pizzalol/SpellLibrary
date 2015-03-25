@@ -44,28 +44,30 @@ function AphoticShieldAbsorb( event )
 	print("Shield Remaining: "..shield_remaining)
 	print("Damage Taken pre Absorb: "..damage)
 
-	-- If the damage is bigger than what the shield can absorb, heal a portion
-	if damage > shield_remaining then
-		local newHealth = unit.OldHealth - damage + shield_remaining
-		print("Old Health: "..unit.OldHealth.." - New Health: "..newHealth.." - Absorbed: "..shield_remaining)
-		unit:SetHealth(newHealth)
-	else
-		local newHealth = unit.OldHealth			
-		unit:SetHealth(newHealth)
-		print("Old Health: "..unit.OldHealth.." - New Health: "..newHealth.." - Absorbed: "..damage)
-	end
+	if not unit:HasModifier("modifier_borrowed_time") then
+		-- If the damage is bigger than what the shield can absorb, heal a portion
+		if damage > shield_remaining then
+			local newHealth = unit.OldHealth - damage + shield_remaining
+			print("Old Health: "..unit.OldHealth.." - New Health: "..newHealth.." - Absorbed: "..shield_remaining)
+			unit:SetHealth(newHealth)
+		else
+			local newHealth = unit.OldHealth			
+			unit:SetHealth(newHealth)
+			print("Old Health: "..unit.OldHealth.." - New Health: "..newHealth.." - Absorbed: "..damage)
+		end
 
-	-- Reduce the shield remaining and remove
-	unit.AphoticShieldRemaining = unit.AphoticShieldRemaining-damage
-	if unit.AphoticShieldRemaining <= 0 then
-		unit.AphoticShieldRemaining = nil
-		unit:RemoveModifierByName("modifier_aphotic_shield")
-		print("--Shield removed--")
-	end
+		-- Reduce the shield remaining and remove
+		unit.AphoticShieldRemaining = unit.AphoticShieldRemaining-damage
+		if unit.AphoticShieldRemaining <= 0 then
+			unit.AphoticShieldRemaining = nil
+			unit:RemoveModifierByName("modifier_aphotic_shield")
+			print("--Shield removed--")
+		end
 
-	if unit.AphoticShieldRemaining then
-		print("Shield Remaining after Absorb: "..unit.AphoticShieldRemaining)
-		print("---------------")
+		if unit.AphoticShieldRemaining then
+			print("Shield Remaining after Absorb: "..unit.AphoticShieldRemaining)
+			print("---------------")
+		end
 	end
 
 end
