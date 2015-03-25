@@ -44,6 +44,7 @@ function AphoticShieldAbsorb( event )
 	print("Shield Remaining: "..shield_remaining)
 	print("Damage Taken pre Absorb: "..damage)
 
+	-- Check if the unit has the borrowed time modifier
 	if not unit:HasModifier("modifier_borrowed_time") then
 		-- If the damage is bigger than what the shield can absorb, heal a portion
 		if damage > shield_remaining then

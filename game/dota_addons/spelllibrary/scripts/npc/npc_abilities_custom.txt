@@ -47949,6 +47949,19 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN | DOTA_ABILITY_BEHAVIOR_AOE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"techies_stasis_trap"
+		"AOERadius"						"%activation_radius"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"		
+			"particle"		"particles/units/heroes/hero_techies/techies_stasis_trap_plant.vpcf"
+			"particle"		"particles/units/heroes/hero_techies/techies_stasis_trap_beams.vpcf"
+			"particle"		"particles/units/heroes/hero_techies/techies_stasis_trap_explode.vpcf"
+			"model"			"models/heroes/techies/fx_techiesfx_stasis.vmdl"	
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -48001,6 +48014,26 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"360.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Techies.StasisTrap.Plant"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_techies/stasis_trap.lua"
+				"Function"		"StasisTrapPlant"
+				"Target"		"POINT"
+				"modifier_land_mine"	"modifier_land_mine_datadriven"
+				"modifier_tracker"		"modifier_land_mine_tracker_datadriven"
+				"modifier_caster"		"modifier_land_mine_caster_datadriven"
+				"modifier_land_mine_invisibility"	"modifier_land_mine_invisibility_datadriven"
 			}
 		}
 	}
