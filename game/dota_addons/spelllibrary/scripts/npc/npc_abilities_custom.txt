@@ -47942,6 +47942,9 @@
 		}
 	}
 	
+	// Rewrite of the Techies Stasis Trap ability
+	// Author: Pizzalol
+	// Date: 25.03.2015.
 	"techies_stasis_trap_datadriven"
 	{
 		// General
