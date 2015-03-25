@@ -22,6 +22,6 @@ function ReapersScythe( keys )
 
 	-- Checking if target is alive to decide if it needs to increase respawn time
 	if not target:IsAlive() then
-		target:SetTimeUntilRespawn(target:GetTimeUntilRespawn() + respawn_time)
+		target:SetTimeUntilRespawn(target:GetRespawnTime() + respawn_time)
 	end
 end

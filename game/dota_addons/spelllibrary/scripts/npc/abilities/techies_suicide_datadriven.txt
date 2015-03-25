@@ -1,3 +1,6 @@
+// Rewrite of the Techies Suicide ability
+// Author: Pizzalol
+// Date: 25.03.2015.
 "techies_suicide_datadriven"
 {
 	// General
@@ -10,6 +13,14 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"techies_suicide"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"		
+		"particle"		"particles/units/heroes/hero_techies/techies_suicide_base.vpcf"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -58,6 +69,104 @@
 			"var_type"				"FIELD_INTEGER"
 			"respawn_time_percentage_tooltip"		"50"
 		}
+		// Extra
+		"07"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"vision_radius"				"400"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"vision_duration"			"2.0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Techies.Suicide"
+			"Target" 		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_techies/techies_suicide_base.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+		}
+
+		"DestroyTrees"
+		{
+			"Target" 		"CASTER"
+			"Radius"		"%big_radius"
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"  	"CASTER"
+				"Radius" 	"%small_radius"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+		
+			"Action"    
+			{
+				"Damage"
+				{
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					}
+					"Type"			"DAMAGE_TYPE_PHYSICAL"
+					"Damage"		"%damage - %partial_damage"
+				}
+			}
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"  	"CASTER"
+				"Radius" 	"%big_radius"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+		
+			"Action"    
+			{
+				"Damage"
+				{
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					}
+					"Type"			"DAMAGE_TYPE_PHYSICAL"
+					"Damage"		"%partial_damage"
+				}
+			}
+		}
+
+		"DelayedAction"
+		{
+			"Delay"     "0.03"
+			"Action"    
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_techies/suicide.lua"
+					"Function"		"Suicide"
+				}
+			}
+		}	
 	}
 }
 
