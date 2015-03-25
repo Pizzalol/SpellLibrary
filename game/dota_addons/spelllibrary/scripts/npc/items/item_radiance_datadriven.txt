@@ -77,7 +77,7 @@
 			
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
 			}
 		}
 		"modifier_item_radiance_datadriven_aura_emitter"
