@@ -47958,8 +47958,9 @@
 		{
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"		
 			"particle"		"particles/units/heroes/hero_techies/techies_stasis_trap_plant.vpcf"
-			"particle"		"particles/units/heroes/hero_techies/techies_stasis_trap_beams.vpcf"
+			"particle"		"particles/units/heroes/hero_techies/techies_stasis_trap_apear.vpcf"
 			"particle"		"particles/units/heroes/hero_techies/techies_stasis_trap_explode.vpcf"
+			"particle"		"particles/status_fx/status_effect_techies_stasis.vpcf"
 			"model"			"models/heroes/techies/fx_techiesfx_stasis.vmdl"	
 		}
 	
@@ -48015,9 +48016,20 @@
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"360.0"
 			}
+			// Extra
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_radius"				"300"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_duration"			"1.0"
+			}
 		}
 	
-		"OnSpellStart"
+		"OnAbilityPhaseStart"
 		{
 			"FireSound"
 			{
@@ -48025,15 +48037,170 @@
 				"Target" 		"CASTER"
 			}
 	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_techies/techies_stasis_trap_plant.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				"TargetPoint"            "POINT"
+	
+				"ControlPoints"
+				{
+					"01"	"POINT"
+				}
+			}
+		}
+	
+		"OnSpellStart"
+		{
 			"RunScript"
 			{
 				"ScriptFile"	"heroes/hero_techies/stasis_trap.lua"
 				"Function"		"StasisTrapPlant"
 				"Target"		"POINT"
-				"modifier_land_mine"	"modifier_land_mine_datadriven"
-				"modifier_tracker"		"modifier_land_mine_tracker_datadriven"
-				"modifier_caster"		"modifier_land_mine_caster_datadriven"
-				"modifier_land_mine_invisibility"	"modifier_land_mine_invisibility_datadriven"
+				"modifier_stasis_trap"	"modifier_stasis_trap_datadriven"
+				"modifier_tracker"		"modifier_stasis_trap_tracker_datadriven"
+				"modifier_stasis_trap_invisibility"	"modifier_stasis_trap_invisibility_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_stasis_trap_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_techies/techies_stasis_trap_apear.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+	
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_hitloc"
+							"TARGET"	"attach_hitloc"
+							"TARGET"	"attach_hitloc"
+							"TARGET"	"attach_hitloc"
+						}
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_stasis_trap_tracker_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"ThinkInterval"  "0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_techies/stasis_trap.lua"
+						"Function"		"StasisTrapTracker"
+						"modifier_trigger"	"modifier_stasis_trap_trigger_datadriven"
+					}
+				}
+			}
+	
+			"modifier_stasis_trap_invisibility_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_stasis_trap_trigger_datadriven"
+			{
+				"OnCreated"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%stun_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					
+						"Action"    
+						{
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_stasis_trap_stun_datadriven"
+								"Target" 		"TARGET"
+								"Duration"		"%stun_duration"
+							}
+						}
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_techies/techies_stasis_trap_explode.vpcf"
+						"EffectAttachType"  "follow_hitloc"
+						"Target"            "TARGET"
+	
+						"ControlPoints"
+						{
+							"01"	"%stun_radius 0 0"
+						}
+					}
+	
+					"CreateThinker"
+					{
+						"ModifierName"	"modifier_stasis_trap_thinker"
+						"Target" 		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_techies/stasis_trap.lua"
+						"Function"		"StasisTrapRemove"
+					}
+				}
+			}
+	
+			"modifier_stasis_trap_stun_datadriven"
+			{
+				"IsDebuff"	"1"
+	
+				"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_techies_stasis.vpcf"
+				"StatusEffectPriority"	"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FROZEN"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_stasis_trap_thinker"
+			{
+				"Duration"	"0.03"
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Techies.StasisTrap.Stun"
+						"Target" 		"TARGET"
+					}
+				}
 			}
 		}
 	}
