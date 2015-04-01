@@ -2,11 +2,10 @@
 {
 	"override_hero" "npc_dota_hero_ancient_apparition"
 
-	"AbilityLayout"	"5"
+	"AbilityLayout"	"4"
 
 	"Ability1"	"techies_land_mines_datadriven"
 	"Ability2"	"techies_stasis_trap_datadriven"
-	"Ability3"	"techies_suicide_datadriven"
+	"Ability3"	"dark_seer_surge_datadriven"
 	"Ability4"	"techies_focused_detonate_datadriven"
-	"Ability5"	"techies_remote_mines_datadriven"
 }

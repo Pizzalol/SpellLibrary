@@ -9992,6 +9992,9 @@
 		}
 	}
 	
+	// Rewrite of the Dark Seer Surge ability
+	// Author: Pizzalol
+	// Date: 01.04.2015.
 	"dark_seer_surge_datadriven"
 	{
 		// General
@@ -10001,6 +10004,15 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"  
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"AbilityTextureName"			"dark_seer_surge"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -10027,6 +10039,44 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"3.0 4.5 6.0 7.5"
+			}
+			// Extra
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_speed"			"522"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Dark_Seer.Surge"
+				"Target" 		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_surge_datadriven"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_surge_datadriven"
+			{
+				"IsBuff"		"1"
+		
+				"EffectName"		"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+				"EffectAttachType"	"follow_hitloc"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE" 	"%move_speed"
+				}
 			}
 		}
 	}
@@ -47770,7 +47820,7 @@
 								"Type"			"DAMAGE_TYPE_PHYSICAL"
 								"Damage"		"%damage / 2"
 							}
-						}
+						}					
 					}
 	
 					"RunScript"
@@ -47784,6 +47834,7 @@
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 	

@@ -182,7 +182,7 @@
 							"Type"			"DAMAGE_TYPE_PHYSICAL"
 							"Damage"		"%damage / 2"
 						}
-					}
+					}					
 				}
 
 				"RunScript"
@@ -196,6 +196,7 @@
 			"States"
 			{
 				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
 
