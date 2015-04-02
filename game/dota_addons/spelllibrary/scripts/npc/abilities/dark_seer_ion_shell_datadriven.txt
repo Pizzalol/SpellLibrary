@@ -1,3 +1,6 @@
+// Rewrite of the Dark Seer Ion Shell ability
+// Author: Pizzalol
+// Date: 02.04.2015.
 "dark_seer_ion_shell_datadriven"
 {
 	// General
@@ -11,6 +14,15 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"dark_seer_ion_shell"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+		"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf"
+		"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell_damage.vpcf"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -47,6 +59,82 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"duration"				"20"
+		}
+		// Extra
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"think_interval"		"0.1"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_ion_shell_datadriven"
+			"Target" 		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_ion_shell_datadriven"
+			"Target" 		"TARGET"
+			"Duration"		"%duration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_ion_shell_datadriven"
+		{
+			"IsBuff"		"1"
+			"IsPurgable"	"0"
+	
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Dark_Seer.Ion_Shield_Start"
+					"Target" 		"TARGET"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf"
+					"EffectAttachType"  "attach_hitloc"
+					"Target"            "TARGET"
+
+					"ControlPoints"
+					{
+						"01"	"100 100 100"
+					}
+				}
+			}
+
+			"OnDestroy"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Dark_Seer.Ion_Shield_end"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+				}
+			}
+
+			"ThinkInterval"  "%think_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_dark_seer/ion_shell.lua"
+					"Function"		"IonShell"
+					"ion_particle"	"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell_damage.vpcf"
+				}
+			}
 		}
 	}
 }

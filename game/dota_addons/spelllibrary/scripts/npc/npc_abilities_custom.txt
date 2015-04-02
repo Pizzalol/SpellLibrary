@@ -9939,6 +9939,9 @@
 			}
 		}
 	}
+	// Rewrite of the Dark Seer Ion Shell ability
+	// Author: Pizzalol
+	// Date: 02.04.2015.
 	"dark_seer_ion_shell_datadriven"
 	{
 		// General
@@ -9952,6 +9955,15 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"dark_seer_ion_shell"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf"
+			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell_damage.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -9988,6 +10000,82 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"20"
+			}
+			// Extra
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"think_interval"		"0.1"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_ion_shell_datadriven"
+				"Target" 		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_ion_shell_datadriven"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_ion_shell_datadriven"
+			{
+				"IsBuff"		"1"
+				"IsPurgable"	"0"
+		
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Dark_Seer.Ion_Shield_Start"
+						"Target" 		"TARGET"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf"
+						"EffectAttachType"  "attach_hitloc"
+						"Target"            "TARGET"
+	
+						"ControlPoints"
+						{
+							"01"	"100 100 100"
+						}
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Dark_Seer.Ion_Shield_end"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+				}
+	
+				"ThinkInterval"  "%think_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_dark_seer/ion_shell.lua"
+						"Function"		"IonShell"
+						"ion_particle"	"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell_damage.vpcf"
+					}
+				}
 			}
 		}
 	}
@@ -20593,24 +20681,32 @@
 		}
 	}
 	
+	// Rewrite of one of Invoker's empty slots
+	// Author: Rook
+	// Date: April 02, 2015
+	
 	"invoker_empty1_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"0"
+		"AbilityTextureName" 			"rubick_empty1"
 	}
+	// Rewrite of one of Invoker's empty slots
+	// Author: Rook
+	// Date: April 02, 2015
 	
 	"invoker_empty2_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"0"
+		"AbilityTextureName" 			"rubick_empty1"
 	}
-	
 	"invoker_emp_datadriven"
 	{
 		// General
@@ -20658,18 +20754,28 @@
 		}
 	}
 	
+	// Rewrite of Exort
+	// Author: Rook
+	// Date: April 02, 2015
+	
 	"invoker_exort_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName" 			"invoker_exort"
 		"MaxLevel"						"7"
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"0"
+		
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf"
+		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -20686,8 +20792,62 @@
 				"bonus_intelligence"		"2 4 6 8 10 12 14"
 			}
 		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"						"heroes/hero_invoker/exort.lua"
+				"Function"							"invoker_exort_datadriven_on_spell_start"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"						"heroes/hero_invoker/exort.lua"
+				"Function"							"invoker_replace_orb_modifiers"
+			}
+		}
+		
+		"OnOwnerSpawned"
+		{
+			"RunScript"
+			{
+				"ScriptFile"						"heroes/hero_invoker/exort.lua"
+				"Function"							"invoker_replace_orb_modifiers"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_invoker_exort_datadriven"
+			{
+				"Passive"  			"1"
+				"IsHidden" 			"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
+				}
+			}
+			"modifier_invoker_exort_datadriven_instance"
+			{
+				"Passive"  			"0"
+				"IsHidden" 			"0"
+				"IsBuff"			"1"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage_per_instance"
+				}
+			}
+		}
 	}
-	
 	"invoker_forge_spirit_datadriven"
 	{
 		// General
@@ -20863,21 +21023,36 @@
 		}
 	}
 	
+	// Rewrite of Invoke
+	// Author: Rook
+	// Date: April 02, 2015
+	// Known bugs:
+	//     Invoke's Aghanim's Scepter upgrade is unimplemented.  Presumably, a second version of Invoke would
+	//         need to be created, and a modifier would regularly check whether the Invoke spell on Invoker should
+	//         be swapped to the other version.
+	
 	"invoker_invoke_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName" 			"invoker_invoke"
 		"MaxLevel"						"4"
-		"LevelsBetweenUpgrades"					"5"
-		"RequiredLevel"						"2"
-	
+		"LevelsBetweenUpgrades"			"5"
+		"RequiredLevel"					"2"
+		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"22 17 12 5"
 		"AbilityManaCost"				"20 40 60 80"
+		
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_invoke.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -20886,7 +21061,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_invoked_spells"		"2 2 2 2"
+				"max_invoked_spells"		"2 2 2 2"  //The only supported values are 0, 1, and 2.
 			}
 			"02"
 			{
@@ -20899,20 +21074,39 @@
 				"mana_cost_scepter"			"0"
 			}
 		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"						"heroes/hero_invoker/invoke.lua"
+				"Function"							"invoker_invoke_datadriven_on_spell_start"
+				"MaxInvokedSpells"					"%max_invoked_spells"
+			}
+		}
 	}
+	// Rewrite of Quas
+	// Author: Rook
+	// Date: April 02, 2015
 	
 	"invoker_quas_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName" 			"invoker_quas"
 		"MaxLevel"						"7"
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"0"
+		
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf"
+		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -20929,8 +21123,62 @@
 				"bonus_strength"			"2 4 6 8 10 12 14"
 			}
 		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"						"heroes/hero_invoker/quas.lua"
+				"Function"							"invoker_quas_datadriven_on_spell_start"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"						"heroes/hero_invoker/quas.lua"
+				"Function"							"invoker_replace_orb_modifiers"
+			}
+		}
+		
+		"OnOwnerSpawned"
+		{
+			"RunScript"
+			{
+				"ScriptFile"						"heroes/hero_invoker/quas.lua"
+				"Function"							"invoker_replace_orb_modifiers"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_invoker_quas_datadriven"
+			{
+				"Passive"  			"1"
+				"IsHidden" 			"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+				}
+			}
+			"modifier_invoker_quas_datadriven_instance"
+			{
+				"Passive"  			"0"
+				"IsHidden" 			"0"
+				"IsBuff"			"1"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen_per_instance"
+				}
+			}
+		}
 	}
-	
 	"invoker_sun_strike_datadriven"
 	{
 		// General
@@ -21058,18 +21306,28 @@
 		}
 	}
 	
+	// Rewrite of Wex
+	// Author: Rook
+	// Date: April 02, 2015
+	
 	"invoker_wex_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName" 			"invoker_wex"
 		"MaxLevel"						"7"
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"0"
+		
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf"
+		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -21091,8 +21349,63 @@
 				"bonus_agility"				"2 4 6 8 10 12 14"
 			}
 		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"						"heroes/hero_invoker/wex.lua"
+				"Function"							"invoker_wex_datadriven_on_spell_start"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"						"heroes/hero_invoker/wex.lua"
+				"Function"							"invoker_replace_orb_modifiers"
+			}
+		}
+		
+		"OnOwnerSpawned"
+		{
+			"RunScript"
+			{
+				"ScriptFile"						"heroes/hero_invoker/wex.lua"
+				"Function"							"invoker_replace_orb_modifiers"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_invoker_wex_datadriven"
+			{
+				"Passive"  			"1"
+				"IsHidden" 			"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agility"
+				}
+			}
+			"modifier_invoker_wex_datadriven_instance"
+			{
+				"Passive"  			"0"
+				"IsHidden" 			"0"
+				"IsBuff"			"1"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_speed_per_instance"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_speed_per_instance"
+				}
+			}
+		}
 	}
-	
 	// Author: Ractidous
 	// Date: 26.01.2015.
 	// NOTE: This ability requires Jakiro Dual Breath Fiery (datadriven version) for full functionality
@@ -47834,7 +48147,6 @@
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 	

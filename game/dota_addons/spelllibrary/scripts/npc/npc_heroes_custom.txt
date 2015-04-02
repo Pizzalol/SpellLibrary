@@ -16,7 +16,7 @@
 		"AbilityLayout"	"4"
 	
 		"Ability1"	"techies_land_mines_datadriven"
-		"Ability2"	"techies_stasis_trap_datadriven"
+		"Ability2"	"dark_seer_ion_shell_datadriven"
 		"Ability3"	"dark_seer_surge_datadriven"
 		"Ability4"	"techies_focused_detonate_datadriven"
 	}
