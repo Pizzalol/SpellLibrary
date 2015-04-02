@@ -1,15 +1,25 @@
+// Rewrite of Exort
+// Author: Rook
+// Date: April 02, 2015
+
 "invoker_exort_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityTextureName" 			"invoker_exort"
 	"MaxLevel"						"7"
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCooldown"				"0"
 	"AbilityManaCost"				"0"
+	
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf"
+	}
 	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -26,5 +36,59 @@
 			"bonus_intelligence"		"2 4 6 8 10 12 14"
 		}
 	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"						"heroes/hero_invoker/exort.lua"
+			"Function"							"invoker_exort_datadriven_on_spell_start"
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"						"heroes/hero_invoker/exort.lua"
+			"Function"							"invoker_replace_orb_modifiers"
+		}
+	}
+	
+	"OnOwnerSpawned"
+	{
+		"RunScript"
+		{
+			"ScriptFile"						"heroes/hero_invoker/exort.lua"
+			"Function"							"invoker_replace_orb_modifiers"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_invoker_exort_datadriven"
+		{
+			"Passive"  			"1"
+			"IsHidden" 			"1"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
+			}
+		}
+		"modifier_invoker_exort_datadriven_instance"
+		{
+			"Passive"  			"0"
+			"IsHidden" 			"0"
+			"IsBuff"			"1"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage_per_instance"
+			}
+		}
+	}
 }
-

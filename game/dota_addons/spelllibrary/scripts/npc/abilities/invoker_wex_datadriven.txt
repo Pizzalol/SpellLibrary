@@ -1,15 +1,25 @@
+// Rewrite of Wex
+// Author: Rook
+// Date: April 02, 2015
+
 "invoker_wex_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityTextureName" 			"invoker_wex"
 	"MaxLevel"						"7"
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCooldown"				"0"
 	"AbilityManaCost"				"0"
+	
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf"
+	}
 	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -31,5 +41,60 @@
 			"bonus_agility"				"2 4 6 8 10 12 14"
 		}
 	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"						"heroes/hero_invoker/wex.lua"
+			"Function"							"invoker_wex_datadriven_on_spell_start"
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"						"heroes/hero_invoker/wex.lua"
+			"Function"							"invoker_replace_orb_modifiers"
+		}
+	}
+	
+	"OnOwnerSpawned"
+	{
+		"RunScript"
+		{
+			"ScriptFile"						"heroes/hero_invoker/wex.lua"
+			"Function"							"invoker_replace_orb_modifiers"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_invoker_wex_datadriven"
+		{
+			"Passive"  			"1"
+			"IsHidden" 			"1"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agility"
+			}
+		}
+		"modifier_invoker_wex_datadriven_instance"
+		{
+			"Passive"  			"0"
+			"IsHidden" 			"0"
+			"IsBuff"			"1"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_speed_per_instance"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_speed_per_instance"
+			}
+		}
+	}
 }
-

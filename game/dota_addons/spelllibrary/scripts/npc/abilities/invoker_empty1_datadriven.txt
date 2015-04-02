@@ -1,9 +1,13 @@
+// Rewrite of one of Invoker's empty slots
+// Author: Rook
+// Date: April 02, 2015
+
 "invoker_empty1_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 	"MaxLevel"						"0"
+	"AbilityTextureName" 			"rubick_empty1"
 }
-
