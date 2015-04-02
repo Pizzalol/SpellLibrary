@@ -1,18 +1,33 @@
+// Rewrite of Invoke
+// Author: Rook
+// Date: April 02, 2015
+// Known bugs:
+//     Invoke's Aghanim's Scepter upgrade is unimplemented.  Presumably, a second version of Invoke would
+//         need to be created, and a modifier would regularly check whether the Invoke spell on Invoker should
+//         be swapped to the other version.
+
 "invoker_invoke_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityTextureName" 			"invoker_invoke"
 	"MaxLevel"						"4"
-	"LevelsBetweenUpgrades"					"5"
-	"RequiredLevel"						"2"
-
+	"LevelsBetweenUpgrades"			"5"
+	"RequiredLevel"					"2"
+	
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCooldown"				"22 17 12 5"
 	"AbilityManaCost"				"20 40 60 80"
+	
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_invoker/invoker_invoke.vpcf"
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+	}
 	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -21,7 +36,7 @@
 		"01"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"max_invoked_spells"		"2 2 2 2"
+			"max_invoked_spells"		"2 2 2 2"  //The only supported values are 0, 1, and 2.
 		}
 		"02"
 		{
@@ -34,5 +49,14 @@
 			"mana_cost_scepter"			"0"
 		}
 	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"						"heroes/hero_invoker/invoke.lua"
+			"Function"							"invoker_invoke_datadriven_on_spell_start"
+			"MaxInvokedSpells"					"%max_invoked_spells"
+		}
+	}
 }
-
