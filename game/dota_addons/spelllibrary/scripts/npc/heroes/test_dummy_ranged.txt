@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"dark_seer_vacuum_datadriven"
-	"Ability2"	"dark_seer_ion_shell_datadriven"
-	"Ability3"	"dark_seer_surge_datadriven"
-	"Ability4"	"techies_focused_detonate_datadriven"
+	"Ability1"	"luna_lucent_beam_datadriven"
+	"Ability2"	"luna_moon_glaive_datadriven"
+	"Ability3"	"luna_lunar_blessing_datadriven"
+	"Ability4"	"luna_eclipse_datadriven"
 }

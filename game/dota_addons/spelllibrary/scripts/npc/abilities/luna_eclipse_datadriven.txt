@@ -1,3 +1,6 @@
+// Rewrite of the Luna Eclipse ability
+// Author: jacklarnes
+// Date: 03.04.2015.
 "luna_eclipse_datadriven"
 {
 	// General
@@ -9,6 +12,15 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"luna_eclipse"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
+		"particle"			"particles/units/heroes/hero_luna/luna_eclipse_impact.vpcf"
+		"particle"			"particles/units/heroes/hero_luna/luna_eclipse.vpcf"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -65,6 +77,41 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"duration_tooltip_scepter"	"1.8 4.2 6.6"
+		}
+		// Extra
+		"09"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"night_duration"			"10"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Luna.Eclipse.Cast"
+			"Target" 		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_luna/luna_eclipse.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_origin"
+				"CASTER"	"attach_origin"
+				"CASTER"	"attach_origin"
+			}
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_luna/eclipse.lua"
+			"Function"		"eclipse_start"
 		}
 	}
 }

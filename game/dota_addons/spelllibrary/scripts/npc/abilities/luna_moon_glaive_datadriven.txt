@@ -1,3 +1,7 @@
+// Rewrite of the Luna Moon Glaive ability
+// Author: jacklarnes
+// Date: 03.04.2015.
+// NOTE: ------------------- THIS ABILITY REQUIRES luna_moon_glaive_dummy_datadriven TO WORK ----------------
 "luna_moon_glaive_datadriven"
 {
 	// General
@@ -5,7 +9,16 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-	
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AbilityTextureName"            "luna_moon_glaive"
+	"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
+	}
+
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
@@ -23,7 +36,25 @@
 		"03"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"damage_reduction_percent"	"35"
+			"damage_reduction_percent"	"35 30 25 20"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_moon_glaive"
+		{
+			"Passive" "1"
+
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_luna/moon_glaive.lua"
+					"Function"		"moon_glaive_start_create_dummy"
+				}
+			}
+
 		}
 	}
 }

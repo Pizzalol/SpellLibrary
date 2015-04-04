@@ -1,10 +1,14 @@
+// Rewrite of the Luna Lunar Blessing ability
+// Author: jacklarnes
+// Date: 03.04.2015.
 "luna_lunar_blessing_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	
+	"AbilityTextureName"			"luna_lunar_blessing"
+
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
@@ -23,6 +27,36 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"bonus_night_vision"		"1000 1000 1000 1000"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_lunar_blessing_aura"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsDebuff"			"0"
+
+			"Aura" 				"modifier_lunar_blessing_damage_effect"
+			"Aura_Radius" 		"%radius"
+			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types" 		"DOTA_UNIT_TARGET_HERO"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BONUS_NIGHT_VISION" "%bonus_night_vision"
+			}
+		}
+
+		"modifier_lunar_blessing_damage_effect"
+		{
+			"IsDebuff"			"0"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
+			}
 		}
 	}
 }

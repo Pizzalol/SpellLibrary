@@ -1,3 +1,6 @@
+// Rewrite of the Luna Lucent Beam ability
+// Author: jacklarnes
+// Date: 03.04.2015.
 "luna_lucent_beam_datadriven"
 {
 	// General
@@ -10,7 +13,14 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"luna_lucent_beam"
-
+    
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
+		"particle"			"particles/units/heroes/hero_luna/luna_lucent_beam.vpcf"
+	}
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"800"
@@ -40,6 +50,64 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"stun_duration"			"0.6 0.6 0.6 0.6"
+		}
+	}
+    
+	"OnSpellStart"
+	{
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_luna/luna_lucent_beam.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"			"TARGET"
+
+			"ControlPointEntities"
+            {
+                "CASTER" "follow_origin"
+                "TARGET" "follow_origin"
+                "TARGET" "follow_origin"
+                "TARGET" "follow_origin"
+                "TARGET" "follow_origin"
+                "TARGET" "follow_origin"
+                "TARGET" "follow_origin"
+            }
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Luna.LucentBeam.Target"
+			"Target"		"TARGET"
+		}
+
+		"Damage"
+		{
+			"Type"		"DAMAGE_TYPE_MAGICAL"
+			"Target"	"TARGET"
+			"Damage"	"%AbilityDamage"
+		}
+        
+        "ApplyModifier"
+        {
+            "ModifierName"	"modifier_lucent_beam_datadriven"
+            "Target"		"TARGET"
+            "Duration"		"%stun_duration"
+        }
+	}
+    
+	"Modifiers"
+	{
+		"modifier_lucent_beam_datadriven"
+		{
+			"IsDebuff"	"1"
+			"OverrideAnimation"	"ACT_DOTA_DISABLED"
+
+			"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"	"follow_overhead"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }
