@@ -21,6 +21,7 @@
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
 		"particle"			"particles/units/heroes/hero_luna/luna_lucent_beam.vpcf"
 	}
+	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"800"

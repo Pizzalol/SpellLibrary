@@ -9,6 +9,13 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityTextureName"			"luna_lunar_blessing"
 
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_luna/luna_ambient_lunar_blessing.vpcf"
+	}
+
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
@@ -37,6 +44,9 @@
 			"Passive"			"1"
 			"IsHidden"			"1"
 			"IsDebuff"			"0"
+
+			"EffectName"		"particles/units/heroes/hero_luna/luna_ambient_lunar_blessing.vpcf"
+			"EffectAttachType"	"follow_origin"
 
 			"Aura" 				"modifier_lunar_blessing_damage_effect"
 			"Aura_Radius" 		"%radius"
