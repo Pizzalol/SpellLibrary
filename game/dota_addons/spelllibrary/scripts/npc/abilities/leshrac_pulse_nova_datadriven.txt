@@ -1,3 +1,6 @@
+// Rewrite of the Leshrac Pulse Nova ability
+// Author: jacklarnes
+// Date: 05.04.2015
 "leshrac_pulse_nova_datadriven"
 {
 	// General
@@ -11,6 +14,13 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"leshrac_pulse_nova"
+
+	"precache"
+	{
+		"soundfile"         "soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
+		"particle"			"particles/units/heroes/hero_leshrac/leshrac_pulse_nova.vpcf"
+		"particle"			"particles/units/heroes/hero_leshrac/leshrac_pulse_nova_ambient.vpcf"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -45,6 +55,144 @@
 		{
 			"var_type"			"FIELD_INTEGER"
 			"damage_scepter"	"160 190 220"
+		}
+		"05"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"nova_tick"			"1.0"
+		}
+	}
+
+	"OnToggleOn"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Leshrac.Pulse_Nova"
+			"Target"		"CASTER"
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+            {
+                "Center" "CASTER"
+                "Radius" "%radius"
+                "Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY" 
+                "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+            }
+
+            "Action"
+            {
+            	"Damage"
+            	{
+            		"Target"	"TARGET"
+            		"Type"		"DAMAGE_TYPE_MAGICAL"
+            		"Damage"	"%damage"
+            	}
+
+            	"FireEffect"
+            	{
+            		"EffectName"        "particles/units/heroes/hero_leshrac/leshrac_pulse_nova.vpcf"
+            		"EffectAttachType"  "follow_origin"
+            		"Target"            "TARGET"
+            	}
+            }
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_pulse_nova_datadriven"
+			"Target"		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_leshrac/pulse_nova.lua"
+			"Function"		"pulse_nova_start"
+		}
+	}
+
+	"OnToggleOff"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_pulse_nova_datadriven"
+			"Target"
+			{
+				"Center"	"CASTER"
+				"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+			}
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_leshrac/pulse_nova.lua"
+			"Function"		"pulse_nova_stop"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_pulse_nova_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"0"
+			
+			"ThinkInterval"  "%nova_tick"
+
+			"OnIntervalThink"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Leshrac.Pulse_Nova_Strike"
+					"Target" 		"CASTER"
+				}
+
+				"ActOnTargets"
+				{
+					"Target"
+		            {
+		                "Center" "CASTER"
+		                "Radius" "%radius"
+		                "Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		                "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		            }
+
+		            "Action"
+		            {
+		            	"FireEffect"
+		            	{
+		            		"EffectName"        "particles/units/heroes/hero_leshrac/leshrac_pulse_nova.vpcf"
+		            		"EffectAttachType"  "follow_origin"
+		            		"Target"            "TARGET"
+		            	}
+
+		            	"Damage"
+		            	{
+		            		"Target"	"TARGET"
+		            		"Type"		"DAMAGE_TYPE_MAGICAL"
+		            		"Damage"	"%damage"
+		            	}		            	
+		            }
+				}
+			}
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_leshrac/leshrac_pulse_nova_ambient.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"		"CASTER"
+
+					"ControlPoints"
+					{
+						"00"	"0 0 0"
+						"01"	"%radius 0 0"
+					}
+				}
+			}
 		}
 	}
 }

@@ -10345,6 +10345,14 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"dark_seer_wall_of_replica"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -10396,7 +10404,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"width"					"1000 1000 1000"
+				"length"				"1000 1000 1000"
 			}			
 			"08"
 			{
@@ -10417,6 +10425,90 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_outgoing_scepter"	"100 120 140"
+			}
+			// Extra
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"width"					"50 50 50"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Dark_Seer.Wall_of_Replica_Start"
+				"Target" 		"CASTER"
+			}
+	
+			"CreateThinker"
+			{
+				"ModifierName"	"modifier_wall_of_replica_thinker_datadriven"
+				"Target" 		"POINT"
+			}
+	
+			//"RunScript"
+			//{
+			//	"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
+			//	"Function"		"WallOfReplica"
+			//	"Target"		"POINT"
+			//	"wall_particle"	"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
+			//	"dummy_modifier"	"modifier_wall_of_replica_dummy_datadriven"
+			//	"dummy_sound"		"Hero_Dark_Seer.Wall_of_Replica_lp"
+			//}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_wall_of_replica_thinker_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"EffectLineTarget"	"TARGET"
+						"EffectLineLength"	"%length"
+					}
+				}
+	
+				"ThinkInterval" "0.25"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_wall_of_replica_target_datadriven"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Line"
+							{
+								"Length"	"1000"
+								"Thickness"	"50"
+							}
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"		"DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_HERO"
+						}
+					}
+				}
+			}
+	
+			"modifier_wall_of_replica_target_datadriven"
+			{
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
+						"Function"		"WallOfReplicaTest"
+					}
+				}
 			}
 		}
 	}
@@ -24858,11 +24950,14 @@
 	
 	    }
 	}
+	// Rewrite of the Leshrac Diabolic Edict ability
+	// Author: jacklarnes
+	// Date: 05.04.2015
 	"leshrac_diabolic_edict_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
@@ -24870,6 +24965,12 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"leshrac_diabolic_edict"
+	
+		"precache"
+		{
+			"soundfile"         "soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
+			"particle"			"particles/units/heroes/hero_leshrac/leshrac_diabolic_edict.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -24894,23 +24995,46 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"num_explosions"	"32"
+				"var_type"				"FIELD_INTEGER"
+				"num_explosions"		"40"
 			}
 			
 			"02"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"500"
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"500"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tower_bonus"			"40"
 			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"explosion_delay"		".25"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Leshrac.Diabolic_Edict_lp"
+				"Target" 		"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_leshrac/diabolic_edict.lua"
+				"Function"		"diabolic_edict_start"
+			}		
 		}
 	}
 	
+	// Rewrite of the Leshrac Lightning Storm ability
+	// Author: jacklarnes
+	// Date: 05.04.2015
 	"leshrac_lightning_storm_datadriven"
 	{
 		// General
@@ -24924,6 +25048,14 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"leshrac_lightning_storm"
 	
+		"precache"
+		{
+			"soundfile"         "soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
+			"particle"			"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"
+			"particle"			"particles/units/heroes/hero_leshrac/leshrac_lightning_slow.vpcf"
+			"particle"			"particles/units/heroes/hero_leshrac/leshrac_lightning_impact.vpcf"
+			"particle"			"particles/units/heroes/hero_leshrac/leshrac_lightning_sparks.vpcf"
+		}
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"700"
@@ -24972,8 +25104,41 @@
 				"slow_movement_speed"	"-75"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_leshrac/lightning_storm.lua"
+				"Function"		"lightning_storm_start"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"lightning_storm_slow"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+		
+				"Duration"			"%slow_duration"
+	
+				"EffectName"        "particles/units/heroes/hero_leshrac/leshrac_lightning_slow.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+	
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_movement_speed" 
+				}
+			}
+		}
 	}
 	
+	// Rewrite of the Leshrac Pulse Nova ability
+	// Author: jacklarnes
+	// Date: 05.04.2015
 	"leshrac_pulse_nova_datadriven"
 	{
 		// General
@@ -24987,6 +25152,13 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"leshrac_pulse_nova"
+	
+		"precache"
+		{
+			"soundfile"         "soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
+			"particle"			"particles/units/heroes/hero_leshrac/leshrac_pulse_nova.vpcf"
+			"particle"			"particles/units/heroes/hero_leshrac/leshrac_pulse_nova_ambient.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -25022,9 +25194,150 @@
 				"var_type"			"FIELD_INTEGER"
 				"damage_scepter"	"160 190 220"
 			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"nova_tick"			"1.0"
+			}
+		}
+	
+		"OnToggleOn"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Leshrac.Pulse_Nova"
+				"Target"		"CASTER"
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+	            {
+	                "Center" "CASTER"
+	                "Radius" "%radius"
+	                "Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY" 
+	                "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	            }
+	
+	            "Action"
+	            {
+	            	"Damage"
+	            	{
+	            		"Target"	"TARGET"
+	            		"Type"		"DAMAGE_TYPE_MAGICAL"
+	            		"Damage"	"%damage"
+	            	}
+	
+	            	"FireEffect"
+	            	{
+	            		"EffectName"        "particles/units/heroes/hero_leshrac/leshrac_pulse_nova.vpcf"
+	            		"EffectAttachType"  "follow_origin"
+	            		"Target"            "TARGET"
+	            	}
+	            }
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_pulse_nova_datadriven"
+				"Target"		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_leshrac/pulse_nova.lua"
+				"Function"		"pulse_nova_start"
+			}
+		}
+	
+		"OnToggleOff"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_pulse_nova_datadriven"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_leshrac/pulse_nova.lua"
+				"Function"		"pulse_nova_stop"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_pulse_nova_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+				
+				"ThinkInterval"  "%nova_tick"
+	
+				"OnIntervalThink"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Leshrac.Pulse_Nova_Strike"
+						"Target" 		"CASTER"
+					}
+	
+					"ActOnTargets"
+					{
+						"Target"
+			            {
+			                "Center" "CASTER"
+			                "Radius" "%radius"
+			                "Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY" 
+			                "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			            }
+	
+			            "Action"
+			            {
+			            	"FireEffect"
+			            	{
+			            		"EffectName"        "particles/units/heroes/hero_leshrac/leshrac_pulse_nova.vpcf"
+			            		"EffectAttachType"  "follow_origin"
+			            		"Target"            "TARGET"
+			            	}
+	
+			            	"Damage"
+			            	{
+			            		"Target"	"TARGET"
+			            		"Type"		"DAMAGE_TYPE_MAGICAL"
+			            		"Damage"	"%damage"
+			            	}		            	
+			            }
+					}
+				}
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_leshrac/leshrac_pulse_nova_ambient.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"		"CASTER"
+	
+						"ControlPoints"
+						{
+							"00"	"0 0 0"
+							"01"	"%radius 0 0"
+						}
+					}
+				}
+			}
 		}
 	}
 	
+	// Rewrite of the Leshrac Split Earth ability
+	// Author: jacklarnes
+	// Date: 05.04.2015
 	"leshrac_split_earth_datadriven"
 	{
 		// General
@@ -25038,10 +25351,18 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"leshrac_split_earth"
 	
+		"precache"
+		{
+			"soundfile"         "soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
+			"particle"			"particles/units/heroes/hero_leshrac/leshrac_split_earth.vpcf"
+			"particle"			"particles/generic_gameplay/generic_stunned.vpcf"
+		}
+	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"750"
 		"AbilityCastPoint"				"0.7 0.7 0.7 0.7"
+		"AOERadius"						"%radius"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -25077,6 +25398,67 @@
 				"var_type"			"FIELD_INTEGER"
 				"duration"			"2"
 			}
+		}
+	
+		"OnSpellStart"
+		{
+			"DelayedAction"
+			{
+				"Delay"     "%delay"
+				"Action"    
+				{
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_leshrac/leshrac_split_earth.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						"TargetPoint"       "POINT"
+	
+						"ControlPoints"
+						{
+							"01"    "%radius %radius %radius"
+						}
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Leshrac.Split_Earth"
+						"Target" 		"CASTER"
+					}
+	
+					"DestroyTrees"
+					{
+						"Target" 		"POINT"
+						"Radius"		"%radius"
+					}
+	
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"POINT"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					
+						"Action"
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+								"Damage"		"%AbilityDamage"
+							}
+	
+							"Stun"
+							{
+								"Target" 	 "TARGET"
+								"Duration"   "%duration"
+							}
+						}
+					}
+				}
+			}		
 		}
 	}
 	
@@ -28051,7 +28433,6 @@
 						"Function"		"moon_glaive_start_create_dummy"
 					}
 				}
-	
 			}
 		}
 	}
@@ -38645,7 +39026,8 @@
 				"States"
 				{
 					"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}

@@ -54,7 +54,6 @@
 					"Function"		"moon_glaive_start_create_dummy"
 				}
 			}
-
 		}
 	}
 }

@@ -1,3 +1,6 @@
+// Rewrite of the Leshrac Lightning Storm ability
+// Author: jacklarnes
+// Date: 05.04.2015
 "leshrac_lightning_storm_datadriven"
 {
 	// General
@@ -11,6 +14,14 @@
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"leshrac_lightning_storm"
 
+	"precache"
+	{
+		"soundfile"         "soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
+		"particle"			"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"
+		"particle"			"particles/units/heroes/hero_leshrac/leshrac_lightning_slow.vpcf"
+		"particle"			"particles/units/heroes/hero_leshrac/leshrac_lightning_impact.vpcf"
+		"particle"			"particles/units/heroes/hero_leshrac/leshrac_lightning_sparks.vpcf"
+	}
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"700"
@@ -57,6 +68,36 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"slow_movement_speed"	"-75"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_leshrac/lightning_storm.lua"
+			"Function"		"lightning_storm_start"
+		}
+	}
+
+	"Modifiers"
+	{
+		"lightning_storm_slow"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"1"
+	
+			"Duration"			"%slow_duration"
+
+			"EffectName"        "particles/units/heroes/hero_leshrac/leshrac_lightning_slow.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "TARGET"
+
+			"Properties"
+			{
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_movement_speed" 
+			}
 		}
 	}
 }

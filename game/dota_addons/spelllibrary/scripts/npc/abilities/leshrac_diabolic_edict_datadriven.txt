@@ -1,8 +1,11 @@
+// Rewrite of the Leshrac Diabolic Edict ability
+// Author: jacklarnes
+// Date: 05.04.2015
 "leshrac_diabolic_edict_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
@@ -10,6 +13,12 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"leshrac_diabolic_edict"
+
+	"precache"
+	{
+		"soundfile"         "soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
+		"particle"			"particles/units/heroes/hero_leshrac/leshrac_diabolic_edict.vpcf"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -34,20 +43,40 @@
 	{
 		"01"
 		{
-			"var_type"			"FIELD_INTEGER"
-			"num_explosions"	"32"
+			"var_type"				"FIELD_INTEGER"
+			"num_explosions"		"40"
 		}
 		
 		"02"
 		{
-			"var_type"			"FIELD_INTEGER"
-			"radius"			"500"
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"500"
 		}
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
 			"tower_bonus"			"40"
 		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"explosion_delay"		".25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Leshrac.Diabolic_Edict_lp"
+			"Target" 		"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_leshrac/diabolic_edict.lua"
+			"Function"		"diabolic_edict_start"
+		}		
 	}
 }
 

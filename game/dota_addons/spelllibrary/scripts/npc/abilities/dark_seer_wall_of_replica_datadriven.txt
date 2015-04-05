@@ -9,6 +9,14 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"dark_seer_wall_of_replica"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+		"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -60,7 +68,7 @@
 		"07"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"width"					"1000 1000 1000"
+			"length"				"1000 1000 1000"
 		}			
 		"08"
 		{
@@ -81,6 +89,90 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"tooltip_outgoing_scepter"	"100 120 140"
+		}
+		// Extra
+		"12"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"width"					"50 50 50"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Dark_Seer.Wall_of_Replica_Start"
+			"Target" 		"CASTER"
+		}
+
+		"CreateThinker"
+		{
+			"ModifierName"	"modifier_wall_of_replica_thinker_datadriven"
+			"Target" 		"POINT"
+		}
+
+		//"RunScript"
+		//{
+		//	"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
+		//	"Function"		"WallOfReplica"
+		//	"Target"		"POINT"
+		//	"wall_particle"	"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
+		//	"dummy_modifier"	"modifier_wall_of_replica_dummy_datadriven"
+		//	"dummy_sound"		"Hero_Dark_Seer.Wall_of_Replica_lp"
+		//}
+	}
+
+	"Modifiers"
+	{
+		"modifier_wall_of_replica_thinker_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"			"TARGET"
+					"EffectName"		"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
+					"EffectAttachType"	"start_at_customorigin"
+					"EffectLineTarget"	"TARGET"
+					"EffectLineLength"	"%length"
+				}
+			}
+
+			"ThinkInterval" "0.25"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_wall_of_replica_target_datadriven"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Line"
+						{
+							"Length"	"1000"
+							"Thickness"	"50"
+						}
+						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types"		"DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_HERO"
+					}
+				}
+			}
+		}
+
+		"modifier_wall_of_replica_target_datadriven"
+		{
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
+					"Function"		"WallOfReplicaTest"
+				}
+			}
 		}
 	}
 }

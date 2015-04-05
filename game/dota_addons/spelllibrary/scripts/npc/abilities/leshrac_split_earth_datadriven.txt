@@ -1,3 +1,6 @@
+// Rewrite of the Leshrac Split Earth ability
+// Author: jacklarnes
+// Date: 05.04.2015
 "leshrac_split_earth_datadriven"
 {
 	// General
@@ -11,10 +14,18 @@
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"leshrac_split_earth"
 
+	"precache"
+	{
+		"soundfile"         "soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
+		"particle"			"particles/units/heroes/hero_leshrac/leshrac_split_earth.vpcf"
+		"particle"			"particles/generic_gameplay/generic_stunned.vpcf"
+	}
+
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"750"
 	"AbilityCastPoint"				"0.7 0.7 0.7 0.7"
+	"AOERadius"						"%radius"
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
@@ -50,6 +61,67 @@
 			"var_type"			"FIELD_INTEGER"
 			"duration"			"2"
 		}
+	}
+
+	"OnSpellStart"
+	{
+		"DelayedAction"
+		{
+			"Delay"     "%delay"
+			"Action"    
+			{
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_leshrac/leshrac_split_earth.vpcf"
+					"EffectAttachType"  "start_at_customorigin"
+					"TargetPoint"       "POINT"
+
+					"ControlPoints"
+					{
+						"01"    "%radius %radius %radius"
+					}
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Leshrac.Split_Earth"
+					"Target" 		"CASTER"
+				}
+
+				"DestroyTrees"
+				{
+					"Target" 		"POINT"
+					"Radius"		"%radius"
+				}
+
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  	"POINT"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				
+					"Action"
+					{
+						"Damage"
+						{
+							"Target"		"TARGET"
+							"Type"			"DAMAGE_TYPE_MAGICAL"
+							"Damage"		"%AbilityDamage"
+						}
+
+						"Stun"
+						{
+							"Target" 	 "TARGET"
+							"Duration"   "%duration"
+						}
+					}
+				}
+			}
+		}		
 	}
 }
 

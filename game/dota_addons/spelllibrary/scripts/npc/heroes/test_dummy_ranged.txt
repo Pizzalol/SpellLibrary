@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"luna_lucent_beam_datadriven"
-	"Ability2"	"luna_moon_glaive_datadriven"
-	"Ability3"	"luna_lunar_blessing_datadriven"
-	"Ability4"	"luna_eclipse_datadriven"
+	"Ability1"	"leshrac_split_earth_datadriven"
+	"Ability2"	"leshrac_diabolic_edict_datadriven"
+	"Ability3"	"leshrac_lightning_storm_datadriven"
+	"Ability4"	"leshrac_pulse_nova_datadriven"
 }
