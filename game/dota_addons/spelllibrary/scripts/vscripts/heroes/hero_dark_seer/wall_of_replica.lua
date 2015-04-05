@@ -1,9 +1,10 @@
 --[[Author: Pizzalol, kritth
-	Date: 04.04.2015.
-	Create the dummy for sound and to keep track of other variables]]
+	Date: 05.04.2015.
+	Create the wall dummies at along the wall]]
 function WallOfReplica( keys )
 	local caster = keys.caster
 	local caster_location = caster:GetAbsOrigin()
+	local caster_team = caster:GetTeamNumber()
 	local target_point = keys.target_points[1]
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -24,20 +25,57 @@ function WallOfReplica( keys )
 	local end_point_left = RotatePosition(target_point, QAngle(0,90,0), rotation_point)
 	local end_point_right = RotatePosition(target_point, QAngle(0,-90,0), rotation_point)
 
-	-- Create the wall dummy
-	local dummy = CreateUnitByName("npc_dummy_blank", target_point, false, nil, nil, caster:GetTeamNumber())
-	ability:ApplyDataDrivenModifier(caster, dummy, dummy_modifier, {})
+	local direction_left = (end_point_left - target_point):Normalized() 
+	local direction_right = (end_point_right - target_point):Normalized()
+
+	-- Calculate the number of secondary dummies that we need to create
+	local num_of_dummies = (((length/2) - width) / (width*2))
+	if num_of_dummies%2 ~= 0 then
+		-- If its an uneven number then make the number even
+		num_of_dummies = num_of_dummies + 1
+	end
+	num_of_dummies = num_of_dummies / 2
+
+	-- Create the main wall dummy
+	local dummy = CreateUnitByName("npc_dummy_blank", target_point, false, caster, caster, caster_team)
+	ability:ApplyDataDrivenModifier(dummy, dummy, dummy_modifier, {})
+	EmitSoundOn(dummy_sound, dummy)	
+
+	-- Create the secondary dummies for the left half of the wall
+	for i=1,num_of_dummies + 2 do
+		-- Create a dummy on every interval point to fill the whole wall
+		local temporary_point = target_point + (width * 2 * i + (width - width/10)) * direction_left
+
+		-- Create the secondary dummy and apply the dummy aura to it, make sure the caster of the aura is the main dummmy
+		-- otherwise you wont be able to save illusion targets
+		local dummy_secondary = CreateUnitByName("npc_dummy_blank", temporary_point, false, caster, caster, caster_team)
+		ability:ApplyDataDrivenModifier(dummy, dummy_secondary, dummy_modifier, {})
+
+		Timers:CreateTimer(duration, function()
+			dummy_secondary:RemoveSelf()
+		end)
+	end
+
+	-- Create the secondary dummies for the right half of the wall
+	for i=1,num_of_dummies + 2 do
+		-- Create a dummy on every interval point to fill the whole wall
+		local temporary_point = target_point + (width * 2 * i + (width - width/10)) * direction_right
+		
+		-- Create the secondary dummy and apply the dummy aura to it, make sure the caster of the aura is the main dummmy
+		-- otherwise you wont be able to save illusion targets
+		local dummy_secondary = CreateUnitByName("npc_dummy_blank", temporary_point, false, caster, caster, caster_team)
+		ability:ApplyDataDrivenModifier(dummy, dummy_secondary, dummy_modifier, {})
+
+		Timers:CreateTimer(duration, function()
+			dummy_secondary:RemoveSelf()
+		end)
+	end
 
 	-- Save the relevant data
-	ability.wall_start_time = GameRules:GetGameTime()
-	ability.wall_duration = duration
-	ability.wall_level = ability_level
-	dummy.wall_left = end_point_left
-	dummy.wall_right = end_point_right
-	dummy.wall_direction = (end_point_left - end_point_right):Normalized()
-	dummy.wall_length = length
-	dummy.wall_width = width
-	ability.wall_table = {}
+	dummy.wall_start_time = dummy.wall_start_time or GameRules:GetGameTime()
+	dummy.wall_duration = dummy_wall_duration or duration
+	dummy.wall_level = dummy.wall_level or ability_level
+	dummy.wall_table = dummy.wall_table or {}
 
 	-- Create the wall particle
 	local particle = ParticleManager:CreateParticle(wall_particle, PATTACH_POINT_FOLLOW, dummy)
@@ -52,55 +90,29 @@ function WallOfReplica( keys )
 end
 
 --[[Author: Pizzalol
-	Date: 04.04.2015.
-	The target is the dummy
-	Shoots projectiles periodically to check if anyone passed the wall]]
-function WallOfReplicaCheck( keys )
-	local target = keys.target
-	local ability = keys.ability
-
-	local speed = 3000
-
-	local projectile_table =
-	{
-		--EffectName = "",
-		Ability = ability,
-		vSpawnOrigin = target.wall_right,
-		vVelocity = Vector( target.wall_direction.x * speed, target.wall_direction.y * speed, 0 ),
-		fDistance = target.wall_length,
-		fStartRadius = target.wall_width,
-		fEndRadius = target.wall_width,
-		Source = target,
-		Caster = target,
-		bHasFrontalCone = false,
-		bReplaceExisting = false,
-		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-		iUnitTargetFlags = DOTA_UNIT_TARGET_NONE,
-		iUnitTargetType = DOTA_UNIT_TARGET_HERO
-	}
-
-	ProjectileManager:CreateLinearProjectile(projectile_table)
-end
-
---[[Author: Pizzalol
-	Date: 04.04.2015.
+	Date: 05.04.2015.
 	Checks if there is an alive illusion of the target, if there is not then create an illusion]]
 function WallOfReplicaIllusionCheck( keys )
-	local caster = keys.caster
+	local caster = keys.caster -- This is the dummy in this case
 	local target = keys.target
 	local target_location = target:GetAbsOrigin()
 	local ability = keys.ability
-	local ability_level = ability.wall_level
 
-	print(ability:entindex())
-
+	-- Get the original hero
 	local player = caster:GetPlayerOwnerID()
 	local player_hero = PlayerResource:GetPlayer(player):GetAssignedHero()
+	
+	-- Initialize the tracking data variables in case there was a hero at the wall spawn point
+	caster.wall_level = caster.wall_level or (ability:GetLevel() - 1)
+	local ability_level = caster.wall_level
+	caster.wall_start_time = caster.wall_start_time or GameRules:GetGameTime() 
+	caster.wall_duration = caster.wall_duration or (ability:GetLevelSpecialValueFor("duration", ability_level))
+	caster.wall_table = caster.wall_table or {}
 
-	-- Ability variables
+	-- Ability variables	
 	local unit_name = target:GetUnitName()
 	local illusion_origin = target_location + RandomVector(100)
-	local illusion_duration = ability.wall_duration - (GameRules:GetGameTime() - ability.wall_start_time)
+	local illusion_duration = caster.wall_duration - (GameRules:GetGameTime() - caster.wall_start_time)
 	local illusion_outgoing_damage = ability:GetLevelSpecialValueFor("replica_damage_outgoing", ability_level)
 	local illusion_incoming_damage = ability:GetLevelSpecialValueFor("replica_damage_incoming", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
@@ -108,7 +120,7 @@ function WallOfReplicaIllusionCheck( keys )
 	-- Check if the hit hero is a real hero
 	if target:IsRealHero() then
 		-- Check if the illusion of the target is alive
-		if not IsValidEntity(ability.wall_table[target]) or not ability.wall_table[target]:IsAlive() then
+		if not IsValidEntity(caster.wall_table[target]) or not caster.wall_table[target]:IsAlive() then
 			-- Create an illusion if its not
 			local illusion = CreateUnitByName(unit_name, illusion_origin, true, player_hero, nil, caster:GetTeamNumber())
 			illusion:SetPlayerID(player)
@@ -142,7 +154,8 @@ function WallOfReplicaIllusionCheck( keys )
 			illusion:AddNewModifier(caster, ability, "modifier_illusion", {duration = illusion_duration, outgoing_damage = illusion_outgoing_damage, incoming_damage = illusion_incoming_damage})
 
 			illusion:MakeIllusion() 
-			ability.wall_table[target] = illusion -- Keep track of the illusion
+			illusion:SetHealth(target:GetHealth()) -- Set the health of the illusion to be the same as the target HP
+			caster.wall_table[target] = illusion -- Keep track of the illusion
 
 			-- Deal damage for creating the illusion
 			local damage_table = {}
@@ -157,8 +170,26 @@ function WallOfReplicaIllusionCheck( keys )
 	end
 end
 
-function WallOfReplicaTest( keys )
-	local caster = keys.caster
+--[[Author: Pizzalol
+	Date: 05.04.2015.
+	Acts as an aura which checks if any hero passed the wall]]
+function WallOfReplicaAura( keys )
+	local caster = keys.caster -- Main wall dummy
+	local target = keys.target -- Secondary dummies
+	local target_location = target:GetAbsOrigin()
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
 
-	print(caster:GetUnitName())
+	local radius = ability:GetLevelSpecialValueFor("width", ability_level)
+	local aura_modifier = keys.aura_modifier
+
+	local target_teams = DOTA_UNIT_TARGET_TEAM_ENEMY
+	local target_types = DOTA_UNIT_TARGET_HERO
+	local target_flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
+
+	local units = FindUnitsInRadius(caster:GetTeamNumber(), target_location, nil, radius, target_teams, target_types, target_flags, FIND_CLOSEST, false)
+
+	for _,unit in ipairs(units) do
+		ability:ApplyDataDrivenModifier(caster, unit, aura_modifier, {Duration = 0.1})
+	end
 end

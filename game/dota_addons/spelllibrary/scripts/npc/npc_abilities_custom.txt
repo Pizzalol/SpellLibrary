@@ -10334,6 +10334,10 @@
 		}
 	}
 	
+	// Rewrite of the Dark Seer Wall of Replica ability
+	// Author: Pizzalol
+	// Date: 05.04.2015.
+	// NOTE: Has the normal illusion behavior for enemies
 	"dark_seer_wall_of_replica_datadriven"
 	{
 		// General
@@ -10442,71 +10446,57 @@
 				"Target" 		"CASTER"
 			}
 	
-			"CreateThinker"
+			"RunScript"
 			{
-				"ModifierName"	"modifier_wall_of_replica_thinker_datadriven"
-				"Target" 		"POINT"
+				"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
+				"Function"		"WallOfReplica"
+				"Target"		"POINT"
+				"wall_particle"	"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
+				"dummy_modifier"	"modifier_wall_of_replica_dummy_datadriven"
+				"dummy_sound"		"Hero_Dark_Seer.Wall_of_Replica_lp"
 			}
-	
-			//"RunScript"
-			//{
-			//	"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
-			//	"Function"		"WallOfReplica"
-			//	"Target"		"POINT"
-			//	"wall_particle"	"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
-			//	"dummy_modifier"	"modifier_wall_of_replica_dummy_datadriven"
-			//	"dummy_sound"		"Hero_Dark_Seer.Wall_of_Replica_lp"
-			//}
 		}
 	
 		"Modifiers"
 		{
-			"modifier_wall_of_replica_thinker_datadriven"
+			"modifier_wall_of_replica_dummy_datadriven"
 			{
 				"IsHidden"		"1"
 				"IsPurgable"	"0"
 	
-				"OnCreated"
+				"ThinkInterval"  "0.2"
+				"OnIntervalThink"
 				{
-					"AttachEffect"
+					"RunScript"
 					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						"EffectLineTarget"	"TARGET"
-						"EffectLineLength"	"%length"
+						"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
+						"Function"		"WallOfReplicaAura"
+						"aura_modifier"	"modifier_wall_of_replica_datadriven"
 					}
 				}
 	
-				"ThinkInterval" "0.25"
-				"OnIntervalThink"
+				"States"
 				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_wall_of_replica_target_datadriven"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Line"
-							{
-								"Length"	"1000"
-								"Thickness"	"50"
-							}
-							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types"		"DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_HERO"
-						}
-					}
+					"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 	
-			"modifier_wall_of_replica_target_datadriven"
+			"modifier_wall_of_replica_datadriven"
 			{
+				"IsHidden"	"1"
+	
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
 				"OnCreated"
 				{
 					"RunScript"
 					{
 						"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
-						"Function"		"WallOfReplicaTest"
+						"Function"		"WallOfReplicaIllusionCheck"
 					}
 				}
 			}

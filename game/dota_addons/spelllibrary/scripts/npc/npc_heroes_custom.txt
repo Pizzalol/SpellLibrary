@@ -18,6 +18,6 @@
 		"Ability1"	"leshrac_split_earth_datadriven"
 		"Ability2"	"leshrac_diabolic_edict_datadriven"
 		"Ability3"	"leshrac_lightning_storm_datadriven"
-		"Ability4"	"leshrac_pulse_nova_datadriven"
+		"Ability4"	"dark_seer_wall_of_replica_datadriven"
 	}
 }
