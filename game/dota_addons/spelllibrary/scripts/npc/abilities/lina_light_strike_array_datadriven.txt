@@ -89,6 +89,32 @@
 
 			"Action"
 			{
+				"FireSound"
+				{
+					"EffectName"	"Ability.LightStrikeArray"
+					"Target"		"CASTER"
+				}
+
+				"FireEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+					"EffectAttachType"	"start_at_customorigin"
+					"TargetPoint"		"POINT"
+
+					"ControlPoints"
+		            {
+		            	"00"	"POINT"
+		            	"01"	"%light_strike_array_aoe 0 0"
+		            	"03"	"0 0 0"
+		            }
+				}
+				
+				"DestroyTrees"
+		        {
+		        	"Target"	"POINT"
+		        	"Radius"	"%light_strike_array_aoe"
+		        }
+
 				"ActOnTargets"
 				{
 					"Target"
@@ -113,35 +139,9 @@
 		            		"ModifierName"	"modifier_light_strike_array_datadriven"
 		            		"Target"		"TARGET"
 		            		"Duration"		"%light_strike_array_stun_duration"
-		            	}
-
-		            	"DestroyTrees"
-		            	{
-		            		"Target"	"POINT"
-		            		"Radius"	"%light_strike_array_aoe"
-		            	}
+		            	}		            	
 		            }
-				}
-
-				"FireSound"
-				{
-					"EffectName"	"Ability.LightStrikeArray"
-					"Target"		"CASTER"
-				}
-
-				"FireEffect"
-				{
-					"EffectName"	"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
-					"EffectAttachType"	"start_at_customorigin"
-					"TargetPoint"		"POINT"
-
-					"ControlPoints"
-		            {
-		            	"00"	"POINT"
-		            	"01"	"%light_strike_array_aoe 0 0"
-		            	"03"	"0 0 0"
-		            }
-				}
+				}				
 			}
 		}
 	}
