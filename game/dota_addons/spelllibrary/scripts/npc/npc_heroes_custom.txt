@@ -15,7 +15,7 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"leshrac_split_earth_datadriven"
+		"Ability1"	"chen_penitence_datadriven"
 		"Ability2"	"leshrac_diabolic_edict_datadriven"
 		"Ability3"	"leshrac_lightning_storm_datadriven"
 		"Ability4"	"dark_seer_wall_of_replica_datadriven"
