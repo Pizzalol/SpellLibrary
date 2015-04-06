@@ -60,7 +60,7 @@ function invoker_ice_wall_datadriven_on_spell_start(keys)
 		local ice_wall_unit_ability = ice_wall_unit:FindAbilityByName("invoker_ice_wall_datadriven")
 		if ice_wall_unit_ability ~= nil then
 			ice_wall_unit_ability:SetLevel(quas_level) --This ensures the correct slow intensity is applied.
-			ice_wall_unit_ability:ApplyDataDrivenModifier(ice_wall_unit, ice_wall_unit, "invoker_ice_wall_datadriven_unit_ability", {duration = -1})
+			ice_wall_unit_ability:ApplyDataDrivenModifier(ice_wall_unit, ice_wall_unit, "modifier_invoker_ice_wall_datadriven_unit_ability", {duration = -1})
 			ice_wall_unit_ability:ApplyDataDrivenModifier(ice_wall_unit, ice_wall_unit, "modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter_slow", {duration = -1})
 			ice_wall_unit_ability:ApplyDataDrivenModifier(ice_wall_unit, ice_wall_unit, "modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter_damage", {duration = -1})
 		end

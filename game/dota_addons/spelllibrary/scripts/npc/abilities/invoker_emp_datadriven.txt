@@ -1,13 +1,20 @@
+// Rewrite of EMP
+// Author: Rook
+// Date: April 06, 2015
+// Dependencies: npc_dummy_blank in npc_units_custom.txt (source found in scripts/npc/units in the SpellLibrary)
+
 "invoker_emp_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_AOE"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"MaxLevel"						"1"
 	"HotKeyOverride"				"C"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+	"AbilityTextureName"			"invoker_emp"
+	"AbilityCastAnimation" 			"ACT_DOTA_CAST_EMP"
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -15,32 +22,85 @@
 	"AbilityCastPoint"				"0"
 	"AbilityCooldown"				"30"
 	"AbilityManaCost"				"125"
-		
+	"AoERadius"						"675"  //Update %area_of_effect if this is.
+	
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_invoker/invoker_emp.vpcf"
+		"particle"			"particles/units/heroes/hero_invoker/invoker_emp_explode.vpcf"
+	}
+	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"				"FIELD_FLOAT"
-			"delay"					"2.9"
-			"levelkey"				"wexlevel"
+			"var_type"					"FIELD_FLOAT"
+			"delay"						"2.9"
+			"levelkey"					"wexlevel"
 		}
 		"02"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"area_of_effect"		"675"
+			"var_type"					"FIELD_INTEGER"
+			"area_of_effect"			"675"
 		}
 		"03"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"mana_burned"			"100 175 250 325 400 475 550"
-			"levelkey"				"wexlevel"
+			"var_type"					"FIELD_INTEGER"
+			"mana_burned"				"100 175 250 325 400 475 550"
+			"levelkey"					"wexlevel"
 		}
 		"04"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"damage_per_mana_pct"	"50"
+			"var_type"					"FIELD_INTEGER"
+			"damage_per_mana_pct"		"50"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"mana_gain_per_mana_pct"	"50"  //The percentage of mana restored to Invoker when mana is drained from enemy heroes.
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"					"heroes/hero_invoker/emp.lua"
+			"Function"						"invoker_emp_datadriven_on_spell_start"
+			"Target"						"POINT"
+			"Delay"							"%delay"
+			"AreaOfEffect"					"%area_of_effect"
+			"DamagePerManaPct"				"%damage_per_mana_pct"
+			"ManaGainPerManaPct"			"%mana_gain_per_mana_pct"
+		}
+	}
+	
+	"Modifiers"
+	{	
+		"modifier_invoker_emp_datadriven_unit_ability"
+		{
+			"Passive"			"0"
+			"IsHidden" 			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			
+			"States"
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"  	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_TEAM_MOVE_TO"    	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_TEAM_SELECT" 		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_COMMAND_RESTRICTED" 	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ATTACK_IMMUNE"  		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MAGIC_IMMUNE"       	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP" 		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_OUT_OF_GAME"    		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"  		"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }
