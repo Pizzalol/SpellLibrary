@@ -101,7 +101,7 @@
 	//so two auras are used.
 	"Modifiers"
 	{	
-		"invoker_invoker_ice_wall_datadriven_unit_ability"
+		"modifier_invoker_ice_wall_datadriven_unit_ability"
 		{
 			"Passive"			"0"
 			"IsHidden" 			"0"
