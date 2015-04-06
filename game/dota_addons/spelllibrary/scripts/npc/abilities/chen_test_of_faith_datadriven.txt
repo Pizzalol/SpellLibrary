@@ -1,3 +1,7 @@
+// Rewrite of the Chen Test of Faith ability
+// Author: Pizzalol
+// Date: 05.04.2014.
+// NOTE: Used together with chen_test_of_faith_teleport_datadriven
 "chen_test_of_faith_datadriven"
 {
 	// General
@@ -11,6 +15,14 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"chen_test_of_faith"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
+		"particle"			"particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -38,6 +50,39 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"damage_max"			"100 200 300 400"
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"chen_test_of_faith_teleport_datadriven"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Chen.TestOfFaith"
+			"Target" 		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "TARGET"
+		}
+
+		"Damage"
+		{
+			"Target"		"TARGET"
+			"Type"			"DAMAGE_TYPE_PURE"
+			"Damage"		"? %damage_min %damage_max"
 		}
 	}
 }

@@ -1,3 +1,8 @@
+// Rewrite of the Chen Test of Faith ability
+// Author: Pizzalol
+// Date: 06.04.2014.
+// NOTE: Used together with chen_test_of_faith_datadriven
+// NOTE2: Teleport loop sound seems to be bugged
 "chen_test_of_faith_teleport_datadriven"
 {
 	// General
@@ -8,6 +13,17 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
+	"AbilityTextureName"			"chen_test_of_faith_teleport"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
+		"particle"			"particles/units/heroes/hero_chen/chen_teleport_cast.vpcf"
+		"particle"			"particles/units/heroes/hero_chen/chen_teleport.vpcf"
+		"particle"			"particles/units/heroes/hero_chen/chen_teleport_flash.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -30,6 +46,96 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"hero_teleport_delay"	"6.0 5.0 4.0 3.0"
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"chen_test_of_faith_datadriven"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_chen/chen_teleport_cast.vpcf"
+			"EffectAttachType"  "attach_attack1"
+			"Target"            "CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
+			"Function"		"TestOfFaithTeleportTarget"
+			"sound_tp_out"	"Hero_Chen.TeleportOut"
+			"sound_tp_in"	"Hero_Chen.TeleportIn"
+			"teleport_modifier"	"modifier_test_of_faith_teleport_datadriven"
+			"teleport_particle"	"particles/units/heroes/hero_chen/chen_teleport_flash.vpcf"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_test_of_faith_teleport_datadriven"
+		{
+			"IsBuff"		"1"
+	
+			"EffectName"		"particles/units/heroes/hero_chen/chen_teleport.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			// Loop sound seems to be bugged
+			//"OnCreated"
+			//{
+			//	"FireSound"
+			//	{
+			//		"EffectName"	"Hero_Chen.TeleportLoop"
+			//		"Target" 		"TARGET"
+			//	}
+			//}
+	
+			//"OnDestroy"
+			//{
+			//	"RunScript"
+			//	{
+			//		"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
+			//		"Function"		"TestOfFaithStopSound"
+			//		"sound"			"Hero_Chen.TeleportLoop"
+			//	}
+			//}
+
+			"ThinkInterval"  "%hero_teleport_delay"
+			"OnIntervalThink"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Chen.TeleportOut"
+					"Target" 		"TARGET"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Chen.TeleportIn"
+					"Target" 		"TARGET"
+				}
+
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_chen/chen_teleport_flash.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
+					"Function"		"TestOfFaithTeleport"
+				}
+			}
 		}
 	}
 }
