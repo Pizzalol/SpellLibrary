@@ -8816,12 +8816,28 @@
 		}
 	}
 	
+	// Rewrite of the Chen Holy Persuasion ability
+	// Author: Pizzalol
+	// Date: 06.04.2014.
+	// NOTE: The HP bonus doesnt work on creeps currently
 	"chen_holy_persuasion_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"AbilityTextureName"			"chen_holy_persuasion"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
+			"particle"			"particles/units/heroes/hero_chen/chen_holy_persuasion.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -8849,6 +8865,72 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"health_bonus"			"75 150 225 300"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Chen.HolyPersuasionCast"
+				"Target" 		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Chen.HolyPersuasionEnemy"
+				"Target" 		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_chen/chen_holy_persuasion.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+	
+				"ControlPointEntities"
+				{
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_chen/holy_persuasion.lua"
+				"Function"		"HolyPersuasion"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_holy_persuasion_datadriven"
+				"Target" 		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_holy_persuasion_datadriven"
+			{
+				"IsBuff"		"1"
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_chen/holy_persuasion.lua"
+						"Function"		"HolyPersuasionRemove"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS" "%health_bonus"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
