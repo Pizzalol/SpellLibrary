@@ -3,6 +3,7 @@
 // Date: 06.04.2014.
 // NOTE: Used together with chen_test_of_faith_datadriven
 // NOTE2: Teleport loop sound seems to be bugged
+// NOTE3: Teleports targets to the middle of the map instead of fountain
 "chen_test_of_faith_teleport_datadriven"
 {
 	// General

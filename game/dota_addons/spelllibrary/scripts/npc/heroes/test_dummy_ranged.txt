@@ -7,5 +7,5 @@
 	"Ability1"	"chen_penitence_datadriven"
 	"Ability2"	"chen_test_of_faith_datadriven"
 	"Ability3"	"chen_test_of_faith_teleport_datadriven"
-	"Ability4"	"dark_seer_wall_of_replica_datadriven"
+	"Ability4"	"chen_hand_of_god_datadriven"
 }
