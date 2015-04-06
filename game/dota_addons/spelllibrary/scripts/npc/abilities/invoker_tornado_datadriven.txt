@@ -1,13 +1,23 @@
+// Rewrite of Tornado
+// Author: Rook
+// Date: April 06, 2015
+// Dependencies: npc_dummy_blank in npc_units_custom.txt (source found in scripts/npc/units in the SpellLibrary)
+// Known bugs:
+//     Part of the invoker_tornado_child.vpcf particle (which appears when enemy units are hit by the tornado and cycloned)
+//         follows Invoker when it shouldn't, due to the particle properties.
+
 "invoker_tornado_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"MaxLevel"						"1"
 	"HotKeyOverride"				"X"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityTextureName"			"invoker_tornado"
+	"AbilityCastAnimation" 			"ACT_DOTA_CAST_TORNADO"
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -15,6 +25,12 @@
 	"AbilityCastPoint"				"0"
 	"AbilityCooldown"				"30"
 	"AbilityManaCost"				"150"
+	
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_invoker/invoker_tornado.vpcf"
+		"particle"			"particles/units/heroes/hero_invoker/invoker_tornado_child.vpcf"
+	}
 		
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -60,14 +76,129 @@
 		"08"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"quas_damage"			"0 0 0 0 0 0 0"
-			"levelkey"				"quaslevel"
+			"wex_damage"			"45 90 135 180 225 270 315"
+			"levelkey"				"wexlevel"
 		}
 		"09"
 		{
-			"var_type"				"FIELD_FLOAT"
-			"wex_damage"			"45 90 135 180 225 270 315"
-			"levelkey"				"wexlevel"
+			"var_type"					"FIELD_INTEGER"
+			"cyclone_min_height"		"300"
+		}
+		"10"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cyclone_initial_height"	"350"
+		}
+		"11"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cyclone_max_height"		"400"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"								"heroes/hero_invoker/tornado.lua"
+			"Function"									"invoker_tornado_datadriven_on_spell_start"
+			"Target"									"POINT"
+			"TravelSpeed"								"%travel_speed"
+			"AreaOfEffect"								"%area_of_effect"
+			"VisionDistance"							"%vision_distance"
+			"EndVisionDuration"							"%end_vision_duration"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit" "0"
+		
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_invoker/tornado.lua"
+			"Function"			"invoker_tornado_datadriven_on_projectile_hit_unit"
+		}
+	}
+	
+	"Modifiers"
+	{	
+		"modifier_invoker_tornado_datadriven_unit_ability"
+		{
+			"Passive"			"0"
+			"IsHidden" 			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			
+			"States"
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"  	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_TEAM_MOVE_TO"    	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_TEAM_SELECT" 		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_COMMAND_RESTRICTED" 	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ATTACK_IMMUNE"  		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MAGIC_IMMUNE"       	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP" 		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_OUT_OF_GAME"    		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"  		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		"modifier_invoker_tornado_datadriven_cyclone"
+		{
+			"States"
+	        {
+				"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
+	        	"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+	        }
+	
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_invoker/invoker_tornado_child.vpcf"
+					"EffectAttachType"	"attach_origin"
+					"Target"            "TARGET"
+				}
+
+				"RunScript"
+	        	{
+	        		"ScriptFile"				"heroes/hero_invoker/tornado.lua"
+	        		"Function"					"modifier_invoker_tornado_datadriven_cyclone_on_created"
+					"CycloneInitialHeight"		"%cyclone_initial_height"
+					"CycloneMinHeight"			"%cyclone_min_height"
+					"CycloneMaxHeight"			"%cyclone_max_height"
+	        	}
+			}
+			
+			"ThinkInterval"		"0.03"
+			"OnIntervalThink"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/hero_invoker/tornado.lua"
+                    "Function"      "modifier_invoker_tornado_datadriven_cyclone_on_interval_think"
+                }
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+	        	{
+	        		"ScriptFile"	"heroes/hero_invoker/tornado.lua"
+	        		"Function"		"modifier_invoker_tornado_datadriven_cyclone_on_destroy"
+					"BaseDamage"	"%base_damage"
+	        	}
+			}
+
+			"OverrideAnimation"     "ACT_DOTA_FLAIL"
 		}
 	}
 }
