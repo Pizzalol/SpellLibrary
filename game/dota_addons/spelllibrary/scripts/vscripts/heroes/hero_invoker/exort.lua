@@ -56,6 +56,8 @@ end
 	Called when Exort is cast or upgraded.  Replaces the modifiers on the caster's modifier bar to
 	ensure the correct order, which also has the effect of leveling the effects of any currently existing orbs.
 	This function is general enough that it can be used for Quas, Wex, or Exort.
+	Known bugs: The correct order of the orb modifiers on the modifier bar is not always maintained.  This is a
+	    visual bug only and likely has to do with removing and reapplying modifiers on the same frame.
 ================================================================================================================= ]]
 function invoker_replace_orb_modifiers(keys)
 	--Initialization for storing the orb list, if not already done.

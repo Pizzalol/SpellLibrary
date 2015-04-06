@@ -1,9 +1,14 @@
+// Rewrite of Ice Wall
+// Author: Rook
+// Date: April 06, 2015
+// Dependencies: npc_dummy_blank in npc_units_custom.txt (source found in scripts/npc/units in the SpellLibrary)
+
 "invoker_ice_wall_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"MaxLevel"						"1"
 	"HotKeyOverride"				"G"
@@ -15,6 +20,14 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCooldown"				"25"
 	"AbilityManaCost"				"175"
+	
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_invoker/invoker_ice_wall.vpcf"
+		"particle"			"particles/units/heroes/hero_invoker/invoker_ice_wall_b.vpcf"
+		"particle"			"particles/units/heroes/hero_invoker/invoker_ice_wall_debuff.vpcf"
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+	}
 	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -45,23 +58,125 @@
 		}
 		"05"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"wall_place_distance"	"200"
+			"var_type"				"FIELD_FLOAT"
+			"damage_interval"		"1"
 		}
 		"06"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"num_wall_elements"		"15"
+			"wall_place_distance"	"200"  //This is the distance from Invoker to the middle point of the perpendicular ice wall.
 		}
 		"07"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"wall_element_spacing"	"80"
+			"num_wall_elements"		"15"  //num_wall_elements * wall_element_spacing is the total length of the ice wall.
 		}
 		"08"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"wall_element_radius"	"105"
+			"wall_element_spacing"	"80"  //The distance between the entity nodes comprising the ice wall.
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"wall_element_radius"	"105"  //Effectively the width of the wall's slowing/damaging aura.
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"			"heroes/hero_invoker/ice_wall.lua"
+			"Function"				"invoker_ice_wall_datadriven_on_spell_start"
+			"NumWallElements"		"%num_wall_elements"
+			"WallElementSpacing"	"%wall_element_spacing"
+			"WallPlaceDistance"		"%wall_place_distance"
+			"SlowDuration"			"%slow_duration"
+		}
+	}
+	
+	"Modifiers"
+	{	
+		"invoker_ice_wall_datadriven_unit_ability"
+		{
+			"Passive"			"0"
+			"IsHidden" 			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			
+			"States"
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"  	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_TEAM_MOVE_TO"    	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_TEAM_SELECT" 		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_COMMAND_RESTRICTED" 	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ATTACK_IMMUNE"  		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MAGIC_IMMUNE"       	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP" 		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_OUT_OF_GAME"    		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"  		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		"modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			
+			"Aura" 				"modifier_invoker_ice_wall_datadriven_unit_ability_aura"
+			"Aura_Radius" 		"%wall_element_radius"
+			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+			"Aura_ApplyToCaster" "0"
+		}
+		"modifier_invoker_ice_wall_datadriven_unit_ability_aura"
+		{
+			"Duration"			"%slow_duration"
+			"Passive"  			"0"
+			"IsHidden" 			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+			"IsPurgable"		"1"
+			
+			"TextureName"			"invoker_ice_wall"
+			
+			"EffectName"			"particles/units/heroes/hero_invoker/invoker_ice_wall_debuff.vpcf"
+			"EffectAttachType"		"follow_origin"
+			
+			"StatusEffectName" 			"particles/status_fx/status_effect_frost.vpcf"
+			"StatusEffectPriority" 		"10"
+			
+			"ThinkInterval" 		"%damage_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_invoker/ice_wall.lua"
+					"Function"			"modifier_invoker_ice_wall_datadriven_unit_ability_aura_on_interval_think"
+					"DamageInterval"	"%damage_interval"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%slow"
+			}
+			
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"				"Hero_Invoker.IceWall.Slow"
+					"Target"					"TARGET"
+				}
+			}
 		}
 	}
 }
