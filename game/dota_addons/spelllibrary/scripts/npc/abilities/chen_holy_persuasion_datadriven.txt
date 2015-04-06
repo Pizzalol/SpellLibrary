@@ -1,7 +1,6 @@
 // Rewrite of the Chen Holy Persuasion ability
 // Author: Pizzalol
 // Date: 06.04.2014.
-// NOTE: The HP bonus doesnt work on creeps currently
 "chen_holy_persuasion_datadriven"
 {
 	// General
@@ -102,11 +101,6 @@
 					"ScriptFile"	"heroes/hero_chen/holy_persuasion.lua"
 					"Function"		"HolyPersuasionRemove"
 				}
-			}
-
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_HEALTH_BONUS" "%health_bonus"
 			}
 
 			"States"

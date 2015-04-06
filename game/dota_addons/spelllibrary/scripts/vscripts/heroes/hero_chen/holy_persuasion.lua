@@ -15,11 +15,14 @@ function HolyPersuasion( keys )
 
 	-- Ability variables
 	local max_units = ability:GetLevelSpecialValueFor("max_units", ability_level)
+	local health_bonus = ability:GetLevelSpecialValueFor("health_bonus", ability_level)
 
 	-- Change the ownership of the unit and restore its mana to full
 	target:SetTeam(caster_team)
 	target:SetOwner(caster)
 	target:SetControllableByPlayer(player, true)
+	target:SetMaxHealth(target:GetMaxHealth() + health_bonus)
+	target:Heal(health_bonus, ability)
 	target:GiveMana(target:GetMaxMana())
 
 	-- Track the unit
