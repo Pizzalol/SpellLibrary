@@ -61,18 +61,20 @@ function invoker_ice_wall_datadriven_on_spell_start(keys)
 		if ice_wall_unit_ability ~= nil then
 			ice_wall_unit_ability:SetLevel(quas_level) --This ensures the correct slow intensity is applied.
 			ice_wall_unit_ability:ApplyDataDrivenModifier(ice_wall_unit, ice_wall_unit, "invoker_ice_wall_datadriven_unit_ability", {duration = -1})
-			ice_wall_unit_ability:ApplyDataDrivenModifier(ice_wall_unit, ice_wall_unit, "modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter", {duration = -1})
+			ice_wall_unit_ability:ApplyDataDrivenModifier(ice_wall_unit, ice_wall_unit, "modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter_slow", {duration = -1})
+			ice_wall_unit_ability:ApplyDataDrivenModifier(ice_wall_unit, ice_wall_unit, "modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter_damage", {duration = -1})
 		end
 		
 		--Store the damage per second to deal.  This value is locked depending on Exort's level at the time Ice Wall was cast.
 		ice_wall_unit.damage_per_second = ice_wall_damage_per_second
 		ice_wall_unit.parent_caster = keys.caster  --Store the reference to the Invoker that spawned this Ice Wall unit.
 		
-		--Remove the Ice Wall aura after the duration ends, and the units themselves after their aura slow modifiers will have all expired.
+		--Remove the Ice Wall auras after the duration ends, and the dummy units themselves after their aura slow modifiers will have all expired.
 		Timers:CreateTimer({
 			endTime = ice_wall_duration,
 			callback = function()
-				ice_wall_unit:RemoveModifierByName("modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter")
+				ice_wall_unit:RemoveModifierByName("modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter_slow")
+				ice_wall_unit:RemoveModifierByName("modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter_damage")
 				
 				Timers:CreateTimer({
 					endTime = keys.SlowDuration + 2,
@@ -89,10 +91,10 @@ end
 --[[ ============================================================================================================
 	Author: Rook
 	Date: April 06, 2015
-	Called regularly while a unit is affected by Ice Wall's aura.  Damages them.
+	Called regularly while a unit is affected by Ice Wall's damaging aura.  Damages them.
 	Additional parameters: keys.DamageInterval
 ================================================================================================================= ]]
-function modifier_invoker_ice_wall_datadriven_unit_ability_aura_on_interval_think(keys)
+function modifier_invoker_ice_wall_datadriven_unit_ability_aura_damage_on_interval_think(keys)
 	if keys.caster.damage_per_second ~= nil and keys.caster.parent_caster ~= nil then
 		ApplyDamage({victim = keys.target, attacker = keys.caster.parent_caster, damage = keys.caster.damage_per_second * keys.DamageInterval, damage_type = DAMAGE_TYPE_MAGICAL,})
 	end

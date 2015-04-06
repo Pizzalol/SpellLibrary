@@ -15,6 +15,7 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"invoker_ice_wall"
+	"AbilityCastAnimation" 			"ACT_DOTA_CAST_ICE_WALL"
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -69,7 +70,7 @@
 		"07"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"num_wall_elements"		"15"  //num_wall_elements * wall_element_spacing is the total length of the ice wall.
+			"num_wall_elements"		"15"  //(num_wall_elements * wall_element_spacing) + (2 * wall_element_radius) is the total length of the ice wall.
 		}
 		"08"
 		{
@@ -96,6 +97,8 @@
 		}
 	}
 	
+	//The slow lingers for %slow_duration seconds, but the damage over time ends as soon as the unit leaves the Ice Wall's radius,
+	//so two auras are used.
 	"Modifiers"
 	{	
 		"invoker_ice_wall_datadriven_unit_ability"
@@ -121,7 +124,7 @@
 				"MODIFIER_STATE_NO_HEALTH_BAR"  		"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
-		"modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter"
+		"modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter_slow"
 		{
 			"Passive"			"0"
 			"IsHidden"			"1"
@@ -130,13 +133,13 @@
 			"IsPurgable"		"0"
 			"Attributes" 		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 			
-			"Aura" 				"modifier_invoker_ice_wall_datadriven_unit_ability_aura"
+			"Aura" 				"modifier_invoker_ice_wall_datadriven_unit_ability_aura_slow"
 			"Aura_Radius" 		"%wall_element_radius"
 			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 			"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
 			"Aura_ApplyToCaster" "0"
 		}
-		"modifier_invoker_ice_wall_datadriven_unit_ability_aura"
+		"modifier_invoker_ice_wall_datadriven_unit_ability_aura_slow"  //This modifier is visible to affected units.
 		{
 			"Duration"			"%slow_duration"
 			"Passive"  			"0"
@@ -153,17 +156,6 @@
 			"StatusEffectName" 			"particles/status_fx/status_effect_frost.vpcf"
 			"StatusEffectPriority" 		"10"
 			
-			"ThinkInterval" 		"%damage_interval"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"		"heroes/hero_invoker/ice_wall.lua"
-					"Function"			"modifier_invoker_ice_wall_datadriven_unit_ability_aura_on_interval_think"
-					"DamageInterval"	"%damage_interval"
-				}
-			}
-			
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%slow"
@@ -175,6 +167,40 @@
 				{
 					"EffectName"				"Hero_Invoker.IceWall.Slow"
 					"Target"					"TARGET"
+				}
+			}
+		}
+		"modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter_damage"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			
+			"Aura" 				"modifier_invoker_ice_wall_datadriven_unit_ability_aura_damage"
+			"Aura_Radius" 		"%wall_element_radius"
+			"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+			"Aura_ApplyToCaster" "0"
+		}
+		"modifier_invoker_ice_wall_datadriven_unit_ability_aura_damage"  //This modifier is hidden to affected units.
+		{
+			"Passive"  			"0"
+			"IsHidden" 			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+			"IsPurgable"		"0"
+			
+			"ThinkInterval" 		"%damage_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_invoker/ice_wall.lua"
+					"Function"			"modifier_invoker_ice_wall_datadriven_unit_ability_aura_damage_on_interval_think"
+					"DamageInterval"	"%damage_interval"
 				}
 			}
 		}
