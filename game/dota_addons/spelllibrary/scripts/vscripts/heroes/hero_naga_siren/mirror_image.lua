@@ -23,6 +23,9 @@ function MirrorImage( event )
 	local casterOrigin = caster:GetAbsOrigin()
 	local casterAngles = caster:GetAngles()
 
+	-- Stop any actions of the caster otherwise its obvious which unit is real
+	caster:Stop()
+
 	-- Initialize the illusion table to keep track of the units created by the spell
 	if not caster.mirror_image_illusions then
 		caster.mirror_image_illusions = {}

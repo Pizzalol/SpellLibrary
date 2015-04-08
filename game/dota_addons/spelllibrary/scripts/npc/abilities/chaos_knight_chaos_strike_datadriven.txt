@@ -12,10 +12,10 @@
 	// Precache
 	//-------------------------------------------------------------------------------------------------------------
 	"precache"
-	 {
-	 	"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
-	 	"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
-	 }
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
+		"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
+	}
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
