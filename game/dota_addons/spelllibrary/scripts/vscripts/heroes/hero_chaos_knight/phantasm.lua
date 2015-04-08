@@ -11,8 +11,8 @@ function Phantasm( keys )
 	local unit_name = caster:GetUnitName()
 	local images_count = ability:GetLevelSpecialValueFor( "images_count", ability_level )
 	local duration = ability:GetLevelSpecialValueFor( "illusion_duration", ability_level )
-	local outgoingDamage = ability:GetLevelSpecialValueFor( "illusion_outgoing_damage", ability_level )
-	local incomingDamage = ability:GetLevelSpecialValueFor( "illusion_incoming_damage", ability_level )
+	local outgoingDamage = ability:GetLevelSpecialValueFor( "outgoing_damage", ability_level )
+	local incomingDamage = ability:GetLevelSpecialValueFor( "incoming_damage", ability_level )
 	local extra_illusion_chance = ability:GetLevelSpecialValueFor("extra_phantasm_chance_pct_tooltip", ability_level)
 	local extra_illusion_sound = keys.sound
 
@@ -22,6 +22,21 @@ function Phantasm( keys )
 
 	-- Stop any actions of the caster otherwise its obvious which unit is real
 	caster:Stop()
+
+	-- Initialize the illusion table to keep track of the units created by the spell
+	if not caster.phantasm_illusions then
+		caster.phantasm_illusions = {}
+	end
+
+	-- Kill the old images
+	for k,v in pairs(caster.phantasm_illusions) do
+		if v and IsValidEntity(v) then 
+			v:ForceKill(false)
+		end
+	end
+
+	-- Start a clean illusion table
+	caster.phantasm_illusions = {}
 
 	-- Setup a table of potential spawn positions
 	local vRandomSpawnPos = {
@@ -88,6 +103,9 @@ function Phantasm( keys )
 		
 		-- Without MakeIllusion the unit counts as a hero, e.g. if it dies to neutrals it says killed by neutrals, it respawns, etc.
 		illusion:MakeIllusion()
+
+		-- Add the illusion created to a table within the caster handle, to remove the illusions on the next cast if necessary
+		table.insert(caster.phantasm_illusions, illusion)
 	end
 
 	-- Check is we got lucky with the chance and create an extra illusion if we did
@@ -137,6 +155,9 @@ function Phantasm( keys )
 		-- Without MakeIllusion the unit counts as a hero, e.g. if it dies to neutrals it says killed by neutrals, it respawns, etc.
 		illusion:MakeIllusion()
 		EmitSoundOn(extra_illusion_sound, caster)
+
+		-- Add the illusion created to a table within the caster handle, to remove the illusions on the next cast if necessary
+		table.insert(caster.phantasm_illusions, illusion)
 	end
 end
 
