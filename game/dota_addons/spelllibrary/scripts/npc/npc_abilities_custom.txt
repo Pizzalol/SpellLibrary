@@ -26947,11 +26947,15 @@
 		}
 	}
 	
+	// Rewrite of the Lifestealer Consume ability
+	// Author: jacklarnes
+	// Date: 07.04.2015.
+	// NOTE: Spell is incomplete
 	"life_stealer_consume_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_datadriven"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED"
 		"FightRecapLevel"				"1"
@@ -26959,9 +26963,32 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		"AbilityCastPoint"				"0"
+	    "AbilityCastRange"              "0"
+	
+		"OnUpgrade"
+		{
+			"LevelUpAbility"
+			{
+				"Target" 		"CASTER"
+				"AbilityName"	"life_stealer_infest_datadriven"
+			}
+		}
+	
+		"OnSpellStart"
+		// OnSpellStart as a Modifier Event, you can Apply it on a target to trigger any Actions.
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_life_stealer/infest.lua"
+				"Function"		"infest_consume"
+			}
+		}
 	}
 	
+	// Rewrite of the Lifestealer Feast ability
+	// Author: jacklarnes, Pizzalol
+	// Date: 07.04.2015.
 	"life_stealer_feast_datadriven"
 	{
 		// General
@@ -26969,7 +26996,13 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	    "AbilityTextureName"            "life_stealer_feast"
 	
+	    "precache"
+	    {
+	        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
+	        "particle"          "particles/units/heroes/hero_life_stealer/life_stealer_feast.vpcf"
+	    }
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -26980,23 +27013,94 @@
 				"hp_leech_percent"		"4 5 6 7"
 			}
 		}
+		"Modifiers"
+		{
+			"modifier_feast_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsDebuff"			"0"
+	
+				"OnAttackStart"
+				// "%attack_damage" is set to the damage value before mitigation
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_feast_damage_datadriven"
+						"Target" 		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_life_stealer/feast.lua"
+						"Function"		"feast_attack"
+						"feast_modifier"	"modifier_feast_damage_datadriven"
+					}
+				}
+	
+				"OnAttack"
+				{
+					"FireEffect"
+					{
+						"EffectName"        "particles/generic_gameplay/generic_lifesteal.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_life_stealer/feast.lua"
+						"Function"		"feast_heal"
+					}
+				}			
+			}
+	
+			"modifier_feast_damage_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"OnAttackLanded"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_feast_damage_datadriven"
+						"Target" 		"CASTER"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "1"
+				}
+			}
+		}
 	}
 	
+	// Rewrite of the Lifestealer Infest ability
+	// Author: jacklarnes
+	// Date: 07.04.2015.
+	// NOTE: Spell is incomplete
 	"life_stealer_infest_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_HERO"
+		//"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"life_stealer_infest"
 		
+		"precache"
+	    {
+	        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
+	        "particle"          "particles/units/heroes/hero_life_stealer/life_stealer_infest_cast.vpcf"
+	    }
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.2"
@@ -27028,8 +27132,93 @@
 				"damage"				"150 275 400"
 			}
 		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_name/infest.lua"
+				"Function"		"infest_add_consume"
+			}
+	
+			"LevelUpAbility"
+			{
+				"Target" 		"CASTER"
+				"AbilityName"	"life_stealer_consume_datadriven"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_LifeStealer.Infest"
+				"Target" 		"TARGET"
+			}
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_life_stealer/life_stealer_infest_cast.vpcf"
+				"EffectAttachType"  "attach_hitloc"
+				"Target"            "TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_infest_hide"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_life_stealer/infest.lua"
+				"Function"		"infest_start"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_life_stealer/infest.lua"
+				"Function"		"infest_check_valid"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_infest_hide"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+		
+				"States"
+				{
+					//"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		   "MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_life_stealer/infest.lua"
+						"Function"		"infest_move_unit"
+					}				
+				}
+			}
+		}
 	}
 	
+	// Rewrite of the Lifestealer Open Wounds ability
+	// Author: jacklarnes
+	// Date: 07.04.2015.
+	// NOTE: Slow is static
 	"life_stealer_open_wounds_datadriven"
 	{
 		// General
@@ -27042,6 +27231,11 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"life_stealer_open_wounds"
 	
+	    "precache"
+	    {
+	        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
+	        "particle"          "particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf"
+	    }
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.2"
@@ -27062,10 +27256,15 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
+			//"01"
+			//{
+			//	"var_type"				"FIELD_INTEGER"
+			//	"slow_steps"			"-70 -70 -60 -50 -30 -10 -10 -10"
+			//}
+			"01" // this is because im too inept to do the above
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_steps"			"-70 -70 -60 -50 -30 -10 -10 -10"
+				"slow_percentage"		"-20 -30 -40 -50"
 			}
 			"02"
 			{
@@ -27088,45 +27287,177 @@
 				"tooltip_range"			"200 300 400 500"
 			}
 		}
-	}
 	
-	"life_stealer_rage_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0"
-		"AbilityCastRange"				"0"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"19"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75 75 75 75"
-		
-		"AbilityDuration"				"3 4 5 6"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
+		"OnSpellStart"
 		{
-			"01"
+			"FireSound"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"attack_speed_bonus"	"30 45 60 80"
+				"EffectName"	"Hero_LifeStealer.OpenWounds.Cast"
+				"Target" 		"TARGET"
 			}
-			"02"
+	
+			"ApplyModifier"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 4.0 5.0 6.0"
+				"ModifierName"	"modifier_open_wounds"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
 			}
 		}
+	
+		"Modifiers"
+		{
+			"modifier_open_wounds"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+	
+				"OnTakeDamage"
+				{
+					"Heal"
+					{
+						"Target"        "ATTACKER"
+						"HealAmount"	"%attack_damage * %heal_percent / 100"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_LifeStealer.OpenWounds"
+						"Target" 		"TARGET"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf"
+						"EffectAttachType"  "attach_hitloc"
+						"Target"            "TARGET"
+					}
+				}
+	
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_percentage" 
+				}
+				
+			}
+		}
+	}
+	
+	// Rewrite of the Lifestealer Rage ability
+	// Author: jacklarnes
+	// Date: 07.04.2015.
+	"life_stealer_rage_datadriven"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityTextureName"            "life_stealer_rage"
+	
+	
+	    "precache"
+	    {
+	        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
+	        "particle"          "particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf"
+	        "particle"          "particles/status_fx/status_effect_life_stealer_rage.vpcf"
+	    }
+	
+	
+	    // Casting
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastPoint"              "0"
+	    "AbilityCastRange"              "0"
+	    
+	    // Time     
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCooldown"               "19"
+	    
+	    // Cost
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityManaCost"               "75 75 75 75"
+	    
+	    "AbilityDuration"               "3 4 5 6"
+	    
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "attack_speed_bonus"    "30 45 60 80"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "duration"              "3.0 4.0 5.0 6.0"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_LifeStealer.Rage"
+	            "Target"        "CASTER"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "scripts/vscripts/heroes/hero_life_stealer/rage.lua"
+	            "Function"        "rage_start"
+	        }
+	
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_rage_ability"
+	            "Target"        "CASTER"
+	            "Duration"      "%duration"
+	        }
+	
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_rage_ability"
+	        {
+	            "Passive"           "0"
+	            "IsHidden"          "0"
+	            "IsDebuff"          "0"
+	
+	            "StatusEffectName"         "particles/status_fx/status_effect_life_stealer_rage.vpcf"        
+	            "StatusEffectPriority"  "10"
+	    
+	            "OnCreated"
+	            {
+	                "AttachEffect"
+	                {
+	                    "EffectName"        "particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf"
+	                    "EffectAttachType"  "attach_hitloc"
+	                    "Target"            "CASTER"
+	                    "ControlPointEntities"
+	                    {
+	                        "CASTER"    "attach_hitloc"
+	                        "CASTER"    "attach_hitloc"
+	                        "CASTER"    "attach_hitloc"
+	                    }
+	                }
+	            }
+	    
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_bonus"
+	            }
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_MAGIC_IMMUNE"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	    }
 	}
 	
 	// Rewrite of the Lina Dragon Slave ability

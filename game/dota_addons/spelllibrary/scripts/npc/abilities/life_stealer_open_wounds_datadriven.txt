@@ -1,3 +1,7 @@
+// Rewrite of the Lifestealer Open Wounds ability
+// Author: jacklarnes
+// Date: 07.04.2015.
+// NOTE: Slow is static
 "life_stealer_open_wounds_datadriven"
 {
 	// General
@@ -10,6 +14,11 @@
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"life_stealer_open_wounds"
 
+    "precache"
+    {
+        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
+        "particle"          "particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf"
+    }
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastPoint"				"0.2"
@@ -30,10 +39,15 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
 	{
-		"01"
+		//"01"
+		//{
+		//	"var_type"				"FIELD_INTEGER"
+		//	"slow_steps"			"-70 -70 -60 -50 -30 -10 -10 -10"
+		//}
+		"01" // this is because im too inept to do the above
 		{
 			"var_type"				"FIELD_INTEGER"
-			"slow_steps"			"-70 -70 -60 -50 -30 -10 -10 -10"
+			"slow_percentage"		"-20 -30 -40 -50"
 		}
 		"02"
 		{
@@ -54,6 +68,63 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"tooltip_range"			"200 300 400 500"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_LifeStealer.OpenWounds.Cast"
+			"Target" 		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_open_wounds"
+			"Target" 		"TARGET"
+			"Duration"		"%duration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_open_wounds"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"1"
+
+			"OnTakeDamage"
+			{
+				"Heal"
+				{
+					"Target"        "ATTACKER"
+					"HealAmount"	"%attack_damage * %heal_percent / 100"
+				}
+			}
+
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_LifeStealer.OpenWounds"
+					"Target" 		"TARGET"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf"
+					"EffectAttachType"  "attach_hitloc"
+					"Target"            "TARGET"
+				}
+			}
+
+			"Properties"
+			{
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_percentage" 
+			}
+			
 		}
 	}
 }

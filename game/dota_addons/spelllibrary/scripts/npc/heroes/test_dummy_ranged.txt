@@ -4,8 +4,9 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"chen_penitence_datadriven"
-	"Ability2"	"chen_test_of_faith_datadriven"
-	"Ability3"	"chaos_knight_chaos_strike_datadriven"
-	"Ability4"	"chen_holy_persuasion_datadriven"
+	"Ability1"	"life_stealer_rage_datadriven"
+	"Ability2"	"life_stealer_feast_datadriven"
+	"Ability3"	"life_stealer_open_wounds_datadriven"
+	"Ability4"	"life_stealer_infest_datadriven"
+	"Ability5"	"life_stealer_consume_datadriven"
 }

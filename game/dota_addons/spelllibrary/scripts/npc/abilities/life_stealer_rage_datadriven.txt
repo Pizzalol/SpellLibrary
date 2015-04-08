@@ -1,39 +1,114 @@
+// Rewrite of the Lifestealer Rage ability
+// Author: jacklarnes
+// Date: 07.04.2015.
 "life_stealer_rage_datadriven"
 {
-	// General
-	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"                     "ability_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityTextureName"            "life_stealer_rage"
 
-	// Casting
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastPoint"				"0"
-	"AbilityCastRange"				"0"
-	
-	// Time		
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"19"
-	
-	// Cost
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"75 75 75 75"
-	
-	"AbilityDuration"				"3 4 5 6"
-	
-	// Special
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"attack_speed_bonus"	"30 45 60 80"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"duration"				"3.0 4.0 5.0 6.0"
-		}
-	}
+
+    "precache"
+    {
+        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
+        "particle"          "particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf"
+        "particle"          "particles/status_fx/status_effect_life_stealer_rage.vpcf"
+    }
+
+
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastPoint"              "0"
+    "AbilityCastRange"              "0"
+    
+    // Time     
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"               "19"
+    
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"               "75 75 75 75"
+    
+    "AbilityDuration"               "3 4 5 6"
+    
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "attack_speed_bonus"    "30 45 60 80"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "duration"              "3.0 4.0 5.0 6.0"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"    "Hero_LifeStealer.Rage"
+            "Target"        "CASTER"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "scripts/vscripts/heroes/hero_life_stealer/rage.lua"
+            "Function"        "rage_start"
+        }
+
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_rage_ability"
+            "Target"        "CASTER"
+            "Duration"      "%duration"
+        }
+
+    }
+
+    "Modifiers"
+    {
+        "modifier_rage_ability"
+        {
+            "Passive"           "0"
+            "IsHidden"          "0"
+            "IsDebuff"          "0"
+
+            "StatusEffectName"         "particles/status_fx/status_effect_life_stealer_rage.vpcf"        
+            "StatusEffectPriority"  "10"
+    
+            "OnCreated"
+            {
+                "AttachEffect"
+                {
+                    "EffectName"        "particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf"
+                    "EffectAttachType"  "attach_hitloc"
+                    "Target"            "CASTER"
+                    "ControlPointEntities"
+                    {
+                        "CASTER"    "attach_hitloc"
+                        "CASTER"    "attach_hitloc"
+                        "CASTER"    "attach_hitloc"
+                    }
+                }
+            }
+    
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_bonus"
+            }
+
+            "States"
+            {
+                "MODIFIER_STATE_MAGIC_IMMUNE"        "MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+    }
 }
 

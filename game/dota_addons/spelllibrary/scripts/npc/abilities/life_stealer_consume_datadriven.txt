@@ -1,8 +1,12 @@
+// Rewrite of the Lifestealer Consume ability
+// Author: jacklarnes
+// Date: 07.04.2015.
+// NOTE: Spell is incomplete
 "life_stealer_consume_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED"
 	"FightRecapLevel"				"1"
@@ -10,6 +14,26 @@
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+	"AbilityCastPoint"				"0"
+    "AbilityCastRange"              "0"
+
+	"OnUpgrade"
+	{
+		"LevelUpAbility"
+		{
+			"Target" 		"CASTER"
+			"AbilityName"	"life_stealer_infest_datadriven"
+		}
+	}
+
+	"OnSpellStart"
+	// OnSpellStart as a Modifier Event, you can Apply it on a target to trigger any Actions.
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_life_stealer/infest.lua"
+			"Function"		"infest_consume"
+		}
+	}
 }
 

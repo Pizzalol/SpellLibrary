@@ -1,3 +1,6 @@
+// Rewrite of the Lifestealer Feast ability
+// Author: jacklarnes, Pizzalol
+// Date: 07.04.2015.
 "life_stealer_feast_datadriven"
 {
 	// General
@@ -5,7 +8,13 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+    "AbilityTextureName"            "life_stealer_feast"
 
+    "precache"
+    {
+        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
+        "particle"          "particles/units/heroes/hero_life_stealer/life_stealer_feast.vpcf"
+    }
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
@@ -14,6 +23,68 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"hp_leech_percent"		"4 5 6 7"
+		}
+	}
+	"Modifiers"
+	{
+		"modifier_feast_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsDebuff"			"0"
+
+			"OnAttackStart"
+			// "%attack_damage" is set to the damage value before mitigation
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_feast_damage_datadriven"
+					"Target" 		"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_life_stealer/feast.lua"
+					"Function"		"feast_attack"
+					"feast_modifier"	"modifier_feast_damage_datadriven"
+				}
+			}
+
+			"OnAttack"
+			{
+				"FireEffect"
+				{
+					"EffectName"        "particles/generic_gameplay/generic_lifesteal.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_life_stealer/feast.lua"
+					"Function"		"feast_heal"
+				}
+			}			
+		}
+
+		"modifier_feast_damage_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+
+			"OnAttackLanded"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_feast_damage_datadriven"
+					"Target" 		"CASTER"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "1"
+			}
 		}
 	}
 }
