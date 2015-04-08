@@ -13,12 +13,11 @@
 	{
 		"override_hero" "npc_dota_hero_ancient_apparition"
 	
-		"AbilityLayout"	"5"
+		"AbilityLayout"	"4"
 	
 		"Ability1"	"chen_penitence_datadriven"
 		"Ability2"	"chen_test_of_faith_datadriven"
-		"Ability3"	"chen_test_of_faith_teleport_datadriven"
+		"Ability3"	"chaos_knight_chaos_strike_datadriven"
 		"Ability4"	"chen_holy_persuasion_datadriven"
-		"Ability5"	"chen_hand_of_god_datadriven"
 	}
 }

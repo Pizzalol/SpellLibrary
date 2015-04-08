@@ -1,9 +1,21 @@
+// Rewrite of the Chaos Knight Chaos Strike ability
+// Author: Pizzalol
+// Date: 07.04.2015.
 "chaos_knight_chaos_strike_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"chaos_knight_chaos_strike"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	 {
+	 	"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
+	 	"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
+	 }
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -18,6 +30,68 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"crit_chance"				"10 10 10 10"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_chaos_strike_datadriven"
+		{
+		    "Passive"   "1"
+		    "IsHidden"  "1"
+
+		    "OnAttackStart"
+		    {
+		        "RemoveModifier"
+		        {
+		            "ModifierName" 	"modifier_chaos_strike_crit_datadriven"
+		            "Target" 		"CASTER"
+		        }
+
+		        "Random"
+		        {
+		            "Chance" 	"%crit_chance"
+		            "OnSuccess"
+		            {
+		            	"FireSound"
+				        {
+				        	"EffectName"	"Hero_ChaosKnight.ChaosStrike"
+				        	"Target"		"CASTER"
+				        }
+
+				        "FireEffect"
+				        {
+				       		"EffectName" 		"particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
+				            "EffectAttachType"  "attach_attack1"
+				            "Target"    		"CASTER"
+				        }
+
+		                "ApplyModifier"
+		                {
+		                    "ModifierName" 	"modifier_chaos_strike_crit_datadriven"
+		                    "Target"    	"CASTER"    
+		                }        
+		            }
+		        }
+		    }
+		}
+
+		"modifier_chaos_strike_crit_datadriven"
+		{
+		    "IsHidden"  "1"
+		    "Properties"
+		    {
+		        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
+		    }
+
+		    "OnAttackLanded"
+		    {
+		        "RemoveModifier"
+		        {
+		            "ModifierName"  "modifier_chaos_strike_crit_datadriven"
+		            "Target"   		"CASTER"    
+		        }
+		    }
 		}
 	}
 }

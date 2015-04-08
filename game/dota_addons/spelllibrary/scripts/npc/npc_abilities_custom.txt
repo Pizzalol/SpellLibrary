@@ -8555,12 +8555,24 @@
 		}
 	}
 	
+	// Rewrite of the Chaos Knight Chaos Strike ability
+	// Author: Pizzalol
+	// Date: 07.04.2015.
 	"chaos_knight_chaos_strike_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"chaos_knight_chaos_strike"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		 {
+		 	"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
+		 	"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
+		 }
 	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8575,6 +8587,68 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"crit_chance"				"10 10 10 10"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_chaos_strike_datadriven"
+			{
+			    "Passive"   "1"
+			    "IsHidden"  "1"
+	
+			    "OnAttackStart"
+			    {
+			        "RemoveModifier"
+			        {
+			            "ModifierName" 	"modifier_chaos_strike_crit_datadriven"
+			            "Target" 		"CASTER"
+			        }
+	
+			        "Random"
+			        {
+			            "Chance" 	"%crit_chance"
+			            "OnSuccess"
+			            {
+			            	"FireSound"
+					        {
+					        	"EffectName"	"Hero_ChaosKnight.ChaosStrike"
+					        	"Target"		"CASTER"
+					        }
+	
+					        "FireEffect"
+					        {
+					       		"EffectName" 		"particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
+					            "EffectAttachType"  "attach_attack1"
+					            "Target"    		"CASTER"
+					        }
+	
+			                "ApplyModifier"
+			                {
+			                    "ModifierName" 	"modifier_chaos_strike_crit_datadriven"
+			                    "Target"    	"CASTER"    
+			                }        
+			            }
+			        }
+			    }
+			}
+	
+			"modifier_chaos_strike_crit_datadriven"
+			{
+			    "IsHidden"  "1"
+			    "Properties"
+			    {
+			        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
+			    }
+	
+			    "OnAttackLanded"
+			    {
+			        "RemoveModifier"
+			        {
+			            "ModifierName"  "modifier_chaos_strike_crit_datadriven"
+			            "Target"   		"CASTER"    
+			        }
+			    }
 			}
 		}
 	}
@@ -21030,18 +21104,23 @@
 		}
 	}
 	
+	// Rewrite of Chaos Meteor
+	// Author: Rook
+	// Date: April 06, 2015
+	// Dependencies: npc_dummy_blank in npc_units_custom.txt (source found in scripts/npc/units in the SpellLibrary)
 	"invoker_chaos_meteor_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"1"
 		"HotKeyOverride"				"D"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"invoker_chaos_meteor"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_CHAOS_METEOR"
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -21053,7 +21132,14 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityModifierSupportValue"	"0.0"	// Mainly about damage
-			
+		
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_invoker/invoker_chaos_meteor.vpcf"
+			"particle"				"particles/units/heroes/hero_invoker/invoker_chaos_meteor_fly.vpcf"
+			"particle"				"particles/units/heroes/hero_invoker/invoker_chaos_meteor_burn_debuff.vpcf"
+		}
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -21061,7 +21147,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"land_time"				"1.3"
+				"land_time"				"1.3"  //The meteor lands on the ground this many seconds after it was cast.
 			}
 			"02"
 			{
@@ -21078,11 +21164,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"travel_speed"			"300"
-			}			
+			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_interval"		"0.5"
+				"damage_interval"		"0.5"  //The main damage and a burn damage modifier is applied by the meteor this often.
 			}
 			"06"
 			{
@@ -21110,6 +21196,104 @@
 				"var_type"				"FIELD_FLOAT"
 				"burn_dps"				"11.5 15 18.5 22 25.5 29 32.5"
 				"levelkey"				"exortlevel"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_dps_inverval"		"1"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"								"heroes/hero_invoker/chaos_meteor.lua"
+				"Function"									"invoker_chaos_meteor_datadriven_on_spell_start"
+				"Target"									"POINT"
+				"LandTime"									"%land_time"
+				"TravelSpeed"								"%travel_speed"
+				"VisionDistance"							"%vision_distance"
+				"EndVisionDuration"							"%end_vision_duration"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_invoker_chaos_meteor_datadriven_unit_ability"
+			{
+				"Passive"			"0"
+				"IsHidden" 			"0"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"  	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_TEAM_MOVE_TO"    	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_TEAM_SELECT" 		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" 	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"  		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"       	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" 		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"    		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"  		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_invoker_chaos_meteor_datadriven_main_damage"
+			{
+				"Passive"  			"0"
+				"IsHidden" 			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				
+				"ThinkInterval" 	"%damage_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_invoker/chaos_meteor.lua"
+						"Function"				"modifier_invoker_chaos_meteor_datadriven_main_damage_on_interval_think"
+						"AreaOfEffect"			"%area_of_effect"
+						"BurnDuration"			"%burn_duration"
+					}
+				}
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_invoker/chaos_meteor.lua"
+						"Function"				"modifier_invoker_chaos_meteor_datadriven_main_damage_on_interval_think"
+						"AreaOfEffect"			"%area_of_effect"
+					}
+				}
+			}
+			"modifier_invoker_chaos_meteor_datadriven_burn_damage"
+			{
+				"Duration"			"%burn_duration"
+				"Passive"  			"0"
+				"IsHidden" 			"0"
+				"IsBuff"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+				
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"ThinkInterval" 	"%burn_dps_inverval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_invoker/chaos_meteor.lua"
+						"Function"				"modifier_invoker_chaos_meteor_datadriven_burn_damage_on_interval_think"
+						"BurnDPSInterval"		"%burn_dps_inverval"
+					}
+				}
 			}
 		}
 	}
@@ -21277,16 +21461,23 @@
 		"MaxLevel"						"0"
 		"AbilityTextureName" 			"rubick_empty1"
 	}
+	// Rewrite of EMP
+	// Author: Rook
+	// Date: April 06, 2015
+	// Dependencies: npc_dummy_blank in npc_units_custom.txt (source found in scripts/npc/units in the SpellLibrary)
+	
 	"invoker_emp_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_AOE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"						"1"
 		"HotKeyOverride"				"C"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"AbilityTextureName"			"invoker_emp"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_EMP"
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -21294,32 +21485,85 @@
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"30"
 		"AbilityManaCost"				"125"
-			
+		"AoERadius"						"675"  //Update %area_of_effect if this is.
+		
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_emp.vpcf"
+			"particle"			"particles/units/heroes/hero_invoker/invoker_emp_explode.vpcf"
+		}
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"delay"					"2.9"
-				"levelkey"				"wexlevel"
+				"var_type"					"FIELD_FLOAT"
+				"delay"						"2.9"
+				"levelkey"					"wexlevel"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"675"
+				"var_type"					"FIELD_INTEGER"
+				"area_of_effect"			"675"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_burned"			"100 175 250 325 400 475 550"
-				"levelkey"				"wexlevel"
+				"var_type"					"FIELD_INTEGER"
+				"mana_burned"				"100 175 250 325 400 475 550"
+				"levelkey"					"wexlevel"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_mana_pct"	"50"
+				"var_type"					"FIELD_INTEGER"
+				"damage_per_mana_pct"		"50"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_gain_per_mana_pct"	"50"  //The percentage of mana restored to Invoker when mana is drained from enemy heroes.
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"					"heroes/hero_invoker/emp.lua"
+				"Function"						"invoker_emp_datadriven_on_spell_start"
+				"Target"						"POINT"
+				"Delay"							"%delay"
+				"AreaOfEffect"					"%area_of_effect"
+				"DamagePerManaPct"				"%damage_per_mana_pct"
+				"ManaGainPerManaPct"			"%mana_gain_per_mana_pct"
+			}
+		}
+		
+		"Modifiers"
+		{	
+			"modifier_invoker_emp_datadriven_unit_ability"
+			{
+				"Passive"			"0"
+				"IsHidden" 			"0"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"  	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_TEAM_MOVE_TO"    	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_TEAM_SELECT" 		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" 	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"  		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"       	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" 		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"    		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"  		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -21525,23 +21769,37 @@
 		}
 	}
 	
+	// Rewrite of Ice Wall
+	// Author: Rook
+	// Date: April 06, 2015
+	// Dependencies: npc_dummy_blank in npc_units_custom.txt (source found in scripts/npc/units in the SpellLibrary)
+	
 	"invoker_ice_wall_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"						"1"
 		"HotKeyOverride"				"G"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"invoker_ice_wall"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ICE_WALL"
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"25"
 		"AbilityManaCost"				"175"
+		
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_ice_wall.vpcf"
+			"particle"			"particles/units/heroes/hero_invoker/invoker_ice_wall_b.vpcf"
+			"particle"			"particles/units/heroes/hero_invoker/invoker_ice_wall_debuff.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -21572,23 +21830,150 @@
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"wall_place_distance"	"200"
+				"var_type"				"FIELD_FLOAT"
+				"damage_interval"		"1"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"num_wall_elements"		"15"
+				"wall_place_distance"	"200"  //This is the distance from Invoker to the middle point of the perpendicular ice wall.
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wall_element_spacing"	"80"
+				"num_wall_elements"		"15"  //(num_wall_elements * wall_element_spacing) + (2 * wall_element_radius) is the total length of the ice wall.
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wall_element_radius"	"105"
+				"wall_element_spacing"	"80"  //The distance between the entity nodes comprising the ice wall.
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"wall_element_radius"	"105"  //Effectively the width of the wall's slowing/damaging aura.
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_invoker/ice_wall.lua"
+				"Function"				"invoker_ice_wall_datadriven_on_spell_start"
+				"NumWallElements"		"%num_wall_elements"
+				"WallElementSpacing"	"%wall_element_spacing"
+				"WallPlaceDistance"		"%wall_place_distance"
+				"SlowDuration"			"%slow_duration"
+			}
+		}
+		
+		//The slow lingers for %slow_duration seconds, but the damage over time ends as soon as the unit leaves the Ice Wall's radius,
+		//so two auras are used.
+		"Modifiers"
+		{	
+			"modifier_invoker_ice_wall_datadriven_unit_ability"
+			{
+				"Passive"			"0"
+				"IsHidden" 			"0"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"  	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_TEAM_MOVE_TO"    	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_TEAM_SELECT" 		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" 	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"  		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"       	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" 		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"    		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"  		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter_slow"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				
+				"Aura" 				"modifier_invoker_ice_wall_datadriven_unit_ability_aura_slow"
+				"Aura_Radius" 		"%wall_element_radius"
+				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_ApplyToCaster" "0"
+			}
+			"modifier_invoker_ice_wall_datadriven_unit_ability_aura_slow"  //This modifier is visible to affected units.
+			{
+				"Duration"			"%slow_duration"
+				"Passive"  			"0"
+				"IsHidden" 			"0"
+				"IsBuff"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+				
+				"TextureName"			"invoker_ice_wall"
+				
+				"EffectName"			"particles/units/heroes/hero_invoker/invoker_ice_wall_debuff.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"StatusEffectName" 			"particles/status_fx/status_effect_frost.vpcf"
+				"StatusEffectPriority" 		"10"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%slow"
+				}
+				
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"				"Hero_Invoker.IceWall.Slow"
+						"Target"					"TARGET"
+					}
+				}
+			}
+			"modifier_invoker_ice_wall_datadriven_unit_ability_aura_emitter_damage"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				
+				"Aura" 				"modifier_invoker_ice_wall_datadriven_unit_ability_aura_damage"
+				"Aura_Radius" 		"%wall_element_radius"
+				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_ApplyToCaster" "0"
+			}
+			"modifier_invoker_ice_wall_datadriven_unit_ability_aura_damage"  //This modifier is hidden to affected units.
+			{
+				"Passive"  			"0"
+				"IsHidden" 			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"0"
+				
+				"ThinkInterval" 		"%damage_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_invoker/ice_wall.lua"
+						"Function"			"modifier_invoker_ice_wall_datadriven_unit_ability_aura_damage_on_interval_think"
+						"DamageInterval"	"%damage_interval"
+					}
+				}
 			}
 		}
 	}
@@ -21802,16 +22187,26 @@
 		}
 	}
 	
+	// Rewrite of Tornado
+	// Author: Rook
+	// Date: April 06, 2015
+	// Dependencies: npc_dummy_blank in npc_units_custom.txt (source found in scripts/npc/units in the SpellLibrary)
+	// Known bugs:
+	//     Part of the invoker_tornado_child.vpcf particle (which appears when enemy units are hit by the tornado and cycloned)
+	//         follows Invoker when it shouldn't, due to the particle properties.
+	
 	"invoker_tornado_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"						"1"
 		"HotKeyOverride"				"X"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"invoker_tornado"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_TORNADO"
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -21819,6 +22214,12 @@
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"30"
 		"AbilityManaCost"				"150"
+		
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_tornado.vpcf"
+			"particle"			"particles/units/heroes/hero_invoker/invoker_tornado_child.vpcf"
+		}
 			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -21864,14 +22265,129 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"quas_damage"			"0 0 0 0 0 0 0"
-				"levelkey"				"quaslevel"
+				"wex_damage"			"45 90 135 180 225 270 315"
+				"levelkey"				"wexlevel"
 			}
 			"09"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"wex_damage"			"45 90 135 180 225 270 315"
-				"levelkey"				"wexlevel"
+				"var_type"					"FIELD_INTEGER"
+				"cyclone_min_height"		"300"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cyclone_initial_height"	"350"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cyclone_max_height"		"400"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"								"heroes/hero_invoker/tornado.lua"
+				"Function"									"invoker_tornado_datadriven_on_spell_start"
+				"Target"									"POINT"
+				"TravelSpeed"								"%travel_speed"
+				"AreaOfEffect"								"%area_of_effect"
+				"VisionDistance"							"%vision_distance"
+				"EndVisionDuration"							"%end_vision_duration"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit" "0"
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_invoker/tornado.lua"
+				"Function"			"invoker_tornado_datadriven_on_projectile_hit_unit"
+			}
+		}
+		
+		"Modifiers"
+		{	
+			"modifier_invoker_tornado_datadriven_unit_ability"
+			{
+				"Passive"			"0"
+				"IsHidden" 			"0"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+				
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"  	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_TEAM_MOVE_TO"    	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_TEAM_SELECT" 		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" 	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"  		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"       	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" 		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"   		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"    		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"  		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_invoker_tornado_datadriven_cyclone"
+			{
+				"States"
+		        {
+					"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
+		        	"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+		        }
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_invoker/invoker_tornado_child.vpcf"
+						"EffectAttachType"	"attach_origin"
+						"Target"            "TARGET"
+					}
+	
+					"RunScript"
+		        	{
+		        		"ScriptFile"				"heroes/hero_invoker/tornado.lua"
+		        		"Function"					"modifier_invoker_tornado_datadriven_cyclone_on_created"
+						"CycloneInitialHeight"		"%cyclone_initial_height"
+						"CycloneMinHeight"			"%cyclone_min_height"
+						"CycloneMaxHeight"			"%cyclone_max_height"
+		        	}
+				}
+				
+				"ThinkInterval"		"0.03"
+				"OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/hero_invoker/tornado.lua"
+	                    "Function"      "modifier_invoker_tornado_datadriven_cyclone_on_interval_think"
+	                }
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+		        	{
+		        		"ScriptFile"	"heroes/hero_invoker/tornado.lua"
+		        		"Function"		"modifier_invoker_tornado_datadriven_cyclone_on_destroy"
+						"BaseDamage"	"%base_damage"
+		        	}
+				}
+	
+				"OverrideAnimation"     "ACT_DOTA_FLAIL"
 			}
 		}
 	}
