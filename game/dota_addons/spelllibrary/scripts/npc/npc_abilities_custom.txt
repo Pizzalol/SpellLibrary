@@ -8497,6 +8497,9 @@
 		}
 	}
 	
+	// Rewrite of the Chaos Knight Chaos Bolt ability
+	// Author: Pizzalol
+	// Date: 08.04.2015.
 	"chaos_knight_chaos_bolt_datadriven"
 	{
 		// General
@@ -8509,6 +8512,15 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"chaos_knight_chaos_bolt"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_chaos_bolt.vpcf"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_bolt_msg.vpcf"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -8551,6 +8563,43 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_max"			"200 225 250 275"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_ChaosKnight.ChaosBolt.Cast"
+				"Target" 		"CASTER"
+			}
+	
+			"TrackingProjectile"
+			{
+				"Target"           	"TARGET"
+				"EffectName"		"particles/units/heroes/hero_chaos_knight/chaos_knight_chaos_bolt.vpcf"
+				"Dodgeable"			"1"
+				"ProvidesVision"	"0"
+				"MoveSpeed"        	"%chaos_bolt_speed"
+				"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"1"
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_ChaosKnight.ChaosBolt.Impact"
+				"Target" 		"TARGET"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_chaos_knight/chaos_bolt.lua"
+				"Function"		"ChaosBolt"
+				"chaos_bolt_particle"	"particles/units/heroes/hero_chaos_knight/chaos_knight_bolt_msg.vpcf"
 			}
 		}
 	}

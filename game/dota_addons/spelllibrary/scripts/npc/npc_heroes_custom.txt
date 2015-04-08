@@ -15,7 +15,7 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"naga_siren_mirror_image_datadriven"
+		"Ability1"	"chaos_knight_chaos_bolt_datadriven"
 		"Ability2"	"life_stealer_feast_datadriven"
 		"Ability3"	"chaos_knight_chaos_strike_datadriven"
 		"Ability4"	"chaos_knight_phantasm_datadriven"
