@@ -17,11 +17,8 @@ function ChaosBolt( keys )
 
 	-- Calculate the stun and damage values
 	local random = RandomFloat(0, 1)
-	local stun = stun_max * random
-	if stun < stun_min then stun = stun_min end
-
-	local damage = damage_max * (1 - random)
-	if damage < damage_min then damage = damage_min end
+	local stun = stun_min + (stun_max - stun_min) * random
+	local damage = damage_min + (damage_max - damage_min) * (1 - random)
 
 	-- Calculate the number of digits needed for the particle
 	local stun_digits = string.len(tostring(math.floor(stun))) + 1
