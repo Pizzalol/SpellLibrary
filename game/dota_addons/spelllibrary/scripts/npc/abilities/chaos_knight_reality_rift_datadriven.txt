@@ -1,3 +1,6 @@
+// Rewrite of the Chaos Knight Reality Rift ability
+// Author: Pizzalol
+// Date: 09.04.2015.
 "chaos_knight_reality_rift_datadriven"
 {
 	// General
@@ -58,6 +61,16 @@
 			"var_type"					"FIELD_FLOAT"
 			"illusion_search_radius"	"1375"
 		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"min_range"					"0.3"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"max_range"					"0.8"
+		}
 	}
 
 	"OnAbilityPhaseStart"
@@ -68,7 +81,12 @@
 			"Target" 		"CASTER"
 		}
 
-		// Run script and fire particle in script
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_chaos_knight/reality_rift.lua"
+			"Function"		"RealityRiftPosition"
+			"reality_rift_particle"	"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
+		}
 	}
 
 	"OnSpellStart"
@@ -79,7 +97,19 @@
 			"Target" 		"TARGET"
 		}
 
-		// Run script for relocating, finding illusions and applying damage buff
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_reality_rift_datadriven"
+			"Target" 		"CASTER"
+			"Duration"		"%bonus_duration"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_chaos_knight/reality_rift.lua"
+			"Function"		"RealityRift"
+			"bonus_modifier"	"modifier_reality_rift_datadriven"
+		}
 	}
 
 	"Modifiers"

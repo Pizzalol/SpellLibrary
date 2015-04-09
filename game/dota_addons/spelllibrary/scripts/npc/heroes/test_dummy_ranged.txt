@@ -5,7 +5,7 @@
 	"AbilityLayout"	"4"
 
 	"Ability1"	"chaos_knight_chaos_bolt_datadriven"
-	"Ability2"	"life_stealer_feast_datadriven"
+	"Ability2"	"chaos_knight_reality_rift_datadriven"
 	"Ability3"	"chaos_knight_chaos_strike_datadriven"
 	"Ability4"	"chaos_knight_phantasm_datadriven"
 }

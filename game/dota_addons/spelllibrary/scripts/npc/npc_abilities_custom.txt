@@ -8847,6 +8847,9 @@
 		}
 	}
 	
+	// Rewrite of the Chaos Knight Reality Rift ability
+	// Author: Pizzalol
+	// Date: 09.04.2015.
 	"chaos_knight_reality_rift_datadriven"
 	{
 		// General
@@ -8858,6 +8861,15 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"chaos_knight_reality_rift"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift_buff.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -8891,6 +8903,87 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"bonus_duration"			"1.2"
+			}
+			// Extra
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"illusion_search_radius"	"1375"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"min_range"					"0.3"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"max_range"					"0.8"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_ChaosKnight.RealityRift"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_chaos_knight/reality_rift.lua"
+				"Function"		"RealityRiftPosition"
+				"reality_rift_particle"	"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_ChaosKnight.RealityRift.Target"
+				"Target" 		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_reality_rift_datadriven"
+				"Target" 		"CASTER"
+				"Duration"		"%bonus_duration"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_chaos_knight/reality_rift.lua"
+				"Function"		"RealityRift"
+				"bonus_modifier"	"modifier_reality_rift_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_reality_rift_datadriven"
+			{
+				"IsBuff"		"1"
+		
+				"EffectName"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift_buff.vpcf"
+				"EffectAttachType"	"attach_attack"
+	
+				"OnAttackLanded"
+				// "%attack_damage" is set to the damage value before mitigation
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_reality_rift_datadriven"
+						"Target" 		"ATTACKER"
+					}
+				}
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
+				}
 			}
 		}
 	}
