@@ -46,13 +46,7 @@ function invoker_chaos_meteor_datadriven_on_spell_start(keys)
 	Timers:CreateTimer({
 		endTime = keys.LandTime,
 		callback = function()
-			--Create a dummy unit will follow the path of the meteor, providing flying vision, sound, damage, etc.
-			local chaos_meteor_dummy_unit = CreateUnitByName("npc_dota_invoker_retro_chaos_meteor_unit", target_point, false, nil, nil, keys.caster:GetTeam())
-			local chaos_meteor_dummy_unit_ability = chaos_meteor_dummy_unit:FindAbilityByName("dummy_unit_passive")
-			if chaos_meteor_dummy_unit_ability ~= nil then
-				chaos_meteor_dummy_unit_ability:SetLevel(1)
-			end
-			
+			--Create a dummy unit will follow the path of the meteor, providing flying vision, sound, damage, etc.			
 			local chaos_meteor_dummy_unit = CreateUnitByName("npc_dummy_blank", target_point, false, nil, nil, keys.caster:GetTeam())
 			chaos_meteor_dummy_unit:AddAbility("invoker_chaos_meteor_datadriven")
 			local chaos_meteor_unit_ability = chaos_meteor_dummy_unit:FindAbilityByName("invoker_chaos_meteor_datadriven")
