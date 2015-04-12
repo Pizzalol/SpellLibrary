@@ -12,7 +12,6 @@ function Invoke( keys )
 	local invoker_empty1 = "invoker_empty1_datadriven"
 	local invoker_empty2 = "invoker_empty2_datadriven"
 	local invoker_slot1 = caster:GetAbilityByIndex(3):GetAbilityName() -- First invoked spell
-	local invoker_slot2 = caster:GetAbilityByIndex(4):GetAbilityName() -- Second invoked spell
 	local spell_to_be_invoked
 
 	--Play the particle effect with the general color.
@@ -65,21 +64,23 @@ function Invoke( keys )
 		end
 
 		-- If its only 1 max invoke spell then just swap abilities in the same slot
-		if max_invoked_spells == 1 then
+		if max_invoked_spells == 1 and invoker_slot1 ~= spell_to_be_invoked then
 			caster:SwapAbilities(invoker_slot1, spell_to_be_invoked, false, true)
 			caster:FindAbilityByName(spell_to_be_invoked):SetLevel(1)
 		-- Otherwise reset the slots and then place the abilities in the proper slots
-		elseif max_invoked_spells == 2 then
+		elseif max_invoked_spells == 2 and invoker_slot1 ~= spell_to_be_invoked then
 			if invoker_slot1 ~= invoker_empty1 then
 				caster:SwapAbilities(invoker_empty1, invoker_slot1, true, false) 
 			end
+
+			local invoker_slot2 = caster:GetAbilityByIndex(4):GetAbilityName() -- Second invoked spell
 
 			if invoker_slot2 ~= invoker_empty2 then
 				caster:SwapAbilities(invoker_empty2, invoker_slot2, true, false) 
 			end
 
-			caster:SwapAbilities(invoker_empty1, spell_to_be_invoked, false, true) 
-			caster:SwapAbilities(invoker_empty2, invoker_slot1, false, true)
+			caster:SwapAbilities(spell_to_be_invoked, invoker_empty1, true, false) 
+			caster:SwapAbilities(invoker_slot1, invoker_empty2, true, false)
 			caster:FindAbilityByName(spell_to_be_invoked):SetLevel(1)
 		end
 	end
