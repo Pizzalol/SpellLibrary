@@ -6,6 +6,17 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 	"MaxLevel"						"1"
 	"HotKeyOverride"				"Z"
+	"AbilityTextureName"			"invoker_alacrity"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		"particle"		"particles/units/heroes/hero_invoker/invoker_alacrity.vpcf"
+		"particle"		"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+		"particle"		"particles/status_fx/status_effect_alacrity.vpcf"
+	}
 	
 	// Unit Targeting
 	//-------------------------------------------------------------------------------------------------------------
@@ -40,6 +51,50 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"duration"					"9"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Invoker.Alacrity"
+			"Target" 		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_alacrity_datadriven"
+			"Target" 		"TARGET"
+			"Duration"		"%duration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_alacrity_datadriven"
+		{
+			"IsBuff"	"1"
+
+			"StatusEffectName" 		"particles/status_fx/status_effect_alacrity.vpcf" 	   
+			"StatusEffectPriority"  "10"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_invoker/invoker_alacrity.vpcf"
+					"EffectAttachType"  "follow_overhead"
+					"Target"            "TARGET"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+					"EffectAttachType"  "follow_overhead"
+					"Target"            "TARGET"
+				}
+			}
 		}
 	}
 }

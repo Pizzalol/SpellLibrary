@@ -1,11 +1,6 @@
 // Rewrite of Invoke
-// Author: Rook
-// Date: April 02, 2015
-// Known bugs:
-//     Invoke's Aghanim's Scepter upgrade is unimplemented.  Presumably, a second version of Invoke would
-//         need to be created, and a modifier would regularly check whether the Invoke spell on Invoker should
-//         be swapped to the other version.
-
+// Author: Rook, Pizzalol
+// Date: April 12, 2015
 "invoker_invoke_datadriven"
 {
 	// General
@@ -52,11 +47,16 @@
 	
 	"OnSpellStart"
 	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Invoker.Invoke"
+			"Target" 		"CASTER"
+		}
+
 		"RunScript"
 		{
 			"ScriptFile"						"heroes/hero_invoker/invoke.lua"
-			"Function"							"invoker_invoke_datadriven_on_spell_start"
-			"MaxInvokedSpells"					"%max_invoked_spells"
+			"Function"							"Invoke"
 		}
 	}
 }
