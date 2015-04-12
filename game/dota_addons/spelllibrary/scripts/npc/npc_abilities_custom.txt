@@ -21271,6 +21271,9 @@
 		}
 	}
 	
+	// Rewrite of the Invoker Alacrity ability
+	// Author: Pizzalol
+	// Date: 12.04.2015.
 	"invoker_alacrity_datadriven"
 	{
 		// General
@@ -21367,6 +21370,49 @@
 						"EffectAttachType"  "follow_overhead"
 						"Target"            "TARGET"
 					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_invoker/alacrity.lua"
+						"Function"		"Alacrity"
+						"speed_modifier"	"modifier_alacrity_attack_speed_datadriven"
+						"damage_modifier"	"modifier_alacrity_damage_datadriven"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_alacrity_damage_datadriven"
+						"Target" 		"TARGET"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_alacrity_attack_speed_datadriven"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+	
+			"modifier_alacrity_attack_speed_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "1"
+				}
+			}
+	
+			"modifier_alacrity_damage_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "1"
 				}
 			}
 		}
