@@ -1,3 +1,6 @@
+// Rewrite of the Invoker Cold Snap ability
+// Author: Pizzalol
+// Date: 13.04.2015.
 "invoker_cold_snap_datadriven"
 {
 	// General
@@ -9,6 +12,15 @@
 	"HotKeyOverride"				"Y"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"invoker_cold_snap"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		"particle"		"particles/units/heroes/hero_invoker/invoker_cold_snap.vpcf"
+		"particle"		"particles/units/heroes/hero_invoker/invoker_cold_snap_status.vpcf"
+	}
 	
 	// Unit Targeting
 	//-------------------------------------------------------------------------------------------------------------
@@ -58,6 +70,99 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"damage_trigger"		"10.0"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Invoker.ColdSnap.Cast"
+			"Target" 		"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Invoker.ColdSnap"
+			"Target" 		"TARGET"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_invoker/cold_snap.lua"
+			"Function"		"ColdSnapStart"
+			"cooldown_modifier"	"modifier_cold_snap_cooldown_datadriven"
+			"stun_modifier"		"modifier_cold_snap_stun_datadriven"
+			"cold_snap_modifier"	"modifier_cold_snap_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_cold_snap_datadriven"
+		{
+			"IsDebuff"		"1"
+			"IsPurgable"	"0"
+
+			"EffectName"	"particles/units/heroes/hero_invoker/invoker_cold_snap_status.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnTakeDamage"
+			// "%attack_damage" is set to the damage value after mitigation
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_invoker/cold_snap.lua"
+					"Function"		"ColdSnapDamage"
+					"DamageTaken"	"%attack_damage"
+					"cooldown_modifier"	"modifier_cold_snap_cooldown_datadriven"
+					"stun_modifier"		"modifier_cold_snap_stun_datadriven"
+				}
+			}
+		}
+
+		"modifier_cold_snap_cooldown_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+		}
+
+		"modifier_cold_snap_stun_datadriven"
+		{
+			"IsDebuff"		"1"
+			"IsPurgable"	"0"
+
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Invoker.ColdSnap.Freeze"
+					"Target" 		"TARGET"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+					"EffectAttachType"  "follow_overhead"
+					"Target"            "TARGET"
+				}
+
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_invoker/invoker_cold_snap.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET"
+				}
+			}
+
+			"StatusEffectName" 		"particles/status_fx/status_effect_frost.vpcf" 	   
+			"StatusEffectPriority"  "10"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_FROZEN"			"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }
