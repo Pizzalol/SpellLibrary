@@ -21634,6 +21634,7 @@
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
 			"particle"		"particles/units/heroes/hero_invoker/invoker_cold_snap.vpcf"
 			"particle"		"particles/units/heroes/hero_invoker/invoker_cold_snap_status.vpcf"
+			"particle"		"particles/status_fx/status_effect_frost.vpcf"
 		}
 		
 		// Unit Targeting
@@ -22139,6 +22140,9 @@
 		}
 	}
 	
+	// Rewrite of the Invoker Ghost Walk ability
+	// Author: Pizzalol
+	// Date: 14.04.2015.
 	"invoker_ghost_walk_datadriven"
 	{
 		// General
@@ -22148,6 +22152,17 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"						"1"
 		"HotKeyOverride"				"V"
+		"AbilityTextureName"			"invoker_ghost_walk"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_ghost_walk.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_ghost_walk_debuff.vpcf"
+			"particle"		"particles/status_fx/status_effect_frost.vpcf"
+		}
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -22184,6 +22199,190 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"aura_fade_time"		"2.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Invoker.GhostWalk"
+				"Target" 		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_invoker/invoker_ghost_walk.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_ghost_walk_datadriven"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_ghost_walk_datadriven"
+			{
+				"IsBuff"		"1"
+				"IsPurgable"	"0"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_invoker/ghost_walk.lua"
+						"Function"		"GhostWalkSelfSlow"
+						"slow_modifier"	"modifier_ghost_walk_slow_datadriven"
+						"boost_modifier"	"modifier_ghost_walk_boost_datadriven"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_ghost_walk_slow_datadriven"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_ghost_walk_boost_datadriven"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+				}
+	
+				"OnAttack"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_ghost_walk_datadriven"
+						"Target" 		"ATTACKER"
+					}
+				}
+	
+				"OnAbilityExecuted"
+				// Any ability (including items) was used by the unit with this modifier.
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_ghost_walk_datadriven"
+						"Target" 		"UNIT"
+					}
+				}
+	
+				"ThinkInterval"  "0.1"
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%area_of_effect"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					
+						"Action"    
+						{
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_ghost_walk_aura_datadriven"
+								"Target" 		"TARGET"
+								"Duration"		"%aura_fade_time"
+							}
+						}
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}			
+			}
+	
+			"modifier_ghost_walk_aura_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"EffectName"	"particles/units/heroes/hero_invoker/invoker_ghost_walk_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"StatusEffectName" 		"particles/status_fx/status_effect_frost.vpcf" 	   
+				"StatusEffectPriority"  "10"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_invoker/ghost_walk.lua"
+						"Function"		"GhostWalkEnemySlow"
+						"slow_modifier"	"modifier_ghost_walk_slow_datadriven"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_ghost_walk_slow_datadriven"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+	
+			"modifier_ghost_walk_slow_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "-1" 
+				}
+			}
+	
+			"modifier_ghost_walk_boost_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "1" 
+				}
 			}
 		}
 	}

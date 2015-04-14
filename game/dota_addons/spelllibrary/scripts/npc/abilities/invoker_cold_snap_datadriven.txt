@@ -20,6 +20,7 @@
 		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
 		"particle"		"particles/units/heroes/hero_invoker/invoker_cold_snap.vpcf"
 		"particle"		"particles/units/heroes/hero_invoker/invoker_cold_snap_status.vpcf"
+		"particle"		"particles/status_fx/status_effect_frost.vpcf"
 	}
 	
 	// Unit Targeting

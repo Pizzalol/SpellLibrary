@@ -1,4 +1,6 @@
-
+--[[Author: Pizzalol
+	Date: 13.04.2015.
+	Applies the initial stun and modifier depending on Quas level]]
 function ColdSnapStart( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -28,6 +30,9 @@ function ColdSnapStart( keys )
 	ApplyDamage(damage_table)
 end
 
+--[[Author: Pizzalol
+	Date: 13.04.2015.
+	If the damage taken is enough to trigger the Cold Snap then stun and deal damage depending on the Quas level]]
 function ColdSnapDamage( keys )
 	local caster = keys.caster
 	local target = keys.unit
