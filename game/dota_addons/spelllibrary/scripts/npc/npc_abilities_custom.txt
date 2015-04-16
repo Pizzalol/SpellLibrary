@@ -18409,6 +18409,9 @@
 	}
 	
 	// Next free ID 5523
+	// Rewrite of the Invoker Forged Spirit Melting Strike ability
+	// Author: Pizzalol
+	// Date: 16.04.2015.
 	"forged_spirit_melting_strike_datadriven"
 	{
 		// General
@@ -18417,6 +18420,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"						"1"
+		"AbilityTextureName"			"forged_spirit_melting_strike"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -18429,7 +18433,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_removed"			"1"
+				"armor_removed"			"-1"
 			}
 			"02"
 			{
@@ -18440,6 +18444,44 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"5"
+			}
+			// Extra
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_cost"				"40"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_melting_strike_datadriven"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+	
+				"OnAttackLanded"
+				// "%attack_damage" is set to the damage value before mitigation
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_invoker/melting_strike.lua"
+						"Function"		"MeltingStrike"
+						"modifier_armor"	"modifier_melting_strike_armor_datadriven"
+					}
+				}
+			}
+	
+			"modifier_melting_strike_armor_datadriven"
+			{
+				"IsHidden"		"0"
+				"IsPurgable"	"0"
+				"IsDebuff"		"1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_removed"
+				}
 			}
 		}
 	}
@@ -22082,6 +22124,10 @@
 			}
 		}
 	}
+	// Rewrite of the Invoker Forge Spirit ability
+	// Author: Pizzalol
+	// Date: 16.04.2015.
+	// NOTE: Setting the maximum mana doesnt work currently
 	"invoker_forge_spirit_datadriven"
 	{
 		// General
@@ -22091,6 +22137,18 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"						"1"
 		"HotKeyOverride"				"F"
+		"AbilityTextureName"			"invoker_forge_spirit"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_forge_spirit_ambient.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_forge_spirit_death.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_forged_spirit_projectile.vpcf"
+			"model"			"models/heroes/invoker/forge_spirit.vmdl"
+		}
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -22136,6 +22194,79 @@
 				"var_type"				"FIELD_FLOAT"
 				"spirit_duration"		"20 30 40 50 60 70 80"
 				"levelkey"				"quaslevel"
+			}
+			// Extra
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_count"			"1 1 1 2 2 2 2" // Depends on Quas and Exort levels
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Invoker.ForgeSpirit"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_invoker/forge_spirit.lua"
+				"Function"		"ForgeSpirit"
+				"positive_armor"	"modifier_forge_spirit_positive_armor_datadriven"
+				"negative_armor"	"modifier_forge_spirit_negative_armor_datadriven"
+				"attack_range"		"modifier_forge_spirit_attack_range_datadriven"
+				"mana_bonus"		"modifier_forge_spirit_mana_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_forge_spirit_positive_armor_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "1"
+				}
+			}
+	
+			"modifier_forge_spirit_negative_armor_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "-1"
+				}
+			}
+	
+			"modifier_forge_spirit_attack_range_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "1"
+				}
+			}
+	
+			// This doesnt work currently
+			"modifier_forge_spirit_mana_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS" "1"
+				}
 			}
 		}
 	}
@@ -22329,6 +22460,7 @@
 				"States"
 				{
 					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 				}			
 			}
 	

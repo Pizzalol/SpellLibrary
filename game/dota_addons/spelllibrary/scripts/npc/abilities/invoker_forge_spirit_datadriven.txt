@@ -1,3 +1,7 @@
+// Rewrite of the Invoker Forge Spirit ability
+// Author: Pizzalol
+// Date: 16.04.2015.
+// NOTE: Setting the maximum mana doesnt work currently
 "invoker_forge_spirit_datadriven"
 {
 	// General
@@ -7,6 +11,18 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"MaxLevel"						"1"
 	"HotKeyOverride"				"F"
+	"AbilityTextureName"			"invoker_forge_spirit"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		"particle"		"particles/units/heroes/hero_invoker/invoker_forge_spirit_ambient.vpcf"
+		"particle"		"particles/units/heroes/hero_invoker/invoker_forge_spirit_death.vpcf"
+		"particle"		"particles/units/heroes/hero_invoker/invoker_forged_spirit_projectile.vpcf"
+		"model"			"models/heroes/invoker/forge_spirit.vmdl"
+	}
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -52,6 +68,79 @@
 			"var_type"				"FIELD_FLOAT"
 			"spirit_duration"		"20 30 40 50 60 70 80"
 			"levelkey"				"quaslevel"
+		}
+		// Extra
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"spirit_count"			"1 1 1 2 2 2 2" // Depends on Quas and Exort levels
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Invoker.ForgeSpirit"
+			"Target" 		"CASTER"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_invoker/forge_spirit.lua"
+			"Function"		"ForgeSpirit"
+			"positive_armor"	"modifier_forge_spirit_positive_armor_datadriven"
+			"negative_armor"	"modifier_forge_spirit_negative_armor_datadriven"
+			"attack_range"		"modifier_forge_spirit_attack_range_datadriven"
+			"mana_bonus"		"modifier_forge_spirit_mana_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_forge_spirit_positive_armor_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "1"
+			}
+		}
+
+		"modifier_forge_spirit_negative_armor_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "-1"
+			}
+		}
+
+		"modifier_forge_spirit_attack_range_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "1"
+			}
+		}
+
+		// This doesnt work currently
+		"modifier_forge_spirit_mana_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MANA_BONUS" "1"
+			}
 		}
 	}
 }

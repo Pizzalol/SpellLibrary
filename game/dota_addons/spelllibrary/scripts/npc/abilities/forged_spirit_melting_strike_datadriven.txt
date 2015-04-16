@@ -1,3 +1,6 @@
+// Rewrite of the Invoker Forged Spirit Melting Strike ability
+// Author: Pizzalol
+// Date: 16.04.2015.
 "forged_spirit_melting_strike_datadriven"
 {
 	// General
@@ -6,6 +9,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"MaxLevel"						"1"
+	"AbilityTextureName"			"forged_spirit_melting_strike"
 	
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -18,7 +22,7 @@
 		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"armor_removed"			"1"
+			"armor_removed"			"-1"
 		}
 		"02"
 		{
@@ -29,6 +33,44 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"duration"				"5"
+		}
+		// Extra
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"mana_cost"				"40"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_melting_strike_datadriven"
+		{
+			"Passive"		"1"
+			"IsHidden"		"1"
+
+			"OnAttackLanded"
+			// "%attack_damage" is set to the damage value before mitigation
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_invoker/melting_strike.lua"
+					"Function"		"MeltingStrike"
+					"modifier_armor"	"modifier_melting_strike_armor_datadriven"
+				}
+			}
+		}
+
+		"modifier_melting_strike_armor_datadriven"
+		{
+			"IsHidden"		"0"
+			"IsPurgable"	"0"
+			"IsDebuff"		"1"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_removed"
+			}
 		}
 	}
 }
