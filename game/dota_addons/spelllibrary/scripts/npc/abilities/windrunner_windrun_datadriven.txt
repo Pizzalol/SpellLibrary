@@ -1,3 +1,5 @@
+// Rewrite of the Windrunner Windrun ability
+// Author: kritth
 // NOTE: Need to find the proper sound. It doesn't seem to fire.
 "windrunner_windrun_datadriven"
 {
