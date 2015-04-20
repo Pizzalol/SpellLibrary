@@ -8750,7 +8750,7 @@
 			{
 				"Target"
 				{
-					"Center"  	"CASTER"
+					"Center"  	"TARGET"
 					"Radius" 	"%radius"
 					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -11051,7 +11051,6 @@
 					"Radius"		"%radius"
 					"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 					"Type"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-					"Flag"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}
 				
 				"Action"
@@ -24008,6 +24007,9 @@
 			}
 		}
 	}
+	// Rewrite of the Invoker Sun Strike ability
+	// Author: Pizzalol
+	// Date: 20.04.2015.
 	"invoker_sun_strike_datadriven"
 	{
 		// General
@@ -24016,10 +24018,23 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"MaxLevel"						"1"
 		"HotKeyOverride"				"T"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_ILLUSION"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"invoker_sun_strike"
+		"AOERadius"						"%area_of_effect"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf"
+		}
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -24057,6 +24072,77 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"vision_duration"		"4.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"CreateThinker"
+			{
+				"ModifierName"	"modifier_sun_strike_datadriven"
+				"Target" 		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_sun_strike_datadriven"
+			{
+				"Duration"		"%delay"
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target" 		"TARGET"
+						"Duration"		"%delay - 0.1" // This is so that the charge sound isnt heard
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Invoker.SunStrike.Charge"
+						"Target" 		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_invoker/sun_strike.lua"
+						"Function"		"sun_strike_charge"
+						"charge_particle"	"particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf"
+					}
+	
+					"DelayedAction"
+					{
+						"Delay"     "%delay"
+						"Action"    
+						{
+							"FireSound"
+							{
+								"EffectName"	"Hero_Invoker.SunStrike.Ignite"
+								"Target" 		"TARGET"
+							}
+	
+							"FireEffect"
+							{
+								"EffectName"        "particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf"
+								"EffectAttachType"  "follow_origin"
+								"Target"            "TARGET"
+	
+								"ControlPoints"
+								{
+									"01"	"%area_of_effect 0 0"
+								}
+							}
+	
+							"RunScript"
+							{
+								"ScriptFile"	"heroes/hero_invoker/sun_strike.lua"
+								"Function"		"sun_strike_damage"
+							}
+						}
+					}
+				}
 			}
 		}
 	}
