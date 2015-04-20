@@ -1,3 +1,7 @@
+// Rewrite of the Shadow Shaman Mass Serpent Ward ability
+// Author: Noya
+// Date: April 20, 2015.
+// Notes: Positioning is randomish, it should be done through Lua to properly place the 8 wards in a square and 2 at the sides
 "shadow_shaman_mass_serpent_ward_datadriven"
 {
 	// General
@@ -89,14 +93,35 @@
 			"var_type"				"FIELD_INTEGER"
 			"ward_3_count"			"0 0 10"
 		}
+		"13"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"splash_full"			"100"
+		}
+		"14"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"splash_medium"			"40"
+		}
+		"15"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"splash_small"			"20"
+		}
+
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_shadowshaman/shadow_shaman_ward_base_attack.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_shadowshaman.vsndevts"
 	}
 
 	"OnSpellStart"
 	{
-		// TODO Sound, Position, Trapping Parity and Splash
 		"FireSound"
 		{
-			"EffectName"		"Hero_Venomancer.Plague_Ward"
+			"EffectName"		"Hero_ShadowShaman.SerpentWard"
 			"Target"			"CASTER"
 		}
 
@@ -117,6 +142,12 @@
 					"ModifierName"	"modifier_phased"
 					"Target"		"TARGET"
 					"Duration"		"0.03"
+				}
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_serpent_ward"
+					"Target" 		"TARGET"
+					"Duration"		"%duration"
 				}
 			}
 		}	
@@ -139,6 +170,12 @@
 					"Target"		"TARGET"
 					"Duration"		"0.03"
 				}
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_serpent_ward"
+					"Target" 		"TARGET"
+					"Duration"		"%duration"
+				}
 			}
 		}	
 
@@ -159,6 +196,40 @@
 					"ModifierName"	"modifier_phased"
 					"Target"		"TARGET"
 					"Duration"		"0.03"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_serpent_ward"
+					"Target" 		"TARGET"
+					"Duration"		"%duration"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		// modifier_shadow_shaman_serpent_ward is the Built-In, to give green damage to the wards
+		"modifier_serpent_ward"
+		{
+			"IsHidden"			"1"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_shadow_shaman/mass_serpent_ward.lua"
+					"Function"		"SetWardDamage"
+				}
+			}
+
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_shadow_shaman/mass_serpent_ward.lua"
+					"Function"		"DealSplashDamage"
 				}
 			}
 		}

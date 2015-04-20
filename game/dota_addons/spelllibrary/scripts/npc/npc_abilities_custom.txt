@@ -4536,12 +4536,16 @@
 		}
 	}
 	
+	// Rewrite of Beastmaster Call of the Wild Boar
+	// Author: Noya
+	// Date: April 5, 2015
+	// This ability is used with beastmaster_call_of_the_wild_datadriven, skilling one will attempt to upgrade the other
 	"beastmaster_call_of_the_wild_boar_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET| DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -4559,27 +4563,332 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-		"01"
+			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"hawk_duration"				"60 60 60 60"
 			}
-		"02"
+			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"boar_duration"				"0 60 60 60"
+				"boar_hp_tooltip"			"200 300 400 500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"boar_damage_tooltip"		"15 30 45 60"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"boar_moveslow_tooltip"		"10 20 30 40"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"boar_attackslow_tooltip"	"10 20 30 40"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"poison_duration_tooltip"	"3"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"boar_duration"				"60 60 60 60"
 			}
 	
+			// Extra		
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"boar_1_count"			"1 0 0 0"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"boar_2_count"			"0 1 0 0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"boar_3_count"			"0 0 1 0"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"boar_4_count"			"0 0 0 1"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance"				"150" // The distance in front of the target at which units will be created
+			}
+		}
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
+			"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+			"particle"	"particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
+			"model"		"models/heroes/beastmaster/beastmaster_beast.vmdl"
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"beastmaster_call_of_the_wild_datadriven"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+		    {
+		    	"EffectName"	"Hero_Beastmaster.Call.Boar"
+		    	"Target"		"CASTER"
+		    }
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_beastmaster_boar_1"
+				"Target"
+				{
+					"Center"				"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
+	        			"Function"      "GetFrontPoint"
+						"Target"		"CASTER"
+						"Distance"		"%distance"
+					}
+				}
+	
+				"UnitCount"			"%boar_1_count"
+				"Duration"			"%boar_duration"
+	
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+	
+				// This makes sure units never get stuck
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_beastmaster_boar"
+						"Target"		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+						"Function"		"SetUnitsMoveForward"
+					}
+				}
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_beastmaster_boar_4"
+				"Target"
+				{
+					"Center"				"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
+	        			"Function"      "GetFrontPoint"
+						"Target"		"CASTER"
+						"Distance"		"%distance"
+					}
+				}
+	
+				"UnitCount"			"%boar_2_count"
+				"Duration"			"%boar_duration"
+	
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+	
+				// This makes sure units never get stuck
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_beastmaster_boar"
+						"Target"		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+						"Function"		"SetUnitsMoveForward"
+					}
+				}
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_beastmaster_boar_3"
+				"Target"
+				{
+					"Center"				"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
+	        			"Function"      "GetFrontPoint"
+						"Target"		"CASTER"
+						"Distance"		"%distance"
+					}
+				}
+	
+				"UnitCount"			"%boar_1_count"
+				"Duration"			"%boar_duration"
+	
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+	
+				// This makes sure units never get stuck
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_beastmaster_boar"
+						"Target"		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+						"Function"		"SetUnitsMoveForward"
+					}
+				}
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_beastmaster_boar_4"
+				"Target"
+				{
+					"Center"				"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
+	        			"Function"      "GetFrontPoint"
+						"Target"		"CASTER"
+						"Distance"		"%distance"
+					}
+				}
+	
+				"UnitCount"			"%boar_4_count"
+				"Duration"			"%boar_duration"
+	
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+	
+				// This makes sure units never get stuck
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_beastmaster_boar"
+						"Target"		"TARGET"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+						"Function"		"SetUnitsMoveForward"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_beastmaster_boar"
+			{
+				"IsHidden"		"1"
+	
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+				}
+	
+				"OnDeath"
+				{
+					"FireEffect"
+					{
+						"Target"			
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+						"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+					
+					"FireSound"
+					{
+						"Target"			
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+						"EffectName"	"Hero_Beastmaster_Boar.Death"
+					}
+				}
+			}
 		}
 	}
-	
+	// Rewrite of Beastmaster Call of the Wild
+	// Author: Noya
+	// Date: April 5, 2015
+	// This ability is used with beastmaster_call_of_the_wild_boar_datadriven, skilling one will attempt to upgrade the other
+	//TODO: Check if its necessary to kill the hawk or there's no limit
 	"beastmaster_call_of_the_wild_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		
+			
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3"
@@ -4596,19 +4905,303 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-		"01"
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"boar_duration"				"60 60 60 60"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_hp_tooltip"			"40 60 80 100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_speed_tooltip"		"250 300 350 400"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_daysight_tooltip"		"700 1000 1300 1600"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_nightsight_tooltip"	"700 800 900 1000"
+			}
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"hawk_duration"				"60 60 60 60"
 			}
-		"02"
+	
+			// Extra		
+			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"boar_duration"				"0 60 60 60"
+				"var_type"				"FIELD_INTEGER"
+				"hawk_1_count"			"1 0 0 0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hawk_2_count"			"0 1 0 0"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hawk_3_count"			"0 0 1 0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hawk_4_count"			"0 0 0 1"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance"				"150" // The distance in front of the target at which units will be created
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"beastmaster_call_of_the_wild_boar_datadriven"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+		    {
+		    	"EffectName"	"Hero_Beastmaster.Call.Hawk"
+		    	"Target"		"CASTER"
+		    }
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_beastmaster_hawk_1"
+				"Target"
+				{
+					"Center"				"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
+	        			"Function"      "GetFrontPoint"
+						"Target"		"CASTER"
+						"Distance"		"%distance"
+					}
+				}
+	
+				"UnitCount"			"%hawk_1_count"
+				"Duration"			"%hawk_duration"
+	
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+	
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+						"Function"		"SetUnitsMoveForward"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_beastmaster_hawk"
+						"Target"		"TARGET"
+					}
+				}
 			}
 	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_beastmaster_hawk_2"
+				"Target"
+				{
+					"Center"				"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
+	        			"Function"      "GetFrontPoint"
+						"Target"		"CASTER"
+						"Distance"		"%distance"
+					}
+				}
+	
+				"UnitCount"			"%hawk_2_count"
+				"Duration"			"%hawk_duration"
+	
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+	
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_beastmaster_hawk"
+						"Target"		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+						"Function"		"SetUnitsMoveForward"
+					}
+				}
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_beastmaster_hawk_4"
+				"Target"
+				{
+					"Center"				"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
+	        			"Function"      "GetFrontPoint"
+						"Target"		"CASTER"
+						"Distance"		"%distance"
+					}
+				}
+	
+				"UnitCount"			"%hawk_3_count"
+				"Duration"			"%hawk_duration"
+	
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+	
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_beastmaster_hawk"
+						"Target"		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+						"Function"		"SetUnitsMoveForward"
+					}
+				}
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_beastmaster_hawk_4"
+				"Target"
+				{
+					"Center"				"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
+	        			"Function"      "GetFrontPoint"
+						"Target"		"CASTER"
+						"Distance"		"%distance"
+					}
+				}
+	
+				"UnitCount"			"%hawk_4_count"
+				"Duration"			"%hawk_duration"
+	
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+	
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_beastmaster_hawk"
+						"Target"		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+						"Function"		"SetUnitsMoveForward"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_beastmaster_hawk"
+			{
+				"IsHidden"		"1"
+	
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+				}
+	
+				"OnDeath"
+				{
+					"FireEffect"
+					{
+						"Target"			
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+						"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+	
+					"FireSound"
+					{
+						"Target"			
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+						"EffectName"	"Hero_Beastmaster_Bird.Death"
+					}
+				}
+			}
 		}
 	}
+	
 	
 	"beastmaster_call_of_the_wild_hawk_datadriven"
 	{
@@ -4706,6 +5299,9 @@
 		}
 	}
 	
+	// Rewrite of Beastmaster Inner Beast
+	// Author: Noya
+	// Date: April 5, 2015
 	"beastmaster_inner_beast_datadriven"
 	{
 		// General
@@ -4713,6 +5309,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityTextureName"			"beastmaster_inner_beast"
 	
 		// Casting
 		"AbilitySpecial"
@@ -4728,8 +5325,34 @@
 				"bonus_attack_speed"	"15 25 35 45"
 			}
 		}
+	
+		"Modifiers"
+		{
+			"modifier_inner_beast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"Aura"          	"modifier_inner_beast_buff"
+				"Aura_Radius"   	"%radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" //mechanical?
+				"Aura_Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ALLIES" //Needed?
+			}
+	
+			"modifier_inner_beast_buff"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed"
+				}
+			}
+		}
 	}
 	
+	// Rewrite of Beastmaster Primal Roar
+	// Author: Noya
+	// Date: April 5, 2015
 	"beastmaster_primal_roar_datadriven"
 	{
 		// General
@@ -4824,6 +5447,102 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"cooldown_scepter"			"45.0 45.0 45.0"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_beastmaster/beastmaster_primal_roar.vpcf"
+			"particle"  "particles/units/heroes/hero_beastmaster/beastmaster_primal_target.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_beastmaster/beastmaster_primal_roar.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				"Target"            "TARGET"
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_cast4_primal_roar"
+					"TARGET"	"attach_hitloc"
+				}
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_primal_roar_stun"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  	"TARGET"
+					"Line"
+					{
+						"Length" 		"%AbilityCastRange" //THIS IS QUESTIONABLE
+						"Thickness" 	"%damage_radius"
+					}
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+			
+				"Action"    
+				{
+					"Knockback"
+					{
+						"Target"            "TARGET"
+						"Center" 	        "CASTER"
+						"Distance"	        "%push_distance"
+						"Duration"	        "%push_duration"
+						"Height"	        "0"
+						"IsFixedDistance"	"0"
+						"ShouldStun"        "0"	
+					}
+	
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%damage"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_primal_roar_slow"
+						"Target" 		"TARGET"
+						"Duration"		"%slow_duration"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_primal_roar_stun"
+			{
+				"IsDebuff"		"1"
+				"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_primal_roar_slow"
+			{
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%slow_attack_speed_pct"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_movement_speed_pct" 
+				}
 			}
 		}
 	}
@@ -9574,6 +10293,9 @@
 		}
 	}
 	
+	// Rewrite of Clinkz Death Pact
+	// Author: Noya
+	// Date: April 5, 2015
 	"clinkz_death_pact_datadriven"
 	{
 		// General
@@ -9618,8 +10340,81 @@
 				"damage_gain_pct"		"5.0 6.5 8.0"
 			}
 		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
+			"particle"  "particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Clinkz.DeathPact.Cast"
+				"Target" 		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+				"ControlPointEntities"
+				{
+					"TARGET"	"attach_origin"
+					"CASTER"	"attach_origin"
+				}
+			}
+			
+			"FireSound"
+			{
+				"EffectName"	"Hero_Clinkz.DeathPact"
+				"Target" 		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_death_pact"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_death_pact"
+			{	
+				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
+						"Function"		"DeathPact"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
+						"Function"		"DeathPactEnd"
+					}
+				}	
+			}
+		}
 	}
 	
+	// Rewrite of Clinkz Searing Arrows
+	// Author: Noya
+	// Date: April 5, 2015
+	// This uses the old Orb mechanic. Orb Labels seem to be malfunctioning, need to warn Valve about this issue.
+	// A non-orb rewrite might be impossible because OnAttackStart triggers earlier than OnOrbFire (i.e. there's no OnAttackLaunched)
 	"clinkz_searing_arrows_datadriven"
 	{
 		// General
@@ -9655,8 +10450,57 @@
 				"damage_bonus"					"30 40 50 60"
 			}
 		}
+	
+		"Modifiers"
+		{
+			"modifier_searing_arrow"
+			{
+				"Passive"               "1"
+				"IsHidden"				"1"
+	
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_DEFAULT"
+					"ProjectileName"    "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+					"CastAttack"		"1"
+				}
+	
+				"OnOrbFire"
+				{
+					"SpendMana"
+					{
+						"Mana"    		"%AbilityManaCost"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Clinkz.SearingArrows"
+						"Target"		"CASTER"
+					}
+				}
+				
+				"OnOrbImpact"
+				{
+					"Damage"
+					{
+						"Type"          "DAMAGE_TYPE_PHYSICAL"
+						"Damage"        "%AbilityDamage"
+						"Target"		"TARGET"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Clinkz.SearingArrows.Impact"
+						"Target"		"CASTER"
+					}
+				}
+			}
+		}
 	}
 	
+	// Rewrite of Clinkz Strafe
+	// Author: Noya
+	// Date: April 5, 2015
 	"clinkz_strafe_datadriven"
 	{
 		// General
@@ -9690,8 +10534,48 @@
 				"attack_speed_bonus_pct"	"130"
 			}
 		}
-	}
 	
+		"OnSpellStart"
+		{
+			// TODO Sound
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_clinkz/clinkz_strafe_fire.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Clinkz.Strafe"
+				"Target" 		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_strafe"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_strafe"
+			{
+				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_strafe.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_bonus_pct"
+				}
+			}
+		}
+	}
+	// Rewrite of Clinkz Wind Walk
+	// Author: Noya
+	// Date: April 5, 2015
 	"clinkz_wind_walk_datadriven"
 	{
 		// General
@@ -9726,6 +10610,111 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"move_speed_bonus_pct"		"11 22 33 44"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			//TODO: Sound, test dying with invis on
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
+				"EffectAttachType"	"attach_origin"
+				"Target"			"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"Target"		"CASTER"
+				"EffectName"	"Hero_Clinkz.WindWalk"
+			}
+	
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_wind_walk_fade_datadriven"
+				"Duration"		"%fade_time"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_wind_walk_fade"
+			{
+				"IsHidden"			"1"
+				"EffectName"		"particles/generic_hero_status/status_invisibility_start.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_wind_walk"
+						"Duration"		"%duration"
+					}
+					"ApplyModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_invisible"
+						"Duration"		"%duration"
+					}
+				}
+			}
+	
+			"modifier_wind_walk"
+			{
+				"OnAttackLanded"
+				{
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_wind_walk"
+					}
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_invisible"
+					}
+				}
+	
+				"OnAbilityExecuted"
+				{
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_wind_walk"
+					}
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_invisible"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED" 
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"Target"
+						{
+							"Center"	"CASTER"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+						"ModifierName"	"modifier_invisible"
+					}
+				}
 			}
 		}
 	}
@@ -18568,6 +19557,10 @@
 	
 	    }
 	}
+	// Rewrite of Furion Force of Nature
+	// Author: Noya
+	// Date: April 5, 2015
+	// The original version lets you cast it in a position where no trees will be spawned, change check_trees_precast to 1 to avoid this
 	"furion_force_of_nature_datadriven"
 	{
 		// General
@@ -18581,6 +19574,7 @@
 		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
 		"AbilityCooldown"				"37 37 37 37"
 		"AbilityManaCost"				"160 160 160 160"
+		"AOERadius"						"%area_of_effect"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -18601,6 +19595,53 @@
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"60 60 60 60"
 			}
+	
+			// If this is set to 1, the spell wont go on cooldown and waste mana if cast on a position with no trees
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"check_trees_precast"	"0"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_furion/furion_force_of_nature_cast.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_furion.vsndevts"
+			"model"		"models/heroes/furion/treant.vmdl"
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_furion/force_of_nature.lua"
+				"Function"		"CheckTrees"
+				"Target"		"POINT"
+			}
+		}
+	
+		"OnSpellStart"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_furion/force_of_nature.lua"
+				"Function"		"ForceOfNature"
+				"Target"		"POINT"
+				"UnitName"		"npc_dota_furion_treant"
+			}	
+	
+			"DestroyTrees"
+			{
+				"Target" 		"POINT"
+				"Radius"		"%radius"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Furion.ForceOfNature"
+				"Target" 		"CASTER"
+			}									
 		}
 	}
 	
@@ -18643,6 +19684,10 @@
 		}
 	}
 	
+	// Rewrite of Furion Teleportation
+	// Author: Noya
+	// Date: April 5, 2015
+	// TODO: Check all sort of cancelling shenanigans
 	"furion_teleportation_datadriven"
 	{
 		// General
@@ -18652,12 +19697,64 @@
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
+		"AbilityCastRange"				"0" // ?? global
 		"AbilityCastPoint"				"3 3 3 3"
 		"AbilityCooldown"				"50 40 30 20"
 		"AbilityManaCost"				"50 50 50 50"
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_furion/furion_teleport_end.vpcf"
+			"particle"  "particles/units/heroes/hero_furion/furion_teleport_end_team.vpcf"
+			"particle"  "particles/units/heroes/hero_furion/furion_teleport.vpcf"
+			"particle"  "particles/units/heroes/hero_furion/furion_teleport_e.vpcf"	//Endcap if canceled
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_furion.vsndevts"
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_teleportation"
+				"Target" 		"CASTER"
+				"Duration"		"%AbilityCastPoint"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heres/hero_furion/teleportation.lua"
+				"Function"		"Teleport"
+				"Target"		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_teleportation"
+			{
+				"IsHidden"			"1"
+		
+				"EffectName"		"particles/units/heroes/hero_furion/furion_teleport.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_teleportation"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+		}
 	}
 	
+	// Rewrite of Furion Wrath of Nature
+	// Author: Noya
+	// Date: April 5, 2015
 	"furion_wrath_of_nature_datadriven"
 	{
 		// General
@@ -18716,6 +19813,33 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_scepter"		"155 210 275"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_furion/furion_wrath_of_nature.vpcf"
+			"particle"  "particles/units/heroes/hero_furion/furion_wrath_of_nature_cast.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_furion.vsndevts"
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_furion/furion_wrath_of_nature_cast.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_furion/wrath_of_nature.lua"
+				"Function"		"WrathOfNature"
+				"Target"		"POINT"
 			}
 		}
 	}
@@ -35071,6 +36195,9 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 	
+	// Rewrite of Nevermore Presence of the Dark Lord
+	// Author: Noya
+	// Date: April 5, 2015
 	"nevermore_dark_lord_datadriven"
 	{
 		// General
@@ -35080,6 +36207,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"OnCastbar"					"0"
+		"AbilityTextureName"			"nevermore_dark_lord"
 		
 		
 		// Casting
@@ -35101,8 +36229,37 @@
 				"presence_radius"				"900"
 			}
 		}
+	
+		"Modifiers"
+		{
+			"modifier_dark_lord"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"Aura"          	"modifier_dark_lord_presence"
+				"Aura_Radius"   	"%presence_radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" //mechanic?
+				"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE" //immune?
+			}
+	
+			"modifier_dark_lord_presence"
+			{
+				"IsHidden"			"0" //hidden?
+				"IsDebuff"			"1"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%presence_armor_reduction"
+				}
+			}
+		}
 	}
 	
+	// Rewrite of Nevermore Necromastery
+	// Author: Noya
+	// Date: April 5, 2015
 	"nevermore_necromastery_datadriven"
 	{
 		// General
@@ -35110,7 +36267,8 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"OnCastbar"					"0"
-		
+		"AbilityTextureName"			"nevermore_necromastery"
+	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -35134,8 +36292,66 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"necromastery_souls_hero_bonus"	"11"
+			}		
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_nevermore/nevermore_souls.vpcf"
+			"particle"  "particles/units/heroes/hero_nevermore/nevermore_necro_souls.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+		}
+	
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_nevermore/necromastery.lua"
+				"Function"		"NecromasteryDeath"
+				"modifier"		"modifier_necromastery"
 			}
-			
+		}
+	
+		"Modifiers"
+		{
+			"modifier_soul_collector"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"EffectName"		"particle_name"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnKill"
+				{
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_nevermore/nevermore_necro_souls.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET" //DEADFLAG?
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_nevermore/necromastery.lua"
+						"Function"		"NecromasteryStack"
+						"modifier"		"modifier_necromastery"
+					}
+				}
+			}
+	
+			"modifier_necromastery"
+			{
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+	
+				"EffectName"		"particles/units/heroes/hero_nevermore/nevermore_souls.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%necromastery_damage_per_soul"
+				}
+			}
 		}
 	}
 	
@@ -35235,6 +36451,9 @@
 		}
 	}
 	
+	// Rewrite of Nevermore Shadowraze 1
+	// Author: Noya
+	// Date: April 5, 2015
 	"nevermore_shadowraze1_datadriven"
 	{
 		// General
@@ -35282,8 +36501,43 @@
 				"shadowraze_cooldown"	"3"
 			}
 		}
-	}
 	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			//TODO: FireSound and Particle
+	
+			"Damage"
+			{
+				"Target"
+				{
+					"Center"   "CASTER"
+					"Radius"	"%shadowraze_radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_nevermore/shadowraze.lua"
+						"Function"      "ShadowrazePoint"
+						"Target"		"CASTER"
+						"Count"			"1"
+						"distance"		"%shadowraze_range"
+					}
+				}
+				"Type"			"DAMAGE_TYPE_MAGICAL"
+				"Damage"		"%AbilityDamage"
+			}
+		}
+	}
+	// Rewrite of Nevermore Shadowraze 2
+	// Author: Noya
+	// Date: April 5, 2015
 	"nevermore_shadowraze2_datadriven"
 	{
 		// General
@@ -35334,6 +36588,9 @@
 		}
 	}
 	
+	// Rewrite of Nevermore Shadowraze 3
+	// Author: Noya
+	// Date: April 5, 2015
 	"nevermore_shadowraze3_datadriven"
 	{
 		// General
@@ -41159,6 +42416,9 @@
 		}
 	}
 	
+	// Rewrite of Pugna Decrepify
+	// Author: Noya
+	// Date: April 5, 2015
 	"pugna_decrepify_datadriven"
 	{
 		// General
@@ -41166,7 +42426,7 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM" //Awful Valve-hack to let it target Nether Ward (and Tombstone?)
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	
 		// Casting
@@ -41208,8 +42468,91 @@
 				"tooltip_duration"		"2.0 2.5 3.0 3.5"
 			}
 		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Pugna.Decrepify"
+				"Target" 		"TARGET"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_decrepify_enemy"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				}
+				"Duration"		"%AbilityDuration"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_decrepify_ally"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				}
+				"Duration"		"%AbilityDuration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_decrepify_ally"
+			{
+				"IsDebuff"			"1"
+		
+				"EffectName"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE" "%bonus_spell_damage_pct_allies"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}			
+			}
+	
+			"modifier_decrepify_enemy"
+			{
+				"IsDebuff"			"1"
+		
+				"EffectName"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE" "%bonus_spell_damage_pct"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}			
+			}
+		}
 	}
 	
+	// Rewrite of Pugna Life Drain
+	// Author: Noya
+	// Date: April 5, 2015
 	"pugna_life_drain_datadriven"
 	{
 		// General
@@ -41288,8 +42631,76 @@
 				"cast_range_scepter_tooltip"		"900"
 			}
 		}
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_pugna/pugna_life_drain.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName" 	"modifier_life_drain"
+				"Target" 		"TARGET"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Pugna.LifeDrain.Target"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName" 	"modifier_life_drain"
+				"Target" 		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_life_drain"
+			{
+				"IsDebuff"	"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_pugna/life_drain.lua"
+						"Function"		"LifeDrainParticle"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_pugna/life_drain.lua"
+						"Function"		"LifeDrainParticleEnd"
+					}
+				}
+	
+				"ThinkInterval"		"%tick_rate"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_pugna/life_drain.lua"
+						"Function"		"LifeDrainHealthTransfer"
+					}
+				}
+			}
+		}
 	}
 	
+	// Rewrite of Pugna Nether Blast
+	// Author: Noya
+	// Date: April 5, 2015
 	"pugna_nether_blast_datadriven"
 	{
 		// General
@@ -41300,6 +42711,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"pugna_nether_blast"
+		"AOERadius"						"%radius"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -41338,8 +42750,80 @@
 				"radius"					"400 400 400 400"
 			}
 		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
+			"particle"  "particles/units/heroes/hero_pugna/pugna_netherblast_pre.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			//TODO Sound
+			"FireSound"
+			{
+				"EffectName"	"Pugna.Blast"
+				"Target" 		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"TargetPoint"		"POINT"
+				"EffectName"        "particles/units/heroes/hero_pugna/pugna_netherblast_pre.vpcf"
+				"EffectAttachType"  "world_origin"
+				"ControlPoints"
+				{
+					"01"				"%radius 2 %radius*2" //TODO Fix
+				}
+			}
+	
+			"DelayedAction"
+			{
+				"Delay"     "%delay"
+				"Action"    
+				{
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+						"EffectRadius"		"%radius"	//TODO Check Attachment
+					}
+	
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  	"POINT"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%AbilityDamage"
+					}
+	
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  	"POINT"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+						}
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%AbilityDamage * %structure_damage_mod"
+					}
+				}
+			}
+		}
 	}
 	
+	// Rewrite of Pugna Nether Ward
+	// Author: Noya
+	// Date: April 5, 2015
 	"pugna_nether_ward_datadriven"
 	{
 		// General
@@ -41382,6 +42866,266 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"mana_regen"				"-1.5 -3.0 -4.5 -6.0"
+			}
+	
+			// Extra
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_1_count"			"1 0 0 0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_2_count"			"0 1 0 0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_3_count"			"0 0 1 0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_4_count"			"0 0 0 1"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_pugna/pugna_ward_ambient.vpcf"
+			"particle"  "particles/units/heroes/hero_pugna/pugna_ward_attack.vpcf"
+			"particle"  "particles/units/heroes/hero_pugna/pugna_ward_attack_light.vpcf"
+			"particle"  "particles/units/heroes/hero_pugna/pugna_ward_attack_medium.vpcf"
+			"particle"  "particles/units/heroes/hero_pugna/pugna_ward_attack_heavy.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
+			"model"		"models/heroes/pugna/pugna_ward.vmdl"
+		}
+	
+		"OnSpellStart"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"		"npc_dota_pugna_nether_ward_1"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_pugna/nether_ward.lua"
+						"Function"      "GetFrontPoint"
+						"Target"		"CASTER"
+						"Count"			"1"
+						"Distance"		"100"
+					}
+				}
+				"Duration"		"%AbilityDuration"
+				"UnitCount"		"%ward_1_count"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+			
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_nether_ward"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"npc_dota_pugna_nether_ward_2"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_pugna/nether_ward.lua"
+						"Function"      "GetFrontPoint"
+						"Target"		"CASTER"
+						"Count"			"1"
+						"Distance"		"100"
+					}
+				}
+				"Duration"		"%AbilityDuration"
+				"UnitCount"		"%ward_2_count"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+			
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_nether_ward"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"npc_dota_pugna_nether_ward_3"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_pugna/nether_ward.lua"
+						"Function"      "GetFrontPoint"
+						"Target"		"CASTER"
+						"Count"			"1"
+						"Distance"		"100"
+					}
+				}
+				"Duration"		"%AbilityDuration"
+				"UnitCount"		"%ward_3_count"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+			
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_nether_ward"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"		"npc_dota_pugna_nether_ward_4"
+				"Target"
+				{
+					"Center"		    "CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_pugna/nether_ward.lua"
+						"Function"      "GetFrontPoint"
+						"Target"		"CASTER"
+						"Count"			"1"
+						"Distance"		"100"
+					}
+				}
+				"Duration"		"%AbilityDuration"
+				"UnitCount"		"%ward_4_count"
+				"GrantsGold"	"1"
+				"GrantsXP"		"1"
+				"SpawnRadius"	"10"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+			
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_nether_ward"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_nether_ward"
+			{	
+				"IsHidden"			"1"
+				"Aura"          	"modifier_nether_ward_debuff"
+				"Aura_Radius"   	"%radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_pugna/nether_ward.lua"
+						"Function"		"NetherWardStart"
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO"
+						}
+					}
+				}
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_pugna/nether_ward.lua"
+						"Function"		"NetherWardMana"
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO"
+						}
+					}
+				}
+	
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_pugna/nether_ward.lua"
+						"Function"		"NetherWardAttacked"
+						"Damage"		"%attack_damage"
+					}
+				}
+			}
+	
+			// TODO: Check interaction with multiple wards
+			"modifier_nether_ward_debuff"
+			{
+				"IsDebuff"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+				}
+	
+				"OnSpentMana"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_pugna/nether_ward.lua"
+						"Function"		"NetherWardZap"
+					}
+				}
 			}
 		}
 	}
@@ -45546,6 +47290,9 @@
 		}
 	}
 	
+	// Rewrite of the Shadow Shaman Ether Shock ability
+	// Author: Noya
+	// Date: April 4, 2015.
 	"shadow_shaman_ether_shock_datadriven"
 	{
 		// General
@@ -45602,8 +47349,33 @@
 				"damage"					"140 200 260 320"
 			}
 		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_shadowshaman/shadowshaman_ether_shock.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_shadowshaman.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_ShadowShaman.EtherShock"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_shadow_shaman/shock.lua"
+				"Function"		"Shock"
+			}
+		}
 	}
 	
+	// Rewrite of the Shadow Shaman Mass Serpent Ward ability
+	// Author: Noya
+	// Date: April 20, 2015.
+	// Notes: Positioning is randomish, it should be done through Lua to properly place the 8 wards in a square and 2 at the sides
 	"shadow_shaman_mass_serpent_ward_datadriven"
 	{
 		// General
@@ -45679,9 +47451,167 @@
 				"damage_max_scepter"	"90 110 130"
 			}
 	
+			// Extra
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_1_count"			"10 0 0"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_2_count"			"0 10 0"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_3_count"			"0 0 10"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"splash_full"			"100"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"splash_medium"			"40"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"splash_small"			"20"
+			}
+	
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_shadowshaman/shadow_shaman_ward_base_attack.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_shadowshaman.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_ShadowShaman.SerpentWard"
+				"Target"			"CASTER"
+			}
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_shadow_shaman_ward_1"
+				"Target"			"POINT"
+				"UnitCount"			"%ward_1_count"
+				"Duration"			"%duration"
+				"SpawnRadius"		"?10 100"
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+	
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_serpent_ward"
+						"Target" 		"TARGET"
+						"Duration"		"%duration"
+					}
+				}
+			}	
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_shadow_shaman_ward_2"
+				"Target"			"POINT"
+				"UnitCount"			"%ward_2_count"
+				"Duration"			"%duration"
+				"SpawnRadius"		"?10 100"
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+	
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_serpent_ward"
+						"Target" 		"TARGET"
+						"Duration"		"%duration"
+					}
+				}
+			}	
+	
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dota_shadow_shaman_ward_3"
+				"Target"			"POINT"
+				"UnitCount"			"%ward_3_count"
+				"Duration"			"%duration"
+				"SpawnRadius"		"?10 100"
+				"GrantsGold"		"1"
+				"GrantsXP"			"1"
+	
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_serpent_ward"
+						"Target" 		"TARGET"
+						"Duration"		"%duration"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			// modifier_shadow_shaman_serpent_ward is the Built-In, to give green damage to the wards
+			"modifier_serpent_ward"
+			{
+				"IsHidden"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_shadow_shaman/mass_serpent_ward.lua"
+						"Function"		"SetWardDamage"
+					}
+				}
+	
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_shadow_shaman/mass_serpent_ward.lua"
+						"Function"		"DealSplashDamage"
+					}
+				}
+			}
 		}
 	}
-	
+	// Rewrite of the Shadow Shaman Shackles ability
+	// Author: Noya
+	// Date: April 4, 2015.
 	"shadow_shaman_shackles_datadriven"
 	{
 		// General
@@ -45732,9 +47662,112 @@
 				"var_type"			"FIELD_FLOAT"
 				"total_damage"		"120 160 160 200"
 			}
+			// Extra, calculated as total_damage / channel_time * tick_interval
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_per_tick"	"4.3 4.6 3.8 4"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/status_fx/status_effect_shaman_shackle.vpcf" 	
+			"particle"	"particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_shadowshaman.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_ShadowShaman.Shackles.Cast"
+				"Target" 		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shackles"
+				"Target" 		"TARGET"
+				"Duration"		"%channel_time"
+			}
+		}
+	
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_shackles"
+				"Target" 		"TARGET"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_shadow_shaman/shackles.lua"
+				"Function"		"StopSound"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_shackles"
+			{
+				"IsDebuff"			"1"
+		
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"StatusEffectName" 		"particles/status_fx/status_effect_shaman_shackle.vpcf" 	   
+				"StatusEffectPriority"  "10"
+	
+				"OverrideAnimation"     "ACT_DOTA_DISABLED"
+	
+				"ThinkInterval"  "%tick_interval"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%damage_per_tick"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_ShadowShaman.Shackles"
+						"Target" 		"TARGET"
+					}
+					
+					"AttachEffect"
+					{
+						"EffectName"			"particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf"
+						"EffectAttachType"		"follow_origin"
+						"Target"				"TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_hitloc"
+							"TARGET"	"attach_hitloc"
+							"TARGET"	"attach_hitloc"
+							"TARGET"	"attach_hitloc"
+							"TARGET"	"attach_hitloc"
+							"CASTER"	"attach_hitloc" //Attach to the hands or any desired attach point of the hero
+							"CASTER"	"attach_hitloc"
+						}
+					}
+				}
+			}
 		}
 	}
 	
+	// Rewrite of the Shadow Shaman Voodoo ability
+	// Author: Noya
+	// Date: April 4, 2015.
+	// TODO: Check hex stacking from different casters
 	"shadow_shaman_voodoo_datadriven"
 	{
 		// General
@@ -45773,6 +47806,97 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"1.25 2.0 2.75 3.5"
+			}
+		}
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_shadowshaman.vsndevts"
+			"particle"			"particles/units/heroes/hero_shadowshaman/shadowshaman_voodoo.vpcf"
+			"model"				"models/props_gameplay/chicken.vmdl"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lion.Voodoo" //TODO
+				"Target"		"TARGET"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lion.Hex.Target" //TODO
+				"Target"		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_shadowshaman/shadowshaman_voodoo.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_voodoo_datadriven"
+				"Target"		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_voodoo_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_shadow_shaman/voodoo.lua"
+						"Function"		"voodoo_start"
+						"model"			"models/props_gameplay/chicken.vmdl"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"		"scripts/vscripts/heroes/hero_shadow_shaman/voodoo.lua"
+						"Function"			"HideWearables"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_shadow_shaman/voodoo.lua"
+						"Function"		"voodoo_end"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_shadow_shaman/voodoo.lua"
+						"Function"		"ShowWearables"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"		"%movespeed"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MUTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_HEXED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_EVADE_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_BLOCK_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}

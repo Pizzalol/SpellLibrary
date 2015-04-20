@@ -14,12 +14,14 @@ function Shock( event )
 	local targets = ability:GetLevelSpecialValueFor("targets", level )
 	local damage = ability:GetLevelSpecialValueFor("damage", level )
 	local AbilityDamageType = ability:GetAbilityDamageType()
+	local particleName = "particles/units/heroes/hero_shadowshaman/shadowshaman_ether_shock.vpcf"
 
 	-- Make sure the main target is damaged
-	local lightningBolt = ParticleManager:CreateParticle("particles/items_fx/chain_lightning.vpcf", PATTACH_WORLDORIGIN, caster)
+	local lightningBolt = ParticleManager:CreateParticle(particleName, PATTACH_WORLDORIGIN, caster)
 	ParticleManager:SetParticleControl(lightningBolt,0,Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z + caster:GetBoundingMaxs().z ))	
 	ParticleManager:SetParticleControl(lightningBolt,1,Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z + target:GetBoundingMaxs().z ))
 	ApplyDamage({ victim = target, attacker = caster, damage = damage, damage_type = AbilityDamageType})
+	target:EmitSound("Hero_ShadowShaman.EtherShock.Target")
 
 	local cone_units = GetEnemiesInCone( caster, start_radius, end_radius, end_distance )
 	local targets_shocked = 1 --Is targets=extra targets or total?
@@ -27,9 +29,10 @@ function Shock( event )
 		if targets_shocked < targets then
 			if unit ~= target then
 				-- Particle
-				local lightningBolt = ParticleManager:CreateParticle("particles/items_fx/chain_lightning.vpcf", PATTACH_WORLDORIGIN, caster)
+				local origin = unit:GetAbsOrigin()
+				local lightningBolt = ParticleManager:CreateParticle(particleName, PATTACH_WORLDORIGIN, caster)
 				ParticleManager:SetParticleControl(lightningBolt,0,Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z + caster:GetBoundingMaxs().z ))	
-				ParticleManager:SetParticleControl(lightningBolt,1,Vector(unit:GetAbsOrigin().x,unit:GetAbsOrigin().y,unit:GetAbsOrigin().z + unit:GetBoundingMaxs().z ))
+				ParticleManager:SetParticleControl(lightningBolt,1,Vector(origin.x,origin.y,origin.z + unit:GetBoundingMaxs().z ))
 			
 				-- Damage
 				ApplyDamage({ victim = unit, attacker = caster, damage = damage, damage_type = AbilityDamageType})
@@ -50,7 +53,7 @@ end
 	The cone starts with start_radius and reaches its end_radius after start_radius + end_distance
 ]]
 function GetEnemiesInCone( unit, start_radius, end_radius, end_distance)
-	local DEBUG = true
+	local DEBUG = false
 	
 	-- Positions
 	local fv = unit:GetForwardVector()
@@ -67,11 +70,11 @@ function GetEnemiesInCone( unit, start_radius, end_radius, end_distance)
 	-- 1 medium circle should be enough as long as the mid_interval isn't too large
 	local mid_interval = end_distance - start_radius - end_radius
 	local mid_radius = (start_radius + end_radius) / 2
-	local mid_point = origin + fv * mid_radius 
+	local mid_point = origin + fv * mid_radius * 2
 	
 	if DEBUG then
-		print("There's a space of "..mid_interval.." between the circles at the cone edges")
-		DebugDrawCircle(mid_point, Vector(255,0,0), 100, mid_radius, true, 3)
+		--print("There's a space of "..mid_interval.." between the circles at the cone edges")
+		DebugDrawCircle(mid_point, Vector(0,255,0), 100, mid_radius, true, 3)
 	end
 
 	-- Find the units
@@ -81,28 +84,29 @@ function GetEnemiesInCone( unit, start_radius, end_radius, end_distance)
 	local iFlag = DOTA_UNIT_TARGET_FLAG_NONE
 	local iOrder = FIND_ANY_ORDER
 
-	local start_units = FindUnitsInRadius(team, start_point, nil, start_radius, iTeam, iType, iFlag, iOrder, nil)
-	local end_units = FindUnitsInRadius(team, end_point, nil, end_radius, iTeam, iType, iFlag, iOrder, nil)
-	local mid_units = FindUnitsInRadius(team, mid_point, nil, mid_radius, iTeam, iType, iFlag, iOrder, nil)
+	local start_units = FindUnitsInRadius(team, start_point, nil, start_radius, iTeam, iType, iFlag, iOrder, false)
+	local end_units = FindUnitsInRadius(team, end_point, nil, end_radius, iTeam, iType, iFlag, iOrder, false)
+	local mid_units = FindUnitsInRadius(team, mid_point, nil, mid_radius, iTeam, iType, iFlag, iOrder, false)
 
 	-- Join the tables
 	local cone_units = {}
 	for k,v in pairs(end_units) do
-		table.insert(cone_units, {k,v})
+		table.insert(cone_units, v)
 	end
 
 	for k,v in pairs(start_units) do
 		if not tableContains(cone_units, k) then
-			table.insert(cone_units {k,v})
+			table.insert(cone_units, v)
 		end
 	end	
 
 	for k,v in pairs(mid_units) do
 		if not tableContains(cone_units, k) then
-			table.insert(cone_units {k,v})
+			table.insert(cone_units, v)
 		end
 	end
 
+	DeepPrintTable(cone_units)
 	return cone_units
 
 end
