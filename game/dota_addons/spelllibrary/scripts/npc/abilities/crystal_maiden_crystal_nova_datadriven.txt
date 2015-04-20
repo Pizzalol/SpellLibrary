@@ -101,7 +101,6 @@
 				"Radius"		"%radius"
 				"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 				"Type"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-				"Flag"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 			}
 			
 			"Action"
