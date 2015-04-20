@@ -1,3 +1,6 @@
+// Rewrite of Nevermore Presence of the Dark Lord
+// Author: Noya
+// Date: April 5, 2015
 "nevermore_dark_lord_datadriven"
 {
 	// General
@@ -7,6 +10,7 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"OnCastbar"					"0"
+	"AbilityTextureName"			"nevermore_dark_lord"
 	
 	
 	// Casting
@@ -26,6 +30,32 @@
 		{
 			"var_type"						"FIELD_INTEGER"
 			"presence_radius"				"900"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_dark_lord"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Aura"          	"modifier_dark_lord_presence"
+			"Aura_Radius"   	"%presence_radius"
+			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" //mechanic?
+			"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE" //immune?
+		}
+
+		"modifier_dark_lord_presence"
+		{
+			"IsHidden"			"0" //hidden?
+			"IsDebuff"			"1"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%presence_armor_reduction"
+			}
 		}
 	}
 }

@@ -1,3 +1,6 @@
+// Rewrite of Pugna Nether Ward
+// Author: Noya
+// Date: April 5, 2015
 "pugna_nether_ward_datadriven"
 {
 	// General
@@ -40,6 +43,266 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"mana_regen"				"-1.5 -3.0 -4.5 -6.0"
+		}
+
+		// Extra
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"ward_1_count"			"1 0 0 0"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"ward_2_count"			"0 1 0 0"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"ward_3_count"			"0 0 1 0"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"ward_4_count"			"0 0 0 1"
+		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_pugna/pugna_ward_ambient.vpcf"
+		"particle"  "particles/units/heroes/hero_pugna/pugna_ward_attack.vpcf"
+		"particle"  "particles/units/heroes/hero_pugna/pugna_ward_attack_light.vpcf"
+		"particle"  "particles/units/heroes/hero_pugna/pugna_ward_attack_medium.vpcf"
+		"particle"  "particles/units/heroes/hero_pugna/pugna_ward_attack_heavy.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
+		"model"		"models/heroes/pugna/pugna_ward.vmdl"
+	}
+
+	"OnSpellStart"
+	{
+		"SpawnUnit"
+		{
+			"UnitName"		"npc_dota_pugna_nether_ward_1"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "heroes/hero_pugna/nether_ward.lua"
+					"Function"      "GetFrontPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+					"Distance"		"100"
+				}
+			}
+			"Duration"		"%AbilityDuration"
+			"UnitCount"		"%ward_1_count"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+		
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_nether_ward"
+					"Target" 		"TARGET"
+				}
+			}
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"npc_dota_pugna_nether_ward_2"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "heroes/hero_pugna/nether_ward.lua"
+					"Function"      "GetFrontPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+					"Distance"		"100"
+				}
+			}
+			"Duration"		"%AbilityDuration"
+			"UnitCount"		"%ward_2_count"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+		
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_nether_ward"
+					"Target" 		"TARGET"
+				}
+			}
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"npc_dota_pugna_nether_ward_3"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "heroes/hero_pugna/nether_ward.lua"
+					"Function"      "GetFrontPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+					"Distance"		"100"
+				}
+			}
+			"Duration"		"%AbilityDuration"
+			"UnitCount"		"%ward_3_count"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+		
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_nether_ward"
+					"Target" 		"TARGET"
+				}
+			}
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"		"npc_dota_pugna_nether_ward_4"
+			"Target"
+			{
+				"Center"		    "CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "heroes/hero_pugna/nether_ward.lua"
+					"Function"      "GetFrontPoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+					"Distance"		"100"
+				}
+			}
+			"Duration"		"%AbilityDuration"
+			"UnitCount"		"%ward_4_count"
+			"GrantsGold"	"1"
+			"GrantsXP"		"1"
+			"SpawnRadius"	"10"
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+		
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_nether_ward"
+					"Target" 		"TARGET"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_nether_ward"
+		{	
+			"IsHidden"			"1"
+			"Aura"          	"modifier_nether_ward_debuff"
+			"Aura_Radius"   	"%radius"
+			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"    	"DOTA_UNIT_TARGET_HERO"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_pugna/nether_ward.lua"
+					"Function"		"NetherWardStart"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO"
+					}
+				}
+			}
+
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_pugna/nether_ward.lua"
+					"Function"		"NetherWardMana"
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 	"DOTA_UNIT_TARGET_HERO"
+					}
+				}
+			}
+
+			"OnAttacked"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_pugna/nether_ward.lua"
+					"Function"		"NetherWardAttacked"
+					"Damage"		"%attack_damage"
+				}
+			}
+		}
+
+		// TODO: Check interaction with multiple wards
+		"modifier_nether_ward_debuff"
+		{
+			"IsDebuff"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+			}
+
+			"OnSpentMana"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_pugna/nether_ward.lua"
+					"Function"		"NetherWardZap"
+				}
+			}
 		}
 	}
 }

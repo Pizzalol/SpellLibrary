@@ -1,3 +1,7 @@
+// Rewrite of the Shadow Shaman Voodoo ability
+// Author: Noya
+// Date: April 4, 2015.
+// TODO: Check hex stacking from different casters
 "shadow_shaman_voodoo_datadriven"
 {
 	// General
@@ -36,6 +40,97 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"duration"					"1.25 2.0 2.75 3.5"
+		}
+	}
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_shadowshaman.vsndevts"
+		"particle"			"particles/units/heroes/hero_shadowshaman/shadowshaman_voodoo.vpcf"
+		"model"				"models/props_gameplay/chicken.vmdl"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lion.Voodoo" //TODO
+			"Target"		"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lion.Hex.Target" //TODO
+			"Target"		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_shadowshaman/shadowshaman_voodoo.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_voodoo_datadriven"
+			"Target"		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_voodoo_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_shadow_shaman/voodoo.lua"
+					"Function"		"voodoo_start"
+					"model"			"models/props_gameplay/chicken.vmdl"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"		"scripts/vscripts/heroes/hero_shadow_shaman/voodoo.lua"
+					"Function"			"HideWearables"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_shadow_shaman/voodoo.lua"
+					"Function"		"voodoo_end"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_shadow_shaman/voodoo.lua"
+					"Function"		"ShowWearables"
+				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"		"%movespeed"
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MUTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_HEXED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_EVADE_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_BLOCK_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 	}
 }

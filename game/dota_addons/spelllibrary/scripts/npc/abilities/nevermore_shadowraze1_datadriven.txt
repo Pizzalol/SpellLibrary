@@ -1,3 +1,6 @@
+// Rewrite of Nevermore Shadowraze 1
+// Author: Noya
+// Date: April 5, 2015
 "nevermore_shadowraze1_datadriven"
 {
 	// General
@@ -45,5 +48,37 @@
 			"shadowraze_cooldown"	"3"
 		}
 	}
-}
 
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		//TODO: FireSound and Particle
+
+		"Damage"
+		{
+			"Target"
+			{
+				"Center"   "CASTER"
+				"Radius"	"%shadowraze_radius"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "heroes/hero_nevermore/shadowraze.lua"
+					"Function"      "ShadowrazePoint"
+					"Target"		"CASTER"
+					"Count"			"1"
+					"distance"		"%shadowraze_range"
+				}
+			}
+			"Type"			"DAMAGE_TYPE_MAGICAL"
+			"Damage"		"%AbilityDamage"
+		}
+	}
+}

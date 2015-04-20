@@ -73,6 +73,94 @@
 			"damage_max_scepter"	"90 110 130"
 		}
 
+		// Extra
+		"10"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"ward_1_count"			"10 0 0"
+		}
+		"11"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"ward_2_count"			"0 10 0"
+		}
+		"12"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"ward_3_count"			"0 0 10"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		// TODO Sound, Position, Trapping Parity and Splash
+		"FireSound"
+		{
+			"EffectName"		"Hero_Venomancer.Plague_Ward"
+			"Target"			"CASTER"
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_dota_shadow_shaman_ward_1"
+			"Target"			"POINT"
+			"UnitCount"			"%ward_1_count"
+			"Duration"			"%duration"
+			"SpawnRadius"		"?10 100"
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+			}
+		}	
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_dota_shadow_shaman_ward_2"
+			"Target"			"POINT"
+			"UnitCount"			"%ward_2_count"
+			"Duration"			"%duration"
+			"SpawnRadius"		"?10 100"
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+			}
+		}	
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_dota_shadow_shaman_ward_3"
+			"Target"			"POINT"
+			"UnitCount"			"%ward_3_count"
+			"Duration"			"%duration"
+			"SpawnRadius"		"?10 100"
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+			}
+		}
 	}
 }
-

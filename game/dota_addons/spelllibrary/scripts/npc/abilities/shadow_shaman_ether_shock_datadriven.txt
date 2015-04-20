@@ -1,3 +1,6 @@
+// Rewrite of the Shadow Shaman Ether Shock ability
+// Author: Noya
+// Date: April 4, 2015.
 "shadow_shaman_ether_shock_datadriven"
 {
 	// General
@@ -52,6 +55,23 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"damage"					"140 200 260 320"
+		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_shadowshaman/shadowshaman_ether_shock.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_shadowshaman.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		//TODO Sound, Check parity
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_shadow_shaman/shock.lua"
+			"Function"		"Shock"
 		}
 	}
 }

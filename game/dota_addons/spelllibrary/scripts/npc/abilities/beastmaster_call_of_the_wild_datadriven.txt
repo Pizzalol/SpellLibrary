@@ -1,10 +1,15 @@
+// Rewrite of Beastmaster Call of the Wild
+// Author: Noya
+// Date: April 5, 2015
+// This ability is used with beastmaster_call_of_the_wild_boar_datadriven, skilling one will attempt to upgrade the other
+//TODO: Check if its necessary to kill the hawk or there's no limit
 "beastmaster_call_of_the_wild_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	
+		
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastPoint"				"0.3"
@@ -21,17 +26,300 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
 	{
-	"01"
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"boar_duration"				"60 60 60 60"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"hawk_hp_tooltip"			"40 60 80 100"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"hawk_speed_tooltip"		"250 300 350 400"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"hawk_daysight_tooltip"		"700 1000 1300 1600"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"hawk_nightsight_tooltip"	"700 800 900 1000"
+		}
+		"06"
 		{
 			"var_type"					"FIELD_INTEGER"
 			"hawk_duration"				"60 60 60 60"
 		}
-	"02"
+
+		// Extra		
+		"07"
 		{
-			"var_type"					"FIELD_INTEGER"
-			"boar_duration"				"0 60 60 60"
+			"var_type"				"FIELD_INTEGER"
+			"hawk_1_count"			"1 0 0 0"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hawk_2_count"			"0 1 0 0"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hawk_3_count"			"0 0 1 0"
+		}
+		"10"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hawk_4_count"			"0 0 0 1"
+		}
+		"11"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"distance"				"150" // The distance in front of the target at which units will be created
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+			"Function"		"LevelUpAbility"
+			"ability_name"	"beastmaster_call_of_the_wild_boar_datadriven"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+	    {
+	    	"EffectName"	"Hero_Beastmaster.Call.Hawk"
+	    	"Target"		"CASTER"
+	    }
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_dota_beastmaster_hawk_1"
+			"Target"
+			{
+				"Center"				"CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
+        			"Function"      "GetFrontPoint"
+					"Target"		"CASTER"
+					"Distance"		"%distance"
+				}
+			}
+
+			"UnitCount"			"%hawk_1_count"
+			"Duration"			"%hawk_duration"
+
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+					"Function"		"SetUnitsMoveForward"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_beastmaster_hawk"
+					"Target"		"TARGET"
+				}
+			}
 		}
 
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_dota_beastmaster_hawk_2"
+			"Target"
+			{
+				"Center"				"CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
+        			"Function"      "GetFrontPoint"
+					"Target"		"CASTER"
+					"Distance"		"%distance"
+				}
+			}
+
+			"UnitCount"			"%hawk_2_count"
+			"Duration"			"%hawk_duration"
+
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_beastmaster_hawk"
+					"Target"		"TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+					"Function"		"SetUnitsMoveForward"
+				}
+			}
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_dota_beastmaster_hawk_4"
+			"Target"
+			{
+				"Center"				"CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
+        			"Function"      "GetFrontPoint"
+					"Target"		"CASTER"
+					"Distance"		"%distance"
+				}
+			}
+
+			"UnitCount"			"%hawk_3_count"
+			"Duration"			"%hawk_duration"
+
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_beastmaster_hawk"
+					"Target"		"TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+					"Function"		"SetUnitsMoveForward"
+				}
+			}
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_dota_beastmaster_hawk_4"
+			"Target"
+			{
+				"Center"				"CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
+        			"Function"      "GetFrontPoint"
+					"Target"		"CASTER"
+					"Distance"		"%distance"
+				}
+			}
+
+			"UnitCount"			"%hawk_4_count"
+			"Duration"			"%hawk_duration"
+
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_beastmaster_hawk"
+					"Target"		"TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+					"Function"		"SetUnitsMoveForward"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_beastmaster_hawk"
+		{
+			"IsHidden"		"1"
+
+			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"Target"			"TARGET"
+					"EffectName"		"particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
+					"EffectAttachType"	"follow_origin"
+				}
+			}
+
+			"OnDeath"
+			{
+				"FireEffect"
+				{
+					"Target"			
+					{
+						"Center"	"UNIT"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
+					"EffectAttachType"	"follow_origin"
+				}
+
+				"FireSound"
+				{
+					"Target"			
+					{
+						"Center"	"UNIT"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+					"EffectName"	"Hero_Beastmaster_Bird.Death"
+				}
+			}
+		}
 	}
 }
 

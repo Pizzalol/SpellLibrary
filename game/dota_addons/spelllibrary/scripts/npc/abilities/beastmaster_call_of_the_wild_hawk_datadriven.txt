@@ -1,3 +1,4 @@
+
 "beastmaster_call_of_the_wild_hawk_datadriven"
 {
     // General

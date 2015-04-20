@@ -1,3 +1,6 @@
+// Rewrite of Furion Wrath of Nature
+// Author: Noya
+// Date: April 5, 2015
 "furion_wrath_of_nature_datadriven"
 {
 	// General
@@ -56,6 +59,33 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"damage_scepter"		"155 210 275"
+		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_furion/furion_wrath_of_nature.vpcf"
+		"particle"  "particles/units/heroes/hero_furion/furion_wrath_of_nature_cast.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_furion.vsndevts"
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_furion/furion_wrath_of_nature_cast.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_furion/wrath_of_nature.lua"
+			"Function"		"WrathOfNature"
+			"Target"		"POINT"
 		}
 	}
 }

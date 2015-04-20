@@ -1,3 +1,6 @@
+// Rewrite of the Shadow Shaman Shackles ability
+// Author: Noya
+// Date: April 4, 2015.
 "shadow_shaman_shackles_datadriven"
 {
 	// General
@@ -47,6 +50,66 @@
 		{
 			"var_type"			"FIELD_FLOAT"
 			"total_damage"		"120 160 160 200"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		//TODO Sound Start and Stop
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_shackles"
+			"Target" 		"TARGET"
+			"Duration"		"%channel_time"
+		}
+	}
+
+	"OnChannelFinish"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_shackles"
+			"Target" 		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_shackles"
+		{
+			"IsDebuff"			"1"
+	
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"ThinkInterval"  "%tick_interval"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%total_damage / %channel_time * %tick_interval"
+				}
+			}
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"			"particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf"
+					"EffectAttachType"		"follow_origin"
+					"Target"				"TARGET"
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_origin"
+						"CASTER"	"attach_origin"
+					}
+				}
+			}
 		}
 	}
 }

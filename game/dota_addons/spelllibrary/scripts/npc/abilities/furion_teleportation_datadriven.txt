@@ -1,3 +1,7 @@
+// Rewrite of Furion Teleportation
+// Author: Noya
+// Date: April 5, 2015
+// TODO: Check all sort of cancelling shenanigans
 "furion_teleportation_datadriven"
 {
 	// General
@@ -7,9 +11,58 @@
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastRange"				"0"
+	"AbilityCastRange"				"0" // ?? global
 	"AbilityCastPoint"				"3 3 3 3"
 	"AbilityCooldown"				"50 40 30 20"
 	"AbilityManaCost"				"50 50 50 50"
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_furion/furion_teleport_end.vpcf"
+		"particle"  "particles/units/heroes/hero_furion/furion_teleport_end_team.vpcf"
+		"particle"  "particles/units/heroes/hero_furion/furion_teleport.vpcf"
+		"particle"  "particles/units/heroes/hero_furion/furion_teleport_e.vpcf"	//Endcap if canceled
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_furion.vsndevts"
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_teleportation"
+			"Target" 		"CASTER"
+			"Duration"		"%AbilityCastPoint"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heres/hero_furion/teleportation.lua"
+			"Function"		"Teleport"
+			"Target"		"POINT"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_teleportation"
+		{
+			"IsHidden"			"1"
+	
+			"EffectName"		"particles/units/heroes/hero_furion/furion_teleport.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_teleportation"
+					"Target" 		"CASTER"
+				}
+			}
+		}
+	}
 }
 

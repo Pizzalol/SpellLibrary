@@ -1,3 +1,6 @@
+// Rewrite of Pugna Life Drain
+// Author: Noya
+// Date: April 5, 2015
 "pugna_life_drain_datadriven"
 {
 	// General
@@ -74,6 +77,71 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"cast_range_scepter_tooltip"		"900"
+		}
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_pugna/pugna_life_drain.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName" 	"modifier_life_drain"
+			"Target" 		"TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Pugna.LifeDrain.Target"
+			"Target" 		"CASTER"
+		}
+	}
+
+	"OnChannelFinish"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName" 	"modifier_life_drain"
+			"Target" 		"TARGET"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_life_drain"
+		{
+			"IsDebuff"	"1"
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_pugna/life_drain.lua"
+					"Function"		"LifeDrainParticle"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_pugna/life_drain.lua"
+					"Function"		"LifeDrainParticleEnd"
+				}
+			}
+
+			"ThinkInterval"		"%tick_rate"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_pugna/life_drain.lua"
+					"Function"		"LifeDrainHealthTransfer"
+				}
+			}
 		}
 	}
 }

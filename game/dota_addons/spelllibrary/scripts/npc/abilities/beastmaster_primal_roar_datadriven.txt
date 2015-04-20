@@ -1,3 +1,6 @@
+// Rewrite of Beastmaster Primal Roar
+// Author: Noya
+// Date: April 5, 2015
 "beastmaster_primal_roar_datadriven"
 {
 	// General
@@ -92,6 +95,102 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"cooldown_scepter"			"45.0 45.0 45.0"
+		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_beastmaster/beastmaster_primal_roar.vpcf"
+		"particle"  "particles/units/heroes/hero_beastmaster/beastmaster_primal_target.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_beastmaster/beastmaster_primal_roar.vpcf"
+			"EffectAttachType"  "start_at_customorigin"
+			"Target"            "TARGET"
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_cast4_primal_roar"
+				"TARGET"	"attach_hitloc"
+			}
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_primal_roar_stun"
+			"Target" 		"TARGET"
+			"Duration"		"%duration"
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"  	"TARGET"
+				"Line"
+				{
+					"Length" 		"%AbilityCastRange" //THIS IS QUESTIONABLE
+					"Thickness" 	"%damage_radius"
+				}
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+		
+			"Action"    
+			{
+				"Knockback"
+				{
+					"Target"            "TARGET"
+					"Center" 	        "CASTER"
+					"Distance"	        "%push_distance"
+					"Duration"	        "%push_duration"
+					"Height"	        "0"
+					"IsFixedDistance"	"0"
+					"ShouldStun"        "0"	
+				}
+
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%damage"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_primal_roar_slow"
+					"Target" 		"TARGET"
+					"Duration"		"%slow_duration"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_primal_roar_stun"
+		{
+			"IsDebuff"		"1"
+			"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"	"follow_overhead"
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_primal_roar_slow"
+		{
+			"IsDebuff"		"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%slow_attack_speed_pct"
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_movement_speed_pct" 
+			}
 		}
 	}
 }

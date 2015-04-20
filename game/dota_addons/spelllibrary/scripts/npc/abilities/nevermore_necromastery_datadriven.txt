@@ -1,3 +1,6 @@
+// Rewrite of Nevermore Necromastery
+// Author: Noya
+// Date: April 5, 2015
 "nevermore_necromastery_datadriven"
 {
 	// General
@@ -5,7 +8,8 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"OnCastbar"					"0"
-	
+	"AbilityTextureName"			"nevermore_necromastery"
+
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
@@ -29,8 +33,66 @@
 		{
 			"var_type"						"FIELD_INTEGER"
 			"necromastery_souls_hero_bonus"	"11"
+		}		
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_nevermore/nevermore_souls.vpcf"
+		"particle"  "particles/units/heroes/hero_nevermore/nevermore_necro_souls.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+	}
+
+	"OnOwnerDied"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_nevermore/necromastery.lua"
+			"Function"		"NecromasteryDeath"
+			"modifier"		"modifier_necromastery"
 		}
-		
+	}
+
+	"Modifiers"
+	{
+		"modifier_soul_collector"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"EffectName"		"particle_name"
+			"EffectAttachType"	"follow_origin"
+
+			"OnKill"
+			{
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_nevermore/nevermore_necro_souls.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "TARGET" //DEADFLAG?
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_nevermore/necromastery.lua"
+					"Function"		"NecromasteryStack"
+					"modifier"		"modifier_necromastery"
+				}
+			}
+		}
+
+		"modifier_necromastery"
+		{
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+
+			"EffectName"		"particles/units/heroes/hero_nevermore/nevermore_souls.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%necromastery_damage_per_soul"
+			}
+		}
 	}
 }
 

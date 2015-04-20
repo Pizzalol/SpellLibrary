@@ -1,3 +1,6 @@
+// Rewrite of Clinkz Wind Walk
+// Author: Noya
+// Date: April 5, 2015
 "clinkz_wind_walk_datadriven"
 {
 	// General
@@ -32,6 +35,111 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"move_speed_bonus_pct"		"11 22 33 44"
+		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		//TODO: Sound, test dying with invis on
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
+			"EffectAttachType"	"attach_origin"
+			"Target"			"CASTER"
+		}
+
+		"FireSound"
+		{
+			"Target"		"CASTER"
+			"EffectName"	"Hero_Clinkz.WindWalk"
+		}
+
+		"ApplyModifier"
+		{
+			"Target"		"CASTER"
+			"ModifierName"	"modifier_wind_walk_fade_datadriven"
+			"Duration"		"%fade_time"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_wind_walk_fade"
+		{
+			"IsHidden"			"1"
+			"EffectName"		"particles/generic_hero_status/status_invisibility_start.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"Target"		"CASTER"
+					"ModifierName"	"modifier_wind_walk"
+					"Duration"		"%duration"
+				}
+				"ApplyModifier"
+				{
+					"Target"		"CASTER"
+					"ModifierName"	"modifier_invisible"
+					"Duration"		"%duration"
+				}
+			}
+		}
+
+		"modifier_wind_walk"
+		{
+			"OnAttackLanded"
+			{
+				"RemoveModifier"
+				{
+					"Target"		"CASTER"
+					"ModifierName"	"modifier_wind_walk"
+				}
+				"RemoveModifier"
+				{
+					"Target"		"CASTER"
+					"ModifierName"	"modifier_invisible"
+				}
+			}
+
+			"OnAbilityExecuted"
+			{
+				"RemoveModifier"
+				{
+					"Target"		"CASTER"
+					"ModifierName"	"modifier_wind_walk"
+				}
+				"RemoveModifier"
+				{
+					"Target"		"CASTER"
+					"ModifierName"	"modifier_invisible"
+				}
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED" 
+			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"Target"
+					{
+						"Center"	"CASTER"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+					"ModifierName"	"modifier_invisible"
+				}
+			}
 		}
 	}
 }

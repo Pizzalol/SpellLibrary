@@ -1,3 +1,6 @@
+// Rewrite of Clinkz Death Pact
+// Author: Noya
+// Date: April 5, 2015
 "clinkz_death_pact_datadriven"
 {
 	// General
@@ -40,6 +43,74 @@
 		{
 			"var_type"				"FIELD_FLOAT"
 			"damage_gain_pct"		"5.0 6.5 8.0"
+		}
+	}
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
+		"particle"  "particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Clinkz.DeathPact.Cast"
+			"Target" 		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "TARGET"
+			"ControlPointEntities"
+			{
+				"TARGET"	"attach_origin"
+				"CASTER"	"attach_origin"
+			}
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Clinkz.DeathPact"
+			"Target" 		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_death_pact"
+			"Target" 		"CASTER"
+			"Duration"		"%duration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_death_pact"
+		{	
+			"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
+			"EffectAttachType"	"follow_origin"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
+					"Function"		"DeathPact"
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
+					"Function"		"DeathPactEnd"
+				}
+			}	
 		}
 	}
 }

@@ -1,3 +1,6 @@
+// Rewrite of Pugna Decrepify
+// Author: Noya
+// Date: April 5, 2015
 "pugna_decrepify_datadriven"
 {
 	// General
@@ -5,7 +8,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM" //Awful Valve-hack to let it target Nether Ward (and Tombstone?)
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 
 	// Casting
@@ -45,6 +48,86 @@
 		{
 			"var_type"					"FIELD_FLOAT"
 			"tooltip_duration"		"2.0 2.5 3.0 3.5"
+		}
+	}
+
+	"precache"
+	{
+		"particle" 	"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Pugna.Decrepify"
+			"Target" 		"TARGET"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_decrepify_enemy"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			}
+			"Duration"		"%AbilityDuration"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_decrepify_ally"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			}
+			"Duration"		"%AbilityDuration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_decrepify_ally"
+		{
+			"IsDebuff"			"1"
+	
+			"EffectName"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+			"EffectAttachType"	"follow_origin"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE" "%bonus_spell_damage_pct_allies"
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+			}			
+		}
+
+		"modifier_decrepify_enemy"
+		{
+			"IsDebuff"			"1"
+	
+			"EffectName"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+			"EffectAttachType"	"follow_origin"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE" "%bonus_spell_damage_pct"
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
+			}
+
+			"States"
+			{
+				"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+			}			
 		}
 	}
 }

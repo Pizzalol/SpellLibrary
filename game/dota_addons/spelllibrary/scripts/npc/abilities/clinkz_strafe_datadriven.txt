@@ -1,3 +1,6 @@
+// Rewrite of Clinkz Strafe
+// Author: Noya
+// Date: April 5, 2015
 "clinkz_strafe_datadriven"
 {
 	// General
@@ -31,5 +34,42 @@
 			"attack_speed_bonus_pct"	"130"
 		}
 	}
-}
 
+	"OnSpellStart"
+	{
+		// TODO Sound
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_clinkz/clinkz_strafe_fire.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Clinkz.Strafe"
+			"Target" 		"CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_strafe"
+			"Target" 		"CASTER"
+			"Duration"		"%duration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_strafe"
+		{
+			"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_strafe.vpcf"
+			"EffectAttachType"	"follow_origin"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_bonus_pct"
+			}
+		}
+	}
+}

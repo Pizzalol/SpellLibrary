@@ -1,3 +1,6 @@
+// Rewrite of Beastmaster Inner Beast
+// Author: Noya
+// Date: April 5, 2015
 "beastmaster_inner_beast_datadriven"
 {
 	// General
@@ -5,6 +8,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityTextureName"			"beastmaster_inner_beast"
 
 	// Casting
 	"AbilitySpecial"
@@ -18,6 +22,29 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"bonus_attack_speed"	"15 25 35 45"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_inner_beast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+	
+			"Aura"          	"modifier_inner_beast_buff"
+			"Aura_Radius"   	"%radius"
+			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" //mechanical?
+			"Aura_Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ALLIES" //Needed?
+		}
+
+		"modifier_inner_beast_buff"
+		{
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed"
+			}
 		}
 	}
 }

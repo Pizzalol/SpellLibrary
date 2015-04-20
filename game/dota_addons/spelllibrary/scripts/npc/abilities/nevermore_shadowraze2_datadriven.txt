@@ -1,3 +1,6 @@
+// Rewrite of Nevermore Shadowraze 2
+// Author: Noya
+// Date: April 5, 2015
 "nevermore_shadowraze2_datadriven"
 {
 	// General

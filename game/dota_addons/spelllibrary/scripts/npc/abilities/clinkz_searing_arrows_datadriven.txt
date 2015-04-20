@@ -1,3 +1,8 @@
+// Rewrite of Clinkz Searing Arrows
+// Author: Noya
+// Date: April 5, 2015
+// This uses the old Orb mechanic. Orb Labels seem to be malfunctioning, need to warn Valve about this issue.
+// A non-orb rewrite might be impossible because OnAttackStart triggers earlier than OnOrbFire (i.e. there's no OnAttackLaunched)
 "clinkz_searing_arrows_datadriven"
 {
 	// General
@@ -31,6 +36,52 @@
 		{
 			"var_type"						"FIELD_INTEGER"
 			"damage_bonus"					"30 40 50 60"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_searing_arrow"
+		{
+			"Passive"               "1"
+			"IsHidden"				"1"
+
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_DEFAULT"
+				"ProjectileName"    "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+				"CastAttack"		"1"
+			}
+
+			"OnOrbFire"
+			{
+				"SpendMana"
+				{
+					"Mana"    		"%AbilityManaCost"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Clinkz.SearingArrows"
+					"Target"		"CASTER"
+				}
+			}
+			
+			"OnOrbImpact"
+			{
+				"Damage"
+				{
+					"Type"          "DAMAGE_TYPE_PHYSICAL"
+					"Damage"        "%AbilityDamage"
+					"Target"		"TARGET"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Clinkz.SearingArrows.Impact"
+					"Target"		"CASTER"
+				}
+			}
 		}
 	}
 }
