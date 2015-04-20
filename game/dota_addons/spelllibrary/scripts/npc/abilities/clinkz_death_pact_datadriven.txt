@@ -11,6 +11,7 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityTextureName"			"clinkz_death_pact"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -79,12 +80,36 @@
 			"Target" 		"TARGET"
 		}
 
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_death_pact"
+			"Target" 		"CASTER"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_death_pact_damage"
+			"Target" 		"CASTER"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_death_pact_health"
+			"Target" 		"CASTER"
+		}
+
 		"ApplyModifier"
 		{
 			"ModifierName"	"modifier_death_pact"
 			"Target" 		"CASTER"
 			"Duration"		"%duration"
 		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
+			"Function"		"DeathPact"
+		}	
 	}
 
 	"Modifiers"
@@ -93,14 +118,37 @@
 		{	
 			"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
 			"EffectAttachType"	"follow_origin"
-	
-			"OnCreated"
+
+			"ThinkInterval"  "0.03"
+			"OnIntervalThink"
 			{
 				"RunScript"
 				{
 					"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
-					"Function"		"DeathPact"
+					"Function"		"DeathPactHealth"
 				}
+			}
+		}
+
+		"modifier_death_pact_damage"
+		{
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "1"
+			}
+		}
+
+		"modifier_death_pact_health"
+		{
+			"IsHidden"			"1"
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_HEALTH_BONUS" "1"
 			}
 
 			"OnDestroy"
@@ -108,9 +156,9 @@
 				"RunScript"
 				{
 					"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
-					"Function"		"DeathPactEnd"
+					"Function"		"SetCurrentHealth"
 				}
-			}	
+			}
 		}
 	}
 }

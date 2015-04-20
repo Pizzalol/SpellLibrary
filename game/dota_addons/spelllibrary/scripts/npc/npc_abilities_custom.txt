@@ -10306,6 +10306,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"			"clinkz_death_pact"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -10374,12 +10375,36 @@
 				"Target" 		"TARGET"
 			}
 	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_death_pact"
+				"Target" 		"CASTER"
+			}
+	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_death_pact_damage"
+				"Target" 		"CASTER"
+			}
+	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_death_pact_health"
+				"Target" 		"CASTER"
+			}
+	
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_death_pact"
 				"Target" 		"CASTER"
 				"Duration"		"%duration"
 			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
+				"Function"		"DeathPact"
+			}	
 		}
 	
 		"Modifiers"
@@ -10388,14 +10413,37 @@
 			{	
 				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
 				"EffectAttachType"	"follow_origin"
-		
-				"OnCreated"
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
 				{
 					"RunScript"
 					{
 						"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
-						"Function"		"DeathPact"
+						"Function"		"DeathPactHealth"
 					}
+				}
+			}
+	
+			"modifier_death_pact_damage"
+			{
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "1"
+				}
+			}
+	
+			"modifier_death_pact_health"
+			{
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS" "1"
 				}
 	
 				"OnDestroy"
@@ -10403,9 +10451,9 @@
 					"RunScript"
 					{
 						"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
-						"Function"		"DeathPactEnd"
+						"Function"		"SetCurrentHealth"
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -10426,6 +10474,7 @@
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"			"clinkz_searing_arrows"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -10449,6 +10498,12 @@
 				"var_type"						"FIELD_INTEGER"
 				"damage_bonus"					"30 40 50 60"
 			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
 		}
 	
 		"Modifiers"
@@ -10535,9 +10590,14 @@
 			}
 		}
 	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_clinkz/clinkz_strafe_fire.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+		}
+	
 		"OnSpellStart"
 		{
-			// TODO Sound
 			"FireEffect"
 			{
 				"EffectName"        "particles/units/heroes/hero_clinkz/clinkz_strafe_fire.vpcf"
@@ -10582,6 +10642,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"clinkz_wind_walk"
 	
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -10621,7 +10682,6 @@
 	
 		"OnSpellStart"
 		{
-			//TODO: Sound, test dying with invis on
 			"FireEffect"
 			{
 				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
@@ -10638,7 +10698,7 @@
 			"ApplyModifier"
 			{
 				"Target"		"CASTER"
-				"ModifierName"	"modifier_wind_walk_fade_datadriven"
+				"ModifierName"	"modifier_wind_walk_fade"
 				"Duration"		"%fade_time"
 			}
 		}

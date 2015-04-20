@@ -35,9 +35,14 @@
 		}
 	}
 
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_clinkz/clinkz_strafe_fire.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+	}
+
 	"OnSpellStart"
 	{
-		// TODO Sound
 		"FireEffect"
 		{
 			"EffectName"        "particles/units/heroes/hero_clinkz/clinkz_strafe_fire.vpcf"

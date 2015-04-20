@@ -14,6 +14,7 @@
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AbilityTextureName"			"clinkz_searing_arrows"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -37,6 +38,12 @@
 			"var_type"						"FIELD_INTEGER"
 			"damage_bonus"					"30 40 50 60"
 		}
+	}
+
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
 	}
 
 	"Modifiers"

@@ -7,6 +7,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	"AbilityTextureName"			"clinkz_wind_walk"
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
@@ -46,7 +47,6 @@
 
 	"OnSpellStart"
 	{
-		//TODO: Sound, test dying with invis on
 		"FireEffect"
 		{
 			"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
@@ -63,7 +63,7 @@
 		"ApplyModifier"
 		{
 			"Target"		"CASTER"
-			"ModifierName"	"modifier_wind_walk_fade_datadriven"
+			"ModifierName"	"modifier_wind_walk_fade"
 			"Duration"		"%fade_time"
 		}
 	}
