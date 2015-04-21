@@ -23007,18 +23007,18 @@
 		}
 	}
 	
-	// create dummy
-	// dummy travels alongside the projectile
-	// give dummy the dummy ability and have the projectile refer to it
-	// on hit apply a modifier which moves the target as long as it has the modifier
-	
-	
+	// Rewrite of the Invoker Deafening Blast ability
+	// Author: Pizzalol
+	// Date: 21.04.2015.
+	// NOTE: Knockback calculation is static
 	"invoker_deafening_blast_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"						"1"
 		"HotKeyOverride"				"B"
@@ -23032,6 +23032,9 @@
 		{
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
 			"particle"		"particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_deafening_blast_knockback_debuff.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_deafening_blast_disarm_debuff.vpcf"
+			"particle"		"particles/status_fx/status_effect_frost.vpcf"
 		}
 	
 	
@@ -23119,6 +23122,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"invoker_deafening_blast"
 	
 		"OnProjectileHitUnit"
 		{
@@ -23127,7 +23131,8 @@
 			"RunScript"
 			{
 				"ScriptFile"	"heroes/hero_invoker/deafening_blast.lua"
-				"Function"		"deafening_blast_hit" // deal damage and apply the knockback modifier
+				"Function"		"deafening_blast_hit"
+				"knockback_modifier"	"modifier_deafening_blast_knockback_datadriven"
 			}
 		}
 	
@@ -23137,9 +23142,22 @@
 			{
 				"IsDebuff"		"1"
 	
+				"OverrideAnimation"     "ACT_DOTA_DISABLED"
+				"TextureName"			"invoker_deafening_blast"
+	
+				"StatusEffectName" 		"particles/status_fx/status_effect_frost.vpcf" 	   
+				"StatusEffectPriority"  "10"
+	
+				"EffectName"		"particles/units/heroes/hero_invoker/invoker_deafening_blast_knockback_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
 				"OnCreated"
 				{
-					// store new values for knockback calculation
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_invoker/deafening_blast.lua"
+						"Function"		"deafening_blast_knockback_start"
+					}
 				}
 	
 				"ThinkInterval"  "0.03"
@@ -23150,6 +23168,52 @@
 						"ScriptFile"	"heroes/hero_invoker/deafening_blast.lua"
 						"Function"		"deafening_blast_knockback"
 					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_invoker/deafening_blast.lua"
+						"Function"		"deafening_blast_disarm"
+						"disarm_modifier"	"modifier_deafening_blast_disarm_datadriven"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_deafening_blast_disarm_datadriven"
+			{
+				"IsDebuff"		"1"
+	
+				"StatusEffectName" 		"particles/status_fx/status_effect_frost.vpcf" 	   
+				"StatusEffectPriority"  "10"
+	
+				"EffectName"		"particles/units/heroes/hero_invoker/invoker_deafening_blast_disarm_debuff.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_deafening_blast_dummy"
+			{
+				"Passive"	"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"						"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
