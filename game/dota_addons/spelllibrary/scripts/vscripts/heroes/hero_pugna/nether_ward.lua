@@ -2,28 +2,32 @@
 	Author: Noya
 	Date: April 5, 2015
 	Damages the target based on the mana spent
-	TODO: Pray this damage takes place before the spell goes off
 ]]
 function NetherWardZap( event )
 	local caster = event.caster
-	local target = event.target
+	local target = event.unit -- The unit that spent mana
 	local ability = event.ability
+	local ward = ability.nether_ward -- Keep track of the ward to attach the particle
 	local AbilityDamageType = ability:GetAbilityDamageType()
 
 	local mana_spent
 	if target.OldMana then
-		mana_spent = target.OldMana
+		mana_spent = target.OldMana - target:GetMana()
 	end
 
-	if mana_spent then
+	if mana_spent and mana_spent > 0 then
 		local mana_multiplier = ability:GetLevelSpecialValueFor("mana_multiplier", ability:GetLevel() - 1 )
 		local zap_damage = mana_spent * mana_multiplier
 
 		ApplyDamage({ victim = target, attacker = caster, damage = zap_damage, damage_type = AbilityDamageType })
+		print("Dealt "..zap_damage.." = "..mana_spent.." * "..mana_multiplier)
 
-		-- TODO: Zap particle and sound
-	else
-		print("ERROR, no mana data")
+		local attackName = "particles/units/heroes/hero_pugna/pugna_ward_attack.vpcf" -- There are some light/medium/heavy unused versions
+		local attack = ParticleManager:CreateParticle(attackName, PATTACH_ABSORIGIN_FOLLOW, ward)
+		ParticleManager:SetParticleControl(attack, 1, target:GetAbsOrigin())
+
+		target:EmitSound("Hero_Pugna.NetherWard.Target")
+		caster:EmitSound("Hero_Pugna.NetherWard.Attack")
 	end
 end
 
@@ -31,24 +35,26 @@ end
 	Author: Noya
 	Date: April 5, 2015
 	"Nether Ward has 4 HP. Heroes can attack it for 1 damage, while non-hero units deal 0.25 damage."
-	It actually has 16 in npc_units.txt, probably because 0.25 damage doesn't show in the UI.
 ]]
 function NetherWardAttacked( event )
-	local target = event.target -- the ward
+	local target = event.unit -- the ward
 	local attacker = event.attacker
-	local damage = event.Damage 
+	local damage = event.Damage
+	local ability = event.ability
+	local hero_attack_damage = ability:GetLevelSpecialValueFor("hero_attack_damage", ability:GetLevel() - 1 )
 
-	local attack_counter = target.attack_counter
+	print(target:GetEntityIndex(), target.attack_counter)
 
 	if attacker:IsRealHero() then
-		attack_counter = target.attack_counter - 4
+		target.attack_counter = target.attack_counter - hero_attack_damage
 	else
-		attack_counter = target.attack_counter - 1
+		target.attack_counter = target.attack_counter - 1
 	end
 
 	-- Adjust the health of the ward
 	-- TODO: Check if this should be /4, and if the Damage is still dealt
-	target:SetHealth(attack_counter)
+	target:SetHealth(target.attack_counter)
+	print("SetHealth of "..target:GetUnitName().." at "..target.attack_counter)
 end
 
 --[[
@@ -72,8 +78,14 @@ end
 -- Store all the targets mana and initialize the attack counter of the ward
 function NetherWardStart( event )
 	local target = event.target
-	target.attack_counter = 16
+	local ability = event.ability
+	local attacks_to_destroy = ability:GetLevelSpecialValueFor("attacks_to_destroy", ability:GetLevel() - 1 )
+	target.attack_counter = attacks_to_destroy
 
+	-- This is needed to attach the particle attack. Should be a table if we were dealing with possible multiple wards
+	ability.nether_ward = target
+
+	print(target:GetEntityIndex(),target.attack_counter)
 
 	local targets = event.target_entities
 	for _,hero in pairs(targets) do
@@ -86,6 +98,6 @@ function NetherWardMana( event )
 	local targets = event.target_entities
 
 	for _,hero in pairs(targets) do
-		target.OldMana = target:GetMana()
+		hero.OldMana = hero:GetMana()
 	end
 end

@@ -12,7 +12,6 @@ function LifeDrainParticle( event)
 	local particleName = "particles/units/heroes/hero_pugna/pugna_life_drain.vpcf"
 	caster.LifeDrainParticle = ParticleManager:CreateParticle(particleName, PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControlEnt(caster.LifeDrainParticle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-	ParticleManager:SetParticleControl(caster.LifeDrainParticle, 2, Vector(0,0,255)) -- TODO: Check color CP
 
 end
 
@@ -33,11 +32,13 @@ function LifeDrainHealthTransfer( event )
 	local HP_drain = health_drain * tick_rate
 
 	-- HP drained depends on the actual damage dealt. This is for MAGICAL damage type
-	local HP_gain = HP_drained * target:GetMagicalArmorValue() * 0.01 --Confirm this value
+	local HP_gain = HP_drain * ( 1 - target:GetMagicalArmorValue())
+
+	print(HP_drain,target:GetMagicalArmorValue(),HP_gain)
 
 	-- Act according to the targets team
 	local targetTeam = target:GetTeamNumber()
-	local casterTeam = target:GetTeamNumber()
+	local casterTeam = caster:GetTeamNumber()
 
 	-- If its an illusion then kill it
 	if target:IsIllusion() then
@@ -64,13 +65,17 @@ function LifeDrainHealthTransfer( event )
 
 		-- Make sure that the caster always faces the target
 		caster:SetForwardVector(direction)
+	end
 
 	if targetTeam == casterTeam then
 		-- Health Transfer Caster->Ally
 		ApplyDamage({ victim = caster, attacker = caster, damage = HP_drain, damage_type = DAMAGE_TYPE_MAGICAL })
 		target:Heal( HP_gain, caster)
 		--TODO: Check if this damage transfer should be lethal
-		-- Set the particle control color as green			
+		
+		-- Set the particle control color as green
+		ParticleManager:SetParticleControl(caster.LifeDrainParticle, 10, Vector(0,0,0))
+		ParticleManager:SetParticleControl(caster.LifeDrainParticle, 11, Vector(0,0,0))
 
 	else
 		if caster:GetHealthDeficit() > 0 then
@@ -79,6 +84,8 @@ function LifeDrainHealthTransfer( event )
 			caster:Heal( HP_gain, caster)
 
 			-- Set the particle control color as green
+			ParticleManager:SetParticleControl(caster.LifeDrainParticle, 10, Vector(0,0,0))
+			ParticleManager:SetParticleControl(caster.LifeDrainParticle, 11, Vector(0,0,0))
 
 		elseif target:IsHero() then
 			-- Health to Mana Transfer Enemy->Caster
@@ -86,6 +93,8 @@ function LifeDrainHealthTransfer( event )
 			caster:GiveMana(HP_gain)
 
 			-- Set the particle control color as BLUE
+			ParticleManager:SetParticleControl(caster.LifeDrainParticle, 10, Vector(1,0,0))
+			ParticleManager:SetParticleControl(caster.LifeDrainParticle, 11, Vector(1,0,0))
 		end
 	end
 end

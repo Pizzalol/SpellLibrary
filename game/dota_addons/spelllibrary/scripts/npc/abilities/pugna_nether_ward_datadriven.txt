@@ -1,6 +1,7 @@
 // Rewrite of Pugna Nether Ward
 // Author: Noya
 // Date: April 5, 2015
+// Note: Multiple wards don't stack with this Aura method, setting the nether_ward_debuff as _MULTIPLE would make the aura be applied every frame instead of 1 per ward.
 "pugna_nether_ward_datadriven"
 {
 	// General
@@ -66,6 +67,17 @@
 			"var_type"				"FIELD_INTEGER"
 			"ward_4_count"			"0 0 0 1"
 		}
+
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hero_attack_damage"	"4"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"attacks_to_destroy"	"12"
+		}
 	}
 
 	"precache"
@@ -81,6 +93,12 @@
 
 	"OnSpellStart"
 	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Pugna.NetherWard"
+			"Target" 		"CASTER"
+		}
+
 		"SpawnUnit"
 		{
 			"UnitName"		"npc_dota_pugna_nether_ward_1"
@@ -240,6 +258,9 @@
 			"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 			"Aura_Types"    	"DOTA_UNIT_TARGET_HERO"
 
+			"EffectName"		"particles/units/heroes/hero_pugna/pugna_ward_ambient.vpcf"
+			"EffectAttachType"	"follow_origin"
+
 			"OnCreated"
 			{
 				"RunScript"
@@ -273,7 +294,7 @@
 				}
 			}
 
-			"OnAttacked"
+			"OnTakeDamage"
 			{
 				"RunScript"
 				{
@@ -284,11 +305,9 @@
 			}
 		}
 
-		// TODO: Check interaction with multiple wards
 		"modifier_nether_ward_debuff"
 		{
 			"IsDebuff"			"1"
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 			"Properties"
 			{

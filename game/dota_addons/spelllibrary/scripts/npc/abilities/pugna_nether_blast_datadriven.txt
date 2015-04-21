@@ -60,61 +60,87 @@
 
 	"OnSpellStart"
 	{
-		//TODO Sound
-		"FireSound"
+		"CreateThinker"
 		{
-			"EffectName"	"Pugna.Blast"
-			"Target" 		"CASTER"
+			"ModifierName"	"modifier_nether_blast_thinker"
+			"Target" 		"POINT"
 		}
+	}
 
-		"FireEffect"
+	"Modifiers"
+	{
+		"modifier_nether_blast_thinker"
 		{
-			"TargetPoint"		"POINT"
-			"EffectName"        "particles/units/heroes/hero_pugna/pugna_netherblast_pre.vpcf"
-			"EffectAttachType"  "world_origin"
-			"ControlPoints"
-			{
-				"01"				"%radius 2 %radius*2" //TODO Fix
-			}
-		}
+			"IsHidden"			"1"
+			"Duration"			"1"
 
-		"DelayedAction"
-		{
-			"Delay"     "%delay"
-			"Action"    
+			"OnCreated"
 			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Pugna.NetherBlastPreCast"
+					"Target" 		"TARGET"
+				}
+
 				"FireEffect"
 				{
-					"EffectName"        "particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
+					"Target"			"TARGET"
+					"EffectName"        "particles/units/heroes/hero_pugna/pugna_netherblast_pre.vpcf"
 					"EffectAttachType"  "follow_origin"
-					"Target"            "TARGET"
-					"EffectRadius"		"%radius"	//TODO Check Attachment
+					"ControlPoints"
+					{
+						"01"				"%radius %delay %radius"
+					}
 				}
 
-				"Damage"
+				"DelayedAction"
 				{
-					"Target"
+					"Delay"     "%delay"
+					"Action"    
 					{
-						"Center"  	"POINT"
-						"Radius" 	"%radius"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					}
-					"Type"			"DAMAGE_TYPE_MAGICAL"
-					"Damage"		"%AbilityDamage"
-				}
+						"FireSound"
+						{
+							"EffectName"	"Hero_Pugna.NetherBlast"
+							"Target" 		"CASTER"
+						}
 
-				"Damage"
-				{
-					"Target"
-					{
-						"Center"  	"POINT"
-						"Radius" 	"%radius"
-						"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+						"FireEffect"
+						{
+							"EffectName"        "particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
+							"EffectAttachType"  "follow_origin"
+							"Target"			"TARGET"
+							"ControlPoints"
+							{
+								"01"				"%radius %radius %radius"
+							}
+						}
+
+						"Damage"
+						{
+							"Target"
+							{
+								"Center"  	"TARGET"
+								"Radius" 	"%radius"
+								"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+								"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							}
+							"Type"			"DAMAGE_TYPE_MAGICAL"
+							"Damage"		"%AbilityDamage"
+						}
+
+						"Damage"
+						{
+							"Target"
+							{
+								"Center"  	"TARGET"
+								"Radius" 	"%radius"
+								"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+								"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+							}
+							"Type"			"DAMAGE_TYPE_MAGICAL"
+							"Damage"		"%AbilityDamage * %structure_damage_mod"
+						}
 					}
-					"Type"			"DAMAGE_TYPE_MAGICAL"
-					"Damage"		"%AbilityDamage * %structure_damage_mod"
 				}
 			}
 		}
