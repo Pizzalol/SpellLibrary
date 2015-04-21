@@ -1,7 +1,7 @@
 // Rewrite of the Lifestealer Open Wounds ability
-// Author: jacklarnes
-// Date: 07.04.2015.
-// NOTE: Slow is static
+// Author: jacklarnes, Pizzalol
+// Date: 21.04.2015.
+// NOTE: This is an example on how to do it in pure Datadriven KV, it is possible to make it dynamic with Lua
 "life_stealer_open_wounds_datadriven"
 {
 	// General
@@ -39,15 +39,10 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
 	{
-		//"01"
-		//{
-		//	"var_type"				"FIELD_INTEGER"
-		//	"slow_steps"			"-70 -70 -60 -50 -30 -10 -10 -10"
-		//}
-		"01" // this is because im too inept to do the above
+		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"slow_percentage"		"-20 -30 -40 -50"
+			"slow_steps"			"-70 -70 -60 -50 -30 -10 -10 -10"
 		}
 		"02"
 		{
@@ -68,6 +63,32 @@
 		{
 			"var_type"				"FIELD_INTEGER"
 			"tooltip_range"			"200 300 400 500"
+		}
+		// Extra
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"slow_step70"			"-70"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"slow_step60"			"-60"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"slow_step50"			"-50"
+		}
+		"09"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"slow_step30"			"-30"
+		}
+		"10"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"slow_step10"			"-10"
 		}
 	}
 
@@ -118,13 +139,104 @@
 					"EffectAttachType"  "attach_hitloc"
 					"Target"            "TARGET"
 				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_open_wounds_70"
+					"Target" 		"TARGET"
+					"Duration"		"2"
+				}
+			}			
+		}
+
+		"modifier_open_wounds_70"
+		{
+			"IsHidden"	"1"
+
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_open_wounds_60"
+					"Target" 		"TARGET"
+					"Duration"		"1"
+				}
 			}
 
 			"Properties"
 			{
-			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_percentage" 
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_step70"
 			}
-			
+		}
+
+		"modifier_open_wounds_60"
+		{
+			"IsHidden"	"1"
+
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_open_wounds_50"
+					"Target" 		"TARGET"
+					"Duration"		"1"
+				}
+			}
+
+			"Properties"
+			{
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_step60"
+			}
+		}
+
+		"modifier_open_wounds_50"
+		{
+			"IsHidden"	"1"
+
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_open_wounds_30"
+					"Target" 		"TARGET"
+					"Duration"		"1"
+				}
+			}
+
+			"Properties"
+			{
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_step50"
+			}
+		}
+
+		"modifier_open_wounds_30"
+		{
+			"IsHidden"	"1"
+
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_open_wounds_10"
+					"Target" 		"TARGET"
+					"Duration"		"3"
+				}
+			}
+
+			"Properties"
+			{
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_step30"
+			}
+		}
+
+		"modifier_open_wounds_10"
+		{
+			"IsHidden"	"1"
+
+			"Properties"
+			{
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_step10"
+			}
 		}
 	}
 }
