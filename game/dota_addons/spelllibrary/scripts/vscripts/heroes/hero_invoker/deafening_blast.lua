@@ -126,7 +126,7 @@ function deafening_blast_knockback( keys )
 	local knockback_speed = 6
 
 	local new_location = target_location + target.deafening_direction * knockback_speed
-	target:SetAbsOrigin(new_location)
+	target:SetAbsOrigin(GetGroundPosition(new_location, target))
 end
 
 --[[Author: Pizzalol
@@ -143,5 +143,8 @@ function deafening_blast_disarm( keys )
 	local disarm_duration = owner_ability:GetLevelSpecialValueFor("disarm_duration", wex_level)
 	local disarm_modifier = keys.disarm_modifier
 
-	ability:ApplyDataDrivenModifier(caster, target, disarm_modifier, {duration = disarm_duration})
+	-- Check if the target is alive(to prevent errors when the deafening blast is the killing blow)
+	if target:IsAlive() then
+		ability:ApplyDataDrivenModifier(caster, target, disarm_modifier, {duration = disarm_duration})
+	end
 end

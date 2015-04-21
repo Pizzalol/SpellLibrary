@@ -23094,6 +23094,12 @@
 				"disarm_duration"		"1.0 1.5 2.0 2.5 3.0 3.5 4.0"
 				"levelkey"				"wexlevel"
 			}
+			// Extra
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tree_radius"			"100" // not used currently
+			}
 		}
 	
 		"OnSpellStart"
@@ -23141,6 +23147,7 @@
 			"modifier_deafening_blast_knockback_datadriven"
 			{
 				"IsDebuff"		"1"
+				"IsPurgable"	"0"
 	
 				"OverrideAnimation"     "ACT_DOTA_DISABLED"
 				"TextureName"			"invoker_deafening_blast"
@@ -23160,6 +23167,16 @@
 					}
 				}
 	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_invoker/deafening_blast.lua"
+						"Function"		"deafening_blast_disarm"
+						"disarm_modifier"	"modifier_deafening_blast_disarm_datadriven"
+					}
+				}
+	
 				"ThinkInterval"  "0.03"
 				"OnIntervalThink"
 				{
@@ -23168,15 +23185,11 @@
 						"ScriptFile"	"heroes/hero_invoker/deafening_blast.lua"
 						"Function"		"deafening_blast_knockback"
 					}
-				}
 	
-				"OnDestroy"
-				{
-					"RunScript"
+					"DestroyTrees"
 					{
-						"ScriptFile"	"heroes/hero_invoker/deafening_blast.lua"
-						"Function"		"deafening_blast_disarm"
-						"disarm_modifier"	"modifier_deafening_blast_disarm_datadriven"
+						"Target" 		"TARGET"
+						"Radius"		"100" // Change this to %tree_radius whenever the game feels like working properly
 					}
 				}
 	
@@ -23189,6 +23202,9 @@
 			"modifier_deafening_blast_disarm_datadriven"
 			{
 				"IsDebuff"		"1"
+				"IsPurgable"	"0"
+	
+				"TextureName"	"invoker_deafening_blast"
 	
 				"StatusEffectName" 		"particles/status_fx/status_effect_frost.vpcf" 	   
 				"StatusEffectPriority"  "10"
@@ -42708,9 +42724,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM" //Awful Valve-hack to let it target Nether Ward (and Tombstone?)
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_OTHER"//"DOTA_UNIT_TARGET_CUSTOM" //Awful Valve-hack to let it target Nether Ward and Tombstone
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"pugna_decrepify"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -43043,61 +43060,87 @@
 	
 		"OnSpellStart"
 		{
-			//TODO Sound
-			"FireSound"
+			"CreateThinker"
 			{
-				"EffectName"	"Pugna.Blast"
-				"Target" 		"CASTER"
+				"ModifierName"	"modifier_nether_blast_thinker"
+				"Target" 		"POINT"
 			}
+		}
 	
-			"FireEffect"
+		"Modifiers"
+		{
+			"modifier_nether_blast_thinker"
 			{
-				"TargetPoint"		"POINT"
-				"EffectName"        "particles/units/heroes/hero_pugna/pugna_netherblast_pre.vpcf"
-				"EffectAttachType"  "world_origin"
-				"ControlPoints"
-				{
-					"01"				"%radius 2 %radius*2" //TODO Fix
-				}
-			}
+				"IsHidden"			"1"
+				"Duration"			"1"
 	
-			"DelayedAction"
-			{
-				"Delay"     "%delay"
-				"Action"    
+				"OnCreated"
 				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Pugna.NetherBlastPreCast"
+						"Target" 		"TARGET"
+					}
+	
 					"FireEffect"
 					{
-						"EffectName"        "particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
+						"Target"			"TARGET"
+						"EffectName"        "particles/units/heroes/hero_pugna/pugna_netherblast_pre.vpcf"
 						"EffectAttachType"  "follow_origin"
-						"Target"            "TARGET"
-						"EffectRadius"		"%radius"	//TODO Check Attachment
+						"ControlPoints"
+						{
+							"01"				"%radius %delay %radius"
+						}
 					}
 	
-					"Damage"
+					"DelayedAction"
 					{
-						"Target"
+						"Delay"     "%delay"
+						"Action"    
 						{
-							"Center"  	"POINT"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Damage"		"%AbilityDamage"
-					}
+							"FireSound"
+							{
+								"EffectName"	"Hero_Pugna.NetherBlast"
+								"Target" 		"CASTER"
+							}
 	
-					"Damage"
-					{
-						"Target"
-						{
-							"Center"  	"POINT"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+							"FireEffect"
+							{
+								"EffectName"        "particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
+								"EffectAttachType"  "follow_origin"
+								"Target"			"TARGET"
+								"ControlPoints"
+								{
+									"01"				"%radius %radius %radius"
+								}
+							}
+	
+							"Damage"
+							{
+								"Target"
+								{
+									"Center"  	"TARGET"
+									"Radius" 	"%radius"
+									"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+								}
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+								"Damage"		"%AbilityDamage"
+							}
+	
+							"Damage"
+							{
+								"Target"
+								{
+									"Center"  	"TARGET"
+									"Radius" 	"%radius"
+									"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 	"DOTA_UNIT_TARGET_BUILDING"
+								}
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+								"Damage"		"%AbilityDamage * %structure_damage_mod"
+							}
 						}
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Damage"		"%AbilityDamage * %structure_damage_mod"
 					}
 				}
 			}
@@ -43107,6 +43150,7 @@
 	// Rewrite of Pugna Nether Ward
 	// Author: Noya
 	// Date: April 5, 2015
+	// Note: Multiple wards don't stack with this Aura method, setting the nether_ward_debuff as _MULTIPLE would make the aura be applied every frame instead of 1 per ward.
 	"pugna_nether_ward_datadriven"
 	{
 		// General
@@ -43172,6 +43216,17 @@
 				"var_type"				"FIELD_INTEGER"
 				"ward_4_count"			"0 0 0 1"
 			}
+	
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_attack_damage"	"4"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attacks_to_destroy"	"12"
+			}
 		}
 	
 		"precache"
@@ -43187,6 +43242,12 @@
 	
 		"OnSpellStart"
 		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Pugna.NetherWard"
+				"Target" 		"CASTER"
+			}
+	
 			"SpawnUnit"
 			{
 				"UnitName"		"npc_dota_pugna_nether_ward_1"
@@ -43346,6 +43407,9 @@
 				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO"
 	
+				"EffectName"		"particles/units/heroes/hero_pugna/pugna_ward_ambient.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
 				"OnCreated"
 				{
 					"RunScript"
@@ -43379,7 +43443,7 @@
 					}
 				}
 	
-				"OnAttacked"
+				"OnTakeDamage"
 				{
 					"RunScript"
 					{
@@ -43390,11 +43454,9 @@
 				}
 			}
 	
-			// TODO: Check interaction with multiple wards
 			"modifier_nether_ward_debuff"
 			{
 				"IsDebuff"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 			
 				"Properties"
 				{

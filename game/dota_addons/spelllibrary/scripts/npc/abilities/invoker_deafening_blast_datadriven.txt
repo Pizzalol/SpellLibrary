@@ -85,6 +85,12 @@
 			"disarm_duration"		"1.0 1.5 2.0 2.5 3.0 3.5 4.0"
 			"levelkey"				"wexlevel"
 		}
+		// Extra
+		"09"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"tree_radius"			"100" // not used currently
+		}
 	}
 
 	"OnSpellStart"
@@ -132,6 +138,7 @@
 		"modifier_deafening_blast_knockback_datadriven"
 		{
 			"IsDebuff"		"1"
+			"IsPurgable"	"0"
 
 			"OverrideAnimation"     "ACT_DOTA_DISABLED"
 			"TextureName"			"invoker_deafening_blast"
@@ -151,6 +158,16 @@
 				}
 			}
 
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_invoker/deafening_blast.lua"
+					"Function"		"deafening_blast_disarm"
+					"disarm_modifier"	"modifier_deafening_blast_disarm_datadriven"
+				}
+			}
+
 			"ThinkInterval"  "0.03"
 			"OnIntervalThink"
 			{
@@ -159,15 +176,11 @@
 					"ScriptFile"	"heroes/hero_invoker/deafening_blast.lua"
 					"Function"		"deafening_blast_knockback"
 				}
-			}
 
-			"OnDestroy"
-			{
-				"RunScript"
+				"DestroyTrees"
 				{
-					"ScriptFile"	"heroes/hero_invoker/deafening_blast.lua"
-					"Function"		"deafening_blast_disarm"
-					"disarm_modifier"	"modifier_deafening_blast_disarm_datadriven"
+					"Target" 		"TARGET"
+					"Radius"		"100" // Change this to %tree_radius whenever the game feels like working properly
 				}
 			}
 
@@ -180,6 +193,9 @@
 		"modifier_deafening_blast_disarm_datadriven"
 		{
 			"IsDebuff"		"1"
+			"IsPurgable"	"0"
+
+			"TextureName"	"invoker_deafening_blast"
 
 			"StatusEffectName" 		"particles/status_fx/status_effect_frost.vpcf" 	   
 			"StatusEffectPriority"  "10"
