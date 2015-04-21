@@ -22947,6 +22947,12 @@
 		}
 	}
 	
+	// create dummy
+	// dummy travels alongside the projectile
+	// give dummy the dummy ability and have the projectile refer to it
+	// on hit apply a modifier which moves the target as long as it has the modifier
+	
+	
 	"invoker_deafening_blast_datadriven"
 	{
 		// General
@@ -22959,6 +22965,14 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"invoker_deafening_blast"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf"
+		}
 	
 	
 		// Stats
@@ -23018,8 +23032,68 @@
 				"levelkey"				"wexlevel"
 			}
 		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Invoker.DeafeningBlast"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_invoker/deafening_blast.lua"
+				"Function"		"deafening_blast_start"
+				"Target"		"POINT"
+				"dummy_ability_name"	"invoker_deafening_blast_dummy_datadriven"
+				"projectile_name"		"particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf"
+			}
+		}
 	}
 	
+	// DUMMY SPELL
+	"invoker_deafening_blast_dummy_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_invoker/deafening_blast.lua"
+				"Function"		"deafening_blast_hit" // deal damage and apply the knockback modifier
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_deafening_blast_knockback_datadriven"
+			{
+				"IsDebuff"		"1"
+	
+				"OnCreated"
+				{
+					// store new values for knockback calculation
+				}
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_invoker/deafening_blast.lua"
+						"Function"		"deafening_blast_knockback"
+					}
+				}
+			}
+		}
+	}
 	// Rewrite of one of Invoker's empty slots
 	// Author: Rook
 	// Date: April 02, 2015
@@ -23646,7 +23720,6 @@
 	// Author: Rook
 	// Date: April 06, 2015
 	// Dependencies: npc_dummy_blank in npc_units_custom.txt (source found in scripts/npc/units in the SpellLibrary)
-	
 	"invoker_ice_wall_datadriven"
 	{
 		// General

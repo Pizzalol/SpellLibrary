@@ -2,7 +2,6 @@
 // Author: Rook
 // Date: April 06, 2015
 // Dependencies: npc_dummy_blank in npc_units_custom.txt (source found in scripts/npc/units in the SpellLibrary)
-
 "invoker_ice_wall_datadriven"
 {
 	// General

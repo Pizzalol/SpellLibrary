@@ -16,7 +16,7 @@
 		"AbilityLayout"	"6"
 	
 		"Ability1"	"invoker_quas_datadriven"
-		"Ability2"	"windrunner_shackleshot_datadriven"
+		"Ability2"	"invoker_wex_datadriven"
 		"Ability3"	"invoker_exort_datadriven"
 		"Ability4"	"invoker_empty1_datadriven"
 		"Ability5"	"invoker_empty2_datadriven"
