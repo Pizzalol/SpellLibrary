@@ -8,6 +8,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityTextureName"			"furion_force_of_nature"
 	
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -75,7 +76,7 @@
 		"DestroyTrees"
 		{
 			"Target" 		"POINT"
-			"Radius"		"%radius"
+			"Radius"		"%area_of_effect"
 		}
 
 		"FireSound"

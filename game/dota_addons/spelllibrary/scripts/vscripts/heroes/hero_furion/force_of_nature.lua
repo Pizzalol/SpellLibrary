@@ -54,14 +54,14 @@ function ForceOfNature( event )
 	local particle1 = ParticleManager:CreateParticle( particleName, PATTACH_CUSTOMORIGIN, caster )
 	ParticleManager:SetParticleControl( particle1, 0, point )
 	ParticleManager:SetParticleControl( particle1, 1, point )
-	ParticleManager:SetParticleControl( particle1, 2, Vector(radius,0,0) )
+	ParticleManager:SetParticleControl( particle1, 2, Vector(area_of_effect,0,0) )
 
 	-- Create the units on the next frame
 	Timers:CreateTimer(0.03,
 		function() 
-			print(ability.trees_cut)
-			local treants_spawned = treant_count
-			if ability.trees_cut < treant_count then
+			--print(ability.trees_cut)
+			local treants_spawned = max_treants
+			if ability.trees_cut < max_treants then
 				treants_spawned = ability.trees_cut
 			end
 

@@ -76,16 +76,41 @@
 			"EffectName"        "particles/units/heroes/hero_furion/furion_wrath_of_nature_cast.vpcf"
 			"EffectAttachType"  "follow_origin"
 			"Target"            "CASTER"
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_origin"
+				"CASTER"	"attach_hitloc" //attach_weapon in furion.vmdl
+			}
+		}
+		"FireSound"
+		{
+			"EffectName"	"Hero_Furion.WrathOfNature_Cast.Self"
+			"Target" 		"CASTER"
 		}
 	}
 
 	"OnSpellStart"
 	{
-		"RunScript"
+		"CreateThinker"
 		{
-			"ScriptFile"	"heroes/hero_furion/wrath_of_nature.lua"
-			"Function"		"WrathOfNature"
-			"Target"		"POINT"
+			"ModifierName"	"modifier_wrath_of_nature_thinker"
+			"Target" 		"POINT"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_wrath_of_nature_thinker"
+		{
+			"IsHidden"			"1"
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_furion/wrath_of_nature.lua"
+					"Function"		"WrathOfNature"
+				}
+			}	
 		}
 	}
 }
