@@ -82,7 +82,7 @@ Recommended resources
 
 - [Dota 2 Modkit](https://github.com/Myll/Dota-2-ModKit/releases) great tool when it comes to everything Dota 2 modding related, made by [Myll](https://github.com/Myll)
 
-- [Sound editor](https://dl.dropboxusercontent.com/u/19417676/dota_sound_editor1.2.2.zip) the sound editor for finding the proper ability sounds, made by [pingzing](https://github.com/pingzing)
+- [Sound editor](https://dl.dropboxusercontent.com/u/19417676/dota_sound_editor_v1.3.1.zip) the sound editor for finding the proper ability sounds, made by [pingzing](https://github.com/pingzing)
 
 - [Workshop Tools Wiki](https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools) the official Dota 2 Workshop Tools wiki
 
