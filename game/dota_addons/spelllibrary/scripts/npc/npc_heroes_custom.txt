@@ -4,10 +4,10 @@
 	{
 		"override_hero" "npc_dota_hero_abaddon"
 	
-		"Ability1" "shadow_shaman_ether_shock_datadriven"
-		"Ability2" "shadow_shaman_ether_shock"
-		"Ability3" "shadow_shaman_mass_serpent_ward"
-		"Ability4" "shadow_shaman_mass_serpent_ward_datadriven"
+		"Ability1" "furion_teleportation_datadriven"
+		"Ability2" "furion_force_of_nature_datadriven"
+		"Ability3" "furion_wrath_of_nature"
+		"Ability4" "furion_wrath_of_nature_datadriven"
 	}
 	"npc_dota_hero_ancient_apparition_datadriven"
 	{

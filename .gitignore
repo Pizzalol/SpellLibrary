@@ -1,6 +1,7 @@
 /*
 
 !.gitignore
+!LICENSE.md
 #!.gitattributes this is optional
 
 # Ignore game folder, and all default dota_addons folders

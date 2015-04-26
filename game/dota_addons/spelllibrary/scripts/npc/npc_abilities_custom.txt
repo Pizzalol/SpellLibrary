@@ -19626,6 +19626,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"furion_force_of_nature"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -19693,7 +19694,7 @@
 			"DestroyTrees"
 			{
 				"Target" 		"POINT"
-				"Radius"		"%radius"
+				"Radius"		"%area_of_effect"
 			}
 	
 			"FireSound"
@@ -19753,6 +19754,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityTextureName"		"furion_teleportation"
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -19776,17 +19778,42 @@
 			{
 				"ModifierName"	"modifier_teleportation"
 				"Target" 		"CASTER"
-				"Duration"		"%AbilityCastPoint"
+				"Duration"		"3"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Furion.Teleport_Grow"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_furion/teleportation.lua"
+				"Function"		"CreateTeleportParticles"
+				"Target"		"POINT"
 			}
 		}
 	
 		"OnSpellStart"
 		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Furion.Teleport_Disappear"
+				"Target" 		"CASTER"
+			}
+	
 			"RunScript"
 			{
-				"ScriptFile"	"heres/hero_furion/teleportation.lua"
+				"ScriptFile"	"heroes/hero_furion/teleportation.lua"
 				"Function"		"Teleport"
 				"Target"		"POINT"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Furion.Teleport_Appear"
+				"Target" 		"CASTER"
 			}
 		}
 	
@@ -19794,13 +19821,25 @@
 		{
 			"modifier_teleportation"
 			{
-				"IsHidden"			"1"
+				"IsHidden"			"0"
 		
 				"EffectName"		"particles/units/heroes/hero_furion/furion_teleport.vpcf"
 				"EffectAttachType"	"follow_origin"
 	
 				"OnOrder"
 				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Furion.Teleport_Disappear"
+						"Target" 		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_furion/teleportation.lua"
+						"Function"		"EndTeleport"
+					}
+	
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_teleportation"
@@ -19889,16 +19928,41 @@
 				"EffectName"        "particles/units/heroes/hero_furion/furion_wrath_of_nature_cast.vpcf"
 				"EffectAttachType"  "follow_origin"
 				"Target"            "CASTER"
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_origin"
+					"CASTER"	"attach_hitloc" //attach_weapon in furion.vmdl
+				}
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_Furion.WrathOfNature_Cast.Self"
+				"Target" 		"CASTER"
 			}
 		}
 	
 		"OnSpellStart"
 		{
-			"RunScript"
+			"CreateThinker"
 			{
-				"ScriptFile"	"heroes/hero_furion/wrath_of_nature.lua"
-				"Function"		"WrathOfNature"
-				"Target"		"POINT"
+				"ModifierName"	"modifier_wrath_of_nature_thinker"
+				"Target" 		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_wrath_of_nature_thinker"
+			{
+				"IsHidden"			"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_furion/wrath_of_nature.lua"
+						"Function"		"WrathOfNature"
+					}
+				}	
 			}
 		}
 	}
