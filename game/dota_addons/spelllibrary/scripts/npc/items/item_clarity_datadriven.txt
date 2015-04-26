@@ -47,18 +47,12 @@
 		"03"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"regen_interval"		".03"
+			"mana_per_second"		"3.75"
 		}
 	}
 	
 	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"		"items/item_clarity.lua"
-			"Function"			"item_clarity_datadriven_on_spell_start"
-		}
-				
+	{			
 		"ApplyModifier"
 		{
 			"Target"			"TARGET"
@@ -70,6 +64,8 @@
 			"EffectName"		"DOTA_Item.ClarityPotion.Activate"
 			"Target"			"TARGET"
 		}
+		"SpendCharge"
+		{}
 	}
 	
 	"Modifiers"
@@ -83,19 +79,11 @@
 			"IsDebuff"					"0"
 			"IsPurgable"				"1"
 			"EffectName"            	"particles/items_fx/healing_clarity.vpcf"
-			"EffectAttachType"      	"PATTACH_ABSORIGIN"
-			
-			"ThinkInterval" 			"%regen_interval"
-			"OnIntervalThink"
+			"EffectAttachType"      	"follow_origin"
+					
+			"Properties"
 			{
-				"RunScript"
-				{
-					"ScriptFile"			"items/item_clarity.lua"
-					"Function"				"modifier_item_clarity_datadriven_active_on_interval_think"
-					"RegenInterval"			"%regen_interval"
-					"BuffDuration"			"%buff_duration"
-					"TotalManaRegen"		"%total_mana_regen"
-				}
+				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%mana_per_second"
 			}
 			
 			"OnTakeDamage"
