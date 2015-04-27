@@ -2,6 +2,10 @@
 // Author: Noya
 // Date: 16.01.2015.
 // Notes: Armor is added as +Green because there is no way to currently add Base Armor.
+// NOTE2: Its important to include
+// SendToServerConsole("dota_combine_models 0")
+// SendToConsole("dota_combine_models 0")
+// in your addon, check barebones.lua in CaptureGameMode() to see how its done
 "lone_druid_true_form_datadriven"
 {
 	// General

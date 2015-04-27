@@ -1,9 +1,9 @@
 // Rewrite of the Obsidian Destroyer Astral Imprisonment
 // Author: chrislotix
 // Date: 06.01.2015.
-// Changed: 29.01.2015.
+// Changed: 27.04.2015.
 // Changed by: Pizzalol
-// Reason: Fixed AI not hiding the unit
+// Reason: Improved the AI hiding method
 "obsidian_destroyer_astral_imprisonment_datadriven"
 {
 	// General
@@ -113,8 +113,7 @@
 			"IsDebuff"	"1"
 			"IsHidden"	"0"
 			"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
-			"EffectAttachType"	"attach_origin"	
-
+			"EffectAttachType"	"attach_origin"
 
 
 			"States"
@@ -130,14 +129,7 @@
 				"RunScript"
 				{
 					"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
-					"Function"	"SwapModelStart"
-					"model"		"models/development/invisiblebox.vmdl"					
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"		"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
-					"Function"			"HideWearables"
+					"Function"	"AstralImprisonmentStart"				
 				}
 			}
 
@@ -158,13 +150,7 @@
 				"RunScript"
 				{
 					"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
-					"Function"	"SwapModelEnd"					
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"		"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
-					"Function"			"ShowWearables"
+					"Function"	"AstralImprisonmentEnd"					
 				}
 			}				
 		}

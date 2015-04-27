@@ -15574,6 +15574,10 @@
 	// NOTE: Dragon Form is always a Green Dragon
 	// NOTE2: -------------------------- Projectile model will be the corresponding dragon form auto attack model --------------------------
 	// Until Valve implements a way to retrieve the original attack projectile
+	// NOTE3: Its important to include
+	// SendToServerConsole("dota_combine_models 0")
+	// SendToConsole("dota_combine_models 0")
+	// in your addon, check barebones.lua in CaptureGameMode() to see how its done
 	"dragon_knight_elder_dragon_form_datadriven"
 	{
 		// General
@@ -30765,6 +30769,10 @@
 	// Rewrite of the Lion Voodoo ability
 	// Author: Pizzalol
 	// Date: 18.01.2015.
+	// NOTE: Its important to include
+	// SendToServerConsole("dota_combine_models 0")
+	// SendToConsole("dota_combine_models 0")
+	// in your addon, check barebones.lua in CaptureGameMode() to see how its done
 	"lion_voodoo_datadriven"
 	{
 		// General
@@ -31364,6 +31372,10 @@
 	// Author: Noya
 	// Date: 16.01.2015.
 	// Notes: Armor is added as +Green because there is no way to currently add Base Armor.
+	// NOTE2: Its important to include
+	// SendToServerConsole("dota_combine_models 0")
+	// SendToConsole("dota_combine_models 0")
+	// in your addon, check barebones.lua in CaptureGameMode() to see how its done
 	"lone_druid_true_form_datadriven"
 	{
 		// General
@@ -31520,6 +31532,10 @@
 	// Author: Noya
 	// Date: 10.1.2015.
 	// Notes: Used together with "lone_druid_true_form_datadriven", hero needs both abilities (this one starts hidden)
+	// NOTE2: Its important to include
+	// SendToServerConsole("dota_combine_models 0")
+	// SendToConsole("dota_combine_models 0")
+	// in your addon, check barebones.lua in CaptureGameMode() to see how its done
 	"lone_druid_true_form_druid_datadriven"
 	{
 		// General
@@ -32365,6 +32381,10 @@
 	// Rewrite of the Lycan Shapeshift ability
 	// Author: Pizzalol
 	// Date: 24.03.2015.
+	// NOTE: Its important to include
+	// SendToServerConsole("dota_combine_models 0")
+	// SendToConsole("dota_combine_models 0")
+	// in your addon, check barebones.lua in CaptureGameMode() to see how its done
 	"lycan_shapeshift_datadriven"
 	{
 		// General
@@ -38116,9 +38136,9 @@
 	// Rewrite of the Obsidian Destroyer Astral Imprisonment
 	// Author: chrislotix
 	// Date: 06.01.2015.
-	// Changed: 29.01.2015.
+	// Changed: 27.04.2015.
 	// Changed by: Pizzalol
-	// Reason: Fixed AI not hiding the unit
+	// Reason: Improved the AI hiding method
 	"obsidian_destroyer_astral_imprisonment_datadriven"
 	{
 		// General
@@ -38228,8 +38248,7 @@
 				"IsDebuff"	"1"
 				"IsHidden"	"0"
 				"EffectName"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
-				"EffectAttachType"	"attach_origin"	
-	
+				"EffectAttachType"	"attach_origin"
 	
 	
 				"States"
@@ -38245,14 +38264,7 @@
 					"RunScript"
 					{
 						"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
-						"Function"	"SwapModelStart"
-						"model"		"models/development/invisiblebox.vmdl"					
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"		"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
-						"Function"			"HideWearables"
+						"Function"	"AstralImprisonmentStart"				
 					}
 				}
 	
@@ -38273,13 +38285,7 @@
 					"RunScript"
 					{
 						"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
-						"Function"	"SwapModelEnd"					
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"		"scripts/vscripts/heroes/hero_obsidian_destroyer/astral_imprisonment.lua"
-						"Function"			"ShowWearables"
+						"Function"	"AstralImprisonmentEnd"					
 					}
 				}				
 			}
@@ -48289,6 +48295,10 @@
 	// Author: Noya
 	// Date: April 4, 2015.
 	// TODO: Check hex stacking from different casters
+	// NOTE: Its important to include
+	// SendToServerConsole("dota_combine_models 0")
+	// SendToConsole("dota_combine_models 0")
+	// in your addon, check barebones.lua in CaptureGameMode() to see how its done
 	"shadow_shaman_voodoo_datadriven"
 	{
 		// General
@@ -52260,7 +52270,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"15 15 15 15"
 		
-		/ Damage.
+		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityDamage"					"8 12 16"
 	

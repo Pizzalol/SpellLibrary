@@ -1,6 +1,10 @@
 // Rewrite of the Lycan Shapeshift ability
 // Author: Pizzalol
 // Date: 24.03.2015.
+// NOTE: Its important to include
+// SendToServerConsole("dota_combine_models 0")
+// SendToConsole("dota_combine_models 0")
+// in your addon, check barebones.lua in CaptureGameMode() to see how its done
 "lycan_shapeshift_datadriven"
 {
 	// General

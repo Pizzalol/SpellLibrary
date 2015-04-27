@@ -2,6 +2,10 @@
 // Author: Noya
 // Date: April 4, 2015.
 // TODO: Check hex stacking from different casters
+// NOTE: Its important to include
+// SendToServerConsole("dota_combine_models 0")
+// SendToConsole("dota_combine_models 0")
+// in your addon, check barebones.lua in CaptureGameMode() to see how its done
 "shadow_shaman_voodoo_datadriven"
 {
 	// General

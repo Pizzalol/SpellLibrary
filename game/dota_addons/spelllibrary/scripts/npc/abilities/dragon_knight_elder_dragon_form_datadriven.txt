@@ -6,6 +6,10 @@
 // NOTE: Dragon Form is always a Green Dragon
 // NOTE2: -------------------------- Projectile model will be the corresponding dragon form auto attack model --------------------------
 // Until Valve implements a way to retrieve the original attack projectile
+// NOTE3: Its important to include
+// SendToServerConsole("dota_combine_models 0")
+// SendToConsole("dota_combine_models 0")
+// in your addon, check barebones.lua in CaptureGameMode() to see how its done
 "dragon_knight_elder_dragon_form_datadriven"
 {
 	// General

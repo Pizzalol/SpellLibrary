@@ -2,6 +2,10 @@
 // Author: Noya
 // Date: 10.1.2015.
 // Notes: Used together with "lone_druid_true_form_datadriven", hero needs both abilities (this one starts hidden)
+// NOTE2: Its important to include
+// SendToServerConsole("dota_combine_models 0")
+// SendToConsole("dota_combine_models 0")
+// in your addon, check barebones.lua in CaptureGameMode() to see how its done
 "lone_druid_true_form_druid_datadriven"
 {
 	// General

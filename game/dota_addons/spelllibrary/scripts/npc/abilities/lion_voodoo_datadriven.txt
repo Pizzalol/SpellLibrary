@@ -1,6 +1,10 @@
 // Rewrite of the Lion Voodoo ability
 // Author: Pizzalol
 // Date: 18.01.2015.
+// NOTE: Its important to include
+// SendToServerConsole("dota_combine_models 0")
+// SendToConsole("dota_combine_models 0")
+// in your addon, check barebones.lua in CaptureGameMode() to see how its done
 "lion_voodoo_datadriven"
 {
 	// General
