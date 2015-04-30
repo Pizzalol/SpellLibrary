@@ -46,11 +46,13 @@
 			"Aura_Radius" 	"%aura_radius"
 			"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 			"Aura_Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"Aura_Flags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		}
 
 		"modifier_heartstopper_debuff_datadriven"
 		{
 			"IsDebuff"	"1"
+			"IsHidden"	"1"
 
 			"ThinkInterval"	"%aura_damage_interval"
 
@@ -58,10 +60,29 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/heartstopper_aura.lua"
-					"Function"		"HeartstopperAura"
+					"ScriptFile"			"scripts/vscripts/heroes/hero_necrolyte/heartstopper_aura.lua"
+					"Function"				"HeartstopperAura"
+
+					"visibility_modifier"	"modifier_heartstopper_debuff_visibility"
 				}
 			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_heartstopper_debuff_visibility"
+					"Target" 		"TARGET"
+				}
+			}
+		}
+
+		"modifier_heartstopper_debuff_visibility"
+		{
+			"IsDebuff"		"1"
+			"IsHidden"		"0"
+			"IsPurgable" 	"0"
+			"Passive"		"0"
 		}
 	}
 }

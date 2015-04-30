@@ -9,7 +9,13 @@ function HeartstopperAura( keys )
 	local aura_damage = ability:GetLevelSpecialValueFor("aura_damage", (ability:GetLevel() - 1))
 	local aura_damage_interval = ability:GetLevelSpecialValueFor("aura_damage_interval", (ability:GetLevel() - 1))
 
-
+	-- Shows the debuff on the target's modifier bar only if Necrophos is visible
+	local visibility_modifier = keys.visibility_modifier
+	if target:CanEntityBeSeenByMyTeam(caster) then
+		ability:ApplyDataDrivenModifier(caster, target, visibility_modifier, {})
+	else
+		target:RemoveModifierByName(visibility_modifier)
+	end
 
 	local damage_table = {}
 
