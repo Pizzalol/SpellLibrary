@@ -93,7 +93,13 @@
 		"ApplyModifier"
 		{
 			"ModifierName"	"modifier_reapers_scythe_datadriven"
-			"Target"		"TARGET"
+			"Target"
+			{
+				"Center"  	"TARGET"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO"
+				"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
 		}
 
 		"FireSound"
@@ -166,7 +172,7 @@
 							"ControlPointEntities"
 							{
 								"CASTER"	"follow_origin"
-								"TARGET"	"follow_origi"
+								"TARGET"	"follow_origin"
 							}
 						}
 					}
