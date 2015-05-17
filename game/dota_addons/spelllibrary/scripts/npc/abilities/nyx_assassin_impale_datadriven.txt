@@ -85,7 +85,6 @@
 			"MoveSpeed"			"%speed"
 			"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 			"TargetTypes"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			"TargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 			"FixedDistance"		"%length"
 			"ProvidesVision"	"0"
 			"HasFrontalCone"	"0"
