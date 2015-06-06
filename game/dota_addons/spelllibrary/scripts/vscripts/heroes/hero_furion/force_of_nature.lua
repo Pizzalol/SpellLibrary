@@ -70,6 +70,7 @@ function ForceOfNature( event )
 				local treant = CreateUnitByName(unit_name, point, true, caster, caster, caster:GetTeamNumber())
 				treant:SetControllableByPlayer(pID, true)
 				treant:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
+				FindClearSpaceForUnit(treant, point, true)
 			end
 		end
 	)
