@@ -3,7 +3,6 @@
 // Date: 26.12.2014.
 // Known bugs:
 //     The Plague Ward faces an incorrect direction when idling and attacking.
-//     The Poison Sting DoT does not deal damage after the Plague Ward dies, due to garbage collection issues.
 "venomancer_plague_ward_datadriven"
 {
 	// General
