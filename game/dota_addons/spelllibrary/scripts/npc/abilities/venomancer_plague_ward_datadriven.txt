@@ -1,11 +1,14 @@
 // Rewrite of the Venomancer Plague Ward ability
-// Author: Pizzalol
+// Author: Pizzalol and Rook
 // Date: 26.12.2014.
+// Known bugs:
+//     The Plague Ward faces an incorrect direction when idling and attacking.
+//     The Poison Sting DoT does not deal damage after the Plague Ward dies, due to garbage collection issues.
 "venomancer_plague_ward_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
@@ -50,79 +53,84 @@
 			"var_type"				"FIELD_INTEGER"
 			"ward_damage_tooltip"	"10 19 29 38"
 		}
-		"04"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"plague_ward_1_count"	"1 0 0 0"
-		}
-		"05"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"plague_ward_2_count"	"0 1 0 0"
-		}
-		"06"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"plague_ward_3_count"	"0 0 1 0"
-		}
-		"07"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"plague_ward_4_count"	"0 0 0 1"
-		}
 	}
 
 	"OnSpellStart"
-	{
-		"FireSound"
+	{			
+		"RunScript"
 		{
-			"EffectName"		"Hero_Venomancer.Plague_Ward"
-			"Target"			"CASTER"
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"			"npc_dota_venomancer_plague_ward_1"
+			"ScriptFile"		"heroes/hero_venomancer/plague_ward.lua"
+			"Function"			"venomancer_plague_ward_datadriven_on_spell_start"
 			"Target"			"POINT"
-			"UnitCount"			"%plague_ward_1_count"
 			"Duration"			"%duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"			"npc_dota_venomancer_plague_ward_2"
-			"Target"			"POINT"
-			"UnitCount"			"%plague_ward_2_count"
-			"Duration"			"%duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"			"npc_dota_venomancer_plague_ward_3"
-			"Target"			"POINT"
-			"UnitCount"			"%plague_ward_3_count"
-			"Duration"			"%duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"			"npc_dota_venomancer_plague_ward_4"
-			"Target"			"POINT"
-			"UnitCount"			"%plague_ward_4_count"
-			"Duration"			"%duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
 		}
 	}
-}
+	
+	"Modifiers"
+	{
+		"modifier_plague_ward_datadriven"
+		{
+			"Passive"		"0"
+			"IsHidden"		"1"
+			"IsBuff"		"1"
+			"IsDebuff"		"0"
+			"IsPurgable"	"0"
 
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_venomancer/plague_ward.lua"
+					"Function"			"modifier_plague_ward_datadriven_on_attack_landed"
+				}
+			}
+		}
+		
+		//A hidden modifier.  Stacks of this modifier are used to slow the target by the correct amount.
+		//The stack count is set to 0 when a Poison Sting debuff originating from Venomancer is applied, and restored when that debuff
+		//expires, if this modifier still exists.
+		"modifier_plague_ward_datadriven_poison_sting_debuff_movement_speed"
+		{
+			"Passive"		"0"
+			"IsHidden"		"1"
+			"IsBuff"		"0"
+			"IsDebuff"		"1"
+			"IsPurgable"	"1"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"-1"
+			}
+		}
+		
+		//A visible modifier.  Deals damage over time to the target, but only if the target does not also have a 
+		//Poison Sting debuff originating from Venomancer.
+		"modifier_plague_ward_datadriven_poison_sting_debuff"
+		{
+			"Passive"		"0"
+			"IsHidden"		"0"
+			"IsBuff"		"0"
+			"IsDebuff"		"1"
+			"IsPurgable"	"1"
+
+			"ThinkInterval"	"1.0"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_venomancer/plague_ward.lua"
+					"Function"			"modifier_plague_ward_datadriven_debuff_on_interval_think"
+				}
+			}
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_venomancer/plague_ward.lua"
+					"Function"			"modifier_plague_ward_datadriven_debuff_on_interval_think"
+				}
+			}
+		}
+	}		
+}
