@@ -77,14 +77,14 @@ function modifier_plague_ward_datadriven_on_attack_landed(keys)
 			if poison_sting_level > 0 then
 				local poison_sting_duration = poison_sting_ability:GetLevelSpecialValueFor("duration", poison_sting_level - 1)
 			
-				keys.ability:ApplyDataDrivenModifier(keys.attacker, keys.target, "modifier_plague_ward_datadriven_poison_sting_debuff_movement_speed", {duration = poison_sting_duration})
+				keys.ability:ApplyDataDrivenModifier(keys.attacker.venomancer_plague_ward_parent, keys.target, "modifier_plague_ward_datadriven_poison_sting_debuff_movement_speed", {duration = poison_sting_duration})
 				if keys.target:HasModifier("modifier_poison_sting_debuff_datadriven") or keys.target:HasModifier("modifier_venomancer_poison_sting") then
 					keys.target:SetModifierStackCount("modifier_plague_ward_datadriven_poison_sting_debuff_movement_speed", nil, 0)
 				else
 					keys.target:SetModifierStackCount("modifier_plague_ward_datadriven_poison_sting_debuff_movement_speed", nil, math.abs(poison_sting_ability:GetLevelSpecialValueFor("movement_speed", poison_sting_level - 1)))
 				end
 				
-				keys.ability:ApplyDataDrivenModifier(keys.attacker, keys.target, "modifier_plague_ward_datadriven_poison_sting_debuff", {duration = poison_sting_duration})
+				keys.ability:ApplyDataDrivenModifier(keys.attacker.venomancer_plague_ward_parent, keys.target, "modifier_plague_ward_datadriven_poison_sting_debuff", {duration = poison_sting_duration})
 			end
 		end
 	end
@@ -97,15 +97,12 @@ end
 	Called regularly after one of Venomancer's Plague Wards lands an autoattack on a unit.  Damages the target by
 	half the amount of Venomancer's Poison Sting DoT ability, so long as the target is not also affected by a
 	Poison Sting debuff originating from Venomancer.
-	Known bugs: 
-		DoT damage is not dealt after the plague ward dies, since keys.caster (and therefore 
-		keys.caster.venomancer_plague_ward_parent) becomes nil.
 ================================================================================================================= ]]
 function modifier_plague_ward_datadriven_debuff_on_interval_think(keys)
-	if not keys.target:HasModifier("modifier_poison_sting_debuff_datadriven") and not keys.target:HasModifier("modifier_venomancer_poison_sting") and keys.caster ~= nil and IsValidEntity(keys.caster.venomancer_plague_ward_parent) then
-		local poison_sting_ability = keys.caster.venomancer_plague_ward_parent:FindAbilityByName("venomancer_poison_sting_datadriven")
+	if not keys.target:HasModifier("modifier_poison_sting_debuff_datadriven") and not keys.target:HasModifier("modifier_venomancer_poison_sting") and IsValidEntity(keys.caster) then
+		local poison_sting_ability = keys.caster:FindAbilityByName("venomancer_poison_sting_datadriven")
 		if poison_sting_ability == nil then
-			poison_sting_ability = keys.caster.venomancer_plague_ward_parent:FindAbilityByName("venomancer_poison_sting")
+			poison_sting_ability = keys.caster:FindAbilityByName("venomancer_poison_sting")
 		end
 	
 		if poison_sting_ability ~= nil then
