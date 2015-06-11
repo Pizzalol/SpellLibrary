@@ -11,6 +11,8 @@ function Blink(keys)
 	local difference = point - casterPos
 	local ability = keys.ability
 	local range = ability:GetLevelSpecialValueFor("blink_range", (ability:GetLevel() - 1))
+	
+	ProjectileManager:ProjectileDodge(caster)
 
 	if difference:Length2D() > range then
 		point = casterPos + (point - casterPos):Normalized() * range
