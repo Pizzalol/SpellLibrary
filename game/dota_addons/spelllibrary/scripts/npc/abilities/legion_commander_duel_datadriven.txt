@@ -72,6 +72,8 @@
 		"modifier_duel_datadriven"
 		{
 			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"IsDebuff"			"1"
+			"IsPurgable"		"0"
 
 			"OnDeath"
 			{
