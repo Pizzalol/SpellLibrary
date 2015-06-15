@@ -1,53 +1,138 @@
 "abyssal_underlord_pit_of_malice_datadriven"
-{
-	// General
-	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-	
-	"AbilityCastRange"				"750"
-	"AbilityCastPoint"				"0.6"
-	"FightRecapLevel"				"1"
-	"AbilityTextureName"			"abyssal_underlord_pit_of_malice"
-	
-	// Time		
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"24.0 21.0 18.0 15.0"
-
-	// Cost
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"100 115 130 145"
-
-	// Special
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilitySpecial"
 	{
-		"01"
+		// General
+		//-----------------------------------------------------------------------------------------------------------			--
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTarget"				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"pitlord_pit"
+		"AbilityCastPoint"				"0.6"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
+		"AbilityCastRange"				"750"
+		"AbilityCooldown"				"24.0 21.0 18.0 15.0"
+		"AbilityManaCost"				"100 115 130 145"
+		
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"var_type"					"FIELD_INTEGER"
-			"radius"					"275"
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"275"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"pit_duration"					"7.0"
+			}		
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"pit_interval"					"0.5"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"pit_damage"					"100"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ensnare_duration"				"1.0 1.5 2.0 2.5"
+			}
 		}
-		"02"
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
 		{
-			"var_type"						"FIELD_FLOAT"
-			"pit_duration"					"7.0"
-		}		
-		"03"
-		{
-			"var_type"						"FIELD_FLOAT"
-			"pit_interval"					"0.5"
+			"particle"				"particles/units/heroes/hero_abyssal_underlord/pit_of_malice.vpcf"
 		}
-		"04"
+
+		"OnSpellStart"
 		{
-			"var_type"						"FIELD_INTEGER"
-			"pit_damage"					"100"
-		}
-		"05"
-		{
-			"var_type"						"FIELD_FLOAT"
-			"ensnare_duration"				"1.0 1.5 2.0 2.5"
+		 	"CreateThinker"
+		 	{
+		 		"ModifierName"	"pit_thinker"
+		 		"Target" 		"POINT"
+		 	}
+
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  	"POINT"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+			
+				"Action"    
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"rooted"
+						"Duration"		"%ensnare_duration"
+						"Target"	"TARGET"
+					}
+				}
+			}
+		} 
+		
+		"Modifiers"
+		{		
+			"pit_thinker"
+			{
+				"Aura"					"pit_think"
+				"Aura_Radius"			"%radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Duration"				"%pit_duration"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_abyssal_underlord/pit_of_malice.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+						
+						"ControlPoints"
+						{
+							"00" "0 0 0"
+							"01" "%radius 1 1"
+							"15" "25 150 25"
+							"16" "1 0 0"
+						}
+					}
+				}
+			}
+			"pit_think"
+			{
+				"IsDebuff"		"1"
+				"ThinkInterval"	"%pit_interval"
+				
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"		 "TARGET"
+						"Type"			 "DAMAGE_TYPE_MAGICAL"
+						"Damage"		 "%pit_damage"
+					}
+				}
+			}
+			"rooted"
+			{	
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
-}
-
