@@ -14,9 +14,10 @@ function venomancer_plague_ward_datadriven_on_spell_start(keys)
 	
 	local plague_ward_level = keys.ability:GetLevel()
 	if plague_ward_level >= 1 and plague_ward_level <= 4 then
-		local plague_ward_unit = CreateUnitByName("plague_ward_" .. plague_ward_level .. "_datadriven", keys.target_points[1], false, keys.caster, nil, keys.caster:GetTeam())
+		local plague_ward_unit = CreateUnitByName("plague_ward_" .. plague_ward_level .. "_datadriven", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeam())
 		plague_ward_unit:SetForwardVector(direction)
 		plague_ward_unit:SetControllableByPlayer(keys.caster:GetPlayerID(), true)
+		plague_ward_unit:SetOwner(keys.caster)
 		
 		--Display particle effects for Venomancer as well as the plague ward.
 		local venomancer_plague_ward_cast_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_venomancer/venomancer_ward_cast.vpcf", PATTACH_ABSORIGIN, keys.caster)
