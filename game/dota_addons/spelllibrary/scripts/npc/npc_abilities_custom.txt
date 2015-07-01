@@ -1395,7 +1395,7 @@
 				"Function"		"ConcoctionHit"
 				"Target"
 		        {
-		        	"Center"  		"CASTER"
+		        	"Center"  		"TARGET"
 		        	"Radius" 		"%midair_explosion_radius"
 		        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		        	"Types" 		"DOTA_UNIT_TARGET_HERO"
