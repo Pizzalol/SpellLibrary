@@ -165,7 +165,6 @@ function ConcoctionHit( event )
 	print("Projectile Hit Target")
 
 	local caster = event.caster
-	local target = event.target
 	local ability = event.ability
 	local heroes_around = event.target_entities
 	local brew_time = ability:GetLevelSpecialValueFor( "brew_time", ability:GetLevel() - 1 )
