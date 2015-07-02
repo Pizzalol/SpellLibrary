@@ -7,7 +7,7 @@
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
@@ -19,6 +19,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"775"
 	"AbilityCastPoint"				"0.2"
+	"AoERadius"                 	"%midair_explosion_radius"
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -142,7 +143,7 @@
 			"Function"		"ConcoctionHit"
 			"Target"
 	        {
-	        	"Center"  		"CASTER"
+	        	"Center"  		"TARGET"
 	        	"Radius" 		"%midair_explosion_radius"
 	        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	        	"Types" 		"DOTA_UNIT_TARGET_HERO"
