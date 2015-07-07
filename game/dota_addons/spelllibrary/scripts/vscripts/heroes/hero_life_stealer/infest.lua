@@ -28,7 +28,7 @@ function infest_check_valid( keys )
     local caster = keys.caster
     local target = keys.target
 
-    if target:IsHero() and target:GetTeamNumber() ~= caster:GetTeamNumber() or target == caster then
+    if target:IsHero() and target:GetTeamNumber() ~= caster:GetTeamNumber() then
         caster:Hold()
     end
 end
