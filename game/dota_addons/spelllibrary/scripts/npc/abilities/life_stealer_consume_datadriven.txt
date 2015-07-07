@@ -11,20 +11,21 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"life_stealer_consume"
+	"MaxLevel"						"1"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastPoint"				"0"
     "AbilityCastRange"              "0"
 
-	"OnUpgrade"
-	{
-		"LevelUpAbility"
-		{
-			"Target" 		"CASTER"
-			"AbilityName"	"life_stealer_infest_datadriven"
-		}
-	}
+	// "OnUpgrade"
+	// {
+	// 	"LevelUpAbility"
+	// 	{
+	// 		"Target" 		"CASTER"
+	// 		"AbilityName"	"life_stealer_infest_datadriven"
+	// 	}
+	// }
 
 	"OnSpellStart"
 	// OnSpellStart as a Modifier Event, you can Apply it on a target to trigger any Actions.
