@@ -59,7 +59,7 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"	"heroes/hero_name/infest.lua"
+			"ScriptFile"	"heroes/life_stealer/infest.lua"
 			"Function"		"infest_add_consume"
 		}
 

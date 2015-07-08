@@ -10,11 +10,13 @@
 ]]
 
 function infest_check_valid( keys )
-    print "is valid"
     local caster = keys.caster
     local target = keys.target
 
-    if target:IsHero() and target:GetTeamNumber() ~= caster:GetTeamNumber() or caster == target then
+    print(target:GetUnitLabel())
+    print(target:GetUnitName())
+
+    if target:IsHero() and target:GetTeamNumber() ~= caster:GetTeamNumber() or caster == target or target:IsCourier() or target:IsBoss() then
         caster:Hold()
     end
 end
@@ -36,6 +38,14 @@ function infest_start( keys )
 
     caster.host = target
     caster.removed_spells = {}
+
+    -- Strong Dispel
+    local RemovePositiveBuffs = false
+    local RemoveDebuffs = true
+    local BuffsCreatedThisFrameOnly = false
+    local RemoveStuns = true
+    local RemoveExceptions = false
+    caster:Purge( RemovePositiveBuffs, RemoveDebuffs, BuffsCreatedThisFrameOnly, RemoveStuns, RemoveExceptions)
 
     -- Hide the hero underground
     caster:SetAbsOrigin(caster.host:GetAbsOrigin() - Vector(0, 0, 322))
@@ -108,7 +118,8 @@ function infest_move_unit( keys )
 end
 
 function infest_consume(keys)
-    print(keys.caster:GetClassname())
+    print(keys.caster.host:GetUnitLabel())
+    print(keys.caster.host:GetUnitName())
     local caster = keys.caster
     local ability = keys.ability
 
