@@ -49,7 +49,7 @@ function infest_start( keys )
 
     caster.host = target
     caster.removed_spells = {}
-
+    --add the particle
     caster.particleid = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_life_stealer/life_stealer_infested_unit_icon.vpcf", 7, target, caster:GetTeamNumber())
 
 
@@ -95,7 +95,6 @@ function infest_move_unit( keys )
             caster:GetAbilityByIndex(i):SetLevel(caster.removed_spells[i][2])
         end
     end
-
     -- if the unit is not a hero, the unit dies
     if not caster.host:IsHero() then
         -- heal the caster
@@ -103,7 +102,6 @@ function infest_move_unit( keys )
 
         caster.host:Kill(ability, caster)
     end
-
     -- deal aoe damage
     units = FindUnitsInRadius(caster:GetTeamNumber(),
                 caster:GetAbsOrigin(),
@@ -114,7 +112,6 @@ function infest_move_unit( keys )
                 DOTA_UNIT_TARGET_FLAG_NONE,
                 FIND_ANY_ORDER,
                 false)
-
     -- if we find units, deal the damage
     if units ~= nil then
         for k, unit in pairs(units) do
@@ -125,10 +122,12 @@ function infest_move_unit( keys )
                         ability = ability}) 
         end
     end
+    --remove the particle
+    ParticleManager:DestroyParticle(caster.particleid, true)
+
     else
         caster:SetAbsOrigin(caster.host:GetAbsOrigin() - Vector(0, 0, 322))
     end
-
 end
 
 function infest_consume(keys)
@@ -188,4 +187,6 @@ function infest_consume(keys)
                         ability = ability}) 
         end
     end
+    --remove the particle
+    ParticleManager:DestroyParticle(caster.particleid, true)
 end
