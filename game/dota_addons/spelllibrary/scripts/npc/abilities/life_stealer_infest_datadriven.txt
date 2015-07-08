@@ -22,6 +22,7 @@
         "soundfile"         "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
         "particle"          "particles/units/heroes/hero_life_stealer/life_stealer_infest_cast.vpcf"
         "particle"          "particles/units/heroes/hero_life_stealer/life_stealer_infest_emerge_bloody.vpcf"
+        "particle"			"particles/units/heroes/hero_life_stealer/life_stealer_infested_unit_icon.vpcf"
     }
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -122,12 +123,13 @@
 	
 			"States"
 			{
-				//"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_HEALTH_BAR"		   "MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
 
 			"ThinkInterval"  "0.03"
@@ -158,6 +160,8 @@
 
 		"modifier_infest_buff"
 		{
+			"EffectName"        "particles/units/heroes/hero_life_stealer/life_stealer_infested_unit_icon.vpcf"
+			"EffectAttachType"  "follow_overhead"
 			"IsHidden"	"0"
 			"IsBuff"	"1"
 			"IsPurgeable"	"0"
