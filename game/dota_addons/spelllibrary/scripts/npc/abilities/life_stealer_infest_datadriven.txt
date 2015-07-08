@@ -21,6 +21,7 @@
     {
         "soundfile"         "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
         "particle"          "particles/units/heroes/hero_life_stealer/life_stealer_infest_cast.vpcf"
+        "particle"          "particles/units/heroes/hero_life_stealer/life_stealer_infest_emerge_bloody.vpcf"
     }
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -138,13 +139,28 @@
 					"Function"		"infest_move_unit"
 				}				
 			}
+
+			"OnDestroy"
+			{
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_life_stealer/life_stealer_infest_emerge_bloody.vpcf"
+					"EffectAttachType"  "attach_hitloc"
+					"Target"            "TARGET"
+				}
+				"FireSound"
+				{
+					"EffectName"	"Hero_LifeStealer.consume"
+					"Target" 		"TARGET"
+				}
+			}
 		}
 
 		"modifier_infest_buff"
 		{
 			"IsHidden"	"0"
 			"IsBuff"	"1"
-			"IsPurgeable"	"1"
+			"IsPurgeable"	"0"
 			"TextureName"	"life_stealer_infest"
 		}
 	}

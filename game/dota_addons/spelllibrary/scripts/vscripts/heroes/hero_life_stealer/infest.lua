@@ -73,9 +73,48 @@ function infest_move_unit( keys )
     local caster = keys.caster
 
     if caster.host == nil or not caster.host:IsAlive() then -- CHANGE THIS PLEASE
-        caster:RemoveModifierByName("modifier_infest_hide")
-        caster.host:RemoveModifierByName("modifier_infest_buff")
-        caster:SwapAbilities("life_stealer_infest_datadriven", "life_stealer_consume_datadriven", true, false) 
+    caster:SetAbsOrigin(caster.host:GetAbsOrigin())
+    caster:RemoveModifierByName("modifier_infest_hide")
+    caster.host:RemoveModifierByName("modifier_infest_buff")
+    caster:SwapAbilities("life_stealer_infest_datadriven", "life_stealer_consume_datadriven", true, false) 
+
+    for i = 0, 4 do
+        if caster.removed_spells[i] ~= nil then
+            print(caster.removed_spells[i][1], caster.removed_spells[i][2])
+            caster:AddAbility(caster.removed_spells[i][1])
+            caster:GetAbilityByIndex(i):SetLevel(caster.removed_spells[i][2])
+        end
+    end
+
+    -- if the unit is not a hero, the unit dies
+    if not caster.host:IsHero() then
+        -- heal the caster
+        caster:Heal(caster.host:GetHealth(), caster)
+
+        caster.host:Kill(ability, caster)
+    end
+
+    -- deal aoe damage
+    units = FindUnitsInRadius(caster:GetTeamNumber(),
+                caster:GetAbsOrigin(),
+                nil,
+                caster.ability["range"], 
+                DOTA_UNIT_TARGET_TEAM_ENEMY,
+                DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+                DOTA_UNIT_TARGET_FLAG_NONE,
+                FIND_ANY_ORDER,
+                false)
+
+    -- if we find units, deal the damage
+    if units ~= nil then
+        for k, unit in pairs(units) do
+            ApplyDamage({victim = unit,
+                        attacker = caster,
+                        damage = caster.ability["damage"],
+                        damage_type = DAMAGE_TYPE_MAGICAL,
+                        ability = ability}) 
+        end
+    end
     else
         caster:SetAbsOrigin(caster.host:GetAbsOrigin() - Vector(0, 0, 322))
     end
