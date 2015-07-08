@@ -159,8 +159,8 @@
 
 		"modifier_infest_buff"
 		{
-			"EffectName"        "particles/units/heroes/hero_life_stealer/life_stealer_infested_unit_icon.vpcf"
-			"EffectAttachType"  "follow_overhead"
+			//"EffectName"        "particles/units/heroes/hero_life_stealer/life_stealer_infested_unit_icon.vpcf"
+			//"EffectAttachType"  "follow_overhead"
 			"IsHidden"	"0"
 			"IsBuff"	"1"
 			"IsPurgeable"	"0"
