@@ -74,6 +74,7 @@ function infest_move_unit( keys )
 
     if caster.host == nil or not caster.host:IsAlive() then -- CHANGE THIS PLEASE
         caster:RemoveModifierByName("modifier_infest_hide")
+        caster.host:RemoveModifierByName("modifier_infest_buff")
         caster:SwapAbilities("life_stealer_infest_datadriven", "life_stealer_consume_datadriven", true, false) 
     else
         caster:SetAbsOrigin(caster.host:GetAbsOrigin() - Vector(0, 0, 322))
@@ -89,6 +90,7 @@ function infest_consume(keys)
 
     caster:SetAbsOrigin(caster.host:GetAbsOrigin())
     caster:RemoveModifierByName("modifier_infest_hide")
+    caster.host:RemoveModifierByName("modifier_infest_buff")
     caster:SwapAbilities("life_stealer_infest_datadriven", "life_stealer_consume_datadriven", true, false) 
 
     for i = 0, 4 do

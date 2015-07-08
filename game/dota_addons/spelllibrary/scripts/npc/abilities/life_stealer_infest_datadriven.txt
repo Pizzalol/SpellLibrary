@@ -9,7 +9,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 	//"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
@@ -89,6 +89,12 @@
 			"Target" 		"CASTER"
 		}
 
+		"ApplyModifier"
+		{
+			"ModifierName" 	"modifier_infest_buff"
+			"Target"		"TARGET"
+		}
+
 		"RunScript"
 		{
 			"ScriptFile"	"heroes/hero_life_stealer/infest.lua"
@@ -110,7 +116,7 @@
 		"modifier_infest_hide"
 		{
 			"Passive"			"0"
-			"IsHidden"			"0"
+			"IsHidden"			"1"
 			"IsDebuff"			"0"
 	
 			"States"
@@ -132,6 +138,14 @@
 					"Function"		"infest_move_unit"
 				}				
 			}
+		}
+
+		"modifier_infest_buff"
+		{
+			"IsHidden"	"0"
+			"IsBuff"	"1"
+			"IsPurgeable"	"1"
+			"TextureName"	"life_stealer_infest"
 		}
 	}
 }
