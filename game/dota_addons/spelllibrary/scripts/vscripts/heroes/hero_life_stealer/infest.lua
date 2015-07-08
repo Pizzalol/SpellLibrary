@@ -1,26 +1,12 @@
 --[[
-    author: ___ & jacklarnes
-    email: christucket@gmail.com
-    reddit: /u/jacklarnes
+    Author: jacklarnes, RcColes
+    Date: 08.07.2015.
 
-    feel free to contact me with suggestions or if you're finishing it and you have questions
-]]
+    Note: feel free to contact me with suggestions or if you're finishing it and you have questions.
+    Email: christucket@gmail.com
+    reddit: /u/jacklarnes, /u/RcColes
 
---[[
-
-    copied a lot from primal_split.lua
-
-    so far: no animations, no sounds, hero can attack and be attacked while infested
-            does not have all the correct unit targetting right now
-            does not treat familiars/spirit bears/etc as special units
-            does not do anything on death of caster.host
-
-            caster.ability probably needs to be updated when the target upgrades the spell mid-consume
-
-
-            right now it looks for the first 5 spells and removes everything but infest
-            it tries to add them back with their proper levels. i did not test for anything
-            over 5 spells
+    Note: Problems may occur if used on heroes with more then 5 abilities.
 ]]
 
 function infest_check_valid( keys )

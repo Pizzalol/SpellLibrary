@@ -1,7 +1,6 @@
 // Rewrite of the Lifestealer Infest ability
-// Author: jacklarnes
-// Date: 07.04.2015.
-// NOTE: Spell is incomplete
+// Author: jacklarnes, RcColes
+// Date: 08.07.2015.
 "life_stealer_infest_datadriven"
 {
 	// General

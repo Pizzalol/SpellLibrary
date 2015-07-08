@@ -1,7 +1,6 @@
 // Rewrite of the Lifestealer Consume ability
-// Author: jacklarnes
-// Date: 07.04.2015.
-// NOTE: Spell is incomplete
+// Author: jacklarnes, RcColes
+// Date: 08.07.2015.
 "life_stealer_consume_datadriven"
 {
 	// General
@@ -17,15 +16,6 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastPoint"				"0"
     "AbilityCastRange"              "0"
-
-	// "OnUpgrade"
-	// {
-	// 	"LevelUpAbility"
-	// 	{
-	// 		"Target" 		"CASTER"
-	// 		"AbilityName"	"life_stealer_infest_datadriven"
-	// 	}
-	// }
 
 	"OnSpellStart"
 	// OnSpellStart as a Modifier Event, you can Apply it on a target to trigger any Actions.
