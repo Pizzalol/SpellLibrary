@@ -5,14 +5,14 @@
 #!.gitattributes this is optional
 
 # Ignore game folder, and all default dota_addons folders
-!game
-/game/*
-!/game/scripts
-!/game/resource
-/game/resource/*
-!/game/resource/flash3
+!Game
+/Game/*
+!/Game/scripts
+!/Game/resource
+/Game/resource/*
+!/Game/resource/flash3
 
 
 
 # Ignore content folder, and all default dota_addons folders
-/content/*
+/Content/*
