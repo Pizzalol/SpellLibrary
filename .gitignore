@@ -7,19 +7,12 @@
 # Ignore game folder, and all default dota_addons folders
 !game
 /game/*
-!/game/dota_addons
-/game/dota_addons/*
-!/game/dota_addons/spelllibrary
-/game/dota_addons/spelllibrary/*
-!/game/dota_addons/spelllibrary/scripts
-!/game/dota_addons/spelllibrary/resource
-/game/dota_addons/spelllibrary/resource/*
-!/game/dota_addons/spelllibrary/resource/flash3
+!/game/scripts
+!/game/resource
+/game/resource/*
+!/game/resource/flash3
 
 
 
 # Ignore content folder, and all default dota_addons folders
-!content
 /content/*
-!/content/dota_addons
-/content/dota_addons/*
