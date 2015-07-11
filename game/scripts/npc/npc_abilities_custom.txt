@@ -37841,7 +37841,8 @@
 	//Start of file necrolyte_heartstopper_aura_datadriven.txt
 	// Rewrite of the Necrophos Heartstopper Aura ability
 	// Author: Pizzalol
-	// Date: 05.01.2015.
+	// Date: 11.07.2015.
+	// Game version: 6.84
 	"necrolyte_heartstopper_aura_datadriven"
 	{
 		// General
