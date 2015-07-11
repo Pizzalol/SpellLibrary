@@ -1,9 +1,8 @@
 --[[Author: Amused/D3luxe
 	Used by: Pizzalol
-	Date: 17.12.2014.
+	Date: 11.07.2015.
 	Blinks the target to the target point, if the point is beyond max blink range then blink the maximum range]]
 function Blink(keys)
-	--PrintTable(keys)
 	local point = keys.target_points[1]
 	local caster = keys.caster
 	local casterPos = caster:GetAbsOrigin()
@@ -16,5 +15,6 @@ function Blink(keys)
 		point = casterPos + (point - casterPos):Normalized() * range
 	end
 
-	FindClearSpaceForUnit(caster, point, false)	
+	FindClearSpaceForUnit(caster, point, false)
+	ProjectileManager:ProjectileDodge(caster)
 end

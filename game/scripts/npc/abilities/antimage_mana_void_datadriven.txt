@@ -1,6 +1,7 @@
 // Rewrite of the Antimage Mana Void ability
 // Author: Pizzalol
 // Date: 17.12.2014.
+// Game version: 6.84
 "antimage_mana_void_datadriven"
 {
 	// General

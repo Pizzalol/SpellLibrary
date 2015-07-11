@@ -1,8 +1,7 @@
 // Rewrite of the Antimage Blink ability
 // Author: Pizzalol
-// Date: 17.12.2014.
-// NOTE: "Blink" action block doesnt work with POINT, works with TARGET after changing the behavior.
-// Also there doesnt seem to be a way to change the blink range for the action block
+// Date: 11.07.2015.
+// Game version: 6.84
 "antimage_blink_datadriven"
 {
 	// General

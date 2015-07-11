@@ -4,9 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"life_stealer_rage_datadriven"
-	"Ability2"	"obsidian_destroyer_astral_imprisonment_datadriven"
+	"Ability1"	"antimage_mana_break_datadriven"
+	"Ability2"	"antimage_blink_datadriven"
 	"Ability3"	"life_stealer_open_wounds_datadriven"
 	"Ability4"	"life_stealer_infest_datadriven"
-	"Ability5"	"life_stealer_consume_datadriven"
 }

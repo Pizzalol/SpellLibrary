@@ -1,6 +1,7 @@
 // Remwrite of the Antimage Spellshield ability
 // Author: Pizzalol
 // Date: 16.12.2014.
+// Game version: 6.84
 "antimage_spell_shield_datadriven"
 {
 	// General

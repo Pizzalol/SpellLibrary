@@ -1,10 +1,9 @@
 // Rewrite of the Antimage Mana Break ability
 // Author: Pizzalol
-// Date: 16.12.2014.
+// Date: 11.07.2015.
+// Game version: 6.84
 // NOTE: Sound and particle will play even on units with no mana, to fix that just run a script on the "OnOrbFire"
 // event and check if the unit has mana, if it does then launch the particle and sound through lua
-// NOTE2: Damages magic immune enemies and drains mana, can be fixed by checking if the target is magic immune in
-// the script. Waiting for 6.82 parity for the new spell immunity system
 "antimage_mana_break_datadriven"
 {
 	// General
@@ -53,13 +52,6 @@
 
 			"OnOrbImpact"
 			{
-				"RunScript"
-				{
-					"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/mana_break.lua"
-					"Function"		"ManaBreak"
-					"Target"		"TARGET"
-				}
-
 				"FireSound"
 				{
 					"EffectName"	"Hero_Antimage.ManaBreak"
@@ -72,6 +64,13 @@
 					"EffectAttachType"	"attach_hitloc"
 					"Target"		"TARGET"
 				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/mana_break.lua"
+					"Function"		"ManaBreak"
+					"Target"		"TARGET"
+				}				
 			}
 		}
 	}
