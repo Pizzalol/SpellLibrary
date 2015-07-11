@@ -61,7 +61,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"			"scripts/vscripts/heroes/hero_necrolyte/heartstopper_aura.lua"
+					"ScriptFile"			"heroes/hero_necrolyte/heartstopper_aura.lua"
 					"Function"				"HeartstopperAura"
 
 					"visibility_modifier"	"modifier_heartstopper_debuff_visibility"

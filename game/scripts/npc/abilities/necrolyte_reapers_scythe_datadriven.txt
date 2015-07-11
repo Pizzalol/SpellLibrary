@@ -1,6 +1,7 @@
 // Rewrite of the Necrophos Reapers Scythe ability
 // Author: Pizzalol
 // Date: 06.01.2015.
+// Game version: 6.84
 "necrolyte_reapers_scythe_datadriven"
 {
 	// General
@@ -134,7 +135,7 @@
 
 				"RunScript"
 				{
-					"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/reapers_scythe.lua"
+					"ScriptFile"	"heroes/hero_necrolyte/reapers_scythe.lua"
 					"Function"		"ReapersScythe"
 				}
 			}

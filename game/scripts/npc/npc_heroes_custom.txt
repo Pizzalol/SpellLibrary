@@ -25,7 +25,7 @@
 	
 		"Ability1"	"antimage_mana_break_datadriven"
 		"Ability2"	"necrolyte_heartstopper_aura_datadriven"
-		"Ability3"	"life_stealer_open_wounds_datadriven"
+		"Ability3"	"necrolyte_sadist_datadriven"
 		"Ability4"	"life_stealer_infest_datadriven"
 	}
 	//End of file test_dummy_ranged.txt

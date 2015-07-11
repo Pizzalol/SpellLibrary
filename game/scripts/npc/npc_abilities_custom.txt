@@ -37695,6 +37695,7 @@
 	// Rewrite of the Necrophos Death Pulse ability
 	// Author: Pizzalol
 	// Date: 05.01.2015.
+	// Game version: 6.84
 	"necrolyte_death_pulse_datadriven"
 	{
 		// General
@@ -37902,7 +37903,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"			"scripts/vscripts/heroes/hero_necrolyte/heartstopper_aura.lua"
+						"ScriptFile"			"heroes/hero_necrolyte/heartstopper_aura.lua"
 						"Function"				"HeartstopperAura"
 	
 						"visibility_modifier"	"modifier_heartstopper_debuff_visibility"
@@ -37936,6 +37937,7 @@
 	// Rewrite of the Necrophos Reapers Scythe ability
 	// Author: Pizzalol
 	// Date: 06.01.2015.
+	// Game version: 6.84
 	"necrolyte_reapers_scythe_datadriven"
 	{
 		// General
@@ -38069,7 +38071,7 @@
 	
 					"RunScript"
 					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/reapers_scythe.lua"
+						"ScriptFile"	"heroes/hero_necrolyte/reapers_scythe.lua"
 						"Function"		"ReapersScythe"
 					}
 				}
@@ -38135,9 +38137,8 @@
 	//Start of file necrolyte_sadist_datadriven.txt
 	// Rewrite of the Necrophos Sadist ability
 	// Author: Pizzalol
-	// Date: 06.01.2015.
-	// Changed: 10.01.2015.
-	// Reason: Improved the code
+	// Date: 11.07.2015.
+	// Game version: 6.84
 	"necrolyte_sadist_datadriven"
 	{
 		// General
@@ -38202,6 +38203,12 @@
 			{
 				"IsBuff"	"1"
 				"Duration"	"%regen_duration"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_regen"
+				}
 			}
 	
 			"modifier_sadist_regen_datadriven"
@@ -38215,7 +38222,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/sadist.lua"
+						"ScriptFile"	"heroes/hero_necrolyte/sadist.lua"
 						"Function"		"ApplySadist"
 						"stack_modifier"	"modifier_sadist_buff_datadriven"
 					}
@@ -38225,17 +38232,11 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_necrolyte/sadist.lua"
+						"ScriptFile"	"heroes/hero_necrolyte/sadist.lua"
 						"Function"		"RemoveSadist"
 						"stack_modifier"	"modifier_sadist_buff_datadriven"
 					}
-				}
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_regen"
-				}
+				}			
 			}
 		}
 	}

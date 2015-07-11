@@ -1,6 +1,7 @@
 // Rewrite of the Necrophos Death Pulse ability
 // Author: Pizzalol
 // Date: 05.01.2015.
+// Game version: 6.84
 "necrolyte_death_pulse_datadriven"
 {
 	// General
