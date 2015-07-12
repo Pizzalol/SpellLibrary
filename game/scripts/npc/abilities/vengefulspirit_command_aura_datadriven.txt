@@ -1,6 +1,7 @@
 // Rewrite of the Vengeful Spirit Command Aura ability
 // Author: Pizzalol
 // Date: 26.01.2015.
+// Game version: 6.84
 "vengefulspirit_command_aura_datadriven"
 {
 	// General

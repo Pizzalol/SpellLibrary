@@ -1,6 +1,7 @@
 // Rewrite of the Vengeful Spirit Nether Swap ability
 // Author: Pizzalol
-// Date: 26.01.2015.
+// Date: 12.07.2015.
+// Game version: 6.84
 "vengefulspirit_nether_swap_datadriven"
 {
 	// General
@@ -50,6 +51,12 @@
 		{
 			"var_type"						"FIELD_FLOAT"
 			"nether_swap_cooldown_scepter"	"10"
+		}
+		// Extra
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"tree_radius"					"300"
 		}
 	}
 
