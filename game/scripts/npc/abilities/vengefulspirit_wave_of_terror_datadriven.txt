@@ -1,6 +1,7 @@
 // Rewrite of the Vengeful Spirit Wave of Terror ability
 // Author: Pizzalol
-// Date: 31.01.2015.
+// Date: 12.07.2015.
+// Game version: 6.84
 "vengefulspirit_wave_of_terror_datadriven"
 {
 	// General
@@ -27,8 +28,8 @@
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"15.0 15.0 15.0 15.0"
-	"AbilityDuration"				"20.0 20.0 20.0 20.0"
+	"AbilityCooldown"				"20.0 20.0 20.0 20.0"
+	"AbilityDuration"				"15.0 15.0 15.0 15.0"
 
 	// Damage.
 	//-------------------------------------------------------------------------------------------------------------
@@ -88,28 +89,12 @@
 			"Target" 		"CASTER"
 		}
 
-		"LinearProjectile"
-		{
-		    "Target"      	 "POINT"
-			"EffectName"	 "particles/units/heroes/hero_vengeful/vengeful_wave_of_terror.vpcf"
-			"MoveSpeed"		 "%wave_speed"
-			"StartRadius"	 "%wave_width"
-			"StartPosition"  "attach_attack1"
-			"EndRadius"      "%wave_width"
-			"HasFrontalCone" "0"
-			"FixedDistance"  "%wave_range"
-			"TargetTeams"	 "DOTA_UNIT_TARGET_TEAM_ENEMY"
-			"TargetTypes"	 "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-			"TargetFlags"	 "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"						
-		    "ProvidesVision" "1"
-		    "VisionRadius" 	 "%vision_aoe"
-		}
-
 		"RunScript"
 		{
 			"ScriptFile"	"heroes/hero_vengefulspirit/wave_of_terror.lua"
 			"Function"		"WaveOfTerrorVision"
 			"Target"		"POINT"
+			"wave_particle"	"particles/units/heroes/hero_vengeful/vengeful_wave_of_terror.vpcf"
 		}
 	}
 

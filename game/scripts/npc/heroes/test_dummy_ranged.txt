@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"antimage_mana_break_datadriven"
-	"Ability2"	"necrolyte_heartstopper_aura_datadriven"
-	"Ability3"	"night_stalker_hunter_in_the_night_datadriven"
-	"Ability4"	"life_stealer_infest_datadriven"
+	"Ability1"	"vengefulspirit_magic_missile_datadriven"
+	"Ability2"	"vengefulspirit_wave_of_terror_datadriven"
+	"Ability3"	"vengefulspirit_command_aura_datadriven"
+	"Ability4"	"vengefulspirit_nether_swap_datadriven"
 }

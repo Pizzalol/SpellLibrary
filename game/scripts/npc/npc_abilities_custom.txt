@@ -60960,6 +60960,7 @@
 	// Rewrite of the Vengeful Spirit Command Aura ability
 	// Author: Pizzalol
 	// Date: 26.01.2015.
+	// Game version: 6.84
 	"vengefulspirit_command_aura_datadriven"
 	{
 		// General
@@ -61101,6 +61102,7 @@
 	// Rewrite of the Vengeful Spirit Magic Missile ability
 	// Author: Pizzalol
 	// Date: 26.01.2015.
+	// Game version: 6.84
 	"vengefulspirit_magic_missile_datadriven"
 	{
 		// General
@@ -61129,7 +61131,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
+		"AbilityCooldown"				"13.0 12.0 11.0 10.0"
 	
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
@@ -61204,7 +61206,8 @@
 	//Start of file vengefulspirit_nether_swap_datadriven.txt
 	// Rewrite of the Vengeful Spirit Nether Swap ability
 	// Author: Pizzalol
-	// Date: 26.01.2015.
+	// Date: 12.07.2015.
+	// Game version: 6.84
 	"vengefulspirit_nether_swap_datadriven"
 	{
 		// General
@@ -61254,6 +61257,12 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"nether_swap_cooldown_scepter"	"10"
+			}
+			// Extra
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tree_radius"					"300"
 			}
 		}
 	
@@ -61406,28 +61415,12 @@
 				"Target" 		"CASTER"
 			}
 	
-			"LinearProjectile"
-			{
-			    "Target"      	 "POINT"
-				"EffectName"	 "particles/units/heroes/hero_vengeful/vengeful_wave_of_terror.vpcf"
-				"MoveSpeed"		 "%wave_speed"
-				"StartRadius"	 "%wave_width"
-				"StartPosition"  "attach_attack1"
-				"EndRadius"      "%wave_width"
-				"HasFrontalCone" "0"
-				"FixedDistance"  "%wave_range"
-				"TargetTeams"	 "DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"TargetTypes"	 "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-				"TargetFlags"	 "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"						
-			    "ProvidesVision" "1"
-			    "VisionRadius" 	 "%vision_aoe"
-			}
-	
 			"RunScript"
 			{
 				"ScriptFile"	"heroes/hero_vengefulspirit/wave_of_terror.lua"
 				"Function"		"WaveOfTerrorVision"
 				"Target"		"POINT"
+				"wave_particle"	"particles/units/heroes/hero_vengeful/vengeful_wave_of_terror.vpcf"
 			}
 		}
 	
