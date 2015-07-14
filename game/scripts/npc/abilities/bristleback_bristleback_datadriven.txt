@@ -1,9 +1,14 @@
+// Ability: Bristleback
+// By: Ragnar Homsar
+// Date: July 10, 2015
+
 "bristleback_bristleback_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"	"bristleback_bristleback"
 			
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -32,8 +37,36 @@
 		"05"
 		{
 			"var_type"						"FIELD_FLOAT"
-			"quill_release_threshold"				"250.0"
+			"quill_release_threshold"		"250.0"
+		}
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_bristleback/bristleback_side_dmg.vpcf"
+		"particle"	"particles/units/heroes/hero_bristleback/bristleback_back_dmg.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_bristleback.vsndevts"
+	}
+
+	"Modifiers"
+	{
+		"modifier_bristleback"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"OnTakeDamage"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/bristleback.lua"
+					"Function"		"bristleback_takedamage"
+					"Damage"		"%attack_damage"
+					"back_particle"	"particles/units/heroes/hero_bristleback/bristleback_back_dmg.vpcf"
+					"side_particle"	"particles/units/heroes/hero_bristleback/bristleback_side_dmg.vpcf"
+					"sound"			"Hero_Bristleback.Bristleback"
+				}		
+			}
 		}
 	}
 }
-
