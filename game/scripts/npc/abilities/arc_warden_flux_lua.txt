@@ -1,0 +1,52 @@
+	"arc_warden_flux"
+		{
+
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					 "heroes/hero_arc_warden/arc_warden_flux_lua.lua"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"  "DAMAGE_TYPE_MAGICAL"
+
+
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"600 700 800 900"
+		"AbilityManaCost"				"75"
+		"AbilityCooldown"				"20"
+
+		"AbilitySpecial"
+			{
+			"1"
+				{
+				"var_type"				"FIELD_FLOAT"
+				"flux_damage_per_second" "15 30 45 60"
+				}
+			"2"
+				{
+				"var_type"				"FIELD_FLOAT"
+				"flux_duration" "6"
+				}
+			"3"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"flux_mute_radius"	"225"
+				}
+			"4"
+				{
+				"var_type"				"FIELD_FLOAT"
+				"flux_tick_interval"	"0.5"
+				}
+			"05"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"slow"	"-50"
+				}
+			}
+
+		"precache"
+			{
+
+			"particle" "particles/units/heroes/hero_zuus/zuus_static_field_b.vpcf"
+			"particle" "particles/status_fx/status_effect_disruptor_kinetic_fieldslow.vpcf"
+			}
+    	}
