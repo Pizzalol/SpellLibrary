@@ -27,8 +27,10 @@ function arc_warden_tempest_double:OnSpellStart()
 	for ability_id = 0, 15 do
 		local ability = double:GetAbilityByIndex(ability_id)
 		if ability then
-			if ability:GetName() ~= "arc_warden_tempest_double" then
-				ability:SetLevel(caster:GetAbilityByIndex(ability_id):GetLevel())
+			
+			ability:SetLevel(caster:GetAbilityByIndex(ability_id):GetLevel())
+			if ability:GetName() == "arc_warden_tempest_double" then
+				ability:SetActivated(false)
 			end
 		end
 	end
@@ -92,4 +94,8 @@ end
 
 function arc_warden_tempest_double_modifier:IsHidden()
 	return true
+end
+
+function arc_warden_tempest_double_modifier:GetAttributes()
+	return MODIFIER_ATTRIBUTE_PERMANENT
 end

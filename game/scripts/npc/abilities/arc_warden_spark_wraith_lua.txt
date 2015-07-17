@@ -44,5 +44,6 @@
 			"particle" "particles/units/heroes/hero_disruptor/disruptor_thunder_strike_buff_sphere.vpcf"
 			"particle" "particles/units/heroes/hero_disruptor/disruptor_thunder_strike_buff_sphere3.vpcf"
 			"particle" "particles/units/heroes/hero_zuus/zuus_base_attack_sparkles.vpcf"
+			"particle" "particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"
 			}
 		}

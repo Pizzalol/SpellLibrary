@@ -10,6 +10,20 @@ function arc_warden_spark_wraith:OnSpellStart()
 	local thinker = CreateModifierThinker(caster, self, "arc_warden_spark_wraith_thinker", {}, point, team_id, false)
 end
 
+function arc_warden_spark_wraith:OnProjectileHit( target, location )
+	local thinker = self:GetCaster()
+	local modifier = thinker:FindModifierByName("arc_warden_spark_wraith_thinker")
+	local caster = modifier:GetCaster()
+	if caster == nil then
+		caster = PlayerResource:GetSelectedHeroEntity(thinker.player_id)
+	end
+	ApplyDamage({ victim = target, attacker = caster, damage = self:GetAbilityDamage(), damage_type = self:GetAbilityDamageType(), ["ability"] = self})
+	local damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_base_attack_sparkles.vpcf", PATTACH_ROOTBONE_FOLLOW, target)
+	ParticleManager:ReleaseParticleIndex(damage_particle)
+	AddFOWViewer(caster:GetTeamNumber(), target:GetAbsOrigin(), self:GetSpecialValueFor("vision_radius"), 3.34, true)
+	modifier:Destroy()
+end
+
 arc_warden_spark_wraith_thinker = class({})
 
 function arc_warden_spark_wraith_thinker:OnCreated(event)
@@ -21,8 +35,7 @@ function arc_warden_spark_wraith_thinker:OnCreated(event)
 		self.speed = ability:GetSpecialValueFor("speed")
 		self.search_radius = ability:GetSpecialValueFor("search_radius")
 		self.vision_radius = ability:GetSpecialValueFor("vision_radius")
-		self.damage = ability:GetAbilityDamage()
-		self.damage_type = ability:GetAbilityDamageType()
+		thinker:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 		local startup_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_disruptor/disruptor_thunder_strike_buff_sphere3.vpcf", PATTACH_WORLDORIGIN, thinker)
 		local thinker_pos = thinker:GetAbsOrigin()
 		ParticleManager:SetParticleControl(startup_particle, 3, (thinker_pos + Vector(0, 0, 150)))
@@ -30,6 +43,9 @@ function arc_warden_spark_wraith_thinker:OnCreated(event)
 		self.startup_particle = startup_particle
 		thinker:SetDayTimeVisionRange(self.vision_radius)
 		thinker:SetNightTimeVisionRange(self.vision_radius)
+		thinker:AddAbility("arc_warden_spark_wraith")
+		thinker:FindAbilityByName("arc_warden_spark_wraith"):SetLevel(ability:GetLevel())
+		thinker.player_id = ability:GetCaster():GetPlayerOwnerID()
 	end
 end
 
@@ -52,45 +68,32 @@ function arc_warden_spark_wraith_thinker:OnIntervalThink()
 				self.target = enemies[1]
 				self.duration = nil
 				self.expire = nil
-				self.time = GameRules:GetGameTime()
+				self:StartIntervalThink(-1)
+				local info = 
+					{
+					Target = enemies[1],
+					Source = thinker,
+					Ability = thinker:FindAbilityByName("arc_warden_spark_wraith"),	
+					EffectName = "particles/units/heroes/hero_zuus/zuus_base_attack.vpcf",
+					vSourceLoc = (thinker_pos + Vector(0, 0, 150)),
+					bDrawsOnMinimap = false,
+					iSourceAttachment = 1,
+					iMoveSpeed = self.speed,
+					bDodgeable = false,
+					bProvidesVision = true,
+					iVisionRadius = self.vision_radius,
+					iVisionTeamNumber = thinker:GetTeamNumber(),
+					bVisibleToEnemies = true,
+					flExpireTime = nil,
+					bReplaceExisting = false
+					}
+				ProjectileManager:CreateTrackingProjectile(info)
+				ParticleManager:DestroyParticle(self.particle, false)
 			end
 		end
 	else
-		local current_time = GameRules:GetGameTime()
-		self:UpdateHorizontalMotion(thinker, current_time - self.time)
-		self.time = current_time
-	end
-end
 
-function arc_warden_spark_wraith_thinker:OnHorizontalMotionInterrupted()
-	if IsServer() then
-		self:Destroy()
 	end
-end
-
-function arc_warden_spark_wraith_thinker:UpdateHorizontalMotion(thinker, time)
-	if IsServer() then
-		local thinker_pos = thinker:GetAbsOrigin()
-		local target_pos = self.target:GetAbsOrigin()
-		local bounds_radius = 24
-		local direction = (target_pos - thinker_pos):Normalized()
-		local next_pos = GetGroundPosition(thinker_pos + direction * self.speed * time, thinker)
-		thinker:SetAbsOrigin(next_pos)
-		ParticleManager:SetParticleControl(self.particle, 3, (next_pos + Vector(0, 0, 150)))
-		if (next_pos - target_pos):Length2D() < bounds_radius then
-			self:Damage()
-		end
-	end
-end
-
-function arc_warden_spark_wraith_thinker:Damage()
-	local caster = self:GetCaster()
-	local ability = self:GetAbility()
-	ApplyDamage({ victim = self.target, attacker = caster, damage = self.damage, damage_type = self.damage_type, ["ability"] = ability})
-	local damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_base_attack_sparkles.vpcf", PATTACH_ROOTBONE_FOLLOW, self.target)
-	ParticleManager:ReleaseParticleIndex(damage_particle)
-	AddFOWViewer(caster:GetTeamNumber(), self.target:GetAbsOrigin(), self.vision_radius, 3.34, true)
-	self:Destroy()
 end
 
 function arc_warden_spark_wraith_thinker:OnDestroy()
@@ -99,6 +102,9 @@ function arc_warden_spark_wraith_thinker:OnDestroy()
 	end
 end
 
-function arc_warden_spark_wraith_thinker:CheckState() 
-	return {[MODIFIER_STATE_PROVIDES_VISION] = true}
+function arc_warden_spark_wraith_thinker:CheckState()
+	if self.duration then
+		return {[MODIFIER_STATE_PROVIDES_VISION] = true}
+	end
+	return nil
 end

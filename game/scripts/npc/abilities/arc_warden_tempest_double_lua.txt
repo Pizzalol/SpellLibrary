@@ -4,7 +4,7 @@
 		"ScriptFile"					 "heroes/hero_arc_warden/arc_warden_tempest_double_lua.lua"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"DisplayAdditionalHeroes"	"1"
+		
 		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"65 60 55"
 
