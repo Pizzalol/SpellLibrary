@@ -27,8 +27,6 @@ Guidelines
 
 - Dont bother with Cast Animation, Aghs Upgrades or completely dota-hardcoded interactions
 
-- Keep it as much datadriven as possible (for example don't lua FindUnitsInRadius if you only need to do aoe damage, use ActOnTargets Damage instead)
-
 - Use default particles and sounds
 
 - If you find an ability that seems hard or impossible to rewrite, ask and document your attempts, others will help you
