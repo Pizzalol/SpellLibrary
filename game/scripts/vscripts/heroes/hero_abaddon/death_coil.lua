@@ -49,7 +49,7 @@ function DeathCoil( event )
 	end
 
 	-- Self Damage
-	ApplyDamage({ victim = caster, attacker = caster, damage = self_damage,	damage_type = DAMAGE_TYPE_MAGICAL })
+	ApplyDamage({ victim = caster, attacker = caster, damage = self_damage,	damage_type = DAMAGE_TYPE_PURE })
 
 	-- Create the projectile
 	local info = {
