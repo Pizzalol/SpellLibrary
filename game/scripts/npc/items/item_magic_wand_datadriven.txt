@@ -87,7 +87,7 @@
 				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
 			}
 		}
-		modifier_item_magic_wand_datadriven_aura_emitter"
+		"modifier_item_magic_wand_datadriven_aura_emitter"
 		{
 			"Passive"				"1"
 			"IsHidden"				"1"

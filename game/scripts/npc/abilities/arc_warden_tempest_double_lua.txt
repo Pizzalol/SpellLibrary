@@ -1,0 +1,33 @@
+"arc_warden_tempest_double"
+		{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					 "heroes/hero_arc_warden/arc_warden_tempest_double_lua.lua"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"65 60 55"
+
+		"AbilitySpecial"
+			{
+			"01"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"duration"	"20"
+				}
+			"02"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"health_cost"	"30 15 0"
+				}
+			"03"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"mana_cost"	"30 15 0"
+				}
+			}
+		"precache"
+			{
+			"particle" "particles/status_fx/status_effect_ancestral_spirit.vpcf"
+			}
+		}

@@ -1,3 +1,6 @@
+// Author: Ragnar Homsar
+// Date: July 13, 2015
+
 "bristleback_viscous_nasal_goo_datadriven"
 {
 	// General
@@ -40,17 +43,17 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"armor_per_stack"		"1 1 2 2"
+			"armor_per_stack"		"-1 -1.4 -1.8 -2.2" // These were originally positive, but that kind of made doing the slow through keyvalue a pain. Therefore, I've changed them to be negative.
 		}
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"base_move_slow"		"20"
+			"base_move_slow"		"-20"				// See above.
 		}
 		"05"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"move_slow_per_stack"	"3 6 9 12"
+			"move_slow_per_stack"	"-3 -6 -9 -12"		// Also see above.
 		}
 		"06"
 		{
@@ -60,8 +63,139 @@
 		"07"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"goo_duration_creep"			"10.0"
+			"goo_duration_creep"	"10.0"
+		}
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_goo.vpcf"
+		"particle"	"particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_goo_debuff.vpcf"
+		"particle"	"particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_stack.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_bristleback.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Bristleback.ViscousGoo.Cast"
+			"Target"			"CASTER"
+		}
+
+		"TrackingProjectile"
+		{
+			"Target"			"TARGET"
+			"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_goo.vpcf"
+			"Dodgeable"			"1"
+			"ProvidesVision"	"0"
+			"MoveSpeed"			"1000"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_Bristleback.ViscousGoo.Target"
+			"Target"			"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"Target"		"TARGET"
+			"ModifierName"	"modifier_viscous_nasal_goo_datadriven_determiner"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_viscous_nasal_goo_datadriven_base_creep"
+		{
+			"IsHidden"			"1"
+			"Duration"			"%goo_duration_creep"
+
+			"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_goo_debuff.vpcf"
+			"EffectAttachType"	"attach_hitloc"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%base_move_slow"
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/viscous_nasal_goo.lua"
+					"Function"		"destroy_particles"
+				}
+			}
+		}
+
+		"modifier_viscous_nasal_goo_datadriven_base_hero"
+		{
+			"IsHidden"		"1"
+			"Duration"		"%goo_duration"
+
+			"EffectName"	"particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_goo_debuff.vpcf"
+			"EffectAttachType"	"attach_hitloc"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%base_move_slow"
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFIle"	"scripts/vscripts/heroes/hero_bristleback/viscous_nasal_goo.lua"
+					"Function"		"destroy_particles"
+				}
+			}
+		}
+
+		"modifier_viscous_nasal_goo_datadriven_stack_creep"
+		{
+			"IsDebuff"	"1"
+			"Duration"			"%goo_duration_creep"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_per_stack"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_slow_per_stack"
+			}
+		}
+
+		"modifier_viscous_nasal_goo_datadriven_stack_hero"
+		{
+			"IsDebuff"	"1"
+			"Duration"		"%goo_duration"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_per_stack"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_slow_per_stack"
+			}
+		}
+
+		"modifier_viscous_nasal_goo_datadriven_determiner"
+		{
+			"IsHidden"	"1"
+			"Duration"	"0.01"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"				"scripts/vscripts/heroes/hero_bristleback/viscous_nasal_goo.lua"
+					"Function"					"determine_debuff"
+					"debuff_duration"			"%goo_duration"
+					"debuff_duration_creep"		"%goo_duration_creep"
+					"max_stacks"				"%stack_limit"
+				}
+			}
 		}
 	}
 }
-

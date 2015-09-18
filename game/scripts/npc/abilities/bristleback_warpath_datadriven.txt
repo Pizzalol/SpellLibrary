@@ -1,49 +1,107 @@
-"bristleback_warpath_datadriven"
-{
-	// General
-	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
-	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+// Author: Ragnar Homsar
+// Date: July 14, 2015
+// NOTE: Warpath is currently missing its particle effects and run/idle animations.
 
-	// Casting
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityDuration"				"10.0 10.0 10.0"
-			
-	// Special
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilitySpecial"
+"bristleback_warpath_datadriven"
 	{
-		"01"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"bristleback_warpath"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDuration"				"10.0 10.0 10.0"
+				
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"var_type"						"FIELD_INTEGER"
-			"base_damage"						"20 25 30"
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"base_damage"						"20 25 30"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_per_stack"					"20 25 30"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"base_move_speed"					"3 4 5"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"move_speed_per_stack"				"3 4 5"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stack_duration"				"14.0"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_stacks"					"5 6 7"
+			}
 		}
-		"02"
+
+		"precache"
 		{
-			"var_type"						"FIELD_INTEGER"
-			"damage_per_stack"					"20 25 30"
+			"particle"	"particles/units/heroes/hero_bristleback/bristleback_warpath.vpcf"
+			"particle"	"particles/units/heroes/hero_bristleback/bristleback_warpath_dust.vpcf"
 		}
-		"03"
+
+		"Modifiers"
 		{
-			"var_type"						"FIELD_INTEGER"
-			"base_move_speed"					"3 4 5"
-		}
-		"04"
-		{
-			"var_type"						"FIELD_INTEGER"
-			"move_speed_per_stack"				"3 4 5"
-		}
-		"05"
-		{
-			"var_type"						"FIELD_FLOAT"
-			"stack_duration"				"14.0"
-		}
-		"06"
-		{
-			"var_type"						"FIELD_INTEGER"
-			"max_stacks"					"5 6 7"
+			"modifier_warpath_datadriven_factory"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/warpath.lua"
+						"Function"		"ability_executed"
+						"max_stacks"	"%max_stacks"
+						"duration"		"%stack_duration"
+					}
+				}
+			}
+
+			"modifier_warpath_datadriven_counter"
+			{
+				"IsBuff"		"1"
+				"Duration"		"%stack_duration"
+			}
+
+			"modifier_warpath_datadriven_stack"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%stack_duration"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_per_stack"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_per_stack"
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/warpath.lua"
+						"Function"		"stack_destroyed"
+					}
+				}
+			}
 		}
 	}
-}
-
