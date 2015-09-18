@@ -1,141 +1,194 @@
-hookTable = hookTable or {}
+-- Fix projectile offset to take into consideration the direction
+-- Fix motion controller
+-- Fix particles
+-- FIX HOOK
 
---[[Author: Pizzalol
-	Date: 02.01.2015.
-	Changed: 10.01.2015.
-	Upon hitting a unit it gives vision and checks if its a friendly unit or an enemy one and then pulls it back]]
-	--[[Changelog
-		10.01.2015.
-		Fixed ability damage type to not be static]]
-function RetractMeatHook( keys )
-	-- Spell
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local damage = ability:GetAbilityDamage() 
-	local hookSpeed = ability:GetLevelSpecialValueFor("hook_speed", (ability:GetLevel() - 1)) * 0.03
-	local casterLocation = caster:GetAbsOrigin()
-	local targetLocation = target:GetAbsOrigin() 
-	local distance = (targetLocation - casterLocation):Length2D()
-	local direction = (casterLocation - targetLocation):Normalized()
 
-	-- Modifier
-	local meat_hook_modifier = keys.meat_hook_modifier
+function LaunchMeatHook( keys )
+	local hCaster = keys.caster
+	local hAbility = keys.ability
+	local vTarget_point = keys.target_points[1]
+	local vCaster_location = hCaster:GetAbsOrigin() 
+	local vDirection = (vTarget_point - vCaster_location):Normalized()
+	local nAbility_level = hAbility:GetLevel() - 1
 
-	-- Sound
-	local sound_extend = keys.sound_extend
-	local sound_retract = keys.sound_retract
-	local sound_retract_stop = keys.sound_retract_stop
-	StopSoundEvent(sound_extend, caster)
+	hAbility.hook_damage = hAbility:GetLevelSpecialValueFor("hook_damage", nAbility_level)
+	hAbility.hook_speed = hAbility:GetLevelSpecialValueFor("hook_speed", nAbility_level)
+	hAbility.hook_width = hAbility:GetLevelSpecialValueFor("hook_width", nAbility_level)
+	hAbility.hook_distance = hAbility:GetLevelSpecialValueFor("hook_distance", nAbility_level)
 
-	-- Vision
-	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", (ability:GetLevel() - 1))
-	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", (ability:GetLevel() - 1))
-	ability:CreateVisibilityNode(targetLocation, vision_radius, vision_duration) 
+	hAbility.vision_radius = hAbility:GetLevelSpecialValueFor("vision_radius", nAbility_level)
+	hAbility.vision_duration = hAbility:GetLevelSpecialValueFor("vision_duration", nAbility_level)
 
-	-- Damage
-	if target:GetTeam() ~= caster:GetTeam() then
-		local damageTable = {}
-		damageTable.attacker = caster
-		damageTable.victim = target
-		damageTable.damage_type = ability:GetAbilityDamageType()
-		damageTable.ability = ability
-		damageTable.damage = damage
+	hAbility.vHookOffset = Vector(0,0,96)
+	hAbility.vStartPosition = (vCaster_location + hAbility.hook_width) * vDirection
+	vDirection.z = 0 -- Didnt do some calculations for direction
+	hAbility.vTargetPosition = vDirection * hAbility.hook_distance
 
-		ApplyDamage(damageTable)
+	-- ??
+	local vHookTarget = hAbility.vTargetPosition --+ hAbility.vHookOffset
+	local vKillswitch = Vector( ( ( hAbility.hook_distance / hAbility.hook_speed ) * 2 ), 0, 0 )
+
+	if hCaster and hCaster:IsHero() then
+		local hHook = hCaster:GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
+		if hHook ~= nil then
+			hHook:AddEffects( EF_NODRAW )
+		end
 	end
 
-	-- Make the target face the caster
-	target:SetForwardVector(direction)
+	hAbility.nChainParticleFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook.vpcf", PATTACH_CUSTOMORIGIN, hAbility:GetCaster() )
+	ParticleManager:SetParticleAlwaysSimulate( hAbility.nChainParticleFXIndex )
+	ParticleManager:SetParticleControlEnt( hAbility.nChainParticleFXIndex, 0, hCaster, PATTACH_POINT_FOLLOW, "attach_hitloc", vCaster_location + hAbility.vHookOffset, true )
+	ParticleManager:SetParticleControl( hAbility.nChainParticleFXIndex, 1, vHookTarget )
+	ParticleManager:SetParticleControl( hAbility.nChainParticleFXIndex, 2, Vector( hAbility.hook_speed, hAbility.hook_distance, hAbility.hook_width ) )
+	ParticleManager:SetParticleControl( hAbility.nChainParticleFXIndex, 3, vKillswitch )
+	ParticleManager:SetParticleControl( hAbility.nChainParticleFXIndex, 4, Vector( 1, 0, 0 ) )
+	ParticleManager:SetParticleControl( hAbility.nChainParticleFXIndex, 5, Vector( 0, 0, 0 ) )
+	ParticleManager:SetParticleControlEnt( hAbility.nChainParticleFXIndex, 7, hCaster, PATTACH_CUSTOMORIGIN, nil, vCaster_location, true )
 
-	-- For retracting the hook
-	hookTable[caster].bHitUnit = true
-	
-	-- Moving the target
-	Timers:CreateTimer(0, function()
-		targetLocation = casterLocation + (targetLocation - casterLocation):Normalized() * (distance - hookSpeed)
-		target:SetAbsOrigin(targetLocation)
+	--print("Caster location: " .. tostring(vCaster_location))
+	--print("Target point: " .. tostring(vTarget_point))
+	--print("Target position: " .. tostring(hAbility.vTargetPosition))
+	--print("Direction: " .. tostring(vDirection))
+	--print("Spawn origin: " .. tostring((vCaster_location + hAbility.hook_width) * vDirection))
 
-		distance = (targetLocation - casterLocation):Length2D()
+	local info = 
+	{
+		EffectName = "particles/units/heroes/hero_vengeful/vengeful_wave_of_terror.vpcf",
+		Ability = hAbility,
+		vSpawnOrigin = vCaster_location + hAbility.hook_width * vDirection,
+		vVelocity = vDirection * hAbility.hook_speed,
+		fDistance = hAbility.hook_distance,
+		fStartRadius = hAbility.hook_width ,
+		fEndRadius = hAbility.hook_width ,
+		Source = hCaster,
+		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_BOTH,
+		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+	}
 
-		if distance > 100 then
-			return 0.03
-		else
-			-- Finished dragging the target
-			FindClearSpaceForUnit(target, targetLocation, false)
-			target:RemoveModifierByName(meat_hook_modifier)
-			StopSoundEvent(sound_retract, caster)
-			EmitSoundOn(sound_retract_stop, caster)
+	ProjectileManager:CreateLinearProjectile( info )
 
-			-- This is to fix a visual bug when the target is very close to the caster
-			Timers:CreateTimer(0.03, function() hookTable[caster].bHitUnit = false end)
-		end
-
-		end)
+	hAbility.bRetracting = false
+	hAbility.hVictim = nil
+	hAbility.bDiedInHook = false
 end
 
---[[Author: Pizzalol
-	Date: 03.01.2015.
-	Creates a dummy that moves along the hook path until it hits a unit or reaches the maximum distance
-	then it retracts back to the launch position]]
-function LaunchMeatHook( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local casterLocation = caster:GetAbsOrigin()
-	local dummyLocation = casterLocation
-	local dummy = CreateUnitByName("npc_dummy_blank", dummyLocation, false, caster, caster, caster:GetTeam())
+function MeatHookHit( keys )
+	local hCaster = keys.caster
+	local hTarget = keys.target
+	local hAbility = keys.ability
 
-	-- KV variables
-	local targetPoint = keys.target_points[1]
-	local hookSpeed = ability:GetLevelSpecialValueFor("hook_speed", (ability:GetLevel() - 1)) * 0.03
-	local dummy_modifier = keys.dummy_modifier	
-	local hook_particle = keys.hook_particle
-	local sound_extend = keys.sound_extend
 
-	local travel_distance = ability:GetLevelSpecialValueFor("hook_distance", (ability:GetLevel() - 1))
-	local distance_traveled = 0
+	if hAbility.bRetracting == false then
+		local bTargetPulled = false
 
-	-- Hook particle
-	local particle = ParticleManager:CreateParticle(hook_particle, PATTACH_RENDERORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControlEnt(particle, 0, caster, 5, "attach_attack1", casterLocation, false)
-	ParticleManager:SetParticleControlEnt(particle, 6, dummy, 5, "attach_hitloc", dummyLocation, false)
+		if hTarget then
+			if hTarget:GetTeamNumber() ~= hCaster:GetTeamNumber() then
+				local hDamage_table = {}
 
-	-- Setting up the hook dummy
-	dummy:AddNewModifier(caster, nil, "modifier_phased", {})
-	ability:ApplyDataDrivenModifier(caster, dummy, dummy_modifier, {})
-	dummyLocation = dummyLocation + Vector(0,0,125) 
+				hDamage_table.attacker = hCaster
+				hDamage_table.victim = hTarget
+				hDamage_table.ability = hAbility
+				hDamage_table.damage_type = hAbility:GetAbilityDamageType()
+				hDamage_table.damage = hAbility.hook_damage
 
-	local direction = (targetPoint - casterLocation):Normalized()
-	dummy:SetForwardVector(direction)	
-
-	-- Setting up the extend/retract decision
-	hookTable[caster] = hookTable[caster] or {}
-	hookTable[caster].bHitUnit = false
-
-	-- Extending the hook dummy
-	Timers:CreateTimer(0.03, function()
-		dummyLocation = dummyLocation + direction * hookSpeed
-		dummy:SetAbsOrigin(dummyLocation)
-		distance_traveled = distance_traveled + hookSpeed
-
-		if distance_traveled < travel_distance and not hookTable[caster].bHitUnit then
-			return 0.03
-		else
-			-- Retract the hook dummy
-			Timers:CreateTimer(0,function()
-				distance_traveled = distance_traveled - hookSpeed
-				dummyLocation = casterLocation + Vector(0,0,125) + direction * distance_traveled
-				dummy:SetAbsOrigin(dummyLocation)
-
-				if distance_traveled > 100 then
-					return 0.03
-				else
-					StopSoundEvent(sound_extend, caster)
-					ParticleManager:DestroyParticle(particle, true)
-					dummy:RemoveSelf()
-
+				if not hTarget:IsAlive() then
+					hAbility.bDiedInHook = true
 				end
-			end)
+
+				if not hTarget:IsMagicImmune() then
+					hTarget:Interrupt()
+				end
+		
+				local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf", PATTACH_CUSTOMORIGIN, hTarget )
+				ParticleManager:SetParticleControlEnt( nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", hCaster:GetOrigin(), true )
+				ParticleManager:ReleaseParticleIndex( nFXIndex )
+			end
+
+			AddFOWViewer( hCaster:GetTeamNumber(), hTarget:GetOrigin(), hAbility.vision_radius, hAbility.vision_duration, false )
+			hAbility.hVictim = hTarget
+			bTargetPulled = true
 		end
-	end)
+
+		local vHookPos = hAbility.vTargetPosition
+		local flPad = hCaster:GetPaddedCollisionRadius()
+		if hTarget ~= nil then
+			vHookPos = hTarget:GetOrigin()
+			flPad = flPad + hTarget:GetPaddedCollisionRadius()
+		end
+
+		--Missing: Setting target facing angle
+		local vVelocity = hAbility.vStartPosition - vHookPos
+		vVelocity.z = 0.0
+
+		local flDistance = vVelocity:Length2D() - flPad
+		vVelocity = vVelocity:Normalized() * hAbility.hook_speed
+
+		local info = 
+		{
+			Ability = hAbility,
+			vSpawnOrigin = vHookPos,
+			vVelocity = vVelocity,
+			fDistance = flDistance,
+			Source = hCaster,
+		}
+
+		ProjectileManager:CreateLinearProjectile( info )
+		hAbility.vProjectileLocation = vHookPos
+
+		if hTarget ~= nil and ( not hTarget:IsInvisible() ) and bTargetPulled then
+			ParticleManager:SetParticleControlEnt( hAbility.nChainParticleFXIndex, 1, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", hTarget:GetOrigin() + hAbility.vHookOffset, true )
+			ParticleManager:SetParticleControl( hAbility.nChainParticleFXIndex, 4, Vector( 0, 0, 0 ) )
+			ParticleManager:SetParticleControl( hAbility.nChainParticleFXIndex, 5, Vector( 1, 0, 0 ) )
+		else
+			ParticleManager:SetParticleControlEnt( hAbility.nChainParticleFXIndex, 1, hCaster, PATTACH_POINT_FOLLOW, "attach_weapon_chain_rt", hCaster:GetOrigin() + hAbility.vHookOffset, true);
+		end
+
+		EmitSoundOn( "Hero_Pudge.AttackHookRetract", hTarget )
+
+		hAbility.bRetracting = true
+	else
+		if hCaster and hCaster:IsHero() then
+			local hHook = hCaster:GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
+			if hHook ~= nil then
+				hHook:RemoveEffects( EF_NODRAW )
+			end
+		end
+
+		if hAbility.hVictim ~= nil then
+			local vFinalHookPos = vLocation
+			hAbility.hVictim:InterruptMotionControllers( true )
+			hAbility.hVictim:RemoveModifierByName( "modifier_pudge_meat_hook_lua" )
+
+			local vVictimPosCheck = hAbility.hVictim:GetOrigin() - vFinalHookPos 
+			local flPad = hCaster:GetPaddedCollisionRadius() + hAbility.hVictim:GetPaddedCollisionRadius()
+			if vVictimPosCheck:Length2D() > flPad then
+				FindClearSpaceForUnit( hAbility.hVictim, hAbility.vStartPosition, false )
+			end
+		end
+
+		hAbility.hVictim = nil
+		ParticleManager:DestroyParticle( hAbility.nChainParticleFXIndex, true )
+		EmitSoundOn( "Hero_Pudge.AttackHookRetractStop", hCaster )
+	end
+end
+
+-- do direction *-1 and hook speed * server tick instead of projectile location
+
+function HookMotionControl( keys )
+	local hCaster = keys.caster
+	local hTarget = keys.target
+	local hAbility = keys.ability
+
+	if hAbility.hVictim then
+		hAbility.hVictim:SetOrigin( hAbility.vProjectileLocation )
+		local vToCaster = hAbility.vStartPosition - hCaster:GetOrigin()
+		local flDist = vToCaster:Length2D()
+		if hAbility.bChainAttached == false and flDist > 128.0 then 
+			hAbility.bChainAttached = true  
+			ParticleManager:SetParticleControlEnt( hAbility.nChainParticleFXIndex, 0, hCaster, PATTACH_CUSTOMORIGIN, "attach_hitloc", hCaster:GetOrigin(), true )
+			ParticleManager:SetParticleControl( hAbility.nChainParticleFXIndex, 0, hAbility.vStartPosition + hAbility.vHookOffset )
+		end                   
+	end
 end

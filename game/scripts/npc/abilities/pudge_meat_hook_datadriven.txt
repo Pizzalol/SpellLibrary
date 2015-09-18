@@ -19,6 +19,7 @@
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
 		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
 		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf"
+		"particle"			"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
 	}
 	
 	// Casting
@@ -29,10 +30,6 @@
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCooldown"				"14.0 13.0 12.0 11.0"
-
-	// Damage.
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityDamage"					"90 180 270 360"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
@@ -72,6 +69,11 @@
 			"var_type"			"FIELD_FLOAT"
 			"caster_duration"	"0.3 0.37 0.46 0.53"
 		}
+		"07"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"hook_damage"		"90 180 270 360"
+		}
 	}
 
 	"OnSpellStart"
@@ -82,31 +84,9 @@
 			"Target"		"CASTER"
 		}
 
-		"LinearProjectile"
-		{
-			"Target"      	"POINT"
-		    "EffectName"  	""
-		    "MoveSpeed"   	"%hook_speed"
-		    "StartRadius"   "%hook_width"
-		    "StartPosition" "attach_origin"
-		    "EndRadius"     "%hook_width"
-		    "FixedDistance" "%hook_distance"
-		    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-		    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
-		    "HasFrontalCone"    "0"
-		    "ProvidesVision" "0"
-		}
-
 		"ApplyModifier"
 		{
 			"ModifierName"	"modifier_meat_hook_caster_datadriven"
-			"Target"		"CASTER"
-		}
-
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_meat_hook_phased_datadriven"
 			"Target"		"CASTER"
 		}
 
@@ -133,48 +113,47 @@
 			"Target"		"TARGET"
 		}
 
-		"FireSound"
-		{
-			"EffectName"	"Hero_Pudge.AttackHookImpact"
-			"Target"		"TARGET"
-		}
+		//"FireSound"
+		//{
+		//	"EffectName"	"Hero_Pudge.AttackHookImpact"
+		//	"Target"		"TARGET"
+		//}
 
-		"FireSound"
-		{
-			"EffectName"	"Hero_Pudge.AttackHookRetract"
-			"Target"		"CASTER"
-		}
+		//"FireSound"
+		//{
+		//	"EffectName"	"Hero_Pudge.AttackHookRetract"
+		//	"Target"		"CASTER"
+		//}
 		
 		"RunScript"
 		{
 			"ScriptFile"			"scripts/vscripts/heroes/hero_pudge/meat_hook.lua"
-			"Function"				"RetractMeatHook"
+			"Function"				"MeatHookHit"
 			"meat_hook_modifier"	"modifier_meat_hook_target_datadriven"
 			"sound_extend"			"Hero_Pudge.AttackHookExtend"
 			"sound_retract"			"Hero_Pudge.AttackHookRetract"
 			"sound_retract_stop"	"Hero_Pudge.AttackHookRetractStop"
 		}
 
-		"ApplyModifier"
+		//"ApplyModifier"
+		//{
+		//	"ModifierName"	"modifier_meat_hook_target_datadriven"
+		//	"Target"		"TARGET"
+		//}
+
+		"ApplyMotionController"
+		// For this: gfycat.com/BraveHideousGiantschnauzer -> check: bit.ly/1KWulqA
 		{
-			"ModifierName"	"modifier_meat_hook_target_datadriven"
-			"Target"		"TARGET"
+			"Caster" 		"CASTER"
+		    "Target" 		"TARGET"
+		    "ScriptFile"    "heroes/hero_pudge/meat_hook.lua"
+		    "HorizontalControlFunction" "HookMotionControl"       
 		}
 	}
 
 
 	"Modifiers"
 	{
-		"modifier_meat_hook_phased_datadriven"
-		{
-			"IsHidden"	"1"	
-			"Duration"	"0.1"
-			"States"
-			{
-				"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-
 		"modifier_meat_hook_caster_datadriven"
 		{
 			"IsHidden"	"1"

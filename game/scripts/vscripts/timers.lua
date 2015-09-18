@@ -1,3 +1,5 @@
+TIMERS_VERSION = "1.01"
+
 --[[
 
   -- A timer running every second that starts immediately on the next frame, respects pauses
@@ -188,7 +190,9 @@ function Timers:CreateTimer(name, args)
     args.endTime = now + args.endTime
   end
 
-  Timers.timers[name] = args
+  Timers.timers[name] = args 
+
+  return name
 end
 
 function Timers:RemoveTimer(name)
@@ -209,4 +213,5 @@ function Timers:RemoveTimers(killAll)
   Timers.timers = timers
 end
 
-Timers:start()
+
+if not Timers.timers then Timers:start() end

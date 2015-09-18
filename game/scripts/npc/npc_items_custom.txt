@@ -1,9 +1,5 @@
-//Generated using Dota Custom File Generator by cris9696
 "DOTAAbilities"
 {
-
-
-	//Start of file item_abyssal_blade_datadriven.txt
 	// Rewrite of Abyssal Blade
 	// Author: Rook
 	// Date: February 1, 2015
@@ -184,10 +180,6 @@
 			}
 		}
 	}
-	//End of file item_abyssal_blade_datadriven.txt
-
-
-	//Start of file item_ancient_janggo_datadriven.txt
 	// Rewrite of Drum of Endurance
 	// Author: Rook
 	// Date: February 4, 2015
@@ -339,10 +331,6 @@
 			}
 		}
 	}
-	//End of file item_ancient_janggo_datadriven.txt
-
-
-	//Start of file item_arcane_boots_datadriven.txt
 	// Rewrite of Arcane Boots
 	// Author: Rook
 	// Date: February 4, 2015
@@ -425,10 +413,6 @@
 			}
 		}
 	}
-	//End of file item_arcane_boots_datadriven.txt
-
-
-	//Start of file item_armlet_datadriven.txt
 	// Rewrite of Armlet of Mordiggian
 	// Author: Rook
 	// Date: February 3, 2015
@@ -740,10 +724,6 @@
 			}
 		}
 	}
-	//End of file item_armlet_datadriven.txt
-
-
-	//Start of file item_assault_datadriven.txt
 	// Rewrite of Assault Cuirass
 	// Author: Rook
 	// Date: January 28, 2015
@@ -902,10 +882,6 @@
 			}
 		}
 	}
-	//End of file item_assault_datadriven.txt
-
-
-	//Start of file item_basher_datadriven.txt
 	// Rewrite of Skull Basher
 	// Author: Rook
 	// Date: February 1, 2015
@@ -1046,10 +1022,6 @@
 			}
 		}
 	}
-	//End of file item_basher_datadriven.txt
-
-
-	//Start of file item_belt_of_strength_datadriven.txt
 	// Rewrite of Belt of Strength
 	// Author: Rook
 	// Date: January 25, 2015
@@ -1099,10 +1071,6 @@
 			}
 		}
 	}
-	//End of file item_belt_of_strength_datadriven.txt
-
-
-	//Start of file item_bfury_datadriven.txt
 	// Rewrite of Battle Fury
 	// Author: Rook
 	// Date: February 2, 2015
@@ -1238,10 +1206,6 @@
 			}
 		}
 	}
-	//End of file item_bfury_datadriven.txt
-
-
-	//Start of file item_black_king_bar_datadriven.txt
 	// Rewrite of Black King Bar
 	// Author: Rook
 	// Date: January 29, 2015
@@ -1352,10 +1316,6 @@
 			}
 		}
 	}
-	//End of file item_black_king_bar_datadriven.txt
-
-
-	//Start of file item_blades_of_attack_datadriven.txt
 	// Rewrite of Blades of Attack
 	// Author: Rook
 	// Date: January 25, 2015
@@ -1405,10 +1365,6 @@
 			}
 		}
 	}
-	//End of file item_blades_of_attack_datadriven.txt
-
-
-	//Start of file item_blade_of_alacrity_datadriven.txt
 	// Rewrite of Blade of Alacrity
 	// Author: Rook
 	// Date: January 25, 2015
@@ -1457,10 +1413,6 @@
 			}
 		}
 	}
-	//End of file item_blade_of_alacrity_datadriven.txt
-
-
-	//Start of file item_blink_datadriven.txt
 	// Rewrite of Blink Dagger
 	// Author: Rook
 	// Date: January 25, 2015
@@ -1551,10 +1503,6 @@
 			}
 		}
 	}
-	//End of file item_blink_datadriven.txt
-
-
-	//Start of file item_bloodstone_datadriven.txt
 	// Rewrite of Bloodstone
 	// Author: Rook
 	// Date: January 29, 2015
@@ -1775,10 +1723,6 @@
 			}
 		}
 	}
-	//End of file item_bloodstone_datadriven.txt
-
-
-	//Start of file item_boots_datadriven.txt
 	// Rewrite of Boots of Speed
 	// Author: Rook
 	// Date: January 25, 2015
@@ -1828,10 +1772,6 @@
 			}
 		}
 	}
-	//End of file item_boots_datadriven.txt
-
-
-	//Start of file item_boots_of_elves_datadriven.txt
 	// Rewrite of Band of Elvenskin
 	// Author: Rook
 	// Date: January 25, 2015
@@ -1881,10 +1821,6 @@
 			}
 		}
 	}
-	//End of file item_boots_of_elves_datadriven.txt
-
-
-	//Start of file item_bracer_datadriven.txt
 	// Rewrite of Bracer
 	// Author: Rook
 	// Date: January 25, 2015
@@ -1951,10 +1887,6 @@
 			}
 		}
 	}
-	//End of file item_bracer_datadriven.txt
-
-
-	//Start of file item_branches_datadriven.txt
 	// Rewrite of Iron Branch
 	// Author: Rook
 	// Date: January 25, 2015
@@ -2005,10 +1937,6 @@
 			}
 		}
 	}
-	//End of file item_branches_datadriven.txt
-
-
-	//Start of file item_broadsword_datadriven.txt
 	// Rewrite of Broadsword
 	// Author: Rook
 	// Date: January 25, 2015
@@ -2058,10 +1986,6 @@
 			}
 		}
 	}
-	//End of file item_broadsword_datadriven.txt
-
-
-	//Start of file item_buckler_datadriven.txt
 	// Rewrite of Buckler
 	// Author: Rook
 	// Date: January 26, 2015
@@ -2167,10 +2091,6 @@
 			}
 		}
 	}
-	//End of file item_buckler_datadriven.txt
-
-
-	//Start of file item_butterfly_datadriven.txt
 	// Rewrite of Butterfly
 	// Author: Rook
 	// Date: February 1, 2015
@@ -2313,10 +2233,6 @@
 			}
 		}
 	}
-	//End of file item_butterfly_datadriven.txt
-
-
-	//Start of file item_chainmail_datadriven.txt
 	// Rewrite of Chainmail
 	// Author: Rook
 	// Date: January 25, 2015
@@ -2366,10 +2282,6 @@
 			}
 		}
 	}
-	//End of file item_chainmail_datadriven.txt
-
-
-	//Start of file item_cheese_datadriven.txt
 	// Rewrite of Cheese
 	// Author: Rook
 	// Date: January 25, 2015
@@ -2430,10 +2342,6 @@
 			}
 		}
 	}
-	//End of file item_cheese_datadriven.txt
-
-
-	//Start of file item_circlet_datadriven.txt
 	// Rewrite of Circlet
 	// Author: Rook
 	// Date: January 25, 2015
@@ -2484,10 +2392,6 @@
 			}
 		}
 	}
-	//End of file item_circlet_datadriven.txt
-
-
-	//Start of file item_clarity_datadriven.txt
 	// Rewrite of Clarity
 	// Author: Rook
 	// Date: January 25, 2015
@@ -2587,10 +2491,6 @@
 			}
 		}
 	}
-	//End of file item_clarity_datadriven.txt
-
-
-	//Start of file item_claymore_datadriven.txt
 	// Rewrite of Claymore
 	// Author: Rook
 	// Date: February 4, 2015
@@ -2639,10 +2539,6 @@
 			}
 		}
 	}
-	//End of file item_claymore_datadriven.txt
-
-
-	//Start of file item_cloak_datadriven.txt
 	// Rewrite of Cloak
 	// Author: Rook
 	// Date: January 25, 2015
@@ -2692,10 +2588,6 @@
 			}
 		}
 	}
-	//End of file item_cloak_datadriven.txt
-
-
-	//Start of file item_dagon_datadriven.txt
 	// Rewrite of Dagon
 	// Author: Rook
 	// Date: January 26, 2015
@@ -3175,10 +3067,6 @@
 			}
 		}
 	}
-	//End of file item_dagon_datadriven.txt
-
-
-	//Start of file item_demon_edge_datadriven.txt
 	// Rewrite of Demon Edge
 	// Author: Rook
 	// Date: January 25, 2015
@@ -3228,10 +3116,6 @@
 			}
 		}
 	}
-	//End of file item_demon_edge_datadriven.txt
-
-
-	//Start of file item_desolator_datadriven.txt
 	// Rewrite of Desolator
 	// Author: Rook
 	// Date: February 4, 2015
@@ -3324,10 +3208,6 @@
 			}
 		}
 	}
-	//End of file item_desolator_datadriven.txt
-
-
-	//Start of file item_eagle_datadriven.txt
 	// Rewrite of Eaglesong
 	// Author: Rook
 	// Date: January 25, 2015
@@ -3377,10 +3257,6 @@
 			}
 		}
 	}
-	//End of file item_eagle_datadriven.txt
-
-
-	//Start of file item_energy_booster_datadriven.txt
 	// Rewrite of Energy Booster
 	// Author: Rook
 	// Date: January 25, 2015
@@ -3431,10 +3307,6 @@
 			}
 		}
 	}
-	//End of file item_energy_booster_datadriven.txt
-
-
-	//Start of file item_flask_datadriven.txt
 	// Rewrite of Healing Salve
 	// Author: Rook
 	// Date: January 25, 2015
@@ -3535,10 +3407,6 @@
 			}
 		}
 	}
-	//End of file item_flask_datadriven.txt
-
-
-	//Start of file item_gauntlets_datadriven.txt
 	// Rewrite of Gauntlets
 	// Author: Rook
 	// Date: January 25, 2015
@@ -3587,10 +3455,6 @@
 			}
 		}
 	}
-	//End of file item_gauntlets_datadriven.txt
-
-
-	//Start of file item_gem_datadriven.txt
 	// Rewrite of Gem of True Sight
 	// Author: Noya
 	// Date: February 7, 2015
@@ -3688,10 +3552,6 @@
 		}
 	}
 	
-	//End of file item_gem_datadriven.txt
-
-
-	//Start of file item_ghost_datadriven.txt
 	// Rewrite of Ghost Scepter
 	// Author: Rook
 	// Date: January 25, 2015
@@ -3798,10 +3658,6 @@
 			}
 		}
 	}
-	//End of file item_ghost_datadriven.txt
-
-
-	//Start of file item_gloves_datadriven.txt
 	// Rewrite of Gloves of Haste
 	// Author: Rook
 	// Date: January 25, 2015
@@ -3851,10 +3707,6 @@
 			}
 		}
 	}
-	//End of file item_gloves_datadriven.txt
-
-
-	//Start of file item_hand_of_midas_datadriven.txt
 	// Rewrite of Hand of Midas
 	// Author: Rook
 	// Date: January 25, 2015
@@ -3933,10 +3785,6 @@
 			}
 		}
 	}
-	//End of file item_hand_of_midas_datadriven.txt
-
-
-	//Start of file item_headdress_datadriven.txt
 	// Rewrite of Headdress
 	// Author: Rook
 	// Date: January 26, 2015
@@ -4017,10 +3865,6 @@
 			}
 		}
 	}
-	//End of file item_headdress_datadriven.txt
-
-
-	//Start of file item_heart_datadriven.txt
 	// Rewrite of Heart of Tarrasque
 	// Author: Rook
 	// Date: January 28, 2015
@@ -4136,10 +3980,6 @@
 			}
 		}
 	}
-	//End of file item_heart_datadriven.txt
-
-
-	//Start of file item_heavens_halberd_datadriven.txt
 	// Rewrite of Heaven's Halberd
 	// Author: Rook
 	// Date: February 5, 2015
@@ -4314,10 +4154,6 @@
 			}
 		}
 	}
-	//End of file item_heavens_halberd_datadriven.txt
-
-
-	//Start of file item_helm_of_iron_will_datadriven.txt
 	// Rewrite of Helm of Iron Will
 	// Author: Rook
 	// Date: January 25, 2015
@@ -4373,10 +4209,6 @@
 			}
 		}
 	}
-	//End of file item_helm_of_iron_will_datadriven.txt
-
-
-	//Start of file item_hood_of_defiance_datadriven.txt
 	// Rewrite of Hood of Defiance
 	// Author: Rook
 	// Date: January 30, 2015
@@ -4432,10 +4264,6 @@
 			}
 		}
 	}
-	//End of file item_hood_of_defiance_datadriven.txt
-
-
-	//Start of file item_hyperstone_datadriven.txt
 	// Rewrite of Hyperstone
 	// Author: Rook
 	// Date: January 25, 2015
@@ -4485,10 +4313,6 @@
 			}
 		}
 	}
-	//End of file item_hyperstone_datadriven.txt
-
-
-	//Start of file item_invis_sword_datadriven.txt
 	// Rewrite of Shadow Blade
 	// Author: Rook
 	// Date: February 3, 2015
@@ -4634,10 +4458,6 @@
 			}
 		}
 	}
-	//End of file item_invis_sword_datadriven.txt
-
-
-	//Start of file item_javelin_datadriven.txt
 	// Rewrite of Javelin
 	// Author: Rook
 	// Date: January 25, 2015
@@ -4713,10 +4533,6 @@
 			}
 		}
 	}
-	//End of file item_javelin_datadriven.txt
-
-
-	//Start of file item_lifesteal_datadriven.txt
 	// Rewrite of Morbid Mask
 	// Author: Rook
 	// Date: January 25, 2015
@@ -4789,10 +4605,6 @@
 			}
 		}
 	}
-	//End of file item_lifesteal_datadriven.txt
-
-
-	//Start of file item_magic_stick_datadriven.txt
 	// Rewrite of Magic Stick
 	// Author: Rook
 	// Date: January 25, 2015
@@ -4893,10 +4705,6 @@
 			}
 		}
 	}
-	//End of file item_magic_stick_datadriven.txt
-
-
-	//Start of file item_magic_wand_datadriven.txt
 	// Rewrite of Magic Wand
 	// Author: Rook
 	// Date: January 25, 2015
@@ -5016,10 +4824,6 @@
 			}
 		}
 	}
-	//End of file item_magic_wand_datadriven.txt
-
-
-	//Start of file item_manta_datadriven.txt
 	// Rewrite of Manta Style
 	// Author: Rook
 	// Date: February 2, 2015
@@ -5217,10 +5021,6 @@
 			}
 		}
 	}
-	//End of file item_manta_datadriven.txt
-
-
-	//Start of file item_mantle_datadriven.txt
 	// Rewrite of Mantle of Intelligence
 	// Author: Rook
 	// Date: January 25, 2015
@@ -5269,10 +5069,6 @@
 			}
 		}
 	}
-	//End of file item_mantle_datadriven.txt
-
-
-	//Start of file item_mask_of_madness_datadriven.txt
 	// Rewrite of Mask of Madness
 	// Author: Rook
 	// Date: February 4, 2015
@@ -5400,10 +5196,6 @@
 			}
 		}
 	}
-	//End of file item_mask_of_madness_datadriven.txt
-
-
-	//Start of file item_medallion_of_courage_datadriven.txt
 	// Rewrite of Medallion of Courage
 	// Author: Rook
 	// Date: February 4, 2015
@@ -5528,10 +5320,6 @@
 			}
 		}
 	}
-	//End of file item_medallion_of_courage_datadriven.txt
-
-
-	//Start of file item_mekansm_datadriven.txt
 	// Rewrite of Mekansm
 	// Author: Rook
 	// Date: January 26, 2015
@@ -5684,10 +5472,6 @@
 			}
 		}
 	}
-	//End of file item_mekansm_datadriven.txt
-
-
-	//Start of file item_mithril_hammer_datadriven.txt
 	// Rewrite of Mithril Hammer
 	// Author: Rook
 	// Date: January 25, 2015
@@ -5736,10 +5520,6 @@
 			}
 		}
 	}
-	//End of file item_mithril_hammer_datadriven.txt
-
-
-	//Start of file item_monkey_king_bar_datadriven.txt
 	// Rewrite of Monkey King Bar
 	// Author: Rook
 	// Date: January 30, 2015
@@ -5863,10 +5643,6 @@
 			}
 		}
 	}
-	//End of file item_monkey_king_bar_datadriven.txt
-
-
-	//Start of file item_mystic_staff_datadriven.txt
 	// Rewrite of Mystic Staff
 	// Author: Rook
 	// Date: January 25, 2015
@@ -5916,10 +5692,6 @@
 			}
 		}
 	}
-	//End of file item_mystic_staff_datadriven.txt
-
-
-	//Start of file item_null_talisman_datadriven.txt
 	// Rewrite of Null Talisman
 	// Author: Rook
 	// Date: January 25, 2015
@@ -5986,10 +5758,6 @@
 			}
 		}
 	}
-	//End of file item_null_talisman_datadriven.txt
-
-
-	//Start of file item_oblivion_staff_datadriven.txt
 	// Rewrite of Oblivion Staff
 	// Author: Rook
 	// Date: January 25, 2015
@@ -6056,10 +5824,6 @@
 			}
 		}
 	}
-	//End of file item_oblivion_staff_datadriven.txt
-
-
-	//Start of file item_ogre_axe_datadriven.txt
 	// Rewrite of Ogre Club
 	// Author: Rook
 	// Date: January 25, 2015
@@ -6108,10 +5872,6 @@
 			}
 		}
 	}
-	//End of file item_ogre_axe_datadriven.txt
-
-
-	//Start of file item_orb_of_venom_datadriven.txt
 	// Rewrite of Orb of Venom
 	// Author: Rook
 	// Date: February 4, 2015
@@ -6254,10 +6014,6 @@
 			}
 		}
 	}
-	//End of file item_orb_of_venom_datadriven.txt
-
-
-	//Start of file item_pers_datadriven.txt
 	// Rewrite of Perseverance
 	// Author: Rook
 	// Date: January 25, 2015
@@ -6320,10 +6076,6 @@
 			}
 		}
 	}
-	//End of file item_pers_datadriven.txt
-
-
-	//Start of file item_phase_boots_datadriven.txt
 	// Rewrite of Phase Boots
 	// Author: Rook
 	// Date: January 25, 2015
@@ -6438,10 +6190,6 @@
 			}
 		}
 	}
-	//End of file item_phase_boots_datadriven.txt
-
-
-	//Start of file item_platemail_datadriven.txt
 	// Rewrite of Platemail
 	// Author: Rook
 	// Date: January 25, 2015
@@ -6490,10 +6238,6 @@
 			}
 		}
 	}
-	//End of file item_platemail_datadriven.txt
-
-
-	//Start of file item_point_booster_datadriven.txt
 	// Rewrite of Point Booster
 	// Author: Rook
 	// Date: January 25, 2015
@@ -6549,10 +6293,6 @@
 			}
 		}
 	}
-	//End of file item_point_booster_datadriven.txt
-
-
-	//Start of file item_power_treads_datadriven.txt
 	// Rewrite of Power Treads
 	// Author: Rook
 	// Date: January 25, 2015
@@ -6773,10 +6513,6 @@
 			}
 		}
 	}
-	//End of file item_power_treads_datadriven.txt
-
-
-	//Start of file item_quarterstaff_datadriven.txt
 	// Rewrite of Quarterstaff
 	// Author: Rook
 	// Date: January 25, 2015
@@ -6832,10 +6568,6 @@
 			}
 		}
 	}
-	//End of file item_quarterstaff_datadriven.txt
-
-
-	//Start of file item_radiance_datadriven.txt
 	// Rewrite of Radiance
 	// Author: Rook
 	// Date: January 30, 2015
@@ -7027,10 +6759,6 @@
 			}
 		}
 	}
-	//End of file item_radiance_datadriven.txt
-
-
-	//Start of file item_reaver_datadriven.txt
 	// Rewrite of Reaver
 	// Author: Rook
 	// Date: January 25, 2015
@@ -7080,10 +6808,6 @@
 			}
 		}
 	}
-	//End of file item_reaver_datadriven.txt
-
-
-	//Start of file item_recipe_abyssal_blade_datadriven.txt
 	// Rewrite of Recipe: Abyssal Blade
 	// Author: Rook
 	// Date: February 1, 2015
@@ -7111,10 +6835,6 @@
 			"01"						"item_basher_datadriven;item_relic_datadriven"
 		}
 	}
-	//End of file item_recipe_abyssal_blade_datadriven.txt
-
-
-	//Start of file item_recipe_ancient_janggo_datadriven.txt
 	// Rewrite of Recipe: Drum of Endurance
 	// Author: Rook
 	// Date: February 4, 2015
@@ -7143,10 +6863,6 @@
 			"02"						"item_ancient_janggo_datadriven"
 		}
 	}
-	//End of file item_recipe_ancient_janggo_datadriven.txt
-
-
-	//Start of file item_recipe_arcane_boots_datadriven.txt
 	// Rewrite of Recipe: Arcane Boots
 	// Author: Rook
 	// Date: February 4, 2015
@@ -7174,10 +6890,6 @@
 			"01"						"item_energy_booster_datadriven;item_boots_datadriven"
 		}
 	}
-	//End of file item_recipe_arcane_boots_datadriven.txt
-
-
-	//Start of file item_recipe_armlet_datadriven.txt
 	// Rewrite of Recipe: Armlet of Mordiggian
 	// Author: Rook
 	// Date: February 3, 2015
@@ -7205,10 +6917,6 @@
 			"01"						"item_helm_of_iron_will_datadriven;item_gloves_datadriven;item_blades_of_attack_datadriven"
 		}
 	}
-	//End of file item_recipe_armlet_datadriven.txt
-
-
-	//Start of file item_recipe_assault_datadriven.txt
 	// Rewrite of Recipe: Assault Cuirass
 	// Author: Rook
 	// Date: January 28, 2015
@@ -7236,10 +6944,6 @@
 			"01"						"item_platemail_datadriven;item_hyperstone_datadriven;item_chainmail_datadriven"
 		}
 	}
-	//End of file item_recipe_assault_datadriven.txt
-
-
-	//Start of file item_recipe_basher_datadriven.txt
 	// Rewrite of Recipe: Skull Basher
 	// Author: Rook
 	// Date: February 1, 2015
@@ -7268,10 +6972,6 @@
 			"01"						"item_belt_of_strength_datadriven;item_javelin_datadriven"
 		}
 	}
-	//End of file item_recipe_basher_datadriven.txt
-
-
-	//Start of file item_recipe_bfury_datadriven.txt
 	// Rewrite of Recipe: Battle Fury
 	// Author: Rook
 	// Date: February 2, 2015
@@ -7299,10 +6999,6 @@
 			"01"						"item_broadsword;item_claymore;item_pers"
 		}
 	}
-	//End of file item_recipe_bfury_datadriven.txt
-
-
-	//Start of file item_recipe_black_king_bar_datadriven.txt
 	// Rewrite of Recipe: Black King Bar
 	// Author: Rook
 	// Date: January 25, 2015
@@ -7330,10 +7026,6 @@
 			"01"						"item_ogre_axe_datadriven;item_mithril_hammer_datadriven"
 		}
 	}
-	//End of file item_recipe_black_king_bar_datadriven.txt
-
-
-	//Start of file item_recipe_bloodstone_datadriven.txt
 	// Rewrite of Recipe: Bloodstone
 	// Author: Rook
 	// Date: January 29, 2015
@@ -7361,10 +7053,6 @@
 			"01"						"item_soul_ring_datadriven;item_soul_booster_datadriven"
 		}
 	}
-	//End of file item_recipe_bloodstone_datadriven.txt
-
-
-	//Start of file item_recipe_bracer_datadriven.txt
 	// Rewrite of Recipe: Bracer
 	// Author: Rook
 	// Date: January 25, 2015
@@ -7392,10 +7080,6 @@
 			"01"						"item_circlet_datadriven;item_gauntlets_datadriven"
 		}
 	}
-	//End of file item_recipe_bracer_datadriven.txt
-
-
-	//Start of file item_recipe_buckler_datadriven.txt
 	// Rewrite of Recipe: Buckler
 	// Author: Rook
 	// Date: January 26, 2015
@@ -7423,10 +7107,6 @@
 			"01"						"item_chainmail_datadriven;item_branches_datadriven"
 		}
 	}
-	//End of file item_recipe_buckler_datadriven.txt
-
-
-	//Start of file item_recipe_butterfly_datadriven.txt
 	// Rewrite of Recipe: Butterfly
 	// Author: Rook
 	// Date: January 31, 2015
@@ -7454,10 +7134,6 @@
 			"01"						"item_talisman_of_evasion_datadriven;item_quarterstaff_datadriven;item_eagle_datadriven"
 		}
 	}
-	//End of file item_recipe_butterfly_datadriven.txt
-
-
-	//Start of file item_recipe_dagon_datadriven.txt
 	// Rewrite of Recipe: Dagon
 	// Author: Rook
 	// Date: January 26, 2015
@@ -7581,10 +7257,6 @@
 			"01"						"item_dagon_4_datadriven;item_recipe_dagon_datadriven"
 		}
 	}
-	//End of file item_recipe_dagon_datadriven.txt
-
-
-	//Start of file item_recipe_desolator_datadriven.txt
 	// Rewrite of Recipe: Desolator
 	// Author: Rook
 	// Date: February 4, 2015
@@ -7612,10 +7284,6 @@
 			"01"						"item_mithril_hammer_datadriven;item_mithril_hammer_datadriven"
 		}
 	}
-	//End of file item_recipe_desolator_datadriven.txt
-
-
-	//Start of file item_recipe_hand_of_midas_datadriven.txt
 	// Rewrite of Recipe: Hand of Midas
 	// Author: Rook
 	// Date: January 25, 2015
@@ -7644,10 +7312,6 @@
 			"01"						"item_gloves_datadriven"
 		}
 	}
-	//End of file item_recipe_hand_of_midas_datadriven.txt
-
-
-	//Start of file item_recipe_headdress_datadriven.txt
 	// Rewrite of Recipe: Headdress
 	// Author: Rook
 	// Date: January 26, 2015
@@ -7675,10 +7339,6 @@
 			"01"						"item_ring_of_regen_datadriven;item_branches_datadriven"
 		}
 	}
-	//End of file item_recipe_headdress_datadriven.txt
-
-
-	//Start of file item_recipe_heart_datadriven.txt
 	// Rewrite of Recipe: Heart of Tarrasque
 	// Author: Rook
 	// Date: January 26, 2015
@@ -7706,10 +7366,6 @@
 			"01"						"item_reaver_datadriven;item_vitality_booster_datadriven"
 		}
 	}
-	//End of file item_recipe_heart_datadriven.txt
-
-
-	//Start of file item_recipe_heavens_halberd_datadriven.txt
 	// Rewrite of Recipe: Heaven's Halberd
 	// Author: Rook
 	// Date: February 5, 2015
@@ -7737,10 +7393,6 @@
 			"01"						"item_sange_datadriven;item_talisman_of_evasion_datadriven"
 		}
 	}
-	//End of file item_recipe_heavens_halberd_datadriven.txt
-
-
-	//Start of file item_recipe_hood_of_defiance_datadriven.txt
 	// Rewrite of Recipe: Hood of Defiance
 	// Author: Rook
 	// Date: January 30, 2015
@@ -7768,10 +7420,6 @@
 			"01"						"item_ring_of_health_datadriven;item_cloak_datadriven;item_ring_of_regen_datadriven;item_ring_of_regen_datadriven"
 		}
 	}
-	//End of file item_recipe_hood_of_defiance_datadriven.txt
-
-
-	//Start of file item_recipe_invis_sword_datadriven.txt
 	// Rewrite of Recipe: Shadow Blade
 	// Author: Rook
 	// Date: February 3, 2015
@@ -7799,10 +7447,6 @@
 			"01"						"item_shadow_amulet_datadriven;item_claymore_datadriven"
 		}
 	}
-	//End of file item_recipe_invis_sword_datadriven.txt
-
-
-	//Start of file item_recipe_magic_wand_datadriven.txt
 	// Rewrite of Recipe: Magic Wand
 	// Author: Rook
 	// Date: January 25, 2015
@@ -7830,10 +7474,6 @@
 			"01"						"item_magic_stick_datadriven;item_branches_datadriven;item_branches_datadriven;item_branches_datadriven"
 		}
 	}
-	//End of file item_recipe_magic_wand_datadriven.txt
-
-
-	//Start of file item_recipe_manta_datadriven.txt
 	// Rewrite of Recipe: Manta Style
 	// Author: Rook
 	// Date: February 2, 2015
@@ -7862,10 +7502,6 @@
 			"01"						"item_yasha;item_ultimate_orb"
 		}
 	}
-	//End of file item_recipe_manta_datadriven.txt
-
-
-	//Start of file item_recipe_mask_of_madness_datadriven.txt
 	// Rewrite of Recipe: Mask of Madness
 	// Author: Rook
 	// Date: February 4, 2015
@@ -7893,10 +7529,6 @@
 			"01"						"item_lifesteal_datadriven"
 		}
 	}
-	//End of file item_recipe_mask_of_madness_datadriven.txt
-
-
-	//Start of file item_recipe_medallion_of_courage_datadriven.txt
 	// Rewrite of Recipe: Medallion of Courage
 	// Author: Rook
 	// Date: February 4, 2015
@@ -7924,10 +7556,6 @@
 			"01"						"item_chainmail_datadriven;item_sobi_mask_datadriven"
 		}
 	}
-	//End of file item_recipe_medallion_of_courage_datadriven.txt
-
-
-	//Start of file item_recipe_mekansm_datadriven.txt
 	// Rewrite of Recipe: Mekansm
 	// Author: Rook
 	// Date: January 26, 2015
@@ -7955,10 +7583,6 @@
 			"01"						"item_headdress_datadriven;item_buckler_datadriven"
 		}
 	}
-	//End of file item_recipe_mekansm_datadriven.txt
-
-
-	//Start of file item_recipe_monkey_king_bar_datadriven.txt
 	// Rewrite of Recipe: Monkey King Bar
 	// Author: Rook
 	// Date: January 30, 2015
@@ -7986,10 +7610,6 @@
 			"01"						"item_demon_edge_datadriven;item_javelin_datadriven;item_javelin_datadriven"
 		}
 	}
-	//End of file item_recipe_monkey_king_bar_datadriven.txt
-
-
-	//Start of file item_recipe_null_talisman_datadriven.txt
 	// Rewrite of Recipe: Null Talisman
 	// Author: Rook
 	// Date: January 25, 2015
@@ -8017,10 +7637,6 @@
 			"01"						"item_circlet_datadriven;item_mantle_datadriven"
 		}
 	}
-	//End of file item_recipe_null_talisman_datadriven.txt
-
-
-	//Start of file item_recipe_oblivion_staff_datadriven.txt
 	// Rewrite of Recipe: Oblivion Staff
 	// Author: Rook
 	// Date: January 25, 2015
@@ -8048,10 +7664,6 @@
 			"01"						"item_quarterstaff_datadriven;item_sobi_mask_datadriven;item_robe_datadriven"
 		}
 	}
-	//End of file item_recipe_oblivion_staff_datadriven.txt
-
-
-	//Start of file item_recipe_pers_datadriven.txt
 	// Rewrite of Recipe: Perseverance
 	// Author: Rook
 	// Date: January 25, 2015
@@ -8079,10 +7691,6 @@
 			"01"						"item_ring_of_health_datadriven;item_void_stone_datadriven"
 		}
 	}
-	//End of file item_recipe_pers_datadriven.txt
-
-
-	//Start of file item_recipe_phase_boots_datadriven.txt
 	// Rewrite of Recipe: Phase Boots
 	// Author: Rook
 	// Date: January 25, 2015
@@ -8110,10 +7718,6 @@
 			"01"						"item_boots_datadriven;item_blades_of_attack_datadriven;item_blades_of_attack_datadriven"
 		}
 	}
-	//End of file item_recipe_phase_boots_datadriven.txt
-
-
-	//Start of file item_recipe_power_treads_datadriven.txt
 	// Rewrite of Recipe: Power Treads
 	// Author: Rook
 	// Date: January 25, 2015
@@ -8143,10 +7747,6 @@
 			"03"						"item_gloves_datadriven;item_boots_datadriven;item_boots_of_elves_datadriven"
 		}
 	}
-	//End of file item_recipe_power_treads_datadriven.txt
-
-
-	//Start of file item_recipe_radiance_datadriven.txt
 	// Rewrite of Recipe: Radiance
 	// Author: Rook
 	// Date: January 30, 2015
@@ -8174,10 +7774,6 @@
 			"01"						"item_relic_datadriven"
 		}
 	}
-	//End of file item_recipe_radiance_datadriven.txt
-
-
-	//Start of file item_recipe_refresher_datadriven.txt
 	// Rewrite of Recipe: Refresher Orb
 	// Author: Rook
 	// Date: January 26, 2015
@@ -8205,10 +7801,6 @@
 			"01"						"item_oblivion_staff_datadriven;item_pers_datadriven"
 		}
 	}
-	//End of file item_recipe_refresher_datadriven.txt
-
-
-	//Start of file item_recipe_ring_of_aquila_datadriven.txt
 	// Rewrite of Recipe: Ring of Aquila
 	// Author: Rook
 	// Date: February 5, 2015
@@ -8236,10 +7828,6 @@
 			"01"						"item_wraith_band_datadriven;item_ring_of_basilius_datadriven"
 		}
 	}
-	//End of file item_recipe_ring_of_aquila_datadriven.txt
-
-
-	//Start of file item_recipe_ring_of_basilius_datadriven.txt
 	// Rewrite of Recipe: Ring of Basilius
 	// Author: Rook
 	// Date: January 26, 2015
@@ -8273,10 +7861,6 @@
 			"01"						"item_sobi_mask_datadriven;item_ring_of_protection_datadriven"
 		}
 	}
-	//End of file item_recipe_ring_of_basilius_datadriven.txt
-
-
-	//Start of file item_recipe_rod_of_atos_datadriven.txt
 	// Rewrite of Recipe: Rod of Atos
 	// Author: Rook
 	// Date: February 4, 2015
@@ -8304,10 +7888,6 @@
 			"01"						"item_staff_of_wizardry_datadriven;item_staff_of_wizardry_datadriven;item_vitality_booster_datadriven"
 		}
 	}
-	//End of file item_recipe_rod_of_atos_datadriven.txt
-
-
-	//Start of file item_recipe_sange_and_yasha_datadriven.txt
 	// Rewrite of Recipe: Sange and Yasha
 	// Author: Rook
 	// Date: February 3, 2015
@@ -8335,10 +7915,6 @@
 			"01"						"item_yasha_datadriven;item_sange_datadriven"
 		}
 	}
-	//End of file item_recipe_sange_and_yasha_datadriven.txt
-
-
-	//Start of file item_recipe_sange_datadriven.txt
 	// Rewrite of Recipe: Sange
 	// Author: Rook
 	// Date: February 4, 2015
@@ -8366,10 +7942,6 @@
 			"01"						"item_ogre_axe_datadriven;item_belt_of_strength_datadriven"
 		}
 	}
-	//End of file item_recipe_sange_datadriven.txt
-
-
-	//Start of file item_recipe_satanic_datadriven.txt
 	// Rewrite of Recipe: Satanic
 	// Author: Rook
 	// Date: February 3, 2015
@@ -8397,10 +7969,6 @@
 			"01"						"item_reaver_datadriven;item_helm_of_the_dominator_datadriven"
 		}
 	}
-	//End of file item_recipe_satanic_datadriven.txt
-
-
-	//Start of file item_recipe_shivas_guard_datadriven.txt
 	// Rewrite of Recipe: Shiva's Guard
 	// Author: Rook
 	// Date: February 15, 2015
@@ -8428,10 +7996,6 @@
 			"01"						"item_platemail_datadriven;item_mystic_staff_datadriven"
 		}
 	}
-	//End of file item_recipe_shivas_guard_datadriven.txt
-
-
-	//Start of file item_recipe_skadi_datadriven.txt
 	// Rewrite of Recipe: Eye of Skadi
 	// Author: Rook
 	// Date: February 4, 2015
@@ -8459,10 +8023,6 @@
 			"01"						"item_ultimate_orb_datadriven;item_ultimate_orb_datadriven;item_point_booster_datadriven;item_orb_of_venom_datadriven"
 		}
 	}
-	//End of file item_recipe_skadi_datadriven.txt
-
-
-	//Start of file item_recipe_soul_booster_datadriven.txt
 	// Rewrite of Recipe: Soul Booster
 	// Author: Rook
 	// Date: January 30, 2015
@@ -8490,10 +8050,6 @@
 			"01"						"item_vitality_booster_datadriven;item_energy_booster_datadriven;item_point_booster_datadriven"
 		}
 	}
-	//End of file item_recipe_soul_booster_datadriven.txt
-
-
-	//Start of file item_recipe_sphere_datadriven.txt
 	// Rewrite of Recipe: Linken's Sphere
 	// Author: Rook
 	// Date: January 29, 2015
@@ -8521,10 +8077,6 @@
 			"01"						"item_ultimate_orb_datadriven;item_pers_datadriven"
 		}
 	}
-	//End of file item_recipe_sphere_datadriven.txt
-
-
-	//Start of file item_recipe_ultimate_scepter_datadriven.txt
 	// Rewrite of Recipe: Aghanim's Scepter
 	// Author: Rook
 	// Date: January 26, 2015
@@ -8552,10 +8104,6 @@
 			"01"						"item_point_booster_datadriven;item_staff_of_wizardry_datadriven;item_ogre_axe_datadriven;item_blade_of_alacrity_datadriven"
 		}
 	}
-	//End of file item_recipe_ultimate_scepter_datadriven.txt
-
-
-	//Start of file item_recipe_urn_of_shadows_datadriven.txt
 	// Rewrite of Recipe: Urn of Shadows
 	// Author: Rook
 	// Date: January 26, 2015
@@ -8583,10 +8131,6 @@
 			"01"						"item_sobi_mask_datadriven;item_gauntlets_datadriven;item_gauntlets_datadriven"
 		}
 	}
-	//End of file item_recipe_urn_of_shadows_datadriven.txt
-
-
-	//Start of file item_recipe_veil_of_discord_datadriven.txt
 	// Rewrite of Recipe: Veil of Discord
 	// Author: Rook
 	// Date: February 4, 2015
@@ -8614,10 +8158,6 @@
 			"01"						"item_helm_of_iron_will_datadriven;item_null_talisman_datadriven"
 		}
 	}
-	//End of file item_recipe_veil_of_discord_datadriven.txt
-
-
-	//Start of file item_recipe_vladmir_datadriven.txt
 	// Rewrite of Recipe: Vladmir's Offering
 	// Author: Rook
 	// Date: January 26, 2015
@@ -8645,10 +8185,6 @@
 			"01"						"item_ring_of_regen_datadriven;item_ring_of_basilius_datadriven;item_lifesteal_datadriven"
 		}
 	}
-	//End of file item_recipe_vladmir_datadriven.txt
-
-
-	//Start of file item_recipe_wraith_band_datadriven.txt
 	// Rewrite of Recipe: Wraith Band
 	// Author: Rook
 	// Date: January 25, 2015
@@ -8676,10 +8212,6 @@
 			"01"						"item_circlet_datadriven;item_slippers_datadriven"
 		}
 	}
-	//End of file item_recipe_wraith_band_datadriven.txt
-
-
-	//Start of file item_recipe_yasha_datadriven.txt
 	// Rewrite of Recipe: Yasha
 	// Author: Rook
 	// Date: February 4, 2015
@@ -8707,10 +8239,6 @@
 			"01"						"item_blade_of_alacrity_datadriven;item_boots_of_elves_datadriven"
 		}
 	}
-	//End of file item_recipe_yasha_datadriven.txt
-
-
-	//Start of file item_refresher_datadriven.txt
 	// Rewrite of Refresher Orb
 	// Author: Rook
 	// Date: January 26, 2015
@@ -8797,10 +8325,6 @@
 			}
 		}
 	}
-	//End of file item_refresher_datadriven.txt
-
-
-	//Start of file item_relic_datadriven.txt
 	// Rewrite of Sacred Relic
 	// Author: Rook
 	// Date: January 25, 2015
@@ -8850,10 +8374,6 @@
 			}
 		}
 	}
-	//End of file item_relic_datadriven.txt
-
-
-	//Start of file item_ring_of_aquila_datadriven.txt
 	// Rewrite of Ring of Aquila
 	// Author: Rook
 	// Date: February 5, 2015
@@ -9118,10 +8638,6 @@
 			}
 		}
 	}
-	//End of file item_ring_of_aquila_datadriven.txt
-
-
-	//Start of file item_ring_of_basilius_datadriven.txt
 	// Rewrite of Ring of Basilius
 	// Author: Rook
 	// Date: January 26, 2015
@@ -9348,10 +8864,6 @@
 			}
 		}
 	}
-	//End of file item_ring_of_basilius_datadriven.txt
-
-
-	//Start of file item_ring_of_health_datadriven.txt
 	// Rewrite of Ring of Health
 	// Author: Rook
 	// Date: January 25, 2015
@@ -9409,10 +8921,6 @@
 			}
 		}
 	}
-	//End of file item_ring_of_health_datadriven.txt
-
-
-	//Start of file item_ring_of_protection_datadriven.txt
 	// Rewrite of Ring of Protection
 	// Author: Rook
 	// Date: January 25, 2015
@@ -9467,10 +8975,6 @@
 			}
 		}
 	}
-	//End of file item_ring_of_protection_datadriven.txt
-
-
-	//Start of file item_ring_of_regen_datadriven.txt
 	// Rewrite of Ring of Regen
 	// Author: Rook
 	// Date: January 25, 2015
@@ -9527,10 +9031,6 @@
 			}
 		}
 	}
-	//End of file item_ring_of_regen_datadriven.txt
-
-
-	//Start of file item_robe_datadriven.txt
 	// Rewrite of Robe of the Magi
 	// Author: Rook
 	// Date: January 25, 2015
@@ -9580,10 +9080,6 @@
 			}
 		}
 	}
-	//End of file item_robe_datadriven.txt
-
-
-	//Start of file item_rod_of_atos_datadriven.txt
 	// Rewrite of Rod of Atos
 	// Author: Rook
 	// Date: February 4, 2015
@@ -9691,10 +9187,6 @@
 			}
 		}
 	}
-	//End of file item_rod_of_atos_datadriven.txt
-
-
-	//Start of file item_sange_and_yasha_datadriven.txt
 	// Rewrite of Sange and Yasha
 	// Author: Rook
 	// Date: February 3, 2015
@@ -9827,10 +9319,6 @@
 			}
 		}
 	}
-	//End of file item_sange_and_yasha_datadriven.txt
-
-
-	//Start of file item_sange_datadriven.txt
 	// Rewrite of Sange
 	// Author: Rook
 	// Date: February 4, 2015
@@ -9939,10 +9427,6 @@
 			}
 		}
 	}
-	//End of file item_sange_datadriven.txt
-
-
-	//Start of file item_satanic_datadriven.txt
 	// Rewrite of Satanic
 	// Author: Rook
 	// Date: February 3, 2015
@@ -10080,10 +9564,6 @@
 			}
 		}
 	}
-	//End of file item_satanic_datadriven.txt
-
-
-	//Start of file item_shivas_guard_datadriven.txt
 	// Rewrite of Shiva's Guard
 	// Author: Rook
 	// Date: February 15, 2015
@@ -10293,10 +9773,6 @@
 			}
 		}
 	}
-	//End of file item_shivas_guard_datadriven.txt
-
-
-	//Start of file item_skadi_datadriven.txt
 	// Rewrite of Eye of Skadi
 	// Author: Rook
 	// Date: February 4, 2015
@@ -10415,10 +9891,6 @@
 			}
 		}
 	}
-	//End of file item_skadi_datadriven.txt
-
-
-	//Start of file item_slippers_datadriven.txt
 	// Rewrite of Slippers of Agility
 	// Author: Rook
 	// Date: January 25, 2015
@@ -10468,10 +9940,6 @@
 			}
 		}
 	}
-	//End of file item_slippers_datadriven.txt
-
-
-	//Start of file item_sobi_mask_datadriven.txt
 	// Rewrite of Sage's Mask
 	// Author: Rook
 	// Date: January 25, 2015
@@ -10522,10 +9990,6 @@
 			}
 		}
 	}
-	//End of file item_sobi_mask_datadriven.txt
-
-
-	//Start of file item_soul_booster_datadriven.txt
 	// Rewrite of Soul Booster
 	// Author: Rook
 	// Date: January 30, 2015
@@ -10592,10 +10056,6 @@
 			}
 		}
 	}
-	//End of file item_soul_booster_datadriven.txt
-
-
-	//Start of file item_sphere_datadriven.txt
 	// Rewrite of Linken's Sphere
 	// Author: Rook
 	// Date: January 30, 2015
@@ -10747,10 +10207,6 @@
 			}
 		}
 	}
-	//End of file item_sphere_datadriven.txt
-
-
-	//Start of file item_staff_of_wizardry_datadriven.txt
 	// Rewrite of Staff of Wizardry
 	// Author: Rook
 	// Date: January 25, 2015
@@ -10799,10 +10255,6 @@
 			}
 		}
 	}
-	//End of file item_staff_of_wizardry_datadriven.txt
-
-
-	//Start of file item_talisman_of_evasion_datadriven.txt
 	// Rewrite of Talisman of Evasion
 	// Author: Rook
 	// Date: January 25, 2015
@@ -10851,10 +10303,6 @@
 			}
 		}
 	}
-	//End of file item_talisman_of_evasion_datadriven.txt
-
-
-	//Start of file item_ultimate_orb_datadriven.txt
 	// Rewrite of Ultimate Orb
 	// Author: Rook
 	// Date: January 25, 2015
@@ -10906,10 +10354,6 @@
 			}
 		}
 	}
-	//End of file item_ultimate_orb_datadriven.txt
-
-
-	//Start of file item_ultimate_scepter_datadriven.txt
 	// Rewrite of Aghanim's Scepter
 	// Author: Rook
 	// Date: January 25, 2015
@@ -10992,10 +10436,6 @@
 			}
 		}
 	}
-	//End of file item_ultimate_scepter_datadriven.txt
-
-
-	//Start of file item_urn_of_shadows_datadriven.txt
 	// Rewrite of Urn of Shadows
 	// Author: Rook
 	// Date: January 26, 2015
@@ -11221,10 +10661,6 @@
 			}
 		}
 	}
-	//End of file item_urn_of_shadows_datadriven.txt
-
-
-	//Start of file item_veil_of_discord_datadriven.txt
 	// Rewrite of Veil of Discord
 	// Author: Rook
 	// Date: February 4, 2015
@@ -11372,10 +10808,6 @@
 			}
 		}
 	}
-	//End of file item_veil_of_discord_datadriven.txt
-
-
-	//Start of file item_vitality_booster_datadriven.txt
 	// Rewrite of Vitality Booster
 	// Author: Rook
 	// Date: January 25, 2015
@@ -11425,10 +10857,6 @@
 			}
 		}
 	}
-	//End of file item_vitality_booster_datadriven.txt
-
-
-	//Start of file item_vladmir_datadriven.txt
 	// Rewrite of Vladmir's Offering
 	// Author: Rook
 	// Date: January 26, 2015
@@ -11569,10 +10997,6 @@
 			}
 		}
 	}
-	//End of file item_vladmir_datadriven.txt
-
-
-	//Start of file item_void_stone_datadriven.txt
 	// Rewrite of Void Stone
 	// Author: Rook
 	// Date: January 25, 2015
@@ -11623,10 +11047,6 @@
 			}
 		}
 	}
-	//End of file item_void_stone_datadriven.txt
-
-
-	//Start of file item_wraith_band_datadriven.txt
 	// Rewrite of Wraith Band
 	// Author: Rook
 	// Date: January 25, 2015
@@ -11693,10 +11113,6 @@
 			}
 		}
 	}
-	//End of file item_wraith_band_datadriven.txt
-
-
-	//Start of file item_yasha_datadriven.txt
 	// Rewrite of Yasha
 	// Author: Rook
 	// Date: February 4, 2015
@@ -11761,5 +11177,4 @@
 			}
 		}
 	}
-	//End of file item_yasha_datadriven.txt
 }

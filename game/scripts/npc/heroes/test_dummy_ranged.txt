@@ -4,7 +4,7 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"vengefulspirit_magic_missile_datadriven"
+	"Ability1"	"pudge_meat_hook_datadriven"
 	"Ability2"	"vengefulspirit_wave_of_terror_datadriven"
 	"Ability3"	"vengefulspirit_command_aura_datadriven"
 	"Ability4"	"vengefulspirit_nether_swap_datadriven"
