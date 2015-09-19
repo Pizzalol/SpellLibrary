@@ -1,9 +1,7 @@
 // Rewrite of the Phantom Assassin Phantom Strike ability
 // Author: Pizzalol
-// Date: 21.12.2014.
-// NOTE: Removed target and attack limitation
-// NOTE2: Can be cast on self
-// NOTE3: Blink dagger particle is shown due to the blink action block
+// Date: 19.09.2015.
+// NOTE: Can be cast on self
 "phantom_assassin_phantom_strike_datadriven"
 {
 	// General
@@ -69,12 +67,6 @@
 			"Target"	"TARGET"
 		}
 
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_phantom_strike_datadriven"
-			"Target"			"CASTER"
-		}
-
 		"FireSound"
 		{
 			"EffectName"		"Hero_PhantomAssassin.Strike.Start"
@@ -93,6 +85,13 @@
 			"EffectName"		"Hero_PhantomAssassin.Strike.End"
 			"Target"			"CASTER"
 		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_phantom_assassin/phantom_strike.lua"
+			"Function"		"PhantomStrike"
+			"phantom_strike_modifier"	"modifier_phantom_strike_datadriven"
+		}
 	}
 
 	"Modifiers"
@@ -100,7 +99,17 @@
 		"modifier_phantom_strike_datadriven"
 		{
 			"IsBuff"	"1"
-			"Duration"	"%AbilityDuration"
+
+			"OnAttackLanded"
+			// "%attack_damage" is set to the damage value before mitigation
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_phantom_assassin/phantom_strike.lua"
+					"Function"		"PhantomStrikeAttack"
+					"phantom_strike_modifier"	"modifier_phantom_strike_datadriven"
+				}
+			}
 
 			"Properties"
 			{
