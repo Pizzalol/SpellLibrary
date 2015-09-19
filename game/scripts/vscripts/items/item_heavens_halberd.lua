@@ -25,6 +25,6 @@ function item_heavens_halberd_datadriven_on_spell_start(keys)
 	if keys.target:IsRangedAttacker() then
 		keys.ability:ApplyDataDrivenModifier(keys.caster, keys.target, "modifier_item_heavens_halberd_datadriven_disarm", {duration = keys.DisarmDurationRanged})
 	else  --The target is melee.
-		keys.ability:ApplyDataDrivenModifier(keys.caster, keys.target, "modifier_item_heavens_halberd_datadriven_disarm", {duration = keys.DisarmDurationRanged})
+		keys.ability:ApplyDataDrivenModifier(keys.caster, keys.target, "modifier_item_heavens_halberd_datadriven_disarm", {duration = keys.DisarmDurationMelee})
 	end
 end
