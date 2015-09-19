@@ -2854,6 +2854,180 @@
 	}
 	
 	
+	"arc_warden_flux"
+		{
+
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					 "heroes/hero_arc_warden/arc_warden_flux_lua.lua"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"  "DAMAGE_TYPE_MAGICAL"
+
+
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"600 700 800 900"
+		"AbilityManaCost"				"75"
+		"AbilityCooldown"				"20"
+
+		"AbilitySpecial"
+			{
+			"1"
+				{
+				"var_type"				"FIELD_FLOAT"
+				"flux_damage_per_second" "15 30 45 60"
+				}
+			"2"
+				{
+				"var_type"				"FIELD_FLOAT"
+				"flux_duration" "6"
+				}
+			"3"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"flux_mute_radius"	"225"
+				}
+			"4"
+				{
+				"var_type"				"FIELD_FLOAT"
+				"flux_tick_interval"	"0.5"
+				}
+			"05"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"slow"	"-50"
+				}
+			}
+
+		"precache"
+			{
+
+			"particle" "particles/units/heroes/hero_zuus/zuus_static_field_b.vpcf"
+			"particle" "particles/status_fx/status_effect_disruptor_kinetic_fieldslow.vpcf"
+			}
+    	}
+	"arc_warden_magnetic_field"
+		{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					 "heroes/hero_arc_warden/arc_warden_magnetic_field_lua.lua"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityRadius"	"275"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"900"
+		"AbilityManaCost"				"110"
+		"AbilityCooldown"				"50"
+		
+		"AbilitySpecial"
+			{
+			"01"
+				{
+				"var_type"				"FIELD_FLOAT"
+				"field_duration" "3.5 4 4.5 5"
+				}
+			"02"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"evasion"	"100"
+				}
+			"03"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"50 60 70 80"
+				}
+			"04"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"radius"	"275"
+				}
+			}
+		"precache"
+			{
+
+			"particle" "particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"
+			}
+		}
+	"arc_warden_spark_wraith"
+		{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					 "heroes/hero_arc_warden/arc_warden_spark_wraith_lua.lua"
+		"AbilityName"		"arc_warden_spark_wraith"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"  "DAMAGE_TYPE_MAGICAL"
+		"AbilityDamage" "150 200 250 300"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"2000"
+		"AbilityManaCost"				"50"
+		"AbilityCooldown"				"4"
+
+		"AbilitySpecial"
+			{
+			"01"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"duration"	"50"
+				}
+			"02"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"startup_time"	"3"
+				}
+			"03"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"speed"	"400"
+				}
+			"04"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"search_radius"	"375"
+				}
+			"05"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"	"300"
+				}
+			}
+		"precache"
+			{
+			"particle" "particles/units/heroes/hero_disruptor/disruptor_thunder_strike_buff_sphere.vpcf"
+			"particle" "particles/units/heroes/hero_disruptor/disruptor_thunder_strike_buff_sphere3.vpcf"
+			"particle" "particles/units/heroes/hero_zuus/zuus_base_attack_sparkles.vpcf"
+			"particle" "particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"
+			}
+		}
+	"arc_warden_tempest_double"
+			{
+			"BaseClass"						"ability_lua"
+			"ScriptFile"					 "heroes/hero_arc_warden/arc_warden_tempest_double_lua.lua"
+			"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+			"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+			
+			"AbilityCastPoint"				"0.3"
+			"AbilityCooldown"				"65 60 55"
+	
+			"AbilitySpecial"
+				{
+				"01"
+					{
+					"var_type"				"FIELD_INTEGER"
+					"duration"	"20"
+					}
+				"02"
+					{
+					"var_type"				"FIELD_INTEGER"
+					"health_cost"	"30 15 0"
+					}
+				"03"
+					{
+					"var_type"				"FIELD_INTEGER"
+					"mana_cost"	"30 15 0"
+					}
+				}
+			"precache"
+				{
+				"particle" "particles/status_fx/status_effect_ancestral_spirit.vpcf"
+				}
+			}
 	"attribute_bonus_datadriven"
 	{
 		// General
@@ -7699,16 +7873,10 @@
 		}
 	}
 	
-<<<<<<< HEAD
-=======
-	//End of file brewmaster_thunder_clap_datadriven.txt
-
-
 	// Ability: Bristleback
 	// By: Ragnar Homsar
 	// Date: July 10, 2015
-
->>>>>>> 8d44a7bdc71b6faae12db45c5168a26bc73a2233
+	
 	"bristleback_bristleback_datadriven"
 	{
 		// General
@@ -7747,21 +7915,21 @@
 				"quill_release_threshold"		"250.0"
 			}
 		}
-
+	
 		"precache"
 		{
 			"particle"	"particles/units/heroes/hero_bristleback/bristleback_side_dmg.vpcf"
 			"particle"	"particles/units/heroes/hero_bristleback/bristleback_back_dmg.vpcf"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_bristleback.vsndevts"
 		}
-
+	
 		"Modifiers"
 		{
 			"modifier_bristleback"
 			{
 				"Passive"	"1"
 				"IsHidden"	"1"
-
+	
 				"OnTakeDamage"
 				{
 					"RunScript"
@@ -7777,250 +7945,240 @@
 			}
 		}
 	}
-<<<<<<< HEAD
-	
-=======
-
 	// Author: Ragnar Homsar
 	// Date: July 12, 2015
-
->>>>>>> 8d44a7bdc71b6faae12db45c5168a26bc73a2233
+	
 	"bristleback_quill_spray_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"bristleback_quill_spray"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"625"
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"				"ability_datadriven"
+			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+			"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+			"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+			"FightRecapLevel"				"1"
+			"AbilityTextureName"			"bristleback_quill_spray"
 		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"3.0 3.0 3.0 3.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"35 35 35 35"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
+			// Casting
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCastRange"				"625"
+			"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+			
+			// Time		
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCooldown"				"3.0 3.0 3.0 3.0"
+		
+			// Cost
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityManaCost"				"35 35 35 35"
+		
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"625"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"quill_base_damage"		"20.0 40.0 60.0 80.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"quill_stack_damage"	"30.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"quill_stack_duration"	"14.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"max_damage"			"400.0"
-			}
-		}
-
-		"precache"
-		{
-			"particle"	"particles/units/heroes/hero_bristleback/bristleback_quill_spray.vpcf"
-			"particle"	"particles/units/heroes/hero_bristleback/bristleback_quill_spray_impact.vpcf"
-			"particle"	"particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit.vpcf"
-			"particle"	"particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit_creep.vpcf"
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_bristleback.vsndevts"
-		}
-
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"
+				"01"
 				{
-					"Center"	"CASTER"
-					"Radius"	"%radius"
-					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"var_type"				"FIELD_INTEGER"
+					"radius"				"625"
 				}
-
-				"ModifierName"	"modifier_quill_spray_datadriven_determiner"
-			}
-
-			"FireEffect"
-			{
-				"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray.vpcf"
-				"EffectAttachType"	"attach_hitloc"
-				"EffectRadius"		"%radius"
-				"Target"			"CASTER"
-			}
-
-			"FireSound"
-			{
-				"EffectName"		"Hero_Bristleback.QuillSpray.Cast"
-				"Target"			"CASTER"
-			}
-
-			"FireSound"
-			{
-				"EffectName"		"Hero_Bristleback.QuillSpray.Target"
-				"Target"
+				"02"
 				{
-					"Center"	"CASTER"
-					"Radius"	"%radius"
-					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"var_type"				"FIELD_FLOAT"
+					"quill_base_damage"		"20.0 40.0 60.0 80.0"
+				}
+				"03"
+				{
+					"var_type"				"FIELD_FLOAT"
+					"quill_stack_damage"	"30.0"
+				}
+				"04"
+				{
+					"var_type"				"FIELD_FLOAT"
+					"quill_stack_duration"	"14.0"
+				}
+				"05"
+				{
+					"var_type"				"FIELD_FLOAT"
+					"max_damage"			"400.0"
 				}
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_quill_spray_datadriven_user_display"
+	
+			"precache"
 			{
-				"IsDebuff"	"1"
+				"particle"	"particles/units/heroes/hero_bristleback/bristleback_quill_spray.vpcf"
+				"particle"	"particles/units/heroes/hero_bristleback/bristleback_quill_spray_impact.vpcf"
+				"particle"	"particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit.vpcf"
+				"particle"	"particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit_creep.vpcf"
+				"soundfile"	"soundevents/game_sounds_heroes/game_sounds_bristleback.vsndevts"
 			}
-
-			"modifier_quill_spray_datadriven_stack_creep" // with thanks to BMD for explaining MODIFIER_ATTRIBUTE_MULTIPLE and telling me a good way to handle this
+	
+			"OnSpellStart"
 			{
-				"IsHidden"		"1"
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
-				"Duration"		"%quill_stack_duration"
-
-				"OnCreated"
+				"ApplyModifier"
 				{
-					"RunScript"
+					"Target"
 					{
-						"ScriptFile"		"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
-						"Function"			"stack_created"
-						"stack_duration"	"%quill_stack_duration"
-						"base_damage"		"%quill_base_damage"
-						"stack_damage"		"%quill_stack_damage"
-						"max_damage"		"%max_damage"
+						"Center"	"CASTER"
+						"Radius"	"%radius"
+						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 					}
-
-					"FireEffect"
+	
+					"ModifierName"	"modifier_quill_spray_datadriven_determiner"
+				}
+	
+				"FireEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray.vpcf"
+					"EffectAttachType"	"attach_hitloc"
+					"EffectRadius"		"%radius"
+					"Target"			"CASTER"
+				}
+	
+				"FireSound"
+				{
+					"EffectName"		"Hero_Bristleback.QuillSpray.Cast"
+					"Target"			"CASTER"
+				}
+	
+				"FireSound"
+				{
+					"EffectName"		"Hero_Bristleback.QuillSpray.Target"
+					"Target"
 					{
-						"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray_impact.vpcf"
-						"EffectAttachType"	"follow_hitloc"
-						"Target"			"TARGET"
+						"Center"	"CASTER"
+						"Radius"	"%radius"
+						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 					}
-
-					"AttachEffect"
+				}
+			}
+	
+			"Modifiers"
+			{
+				"modifier_quill_spray_datadriven_user_display"
+				{
+					"IsDebuff"	"1"
+				}
+	
+				"modifier_quill_spray_datadriven_stack_creep" // with thanks to BMD for explaining MODIFIER_ATTRIBUTE_MULTIPLE and telling me a good way to handle this
+				{
+					"IsHidden"		"1"
+					"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+					"Duration"		"%quill_stack_duration"
+	
+					"OnCreated"
 					{
-						"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit_creep.vpcf"
-						"EffectAttachType"	"follow_hitloc"
-						"Target"			"TARGET"
-						"ControlPointEntities"
+						"RunScript"
 						{
-							"TARGET"		"attach_hitloc"
-							"TARGET"		"attach_hitloc"
-							"TARGET"		"attach_hitloc"
+							"ScriptFile"		"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
+							"Function"			"stack_created"
+							"stack_duration"	"%quill_stack_duration"
+							"base_damage"		"%quill_base_damage"
+							"stack_damage"		"%quill_stack_damage"
+							"max_damage"		"%max_damage"
+						}
+	
+						"FireEffect"
+						{
+							"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray_impact.vpcf"
+							"EffectAttachType"	"follow_hitloc"
+							"Target"			"TARGET"
+						}
+	
+						"AttachEffect"
+						{
+							"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit_creep.vpcf"
+							"EffectAttachType"	"follow_hitloc"
+							"Target"			"TARGET"
+							"ControlPointEntities"
+							{
+								"TARGET"		"attach_hitloc"
+								"TARGET"		"attach_hitloc"
+								"TARGET"		"attach_hitloc"
+							}
+						}
+					}
+	
+					"OnDestroy"
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
+							"Function"		"stack_destroyed"
 						}
 					}
 				}
-
-				"OnDestroy"
+	
+				"modifier_quill_spray_datadriven_stack_hero"
 				{
-					"RunScript"
+					"IsHidden"		"1"
+					"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+					"Duration"		"%quill_stack_duration"
+	
+					"OnCreated"
 					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
-						"Function"		"stack_destroyed"
-					}
-				}
-			}
-
-			"modifier_quill_spray_datadriven_stack_hero"
-			{
-				"IsHidden"		"1"
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
-				"Duration"		"%quill_stack_duration"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
-						"Function"			"stack_created"
-						"stack_duration"	"%quill_stack_duration"
-						"base_damage"		"%quill_base_damage"
-						"stack_damage"		"%quill_stack_damage"
-						"max_damage"		"%max_damage"
-					}
-
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray_impact.vpcf"
-						"EffectAttachType"	"follow_hitloc"
-						"Target"			"TARGET"
-					}
-
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit.vpcf"
-						"EffectAttachType"	"follow_hitloc"
-						"Target"			"TARGET"
-						"ControlPointEntities"
+						"RunScript"
 						{
-							"TARGET"		"attach_hitloc"
-							"TARGET"		"attach_hitloc"
-							"TARGET"		"attach_hitloc"
-							"TARGET"		"attach_hitloc"
+							"ScriptFile"		"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
+							"Function"			"stack_created"
+							"stack_duration"	"%quill_stack_duration"
+							"base_damage"		"%quill_base_damage"
+							"stack_damage"		"%quill_stack_damage"
+							"max_damage"		"%max_damage"
+						}
+	
+						"FireEffect"
+						{
+							"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray_impact.vpcf"
+							"EffectAttachType"	"follow_hitloc"
+							"Target"			"TARGET"
+						}
+	
+						"AttachEffect"
+						{
+							"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit.vpcf"
+							"EffectAttachType"	"follow_hitloc"
+							"Target"			"TARGET"
+							"ControlPointEntities"
+							{
+								"TARGET"		"attach_hitloc"
+								"TARGET"		"attach_hitloc"
+								"TARGET"		"attach_hitloc"
+								"TARGET"		"attach_hitloc"
+							}
+						}
+					}
+	
+					"OnDestroy"
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
+							"Function"		"stack_destroyed"
 						}
 					}
 				}
-
-				"OnDestroy"
+	
+				"modifier_quill_spray_datadriven_determiner"
 				{
-					"RunScript"
+					"IsHidden"		"1"
+					"Duration"		"0.01"
+	
+					"OnCreated"
 					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
-						"Function"		"stack_destroyed"
-					}
-				}
-			}
-
-			"modifier_quill_spray_datadriven_determiner"
-			{
-				"IsHidden"		"1"
-				"Duration"		"0.01"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
-						"Function"		"determine_debuff"
+						"RunScript"
+						{
+							"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
+							"Function"		"determine_debuff"
+						}
 					}
 				}
 			}
 		}
-	}
-<<<<<<< HEAD
-	
-=======
-
 	// Author: Ragnar Homsar
 	// Date: July 13, 2015
-
->>>>>>> 8d44a7bdc71b6faae12db45c5168a26bc73a2233
+	
 	"bristleback_viscous_nasal_goo_datadriven"
 	{
 		// General
@@ -8032,7 +8190,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"bristleback_viscous_nasal_goo"
-
+	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
@@ -8041,11 +8199,11 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"1.5 1.5 1.5 1.5"
-
+	
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"30 30 30 30"
-
+	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -8086,7 +8244,7 @@
 				"goo_duration_creep"	"10.0"
 			}
 		}
-
+	
 		"precache"
 		{
 			"particle"	"particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_goo.vpcf"
@@ -8094,7 +8252,7 @@
 			"particle"	"particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_stack.vpcf"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_bristleback.vsndevts"
 		}
-
+	
 		"OnSpellStart"
 		{
 			"FireSound"
@@ -8102,7 +8260,7 @@
 				"EffectName"		"Hero_Bristleback.ViscousGoo.Cast"
 				"Target"			"CASTER"
 			}
-
+	
 			"TrackingProjectile"
 			{
 				"Target"			"TARGET"
@@ -8112,7 +8270,7 @@
 				"MoveSpeed"			"1000"
 			}
 		}
-
+	
 		"OnProjectileHitUnit"
 		{
 			"FireSound"
@@ -8120,29 +8278,29 @@
 				"EffectName"		"Hero_Bristleback.ViscousGoo.Target"
 				"Target"			"TARGET"
 			}
-
+	
 			"ApplyModifier"
 			{
 				"Target"		"TARGET"
 				"ModifierName"	"modifier_viscous_nasal_goo_datadriven_determiner"
 			}
 		}
-
+	
 		"Modifiers"
 		{
 			"modifier_viscous_nasal_goo_datadriven_base_creep"
 			{
 				"IsHidden"			"1"
 				"Duration"			"%goo_duration_creep"
-
+	
 				"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_goo_debuff.vpcf"
 				"EffectAttachType"	"attach_hitloc"
-
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%base_move_slow"
 				}
-
+	
 				"OnDestroy"
 				{
 					"RunScript"
@@ -8152,20 +8310,20 @@
 					}
 				}
 			}
-
+	
 			"modifier_viscous_nasal_goo_datadriven_base_hero"
 			{
 				"IsHidden"		"1"
 				"Duration"		"%goo_duration"
-
+	
 				"EffectName"	"particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_goo_debuff.vpcf"
 				"EffectAttachType"	"attach_hitloc"
-
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%base_move_slow"
 				}
-
+	
 				"OnDestroy"
 				{
 					"RunScript"
@@ -8175,36 +8333,36 @@
 					}
 				}
 			}
-
+	
 			"modifier_viscous_nasal_goo_datadriven_stack_creep"
 			{
 				"IsDebuff"	"1"
 				"Duration"			"%goo_duration_creep"
-
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_per_stack"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_slow_per_stack"
 				}
 			}
-
+	
 			"modifier_viscous_nasal_goo_datadriven_stack_hero"
 			{
 				"IsDebuff"	"1"
 				"Duration"		"%goo_duration"
-
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_per_stack"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_slow_per_stack"
 				}
 			}
-
+	
 			"modifier_viscous_nasal_goo_datadriven_determiner"
 			{
 				"IsHidden"	"1"
 				"Duration"	"0.01"
-
+	
 				"OnCreated"
 				{
 					"RunScript"
@@ -8219,125 +8377,113 @@
 			}
 		}
 	}
-<<<<<<< HEAD
-	
-=======
-
 	// Author: Ragnar Homsar
 	// Date: July 14, 2015
 	// NOTE: Warpath is currently missing its particle effects and run/idle animations.
-
->>>>>>> 8d44a7bdc71b6faae12db45c5168a26bc73a2233
+	
 	"bristleback_warpath_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"bristleback_warpath"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDuration"				"10.0 10.0 10.0"
-				
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
 		{
-			"01"
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"				"ability_datadriven"
+			"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			"AbilityTextureName"			"bristleback_warpath"
+		
+			// Casting
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityDuration"				"10.0 10.0 10.0"
+					
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"base_damage"						"20 25 30"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_per_stack"					"20 25 30"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"base_move_speed"					"3 4 5"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"move_speed_per_stack"				"3 4 5"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"stack_duration"				"14.0"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"max_stacks"					"5 6 7"
-			}
-		}
-
-		"precache"
-		{
-			"particle"	"particles/units/heroes/hero_bristleback/bristleback_warpath.vpcf"
-			"particle"	"particles/units/heroes/hero_bristleback/bristleback_warpath_dust.vpcf"
-		}
-
-		"Modifiers"
-		{
-			"modifier_warpath_datadriven_factory"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-
-				"OnAbilityExecuted"
+				"01"
 				{
-					"RunScript"
+					"var_type"						"FIELD_INTEGER"
+					"base_damage"						"20 25 30"
+				}
+				"02"
+				{
+					"var_type"						"FIELD_INTEGER"
+					"damage_per_stack"					"20 25 30"
+				}
+				"03"
+				{
+					"var_type"						"FIELD_INTEGER"
+					"base_move_speed"					"3 4 5"
+				}
+				"04"
+				{
+					"var_type"						"FIELD_INTEGER"
+					"move_speed_per_stack"				"3 4 5"
+				}
+				"05"
+				{
+					"var_type"						"FIELD_FLOAT"
+					"stack_duration"				"14.0"
+				}
+				"06"
+				{
+					"var_type"						"FIELD_INTEGER"
+					"max_stacks"					"5 6 7"
+				}
+			}
+	
+			"precache"
+			{
+				"particle"	"particles/units/heroes/hero_bristleback/bristleback_warpath.vpcf"
+				"particle"	"particles/units/heroes/hero_bristleback/bristleback_warpath_dust.vpcf"
+			}
+	
+			"Modifiers"
+			{
+				"modifier_warpath_datadriven_factory"
+				{
+					"Passive"	"1"
+					"IsHidden"	"1"
+	
+					"OnAbilityExecuted"
 					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/warpath.lua"
-						"Function"		"ability_executed"
-						"max_stacks"	"%max_stacks"
-						"duration"		"%stack_duration"
+						"RunScript"
+						{
+							"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/warpath.lua"
+							"Function"		"ability_executed"
+							"max_stacks"	"%max_stacks"
+							"duration"		"%stack_duration"
+						}
+					}
+				}
+	
+				"modifier_warpath_datadriven_counter"
+				{
+					"IsBuff"		"1"
+					"Duration"		"%stack_duration"
+				}
+	
+				"modifier_warpath_datadriven_stack"
+				{
+					"IsHidden"		"1"
+					"Duration"		"%stack_duration"
+					"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+					"Properties"
+					{
+						"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_per_stack"
+						"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_per_stack"
+					}
+	
+					"OnDestroy"
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/warpath.lua"
+							"Function"		"stack_destroyed"
+						}
 					}
 				}
 			}
-
-			"modifier_warpath_datadriven_counter"
-			{
-				"IsBuff"		"1"
-				"Duration"		"%stack_duration"
-			}
-
-			"modifier_warpath_datadriven_stack"
-			{
-				"IsHidden"		"1"
-				"Duration"		"%stack_duration"
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_per_stack"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_per_stack"
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/warpath.lua"
-						"Function"		"stack_destroyed"
-					}
-				}
-			}
 		}
-	}
-<<<<<<< HEAD
-	
-=======
-
-
-	//Start of file broodmother_incapacitating_bite_datadriven.txt
->>>>>>> 8d44a7bdc71b6faae12db45c5168a26bc73a2233
 	// Rewrite of the Broodmother Incapacitating Bite ability
 	// Author: Pizzalol
 	// Date: 12.01.2015.
@@ -52127,7 +52273,6 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"120 120 120 120"
-		"AbilityCooldown"				"40.0 40.0 40.0 40.0"
 	
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------

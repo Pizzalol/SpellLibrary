@@ -197,7 +197,7 @@
 		}
 		"modifier_item_urn_of_shadows_datadriven_damage"
 		{
-			"Damage"			"%soul_damage_duration"
+			"Duration"			"%soul_damage_duration"
 			"Passive"			"0"
 			"IsHidden"			"0"
 			"IsBuff"			"0"
