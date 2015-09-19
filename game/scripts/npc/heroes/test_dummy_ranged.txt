@@ -5,7 +5,7 @@
 	"AbilityLayout"	"4"
 
 	"Ability1"	"pudge_meat_hook_datadriven"
-	"Ability2"	"vengefulspirit_wave_of_terror_datadriven"
+	"Ability2"	"lion_voodoo_datadriven"
 	"Ability3"	"vengefulspirit_command_aura_datadriven"
 	"Ability4"	"brewmaster_primal_split_datadriven"
 }
