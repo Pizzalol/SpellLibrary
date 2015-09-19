@@ -19,7 +19,7 @@ function invoker_chaos_meteor_datadriven_on_spell_start(keys)
 	keys.caster:EmitSound("Hero_Invoker.ChaosMeteor.Loop")
 
 	--Create a particle effect consisting of the meteor falling from the sky and landing at the target point.
-	local meteor_fly_original_point = (target_point - (velocity_per_second * keys.LandTime)) + Vector (0, 0, 500)  --Start the meteor in the air in a place where it'll be moving the same speed when flying and when rolling.
+	local meteor_fly_original_point = (target_point - (velocity_per_second * keys.LandTime)) + Vector (0, 0, 1000)  --Start the meteor in the air in a place where it'll be moving the same speed when flying and when rolling.
 	local chaos_meteor_fly_particle_effect = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_chaos_meteor_fly.vpcf", PATTACH_ABSORIGIN, keys.caster)
 	ParticleManager:SetParticleControl(chaos_meteor_fly_particle_effect, 0, meteor_fly_original_point)
 	ParticleManager:SetParticleControl(chaos_meteor_fly_particle_effect, 1, target_point)
