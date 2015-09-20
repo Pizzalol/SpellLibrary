@@ -14,7 +14,8 @@ function ShapeshiftHaste( keys )
 
 	-- If they are the same then apply the modifier
 	if caster_owner == target_owner then
-		ability:ApplyDataDrivenModifier(caster, target, modifier, {Duration = duration}) 
+		ability:ApplyDataDrivenModifier(caster, target, modifier, {Duration = duration})
+		target:AddNewModifier(caster, nil, "modifier_bloodseeker_thirst", {Duration = duration})
 	end
 end
 

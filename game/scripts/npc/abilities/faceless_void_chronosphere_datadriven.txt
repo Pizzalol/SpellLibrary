@@ -205,6 +205,27 @@
 			"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
 			"EffectAttachType"	"follow_origin"
 
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_bloodseeker_thirst"
+					"Target" 		"TARGET"
+					"Duration"		"%aura_interval * 2"
+				}
+			}			
+
+			"ThinkInterval"  "%aura_interval"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_bloodseeker_thirst"
+					"Target" 		"TARGET"
+					"Duration"		"%aura_interval * 2"
+				}
+			}
+
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"1000"

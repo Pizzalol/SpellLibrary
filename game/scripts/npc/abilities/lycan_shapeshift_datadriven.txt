@@ -115,6 +115,13 @@
 					"Target" 		"TARGET"
 					"Duration"		"%duration"
 				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_bloodseeker_thirst"
+					"Target" 		"TARGET"
+					"Duration"		"%duration"
+				}
 			}
 
 			"States"
