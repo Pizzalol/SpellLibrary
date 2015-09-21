@@ -1,6 +1,6 @@
 // Rewrite of the Faceless Void Time Walk ability
 // Author: Pizzalol
-// Date: 07.01.2015.
+// Date: 21.09.2015.
 "faceless_void_time_walk_datadriven"
 {
 	// General
@@ -15,6 +15,9 @@
 	"precache"
 	{
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+		"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf"
+		"particle"  		"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf"
+		//"particle"  		"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf" // Uncomment this if you plan on using it
 	}
 	
 	// Casting
@@ -72,22 +75,26 @@
 
 	"OnSpellStart"
 	{
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_time_walk_slow_aura_datadriven"
-			"Target"		"CASTER"
-		}
-
 		"FireSound"
 		{
 			"EffectName"	"Hero_FacelessVoid.TimeWalk"
 			"Target"		"CASTER"
 		}
 
-		"ApplyModifier"
+		"FireEffect"
 		{
-			"ModifierName"	"modifier_time_walk_datadriven"
-			"Target"		"CASTER"
+			"EffectName"        "particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf"
+			"EffectAttachType"  "start_at_customorigin"
+
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_origin"
+			}
+
+			"ControlPoints"
+			{
+				"01"	"POINT"
+			}
 		}
 
 		"RunScript"
@@ -95,8 +102,19 @@
 			"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/time_walk.lua"
 			"Function"		"TimeWalk"
 			"Target"		"POINT"
-			"caster_modifier"	"modifier_time_walk_datadriven"
 			"caster_aura"		"modifier_time_walk_slow_aura_datadriven"
+		}
+
+		"ApplyMotionController"
+		// For this: gfycat.com/BraveHideousGiantschnauzer -> check: bit.ly/1KWulqA
+		{
+		    "Target"
+		    {
+		    	"Center"	"CASTER"
+		    	"Flags"     "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		    }
+		    "ScriptFile"    "heroes/hero_faceless_void/time_walk.lua"
+		    "HorizontalControlFunction" "TimeWalkMotion"  
 		}
 	}
 
@@ -110,6 +128,30 @@
 			"Aura_Radius" 	"%radius"
 			"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 			"Aura_Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+			"OnDestroy"
+			{
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf"
+					"EffectAttachType"  "attach_origin"
+					"Target"            "CASTER"
+
+					"ControlPoints"
+					{
+						"01"	"%radius 0 0"
+					}
+				}
+			}
+
+			// Use this if you want to achieve a "time walk" effect for heroes other than faceless
+			//"EffectName"		"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
+			//"EffectAttachType"	"follow_origin"
+
+			"States"
+			{
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
 		}
 
 		"modifier_time_walk_slow_datadriven"
@@ -121,16 +163,6 @@
 			{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed_pct"
 				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_pct"
-			}
-		}
-
-		"modifier_time_walk_datadriven"
-		{
-			"IsHidden"	"1"
-
-			"States"
-			{
-				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
 	}

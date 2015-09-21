@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"pudge_meat_hook_datadriven"
-	"Ability2"	"phantom_assassin_phantom_strike_datadriven"
+	"Ability1"	"faceless_void_time_walk_datadriven"
+	"Ability2"	"faceless_void_backtrack_datadriven"
 	"Ability3"	"vengefulspirit_command_aura_datadriven"
 	"Ability4"	"faceless_void_chronosphere_datadriven"
 }

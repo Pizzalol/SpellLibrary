@@ -1,32 +1,42 @@
 --[[Author: Pizzalol
-	Date: 07.01.2015.
-	Moves the caster to the target location
-	Upon getting to the location it removes the invulnerability and slow aura modifiers]]
+	Date: 21.09.2015.
+	Prepares all the required information for movement]]
 function TimeWalk( keys )
 	local caster = keys.caster
-	local caster_location = caster:GetAbsOrigin() 
+	local caster_location = caster:GetAbsOrigin()
 	local target_point = keys.target_points[1]
 	local ability = keys.ability
-	local caster_modifier = keys.caster_modifier
 	local caster_aura = keys.caster_aura
 
-	local speed = ability:GetLevelSpecialValueFor("speed", (ability:GetLevel() - 1)) * 0.03
+	-- Distance calculations
+	local speed = ability:GetLevelSpecialValueFor("speed", (ability:GetLevel() - 1))
 	local distance = (target_point - caster_location):Length2D()
 	local direction = (target_point - caster_location):Normalized()
-	local traveled_distance = 0
+	local duration = distance/speed
 
-	-- Moving the caster
-	Timers:CreateTimer(0, function()
-		if traveled_distance < distance then
-			caster_location = caster_location + direction * speed
-			caster:SetAbsOrigin(caster_location)
-			traveled_distance = traveled_distance + speed
-			return 0.03
-		else
-			caster:RemoveModifierByName(caster_modifier)
-			caster:RemoveModifierByName(caster_aura)
-		end
+	-- Saving the data in the ability
+	ability.time_walk_distance = distance
+	ability.time_walk_speed = speed * 1/30 -- 1/30 is how often the motion controller ticks
+	ability.time_walk_direction = direction
+	ability.time_walk_traveled_distance = 0
 
-	end)
+	-- Apply the slow aura and invlunerability modifier to the caster
+	ability:ApplyDataDrivenModifier(caster, caster, caster_aura, {duration = duration})
+end
 
+--[[Author: Pizzalol
+	Date: 21.09.2015.
+	Moves the target until it has traveled the distance to the chosen point]]
+function TimeWalkMotion( keys )
+	local caster = keys.target
+	local ability = keys.ability
+
+	-- Move the caster while the distance traveled is less than the original distance upon cast
+	if ability.time_walk_traveled_distance < ability.time_walk_distance then
+		caster:SetAbsOrigin(caster:GetAbsOrigin() + ability.time_walk_direction * ability.time_walk_speed)
+		ability.time_walk_traveled_distance = ability.time_walk_traveled_distance + ability.time_walk_speed
+	else
+		-- Remove the motion controller once the distance has been traveled
+		caster:InterruptMotionControllers(false)
+	end
 end
