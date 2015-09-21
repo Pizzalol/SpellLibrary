@@ -63,13 +63,6 @@
 			"Target"		"CASTER"
 		}
 
-		"AttachEffect"
-		{
-			"EffectName"	"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
-			"Target"		"CASTER"
-			"EffectAttachType"	"attach_hitloc"
-		}
-
 		"FireSound"
 		{
 			"EffectName"	"Hero_Antimage.Blink_in"
