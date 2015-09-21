@@ -65,17 +65,10 @@
 			"Target" 		"CASTER"
 		}
 
-		"FireEffect"
+		"RemoveModifier"
 		{
-			"EffectName"        "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
-			"EffectAttachType"  "start_at_customorigin"
-
-			"ControlPointEntities"
-			{
-				"CASTER"	"follow_origin"
-				"CASTER"	"follow_origin"
-				"CASTER"	"follow_origin"
-			}
+			"ModifierName"	"modifier_berserkers_call_caster_datadriven"
+			"Target" 		"CASTER"
 		}
 
 		"ApplyModifier"
@@ -114,6 +107,26 @@
 		{
 			"IsPurgable"		"0"
 			"IsBuff"			"1"
+	
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"			"CASTER"
+					"EffectName"        "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
+					"EffectAttachType" 	"follow_origin"
+					"ControlPoints"
+					{
+						"02"		"%radius 1 1"	//Required for Rampant Outrage (axe immortal)
+					}
+					"ControlPointEntities"
+					{
+						"CASTER"	"follow_origin"
+						"CASTER"	"follow_origin"
+						"CASTER"	"follow_origin"
+					}
+				}
+			}
 	
 			"Properties"
 			{
