@@ -1,0 +1,67 @@
+// Rewrite of the Pudge Dismember ability
+// Author: Valve
+// Date: 25.09.2015.
+"pudge_dismember_lua"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"FightRecapLevel"				"2"
+	"BaseClass"						"ability_lua"
+	"AbilityTextureName"					"pudge_dismember"
+	"ScriptFile"						"heroes/hero_pudge/pudge_dismember_lua.lua"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+		"particle"			"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+	}
+		
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"160"
+	"AbilityCastPoint"				"0.3 0.3 0.3"
+
+	"AbilityCooldown"				"30.0 30.0 30.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100 130 170"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"dismember_damage"		"75 125 175"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"strength_damage_scepter"		"1.0"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"hero_duration"				"3.0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"creep_duration"			"6.0"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"tick_rate"				"1.01"
+		}
+	}
+}

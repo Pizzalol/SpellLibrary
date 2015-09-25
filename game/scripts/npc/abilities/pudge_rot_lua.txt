@@ -1,0 +1,54 @@
+// Rewrite of the Pudge Rot ability
+// Author: Valve
+// Date: 25.09.2015.
+"pudge_rot_lua"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------														
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"BaseClass"						"ability_lua"
+	"AbilityTextureName"					"pudge_rot"
+	"ScriptFile"						"heroes/hero_pudge/pudge_rot_lua.lua"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+		"particle"			"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+	}
+		
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0 0 0 0"
+
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"rot_radius"			"250"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"rot_tick"				"0.2"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"rot_slow"				"-20 -22 -24 -26"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"rot_damage"				"35 60 85 110"
+		}
+	}
+}

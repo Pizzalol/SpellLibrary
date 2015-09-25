@@ -1,0 +1,40 @@
+// Rewrite of the Pudge Flesh Heap ability
+// Author: Valve
+// Date: 25.09.2015.
+"pudge_flesh_heap_lua"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_lua"
+	"AbilityTextureName"					"pudge_flesh_heap"
+	"ScriptFile"						"heroes/hero_pudge/pudge_flesh_heap_lua.lua"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf"
+	}		
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"flesh_heap_magic_resist"		"6 8 10 12"
+		}
+		"02"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"flesh_heap_strength_buff_amount"	"1.0 1.5 2 2.5"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"flesh_heap_range"		"450"
+		}
+	}
+}
