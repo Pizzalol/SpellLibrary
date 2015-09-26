@@ -1,6 +1,6 @@
 modifier_shapeshift_speed_lua = class({})
 
---[[Author: Perry/Noya
+--[[Author: Perry,Noya
 	Date: 26.09.2015.
 	Creates a modifier that allows to go beyond the 522 movement speed limit]]
 function modifier_shapeshift_speed_lua:DeclareFunctions()

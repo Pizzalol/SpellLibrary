@@ -1,8 +1,6 @@
 // Rewrite of the Faceless Void Chronosphere ability
 // Author: Pizzalol
-// Date: 10.01.2015.
-// Changed: 18.01.2015.
-// Reason: Fixed Chronosphere modifier and particle
+// Date: 26.09.2015.
 "faceless_void_chronosphere_datadriven"
 {
 	// General
@@ -82,7 +80,11 @@
 			"var_type"				"FIELD_INTEGER"
 			"ignore_void"			"1"
 		}
-
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"speed"					"1000"
+		}
 	}
 
 	"OnSpellStart"
@@ -113,8 +115,6 @@
 
 		"modifier_chronosphere_aura_datadriven"
 		{
-			"Duration"	"%duration"
-
 			"OnCreated"
 			{
 				"AttachEffect"
@@ -141,6 +141,7 @@
 						"Center"	"TARGET"
 						"Types"		"DOTA_UNIT_TARGET_ALL"
 						"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 						"Radius"	"%radius"
 					}
 
@@ -152,7 +153,6 @@
 							"Function"			"ChronosphereAura"
 							"Target"			"TARGET"
 							"aura_modifier"		"modifier_chronosphere_datadriven"
-							"caster_modifier"	"modifier_chronosphere_caster_datadriven"
 						}
 					}
 				}
@@ -170,7 +170,6 @@
 		"modifier_chronosphere_datadriven"
 		{
 			"IsHidden"	"1"
-			"Duration"	"%aura_interval"
 
 			"OnCreated"
 			{
@@ -194,46 +193,6 @@
 			{
 				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
 				"MODIFIER_STATE_FROZEN"			"MODIFIER_STATE_VALUE_ENABLED"
-			}
-		}
-
-		"modifier_chronosphere_caster_datadriven"
-		{
-			"IsHidden"	"1"
-			"Duration"	"%aura_interval * 2"
-
-			"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
-			"EffectAttachType"	"follow_origin"
-
-			"OnCreated"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_bloodseeker_thirst"
-					"Target" 		"TARGET"
-					"Duration"		"%aura_interval * 2"
-				}
-			}			
-
-			"ThinkInterval"  "%aura_interval"
-			"OnIntervalThink"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_bloodseeker_thirst"
-					"Target" 		"TARGET"
-					"Duration"		"%aura_interval * 2"
-				}
-			}
-
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"1000"
-			}
-
-			"States"
-			{
-				"MODIFIER_STATE_FLYING"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
 	}
