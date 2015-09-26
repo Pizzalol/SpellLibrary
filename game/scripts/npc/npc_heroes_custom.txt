@@ -18,6 +18,6 @@
 		"Ability1"	"pudge_meat_hook_lua"
 		"Ability2"	"pudge_rot_lua"
 		"Ability3"	"pudge_flesh_heap_lua"
-		"Ability4"	"pudge_dismember_lua"
+		"Ability4"	"lycan_shapeshift_datadriven"
 	}
 }

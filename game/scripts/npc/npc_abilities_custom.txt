@@ -33158,11 +33158,7 @@
 	
 	// Rewrite of the Lycan Shapeshift ability
 	// Author: Pizzalol
-	// Date: 24.03.2015.
-	// NOTE: Its important to include
-	// SendToServerConsole("dota_combine_models 0")
-	// SendToConsole("dota_combine_models 0")
-	// in your addon, check barebones.lua in CaptureGameMode() to see how its done
+	// Date: 26.09.2015.
 	"lycan_shapeshift_datadriven"
 	{
 		// General
@@ -33273,13 +33269,6 @@
 						"Target" 		"TARGET"
 						"Duration"		"%duration"
 					}
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_bloodseeker_thirst"
-						"Target" 		"TARGET"
-						"Duration"		"%duration"
-					}
 				}
 	
 				"States"
@@ -33313,7 +33302,6 @@
 							{
 								"ScriptFile"	"heroes/hero_lycan/shapeshift.lua"
 								"Function"		"ShapeshiftHaste"
-								"modifier"		"modifier_shapeshift_haste_datadriven"
 							}
 						}
 					}
@@ -33334,14 +33322,7 @@
 					"RunScript"
 					{
 						"ScriptFile"			"heroes/hero_lycan/shapeshift.lua"
-						"Function"				"ModelSwapStart"
-						"model"					"models/heroes/lycan/lycan_wolf.vmdl"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"			"heroes/hero_lycan/shapeshift.lua"
-						"Function"				"HideWearables"
+						"Function"				"ShapeshiftStart"
 					}
 				}
 	
@@ -33351,19 +33332,11 @@
 					{
 						"EffectName"        "particles/units/heroes/hero_lycan/lycan_shapeshift_revert.vpcf"
 						"EffectAttachType"  "follow_origin"
-						"Target"            "TARGET"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"			"heroes/hero_lycan/shapeshift.lua"
-						"Function"				"ModelSwapEnd"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"			"heroes/hero_lycan/shapeshift.lua"
-						"Function"				"ShowWearables"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
 					}
 				}
 	
@@ -33386,7 +33359,6 @@
 							{
 								"ScriptFile"	"heroes/hero_lycan/shapeshift.lua"
 								"Function"		"ShapeshiftHaste"
-								"modifier"		"modifier_shapeshift_haste_datadriven"
 							}
 						}
 					}
@@ -33419,7 +33391,6 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION" 		"%bonus_night_vision"
-					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"		"%speed"
 				}
 			}
 	
@@ -33441,20 +33412,6 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
-				}
-			}
-	
-			"modifier_shapeshift_haste_datadriven"
-			{
-				"IsHidden"		"1"
-				"IsPurgable"	"0"
-	
-				"EffectName"	"particles/units/heroes/hero_lycan/lycan_shapeshift_buff.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"		"%speed"
 				}
 			}
 		}
