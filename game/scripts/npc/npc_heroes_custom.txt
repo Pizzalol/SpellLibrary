@@ -16,7 +16,7 @@
 		"AbilityLayout"	"4"
 	
 		"Ability1"	"pudge_meat_hook_lua"
-		"Ability2"	"pudge_rot_lua"
+		"Ability2"	"mirana_arrow_datadriven"
 		"Ability3"	"mirana_leap_datadriven"
 		"Ability4"	"faceless_void_chronosphere_datadriven"
 	}

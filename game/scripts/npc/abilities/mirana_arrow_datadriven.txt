@@ -1,7 +1,6 @@
 // Rewrite of the Mirana Sacred Arrow ability
 // Author: Pizzalol
-// Date: 04.01.2015.
-// Changed: 06.01.2015.
+// Date: 26.09.2015.
 "mirana_arrow_datadriven"
 {
 	// General
@@ -97,6 +96,12 @@
 
 	"OnSpellStart"
 	{
+		"FireSound"
+		{
+			"EffectName"			"Hero_Mirana.ArrowCast"
+			"Target"				"CASTER"
+		}
+
 		"LinearProjectile"
 		{
 			"Target"      	"POINT"
@@ -116,30 +121,44 @@
 
 		"RunScript"
 		{
-			"ScriptFile"			"scripts/vscripts/heroes/hero_mirana/arrow.lua"
+			"ScriptFile"			"heroes/hero_mirana/arrow.lua"
 			"Function"				"LaunchArrow"
-		}
-
-		"FireSound"
-		{
-			"EffectName"			"Hero_Mirana.ArrowCast"
-			"Target"				"CASTER"
-		}
+			"Target"				"POINT"
+		}		
 	}
 
 	"OnProjectileHitUnit"
 	{
+		"FireSound"
+		{
+			"EffectName"			"Hero_Mirana.ArrowImpact"
+			"Target"
+			{
+				"Center"			"TARGET"
+				"Flags"     		"DOTA_UNIT_TARGET_FLAG_DEAD"
+			}
+		}
+
 		"RunScript"
 		{
-			"ScriptFile"			"scripts/vscripts/heroes/hero_mirana/arrow.lua"
+			"ScriptFile"			"heroes/hero_mirana/arrow.lua"
 			"Function"				"ArrowHit"
 			"Target"				"TARGET"
 		}
 
-		"FireSound"
+		"RunScript"
 		{
-			"EffectName"			"Hero_Mirana.ArrowImpact"
-			"Target"				"TARGET"
+			"ScriptFile"	"heroes/hero_mirana/arrow.lua"
+			"Function"		"ArrowVision"
+		}
+	}
+
+	"OnProjectileFinish"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_mirana/arrow.lua"
+			"Function"		"ArrowVision"
 		}
 	}
 }

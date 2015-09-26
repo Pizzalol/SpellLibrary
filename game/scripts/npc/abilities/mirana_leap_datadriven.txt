@@ -114,35 +114,6 @@
             	}
             }
 		}
-
-		"DelayedAction"
-		{
-			"Delay"		"%leap_distance / %leap_speed"
-
-			"Action"
-			{
-				"ActOnTargets"
-				{
-					"Target"
-		            {
-		                "Center" "CASTER"
-		                "Radius" "%leap_radius"
-		                "Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
-		                "Types" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		            }
-
-		            "Action"
-		            {
-		            	"ApplyModifier"
-		            	{
-		            		"ModifierName"	"modifier_leap_datadriven"
-		            		"Target"		"TARGET"
-		            		"Duration"		"%leap_duration"
-		            	}
-		            }
-				}
-			}
-		}
 	}
 
 	"Modifiers"
