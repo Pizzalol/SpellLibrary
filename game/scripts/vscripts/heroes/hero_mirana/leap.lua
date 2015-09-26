@@ -1,54 +1,51 @@
 --[[Author: Pizzalol
-	Date: 05.01.2015.
-	Leaps the target forward]]
+	Date: 26.09.2015.
+	Clears current caster commands and disjoints projectiles while setting up everything required for movement]]
 function Leap( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local leap_distance = ability:GetLevelSpecialValueFor("leap_distance", (ability:GetLevel() - 1))
-	local leap_speed = ability:GetLevelSpecialValueFor("leap_speed", (ability:GetLevel() - 1))
+	local ability_level = ability:GetLevel() - 1	
 
-	-- Clears any current command
+	-- Clears any current command and disjoints projectiles
 	caster:Stop()
+	ProjectileManager:ProjectileDodge(caster)
 
-	-- Physics
-	local direction = caster:GetForwardVector()
-	local velocity = leap_speed * 1.4
-	local end_time = leap_distance / leap_speed
-	local time_elapsed = 0
-	local time = end_time/2
-	local jump = end_time/0.03
+	-- Ability variables
+	ability.leap_direction = caster:GetForwardVector()
+	ability.leap_distance = ability:GetLevelSpecialValueFor("leap_distance", ability_level)
+	ability.leap_speed = ability:GetLevelSpecialValueFor("leap_speed", ability_level) * 1/30
+	ability.leap_traveled = 0
+	ability.leap_z = 0
+end
 
-	Physics:Unit(caster)
+--[[Moves the caster on the horizontal axis until it has traveled the distance]]
+function LeapHorizonal( keys )
+	local caster = keys.target
+	local ability = keys.ability
 
-	caster:PreventDI(true)
-	caster:SetAutoUnstuck(false)
-	caster:SetNavCollisionType(PHYSICS_NAV_NOTHING)
-	caster:FollowNavMesh(false)	
-	caster:SetPhysicsVelocity(direction * velocity)
+	if ability.leap_traveled < ability.leap_distance then
+		caster:SetAbsOrigin(caster:GetAbsOrigin() + ability.leap_direction * ability.leap_speed)
+		ability.leap_traveled = ability.leap_traveled + ability.leap_speed
+	else
+		caster:InterruptMotionControllers(true)
+	end
+end
 
+--[[Moves the caster on the vertical axis until movement is interrupted]]
+function LeapVertical( keys )
+	local caster = keys.target
+	local ability = keys.ability
 
-	-- Move the unit
-	Timers:CreateTimer(0, function()
-		local ground_position = GetGroundPosition(caster:GetAbsOrigin() , caster)
-		time_elapsed = time_elapsed + 0.03
-		if time_elapsed < time then
-			caster:SetAbsOrigin(caster:GetAbsOrigin() + Vector(0,0,jump)) -- Going up
-		else
-			caster:SetAbsOrigin(caster:GetAbsOrigin() - Vector(0,0,jump)) -- Going down
-		end
-		-- If the target reached the ground then remove physics
-		if caster:GetAbsOrigin().z - ground_position.z <= 0 then
-			caster:SetPhysicsAcceleration(Vector(0,0,0))
-			caster:SetPhysicsVelocity(Vector(0,0,0))
-			caster:OnPhysicsFrame(nil)
-			caster:PreventDI(false)
-			caster:SetNavCollisionType(PHYSICS_NAV_SLIDE)
-			caster:SetAutoUnstuck(true)
-			caster:FollowNavMesh(true)
-			caster:SetPhysicsFriction(.05)
-			return nil
-		end
-
-		return 0.03
-	end)
+	-- For the first half of the distance the unit goes up and for the second half it goes down
+	if ability.leap_traveled < ability.leap_distance/2 then
+		-- Go up
+		-- This is to memorize the z point when it comes to cliffs and such although the division of speed by 2 isnt necessary, its more of a cosmetic thing
+		ability.leap_z = ability.leap_z + ability.leap_speed/2
+		-- Set the new location to the current ground location + the memorized z point
+		caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,ability.leap_z))
+	else
+		-- Go down
+		ability.leap_z = ability.leap_z - ability.leap_speed/2
+		caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,ability.leap_z))
+	end
 end

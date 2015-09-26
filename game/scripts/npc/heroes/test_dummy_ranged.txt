@@ -6,6 +6,6 @@
 
 	"Ability1"	"pudge_meat_hook_lua"
 	"Ability2"	"pudge_rot_lua"
-	"Ability3"	"pudge_flesh_heap_lua"
+	"Ability3"	"mirana_leap_datadriven"
 	"Ability4"	"faceless_void_chronosphere_datadriven"
 }

@@ -1,6 +1,9 @@
 pudge_flesh_heap_lua = class({})
 LinkLuaModifier( "modifier_flesh_heap_lua", "heroes/hero_pudge/modifiers/modifier_flesh_heap_lua.lua" ,LUA_MODIFIER_MOTION_NONE )
 
+--[[Author: Valve
+	Date: 26.09.2015.
+	Passive modifier which increases strength based on the number of kills made]]
 --------------------------------------------------------------------------------
 
 function pudge_flesh_heap_lua:GetIntrinsicModifierName()

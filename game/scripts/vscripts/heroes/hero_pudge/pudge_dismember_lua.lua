@@ -1,6 +1,8 @@
 pudge_dismember_lua = class({})
 LinkLuaModifier( "modifier_dismember_lua", "heroes/hero_pudge/modifiers/modifier_dismember_lua.lua" ,LUA_MODIFIER_MOTION_NONE )
 
+--[[Author: Valve
+	Date: 26.09.2015.]]
 --------------------------------------------------------------------------------
 
 function pudge_dismember_lua:GetConceptRecipientType()

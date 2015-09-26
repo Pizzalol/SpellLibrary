@@ -1,6 +1,7 @@
 modifier_chronosphere_speed_lua = class({})
 
 --[[Author: Perry,Noya
+	Date: 26.09.2015.
 	Removes the movement speed limit and applies the chronosphere effect]]
 function modifier_chronosphere_speed_lua:DeclareFunctions()
 	local funcs = 

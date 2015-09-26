@@ -35165,7 +35165,7 @@
 	
 	// Rewrite of the Mirana Leap ability
 	// Author: Pizzalol
-	// Date: 05.01.2015.
+	// Date: 26.09.2015.
 	"mirana_leap_datadriven"
 	{
 		// General
@@ -35246,8 +35246,17 @@
 			
 			"RunScript"
 			{
-				"ScriptFile"	"scripts/vscripts/heroes/hero_mirana/leap.lua"
+				"ScriptFile"	"heroes/hero_mirana/leap.lua"
 				"Function"		"Leap"
+			}
+	
+			"ApplyMotionController"
+			// For this: gfycat.com/BraveHideousGiantschnauzer -> check: bit.ly/1KWulqA
+			{
+			    "Target" 		"CASTER"
+			    "ScriptFile"    "heroes/hero_mirana/leap.lua"
+			    "HorizontalControlFunction" "LeapHorizonal"
+			    "VerticalControlFunction" 	"LeapVertical"         
 			}
 	
 			"ActOnTargets"
@@ -35266,6 +35275,7 @@
 	            	{
 	            		"ModifierName"	"modifier_leap_datadriven"
 	            		"Target"		"TARGET"
+	            		"Duration"		"%leap_duration"
 	            	}
 	            }
 			}
@@ -35292,6 +35302,7 @@
 			            	{
 			            		"ModifierName"	"modifier_leap_datadriven"
 			            		"Target"		"TARGET"
+			            		"Duration"		"%leap_duration"
 			            	}
 			            }
 					}
@@ -35303,8 +35314,6 @@
 		{
 			"modifier_leap_datadriven"
 			{
-				"Duration"	"%leap_duration"
-	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%leap_speedbonus_as"
