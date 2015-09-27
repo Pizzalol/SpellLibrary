@@ -1,6 +1,6 @@
 -- Change these to whatever you want
 ice_blast_target_team = DOTA_UNIT_TARGET_TEAM_ENEMY
-ice_blast_target_type = DOTA_UNIT_TARGET_HERO
+ice_blast_target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 ice_blast_target_flag = DOTA_UNIT_TARGET_FLAG_NONE
 
 --[[Author: Pizzalol
@@ -126,13 +126,12 @@ function ice_blast_launch( keys )
 					hail_location = hail_location + Vector(projectile_direction.x * hail_speed, projectile_direction.y * hail_speed, 0)
 					hail_traveled_distance = hail_traveled_distance + hail_speed
 
-					ability:CreateVisibilityNode(hail_location, travel_vision, travel_vision_duration)
-
+					AddFOWViewer(caster:GetTeamNumber(), hail_location, travel_vision, travel_vision_duration, false)
 					return 1/30
 				else
 					-- End path area vision
 					caster.ice_blast_tracer:RemoveSelf()
-					ability:CreateVisibilityNode(hail_location, area_vision, area_vision_duration)
+					AddFOWViewer(caster:GetTeamNumber(), hail_location, area_vision, area_vision_duration, false)
 					return nil
 				end
 			end)
@@ -188,7 +187,10 @@ function ice_blast_explode( keys )
 	local units_to_damage = FindUnitsInRadius(caster:GetTeam(), caster.ice_blast_tracer_location, nil, caster.ice_blast_radius, ice_blast_target_team, ice_blast_target_type, ice_blast_target_flag, FIND_CLOSEST, false)
 
 	for _,v in pairs(units_to_damage) do
-		ability:ApplyDataDrivenModifier(caster, v, modifier, {duration = duration})
+		-- Apply the frostbite modifier only to heroes
+		if v:IsConsideredHero() then
+			ability:ApplyDataDrivenModifier(caster, v, modifier, {duration = duration})
+		end
 
 		damage_table.victim = v
 		ApplyDamage(damage_table)

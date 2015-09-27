@@ -122,7 +122,7 @@
 		"modifier_trueshot_damage_datadriven"
 		{
 			"IsPurgable"			"0"
-			"IsHidden"				"0"
+			"IsHidden"				"1"
 
 			"Properties"
 			{
