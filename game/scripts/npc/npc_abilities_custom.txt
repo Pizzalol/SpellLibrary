@@ -24109,7 +24109,7 @@
 	}
 	// Rewrite of the Invoker Forge Spirit ability
 	// Author: Pizzalol
-	// Date: 16.04.2015.
+	// Date: 27.09.2015.
 	// NOTE: Setting the maximum mana doesnt work currently
 	"invoker_forge_spirit_datadriven"
 	{
@@ -24201,7 +24201,6 @@
 				"positive_armor"	"modifier_forge_spirit_positive_armor_datadriven"
 				"negative_armor"	"modifier_forge_spirit_negative_armor_datadriven"
 				"attack_range"		"modifier_forge_spirit_attack_range_datadriven"
-				"mana_bonus"		"modifier_forge_spirit_mana_datadriven"
 			}
 		}
 	
@@ -24237,18 +24236,6 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "1"
-				}
-			}
-	
-			// This doesnt work currently
-			"modifier_forge_spirit_mana_datadriven"
-			{
-				"IsHidden"		"1"
-				"IsPurgable"	"0"
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_BONUS" "1"
 				}
 			}
 		}
@@ -27087,8 +27074,8 @@
 		{
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
 			"particle"			"particles/status_fx/status_effect_keeper_spirit_form.vpcf"
-			"particle"  "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_cast.vpcf"
-			"particle"  "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_ambient.vpcf"				
+			"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_cast.vpcf"
+			"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_ambient.vpcf"				
 		}
 	
 		// Time		

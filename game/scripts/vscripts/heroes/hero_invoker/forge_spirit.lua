@@ -1,5 +1,5 @@
 --[[Author: Pizzalol
-	Date: 16.04.2015.
+	Date: 27.09.2015.
 	Creates spirits and sets their stats according to Quas and Exort levels]]
 function ForgeSpirit( keys )
 	local caster = keys.caster
@@ -23,7 +23,6 @@ function ForgeSpirit( keys )
 	local positive_armor = keys.positive_armor
 	local negative_armor = keys.negative_armor
 	local attack_range = keys.attack_range
-	local mana_bonus = keys.mana_bonus
 
 	-- Calculate the number of spirits
 	local spirit_count
@@ -35,19 +34,19 @@ function ForgeSpirit( keys )
 
 	-- Spirit cleanup
 	-- Initialize the unit table to keep track of the spirits
-	if not caster.forged_spirits then
-		caster.forged_spirits = {}
+	if not ability.forged_spirits then
+		ability.forged_spirits = {}
 	end
 
 	-- Kill the old spirits
-	for k,v in pairs(caster.forged_spirits) do
+	for k,v in pairs(ability.forged_spirits) do
 		if v and IsValidEntity(v) then 
 			v:ForceKill(false)
 		end
 	end
 
 	-- Start a clean unit table
-	caster.forged_spirits = {}
+	ability.forged_spirits = {}
 
 	-- Create new spirits
 	for i=1,spirit_count do
@@ -64,9 +63,10 @@ function ForgeSpirit( keys )
 		forged_spirit:SetBaseDamageMin(spirit_damage) 
 		forged_spirit:SetBaseDamageMax(spirit_damage)
 
-		-- Set the health
-		forged_spirit:SetMaxHealth(spirit_hp)
-		forged_spirit:Heal(spirit_hp, ability)
+		-- Set the health and mana
+		--forged_spirit:SetManaGain(0)
+		--forged_spirit:CreatureLevelUp(1)
+		forged_spirit:SetBaseMaxHealth(spirit_hp)
 
 		-- Set the armor
 		-- Check if we have to add or reduce armor and then apply the positive or negative modifier
@@ -79,10 +79,6 @@ function ForgeSpirit( keys )
 			forged_spirit:SetModifierStackCount(negative_armor, ability, armor * -1)
 		end
 
-		-- Set the mana
-		ability:ApplyDataDrivenModifier(caster, forged_spirit, mana_bonus, {}) 
-		forged_spirit:SetModifierStackCount(mana_bonus, ability, spirit_mana)
-
 		-- Set the attack range
 		ability:ApplyDataDrivenModifier(caster, forged_spirit, attack_range, {}) 
 		forged_spirit:SetModifierStackCount(attack_range, ability, spirit_attack_range)
@@ -91,6 +87,6 @@ function ForgeSpirit( keys )
 		forged_spirit:AddNewModifier(caster, ability, "modifier_kill", {duration = spirit_duration})
 
 		-- Track the spirit
-		table.insert(caster.forged_spirits, forged_spirit)
+		table.insert(ability.forged_spirits, forged_spirit)
 	end
 end

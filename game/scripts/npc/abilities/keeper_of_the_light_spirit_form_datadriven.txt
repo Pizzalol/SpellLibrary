@@ -21,8 +21,8 @@
 	{
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
 		"particle"			"particles/status_fx/status_effect_keeper_spirit_form.vpcf"
-		"particle"  "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_cast.vpcf"
-		"particle"  "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_ambient.vpcf"				
+		"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_cast.vpcf"
+		"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_ambient.vpcf"				
 	}
 
 	// Time		

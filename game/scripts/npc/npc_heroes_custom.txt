@@ -15,14 +15,12 @@
 	
 		"AbilityLayout"	"6"
 	
-		"Ability1"	"keeper_of_the_light_illuminate_datadriven"
-		"Ability2"	"keeper_of_the_light_mana_leak_datadriven"
-		"Ability3"	"keeper_of_the_light_chakra_magic_datadriven"
-		"Ability4"	"keeper_of_the_light_recall_datadriven"
-		"Ability5"	"keeper_of_the_light_blinding_light_datadriven"
-		"Ability6"	"keeper_of_the_light_spirit_form_datadriven"
-		"Ability7"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
-		"Ability8"	"keeper_of_the_light_illuminate_end_datadriven"
-		"Ability9"	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
+		"Ability1"	"invoker_quas_datadriven"
+		"Ability2"	"invoker_wex_datadriven"
+		"Ability3"	"invoker_exort_datadriven"
+		"Ability4"	"invoker_empty1_datadriven"
+		"Ability5"	"invoker_empty2_datadriven"
+		"Ability6"	"invoker_invoke_datadriven"
+		"Ability7"	"invoker_forge_spirit_datadriven"
 	}
 }
