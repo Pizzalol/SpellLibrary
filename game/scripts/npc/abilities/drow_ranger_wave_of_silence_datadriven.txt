@@ -1,3 +1,6 @@
+// Rewrite of the Drow Ranger Wave of silence
+// Author: kritth
+// Date: 03.01.2015.
 "drow_ranger_wave_of_silence_datadriven"
 {
 	// General

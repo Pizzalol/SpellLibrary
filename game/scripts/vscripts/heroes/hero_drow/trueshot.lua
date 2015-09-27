@@ -1,69 +1,29 @@
 --[[
-	Author: kritth
-	Date: 3.1.2015.
-	Create timer to provide bonus damage
+	Author: kritth, Pizzalol
+	Date: 27.09.2015.
+	Calculates the bonus damage based on casters agility and then applies a stack modifier to grant the damage
 ]]
-
---[[Changelog:
-	16.03.2015. Fixed an issue where the timer wouldnt die correctly -- Pizzalol]]
 function trueshot_initialize( keys )
 	local caster = keys.caster
 	local target = keys.target
-	local ability = keys. ability
-	local prefix = "modifier_trueshot_damage_mod_"
-	
-	Timers:CreateTimer( DoUniqueString( "trueshot_updateDamage_" .. target:entindex() ), {
-		endTime = 0.25,
-		callback = function()
-			if target and IsValidEntity(target) then
-				-- Adjust damage based on agility of caster
-				local agility = caster:GetAgility()
-				local percent = ability:GetLevelSpecialValueFor( "trueshot_ranged_damage", ability:GetLevel() - 1 )
-				local damage = math.floor( agility * percent / 100 )
-				
-				-- check if unit has attribute
-				if not target.TrueshotDamage then
-					target.TrueshotDamage = 0
-				end
-				
-				-- Check if unit doesn't have buff
-				if not target:HasModifier( "modifier_trueshot_effect_datadriven" ) then
-					damage = 0
-				end
-				
-				local damage_ref = damage
-				
-				-- If the stored value is different
-				if target.TrueshotDamage ~= damage then
-					-- modifier values
-					local bitTable = { 512, 256, 128, 64, 32, 16, 8, 4, 2, 1 }
-					
-					-- Get the list of modifiers on the hero and loops through removing
-					local modCount = target:GetModifierCount()
-					for i = 0, modCount do
-						for u = 1, #bitTable do
-							local val = bitTable[u]
-							if target:GetModifierNameByIndex( i ) == prefix .. val then
-								target:RemoveModifierByName( prefix .. val )
-							end
-						end
-					end
-					
-					-- Add modifiers
-					for p = 1, #bitTable do
-						local val = bitTable[p]
-						local count = math.floor( damage / val )
-						if count >= 1 then
-							ability:ApplyDataDrivenModifier( caster, target, prefix .. val, {} )
-							damage = damage - val
-						end
-					end
-				end
-				target.TrueshotDamage = damage_ref
-				return 0.25
-			else
-				return nil
-			end
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	local trueshot_modifier = keys.trueshot_modifier
+	local trueshot_damage_modifier = keys.trueshot_damage_modifier
+
+	-- Check if its a valid target
+	if target and IsValidEntity(target) and target:HasModifier(trueshot_modifier) then
+		local agility = caster:GetAgility()
+		local percent = ability:GetLevelSpecialValueFor("trueshot_ranged_damage", ability_level) 
+		local trueshot_damage = math.floor(agility * percent / 100)
+
+		-- If it doesnt have the stack modifier then apply it
+		if not target:FindModifierByName(trueshot_damage_modifier) then
+			ability:ApplyDataDrivenModifier(caster, target, trueshot_damage_modifier, {})
 		end
-	})
+		
+		-- Set the damage to the calculated damage
+		target:SetModifierStackCount(trueshot_damage_modifier, caster, trueshot_damage)
+	end
 end

@@ -1,3 +1,6 @@
+// Rewrite of the Drow Ranger Markshmanship
+// Author: kritth
+// Date: 03.01.2015.
 "drow_ranger_marksmanship_datadriven"
 {
 	// General

@@ -1,3 +1,6 @@
+// Rewrite of the Drow Ranger Frost Arrows
+// Author: kritth
+// Date: 03.01.2015.
 "drow_ranger_frost_arrows_datadriven"
 {
 	// General

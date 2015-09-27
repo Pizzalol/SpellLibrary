@@ -16752,6 +16752,9 @@
 		}
 	}	
 	
+	// Rewrite of the Drow Ranger Frost Arrows
+	// Author: kritth
+	// Date: 03.01.2015.
 	"drow_ranger_frost_arrows_datadriven"
 	{
 		// General
@@ -16878,6 +16881,9 @@
 			}
 		}
 	}
+	// Rewrite of the Drow Ranger Markshmanship
+	// Author: kritth
+	// Date: 03.01.2015.
 	"drow_ranger_marksmanship_datadriven"
 	{
 		// General
@@ -16972,54 +16978,9 @@
 			}
 		}
 	}
-	"drow_ranger_silence_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"drow_ranger_silence"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13.0 13.0 13.0 13.0"
-		"AbilityDuration"				"3.0 4.0 5.0 6.0"
-	
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"0 0 0 0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90 90 90 90"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"silence_radius"			"300"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.0 4.0 5.0 6.0"
-			}
-		}
-	}
-	
-	// Author: kritth
-	// Date: 3.1.2015.
-	// Note: Constraint is that agility never go above 2841
+	// Rewrite of the Drow Ranger Trueshot aura
+	// Author: kritth, Pizzalol
+	// Date: 27.09.2015.
 	"drow_ranger_trueshot_datadriven"
 	{
 		// General
@@ -17075,7 +17036,7 @@
 			{
 				"Passive"				"1"
 				"IsPurgable"			"0"
-				"IsHidden"				"0"
+				"IsHidden"				"1"
 				
 				"Aura"					"modifier_trueshot_effect_datadriven"
 				"Aura_Radius"			"%global_radius"
@@ -17107,114 +17068,52 @@
 					{
 						"ScriptFile"	"heroes/hero_drow/trueshot.lua"
 						"Function"		"trueshot_initialize"
+						"trueshot_modifier"	"modifier_trueshot_effect_datadriven"
+						"trueshot_damage_modifier"	"modifier_trueshot_damage_datadriven"
+					}
+				}
+	
+				"ThinkInterval"  "0.25"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_drow/trueshot.lua"
+						"Function"		"trueshot_initialize"
+						"trueshot_modifier"	"modifier_trueshot_effect_datadriven"
+						"trueshot_damage_modifier"	"modifier_trueshot_damage_datadriven"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_trueshot_damage_datadriven"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD | DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
+						}
 					}
 				}
 			}
 		
-			// Bit Modifiers
-			"modifier_trueshot_damage_mod_1"
+			"modifier_trueshot_damage_datadriven"
 			{
 				"IsPurgable"			"0"
-				"IsHidden"				"1"  
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"IsHidden"				"0"
+	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"1"
 				}
 			}
-			
-			"modifier_trueshot_damage_mod_2"
-			{
-				"IsPurgable"			"0"
-				"IsHidden"				"1"  
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"2"
-				}
-			}
-			"modifier_trueshot_damage_mod_4"
-			{
-				"IsPurgable"			"0"
-				"IsHidden"				"1"  
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"4"
-				}
-			}
-			"modifier_trueshot_damage_mod_8"
-			{
-				"IsPurgable"			"0"
-				"IsHidden"				"1"  
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"8"
-				}
-			}
-			"modifier_trueshot_damage_mod_16"
-			{
-				"IsPurgable"			"0"
-				"IsHidden"				"1"  
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"16"
-				}
-			}
-			"modifier_trueshot_damage_mod_32"
-			{
-				"IsPurgable"			"0"
-				"IsHidden"				"1"  
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"32"
-				}
-			}
-			"modifier_trueshot_damage_mod_64"
-			{
-				"IsPurgable"			"0"
-				"IsHidden"				"1"  
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"64"
-				}
-			}
-			"modifier_trueshot_damage_mod_128"
-			{
-				"IsPurgable"			"0"
-				"IsHidden"				"1"  
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"128"
-				}
-			}
-			"modifier_trueshot_damage_mod_256"
-			{
-				"IsPurgable"			"0"
-				"IsHidden"				"1"  
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"256"
-				}
-			}
-			"modifier_trueshot_damage_mod_512"
-			{
-				"IsPurgable"			"0"
-				"IsHidden"				"1"  
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"512"
-				}
-			}
 		}
 	}
+	// Rewrite of the Drow Ranger Wave of silence
+	// Author: kritth
+	// Date: 03.01.2015.
 	"drow_ranger_wave_of_silence_datadriven"
 	{
 		// General
