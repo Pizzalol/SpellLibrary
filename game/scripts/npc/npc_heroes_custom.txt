@@ -17,7 +17,7 @@
 	
 		"Ability1"	"invoker_quas_datadriven"
 		"Ability2"	"chaos_knight_reality_rift_datadriven"
-		"Ability3"	"invoker_exort_datadriven"
-		"Ability4"	"invoker_empty1_datadriven"
+		"Ability3"	"shadow_shaman_voodoo_datadriven"
+		"Ability4"	"lion_voodoo_datadriven"
 	}
 }

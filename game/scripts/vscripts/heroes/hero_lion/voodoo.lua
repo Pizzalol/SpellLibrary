@@ -1,63 +1,20 @@
---[[Author: Pizzalol
-	Date: 18.01.2015.
-	Checks if the target is an illusion, if true then it kills it
-	otherwise the target model gets swapped into a frog]]
-function voodoo_start( keys )
-	local target = keys.target
-	local model = keys.model
+LinkLuaModifier("modifier_voodoo_lua", "heroes/hero_lion/modifiers/modifier_voodoo_lua.lua", LUA_MODIFIER_MOTION_NONE)
 
+--[[Author: Pizzalol
+	Date: 27.09.2015.
+	Checks if the target is an illusion, if true then it kills it
+	otherwise it applies the hex modifier to the target]]
+function voodoo_start( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local target = keys.target
+
+	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
+	
 	if target:IsIllusion() then
 		target:ForceKill(true)
 	else
-		if target.target_model == nil then
-			target.target_model = target:GetModelName()
-		end
-
-		target:SetOriginalModel(model)
-	end
-end
-
---[[Author: Pizzalol
-	Date: 18.01.2015.
-	Reverts the target model back to what it was]]
-function voodoo_end( keys )
-	local target = keys.target
-
-	-- Checking for errors
-	if target.target_model ~= nil then
-		target:SetModel(target.target_model)
-		target:SetOriginalModel(target.target_model)
-	end
-end
-
-
---[[Author: Noya
-	Date: 09.08.2015.
-	Hides all dem hats
-]]
-function HideWearables( event )
-	local hero = event.target
-	local ability = event.ability
-
-	print("hello1")
-
-	hero.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
-    local model = hero:FirstMoveChild()
-    while model ~= nil do
-        if model:GetClassname() == "dota_item_wearable" then
-            model:AddEffects(EF_NODRAW) -- Set model hidden
-            table.insert(hero.hiddenWearables, model)
-        end
-        model = model:NextMovePeer()
-    end
-end
-
-function ShowWearables( event )
-	local hero = event.target
-
-	print("hello2")
-
-	for i,v in pairs(hero.hiddenWearables) do
-		v:RemoveEffects(EF_NODRAW)
+		target:AddNewModifier(caster, ability, "modifier_voodoo_lua", {duration = duration})
 	end
 end

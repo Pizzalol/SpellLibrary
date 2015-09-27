@@ -1,11 +1,6 @@
 // Rewrite of the Shadow Shaman Voodoo ability
 // Author: Noya
-// Date: April 4, 2015.
-// TODO: Check hex stacking from different casters
-// NOTE: Its important to include
-// SendToServerConsole("dota_combine_models 0")
-// SendToConsole("dota_combine_models 0")
-// in your addon, check barebones.lua in CaptureGameMode() to see how its done
+// Date: 27.09.2015.
 "shadow_shaman_voodoo_datadriven"
 {
 	// General
@@ -60,13 +55,7 @@
 	{
 		"FireSound"
 		{
-			"EffectName"	"Hero_Lion.Voodoo" //TODO
-			"Target"		"TARGET"
-		}
-
-		"FireSound"
-		{
-			"EffectName"	"Hero_Lion.Hex.Target" //TODO
+			"EffectName"	"Hero_ShadowShaman.Hex.Target"
 			"Target"		"TARGET"
 		}
 
@@ -77,64 +66,11 @@
 			"Target"		"TARGET"
 		}
 
-		"ApplyModifier"
+		"RunScript"
 		{
-			"ModifierName"	"modifier_voodoo_datadriven"
+			"ScriptFile"	"heroes/hero_shadow_shaman/voodoo.lua"
+			"Function"		"voodoo_start"
 			"Target"		"TARGET"
-		}
-	}
-
-	"Modifiers"
-	{
-		"modifier_voodoo_datadriven"
-		{
-			"IsDebuff"	"1"
-			"Duration"	"%duration"
-
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"scripts/vscripts/heroes/hero_shadow_shaman/voodoo.lua"
-					"Function"		"voodoo_start"
-					"model"			"models/props_gameplay/chicken.vmdl"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"		"scripts/vscripts/heroes/hero_shadow_shaman/voodoo.lua"
-					"Function"			"HideWearables"
-				}
-			}
-
-			"OnDestroy"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"scripts/vscripts/heroes/hero_shadow_shaman/voodoo.lua"
-					"Function"		"voodoo_end"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"	"scripts/vscripts/heroes/hero_shadow_shaman/voodoo.lua"
-					"Function"		"ShowWearables"
-				}
-			}
-
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"		"%movespeed"
-			}
-
-			"States"
-			{
-				"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_MUTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_HEXED"		"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_EVADE_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_BLOCK_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
-			}
 		}
 	}
 }
