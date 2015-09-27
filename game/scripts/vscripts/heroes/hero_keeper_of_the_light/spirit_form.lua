@@ -13,8 +13,8 @@ function SwapAbilities( keys )
 end
 
 --[[
-	Author: Noya/Pizzalol
-	Date: 25.01.2015.
+	Author: Noya,Pizzalol
+	Date: 27.09.2015.
 	Levels up the ability_name to the same level of the ability that runs this and only
 	if the target has the specified modifier
 ]]
@@ -31,11 +31,19 @@ function LevelUpAbility( event )
 	local ability_level = ability_handle:GetLevel()
 
 	-- Check to not enter a level up loop
-	if ability_level ~= this_abilityLevel and caster:HasModifier(modifier) then
+	if ability_level ~= this_abilityLevel then
 		ability_handle:SetLevel(this_abilityLevel)
+	end
+
+	-- Disable/Enable the ability depending if Spirit Form is active
+	if caster:HasModifier(modifier) then
+		ability_handle:SetActivated(true) 
+	else
+		ability_handle:SetActivated(false)
 	end
 end
 
+--[[Enables the Spirit Form abilities]]
 function SpiritFormStart( keys )
 	local caster = keys.caster
 	local spirit_form = keys.ability
@@ -45,14 +53,14 @@ function SpiritFormStart( keys )
 	local recall = caster:FindAbilityByName(keys.recall)
 	local blinding_light = caster:FindAbilityByName(keys.blinding_light)
 
-	local spirit_form_level = spirit_form:GetLevel()
 	local illuminate_level = illuminate:GetLevel()
 
 	spirit_form_illuminate:SetLevel(illuminate_level)
-	recall:SetLevel(spirit_form_level)
-	blinding_light:SetLevel(spirit_form_level)
+	recall:SetActivated(true)
+	blinding_light:SetActivated(true)
 end
 
+--[[Disables the Spirit Form abilities]]
 function SpiritFormEnd( keys )
 	local caster = keys.caster
 
@@ -64,8 +72,8 @@ function SpiritFormEnd( keys )
 	local spirit_form_illuminate_level = spirit_form_illuminate:GetLevel()
 
 	illuminate:SetLevel(spirit_form_illuminate_level)
-	recall:SetLevel(0)
-	blinding_light:SetLevel(0)
+	recall:SetActivated(false)
+	blinding_light:SetActivated(false)
 
 	if caster.spirit_form_illuminate_dummy and IsValidEntity(caster.spirit_form_illuminate_dummy) then
 		caster.spirit_form_illuminate_dummy:RemoveModifierByName("modifier_spirit_form_illuminate_dummy_datadriven")

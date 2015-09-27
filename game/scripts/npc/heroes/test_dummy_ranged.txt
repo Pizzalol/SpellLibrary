@@ -2,10 +2,15 @@
 {
 	"override_hero" "npc_dota_hero_ancient_apparition"
 
-	"AbilityLayout"	"4"
+	"AbilityLayout"	"6"
 
-	"Ability1"	"drow_ranger_trueshot_datadriven"
-	"Ability2"	"mirana_arrow_datadriven"
-	"Ability3"	"mirana_leap_datadriven"
-	"Ability4"	"faceless_void_chronosphere_datadriven"
+	"Ability1"	"keeper_of_the_light_illuminate_datadriven"
+	"Ability2"	"keeper_of_the_light_mana_leak_datadriven"
+	"Ability3"	"keeper_of_the_light_chakra_magic_datadriven"
+	"Ability4"	"keeper_of_the_light_recall_datadriven"
+	"Ability5"	"keeper_of_the_light_blinding_light_datadriven"
+	"Ability6"	"keeper_of_the_light_spirit_form_datadriven"
+	"Ability7"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
+	"Ability8"	"keeper_of_the_light_illuminate_end_datadriven"
+	"Ability9"	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
 }

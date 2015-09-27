@@ -17102,7 +17102,7 @@
 			"modifier_trueshot_damage_datadriven"
 			{
 				"IsPurgable"			"0"
-				"IsHidden"				"0"
+				"IsHidden"				"1"
 	
 				"Properties"
 				{
@@ -27066,16 +27066,12 @@
 	
 	// Rewrite of the Keeper of the Light Spirit Form ability
 	// Author: Pizzalol
-	// Date: 25.01.2015.
+	// Date: 27.09.2015.
 	// NOTE: This ability REQUIRES the following abilities and all of their sub abilities
 	//		keeper_of_the_light_illuminate_datadriven
 	//		keeper_of_the_light_recall_datadriven
 	//		keeper_of_the_light_blinding_light_datadriven
 	//		keeper_of_the_light_spirit_form_illuminate_datadriven
-	// 
-	// NOTE2: The Spirit Form sub abilities are set to level 0 after Spirit Form ends
-	// and they are set to the Spirit Form level when it starts instead of being set as
-	// enabled/disabled
 	"keeper_of_the_light_spirit_form_datadriven"
 	{
 		// General
