@@ -1,6 +1,6 @@
 // Rewrite of the Chaos Knight Reality Rift ability
 // Author: Pizzalol
-// Date: 09.04.2015.
+// Date: 27.09.2015.
 "chaos_knight_reality_rift_datadriven"
 {
 	// General

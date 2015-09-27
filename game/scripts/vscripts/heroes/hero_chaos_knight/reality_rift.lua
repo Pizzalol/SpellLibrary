@@ -1,5 +1,5 @@
 --[[Author: Pizzalol
-	Date: 09.04.2015.
+	Date: 27.09.2015.
 	Calculate the rift position and play the particle]]
 function RealityRiftPosition( keys )
 	local caster = keys.caster
@@ -25,6 +25,7 @@ function RealityRiftPosition( keys )
 	ParticleManager:SetParticleControlEnt(particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster_location, true)
 	ParticleManager:SetParticleControlEnt(particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_location, true)
 	ParticleManager:SetParticleControl(particle, 2, target_point_vector)
+	ParticleManager:SetParticleControlOrientation(particle, 2, direction, Vector(0,1,0), Vector(1,0,0))
 	ParticleManager:ReleaseParticleIndex(particle) 
 
 	-- Save the location
