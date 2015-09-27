@@ -122,7 +122,7 @@
 		
 		"RunScript"
 		{
-			"ScriptFile"		"heroes/hero_crystalmaiden/crystal_nova.lua"
+			"ScriptFile"		"heroes/hero_crystal_maiden/crystal_nova.lua"
 			"Function"			"crystal_nova_post_vision"
 			"Target"			"POINT"
 		}

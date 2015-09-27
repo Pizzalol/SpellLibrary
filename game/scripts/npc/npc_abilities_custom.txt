@@ -11799,7 +11799,7 @@
 			
 			"RunScript"
 			{
-				"ScriptFile"		"heroes/hero_crystalmaiden/crystal_nova.lua"
+				"ScriptFile"		"heroes/hero_crystal_maiden/crystal_nova.lua"
 				"Function"			"crystal_nova_post_vision"
 				"Target"			"POINT"
 			}
@@ -12007,7 +12007,7 @@
 					
 					"RunScript"
 					{
-						"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+						"ScriptFile"	"heroes/hero_crystal_maiden/freezing_field.lua"
 						"Function"		"freezing_field_order_explosion"
 					}
 				}
@@ -12025,7 +12025,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+						"ScriptFile"	"heroes/hero_crystal_maiden/freezing_field.lua"
 						"Function"		"freezing_field_explode"
 						"section"		"0"
 					}
@@ -12044,7 +12044,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+						"ScriptFile"	"heroes/hero_crystal_maiden/freezing_field.lua"
 						"Function"		"freezing_field_explode"
 						"section"		"1"
 					}
@@ -12063,7 +12063,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+						"ScriptFile"	"heroes/hero_crystal_maiden/freezing_field.lua"
 						"Function"		"freezing_field_explode"
 						"section"		"2"
 					}
@@ -12082,7 +12082,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+						"ScriptFile"	"heroes/hero_crystal_maiden/freezing_field.lua"
 						"Function"		"freezing_field_explode"
 						"section"		"3"
 					}
@@ -16936,7 +16936,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"			"heroes/hero_drow/marksmanship.lua"
+						"ScriptFile"			"heroes/hero_drow_ranger/marksmanship.lua"
 						"Function"				"marksmanship_detection"
 					}
 				}
@@ -17066,7 +17066,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"heroes/hero_drow/trueshot.lua"
+						"ScriptFile"	"heroes/hero_drow_ranger/trueshot.lua"
 						"Function"		"trueshot_initialize"
 						"trueshot_modifier"	"modifier_trueshot_effect_datadriven"
 						"trueshot_damage_modifier"	"modifier_trueshot_damage_datadriven"
@@ -17078,7 +17078,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"heroes/hero_drow/trueshot.lua"
+						"ScriptFile"	"heroes/hero_drow_ranger/trueshot.lua"
 						"Function"		"trueshot_initialize"
 						"trueshot_modifier"	"modifier_trueshot_effect_datadriven"
 						"trueshot_damage_modifier"	"modifier_trueshot_damage_datadriven"
@@ -17223,7 +17223,7 @@
 			
 			"RunScript"
 			{
-				"ScriptFile"		"heroes/hero_drow/wave_of_silence.lua"
+				"ScriptFile"		"heroes/hero_drow_ranger/wave_of_silence.lua"
 				"Function"			"modifier_wave_of_silence_knockback"
 				"height"			"%knockback_height"
 				"duration"			"%knockback_duration"

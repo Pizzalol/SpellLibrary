@@ -110,7 +110,7 @@
 		
 		"RunScript"
 		{
-			"ScriptFile"		"heroes/hero_drow/wave_of_silence.lua"
+			"ScriptFile"		"heroes/hero_drow_ranger/wave_of_silence.lua"
 			"Function"			"modifier_wave_of_silence_knockback"
 			"height"			"%knockback_height"
 			"duration"			"%knockback_duration"

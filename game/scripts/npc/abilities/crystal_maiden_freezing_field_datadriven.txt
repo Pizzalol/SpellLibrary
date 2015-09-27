@@ -183,7 +183,7 @@
 				
 				"RunScript"
 				{
-					"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+					"ScriptFile"	"heroes/hero_crystal_maiden/freezing_field.lua"
 					"Function"		"freezing_field_order_explosion"
 				}
 			}
@@ -201,7 +201,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+					"ScriptFile"	"heroes/hero_crystal_maiden/freezing_field.lua"
 					"Function"		"freezing_field_explode"
 					"section"		"0"
 				}
@@ -220,7 +220,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+					"ScriptFile"	"heroes/hero_crystal_maiden/freezing_field.lua"
 					"Function"		"freezing_field_explode"
 					"section"		"1"
 				}
@@ -239,7 +239,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+					"ScriptFile"	"heroes/hero_crystal_maiden/freezing_field.lua"
 					"Function"		"freezing_field_explode"
 					"section"		"2"
 				}
@@ -258,7 +258,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"heroes/hero_crystalmaiden/freezing_field.lua"
+					"ScriptFile"	"heroes/hero_crystal_maiden/freezing_field.lua"
 					"Function"		"freezing_field_explode"
 					"section"		"3"
 				}

@@ -86,7 +86,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"heroes/hero_drow/trueshot.lua"
+					"ScriptFile"	"heroes/hero_drow_ranger/trueshot.lua"
 					"Function"		"trueshot_initialize"
 					"trueshot_modifier"	"modifier_trueshot_effect_datadriven"
 					"trueshot_damage_modifier"	"modifier_trueshot_damage_datadriven"
@@ -98,7 +98,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"heroes/hero_drow/trueshot.lua"
+					"ScriptFile"	"heroes/hero_drow_ranger/trueshot.lua"
 					"Function"		"trueshot_initialize"
 					"trueshot_modifier"	"modifier_trueshot_effect_datadriven"
 					"trueshot_damage_modifier"	"modifier_trueshot_damage_datadriven"

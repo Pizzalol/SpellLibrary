@@ -53,7 +53,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"			"heroes/hero_drow/marksmanship.lua"
+					"ScriptFile"			"heroes/hero_drow_ranger/marksmanship.lua"
 					"Function"				"marksmanship_detection"
 				}
 			}
