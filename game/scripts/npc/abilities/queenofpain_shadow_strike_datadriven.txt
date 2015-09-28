@@ -1,8 +1,7 @@
 // Rewrite of the Queen of Pain Shadow Strike ability
 // Author: Pizzalol
-// Date: 21.12.2014.
-// NOTE: Stacks with itself
-// NOTE2: Particle dagger attaches to the feet
+// Date: 28.09.2015.
+// NOTE: Particle dagger attaches to the feet
 "queenofpain_shadow_strike_datadriven"
 {
 	// General
@@ -34,7 +33,6 @@
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCooldown"				"16.0 12.0 8.0 4.0"
-	"AbilityDuration"				"15.0 15.0 15.0 15.0"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
@@ -73,7 +71,12 @@
 		"06"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"movement_slow_small"			"-1.33 -2 -2.67 -3.33"
+			"damage_interval"		"3"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"15.0"
 		}
 	}
 
@@ -95,130 +98,48 @@
 			"Target"			"CASTER"
 		}
 
-		"AttachEffect"
+		"FireEffect"
 		{
 			"Target"			"CASTER"
-			"EffectAttachType"	"attach_origin"
+			"EffectAttachType"	"follow_origin"
 			"EffectName"		"particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf"
 		}
 	}
 
 	"OnProjectileHitUnit"
 	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_queenofpain/shadow_strike.lua"
+			"Function"		"shadow_strike"
+			"modifier"		"modifier_shadow_strike_debuff_datadriven"
+		}
+
 		"Damage"
 		{
 			"Target"		"TARGET"
 			"Type"			"DAMAGE_TYPE_MAGICAL"
 			"Damage"		"%strike_damage"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_debuff_datadriven"
-			"Target"		"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_thinker_datadriven"
-			"Target"		"TARGET"
-		}
-
-		// Slow stacks(15 of them)
-
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		// 5
-
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		// 10
-
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-			"Target"		"TARGET"
-		}
-		// 15
+		}		
 	}
 
 	"Modifiers"
 	{
 		"modifier_shadow_strike_debuff_datadriven"
 		{
-			"Duration"	"%AbilityDuration"
 			"IsDebuff"	"1"
-			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 
-			"EffectName"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
-			"EffectAttachType"	"follow_chest"
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
+					"EffectAttachType"	"attach_hitloc"
+					"Target"            "TARGET"
+				}
+			}
 
-			"ThinkInterval"	"3.0"
-
+			"ThinkInterval"	"%damage_interval"
 			"OnIntervalThink"
 			{
 				"Damage"
@@ -228,35 +149,10 @@
 					"Damage"		"%duration_damage"
 				}
 			}
-		}
-
-		"modifier_shadow_strike_thinker_datadriven"
-		{
-			"IsHidden"	"1"
-			"Duration"	"%AbilityDuration"
-			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-			"ThinkInterval"	"1.0"
-
-			"OnIntervalThink"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_shadow_strike_slow_datadriven"
-					"Target"		"TARGET"
-				}
-			}
-		}
-
-		"modifier_shadow_strike_slow_datadriven"
-		{
-			"IsHidden"		"1"
-			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
-
 
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"-1"
 			}
 		}
 	}
