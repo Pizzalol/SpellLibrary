@@ -5,7 +5,7 @@
 	"AbilityLayout"	"4"
 
 	"Ability1"	"queenofpain_shadow_strike_datadriven"
-	"Ability2"	"chaos_knight_reality_rift_datadriven"
-	"Ability3"	"shadow_shaman_voodoo_datadriven"
+	"Ability2"	"luna_moon_glaive_datadriven"
+	"Ability3"	"phantom_assassin_phantom_strike_datadriven"
 	"Ability4"	"lion_voodoo_datadriven"
 }

@@ -1,7 +1,6 @@
 // Rewrite of the Phantom Assassin Phantom Strike ability
 // Author: Pizzalol
-// Date: 19.09.2015.
-// NOTE: Can be cast on self
+// Date: 29.09.2015.
 "phantom_assassin_phantom_strike_datadriven"
 {
 	// General
@@ -12,6 +11,7 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"AbilityTextureName"			"phantom_assassin_phantom_strike"
+	"CastFilterRejectCaster" 		"1"
 
 	// Precache
 	//-------------------------------------------------------------------------------------------------------------

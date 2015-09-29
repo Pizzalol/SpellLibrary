@@ -1,10 +1,7 @@
 // Rewrite of Abaddon Death Coil
 // Author: Noya
-// Date: 8.1.2015.
-// Notes: Disabling Self target is done with a lua workaround. 
-//		  To show "Can't target self" you can add the CustomError Flash module by zedor: https://github.com/zedor/CustomError
-//		  The ability animation still plays even when the spells is self targeted
-//		  Projectile is only cosmetic, the damage/heal is not tied to it
+// Date: 29.09.2015.
+// Notes: Projectile is only cosmetic, the damage/heal is not tied to it
 "abaddon_death_coil_datadriven"
 {
 	// General
@@ -17,6 +14,7 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"abaddon_death_coil"
+	"CastFilterRejectCaster" 		"1"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -61,15 +59,6 @@
 	{
 		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 		"particle" 	"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
-	}
-
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/hero_abaddon/death_coil.lua"
-			"Function"		"DeathCoilPreCast"
-		}
 	}
 
 	"OnSpellStart"

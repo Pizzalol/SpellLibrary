@@ -283,11 +283,8 @@
 	
 	// Rewrite of Abaddon Death Coil
 	// Author: Noya
-	// Date: 8.1.2015.
-	// Notes: Disabling Self target is done with a lua workaround. 
-	//		  To show "Can't target self" you can add the CustomError Flash module by zedor: https://github.com/zedor/CustomError
-	//		  The ability animation still plays even when the spells is self targeted
-	//		  Projectile is only cosmetic, the damage/heal is not tied to it
+	// Date: 29.09.2015.
+	// Notes: Projectile is only cosmetic, the damage/heal is not tied to it
 	"abaddon_death_coil_datadriven"
 	{
 		// General
@@ -300,6 +297,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"abaddon_death_coil"
+		"CastFilterRejectCaster" 		"1"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -344,15 +342,6 @@
 		{
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 			"particle" 	"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
-		}
-	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_abaddon/death_coil.lua"
-				"Function"		"DeathCoilPreCast"
-			}
 		}
 	
 		"OnSpellStart"
@@ -40287,8 +40276,7 @@
 	
 	// Rewrite of the Phantom Assassin Phantom Strike ability
 	// Author: Pizzalol
-	// Date: 19.09.2015.
-	// NOTE: Can be cast on self
+	// Date: 29.09.2015.
 	"phantom_assassin_phantom_strike_datadriven"
 	{
 		// General
@@ -40299,6 +40287,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"phantom_assassin_phantom_strike"
+		"CastFilterRejectCaster" 		"1"
 	
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -58538,8 +58527,7 @@
 	
 	// Rewrite of the Vengeful Spirit Nether Swap ability
 	// Author: Pizzalol
-	// Date: 12.07.2015.
-	// Game version: 6.84
+	// Date: 29.09.2015.
 	"vengefulspirit_nether_swap_datadriven"
 	{
 		// General
@@ -58552,6 +58540,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"vengefulspirit_nether_swap"
+		"CastFilterRejectCaster" 		"1"
 	
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -58595,15 +58584,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"tree_radius"					"300"
-			}
-		}
-	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile" "heroes/hero_vengefulspirit/nether_swap.lua"
-				"Function" "NetherSwapPreCast"
 			}
 		}
 	
@@ -62664,6 +62644,9 @@
 		}
 	}
 	
+	// Rewrite of the Wisp Tether
+	// Author: Ractidous
+	// Date: 29.09.2015.
 	"wisp_tether_datadriven"
 	{
 		// General
@@ -62674,6 +62657,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"wisp_tether"
+		"CastFilterRejectCaster" 		"1"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -62777,15 +62761,6 @@
 			"particle"					"particles/units/heroes/hero_wisp/wisp_tether.vpcf"
 			"particle"					"particles/units/heroes/hero_wisp/wisp_tether_hit.vpcf"
 			"particle"					"particles/units/heroes/hero_wisp/wisp_tether_slow.vpcf"
-		}
-		
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_wisp/tether.lua"
-				"Function"		"TetherPreCast"
-			}
 		}
 		
 		"OnSpellStart"

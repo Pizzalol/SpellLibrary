@@ -1,3 +1,6 @@
+// Rewrite of the Wisp Tether
+// Author: Ractidous
+// Date: 29.09.2015.
 "wisp_tether_datadriven"
 {
 	// General
@@ -8,6 +11,7 @@
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"AbilityTextureName"			"wisp_tether"
+	"CastFilterRejectCaster" 		"1"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -111,15 +115,6 @@
 		"particle"					"particles/units/heroes/hero_wisp/wisp_tether.vpcf"
 		"particle"					"particles/units/heroes/hero_wisp/wisp_tether_hit.vpcf"
 		"particle"					"particles/units/heroes/hero_wisp/wisp_tether_slow.vpcf"
-	}
-	
-	"OnAbilityPhaseStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"heroes/hero_wisp/tether.lua"
-			"Function"		"TetherPreCast"
-		}
 	}
 	
 	"OnSpellStart"
