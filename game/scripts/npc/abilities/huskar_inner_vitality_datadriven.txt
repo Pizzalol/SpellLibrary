@@ -87,6 +87,12 @@
 			"EffectName"        "particles/units/heroes/hero_huskar/huskar_inner_vitality_cast.vpcf"
 			"EffectAttachType"  "follow_origin"
 			"Target"            "CASTER"
+
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_origin"
+				"CASTER"	"attach_origin"
+			}
 		}
 
 		//ApplyModifier

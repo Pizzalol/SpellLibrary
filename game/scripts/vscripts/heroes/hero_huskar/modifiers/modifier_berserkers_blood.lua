@@ -2,6 +2,12 @@ if modifier_huskar_berserkers_blood_lua == nil then
     modifier_huskar_berserkers_blood_lua = class({})
 end
 
+function modifier_huskar_berserkers_blood_lua:GetAttributes()
+	local atrrib = { MODIFIER_ATTRIBUTE_PERMANENT }
+
+	return attrib
+end
+
 function modifier_huskar_berserkers_blood_lua:GetStatusEffectName()
 	return "particles/units/heroes/hero_huskar/huskar_berserker_blood_hero_effect.vpcf"
 end
@@ -15,7 +21,7 @@ function modifier_huskar_berserkers_blood_lua:OnCreated()
 	self.berserkers_blood_attack_speed = self:GetAbility():GetSpecialValueFor( "attack_speed_bonus_per_stack" )
 
     if IsServer() then
-        print("Created")
+        --print("Created")
         self:SetStackCount( 1 )
 		self:GetParent():CalculateStatBonus()
 
@@ -42,7 +48,7 @@ function modifier_huskar_berserkers_blood_lua:OnIntervalThink()
 	        if health_perc <= current_health then
 
 	            newStackCount = maxcount - i
-	            print("setting count to " .. newStackCount)
+	            --print("setting count to " .. newStackCount)
 	            break
 	        end
 
@@ -68,7 +74,7 @@ function modifier_huskar_berserkers_blood_lua:OnRefresh()
 	local caster = self:GetParent()
 
     if IsServer() then
-        print("Refreshed")
+        --print("Refreshed")
         --if self.particle_glow and self.particle_hero then
         	--ParticleManager:ReleaseParticleIndex(self.particle_glow)
         	--ParticleManager:ReleaseParticleIndex(self.particle_hero)

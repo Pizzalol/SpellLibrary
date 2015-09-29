@@ -14,13 +14,14 @@ function modifier_huskar_inner_vitality_lua:OnCreated()
     self.heal_amount = 0
 
     if IsServer() then
-        print("Created")
+        --print("Created")
         self:GetParent():CalculateStatBonus()
 
         local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
         self:AddParticle( nFXIndex, false, false, -1, false, false )
 
-        self:StartIntervalThink(1.0)
+        self:OnIntervalThink()
+        self:StartIntervalThink(0.1)
     end
 end
 
@@ -76,7 +77,7 @@ function modifier_huskar_inner_vitality_lua:OnRefresh()
     self.inner_vitality_hurt_percent = self:GetAbility():GetSpecialValueFor("hurt_percent")
 
     if IsServer() then
-        print("Refreshed")
+        --print("Refreshed")
         self:GetParent():CalculateStatBonus()
     end
 end
