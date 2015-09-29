@@ -32505,8 +32505,8 @@
 	}
 	
 	// Rewrite of the Luna Moon Glaive ability
-	// Author: jacklarnes
-	// Date: 03.04.2015.
+	// Author: jacklarnes, Pizzalol
+	// Date: 29.09.2015.
 	// NOTE: ------------------- THIS ABILITY REQUIRES luna_moon_glaive_dummy_datadriven TO WORK ----------------
 	"luna_moon_glaive_datadriven"
 	{
@@ -32522,6 +32522,7 @@
 	
 		"precache"
 		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
 			"particle"			"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
 		}
 	
@@ -32550,7 +32551,8 @@
 		{
 			"modifier_moon_glaive"
 			{
-				"Passive" "1"
+				"Passive" 	"1"
+				"IsHidden"	"1"
 	
 				"OnAttackLanded"
 				{
@@ -32565,8 +32567,8 @@
 	}
 	
 	// Rewrite of the Luna Moon Glaive ability
-	// Author: jacklarnes
-	// Date: 03.04.2015.
+	// Author: jacklarnes, Pizzalol
+	// Date: 29.09.2015.
 	// NOTE: ------------------- THIS ABILITY REQUIRES luna_moon_glaive_datadriven TO WORK ----------------
 	"luna_moon_glaive_dummy_datadriven"
 	{
@@ -32575,12 +32577,6 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-	
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
-			"particle"			"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
-		}
 	
 		"OnProjectileHitUnit"
 		{
@@ -32594,8 +32590,8 @@
 			
 			"RunScript"
 			{
-				"ScriptFile"	"scripts/vscripts/heroes/hero_luna/moon_glaive.lua"
-				"Function"		"moon_glaive_dummy_created"
+				"ScriptFile"	"heroes/hero_luna/moon_glaive.lua"
+				"Function"		"moon_glaive_bounce"
 			}
 	
 		}
@@ -32612,15 +32608,6 @@
 					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_FLYING"							"MODIFIER_STATE_VALUE_ENABLED"
-				}
-	
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_luna/moon_glaive.lua"
-						"Function"		"moon_glaive_dummy_created"
-					}
 				}
 			}
 		}

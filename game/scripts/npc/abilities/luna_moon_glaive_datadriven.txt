@@ -1,6 +1,6 @@
 // Rewrite of the Luna Moon Glaive ability
-// Author: jacklarnes
-// Date: 03.04.2015.
+// Author: jacklarnes, Pizzalol
+// Date: 29.09.2015.
 // NOTE: ------------------- THIS ABILITY REQUIRES luna_moon_glaive_dummy_datadriven TO WORK ----------------
 "luna_moon_glaive_datadriven"
 {
@@ -16,6 +16,7 @@
 
 	"precache"
 	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
 		"particle"			"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
 	}
 
@@ -44,7 +45,8 @@
 	{
 		"modifier_moon_glaive"
 		{
-			"Passive" "1"
+			"Passive" 	"1"
+			"IsHidden"	"1"
 
 			"OnAttackLanded"
 			{
