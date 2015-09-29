@@ -2,8 +2,9 @@
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"huskar_berserkers_blood"
 			
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -18,6 +19,27 @@
 		{
 			"var_type"						"FIELD_INTEGER"
 			"resistance_per_stack"			"4 5 6 7"
+		}
+	}
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"  "particles/units/heroes/hero_huskar/huskar_berserker_blood_hero_effect.vpcf"
+		"particle"  "particles/units/heroes/hero_huskar/huskar_berserkers_blood_glow.vpcf"
+	}
+
+	//Datadriven
+	//-------------------------------------------------------------------------------------------------------------
+	"OnUpgrade"
+	{
+		//ApplyModifier 
+		"RunScript"
+		{
+			"ModifierName"	"modifier_huskar_berserkers_blood_lua"
+			"ScriptFile"	"heroes/hero_huskar/berserkers_blood.lua"
+			"Function"		"ApplyModifier"
 		}
 	}
 }
