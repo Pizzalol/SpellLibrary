@@ -1,8 +1,12 @@
+// Rewrite of the Huskar Life Break ability
+// Author: Bude
+// Date: 30.09.2015
+// NOTE: Modifier that keeps huskar from attacking does not get removed if Life Break is cancelled prematurely
 "huskar_life_break_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"		
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -24,38 +28,38 @@
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityManaCost"				"0 0 0"		
-	
+
 	// Cast Range
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"550"
-	
+
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityDuration"				"4 5 6"
-	
+
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"					"FIELD_FLOAT"
-			"health_cost_percent"		".35"
+			"var_type"							"FIELD_FLOAT"
+			"health_cost_percent"				"0.35"
 		}
 		"02"
 		{
-			"var_type"					"FIELD_FLOAT"
-			"health_damage"				"0.35"
+			"var_type"							"FIELD_FLOAT"
+			"health_damage"						"0.35"
 		}
 		"03"
 		{
-			"var_type"					"FIELD_FLOAT"
-			"health_damage_scepter"		"0.65"
+			"var_type"							"FIELD_FLOAT"
+			"health_damage_scepter"				"0.65"
 		}
 		"04"
 		{
-			"var_type"					"FIELD_INTEGER"
-			"charge_speed"				"1000"
+			"var_type"							"FIELD_INTEGER"
+			"charge_speed"						"1000"
 		}
 		"05"
 		{
@@ -69,13 +73,13 @@
 		}
 		"07"
 		{
-			"var_type"					"FIELD_INTEGER"
-			"movespeed"					"-40 -50 -60"
+			"var_type"							"FIELD_INTEGER"
+			"movespeed_slow"					"-40 -50 -60"
 		}
 		"08"
 		{
-			"var_type"					"FIELD_FLOAT"
-			"slow_durtion_tooltip"		"4 5 6"
+			"var_type"							"FIELD_FLOAT"
+			"slow_duration_tooltip"				"4 5 6"
 		}
 		"09"
 		{
@@ -84,8 +88,98 @@
 		}
 		"10"
 		{
-			"var_type"					"FIELD_FLOAT"
-			"cooldown_scepter"			"4"
+			"var_type"							"FIELD_FLOAT"
+			"Costoldown_scepter"				"4"
+		}
+		"11"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"max_distance"						"1400"
+		}
+	}
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
+		"particle"  "particles/units/heroes/hero_huskar/huskar_life_break.vpcf"
+		"particle"  "particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf"
+		"particles" "particles/status_fx/status_effect_huskar_lifebreak.vpcf"
+	}
+
+	// Datadriven
+	//-------------------------------------------------------------------------------------------------------------
+	"OnSpellStart"
+	{	
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_huskar_life_break_datadriven"
+			"Target" 		"CASTER"
+			"Duration"		"1"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_huskar/life_break.lua"
+			"Function"		"LifeBreak"
+			"ModifierName"			"modifier_huskar_life_break_datadriven"
+		    "ModifierName_Debuff"	"modifier_huskar_life_break_datadriven_debuff"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Huskar.Life_Break"
+			"Target" 		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+		}
+
+		"ApplyMotionController"
+		// For this: gfycat.com/BraveHideousGiantschnauzer -> check: bit.ly/1KWulqA
+		{
+			"Target"		"CASTER"
+		    "ScriptFile"    "heroes/hero_huskar/life_break.lua"
+		    "HorizontalControlFunction" "JumpHorizonal"
+		    "VerticalControlFunction" 	"JumpVertical"
+		}
+	}
+
+	"Modifiers"
+	{	
+		"modifier_huskar_life_break_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			"IsDebuff"			"0"
+			"Duration"			"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_huskar_life_break_datadriven_debuff"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsDebuff"			"1"
+			"Duration"			"%AbilityDuration"
+
+			"StatusEffectName"		"particles/status_fx/status_effect_huskar_lifebreak.vpcf"
+			"StatusEffectPriority"	"15"	//What this
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movespeed_slow"
+			}
 		}
 	}
 }

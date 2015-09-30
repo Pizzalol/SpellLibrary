@@ -1,13 +1,17 @@
+// Rewrite of the Huskar Burning Spear ability
+// Author: Bude
+// Date: 30.09.2015
 "huskar_burning_spear_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"huskar_burning_spear"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -33,9 +37,137 @@
 	{
 		"01"
 		{
-			"var_type"						"FIELD_INTEGER"
-			"health_cost"					"15"
+			"var_type"				"FIELD_INTEGER"
+			"health_cost"			"15"
+		}
+	}
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
+		"particle"  "particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf"
+		"particle"  "particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
+	}
+
+	// Datadriven
+	//-------------------------------------------------------------------------------------------------------------
+
+	"Modifiers"
+	{
+		// Modifier to handle OrbEffect-Behaviour
+		"modifier_burning_spear_datadriven"
+		{
+			// Will always stay on the caster once the ability is upgraded
+			// Hidden
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"0"
+			"IsPurgable"		"0"
+
+			// OrbEffect-Behaviour
+			"Orb"
+			{
+                "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
+                "ProjectileName"    "particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf"
+                "CastAttack"        "1"
+            }
+
+            // HealthCost is handled here
+			"OnOrbFire"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Huskar.Burning_Spear.Cast"
+					"Target"		"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_huskar/burning_spear.lua"
+					"Function"		"DoHealthCost"
+				}
+			}
+
+			// Apply the hidden dot modifier to the target here
+			// Call IncreaseStackCount to keep stack count on modifier_burning_spear_datadriven_debuff_counter updated
+			"OnOrbImpact"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Huskar.Burning_Spear"
+					"Target"		"TARGET"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_burning_spear_datadriven_debuff"
+					"Target" 		"TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_huskar/burning_spear.lua"
+					"Function"		"IncreaseStackCount"
+
+					"modifier_counter_name"		"modifier_burning_spear_datadriven_debuff_counter"
+				}
+			}
+		}
+
+		// Modifier to show stack count
+		// Only visual
+		"modifier_burning_spear_datadriven_debuff_counter"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+			"IsPurgable"		"0"
+		}
+
+		// Modifier to handle the dot
+		"modifier_burning_spear_datadriven_debuff"
+		{
+			"Passive"			"0"
+			"IsHidden"			"1"
+			"IsBuff"			"0"
+			"IsDebuff"			"1"
+			"IsPurgable"		"0"
+			"Duration"			"%AbilityDuration"
+
+			// Allow multiple instances of this modifier on the target
+			// Modifiers stack additivly (dmg) with independent durations
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+			"EffectName"		"particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
+			"ThinkInterval"  "1.0"
+			"OnIntervalThink"
+			{
+				// Damage of %AbilityDamage every %ThinkInterval seconds
+				"Damage"
+				{
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%AbilityDamage"
+				}
+			}
+
+			// Updating visual modifier's stack count
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_huskar/burning_spear.lua"
+					"Function"		"DecreaseStackCount"
+
+					"modifier_counter_name"		"modifier_burning_spear_datadriven_debuff_counter"
+				}
+			}
 		}
 	}
 }
-

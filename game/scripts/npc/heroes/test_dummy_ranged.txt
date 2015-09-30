@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"queenofpain_shadow_strike_datadriven"
-	"Ability2"	"luna_moon_glaive_datadriven"
-	"Ability3"	"phantom_assassin_phantom_strike_datadriven"
-	"Ability4"	"lion_voodoo_datadriven"
+	"Ability1"	"huskar_inner_vitality_datadriven"
+	"Ability2"	"huskar_burning_spear_datadriven"
+	"Ability3"	"huskar_berserkers_blood_datadriven"
+	"Ability4"	"huskar_life_break_datadriven"
 }

@@ -1,54 +1,58 @@
+// Rewrite of the Huskar Inner Vitality ability
+// Author: Bude
+// Date: 30.09.2015
 "huskar_inner_vitality_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"						   
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	"AbilityTextureName"			"huskar_inner_vitality"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastRange"				"550"
+	"AbilityCastRange"				"800"
 	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
+
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"25 22 19 16"
+	"AbilityCooldown"				"22 18 14 10"
 	"AbilityDuration"				"16 16 16 16"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityManaCost"				"170 170 170 170"
-	
+
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityModifierSupportValue"	"0.0"	// already gets credit for the healing
 
-	
+
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"heal"					"2 4 6 8"
+			"var_type"						"FIELD_INTEGER"
+			"heal"							"10"
 		}
 		"02"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"attrib_bonus"			"0.05 0.1 0.15 0.20"
+		{	
+			"var_type"						"FIELD_FLOAT"
+			"attrib_bonus"					"0.05 0.10 0.15 0.20"
 		}
 		"03"
 		{
-			"var_type"				"FIELD_FLOAT"
-			"hurt_attrib_bonus"		"0.3 0.45 0.60 0.75"
+			"var_type"						"FIELD_FLOAT"
+			"hurt_attrib_bonus"				"0.20 0.40 0.60 0.80"
 		}
 		"04"
 		{
-			"var_type"				"FIELD_FLOAT"
-			"hurt_percent"			"0.40"
+			"var_type"						"FIELD_FLOAT"
+			"hurt_percent"					"0.40"
 		}
 		"05"
 		{
@@ -57,9 +61,50 @@
 		}
 		"06"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"tooltip_hurt_attrib_bonus"		"30 45 60 75"
+			"var_type"						"FIELD_INTEGER"
+			"tooltip_hurt_attrib_bonus"		"20 45 60 80"
+		}
+	}
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
+		"particle"  "particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf"
+		"particle"	"particles/units/heroes/hero_huskar/huskar_inner_vitality_cast.vpcf"
+	}
+
+	// Datadriven
+	//-------------------------------------------------------------------------------------------------------------
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Huskar.Inner_Vitality"
+			"Target"		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_huskar/huskar_inner_vitality_cast.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_origin"
+				"CASTER"	"attach_origin"
+			}
+		}
+
+		//ApplyLuaModifier
+		"RunScript"
+		{
+			"ModifierName"	"modifier_huskar_inner_vitality_lua"
+			"ScriptFile"	"heroes/hero_huskar/inner_vitality.lua"
+			"Function"		"ApplyLuaModifier"
+			"Target"		"TARGET"
 		}
 	}
 }	
-
