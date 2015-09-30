@@ -23950,6 +23950,21 @@
 				"var_type"						"FIELD_FLOAT"
 				"model_size_per_stack"			"0.02"
 			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"hurt_health_ceiling"			"0.87"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"hurt_health_floor"				"0.03"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"hurt_health_step"				"0.07"
+			}
 		}
 	
 		// Precache

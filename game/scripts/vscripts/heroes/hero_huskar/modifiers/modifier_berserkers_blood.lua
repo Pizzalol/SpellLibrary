@@ -10,9 +10,7 @@ end
 ]]--
 
 function modifier_huskar_berserkers_blood_lua:GetAttributes()
-	local atrrib = { MODIFIER_ATTRIBUTE_PERMANENT }
-
-	return attrib
+	return MODIFIER_ATTRIBUTE_PERMANENT
 end
 
 --As described: Could not get the particles to work ...
@@ -27,9 +25,14 @@ end
 ]]--
 
 function modifier_huskar_berserkers_blood_lua:OnCreated()
+	-- Variables
 	self.berserkers_blood_magic_resist = self:GetAbility():GetSpecialValueFor( "resistance_per_stack" )
 	self.berserkers_blood_attack_speed = self:GetAbility():GetSpecialValueFor( "attack_speed_bonus_per_stack" )
 	self.berserkers_blood_model_size = self:GetAbility():GetSpecialValueFor("model_size_per_stack")
+	self.berserkers_blood_hurt_health_ceiling = self:GetAbility():GetSpecialValueFor("hurt_health_ceiling")
+	self.berserkers_blood_hurt_health_floor = self:GetAbility():GetSpecialValueFor("hurt_health_floor")
+	self.berserkers_blood_hurt_health_step = self:GetAbility():GetSpecialValueFor("hurt_health_step")
+
 
     if IsServer() then
         --print("Created")
@@ -49,24 +52,23 @@ function modifier_huskar_berserkers_blood_lua:OnIntervalThink()
 		local oldStackCount = self:GetStackCount()
 		local health_perc = caster:GetHealthPercent()/100
 		local newStackCount = 1
+
 		local model_size = self.berserkers_blood_model_size
-		
-		-- check to update stackcount here
-		local maxcount = 14
+		local hurt_health_ceiling = self.berserkers_blood_hurt_health_ceiling
+		local hurt_health_floor = self.berserkers_blood_hurt_health_floor
+		local hurt_health_step = self.berserkers_blood_hurt_health_step
 
-	    local i = 0
 
-	    for current_health=0.03, 0.87, 0.07 do
+	    for current_health=hurt_health_ceiling, hurt_health_floor, -hurt_health_step do
 	        if health_perc <= current_health then
 
-	            newStackCount = maxcount - i
-	            --print("setting count to " .. newStackCount)
-	            break
+	            newStackCount = newStackCount+1
+	        else
+	        	break
 	        end
-
-	        i = i+1
 	    end
 	   
+
     	local difference = newStackCount - oldStackCount
 
     	-- set stackcount
