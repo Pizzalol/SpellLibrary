@@ -24393,7 +24393,7 @@
 			"ApplyMotionController"
 			// For this: gfycat.com/BraveHideousGiantschnauzer -> check: bit.ly/1KWulqA
 			{
-			    "Target"		"CASTER"
+				"Target"		"CASTER"
 			    "ScriptFile"    "heroes/hero_huskar/life_break.lua"
 			    "HorizontalControlFunction" "LeapHorizonal"
 			    "VerticalControlFunction" 	"LeapVertical"

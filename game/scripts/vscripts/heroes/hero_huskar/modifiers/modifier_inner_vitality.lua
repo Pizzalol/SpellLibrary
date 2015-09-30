@@ -2,6 +2,12 @@ if modifier_huskar_inner_vitality_lua == nil then
     modifier_huskar_inner_vitality_lua = class({})
 end
 
+--[[
+    Author: Bude
+    Date: 29.09.2015.
+    Checks target health every interval and adjusts health regen accordingly
+]]--
+
 function modifier_huskar_inner_vitality_lua:IsBuff()
     return 1
 end

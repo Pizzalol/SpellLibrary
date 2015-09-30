@@ -3,6 +3,7 @@ LinkLuaModifier( "modifier_huskar_inner_vitality_lua" , "heroes/hero_huskar/modi
 --[[
     Author: Bude
     Date: 29.09.2015
+    Simply applies the lua modifier
 --]]
 
 function ApplyModifier( keys )

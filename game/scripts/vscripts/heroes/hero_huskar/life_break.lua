@@ -1,7 +1,7 @@
 --[[
     Author: Bude
-    Date: 05.09.2015.
-    (Description)
+    Date: 29.09.2015.
+    Sets some initial values and prepares the caster for motion controllers
 ]]
 function LifeBreak( keys )
     local caster = keys.caster
@@ -14,9 +14,13 @@ function LifeBreak( keys )
     caster:Stop()
 
     -- Physics
+    ability.target = target
     ability.velocity = charge_speed
-    ability.actualtarget = target
+    ability.life_break_z = 0
+    ability.initial_distance = (GetGroundPosition(target:GetAbsOrigin(), target)-GetGroundPosition(caster:GetAbsOrigin(), caster)):Length2D()
+    ability.traveled = 0
 end
+
 
 function DoDamage(caster, target, ability)
     local caster_health = caster:GetHealth()
@@ -50,16 +54,23 @@ end
 function LeapHorizonal( keys )
     local caster = keys.target
     local ability = keys.ability
-    local target = ability.actualtarget
+    local target = ability.target
 
     local target_loc = GetGroundPosition(target:GetAbsOrigin(), target)
     local caster_loc = GetGroundPosition(caster:GetAbsOrigin(), caster)
     local direction = (target_loc - caster_loc):Normalized()
 
+    if (target_loc - caster_loc):Length2D() >= 1400 then
+    	caster:InterruptMotionControllers(true)
+    end
+
     if (target_loc - caster_loc):Length2D() > 100 then
         caster:SetAbsOrigin(caster:GetAbsOrigin() + direction * ability.velocity)
+        ability.traveled = ability.traveled + ability.velocity
     else
         caster:InterruptMotionControllers(true)
+
+        caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster))
 
 		if caster:FindModifierByName("modifier_huskar_life_break_datadriven") then
 			caster:RemoveModifierByName("modifier_huskar_life_break_datadriven")
@@ -76,6 +87,16 @@ function LeapHorizonal( keys )
 		ability:ApplyDataDrivenModifier(caster, target, "modifier_huskar_life_break_datadriven_debuff", {})
 
         DoDamage(caster, target, ability)
+
+        order = 
+        {
+            UnitIndex = caster:GetEntityIndex(),
+            OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
+            TargetIndex = target:GetEntityIndex(),
+            Queue = true
+        }
+
+        ExecuteOrderFromTable(order)
     end
 end
 
@@ -83,20 +104,22 @@ end
 function LeapVertical( keys )
     local caster = keys.target
     local ability = keys.ability
-    local target = ability.actualtarget
+    local target = ability.target
 
-    --[[
+    if caster:GetAbsOrigin().z < GetGroundPosition(caster:GetAbsOrigin(), caster).z then
+    	caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, 0))
+    end
+
     -- For the first half of the distance the unit goes up and for the second half it goes down
-    if ability.leap_traveled < ability.leap_distance/2 then
+    if ability.traveled < ability.initial_distance/2 then
         -- Go up
         -- This is to memorize the z point when it comes to cliffs and such although the division of speed by 2 isnt necessary, its more of a cosmetic thing
-        ability.leap_z = ability.leap_z + ability.leap_speed/2
+        ability.life_break_z = ability.life_break_z + ability.velocity/2
         -- Set the new location to the current ground location + the memorized z point
-        caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,ability.leap_z))
-    else
+        caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,ability.life_break_z))
+    elseif caster:GetAbsOrigin().z > GetGroundPosition(caster:GetAbsOrigin(), caster).z then
         -- Go down
-        ability.leap_z = ability.leap_z - ability.leap_speed/2
-        caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,ability.leap_z))
+        ability.life_break_z = ability.life_break_z - ability.velocity/2
+        caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,ability.life_break_z))
     end
-    ]]--
 end

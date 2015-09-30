@@ -2,12 +2,19 @@ if modifier_huskar_berserkers_blood_lua == nil then
     modifier_huskar_berserkers_blood_lua = class({})
 end
 
+--[[Author: Bude
+	Date: 29.09.2015.
+	Grants magical resistance and attackspeed and increases model size per modifier stack
+	TODO: Particles and status effects need to be implemented correctly
+]]--
+
 function modifier_huskar_berserkers_blood_lua:GetAttributes()
 	local atrrib = { MODIFIER_ATTRIBUTE_PERMANENT }
 
 	return attrib
 end
 
+--[[
 function modifier_huskar_berserkers_blood_lua:GetStatusEffectName()
 	return "particles/units/heroes/hero_huskar/huskar_berserker_blood_hero_effect.vpcf"
 end
@@ -15,6 +22,7 @@ end
 function modifier_huskar_berserkers_blood_lua:GetStatusEffectPriority()
 	return 16
 end
+]]--
 
 function modifier_huskar_berserkers_blood_lua:OnCreated()
 	self.berserkers_blood_magic_resist = self:GetAbility():GetSpecialValueFor( "resistance_per_stack" )
@@ -74,23 +82,6 @@ function modifier_huskar_berserkers_blood_lua:OnRefresh()
 	local caster = self:GetParent()
 
     if IsServer() then
-        --print("Refreshed")
-        --if self.particle_glow and self.particle_hero then
-        	--ParticleManager:ReleaseParticleIndex(self.particle_glow)
-        	--ParticleManager:ReleaseParticleIndex(self.particle_hero)
-        --end
-
-       	--local particle_glow = ParticleManager:CreateParticle("particles/units/heroes/hero_huskar/huskar_berserkers_blood_glow.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
-       	--self:AddParticle(particle_glow, false, false, 16, false, true)
-        --ParticleManager:ReleaseParticleIndex(particle_glow)
-
-        --local particle_hero = ParticleManager:CreateParticle("particles/units/heroes/hero_huskar/huskar_berserker_blood_hero_effect.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
-        --self:AddParticle(particle_hero, false, false, 17, true, false)
-        --ParticleManager:SetParticleControlEnt(particle_hero, 1, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, nil, self:GetParent():GetOrigin(), false)
-        --ParticleManager:SetParticleControl(self.particle_hero, 1, Vector(StackCount*10, StackCount*10, StackCount*10))
-        --ParticleManager:SetParticleControl(self.particle_hero, 2, Vector(StackCount*10, StackCount*10, StackCount*10))
-        --ParticleManager:ReleaseParticleIndex(particle_hero)
-
         self:GetParent():CalculateStatBonus()
     end
 end

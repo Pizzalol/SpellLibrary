@@ -87,11 +87,6 @@
 			"var_type"							"FIELD_FLOAT"
 			"Costoldown_scepter"				"4"
 		}
-		"11"
-		{
-			"var_type"							"FIELD_INTEGER"
-			"auto_attack_target"				"1"
-		}
 	}
 
 	// Precache
@@ -99,8 +94,6 @@
 	"precache"
 	{
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
-		// Hero_Huskar.Life_Break
-		// Hero_Huskar.Life_Break.Impact
 		"particle"  "particles/units/heroes/hero_huskar/huskar_life_break.vpcf"
 		"particle"  "particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf"
 		"particles" "particles/status_fx/status_effect_huskar_lifebreak.vpcf"
@@ -139,7 +132,7 @@
 		"ApplyMotionController"
 		// For this: gfycat.com/BraveHideousGiantschnauzer -> check: bit.ly/1KWulqA
 		{
-		    "Target"		"CASTER"
+			"Target"		"CASTER"
 		    "ScriptFile"    "heroes/hero_huskar/life_break.lua"
 		    "HorizontalControlFunction" "LeapHorizonal"
 		    "VerticalControlFunction" 	"LeapVertical"
@@ -175,6 +168,15 @@
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movespeed_slow"
+			}
+
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Huskar.Life_Break.Impact"
+					"Target" 		"TARGET"
+				}
 			}
 		}
 	}
