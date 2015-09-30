@@ -23945,6 +23945,11 @@
 				"var_type"						"FIELD_INTEGER"
 				"resistance_per_stack"			"4 5 6 7"
 			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"model_size_per_stack"			"0.02"
+			}
 		}
 	
 		// Precache
@@ -24267,6 +24272,7 @@
 	// Rewrite of the Huskar Life Break ability
 	// Author: Bude
 	// Date: 30.09.2015
+	// NOTE: Modifier that keeps huskar from attacking does not get removed if Life Break is cancelled prematurely
 	"huskar_life_break_datadriven"
 	{
 		// General
@@ -24420,7 +24426,7 @@
 			"modifier_huskar_life_break_datadriven"
 			{
 				"Passive"			"0"
-				"IsHidden"			"0"
+				"IsHidden"			"1"
 				"IsDebuff"			"0"
 				"Duration"			"1"
 	

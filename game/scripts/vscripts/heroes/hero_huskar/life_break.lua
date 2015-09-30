@@ -2,6 +2,7 @@
     Author: Bude
     Date: 30.09.2015.
     Sets some initial values and prepares the caster for motion controllers
+    NOTE: Modifier that keeps huskar from attacking (etc.) does not get removed properly if Life Break is cancelled
 ]]
 function LifeBreak( keys )
     -- Variables

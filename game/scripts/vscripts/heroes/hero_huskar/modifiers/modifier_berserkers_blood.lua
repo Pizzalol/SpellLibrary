@@ -29,6 +29,7 @@ end
 function modifier_huskar_berserkers_blood_lua:OnCreated()
 	self.berserkers_blood_magic_resist = self:GetAbility():GetSpecialValueFor( "resistance_per_stack" )
 	self.berserkers_blood_attack_speed = self:GetAbility():GetSpecialValueFor( "attack_speed_bonus_per_stack" )
+	self.berserkers_blood_model_size = self:GetAbility():GetSpecialValueFor("model_size_per_stack")
 
     if IsServer() then
         --print("Created")
@@ -48,6 +49,7 @@ function modifier_huskar_berserkers_blood_lua:OnIntervalThink()
 		local oldStackCount = self:GetStackCount()
 		local health_perc = caster:GetHealthPercent()/100
 		local newStackCount = 1
+		local model_size = self.berserkers_blood_model_size
 		
 		-- check to update stackcount here
 		local maxcount = 14
@@ -69,7 +71,7 @@ function modifier_huskar_berserkers_blood_lua:OnIntervalThink()
 
     	-- set stackcount
     	if difference ~= 0 then
-    		caster:SetModelScale(caster:GetModelScale()+difference*0.025)
+    		caster:SetModelScale(caster:GetModelScale()+difference*model_size)
     		self:SetStackCount( newStackCount )
     		self:ForceRefresh()
     	end
