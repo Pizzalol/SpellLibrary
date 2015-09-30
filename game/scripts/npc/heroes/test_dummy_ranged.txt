@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"huskar_inner_vitality_datadriven"
-	"Ability2"	"huskar_burning_spear_datadriven"
-	"Ability3"	"huskar_berserkers_blood_datadriven"
-	"Ability4"	"huskar_life_break_datadriven"
+	"Ability1"	"venomancer_venomous_gale_datadriven"
+	"Ability2"	"windrunner_powershot_datadriven"
+	"Ability3"	"venomancer_plague_ward_datadriven"
+	"Ability4"	"venomancer_poison_nova_datadriven"
 }

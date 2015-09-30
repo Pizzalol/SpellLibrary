@@ -1,9 +1,5 @@
-//Generated using Dota Custom File Generator by cris9696
 "DOTAUnits"
 {
-
-
-	//Start of file npc_dummy_blank.txt
 	// Made by BMD
 	"npc_dummy_blank"
 	{
@@ -83,10 +79,6 @@
 		//----------------------------------------------------------------
 		"AttackDesire" "1.5" // How much bots want to attack them vs other non-hero things
 	}
-	//End of file npc_dummy_blank.txt
-
-
-	//Start of file plague_ward_1_datadriven.txt
 	"plague_ward_1_datadriven"
 	{
 		// General
@@ -172,10 +164,6 @@
 		//Inventory
 		"HasInventory"				"0"
 	}
-	//End of file plague_ward_1_datadriven.txt
-
-
-	//Start of file plague_ward_2_datadriven.txt
 	"plague_ward_2_datadriven"
 	{
 		// General
@@ -261,10 +249,6 @@
 		//Inventory
 		"HasInventory"				"0"
 	}
-	//End of file plague_ward_2_datadriven.txt
-
-
-	//Start of file plague_ward_3_datadriven.txt
 	"plague_ward_3_datadriven"
 	{
 		// General
@@ -350,10 +334,6 @@
 		//Inventory
 		"HasInventory"				"0"
 	}
-	//End of file plague_ward_3_datadriven.txt
-
-
-	//Start of file plague_ward_4_datadriven.txt
 	"plague_ward_4_datadriven"
 	{
 		// General
@@ -439,5 +419,4 @@
 		//Inventory
 		"HasInventory"				"0"
 	}
-	//End of file plague_ward_4_datadriven.txt
 }

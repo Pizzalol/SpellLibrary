@@ -1,8 +1,6 @@
 // Rewrite of the Venomancer Plague Ward ability
 // Author: Pizzalol and Rook
-// Date: 26.12.2014.
-// Known bugs:
-//     The Plague Ward faces an incorrect direction when idling and attacking.
+// Date: 30.09.2015.
 "venomancer_plague_ward_datadriven"
 {
 	// General
@@ -18,6 +16,7 @@
 	"precache"
 	{
 		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+		"model"				"models/heroes/venomancer/venomancer_ward.vmdl"
 	}
 
 	// Casting

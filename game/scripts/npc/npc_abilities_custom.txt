@@ -1,9 +1,5 @@
-//Generated using Dota Custom File Generator by cris9696
 "DOTAAbilities"
 {
-
-
-	//Start of file abaddon_aphotic_shield_datadriven.txt
 	// Rewrite of Abaddon Aphotic Shield
 	// Author: Noya
 	// Date: 9.1.2015.
@@ -156,10 +152,6 @@
 		}
 	}
 	
-	//End of file abaddon_aphotic_shield_datadriven.txt
-
-
-	//Start of file abaddon_borrowed_time_datadriven.txt
 	// Rewrite of Abaddon Borrowed Time
 	// Author: Noya
 	// Date: 9.1.2015.
@@ -289,10 +281,6 @@
 		}
 	}
 	
-	//End of file abaddon_borrowed_time_datadriven.txt
-
-
-	//Start of file abaddon_death_coil_datadriven.txt
 	// Rewrite of Abaddon Death Coil
 	// Author: Noya
 	// Date: 29.09.2015.
@@ -366,10 +354,6 @@
 		}
 	}
 	
-	//End of file abaddon_death_coil_datadriven.txt
-
-
-	//Start of file abaddon_frostmourne_datadriven.txt
 	// Rewrite of Abaddon Curse of Avernus
 	// Author: Noya
 	// Date: 9.1.2015.
@@ -486,10 +470,6 @@
 		}
 	}
 	
-	//End of file abaddon_frostmourne_datadriven.txt
-
-
-	//Start of file ability_base_datadriven.txt
 	"ability_base_datadriven"
 	{
 		// General
@@ -535,10 +515,6 @@
 	}
 	
 	
-	//End of file ability_base_datadriven.txt
-
-
-	//Start of file abyssal_underlord_atrophy_aura_datadriven.txt
 	"abyssal_underlord_atrophy_aura_datadriven"
 	{
 		// General
@@ -582,10 +558,6 @@
 		}
 	}
 	
-	//End of file abyssal_underlord_atrophy_aura_datadriven.txt
-
-
-	//Start of file abyssal_underlord_cancel_dark_rift_datadriven.txt
 	"abyssal_underlord_cancel_dark_rift_datadriven"
 	{
 		// General
@@ -600,10 +572,6 @@
 		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
 	}
 	
-	//End of file abyssal_underlord_cancel_dark_rift_datadriven.txt
-
-
-	//Start of file abyssal_underlord_dark_rift_datadriven.txt
 	"abyssal_underlord_dark_rift_datadriven"
 	{
 		// General
@@ -643,10 +611,6 @@
 		}
 	}
 	
-	//End of file abyssal_underlord_dark_rift_datadriven.txt
-
-
-	//Start of file abyssal_underlord_firestorm_datadriven.txt
 	"abyssal_underlord_firestorm_datadriven"
 	{
 		// General
@@ -720,10 +684,6 @@
 		}
 	}
 	
-	//End of file abyssal_underlord_firestorm_datadriven.txt
-
-
-	//Start of file abyssal_underlord_pit_of_malice_datadriven.txt
 	"abyssal_underlord_pit_of_malice_datadriven"
 		{
 			// General
@@ -862,10 +822,6 @@
 				}
 			}
 		}
-	//End of file abyssal_underlord_pit_of_malice_datadriven.txt
-
-
-	//Start of file alchemist_acid_spray_datadriven.txt
 	// Rewrite of Alchemist Acid Spray
 	// Author: Noya
 	// Date: 9.1.2015.
@@ -1003,10 +959,6 @@
 	
 	}
 	
-	//End of file alchemist_acid_spray_datadriven.txt
-
-
-	//Start of file alchemist_chemical_rage_datadriven.txt
 	// Rewrite of Alchemist Chemical Rage
 	// Author: Noya
 	// Date: 9.1.2015.
@@ -1146,10 +1098,6 @@
 		}
 	}
 	
-	//End of file alchemist_chemical_rage_datadriven.txt
-
-
-	//Start of file alchemist_goblins_greed_datadriven.txt
 	// Rewrite of Alchemist Greevils Greed
 	// Author: Noya
 	// Date: 9.1.2015.
@@ -1224,10 +1172,6 @@
 		
 	}
 	
-	//End of file alchemist_goblins_greed_datadriven.txt
-
-
-	//Start of file alchemist_unstable_concoction_datadriven.txt
 	// Rewrite of Alchemist Unstable Concoction
 	// Author: Noya
 	// Date: 10.1.2015.
@@ -1381,10 +1325,6 @@
 		}
 	}
 	
-	//End of file alchemist_unstable_concoction_datadriven.txt
-
-
-	//Start of file alchemist_unstable_concoction_throw_datadriven.txt
 	// Rewrite of Alchemist Unstable Concoction Throw (Sub-Ability)
 	// Author: Noya
 	// Date: 10.1.2015.
@@ -1565,10 +1505,6 @@
 		}
 	}
 	
-	//End of file alchemist_unstable_concoction_throw_datadriven.txt
-
-
-	//Start of file alpha_wolf_command_aura_datadriven.txt
 	"alpha_wolf_command_aura_datadriven"
 	{
 		// General
@@ -1594,10 +1530,6 @@
 		}
 	}
 	
-	//End of file alpha_wolf_command_aura_datadriven.txt
-
-
-	//Start of file alpha_wolf_critical_strike_datadriven.txt
 	"alpha_wolf_critical_strike_datadriven"
 	{
 		// General
@@ -1623,10 +1555,6 @@
 		}
 	}
 	
-	//End of file alpha_wolf_critical_strike_datadriven.txt
-
-
-	//Start of file ancient_apparition_chilling_touch_datadriven.txt
 	// Rewrite of the Ancient Apparition Chilling Touch ability
 	// Author: Pizzalol
 	// Date: 14.02.2015.
@@ -1822,10 +1750,6 @@
 		}
 	}
 	
-	//End of file ancient_apparition_chilling_touch_datadriven.txt
-
-
-	//Start of file ancient_apparition_cold_feet_datadriven.txt
 	// Rewrite of the Ancient Apparition Cold Feet ability
 	// Author: Pizzalol
 	// Date: 13.02.2015.
@@ -2058,10 +1982,6 @@
 		}
 	}
 	
-	//End of file ancient_apparition_cold_feet_datadriven.txt
-
-
-	//Start of file ancient_apparition_ice_blast_datadriven.txt
 	// Rewrite of the Ancient Apparition Ice Blast ability
 	// Author: Pizzalol
 	// Date: 21.02.2015.
@@ -2369,10 +2289,6 @@
 		}
 	}
 	
-	//End of file ancient_apparition_ice_blast_datadriven.txt
-
-
-	//Start of file ancient_apparition_ice_blast_release_datadriven.txt
 	// Rewrite of the Ancient Apparition Ice Blast Release ability
 	// Author: Pizzalol
 	// Date: 21.02.2015.
@@ -2429,10 +2345,6 @@
 		}
 	}
 	
-	//End of file ancient_apparition_ice_blast_release_datadriven.txt
-
-
-	//Start of file ancient_apparition_ice_vortex_datadriven.txt
 	// Rewrite of the Ancient Apparition Ice Vortex ability
 	// Author: Pizzalol
 	// Date: 11.02.2015.
@@ -2584,10 +2496,6 @@
 		}
 	}
 	
-	//End of file ancient_apparition_ice_vortex_datadriven.txt
-
-
-	//Start of file antimage_blink_datadriven.txt
 	// Rewrite of the Antimage Blink ability
 	// Author: Pizzalol
 	// Date: 11.07.2015.
@@ -2668,10 +2576,6 @@
 		}
 	}
 	
-	//End of file antimage_blink_datadriven.txt
-
-
-	//Start of file antimage_mana_break_datadriven.txt
 	// Rewrite of the Antimage Mana Break ability
 	// Author: Pizzalol
 	// Date: 11.07.2015.
@@ -2750,10 +2654,6 @@
 		}
 	}
 	
-	//End of file antimage_mana_break_datadriven.txt
-
-
-	//Start of file antimage_mana_void_datadriven.txt
 	// Rewrite of the Antimage Mana Void ability
 	// Author: Pizzalol
 	// Date: 17.12.2014.
@@ -2897,10 +2797,6 @@
 	}
 	
 	
-	//End of file antimage_mana_void_datadriven.txt
-
-
-	//Start of file antimage_spell_shield_datadriven.txt
 	// Remwrite of the Antimage Spellshield ability
 	// Author: Pizzalol
 	// Date: 16.12.2014.
@@ -2940,163 +2836,147 @@
 	}
 	
 	
-	//End of file antimage_spell_shield_datadriven.txt
+	"arc_warden_flux"
+		{
+
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					 "heroes/hero_arc_warden/arc_warden_flux_lua.lua"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"  "DAMAGE_TYPE_MAGICAL"
 
 
-	//Start of file arc_warden_flux_lua.txt
-		"arc_warden_flux"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"600 700 800 900"
+		"AbilityManaCost"				"75"
+		"AbilityCooldown"				"20"
+
+		"AbilitySpecial"
 			{
-	
-			"BaseClass"						"ability_lua"
-			"ScriptFile"					 "heroes/hero_arc_warden/arc_warden_flux_lua.lua"
-			"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-			"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-			"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-			"AbilityUnitDamageType"  "DAMAGE_TYPE_MAGICAL"
-	
-	
-			"AbilityCastPoint"				"0.3"
-			"AbilityCastRange"				"600 700 800 900"
-			"AbilityManaCost"				"75"
-			"AbilityCooldown"				"20"
-	
-			"AbilitySpecial"
+			"1"
 				{
-				"1"
-					{
-					"var_type"				"FIELD_FLOAT"
-					"flux_damage_per_second" "15 30 45 60"
-					}
-				"2"
-					{
-					"var_type"				"FIELD_FLOAT"
-					"flux_duration" "6"
-					}
-				"3"
-					{
-					"var_type"				"FIELD_INTEGER"
-					"flux_mute_radius"	"225"
-					}
-				"4"
-					{
-					"var_type"				"FIELD_FLOAT"
-					"flux_tick_interval"	"0.5"
-					}
-				"05"
-					{
-					"var_type"				"FIELD_INTEGER"
-					"slow"	"-50"
-					}
+				"var_type"				"FIELD_FLOAT"
+				"flux_damage_per_second" "15 30 45 60"
 				}
-	
-			"precache"
+			"2"
 				{
-	
-				"particle" "particles/units/heroes/hero_zuus/zuus_static_field_b.vpcf"
-				"particle" "particles/status_fx/status_effect_disruptor_kinetic_fieldslow.vpcf"
+				"var_type"				"FIELD_FLOAT"
+				"flux_duration" "6"
 				}
-	    	}
-	//End of file arc_warden_flux_lua.txt
-
-
-	//Start of file arc_warden_magnetic_field_lua.txt
-		"arc_warden_magnetic_field"
-			{
-			"BaseClass"						"ability_lua"
-			"ScriptFile"					 "heroes/hero_arc_warden/arc_warden_magnetic_field_lua.lua"
-			"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
-			"AbilityRadius"	"275"
-			"AbilityCastPoint"				"0.3"
-			"AbilityCastRange"				"900"
-			"AbilityManaCost"				"110"
-			"AbilityCooldown"				"50"
-			
-			"AbilitySpecial"
+			"3"
 				{
-				"01"
-					{
-					"var_type"				"FIELD_FLOAT"
-					"field_duration" "3.5 4 4.5 5"
-					}
-				"02"
-					{
-					"var_type"				"FIELD_INTEGER"
-					"evasion"	"100"
-					}
-				"03"
-					{
-					"var_type"				"FIELD_INTEGER"
-					"bonus_attack_speed"	"50 60 70 80"
-					}
-				"04"
-					{
-					"var_type"				"FIELD_INTEGER"
-					"radius"	"275"
-					}
+				"var_type"				"FIELD_INTEGER"
+				"flux_mute_radius"	"225"
 				}
-			"precache"
+			"4"
 				{
-	
-				"particle" "particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"
+				"var_type"				"FIELD_FLOAT"
+				"flux_tick_interval"	"0.5"
+				}
+			"05"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"slow"	"-50"
 				}
 			}
-	//End of file arc_warden_magnetic_field_lua.txt
 
-
-	//Start of file arc_warden_spark_wraith_lua.txt
-		"arc_warden_spark_wraith"
+		"precache"
 			{
-			"BaseClass"						"ability_lua"
-			"ScriptFile"					 "heroes/hero_arc_warden/arc_warden_spark_wraith_lua.lua"
-			"AbilityName"		"arc_warden_spark_wraith"
-			"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_POINT"
-			"AbilityUnitDamageType"  "DAMAGE_TYPE_MAGICAL"
-			"AbilityDamage" "150 200 250 300"
-			"AbilityCastPoint"				"0.3"
-			"AbilityCastRange"				"2000"
-			"AbilityManaCost"				"50"
-			"AbilityCooldown"				"4"
-	
-			"AbilitySpecial"
+
+			"particle" "particles/units/heroes/hero_zuus/zuus_static_field_b.vpcf"
+			"particle" "particles/status_fx/status_effect_disruptor_kinetic_fieldslow.vpcf"
+			}
+    	}
+	"arc_warden_magnetic_field"
+		{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					 "heroes/hero_arc_warden/arc_warden_magnetic_field_lua.lua"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityRadius"	"275"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"900"
+		"AbilityManaCost"				"110"
+		"AbilityCooldown"				"50"
+		
+		"AbilitySpecial"
+			{
+			"01"
 				{
-				"01"
-					{
-					"var_type"				"FIELD_INTEGER"
-					"duration"	"50"
-					}
-				"02"
-					{
-					"var_type"				"FIELD_INTEGER"
-					"startup_time"	"3"
-					}
-				"03"
-					{
-					"var_type"				"FIELD_INTEGER"
-					"speed"	"400"
-					}
-				"04"
-					{
-					"var_type"				"FIELD_INTEGER"
-					"search_radius"	"375"
-					}
-				"05"
-					{
-					"var_type"				"FIELD_INTEGER"
-					"vision_radius"	"300"
-					}
+				"var_type"				"FIELD_FLOAT"
+				"field_duration" "3.5 4 4.5 5"
 				}
-			"precache"
+			"02"
 				{
-				"particle" "particles/units/heroes/hero_disruptor/disruptor_thunder_strike_buff_sphere.vpcf"
-				"particle" "particles/units/heroes/hero_disruptor/disruptor_thunder_strike_buff_sphere3.vpcf"
-				"particle" "particles/units/heroes/hero_zuus/zuus_base_attack_sparkles.vpcf"
-				"particle" "particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"
+				"var_type"				"FIELD_INTEGER"
+				"evasion"	"100"
+				}
+			"03"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"50 60 70 80"
+				}
+			"04"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"radius"	"275"
 				}
 			}
-	//End of file arc_warden_spark_wraith_lua.txt
+		"precache"
+			{
 
+			"particle" "particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"
+			}
+		}
+	"arc_warden_spark_wraith"
+		{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					 "heroes/hero_arc_warden/arc_warden_spark_wraith_lua.lua"
+		"AbilityName"		"arc_warden_spark_wraith"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"  "DAMAGE_TYPE_MAGICAL"
+		"AbilityDamage" "150 200 250 300"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"2000"
+		"AbilityManaCost"				"50"
+		"AbilityCooldown"				"4"
 
-	//Start of file arc_warden_tempest_double_lua.txt
+		"AbilitySpecial"
+			{
+			"01"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"duration"	"50"
+				}
+			"02"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"startup_time"	"3"
+				}
+			"03"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"speed"	"400"
+				}
+			"04"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"search_radius"	"375"
+				}
+			"05"
+				{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"	"300"
+				}
+			}
+		"precache"
+			{
+			"particle" "particles/units/heroes/hero_disruptor/disruptor_thunder_strike_buff_sphere.vpcf"
+			"particle" "particles/units/heroes/hero_disruptor/disruptor_thunder_strike_buff_sphere3.vpcf"
+			"particle" "particles/units/heroes/hero_zuus/zuus_base_attack_sparkles.vpcf"
+			"particle" "particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"
+			}
+		}
 	"arc_warden_tempest_double"
 			{
 			"BaseClass"						"ability_lua"
@@ -3130,10 +3010,6 @@
 				"particle" "particles/status_fx/status_effect_ancestral_spirit.vpcf"
 				}
 			}
-	//End of file arc_warden_tempest_double_lua.txt
-
-
-	//Start of file attribute_bonus_datadriven.txt
 	"attribute_bonus_datadriven"
 	{
 		// General
@@ -3154,10 +3030,6 @@
 		}
 	}
 	
-	//End of file attribute_bonus_datadriven.txt
-
-
-	//Start of file attr_damage_datadriven.txt
 	"attr_damage_datadriven"
 	{
 	    // General
@@ -3199,10 +3071,6 @@
 	
 	    }
 	}
-	//End of file attr_damage_datadriven.txt
-
-
-	//Start of file axe_battle_hunger_datadriven.txt
 	// Rewrite of the Axe Battle Hunger ability
 	// Author: Pizzalol
 	// Date: 09.02.2015.
@@ -3371,10 +3239,6 @@
 		}	
 	}
 	
-	//End of file axe_battle_hunger_datadriven.txt
-
-
-	//Start of file axe_berserkers_call_datadriven.txt
 	// Rewrite of the Axe Berserkers Call ability
 	// Author: Pizzalol
 	// Date: 09.02.2015.
@@ -3541,10 +3405,6 @@
 		}
 	}
 	
-	//End of file axe_berserkers_call_datadriven.txt
-
-
-	//Start of file axe_counter_helix_datadriven.txt
 	// Rewrite of the Axe Counter Helix ability
 	// Author: Pizzalol
 	// Date: 09.02.2015.
@@ -3701,10 +3561,6 @@
 		}
 	}
 	
-	//End of file axe_counter_helix_datadriven.txt
-
-
-	//Start of file axe_culling_blade_datadriven.txt
 	// Rewrite of the Axe Culling Blade ability
 	// Author: Pizzalol
 	// Date: 10.02.2015.
@@ -3851,10 +3707,6 @@
 		}
 	}	
 	
-	//End of file axe_culling_blade_datadriven.txt
-
-
-	//Start of file backdoor_protection_datadriven.txt
 	"backdoor_protection_datadriven"
 	{
 		// General
@@ -3885,10 +3737,6 @@
 		}
 	}
 	
-	//End of file backdoor_protection_datadriven.txt
-
-
-	//Start of file backdoor_protection_in_base_datadriven.txt
 	"backdoor_protection_in_base_datadriven"
 	{
 		// General
@@ -3914,10 +3762,6 @@
 		}
 	}
 	
-	//End of file backdoor_protection_in_base_datadriven.txt
-
-
-	//Start of file bane_brain_sap_datadriven.txt
 	// Rewrite of the Bane Brain Sap
 	// Author: chrislotix
 	// Date: 11.01.2015.
@@ -4012,10 +3856,6 @@
 		}
 	}
 	
-	//End of file bane_brain_sap_datadriven.txt
-
-
-	//Start of file bane_enfeeble_datadriven.txt
 	// Rewrite of the Bane Enfeeble
 	// Author: chrislotix
 	// Date: 11.01.2015.
@@ -4104,10 +3944,6 @@
 		}
 	}
 	
-	//End of file bane_enfeeble_datadriven.txt
-
-
-	//Start of file bane_fiends_grip_datadriven.txt
 	// Rewrite of the Bane Fiends Grip
 	// Author: chrislotix, Pizzalol
 	// Date: 11.01.2015.
@@ -4386,10 +4222,6 @@
 			}
 		}
 	}
-	//End of file bane_fiends_grip_datadriven.txt
-
-
-	//Start of file bane_nightmare_datadriven.txt
 	// Rewrite of the Bane Nightmare ability
 	// Author: Pizzalol, chrislotix
 	// Date: 12.02.2015.
@@ -4645,10 +4477,6 @@
 			}
 		}
 	}	
-	//End of file bane_nightmare_datadriven.txt
-
-
-	//Start of file bane_nightmare_end_datadriven.txt
 	// Rewrite of the Bane Nightmare End ability
 	// Author: Pizzalol
 	// Date: 12.02.2015.
@@ -4692,10 +4520,6 @@
 		}
 	}
 	
-	//End of file bane_nightmare_end_datadriven.txt
-
-
-	//Start of file batrider_firefly_datadriven.txt
 	"batrider_firefly_datadriven"
 	{
 		// General
@@ -4749,10 +4573,6 @@
 		}
 	}
 	
-	//End of file batrider_firefly_datadriven.txt
-
-
-	//Start of file batrider_flamebreak_datadriven.txt
 	"batrider_flamebreak_datadriven"
 	{
 		// General
@@ -4829,10 +4649,6 @@
 		}
 	}
 	
-	//End of file batrider_flamebreak_datadriven.txt
-
-
-	//Start of file batrider_flaming_lasso_datadriven.txt
 	"batrider_flaming_lasso_datadriven"
 	{
 		// General
@@ -4882,10 +4698,6 @@
 		}
 	}
 	
-	//End of file batrider_flaming_lasso_datadriven.txt
-
-
-	//Start of file batrider_sticky_napalm_datadriven.txt
 	"batrider_sticky_napalm_datadriven"
 	{
 		// General
@@ -4949,10 +4761,6 @@
 		}
 	}
 	
-	//End of file batrider_sticky_napalm_datadriven.txt
-
-
-	//Start of file beastmaster_boar_poison_datadriven.txt
 	"beastmaster_boar_poison_datadriven"
 	{
 		// General
@@ -4984,10 +4792,6 @@
 		}
 	}
 	
-	//End of file beastmaster_boar_poison_datadriven.txt
-
-
-	//Start of file beastmaster_call_of_the_wild_boar_datadriven.txt
 	// Rewrite of Beastmaster Call of the Wild Boar
 	// Author: Noya
 	// Date: April 5, 2015
@@ -5329,10 +5133,6 @@
 			}
 		}
 	}
-	//End of file beastmaster_call_of_the_wild_boar_datadriven.txt
-
-
-	//Start of file beastmaster_call_of_the_wild_datadriven.txt
 	// Rewrite of Beastmaster Call of the Wild
 	// Author: Noya
 	// Date: April 5, 2015
@@ -5658,10 +5458,6 @@
 		}
 	}
 	
-	//End of file beastmaster_call_of_the_wild_datadriven.txt
-
-
-	//Start of file beastmaster_call_of_the_wild_hawk_datadriven.txt
 	
 	"beastmaster_call_of_the_wild_hawk_datadriven"
 	{
@@ -5704,10 +5500,6 @@
 	
 	    }
 	}
-	//End of file beastmaster_call_of_the_wild_hawk_datadriven.txt
-
-
-	//Start of file beastmaster_greater_boar_poison_datadriven.txt
 	"beastmaster_greater_boar_poison_datadriven"
 	{
 		// General
@@ -5739,10 +5531,6 @@
 		}
 	}
 	
-	//End of file beastmaster_greater_boar_poison_datadriven.txt
-
-
-	//Start of file beastmaster_hawk_invisibility_datadriven.txt
 	"beastmaster_hawk_invisibility_datadriven"
 	{
 		// General
@@ -5767,10 +5555,6 @@
 		}
 	}
 	
-	//End of file beastmaster_hawk_invisibility_datadriven.txt
-
-
-	//Start of file beastmaster_inner_beast_datadriven.txt
 	// Rewrite of Beastmaster Inner Beast
 	// Author: Noya
 	// Date: April 5, 2015
@@ -5822,10 +5606,6 @@
 		}
 	}
 	
-	//End of file beastmaster_inner_beast_datadriven.txt
-
-
-	//Start of file beastmaster_primal_roar_datadriven.txt
 	// Rewrite of Beastmaster Primal Roar
 	// Author: Noya
 	// Date: April 5, 2015
@@ -6023,10 +5803,6 @@
 		}
 	}
 	
-	//End of file beastmaster_primal_roar_datadriven.txt
-
-
-	//Start of file beastmaster_wild_axes_datadriven.txt
 	"beastmaster_wild_axes_datadriven"
 	{
 		// General
@@ -6079,10 +5855,6 @@
 		}
 	}
 	
-	//End of file beastmaster_wild_axes_datadriven.txt
-
-
-	//Start of file big_thunder_lizard_frenzy_datadriven.txt
 	"big_thunder_lizard_frenzy_datadriven"
 	{
 		// General
@@ -6114,10 +5886,6 @@
 		}
 	}
 	
-	//End of file big_thunder_lizard_frenzy_datadriven.txt
-
-
-	//Start of file big_thunder_lizard_slam_datadriven.txt
 	"big_thunder_lizard_slam_datadriven"
 	{
 		// General
@@ -6166,10 +5934,6 @@
 		}
 	}
 	
-	//End of file big_thunder_lizard_slam_datadriven.txt
-
-
-	//Start of file black_dragon_splash_attack_datadriven.txt
 	"black_dragon_splash_attack_datadriven"
 	{
 		// General
@@ -6215,10 +5979,6 @@
 		}
 	}
 	
-	//End of file black_dragon_splash_attack_datadriven.txt
-
-
-	//Start of file bloodseeker_bloodrage_datadriven.txt
 	"bloodseeker_bloodrage_datadriven"
 	{
 		// General
@@ -6280,10 +6040,6 @@
 		}
 	}
 	
-	//End of file bloodseeker_bloodrage_datadriven.txt
-
-
-	//Start of file bloodseeker_blood_bath_datadriven.txt
 	"bloodseeker_blood_bath_datadriven"
 	{
 		// General
@@ -6339,10 +6095,6 @@
 		}
 	}
 	
-	//End of file bloodseeker_blood_bath_datadriven.txt
-
-
-	//Start of file bloodseeker_rupture_datadriven.txt
 	"bloodseeker_rupture_datadriven"
 	{
 		// General
@@ -6412,10 +6164,6 @@
 	
 	
 	
-	//End of file bloodseeker_rupture_datadriven.txt
-
-
-	//Start of file bloodseeker_thirst_datadriven.txt
 	"bloodseeker_thirst_datadriven"
 	{
 		// General
@@ -6451,10 +6199,6 @@
 		}
 	}
 	
-	//End of file bloodseeker_thirst_datadriven.txt
-
-
-	//Start of file blue_dragonspawn_overseer_devotion_aura_datadriven.txt
 	"blue_dragonspawn_overseer_devotion_aura_datadriven"
 	{
 		// General
@@ -6480,10 +6224,6 @@
 		}
 	}
 	
-	//End of file blue_dragonspawn_overseer_devotion_aura_datadriven.txt
-
-
-	//Start of file blue_dragonspawn_overseer_evasion_datadriven.txt
 	"blue_dragonspawn_overseer_evasion_datadriven"
 	{
 		// General
@@ -6504,10 +6244,6 @@
 		}
 	}
 	
-	//End of file blue_dragonspawn_overseer_evasion_datadriven.txt
-
-
-	//Start of file blue_dragonspawn_sorcerer_evasion_datadriven.txt
 	"blue_dragonspawn_sorcerer_evasion_datadriven"
 	{
 		// General
@@ -6528,10 +6264,6 @@
 		}
 	}
 	
-	//End of file blue_dragonspawn_sorcerer_evasion_datadriven.txt
-
-
-	//Start of file bounty_hunter_jinada_datadriven.txt
 	// Rewrite of the Bounty Hunter Jinda
 	// Author: chrislotix
 	// Date: 01.01.2015.
@@ -6648,10 +6380,6 @@
 	
 	}	
 	
-	//End of file bounty_hunter_jinada_datadriven.txt
-
-
-	//Start of file bounty_hunter_shuriken_toss_datadriven.txt
 	// Rewrite of the Bounty Hunter Shurikan Toss
 	// Author: chrislotix
 	// Date: 01.01.2015.
@@ -6774,10 +6502,6 @@
 	
 	}
 	
-	//End of file bounty_hunter_shuriken_toss_datadriven.txt
-
-
-	//Start of file bounty_hunter_track_datadriven.txt
 	// Rewrite of the Bounty Hunter Track ability
 	// Author: Pizzalol, chrislotix
 	// Date: 02.01.2015.
@@ -7000,10 +6724,6 @@
 		}
 	}
 	
-	//End of file bounty_hunter_track_datadriven.txt
-
-
-	//Start of file bounty_hunter_wind_walk_datadriven.txt
 	// Rewrite of the Bounty Hunter Windwalk
 	// Author: chrislotix
 	// Date: 01.01.2015.
@@ -7180,10 +6900,6 @@
 		}
 	}
 	
-	//End of file bounty_hunter_wind_walk_datadriven.txt
-
-
-	//Start of file brewmaster_drunken_brawler_datadriven.txt
 	// Rewrite of Brewmaster Drunken Brawler
 	// Author: Noya
 	// Date: 20.01.2015.
@@ -7424,10 +7140,6 @@
 			}
 		}
 	}
-	//End of file brewmaster_drunken_brawler_datadriven.txt
-
-
-	//Start of file brewmaster_drunken_haze_datadriven.txt
 	// Rewrite of Brewmaster Drunken Haze
 	// Author: Noya
 	// Date: 20.01.2015.
@@ -7569,10 +7281,6 @@
 		}
 	}
 	
-	//End of file brewmaster_drunken_haze_datadriven.txt
-
-
-	//Start of file brewmaster_earth_hurl_boulder_datadriven.txt
 	"brewmaster_earth_hurl_boulder_datadriven"
 	{
 		// General
@@ -7617,10 +7325,6 @@
 		}
 	}
 	
-	//End of file brewmaster_earth_hurl_boulder_datadriven.txt
-
-
-	//Start of file brewmaster_earth_pulverize_datadriven.txt
 	"brewmaster_earth_pulverize_datadriven"
 	{
 		// General
@@ -7660,10 +7364,6 @@
 		}
 	}
 	
-	//End of file brewmaster_earth_pulverize_datadriven.txt
-
-
-	//Start of file brewmaster_earth_spell_immunity_datadriven.txt
 	"brewmaster_earth_spell_immunity_datadriven"
 	{
 		// General
@@ -7678,10 +7378,6 @@
 		}
 	}
 	
-	//End of file brewmaster_earth_spell_immunity_datadriven.txt
-
-
-	//Start of file brewmaster_fire_permanent_immolation_datadriven.txt
 	"brewmaster_fire_permanent_immolation_datadriven"
 	{
 		// General
@@ -7708,10 +7404,6 @@
 		}
 	}
 	
-	//End of file brewmaster_fire_permanent_immolation_datadriven.txt
-
-
-	//Start of file brewmaster_primal_split_datadriven.txt
 	// Rewrite of Brewmaster Primal Split
 	// Author: Noya
 	// Date: 21.01.2015.
@@ -7903,10 +7595,6 @@
 		}	
 	}
 	
-	//End of file brewmaster_primal_split_datadriven.txt
-
-
-	//Start of file brewmaster_storm_cyclone_datadriven.txt
 	"brewmaster_storm_cyclone_datadriven"
 	{
 		// General
@@ -7945,10 +7633,6 @@
 		}
 	}
 	
-	//End of file brewmaster_storm_cyclone_datadriven.txt
-
-
-	//Start of file brewmaster_storm_dispel_magic_datadriven.txt
 	"brewmaster_storm_dispel_magic_datadriven"
 	{
 		// General
@@ -7986,10 +7670,6 @@
 		}
 	}
 	
-	//End of file brewmaster_storm_dispel_magic_datadriven.txt
-
-
-	//Start of file brewmaster_storm_wind_walk_datadriven.txt
 	"brewmaster_storm_wind_walk_datadriven"
 	{
 		// General
@@ -8032,10 +7712,6 @@
 		}
 	}
 	
-	//End of file brewmaster_storm_wind_walk_datadriven.txt
-
-
-	//Start of file brewmaster_thunder_clap_datadriven.txt
 	// Rewrite of Brewmaster Thunder Clap
 	// Author: Noya
 	// Date: 20.01.2015.
@@ -8193,10 +7869,6 @@
 		}
 	}
 	
-	//End of file brewmaster_thunder_clap_datadriven.txt
-
-
-	//Start of file bristleback_bristleback_datadriven.txt
 	// Ability: Bristleback
 	// By: Ragnar Homsar
 	// Date: July 10, 2015
@@ -8269,10 +7941,6 @@
 			}
 		}
 	}
-	//End of file bristleback_bristleback_datadriven.txt
-
-
-	//Start of file bristleback_quill_spray_datadriven.txt
 	// Author: Ragnar Homsar
 	// Date: July 12, 2015
 	
@@ -8504,10 +8172,6 @@
 				}
 			}
 		}
-	//End of file bristleback_quill_spray_datadriven.txt
-
-
-	//Start of file bristleback_viscous_nasal_goo_datadriven.txt
 	// Author: Ragnar Homsar
 	// Date: July 13, 2015
 	
@@ -8709,10 +8373,6 @@
 			}
 		}
 	}
-	//End of file bristleback_viscous_nasal_goo_datadriven.txt
-
-
-	//Start of file bristleback_warpath_datadriven.txt
 	// Author: Ragnar Homsar
 	// Date: July 14, 2015
 	// NOTE: Warpath is currently missing its particle effects and run/idle animations.
@@ -8820,10 +8480,6 @@
 				}
 			}
 		}
-	//End of file bristleback_warpath_datadriven.txt
-
-
-	//Start of file broodmother_incapacitating_bite_datadriven.txt
 	// Rewrite of the Broodmother Incapacitating Bite ability
 	// Author: Pizzalol
 	// Date: 12.01.2015.
@@ -8901,10 +8557,6 @@
 		}
 	}
 	
-	//End of file broodmother_incapacitating_bite_datadriven.txt
-
-
-	//Start of file broodmother_insatiable_hunger_datadriven.txt
 	// Rewrite of the Broodmother Insatiable Hunger ability
 	// Author: Pizzalol
 	// Date: 12.01.2015.
@@ -9005,10 +8657,6 @@
 		}
 	}
 	
-	//End of file broodmother_insatiable_hunger_datadriven.txt
-
-
-	//Start of file broodmother_poison_sting_datadriven.txt
 	"broodmother_poison_sting_datadriven"
 	{
 		// General
@@ -9049,10 +8697,6 @@
 		}
 	}
 	
-	//End of file broodmother_poison_sting_datadriven.txt
-
-
-	//Start of file broodmother_spawn_spiderite_datadriven.txt
 	"broodmother_spawn_spiderite_datadriven"
 	{
 		// General
@@ -9078,10 +8722,6 @@
 	}
 	
 	
-	//End of file broodmother_spawn_spiderite_datadriven.txt
-
-
-	//Start of file broodmother_spawn_spiderlings_datadriven.txt
 	// Rewrite of the Broodmother Spawn Spiderlings ability
 	// Author: Pizzalol
 	// Date: 14.01.2015.
@@ -9258,10 +8898,6 @@
 		}
 	}
 	
-	//End of file broodmother_spawn_spiderlings_datadriven.txt
-
-
-	//Start of file broodmother_spin_web_datadriven.txt
 	// Rewrite of the Broodmother Spin Web ability
 	// Author: Pizzalol
 	// Date: 18.01.2015.
@@ -9671,10 +9307,6 @@
 			}
 		}
 	}
-	//End of file broodmother_spin_web_datadriven.txt
-
-
-	//Start of file broodmother_spin_web_destroy_datadriven.txt
 	// Rewrite of the Broodmother Spin Web Destroy ability
 	// Author: Pizzalol
 	// Date: 18.01.2015.
@@ -9709,10 +9341,6 @@
 			}
 		}
 	}
-	//End of file broodmother_spin_web_destroy_datadriven.txt
-
-
-	//Start of file centaur_double_edge_datadriven.txt
 	// Rewrite of Centaur Double Edge
 	// Author: Noya
 	// Date: 9.1.2015.
@@ -9794,10 +9422,6 @@
 		}
 	}
 	
-	//End of file centaur_double_edge_datadriven.txt
-
-
-	//Start of file centaur_great_fortitude_datadriven.txt
 	"centaur_great_fortitude_datadriven"
 	{
 	    // General
@@ -9839,10 +9463,6 @@
 	
 	    }
 	}
-	//End of file centaur_great_fortitude_datadriven.txt
-
-
-	//Start of file centaur_hoof_stomp_datadriven.txt
 	// Rewrite of Centaur Hoof Stomp 
 	// Author: Noya
 	// Date: 9.1.2015.
@@ -9955,10 +9575,6 @@
 		}
 	}
 	
-	//End of file centaur_hoof_stomp_datadriven.txt
-
-
-	//Start of file centaur_khan_endurance_aura_datadriven.txt
 	"centaur_khan_endurance_aura_datadriven"
 	{
 		// General
@@ -9984,10 +9600,6 @@
 		}
 	}
 	
-	//End of file centaur_khan_endurance_aura_datadriven.txt
-
-
-	//Start of file centaur_khan_war_stomp_datadriven.txt
 	"centaur_khan_war_stomp_datadriven"
 	{
 		// General
@@ -10026,10 +9638,6 @@
 		}
 	}
 	
-	//End of file centaur_khan_war_stomp_datadriven.txt
-
-
-	//Start of file centaur_return_datadriven.txt
 	// Rewrite of Centaur Return
 	// Author: Noya
 	// Date: 9.1.2015.
@@ -10094,10 +9702,6 @@
 		}
 	}
 	
-	//End of file centaur_return_datadriven.txt
-
-
-	//Start of file centaur_stampede_datadriven.txt
 	// Rewrite of Centaur Stampede
 	// Author: Noya
 	// Date: 9.1.2015.
@@ -10268,10 +9872,6 @@
 		}
 	}
 	
-	//End of file centaur_stampede_datadriven.txt
-
-
-	//Start of file chaos_knight_chaos_bolt_datadriven.txt
 	// Rewrite of the Chaos Knight Chaos Bolt ability
 	// Author: Pizzalol
 	// Date: 08.04.2015.
@@ -10379,10 +9979,6 @@
 		}
 	}
 	
-	//End of file chaos_knight_chaos_bolt_datadriven.txt
-
-
-	//Start of file chaos_knight_chaos_strike_datadriven.txt
 	// Rewrite of the Chaos Knight Chaos Strike ability
 	// Author: Pizzalol
 	// Date: 07.04.2015.
@@ -10481,10 +10077,6 @@
 		}
 	}
 	
-	//End of file chaos_knight_chaos_strike_datadriven.txt
-
-
-	//Start of file chaos_knight_phantasm_datadriven.txt
 	// Rewrite of the Chaos Knight Phantasm ability
 	// Author: Pizzalol
 	// Date: 08.04.2015.
@@ -10630,10 +10222,6 @@
 		}
 	}
 	
-	//End of file chaos_knight_phantasm_datadriven.txt
-
-
-	//Start of file chaos_knight_reality_rift_datadriven.txt
 	// Rewrite of the Chaos Knight Reality Rift ability
 	// Author: Pizzalol
 	// Date: 27.09.2015.
@@ -10775,10 +10363,6 @@
 		}
 	}
 	
-	//End of file chaos_knight_reality_rift_datadriven.txt
-
-
-	//Start of file chen_hand_of_god_datadriven.txt
 	// Rewrite of the Chen Hand of God ability
 	// Author: Pizzalol
 	// Date: 06.04.2014.
@@ -10894,10 +10478,6 @@
 		}
 	}
 	
-	//End of file chen_hand_of_god_datadriven.txt
-
-
-	//Start of file chen_holy_persuasion_datadriven.txt
 	// Rewrite of the Chen Holy Persuasion ability
 	// Author: Pizzalol
 	// Date: 06.04.2014.
@@ -11011,10 +10591,6 @@
 		}
 	}
 	
-	//End of file chen_holy_persuasion_datadriven.txt
-
-
-	//Start of file chen_penitence_datadriven.txt
 	// Rewrite of the Chen Penitence ability
 	// Author: Pizzalol
 	// Date: 05.04.2014.
@@ -11141,10 +10717,6 @@
 		}
 	}
 	
-	//End of file chen_penitence_datadriven.txt
-
-
-	//Start of file chen_test_of_faith_datadriven.txt
 	// Rewrite of the Chen Test of Faith ability
 	// Author: Pizzalol
 	// Date: 05.04.2014.
@@ -11234,10 +10806,6 @@
 		}
 	}
 	
-	//End of file chen_test_of_faith_datadriven.txt
-
-
-	//Start of file chen_test_of_faith_teleport_datadriven.txt
 	// Rewrite of the Chen Test of Faith ability
 	// Author: Pizzalol
 	// Date: 06.04.2014.
@@ -11381,10 +10949,6 @@
 		}
 	}
 	
-	//End of file chen_test_of_faith_teleport_datadriven.txt
-
-
-	//Start of file clinkz_death_pact_datadriven.txt
 	// Rewrite of Clinkz Death Pact
 	// Author: Noya
 	// Date: April 5, 2015
@@ -11550,10 +11114,6 @@
 		}
 	}
 	
-	//End of file clinkz_death_pact_datadriven.txt
-
-
-	//Start of file clinkz_searing_arrows_datadriven.txt
 	// Rewrite of Clinkz Searing Arrows
 	// Author: Noya
 	// Date: April 5, 2015
@@ -11649,10 +11209,6 @@
 		}
 	}
 	
-	//End of file clinkz_searing_arrows_datadriven.txt
-
-
-	//Start of file clinkz_strafe_datadriven.txt
 	// Rewrite of Clinkz Strafe
 	// Author: Noya
 	// Date: April 5, 2015
@@ -11733,10 +11289,6 @@
 			}
 		}
 	}
-	//End of file clinkz_strafe_datadriven.txt
-
-
-	//Start of file clinkz_wind_walk_datadriven.txt
 	// Rewrite of Clinkz Wind Walk
 	// Author: Noya
 	// Date: April 5, 2015
@@ -11883,10 +11435,6 @@
 		}
 	}
 	
-	//End of file clinkz_wind_walk_datadriven.txt
-
-
-	//Start of file courier_burst_datadriven.txt
 	"courier_burst_datadriven"
 	{
 		// General
@@ -11923,10 +11471,6 @@
 		"MaxLevel"		"1"
 	}
 	
-	//End of file courier_burst_datadriven.txt
-
-
-	//Start of file courier_go_to_secretshop_datadriven.txt
 	"courier_go_to_secretshop_datadriven"
 	{
 		// General
@@ -11938,10 +11482,6 @@
 		"MaxLevel"		"1"
 	}
 	
-	//End of file courier_go_to_secretshop_datadriven.txt
-
-
-	//Start of file courier_morph_datadriven.txt
 	"courier_morph_datadriven"
 	{
 		// General
@@ -11966,10 +11506,6 @@
 		"MaxLevel"		"1"
 	}
 	
-	//End of file courier_morph_datadriven.txt
-
-
-	//Start of file courier_return_stash_items_datadriven.txt
 	"courier_return_stash_items_datadriven"
 	{
 		// General
@@ -11992,10 +11528,6 @@
 		"MaxLevel"		"1"
 	}
 	
-	//End of file courier_return_stash_items_datadriven.txt
-
-
-	//Start of file courier_return_to_base_datadriven.txt
 	"courier_return_to_base_datadriven"
 	{
 		// General
@@ -12007,10 +11539,6 @@
 		"MaxLevel"		"1"
 	}	
 	
-	//End of file courier_return_to_base_datadriven.txt
-
-
-	//Start of file courier_shield_datadriven.txt
 	"courier_shield_datadriven"
 	{
 		// General
@@ -12037,10 +11565,6 @@
 		"MaxLevel"		"1"		
 	}
 	
-	//End of file courier_shield_datadriven.txt
-
-
-	//Start of file courier_take_stash_items_datadriven.txt
 	"courier_take_stash_items_datadriven"
 	{
 		// General
@@ -12063,10 +11587,6 @@
 		"MaxLevel"		"1"
 	}
 	
-	//End of file courier_take_stash_items_datadriven.txt
-
-
-	//Start of file courier_transfer_items_datadriven.txt
 	"courier_transfer_items_datadriven"
 	{
 		// General
@@ -12089,10 +11609,6 @@
 		"MaxLevel"		"1"
 	}
 	
-	//End of file courier_transfer_items_datadriven.txt
-
-
-	//Start of file crystal_maiden_brilliance_aura_datadriven.txt
 	"crystal_maiden_brilliance_aura_datadriven"
 	{
 		// General
@@ -12148,10 +11664,6 @@
 			}
 		}
 	}
-	//End of file crystal_maiden_brilliance_aura_datadriven.txt
-
-
-	//Start of file crystal_maiden_crystal_nova_datadriven.txt
 	"crystal_maiden_crystal_nova_datadriven"
 	{
 		// General
@@ -12299,10 +11811,6 @@
 			}
 		}
 	}
-	//End of file crystal_maiden_crystal_nova_datadriven.txt
-
-
-	//Start of file crystal_maiden_freezing_field_datadriven.txt
 	"crystal_maiden_freezing_field_datadriven"
 	{
 		// General
@@ -12600,10 +12108,6 @@
 			}
 		}
 	}
-	//End of file crystal_maiden_freezing_field_datadriven.txt
-
-
-	//Start of file crystal_maiden_frostbite_datadriven.txt
 	"crystal_maiden_frostbite_datadriven"
 	{
 		// General
@@ -12800,10 +12304,6 @@
 			}
 		}
 	}
-	//End of file crystal_maiden_frostbite_datadriven.txt
-
-
-	//Start of file dark_seer_ion_shell_datadriven.txt
 	// Rewrite of the Dark Seer Ion Shell ability
 	// Author: Pizzalol
 	// Date: 02.04.2015.
@@ -12945,10 +12445,6 @@
 		}
 	}
 	
-	//End of file dark_seer_ion_shell_datadriven.txt
-
-
-	//Start of file dark_seer_surge_datadriven.txt
 	// Rewrite of the Dark Seer Surge ability
 	// Author: Pizzalol
 	// Date: 01.04.2015.
@@ -13038,10 +12534,6 @@
 		}
 	}
 	
-	//End of file dark_seer_surge_datadriven.txt
-
-
-	//Start of file dark_seer_vacuum_datadriven.txt
 	// Rewrite of the Dark Seer Vacuum ability
 	// Author: Pizzalol
 	// Date: 03.04.2015.
@@ -13207,10 +12699,6 @@
 		}
 	}
 	
-	//End of file dark_seer_vacuum_datadriven.txt
-
-
-	//Start of file dark_seer_wall_of_replica_datadriven.txt
 	// Rewrite of the Dark Seer Wall of Replica ability
 	// Author: Pizzalol
 	// Date: 05.04.2015.
@@ -13380,10 +12868,6 @@
 		}
 	}
 	
-	//End of file dark_seer_wall_of_replica_datadriven.txt
-
-
-	//Start of file dark_troll_warlord_ensnare_datadriven.txt
 	"dark_troll_warlord_ensnare_datadriven"
 	{
 		// General
@@ -13418,10 +12902,6 @@
 		}
 	}
 	
-	//End of file dark_troll_warlord_ensnare_datadriven.txt
-
-
-	//Start of file dark_troll_warlord_raise_dead_datadriven.txt
 	"dark_troll_warlord_raise_dead_datadriven"
 	{
 		// General
@@ -13448,10 +12928,6 @@
 		}
 	}
 	
-	//End of file dark_troll_warlord_raise_dead_datadriven.txt
-
-
-	//Start of file dazzle_poison_touch_datadriven.txt
 	// Rewrite of the Dazzle Poison Touch ability
 	// Author: Pizzalol
 	// Date: 05.02.2015.
@@ -13728,10 +13204,6 @@
 		}
 	}
 	
-	//End of file dazzle_poison_touch_datadriven.txt
-
-
-	//Start of file dazzle_shadow_wave_datadriven.txt
 	// Rewrite of the Dazzle Shadow Wave ability
 	// Author: Pizzalol
 	// Date: 09.02.2015.
@@ -13834,10 +13306,6 @@
 		}
 	}
 	
-	//End of file dazzle_shadow_wave_datadriven.txt
-
-
-	//Start of file dazzle_shallow_grave_datadriven.txt
 	// Rewrite of the Dazzle Shallow Grave ability
 	// Author: Pizzalol
 	// Date: 01.02.2015.
@@ -13935,10 +13403,6 @@
 		}
 	}
 	
-	//End of file dazzle_shallow_grave_datadriven.txt
-
-
-	//Start of file dazzle_weave_datadriven.txt
 	// Rewrite of the Dazzle Weave ability
 	// Author: Pizzalol
 	// Date: 02.02.2015.
@@ -14220,10 +13684,6 @@
 		}
 	}
 	
-	//End of file dazzle_weave_datadriven.txt
-
-
-	//Start of file death_prophet_carrion_swarm_datadriven.txt
 	// Rewrite of Death Prophet Carrion Swarm
 	// Author: Noya
 	// Date: 17.01.2015.
@@ -14760,10 +14220,6 @@
 	        }
 		}
 	}
-	//End of file death_prophet_carrion_swarm_datadriven.txt
-
-
-	//Start of file death_prophet_exorcism_datadriven.txt
 	// Rewrite of Death Prophet Exorcism
 	// Author: Noya
 	// Date: 01.02.2015.
@@ -15003,10 +14459,6 @@
 		}
 	}	
 	
-	//End of file death_prophet_exorcism_datadriven.txt
-
-
-	//Start of file death_prophet_silence_datadriven.txt
 	// Rewrite of Death Prophet Silence
 	// Author: Noya
 	// Date: 02.02.2015.
@@ -15597,10 +15049,6 @@
 			}
 		}
 	}
-	//End of file death_prophet_silence_datadriven.txt
-
-
-	//Start of file death_prophet_witchcraft_datadriven.txt
 	// Rewrite of Death Prophet Witchcraft
 	// Author: Noya
 	// Date: 02.02.2015.
@@ -15688,10 +15136,6 @@
 		}
 	}
 	
-	//End of file death_prophet_witchcraft_datadriven.txt
-
-
-	//Start of file default_attack_datadriven.txt
 	"default_attack_datadriven"
 	{
 		// General
@@ -15705,10 +15149,6 @@
 		}
 	}
 	
-	//End of file default_attack_datadriven.txt
-
-
-	//Start of file disruptor_glimpse_datadriven.txt
 	"disruptor_glimpse_datadriven"
 	{
 		// General
@@ -15755,10 +15195,6 @@
 		}
 	}	
 	
-	//End of file disruptor_glimpse_datadriven.txt
-
-
-	//Start of file disruptor_kinetic_field_datadriven.txt
 	"disruptor_kinetic_field_datadriven"
 	{
 		// General
@@ -15807,10 +15243,6 @@
 		}
 	}	
 	
-	//End of file disruptor_kinetic_field_datadriven.txt
-
-
-	//Start of file disruptor_static_storm_datadriven.txt
 	"disruptor_static_storm_datadriven"
 	{
 		// General
@@ -15876,10 +15308,6 @@
 		}
 	}
 	
-	//End of file disruptor_static_storm_datadriven.txt
-
-
-	//Start of file disruptor_thunder_strike_datadriven.txt
 	"disruptor_thunder_strike_datadriven"
 	{
 		// General
@@ -15941,10 +15369,6 @@
 		}
 	}
 	
-	//End of file disruptor_thunder_strike_datadriven.txt
-
-
-	//Start of file doom_bringer_devour_datadriven.txt
 	// Rewrite of the Doom Devour ability
 	// Author: Pizzalol
 	// Date: 04.03.2015.
@@ -16057,10 +15481,6 @@
 		}
 	}
 	
-	//End of file doom_bringer_devour_datadriven.txt
-
-
-	//Start of file doom_bringer_doom_datadriven.txt
 	// Rewrite of the Doom Doom ability
 	// Author: Pizzalol
 	// Date: 25.02.2015.
@@ -16259,10 +15679,6 @@
 		}
 	}
 	
-	//End of file doom_bringer_doom_datadriven.txt
-
-
-	//Start of file doom_bringer_empty1_datadriven.txt
 	"doom_bringer_empty1_datadriven"
 	{
 		// General
@@ -16272,10 +15688,6 @@
 		"MaxLevel"						"0"
 	}
 	
-	//End of file doom_bringer_empty1_datadriven.txt
-
-
-	//Start of file doom_bringer_empty2_datadriven.txt
 	"doom_bringer_empty2_datadriven"
 	{
 		// General
@@ -16285,10 +15697,6 @@
 		"MaxLevel"						"0"
 	}
 	
-	//End of file doom_bringer_empty2_datadriven.txt
-
-
-	//Start of file doom_bringer_lvl_death_datadriven.txt
 	// Rewrite of the Doom Lvl Death ability
 	// Author: Pizzalol
 	// Date: 25.02.2015.
@@ -16395,10 +15803,6 @@
 		}
 	}
 	
-	//End of file doom_bringer_lvl_death_datadriven.txt
-
-
-	//Start of file doom_bringer_scorched_earth_datadriven.txt
 	// Rewrite of the Doom Scorched Earth ability
 	// Author: Pizzalol
 	// Date: 24.02.2015.
@@ -16583,10 +15987,6 @@
 		}
 	}
 	
-	//End of file doom_bringer_scorched_earth_datadriven.txt
-
-
-	//Start of file dragon_knight_breathe_fire_datadriven.txt
 	// Rewrite of the Dragon Knight Breathe Fire
 	// Author: chrislotix
 	// Date: 02.01.2015.
@@ -16692,10 +16092,6 @@
 				}
 			}
 	}
-	//End of file dragon_knight_breathe_fire_datadriven.txt
-
-
-	//Start of file dragon_knight_dragon_blood_datadriven.txt
 	// Rewrite of the Dragon Knight Dragon Blood
 	// Author: chrislotix
 	// Date: 02.01.2015.
@@ -16738,10 +16134,6 @@
 		}
 	}
 	
-	//End of file dragon_knight_dragon_blood_datadriven.txt
-
-
-	//Start of file dragon_knight_dragon_tail_datadriven.txt
 	// Rewrite of the Dragon Knight Dragon Tail
 	// Author: chrislotix
 	// Date: 02.01.2015.
@@ -16830,10 +16222,6 @@
 	
 	}
 	
-	//End of file dragon_knight_dragon_tail_datadriven.txt
-
-
-	//Start of file dragon_knight_elder_dragon_form_datadriven.txt
 	// Rewrite of the Dragon Knight Elder Dragon Form
 	// Author: chrislotix/Pizzalol
 	// Date: 03.01.2015.
@@ -17323,10 +16711,6 @@
 			}
 		}
 	}
-	//End of file dragon_knight_elder_dragon_form_datadriven.txt
-
-
-	//Start of file dragon_knight_frost_breath_datadriven.txt
 	"dragon_knight_frost_breath_datadriven"
 	{
 		// General
@@ -17357,10 +16741,6 @@
 		}
 	}	
 	
-	//End of file dragon_knight_frost_breath_datadriven.txt
-
-
-	//Start of file drow_ranger_frost_arrows_datadriven.txt
 	// Rewrite of the Drow Ranger Frost Arrows
 	// Author: kritth
 	// Date: 03.01.2015.
@@ -17490,10 +16870,6 @@
 			}
 		}
 	}
-	//End of file drow_ranger_frost_arrows_datadriven.txt
-
-
-	//Start of file drow_ranger_marksmanship_datadriven.txt
 	// Rewrite of the Drow Ranger Markshmanship
 	// Author: kritth
 	// Date: 03.01.2015.
@@ -17591,10 +16967,6 @@
 			}
 		}
 	}
-	//End of file drow_ranger_marksmanship_datadriven.txt
-
-
-	//Start of file drow_ranger_trueshot_datadriven.txt
 	// Rewrite of the Drow Ranger Trueshot aura
 	// Author: kritth, Pizzalol
 	// Date: 27.09.2015.
@@ -17728,10 +17100,6 @@
 			}
 		}
 	}
-	//End of file drow_ranger_trueshot_datadriven.txt
-
-
-	//Start of file drow_ranger_wave_of_silence_datadriven.txt
 	// Rewrite of the Drow Ranger Wave of silence
 	// Author: kritth
 	// Date: 03.01.2015.
@@ -17869,10 +17237,6 @@
 			}
 		}
 	}
-	//End of file drow_ranger_wave_of_silence_datadriven.txt
-
-
-	//Start of file earthshaker_aftershock_datadriven.txt
 	"earthshaker_aftershock_datadriven"
 	{
 		// General
@@ -17911,10 +17275,6 @@
 		}
 	}
 	
-	//End of file earthshaker_aftershock_datadriven.txt
-
-
-	//Start of file earthshaker_echo_slam_datadriven.txt
 	"earthshaker_echo_slam_datadriven"
 	{
 		// General
@@ -17971,10 +17331,6 @@
 	}
 	
 	
-	//End of file earthshaker_echo_slam_datadriven.txt
-
-
-	//Start of file earthshaker_enchant_totem_datadriven.txt
 	"earthshaker_enchant_totem_datadriven"
 	{
 		// General
@@ -18019,10 +17375,6 @@
 		}
 	}
 	
-	//End of file earthshaker_enchant_totem_datadriven.txt
-
-
-	//Start of file earthshaker_fissure_datadriven.txt
 	"earthshaker_fissure_datadriven"
 	{
 		// General
@@ -18081,10 +17433,6 @@
 		}
 	}
 	
-	//End of file earthshaker_fissure_datadriven.txt
-
-
-	//Start of file earth_spirit_boulder_smash_datadriven.txt
 	"earth_spirit_boulder_smash_datadriven"
 	{
 		// General
@@ -18164,10 +17512,6 @@
 		}
 	}
 	
-	//End of file earth_spirit_boulder_smash_datadriven.txt
-
-
-	//Start of file earth_spirit_geomagnetic_grip_datadriven.txt
 	"earth_spirit_geomagnetic_grip_datadriven"
 	{
 		// General
@@ -18242,10 +17586,6 @@
 		}
 	}
 	
-	//End of file earth_spirit_geomagnetic_grip_datadriven.txt
-
-
-	//Start of file earth_spirit_magnetize_datadriven.txt
 	"earth_spirit_magnetize_datadriven"
 	{
 		// General
@@ -18323,10 +17663,6 @@
 		}
 	}
 	
-	//End of file earth_spirit_magnetize_datadriven.txt
-
-
-	//Start of file earth_spirit_petrify_datadriven.txt
 	"earth_spirit_petrify_datadriven"
 	{
 		// General
@@ -18378,10 +17714,6 @@
 		}
 	}
 	
-	//End of file earth_spirit_petrify_datadriven.txt
-
-
-	//Start of file earth_spirit_rolling_boulder_datadriven.txt
 	"earth_spirit_rolling_boulder_datadriven"
 	{
 		// General
@@ -18468,10 +17800,6 @@
 	}
 	
 	
-	//End of file earth_spirit_rolling_boulder_datadriven.txt
-
-
-	//Start of file earth_spirit_stone_caller_datadriven.txt
 	"earth_spirit_stone_caller_datadriven"
 	{
 		// General
@@ -18517,10 +17845,6 @@
 		}
 	}
 	
-	//End of file earth_spirit_stone_caller_datadriven.txt
-
-
-	//Start of file elder_titan_ancestral_spirit_datadriven.txt
 	"elder_titan_ancestral_spirit_datadriven"
 	{
 		// General
@@ -18599,10 +17923,6 @@
 		}
 	}
 	
-	//End of file elder_titan_ancestral_spirit_datadriven.txt
-
-
-	//Start of file elder_titan_earth_splitter_datadriven.txt
 	"elder_titan_earth_splitter_datadriven"
 	{
 		// General
@@ -18702,10 +18022,6 @@
 		}
 	}
 	
-	//End of file elder_titan_earth_splitter_datadriven.txt
-
-
-	//Start of file elder_titan_echo_stomp_datadriven.txt
 	"elder_titan_echo_stomp_datadriven"
 	{
 		// General
@@ -18756,10 +18072,6 @@
 			}
 		}
 	}
-	//End of file elder_titan_echo_stomp_datadriven.txt
-
-
-	//Start of file elder_titan_echo_stomp_spirit_datadriven.txt
 	"elder_titan_echo_stomp_spirit_datadriven"
 	{
 		// General
@@ -18807,10 +18119,6 @@
 		}
 	}
 	
-	//End of file elder_titan_echo_stomp_spirit_datadriven.txt
-
-
-	//Start of file elder_titan_natural_order_datadriven.txt
 	"elder_titan_natural_order_datadriven"
 	{
 		// General
@@ -18843,10 +18151,6 @@
 		}
 	}
 	
-	//End of file elder_titan_natural_order_datadriven.txt
-
-
-	//Start of file elder_titan_return_spirit_datadriven.txt
 	"elder_titan_return_spirit_datadriven"
 	{
 		// General
@@ -18864,10 +18168,6 @@
 		"AbilityCooldown"				"0.0 0.0 0.0"
 	}
 	
-	//End of file elder_titan_return_spirit_datadriven.txt
-
-
-	//Start of file ember_spirit_activate_fire_remnant_datadriven.txt
 	"ember_spirit_activate_fire_remnant_datadriven"
 	{
 		// General
@@ -19019,10 +18319,6 @@
 			}
 		}
 	}
-	//End of file ember_spirit_activate_fire_remnant_datadriven.txt
-
-
-	//Start of file ember_spirit_fire_remnant_datadriven.txt
 	// NOTE: Particles for remnant is wrong
 	"ember_spirit_fire_remnant_datadriven"
 	{
@@ -19164,10 +18460,6 @@
 			}
 		}
 	}
-	//End of file ember_spirit_fire_remnant_datadriven.txt
-
-
-	//Start of file ember_spirit_flame_guard_datadriven.txt
 	// NOTE: This ability will only absorb damage whose AbilityUnitDamageType field is marked as DAMAGE_TYPE_MAGICAL
 	"ember_spirit_flame_guard_datadriven"
 	{
@@ -19334,10 +18626,6 @@
 			}
 		}
 	}
-	//End of file ember_spirit_flame_guard_datadriven.txt
-
-
-	//Start of file ember_spirit_searing_chains_datadriven.txt
 	"ember_spirit_searing_chains_datadriven"
 	{
 		// General
@@ -19475,10 +18763,6 @@
 			}
 		}
 	}
-	//End of file ember_spirit_searing_chains_datadriven.txt
-
-
-	//Start of file ember_spirit_sleight_of_fist_datadriven.txt
 	"ember_spirit_sleight_of_fist_datadriven"
 	{
 		// General
@@ -19643,10 +18927,6 @@
 			}
 		}
 	}
-	//End of file ember_spirit_sleight_of_fist_datadriven.txt
-
-
-	//Start of file enchantress_enchant_datadriven.txt
 	"enchantress_enchant_datadriven"
 	{
 		// General
@@ -19693,10 +18973,6 @@
 		}
 	}
 	
-	//End of file enchantress_enchant_datadriven.txt
-
-
-	//Start of file enchantress_impetus_datadriven.txt
 	"enchantress_impetus_datadriven"
 	{
 		// General
@@ -19747,10 +19023,6 @@
 		}
 	}
 	
-	//End of file enchantress_impetus_datadriven.txt
-
-
-	//Start of file enchantress_natures_attendants_datadriven.txt
 	"enchantress_natures_attendants_datadriven"
 	{
 		// General
@@ -19799,10 +19071,6 @@
 		}
 	}
 	
-	//End of file enchantress_natures_attendants_datadriven.txt
-
-
-	//Start of file enchantress_untouchable_datadriven.txt
 	"enchantress_untouchable_datadriven"
 	{
 		// General
@@ -19830,10 +19098,6 @@
 		}
 	}
 	
-	//End of file enchantress_untouchable_datadriven.txt
-
-
-	//Start of file enigma_black_hole_datadriven.txt
 	"enigma_black_hole_datadriven"
 	{
 		// General
@@ -19912,10 +19176,6 @@
 		}
 	}
 	
-	//End of file enigma_black_hole_datadriven.txt
-
-
-	//Start of file enigma_demonic_conversion_datadriven.txt
 	"enigma_demonic_conversion_datadriven"
 	{
 		// General
@@ -19977,10 +19237,6 @@
 		}
 	}
 	
-	//End of file enigma_demonic_conversion_datadriven.txt
-
-
-	//Start of file enigma_malefice_datadriven.txt
 	"enigma_malefice_datadriven"
 	{
 		// General
@@ -20043,10 +19299,6 @@
 		}
 	}
 	
-	//End of file enigma_malefice_datadriven.txt
-
-
-	//Start of file enigma_midnight_pulse_datadriven.txt
 	"enigma_midnight_pulse_datadriven"
 	{
 		// General
@@ -20093,10 +19345,6 @@
 		}
 	}
 	
-	//End of file enigma_midnight_pulse_datadriven.txt
-
-
-	//Start of file enraged_wildkin_tornado_datadriven.txt
 	"enraged_wildkin_tornado_datadriven"
 	{
 		// General
@@ -20126,10 +19374,6 @@
 		}
 	}
 	
-	//End of file enraged_wildkin_tornado_datadriven.txt
-
-
-	//Start of file enraged_wildkin_toughness_aura_datadriven.txt
 	"enraged_wildkin_toughness_aura_datadriven"
 	{
 		// General
@@ -20155,10 +19399,6 @@
 		}
 	}
 	
-	//End of file enraged_wildkin_toughness_aura_datadriven.txt
-
-
-	//Start of file faceless_void_backtrack_datadriven.txt
 	// Rewrite of the Faceless Void Backtrack ability
 	// Author: Pizzalol
 	// Date: 06.01.2015.
@@ -20233,10 +19473,6 @@
 		}
 	}
 	
-	//End of file faceless_void_backtrack_datadriven.txt
-
-
-	//Start of file faceless_void_chronosphere_datadriven.txt
 	// Rewrite of the Faceless Void Chronosphere ability
 	// Author: Pizzalol
 	// Date: 26.09.2015.
@@ -20437,10 +19673,6 @@
 		}
 	}
 	
-	//End of file faceless_void_chronosphere_datadriven.txt
-
-
-	//Start of file faceless_void_time_lock_datadriven.txt
 	// Rewrite of the Faceless Void Time Lock ability
 	// Author: Pizzalol
 	// Date: 06.01.2015.
@@ -20568,10 +19800,6 @@
 		}
 	}
 	
-	//End of file faceless_void_time_lock_datadriven.txt
-
-
-	//Start of file faceless_void_time_walk_datadriven.txt
 	// Rewrite of the Faceless Void Time Walk ability
 	// Author: Pizzalol
 	// Date: 21.09.2015.
@@ -20742,10 +19970,6 @@
 		}
 	}
 	
-	//End of file faceless_void_time_walk_datadriven.txt
-
-
-	//Start of file forest_troll_high_priest_heal_datadriven.txt
 	"forest_troll_high_priest_heal_datadriven"
 	{
 		// General
@@ -20778,10 +20002,6 @@
 		}
 	}
 	
-	//End of file forest_troll_high_priest_heal_datadriven.txt
-
-
-	//Start of file forest_troll_high_priest_mana_aura_datadriven.txt
 	"forest_troll_high_priest_mana_aura_datadriven"
 	{
 		// General
@@ -20808,10 +20028,6 @@
 	}
 	
 	// Next free ID 5523
-	//End of file forest_troll_high_priest_mana_aura_datadriven.txt
-
-
-	//Start of file forged_spirit_melting_strike_datadriven.txt
 	// Rewrite of the Invoker Forged Spirit Melting Strike ability
 	// Author: Pizzalol
 	// Date: 16.04.2015.
@@ -20889,10 +20105,6 @@
 		}
 	}
 	
-	//End of file forged_spirit_melting_strike_datadriven.txt
-
-
-	//Start of file fountain_buyback_datadriven.txt
 	"fountain_buyback_datadriven"
 	{
 	    // General
@@ -20934,10 +20146,6 @@
 	
 	    }
 	}
-	//End of file fountain_buyback_datadriven.txt
-
-
-	//Start of file fountain_glyph_datadriven.txt
 	"fountain_glyph_datadriven"
 	{
 	    // General
@@ -20979,10 +20187,6 @@
 	
 	    }
 	}
-	//End of file fountain_glyph_datadriven.txt
-
-
-	//Start of file furion_force_of_nature_datadriven.txt
 	// Rewrite of Furion Force of Nature
 	// Author: Noya
 	// Date: April 5, 2015
@@ -21072,10 +20276,6 @@
 		}
 	}
 	
-	//End of file furion_force_of_nature_datadriven.txt
-
-
-	//Start of file furion_sprout_datadriven.txt
 	"furion_sprout_datadriven"
 	{
 		// General
@@ -21115,10 +20315,6 @@
 		}
 	}
 	
-	//End of file furion_sprout_datadriven.txt
-
-
-	//Start of file furion_teleportation_datadriven.txt
 	// Rewrite of Furion Teleportation
 	// Author: Noya
 	// Date: April 5, 2015
@@ -21225,10 +20421,6 @@
 		}
 	}
 	
-	//End of file furion_teleportation_datadriven.txt
-
-
-	//Start of file furion_wrath_of_nature_datadriven.txt
 	// Rewrite of Furion Wrath of Nature
 	// Author: Noya
 	// Date: April 5, 2015
@@ -21346,10 +20538,6 @@
 		}
 	}
 	
-	//End of file furion_wrath_of_nature_datadriven.txt
-
-
-	//Start of file ghost_frost_attack_datadriven.txt
 	"ghost_frost_attack_datadriven"
 	{
 		// General
@@ -21381,10 +20569,6 @@
 		}
 	}
 	
-	//End of file ghost_frost_attack_datadriven.txt
-
-
-	//Start of file giant_wolf_critical_strike_datadriven.txt
 	"giant_wolf_critical_strike_datadriven"
 	{
 		// General
@@ -21410,10 +20594,6 @@
 		}
 	}
 	
-	//End of file giant_wolf_critical_strike_datadriven.txt
-
-
-	//Start of file gnoll_assassin_envenomed_weapon_datadriven.txt
 	"gnoll_assassin_envenomed_weapon_datadriven"
 	{
 		// General
@@ -21445,10 +20625,6 @@
 		}
 	}
 	
-	//End of file gnoll_assassin_envenomed_weapon_datadriven.txt
-
-
-	//Start of file greevil_black_hole_datadriven.txt
 	"greevil_black_hole_datadriven"
 	{
 		// General
@@ -21521,10 +20697,6 @@
 	}
 	
 	
-	//End of file greevil_black_hole_datadriven.txt
-
-
-	//Start of file greevil_blade_fury_datadriven.txt
 	"greevil_blade_fury_datadriven"
 	{
 		// General
@@ -21568,10 +20740,6 @@
 		}
 	}
 	
-	//End of file greevil_blade_fury_datadriven.txt
-
-
-	//Start of file greevil_bloodlust_datadriven.txt
 	"greevil_bloodlust_datadriven"
 	{
 		// General
@@ -21621,10 +20789,6 @@
 		}
 	}
 	
-	//End of file greevil_bloodlust_datadriven.txt
-
-
-	//Start of file greevil_cold_snap_datadriven.txt
 	"greevil_cold_snap_datadriven"
 	{
 		// General
@@ -21682,10 +20846,6 @@
 		}
 	}
 	
-	//End of file greevil_cold_snap_datadriven.txt
-
-
-	//Start of file greevil_decrepify_datadriven.txt
 	"greevil_decrepify_datadriven"
 	{
 		// General
@@ -21730,10 +20890,6 @@
 		}
 	}
 	
-	//End of file greevil_decrepify_datadriven.txt
-
-
-	//Start of file greevil_diabolic_edict_datadriven.txt
 	"greevil_diabolic_edict_datadriven"
 	{
 		// General
@@ -21783,10 +20939,6 @@
 		}
 	}
 	
-	//End of file greevil_diabolic_edict_datadriven.txt
-
-
-	//Start of file greevil_echo_slam_datadriven.txt
 	"greevil_echo_slam_datadriven"
 	{
 		// General
@@ -21840,10 +20992,6 @@
 		}
 	}
 	
-	//End of file greevil_echo_slam_datadriven.txt
-
-
-	//Start of file greevil_fatal_bonds_datadriven.txt
 	"greevil_fatal_bonds_datadriven"
 	{
 		// General
@@ -21896,10 +21044,6 @@
 		}
 	}
 	
-	//End of file greevil_fatal_bonds_datadriven.txt
-
-
-	//Start of file greevil_flesh_golem_datadriven.txt
 	"greevil_flesh_golem_datadriven"
 	{
 		// General
@@ -21948,10 +21092,6 @@
 		}
 	}
 	
-	//End of file greevil_flesh_golem_datadriven.txt
-
-
-	//Start of file greevil_hook_datadriven.txt
 	"greevil_hook_datadriven"
 	{
 		// General
@@ -22007,10 +21147,6 @@
 		}
 	}
 	
-	//End of file greevil_hook_datadriven.txt
-
-
-	//Start of file greevil_ice_wall_datadriven.txt
 	"greevil_ice_wall_datadriven"
 	{
 		// General
@@ -22073,10 +21209,6 @@
 		}
 	}
 	
-	//End of file greevil_ice_wall_datadriven.txt
-
-
-	//Start of file greevil_laguna_blade_datadriven.txt
 	"greevil_laguna_blade_datadriven"
 	{
 		// General
@@ -22118,10 +21250,6 @@
 		}
 	}
 	
-	//End of file greevil_laguna_blade_datadriven.txt
-
-
-	//Start of file greevil_leech_seed_datadriven.txt
 	"greevil_leech_seed_datadriven"
 	{
 		"BaseClass"				"ability_datadriven"
@@ -22178,10 +21306,6 @@
 		}
 	}
 	
-	//End of file greevil_leech_seed_datadriven.txt
-
-
-	//Start of file greevil_magic_missile_datadriven.txt
 	"greevil_magic_missile_datadriven"
 	{
 		// General
@@ -22227,10 +21351,6 @@
 		}
 	}
 	
-	//End of file greevil_magic_missile_datadriven.txt
-
-
-	//Start of file greevil_maledict_datadriven.txt
 	"greevil_maledict_datadriven"
 	{
 		// General
@@ -22284,10 +21404,6 @@
 		}
 	}
 	
-	//End of file greevil_maledict_datadriven.txt
-
-
-	//Start of file greevil_miniboss_black_brain_sap_datadriven.txt
 	"greevil_miniboss_black_brain_sap_datadriven"
 	{
 		// General
@@ -22326,10 +21442,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_black_brain_sap_datadriven.txt
-
-
-	//Start of file greevil_miniboss_black_nightmare_datadriven.txt
 	"greevil_miniboss_black_nightmare_datadriven"
 	{
 		// General
@@ -22389,10 +21501,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_black_nightmare_datadriven.txt
-
-
-	//Start of file greevil_miniboss_blue_cold_feet_datadriven.txt
 	"greevil_miniboss_blue_cold_feet_datadriven"
 	{
 		// General
@@ -22444,10 +21552,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_blue_cold_feet_datadriven.txt
-
-
-	//Start of file greevil_miniboss_blue_ice_vortex_datadriven.txt
 	"greevil_miniboss_blue_ice_vortex_datadriven"
 	{
 		// General
@@ -22496,10 +21600,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_blue_ice_vortex_datadriven.txt
-
-
-	//Start of file greevil_miniboss_green_living_armor_datadriven.txt
 	"greevil_miniboss_green_living_armor_datadriven"
 	{
 		// General
@@ -22550,10 +21650,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_green_living_armor_datadriven.txt
-
-
-	//Start of file greevil_miniboss_green_overgrowth_datadriven.txt
 	"greevil_miniboss_green_overgrowth_datadriven"
 	{
 		// General
@@ -22597,10 +21693,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_green_overgrowth_datadriven.txt
-
-
-	//Start of file greevil_miniboss_orange_dragon_slave_datadriven.txt
 	"greevil_miniboss_orange_dragon_slave_datadriven"
 	{
 		// General
@@ -22663,10 +21755,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_orange_dragon_slave_datadriven.txt
-
-
-	//Start of file greevil_miniboss_orange_light_strike_array_datadriven.txt
 	"greevil_miniboss_orange_light_strike_array_datadriven"
 	{
 		// General
@@ -22720,10 +21808,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_orange_light_strike_array_datadriven.txt
-
-
-	//Start of file greevil_miniboss_purple_plague_ward_datadriven.txt
 	"greevil_miniboss_purple_plague_ward_datadriven"
 	{
 		// General
@@ -22772,10 +21856,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_purple_plague_ward_datadriven.txt
-
-
-	//Start of file greevil_miniboss_purple_venomous_gale_datadriven.txt
 	"greevil_miniboss_purple_venomous_gale_datadriven"
 	{
 		// General
@@ -22844,10 +21924,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_purple_venomous_gale_datadriven.txt
-
-
-	//Start of file greevil_miniboss_red_earthshock_datadriven.txt
 	"greevil_miniboss_red_earthshock_datadriven"
 	{
 		// General
@@ -22896,10 +21972,6 @@
 		}
 	}	
 	
-	//End of file greevil_miniboss_red_earthshock_datadriven.txt
-
-
-	//Start of file greevil_miniboss_red_overpower_datadriven.txt
 	"greevil_miniboss_red_overpower_datadriven"
 	{
 		// General
@@ -22943,10 +22015,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_red_overpower_datadriven.txt
-
-
-	//Start of file greevil_miniboss_sight_datadriven.txt
 	"greevil_miniboss_sight_datadriven"
 	{
 		// General
@@ -22967,10 +22035,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_sight_datadriven.txt
-
-
-	//Start of file greevil_miniboss_white_degen_aura_datadriven.txt
 	"greevil_miniboss_white_degen_aura_datadriven"
 	{
 		// General
@@ -23000,10 +22064,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_white_degen_aura_datadriven.txt
-
-
-	//Start of file greevil_miniboss_white_purification_datadriven.txt
 	"greevil_miniboss_white_purification_datadriven"
 	{
 		// General
@@ -23049,10 +22109,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_white_purification_datadriven.txt
-
-
-	//Start of file greevil_miniboss_yellow_ion_shell_datadriven.txt
 	"greevil_miniboss_yellow_ion_shell_datadriven"
 	{
 		// General
@@ -23103,10 +22159,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_yellow_ion_shell_datadriven.txt
-
-
-	//Start of file greevil_miniboss_yellow_surge_datadriven.txt
 	"greevil_miniboss_yellow_surge_datadriven"
 	{
 		// General
@@ -23146,10 +22198,6 @@
 		}
 	}
 	
-	//End of file greevil_miniboss_yellow_surge_datadriven.txt
-
-
-	//Start of file greevil_natures_attendants_datadriven.txt
 	"greevil_natures_attendants_datadriven"
 	{
 		// General
@@ -23197,10 +22245,6 @@
 		}
 	}
 	
-	//End of file greevil_natures_attendants_datadriven.txt
-
-
-	//Start of file greevil_phantom_strike_datadriven.txt
 	"greevil_phantom_strike_datadriven"
 	{
 		// General
@@ -23246,10 +22290,6 @@
 		}
 	}
 	
-	//End of file greevil_phantom_strike_datadriven.txt
-
-
-	//Start of file greevil_poison_nova_datadriven.txt
 	"greevil_poison_nova_datadriven"
 	{
 		// General
@@ -23303,10 +22343,6 @@
 		}
 	}
 	
-	//End of file greevil_poison_nova_datadriven.txt
-
-
-	//Start of file greevil_purification_datadriven.txt
 	"greevil_purification_datadriven"
 	{
 		// General
@@ -23348,10 +22384,6 @@
 		}
 	}
 	
-	//End of file greevil_purification_datadriven.txt
-
-
-	//Start of file greevil_rot_datadriven.txt
 	"greevil_rot_datadriven"
 	{
 		// General
@@ -23391,10 +22423,6 @@
 		}
 	}
 	
-	//End of file greevil_rot_datadriven.txt
-
-
-	//Start of file greevil_shadow_strike_datadriven.txt
 	"greevil_shadow_strike_datadriven"
 	{
 		// General
@@ -23451,10 +22479,6 @@
 		}
 	}
 	
-	//End of file greevil_shadow_strike_datadriven.txt
-
-
-	//Start of file greevil_shadow_wave_datadriven.txt
 	"greevil_shadow_wave_datadriven"
 	{
 		// General
@@ -23501,10 +22525,6 @@
 		}
 	}
 	
-	//End of file greevil_shadow_wave_datadriven.txt
-
-
-	//Start of file greevil_time_lock_datadriven.txt
 	"greevil_time_lock_datadriven"
 	{
 		// General
@@ -23535,10 +22555,6 @@
 		}
 	}
 	
-	//End of file greevil_time_lock_datadriven.txt
-
-
-	//Start of file gyrocopter_call_down_datadriven.txt
 	"gyrocopter_call_down_datadriven"
 	{
 		// General
@@ -23616,10 +22632,6 @@
 		}
 	}
 	
-	//End of file gyrocopter_call_down_datadriven.txt
-
-
-	//Start of file gyrocopter_flak_cannon_datadriven.txt
 	"gyrocopter_flak_cannon_datadriven"
 	{
 		// General
@@ -23667,10 +22679,6 @@
 		}
 	}	
 	
-	//End of file gyrocopter_flak_cannon_datadriven.txt
-
-
-	//Start of file gyrocopter_homing_missile_datadriven.txt
 	"gyrocopter_homing_missile_datadriven"
 	{
 		// General
@@ -23764,10 +22772,6 @@
 		}
 	}
 	
-	//End of file gyrocopter_homing_missile_datadriven.txt
-
-
-	//Start of file gyrocopter_rocket_barrage_datadriven.txt
 	"gyrocopter_rocket_barrage_datadriven"
 	{
 		// General
@@ -23814,10 +22818,6 @@
 		}
 	}	
 	
-	//End of file gyrocopter_rocket_barrage_datadriven.txt
-
-
-	//Start of file harpy_storm_chain_lightning_datadriven.txt
 	"harpy_storm_chain_lightning_datadriven"
 	{
 		// General
@@ -23871,10 +22871,6 @@
 		}
 	}
 	
-	//End of file harpy_storm_chain_lightning_datadriven.txt
-
-
-	//Start of file healing_campfire_datadriven.txt
 	"healing_campfire_datadriven"
 	{
 		// General
@@ -23913,16 +22909,11 @@
 		}
 	}
 	
-	//End of file healing_campfire_datadriven.txt
-
-
-	//Start of file huskar_berserkers_blood_datadriven.txt
 	// Rewrite of the Huskar Berserkers Blood ability
 	// Author: Bude
 	// Date: 30.09.2015
 	// NOTE: Particles and Effects do not work at all
 	//		 Model size increase is probably inaccurate and also not very smooth
-	//		 Health percentages (and max stacks) is static for now
 	"huskar_berserkers_blood_datadriven"
 	{
 		// General
@@ -23989,10 +22980,6 @@
 		}
 	}
 	
-	//End of file huskar_berserkers_blood_datadriven.txt
-
-
-	//Start of file huskar_burning_spear_datadriven.txt
 	// Rewrite of the Huskar Burning Spear ability
 	// Author: Bude
 	// Date: 30.09.2015
@@ -24166,10 +23153,6 @@
 			}
 		}
 	}
-	//End of file huskar_burning_spear_datadriven.txt
-
-
-	//Start of file huskar_inner_vitality_datadriven.txt
 	// Rewrite of the Huskar Inner Vitality ability
 	// Author: Bude
 	// Date: 30.09.2015
@@ -24280,10 +23263,6 @@
 			}
 		}
 	}	
-	//End of file huskar_inner_vitality_datadriven.txt
-
-
-	//Start of file huskar_life_break_datadriven.txt
 	// Rewrite of the Huskar Life Break ability
 	// Author: Bude
 	// Date: 30.09.2015
@@ -24470,10 +23449,6 @@
 		}
 	}
 	
-	//End of file huskar_life_break_datadriven.txt
-
-
-	//Start of file invoker_alacrity_datadriven.txt
 	// Rewrite of the Invoker Alacrity ability
 	// Author: Pizzalol
 	// Date: 12.04.2015.
@@ -24621,10 +23596,6 @@
 		}
 	}
 	
-	//End of file invoker_alacrity_datadriven.txt
-
-
-	//Start of file invoker_chaos_meteor_datadriven.txt
 	// Rewrite of Chaos Meteor
 	// Author: Rook
 	// Date: April 06, 2015
@@ -24819,10 +23790,6 @@
 		}
 	}
 	
-	//End of file invoker_chaos_meteor_datadriven.txt
-
-
-	//Start of file invoker_cold_snap_datadriven.txt
 	// Rewrite of the Invoker Cold Snap ability
 	// Author: Pizzalol
 	// Date: 13.04.2015.
@@ -24993,10 +23960,6 @@
 		}
 	}
 	
-	//End of file invoker_cold_snap_datadriven.txt
-
-
-	//Start of file invoker_deafening_blast_datadriven.txt
 	// Rewrite of the Invoker Deafening Blast ability
 	// Author: Pizzalol
 	// Date: 21.04.2015.
@@ -25224,10 +24187,6 @@
 			}
 		}
 	}
-	//End of file invoker_deafening_blast_datadriven.txt
-
-
-	//Start of file invoker_empty1_datadriven.txt
 	// Rewrite of one of Invoker's empty slots
 	// Author: Rook
 	// Date: April 02, 2015
@@ -25241,10 +24200,6 @@
 		"MaxLevel"						"0"
 		"AbilityTextureName" 			"rubick_empty1"
 	}
-	//End of file invoker_empty1_datadriven.txt
-
-
-	//Start of file invoker_empty2_datadriven.txt
 	// Rewrite of one of Invoker's empty slots
 	// Author: Rook
 	// Date: April 02, 2015
@@ -25258,10 +24213,6 @@
 		"MaxLevel"						"0"
 		"AbilityTextureName" 			"rubick_empty1"
 	}
-	//End of file invoker_empty2_datadriven.txt
-
-
-	//Start of file invoker_emp_datadriven.txt
 	// Rewrite of EMP
 	// Author: Rook
 	// Date: April 06, 2015
@@ -25369,10 +24320,6 @@
 		}
 	}
 	
-	//End of file invoker_emp_datadriven.txt
-
-
-	//Start of file invoker_exort_datadriven.txt
 	// Rewrite of Exort
 	// Author: Rook
 	// Date: April 02, 2015
@@ -25467,10 +24414,6 @@
 			}
 		}
 	}
-	//End of file invoker_exort_datadriven.txt
-
-
-	//Start of file invoker_forge_spirit_datadriven.txt
 	// Rewrite of the Invoker Forge Spirit ability
 	// Author: Pizzalol
 	// Date: 27.09.2015.
@@ -25605,10 +24548,6 @@
 		}
 	}
 	
-	//End of file invoker_forge_spirit_datadriven.txt
-
-
-	//Start of file invoker_ghost_walk_datadriven.txt
 	// Rewrite of the Invoker Ghost Walk ability
 	// Author: Pizzalol
 	// Date: 14.04.2015.
@@ -25857,10 +24796,6 @@
 		}
 	}
 	
-	//End of file invoker_ghost_walk_datadriven.txt
-
-
-	//Start of file invoker_ice_wall_datadriven.txt
 	// Rewrite of Ice Wall
 	// Author: Rook
 	// Date: April 06, 2015
@@ -26069,10 +25004,6 @@
 		}
 	}
 	
-	//End of file invoker_ice_wall_datadriven.txt
-
-
-	//Start of file invoker_invoke_datadriven.txt
 	// Rewrite of Invoke
 	// Author: Rook, Pizzalol
 	// Date: April 12, 2015
@@ -26135,10 +25066,6 @@
 			}
 		}
 	}
-	//End of file invoker_invoke_datadriven.txt
-
-
-	//Start of file invoker_quas_datadriven.txt
 	// Rewrite of Quas
 	// Author: Rook
 	// Date: April 02, 2015
@@ -26233,10 +25160,6 @@
 			}
 		}
 	}
-	//End of file invoker_quas_datadriven.txt
-
-
-	//Start of file invoker_sun_strike_datadriven.txt
 	// Rewrite of the Invoker Sun Strike ability
 	// Author: Pizzalol
 	// Date: 20.04.2015.
@@ -26377,10 +25300,6 @@
 		}
 	}
 	
-	//End of file invoker_sun_strike_datadriven.txt
-
-
-	//Start of file invoker_tornado_datadriven.txt
 	// Rewrite of Tornado
 	// Author: Rook
 	// Date: April 06, 2015
@@ -26586,10 +25505,6 @@
 		}
 	}
 	
-	//End of file invoker_tornado_datadriven.txt
-
-
-	//Start of file invoker_wex_datadriven.txt
 	// Rewrite of Wex
 	// Author: Rook
 	// Date: April 02, 2015
@@ -26690,10 +25605,6 @@
 			}
 		}
 	}
-	//End of file invoker_wex_datadriven.txt
-
-
-	//Start of file jakiro_dual_breath_datadriven.txt
 	// Author: Ractidous
 	// Date: 26.01.2015.
 	// NOTE: This ability requires Jakiro Dual Breath Fiery (datadriven version) for full functionality
@@ -26907,10 +25818,6 @@
 		}
 	}
 	
-	//End of file jakiro_dual_breath_datadriven.txt
-
-
-	//Start of file jakiro_dual_breath_fiery_datadriven.txt
 	// Author: Ractidous
 	// Date: 26.01.2015.
 	// NOTE: This spell is part of the Jakiro Dual Breath ability
@@ -26956,10 +25863,6 @@
 			}
 		}
 	}
-	//End of file jakiro_dual_breath_fiery_datadriven.txt
-
-
-	//Start of file jakiro_ice_path_datadriven.txt
 	"jakiro_ice_path_datadriven"
 	{
 		// General
@@ -27132,10 +26035,6 @@
 		}
 	}
 	
-	//End of file jakiro_ice_path_datadriven.txt
-
-
-	//Start of file jakiro_liquid_fire_datadriven.txt
 	"jakiro_liquid_fire_datadriven"
 	{
 		// General
@@ -27304,10 +26203,6 @@
 		}
 	}
 	
-	//End of file jakiro_liquid_fire_datadriven.txt
-
-
-	//Start of file jakiro_macropyre_datadriven.txt
 	"jakiro_macropyre_datadriven"
 	{
 		// General
@@ -27470,10 +26365,6 @@
 		}
 	}
 	
-	//End of file jakiro_macropyre_datadriven.txt
-
-
-	//Start of file juggernaut_blade_dance_datadriven.txt
 	"juggernaut_blade_dance_datadriven"
 	{
 		// General
@@ -27498,10 +26389,6 @@
 		}
 	}
 	
-	//End of file juggernaut_blade_dance_datadriven.txt
-
-
-	//Start of file juggernaut_blade_fury_datadriven.txt
 	"juggernaut_blade_fury_datadriven"
 	{
 		// General
@@ -27548,10 +26435,6 @@
 		}
 	}
 	
-	//End of file juggernaut_blade_fury_datadriven.txt
-
-
-	//Start of file juggernaut_healing_ward_datadriven.txt
 	"juggernaut_healing_ward_datadriven"
 	{
 		// General
@@ -27590,10 +26473,6 @@
 		}
 	}
 	
-	//End of file juggernaut_healing_ward_datadriven.txt
-
-
-	//Start of file juggernaut_omni_slash_datadriven.txt
 	"juggernaut_omni_slash_datadriven"
 	{
 		// General
@@ -27663,10 +26542,6 @@
 		}
 	}
 	
-	//End of file juggernaut_omni_slash_datadriven.txt
-
-
-	//Start of file keeper_of_the_light_blinding_light_datadriven.txt
 	// Rewrite of the Keeper of the Light Blinding Light ability
 	// Author: Pizzalol
 	// Date: 20.01.2015.
@@ -27840,10 +26715,6 @@
 		}	
 	}
 	
-	//End of file keeper_of_the_light_blinding_light_datadriven.txt
-
-
-	//Start of file keeper_of_the_light_chakra_magic_datadriven.txt
 	// Rewrite of the Keeper of the Light Chakra Magic ability
 	// Author: Pizzalol
 	// Date: 19.01.2015.
@@ -27923,10 +26794,6 @@
 		}
 	}
 	
-	//End of file keeper_of_the_light_chakra_magic_datadriven.txt
-
-
-	//Start of file keeper_of_the_light_empty1_datadriven.txt
 	"keeper_of_the_light_empty1_datadriven"
 	{
 		// General
@@ -27936,10 +26803,6 @@
 		"MaxLevel"						"0"
 	}
 	
-	//End of file keeper_of_the_light_empty1_datadriven.txt
-
-
-	//Start of file keeper_of_the_light_empty2_datadriven.txt
 	"keeper_of_the_light_empty2_datadriven"
 	{
 		// General
@@ -27949,10 +26812,6 @@
 		"MaxLevel"						"0"
 	}
 	
-	//End of file keeper_of_the_light_empty2_datadriven.txt
-
-
-	//Start of file keeper_of_the_light_illuminate_datadriven.txt
 	// Rewrite of the Keeper of the Light Illuminate ability
 	// Author: Pizzalol
 	// Date: 24.01.2015.
@@ -28167,10 +27026,6 @@
 		}	
 	}
 	
-	//End of file keeper_of_the_light_illuminate_datadriven.txt
-
-
-	//Start of file keeper_of_the_light_illuminate_end_datadriven.txt
 	// Rewrite of the Keeper of the Illuminate end ability
 	// Author: Pizzalol
 	// Date: 24.01.2015.
@@ -28198,10 +27053,6 @@
 		
 	}
 	
-	//End of file keeper_of_the_light_illuminate_end_datadriven.txt
-
-
-	//Start of file keeper_of_the_light_mana_leak_datadriven.txt
 	// Rewrite of the Keeper of the Light Mana Leak ability
 	// Author: Pizzalol
 	// Date: 20.01.2015.
@@ -28373,10 +27224,6 @@
 		}	
 	}	
 	
-	//End of file keeper_of_the_light_mana_leak_datadriven.txt
-
-
-	//Start of file keeper_of_the_light_recall_datadriven.txt
 	// Rewrite of the Keeper of the Light Recall ability
 	// Author: Pizzalol
 	// Date: 19.01.2015.
@@ -28511,10 +27358,6 @@
 		}
 	}
 	
-	//End of file keeper_of_the_light_recall_datadriven.txt
-
-
-	//Start of file keeper_of_the_light_spirit_form_datadriven.txt
 	// Rewrite of the Keeper of the Light Spirit Form ability
 	// Author: Pizzalol
 	// Date: 27.09.2015.
@@ -28667,10 +27510,6 @@
 		}	
 	}
 	
-	//End of file keeper_of_the_light_spirit_form_datadriven.txt
-
-
-	//Start of file keeper_of_the_light_spirit_form_illuminate_datadriven.txt
 	// Rewrite of the Keeper of the Light Spirit Form Illuminate ability
 	// Author: Pizzalol
 	// Date: 25.01.2015.
@@ -28939,10 +27778,6 @@
 		}
 	}
 	
-	//End of file keeper_of_the_light_spirit_form_illuminate_datadriven.txt
-
-
-	//Start of file keeper_of_the_light_spirit_form_illuminate_end_datadriven.txt
 	// Rewrite of the Keeper of the Light Spirit Form Illuminate End ability
 	// Author: Pizzalol
 	// Date: 25.01.2015.
@@ -28970,10 +27805,6 @@
 		}	
 	}
 	
-	//End of file keeper_of_the_light_spirit_form_illuminate_end_datadriven.txt
-
-
-	//Start of file kobold_taskmaster_speed_aura_datadriven.txt
 	"kobold_taskmaster_speed_aura_datadriven"
 	{
 		// General
@@ -28999,10 +27830,6 @@
 		}
 	}
 	
-	//End of file kobold_taskmaster_speed_aura_datadriven.txt
-
-
-	//Start of file kunkka_ghostship_datadriven.txt
 	"kunkka_ghostship_datadriven"
 	{
 		// General
@@ -29171,10 +27998,6 @@
 			}
 		}
 	}
-	//End of file kunkka_ghostship_datadriven.txt
-
-
-	//Start of file kunkka_return_datadriven.txt
 	// NOTE: This ability use same script as kunkka_x_marks_the_spot_datadriven
 	"kunkka_return_datadriven"
 	{
@@ -29218,10 +28041,6 @@
 			}
 		}
 	}
-	//End of file kunkka_return_datadriven.txt
-
-
-	//Start of file kunkka_tidebringer_datadriven.txt
 	"kunkka_tidebringer_datadriven"
 	{
 		// General
@@ -29338,10 +28157,6 @@
 			}
 		}
 	}
-	//End of file kunkka_tidebringer_datadriven.txt
-
-
-	//Start of file kunkka_torrent_datadriven.txt
 	"kunkka_torrent_datadriven"
 	{
 		// General
@@ -29564,10 +28379,6 @@
 			}
 		}
 	}
-	//End of file kunkka_torrent_datadriven.txt
-
-
-	//Start of file kunkka_x_marks_the_spot_datadriven.txt
 	"kunkka_x_marks_the_spot_datadriven"
 	{
 		// General
@@ -29719,10 +28530,6 @@
 			}
 		}
 	}
-	//End of file kunkka_x_marks_the_spot_datadriven.txt
-
-
-	//Start of file legion_commander_duel_datadriven.txt
 	// Rewrite of Legion Commander's Duel
 	// Author: Hewdraw
 	// Date: June 11, 2015
@@ -29847,10 +28654,6 @@
 			}
 		}
 	}
-	//End of file legion_commander_duel_datadriven.txt
-
-
-	//Start of file legion_commander_moment_of_courage_datadriven.txt
 	"legion_commander_moment_of_courage_datadriven"
 	{
 		// General
@@ -29884,10 +28687,6 @@
 		}
 	}
 	
-	//End of file legion_commander_moment_of_courage_datadriven.txt
-
-
-	//Start of file legion_commander_overwhelming_odds_datadriven.txt
 	"legion_commander_overwhelming_odds_datadriven"
 	{
 		// General
@@ -29959,10 +28758,6 @@
 		}
 	}
 	
-	//End of file legion_commander_overwhelming_odds_datadriven.txt
-
-
-	//Start of file legion_commander_press_the_attack_datadriven.txt
 	"legion_commander_press_the_attack_datadriven"
 	{
 		// General
@@ -30014,10 +28809,6 @@
 		}
 	}
 	
-	//End of file legion_commander_press_the_attack_datadriven.txt
-
-
-	//Start of file leoric_critical_strike_datadriven.txt
 	"leoric_critical_strike_datadriven"
 	{
 	    // General
@@ -30059,10 +28850,6 @@
 	
 	    }
 	}
-	//End of file leoric_critical_strike_datadriven.txt
-
-
-	//Start of file leoric_hellfire_blast_datadriven.txt
 	"leoric_hellfire_blast_datadriven"
 	{
 	    // General
@@ -30104,10 +28891,6 @@
 	
 	    }
 	}
-	//End of file leoric_hellfire_blast_datadriven.txt
-
-
-	//Start of file leoric_lifesteal_aura_datadriven.txt
 	"leoric_lifesteal_aura_datadriven"
 	{
 	    // General
@@ -30149,10 +28932,6 @@
 	
 	    }
 	}
-	//End of file leoric_lifesteal_aura_datadriven.txt
-
-
-	//Start of file leoric_reincarnate_datadriven.txt
 	"leoric_reincarnate_datadriven"
 	{
 	    // General
@@ -30194,10 +28973,6 @@
 	
 	    }
 	}
-	//End of file leoric_reincarnate_datadriven.txt
-
-
-	//Start of file leshrac_diabolic_edict_datadriven.txt
 	// Rewrite of the Leshrac Diabolic Edict ability
 	// Author: jacklarnes
 	// Date: 05.04.2015
@@ -30280,10 +29055,6 @@
 		}
 	}
 	
-	//End of file leshrac_diabolic_edict_datadriven.txt
-
-
-	//Start of file leshrac_lightning_storm_datadriven.txt
 	// Rewrite of the Leshrac Lightning Storm ability
 	// Author: jacklarnes
 	// Date: 05.04.2015
@@ -30388,10 +29159,6 @@
 		}
 	}
 	
-	//End of file leshrac_lightning_storm_datadriven.txt
-
-
-	//Start of file leshrac_pulse_nova_datadriven.txt
 	// Rewrite of the Leshrac Pulse Nova ability
 	// Author: jacklarnes
 	// Date: 05.04.2015
@@ -30591,10 +29358,6 @@
 		}
 	}
 	
-	//End of file leshrac_pulse_nova_datadriven.txt
-
-
-	//Start of file leshrac_split_earth_datadriven.txt
 	// Rewrite of the Leshrac Split Earth ability
 	// Author: jacklarnes
 	// Date: 05.04.2015
@@ -30722,10 +29485,6 @@
 		}
 	}
 	
-	//End of file leshrac_split_earth_datadriven.txt
-
-
-	//Start of file lich_chain_frost_datadriven.txt
 	// Rewrite of Lich Chain Frost
 	// Author: Noya
 	// Date: 19.1.2015.
@@ -30923,10 +29682,6 @@
 		}
 	}
 	
-	//End of file lich_chain_frost_datadriven.txt
-
-
-	//Start of file lich_dark_ritual_datadriven.txt
 	// Rewrite of Lich Dark Ritual
 	// Author: Noya
 	// Date: 18.1.2015.
@@ -31013,10 +29768,6 @@
 		}
 	}
 	
-	//End of file lich_dark_ritual_datadriven.txt
-
-
-	//Start of file lich_frost_armor_datadriven.txt
 	// Rewrite of Lich Frost Nova
 	// Author: Noya
 	// Date: 18.1.2015.
@@ -31195,10 +29946,6 @@
 		}
 	}
 	
-	//End of file lich_frost_armor_datadriven.txt
-
-
-	//Start of file lich_frost_nova_datadriven.txt
 	// Rewrite of Lich Frost Nova
 	// Author: Noya
 	// Date: 18.1.2015.
@@ -31343,10 +30090,6 @@
 		}
 	}
 	
-	//End of file lich_frost_nova_datadriven.txt
-
-
-	//Start of file life_stealer_consume_datadriven.txt
 	// Rewrite of the Lifestealer Consume ability
 	// Author: jacklarnes, RcColes
 	// Date: 08.07.2015.
@@ -31377,10 +30120,6 @@
 		}
 	}
 	
-	//End of file life_stealer_consume_datadriven.txt
-
-
-	//Start of file life_stealer_feast_datadriven.txt
 	// Rewrite of the Lifestealer Feast ability
 	// Author: jacklarnes, Pizzalol
 	// Date: 07.04.2015.
@@ -31472,10 +30211,6 @@
 		}
 	}
 	
-	//End of file life_stealer_feast_datadriven.txt
-
-
-	//Start of file life_stealer_infest_datadriven.txt
 	// Rewrite of the Lifestealer Infest ability
 	// Author: jacklarnes, RcColes
 	// Date: 08.07.2015.
@@ -31647,10 +30382,6 @@
 		}
 	}
 	
-	//End of file life_stealer_infest_datadriven.txt
-
-
-	//Start of file life_stealer_open_wounds_datadriven.txt
 	// Rewrite of the Lifestealer Open Wounds ability
 	// Author: jacklarnes, Pizzalol
 	// Date: 21.04.2015.
@@ -31894,10 +30625,6 @@
 		}
 	}
 	
-	//End of file life_stealer_open_wounds_datadriven.txt
-
-
-	//Start of file life_stealer_rage_datadriven.txt
 	// Rewrite of the Lifestealer Rage ability
 	// Author: jacklarnes
 	// Date: 07.04.2015.
@@ -32012,10 +30739,6 @@
 	    }
 	}
 	
-	//End of file life_stealer_rage_datadriven.txt
-
-
-	//Start of file lina_dragon_slave_datadriven.txt
 	// Rewrite of the Lina Dragon Slave ability
 	// Author: Pizzalol
 	// Date: 29.12.2014.
@@ -32123,10 +30846,6 @@
 		}
 	}
 	
-	//End of file lina_dragon_slave_datadriven.txt
-
-
-	//Start of file lina_fiery_soul_alt1_datadriven.txt
 	"lina_fiery_soul_alt1_datadriven"
 	{
 	    // General
@@ -32168,10 +30887,6 @@
 	
 	    }
 	}
-	//End of file lina_fiery_soul_alt1_datadriven.txt
-
-
-	//Start of file lina_fiery_soul_datadriven.txt
 	// Rewrite of the Lina Fiery Soul ability
 	// Author: Pizzalol
 	// Date: 30.12.2014.
@@ -32249,10 +30964,6 @@
 		}
 	}
 	
-	//End of file lina_fiery_soul_datadriven.txt
-
-
-	//Start of file lina_laguna_blade_datadriven.txt
 	// Rewrite of the Lina Light Strike Array ability
 	// Author: Pizzalol
 	// Date: 30.12.2014.
@@ -32375,10 +31086,6 @@
 	
 	
 	
-	//End of file lina_laguna_blade_datadriven.txt
-
-
-	//Start of file lina_light_strike_array_datadriven.txt
 	// Rewrite of the Lina Light Strike Array ability
 	// Author: Pizzalol
 	// Date: 29.12.2014.
@@ -32545,10 +31252,6 @@
 		}
 	}
 	
-	//End of file lina_light_strike_array_datadriven.txt
-
-
-	//Start of file lion_finger_of_death_datadriven.txt
 	// Rewrite of the Lion Finger of Death ability
 	// Author: Pizzalol
 	// Date: 18.01.2015.
@@ -32682,10 +31385,6 @@
 	}
 	
 	
-	//End of file lion_finger_of_death_datadriven.txt
-
-
-	//Start of file lion_impale_datadriven.txt
 	// Rewrite of the Lion Impale ability
 	// Author: Pizzalol
 	// Date: 18.01.2015.
@@ -32837,10 +31536,6 @@
 		}
 	}
 	
-	//End of file lion_impale_datadriven.txt
-
-
-	//Start of file lion_mana_drain_datadriven.txt
 	// Rewrite of the Lion Mana Drain ability
 	// Author: Pizzalol
 	// Date: 18.01.2015.
@@ -32997,10 +31692,6 @@
 		}
 	}
 	
-	//End of file lion_mana_drain_datadriven.txt
-
-
-	//Start of file lion_voodoo_datadriven.txt
 	// Rewrite of the Lion Voodoo ability
 	// Author: Pizzalol
 	// Date: 27.09.2015.
@@ -33084,10 +31775,6 @@
 		}
 	}
 	
-	//End of file lion_voodoo_datadriven.txt
-
-
-	//Start of file lone_druid_rabid_datadriven.txt
 	// Rewrite of Lone Druid Rabid
 	// Author: Noya
 	// Date: 15.01.2015.
@@ -33199,10 +31886,6 @@
 		}
 	}
 	
-	//End of file lone_druid_rabid_datadriven.txt
-
-
-	//Start of file lone_druid_spirit_bear_datadriven.txt
 	// Rewrite of Lone Druid Spirit Bear
 	// Author: Noya
 	// Date: 14.01.2015.
@@ -33332,10 +32015,6 @@
 		}
 	}
 	
-	//End of file lone_druid_spirit_bear_datadriven.txt
-
-
-	//Start of file lone_druid_spirit_bear_demolish_datadriven.txt
 	"lone_druid_spirit_bear_demolish_datadriven"
 	{
 		// General
@@ -33360,10 +32039,6 @@
 		}
 	}
 	
-	//End of file lone_druid_spirit_bear_demolish_datadriven.txt
-
-
-	//Start of file lone_druid_spirit_bear_entangle_datadriven.txt
 	"lone_druid_spirit_bear_entangle_datadriven"
 	{
 		// General
@@ -33403,10 +32078,6 @@
 		}
 	}
 	
-	//End of file lone_druid_spirit_bear_entangle_datadriven.txt
-
-
-	//Start of file lone_druid_spirit_bear_return_datadriven.txt
 	"lone_druid_spirit_bear_return_datadriven"
 	{
 		// General
@@ -33438,10 +32109,6 @@
 		}
 	}
 	
-	//End of file lone_druid_spirit_bear_return_datadriven.txt
-
-
-	//Start of file lone_druid_synergy_datadriven.txt
 	// Rewrite of Lone Druid Synergy
 	// Author: Noya
 	// Date: 16.01.2015.
@@ -33521,10 +32188,6 @@
 		}
 	}
 	
-	//End of file lone_druid_synergy_datadriven.txt
-
-
-	//Start of file lone_druid_true_form_battle_cry_datadriven.txt
 	"lone_druid_true_form_battle_cry_datadriven"
 	{
 		// General
@@ -33574,10 +32237,6 @@
 	}
 	
 	
-	//End of file lone_druid_true_form_battle_cry_datadriven.txt
-
-
-	//Start of file lone_druid_true_form_datadriven.txt
 	// Rewrite of Lone Druid True Form
 	// Author: Noya
 	// Date: 16.01.2015.
@@ -33738,10 +32397,6 @@
 		}
 	}
 	
-	//End of file lone_druid_true_form_datadriven.txt
-
-
-	//Start of file lone_druid_true_form_druid_datadriven.txt
 	// Rewrite of Alchemist Unstable Concoction Throw (Sub-Ability)
 	// Author: Noya
 	// Date: 10.1.2015.
@@ -33861,10 +32516,6 @@
 		}
 	}
 	
-	//End of file lone_druid_true_form_druid_datadriven.txt
-
-
-	//Start of file luna_eclipse_datadriven.txt
 	// Rewrite of the Luna Eclipse ability
 	// Author: jacklarnes
 	// Date: 03.04.2015.
@@ -33983,10 +32634,6 @@
 		}
 	}
 	
-	//End of file luna_eclipse_datadriven.txt
-
-
-	//Start of file luna_lucent_beam_datadriven.txt
 	// Rewrite of the Luna Lucent Beam ability
 	// Author: jacklarnes
 	// Date: 03.04.2015.
@@ -34102,10 +32749,6 @@
 		}
 	}
 	
-	//End of file luna_lucent_beam_datadriven.txt
-
-
-	//Start of file luna_lunar_blessing_datadriven.txt
 	// Rewrite of the Luna Lunar Blessing ability
 	// Author: jacklarnes
 	// Date: 03.04.2015.
@@ -34179,10 +32822,6 @@
 		}
 	}
 	
-	//End of file luna_lunar_blessing_datadriven.txt
-
-
-	//Start of file luna_moon_glaive_datadriven.txt
 	// Rewrite of the Luna Moon Glaive ability
 	// Author: jacklarnes, Pizzalol
 	// Date: 29.09.2015.
@@ -34245,10 +32884,6 @@
 		}
 	}
 	
-	//End of file luna_moon_glaive_datadriven.txt
-
-
-	//Start of file luna_moon_glaive_dummy_datadriven.txt
 	// Rewrite of the Luna Moon Glaive ability
 	// Author: jacklarnes, Pizzalol
 	// Date: 29.09.2015.
@@ -34296,10 +32931,6 @@
 		}
 	}
 	
-	//End of file luna_moon_glaive_dummy_datadriven.txt
-
-
-	//Start of file lycan_feral_impulse_datadriven.txt
 	// Rewrite of the Lycan Feral Impulse
 	// Author: chrislotix, Pizzalol
 	// Date: 24.03.2015.
@@ -34413,10 +33044,6 @@
 		}	
 	}
 	
-	//End of file lycan_feral_impulse_datadriven.txt
-
-
-	//Start of file lycan_howl_datadriven.txt
 	// Rewrite of the Lycan Howl
 	// Author: chrislotix, Pizzalol
 	// Date: 24.03.2015.
@@ -34607,10 +33234,6 @@
 		}
 	}
 	
-	//End of file lycan_howl_datadriven.txt
-
-
-	//Start of file lycan_shapeshift_datadriven.txt
 	// Rewrite of the Lycan Shapeshift ability
 	// Author: Pizzalol
 	// Date: 26.09.2015.
@@ -34872,10 +33495,6 @@
 		}
 	}
 	
-	//End of file lycan_shapeshift_datadriven.txt
-
-
-	//Start of file lycan_summon_wolves_critical_strike_datadriven.txt
 	"lycan_summon_wolves_critical_strike_datadriven"
 	{
 		// General
@@ -34901,10 +33520,6 @@
 		}
 	}
 	
-	//End of file lycan_summon_wolves_critical_strike_datadriven.txt
-
-
-	//Start of file lycan_summon_wolves_datadriven.txt
 	// Rewrite of the Lycan Summon Wolves
 	// Author: chrislotix
 	// Date: 15.01.2015.
@@ -35191,10 +33806,6 @@
 		}
 	}
 	
-	//End of file lycan_summon_wolves_datadriven.txt
-
-
-	//Start of file lycan_summon_wolves_invisibility_datadriven.txt
 	"lycan_summon_wolves_invisibility_datadriven"
 	{
 		// General
@@ -35219,10 +33830,6 @@
 		}
 	}
 	
-	//End of file lycan_summon_wolves_invisibility_datadriven.txt
-
-
-	//Start of file magnataur_empower_datadriven.txt
 	"magnataur_empower_datadriven"
 	{
 		// General
@@ -35278,10 +33885,6 @@
 		}
 	}
 	
-	//End of file magnataur_empower_datadriven.txt
-
-
-	//Start of file magnataur_reverse_polarity_datadriven.txt
 	"magnataur_reverse_polarity_datadriven"
 	{
 		// General
@@ -35337,10 +33940,6 @@
 		}
 	}
 	
-	//End of file magnataur_reverse_polarity_datadriven.txt
-
-
-	//Start of file magnataur_shockwave_datadriven.txt
 	"magnataur_shockwave_datadriven"
 	{
 		// General
@@ -35397,10 +33996,6 @@
 		}
 	}
 	
-	//End of file magnataur_shockwave_datadriven.txt
-
-
-	//Start of file magnataur_skewer_datadriven.txt
 	"magnataur_skewer_datadriven"
 	{
 		// General
@@ -35466,10 +34061,6 @@
 		}
 	}
 	
-	//End of file magnataur_skewer_datadriven.txt
-
-
-	//Start of file medusa_mana_shield_datadriven.txt
 	// Rewrite of the Medusa Mana Shield ability
 	// Author: Pizzalol, Noya
 	// Date: 04.03.2015.
@@ -35602,10 +34193,6 @@
 		}
 	}
 	
-	//End of file medusa_mana_shield_datadriven.txt
-
-
-	//Start of file medusa_mystic_snake_datadriven.txt
 	// Rewrite of the Medusa Mystic Snake ability
 	// Author: Pizzalol
 	// Date: 07.03.2015.
@@ -35749,10 +34336,6 @@
 		}
 	}
 	
-	//End of file medusa_mystic_snake_datadriven.txt
-
-
-	//Start of file medusa_split_shot_datadriven.txt
 	// Rewrite of the Medusa Split Shot ability
 	// Author: Pizzalol
 	// Date: 04.03.2015.
@@ -35897,10 +34480,6 @@
 		}
 	}
 	
-	//End of file medusa_split_shot_datadriven.txt
-
-
-	//Start of file medusa_stone_gaze_datadriven.txt
 	// Rewrite of the Medusa Stone Gaze ability
 	// Author: Pizzalol
 	// Date: 07.03.2015.
@@ -36179,10 +34758,6 @@
 		}
 	}
 	
-	//End of file medusa_stone_gaze_datadriven.txt
-
-
-	//Start of file meepo_divided_we_stand_datadriven.txt
 	"meepo_divided_we_stand_datadriven"
 	{
 		// General
@@ -36227,10 +34802,6 @@
 	}
 	
 	
-	//End of file meepo_divided_we_stand_datadriven.txt
-
-
-	//Start of file meepo_earthbind_datadriven.txt
 	"meepo_earthbind_datadriven"
 	{
 		// General
@@ -36281,10 +34852,6 @@
 		}
 	}
 	
-	//End of file meepo_earthbind_datadriven.txt
-
-
-	//Start of file meepo_geostrike_datadriven.txt
 	"meepo_geostrike_datadriven"
 	{
 		// General
@@ -36318,10 +34885,6 @@
 		}
 	}
 	
-	//End of file meepo_geostrike_datadriven.txt
-
-
-	//Start of file meepo_poof_datadriven.txt
 	"meepo_poof_datadriven"
 	{
 		// General
@@ -36361,10 +34924,6 @@
 		}
 	}
 	
-	//End of file meepo_poof_datadriven.txt
-
-
-	//Start of file mirana_arrow_datadriven.txt
 	// Rewrite of the Mirana Sacred Arrow ability
 	// Author: Pizzalol
 	// Date: 26.09.2015.
@@ -36530,10 +35089,6 @@
 		}
 	}
 	
-	//End of file mirana_arrow_datadriven.txt
-
-
-	//Start of file mirana_invis_datadriven.txt
 	// Rewrite of the Mirana Moonlight Shadow ability
 	// Author: Pizzalol
 	// Date: 04.01.2015.
@@ -36746,10 +35301,6 @@
 		}
 	}
 	
-	//End of file mirana_invis_datadriven.txt
-
-
-	//Start of file mirana_leap_datadriven.txt
 	// Rewrite of the Mirana Leap ability
 	// Author: Pizzalol
 	// Date: 26.09.2015.
@@ -36881,10 +35432,6 @@
 		}
 	}
 	
-	//End of file mirana_leap_datadriven.txt
-
-
-	//Start of file mirana_starfall_datadriven.txt
 	// Rewrite of the Mirana Starfall ability
 	// Author: Pizzalol
 	// Date: 04.01.2015.
@@ -37070,10 +35617,6 @@
 		}
 	}
 	
-	//End of file mirana_starfall_datadriven.txt
-
-
-	//Start of file modifier_buyback_gold_penalty_datadriven.txt
 	"modifier_buyback_gold_penalty_datadriven"
 	{
 	    // General
@@ -37115,10 +35658,6 @@
 	
 	    }
 	}
-	//End of file modifier_buyback_gold_penalty_datadriven.txt
-
-
-	//Start of file modifier_illusion_datadriven.txt
 	"modifier_illusion_datadriven"
 	{
 	    // General
@@ -37160,10 +35699,6 @@
 	
 	    }
 	}
-	//End of file modifier_illusion_datadriven.txt
-
-
-	//Start of file modifier_invulnerable_datadriven.txt
 	"modifier_invulnerable_datadriven"
 	{
 	    // General
@@ -37205,10 +35740,6 @@
 	
 	    }
 	}
-	//End of file modifier_invulnerable_datadriven.txt
-
-
-	//Start of file modifier_magicimmune_datadriven.txt
 	"modifier_magicimmune_datadriven"
 	{
 	    // General
@@ -37250,10 +35781,6 @@
 	
 	    }
 	}
-	//End of file modifier_magicimmune_datadriven.txt
-
-
-	//Start of file morphling_adaptive_strike_datadriven.txt
 	"morphling_adaptive_strike_datadriven"
 	{
 		// General
@@ -37332,10 +35859,6 @@
 		}
 	}
 	
-	//End of file morphling_adaptive_strike_datadriven.txt
-
-
-	//Start of file morphling_morph_agi_datadriven.txt
 	// Rewrite of Morphling's Morph (Agility)
 	// Author: Rook
 	// Date: January 28, 2015
@@ -37458,10 +35981,6 @@
 		}
 	}
 	
-	//End of file morphling_morph_agi_datadriven.txt
-
-
-	//Start of file morphling_morph_replicate_datadriven.txt
 	"morphling_morph_replicate_datadriven"
 	{
 		// General
@@ -37476,10 +35995,6 @@
 		"AbilityCastPoint"				"0.25"
 	}
 	
-	//End of file morphling_morph_replicate_datadriven.txt
-
-
-	//Start of file morphling_morph_str_datadriven.txt
 	// Rewrite of Morphling's Morph (Strength)
 	// Author: Rook
 	// Date: January 28, 2015
@@ -37602,10 +36117,6 @@
 		}
 	}
 	
-	//End of file morphling_morph_str_datadriven.txt
-
-
-	//Start of file morphling_replicate_datadriven.txt
 	"morphling_replicate_datadriven"
 	{
 		// General
@@ -37667,10 +36178,6 @@
 		}
 	}
 	
-	//End of file morphling_replicate_datadriven.txt
-
-
-	//Start of file morphling_waveform_datadriven.txt
 	"morphling_waveform_datadriven"
 	{
 		// General
@@ -37716,10 +36223,6 @@
 		}
 	}
 	
-	//End of file morphling_waveform_datadriven.txt
-
-
-	//Start of file naga_siren_ensnare_datadriven.txt
 	"naga_siren_ensnare_datadriven"
 	{
 		// General
@@ -37862,10 +36365,6 @@
 		}
 	}	
 	
-	//End of file naga_siren_ensnare_datadriven.txt
-
-
-	//Start of file naga_siren_mirror_image_datadriven.txt
 	"naga_siren_mirror_image_datadriven"
 	{
 		// General
@@ -37988,10 +36487,6 @@
 		}
 	}
 	
-	//End of file naga_siren_mirror_image_datadriven.txt
-
-
-	//Start of file naga_siren_rip_tide_datadriven.txt
 	"naga_siren_rip_tide_datadriven"
 	{
 		// General
@@ -38104,10 +36599,6 @@
 		}
 	}	
 	
-	//End of file naga_siren_rip_tide_datadriven.txt
-
-
-	//Start of file naga_siren_song_of_the_siren_cancel_datadriven.txt
 	"naga_siren_song_of_the_siren_cancel_datadriven"
 	{
 		// General
@@ -38167,10 +36658,6 @@
 		}
 	}
 	
-	//End of file naga_siren_song_of_the_siren_cancel_datadriven.txt
-
-
-	//Start of file naga_siren_song_of_the_siren_datadriven.txt
 	"naga_siren_song_of_the_siren_datadriven"
 	{
 		// General
@@ -38376,10 +36863,6 @@
 		}
 	}
 	
-	//End of file naga_siren_song_of_the_siren_datadriven.txt
-
-
-	//Start of file necrolyte_death_pulse_datadriven.txt
 	// Rewrite of the Necrophos Death Pulse ability
 	// Author: Pizzalol
 	// Date: 05.01.2015.
@@ -38524,10 +37007,6 @@
 		}
 	}
 	
-	//End of file necrolyte_death_pulse_datadriven.txt
-
-
-	//Start of file necrolyte_heartstopper_aura_datadriven.txt
 	// Rewrite of the Necrophos Heartstopper Aura ability
 	// Author: Pizzalol
 	// Date: 11.07.2015.
@@ -38618,10 +37097,6 @@
 		}
 	}
 	
-	//End of file necrolyte_heartstopper_aura_datadriven.txt
-
-
-	//Start of file necrolyte_reapers_scythe_datadriven.txt
 	// Rewrite of the Necrophos Reapers Scythe ability
 	// Author: Pizzalol
 	// Date: 06.01.2015.
@@ -38819,10 +37294,6 @@
 		}
 	}
 	
-	//End of file necrolyte_reapers_scythe_datadriven.txt
-
-
-	//Start of file necrolyte_sadist_datadriven.txt
 	// Rewrite of the Necrophos Sadist ability
 	// Author: Pizzalol
 	// Date: 11.07.2015.
@@ -38929,10 +37400,6 @@
 		}
 	}
 	
-	//End of file necrolyte_sadist_datadriven.txt
-
-
-	//Start of file necronomicon_archer_aoe_datadriven.txt
 	"necronomicon_archer_aoe_datadriven"
 	{
 		// General
@@ -38960,10 +37427,6 @@
 	
 		
 	
-	//End of file necronomicon_archer_aoe_datadriven.txt
-
-
-	//Start of file necronomicon_archer_mana_burn_datadriven.txt
 	"necronomicon_archer_mana_burn_datadriven"
 	{
 		// General
@@ -38999,10 +37462,6 @@
 		}
 	}
 	
-	//End of file necronomicon_archer_mana_burn_datadriven.txt
-
-
-	//Start of file necronomicon_warrior_last_will_datadriven.txt
 	"necronomicon_warrior_last_will_datadriven"
 	{
 		// General
@@ -39024,10 +37483,6 @@
 		}
 	}
 	
-	//End of file necronomicon_warrior_last_will_datadriven.txt
-
-
-	//Start of file necronomicon_warrior_mana_burn_datadriven.txt
 	"necronomicon_warrior_mana_burn_datadriven"
 	{
 		// General
@@ -39054,10 +37509,6 @@
 		}
 	}
 	
-	//End of file necronomicon_warrior_mana_burn_datadriven.txt
-
-
-	//Start of file necronomicon_warrior_sight_datadriven.txt
 	"necronomicon_warrior_sight_datadriven"
 	{
 		// General
@@ -39078,10 +37529,6 @@
 		}
 	}
 	
-	//End of file necronomicon_warrior_sight_datadriven.txt
-
-
-	//Start of file neutral_spell_immunity_datadriven.txt
 	"neutral_spell_immunity_datadriven"
 	{
 		// General
@@ -39091,10 +37538,6 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 	
-	//End of file neutral_spell_immunity_datadriven.txt
-
-
-	//Start of file nevermore_dark_lord_datadriven.txt
 	// Rewrite of Nevermore Presence of the Dark Lord
 	// Author: Noya
 	// Date: April 5, 2015
@@ -39157,10 +37600,6 @@
 		}
 	}
 	
-	//End of file nevermore_dark_lord_datadriven.txt
-
-
-	//Start of file nevermore_necromastery_datadriven.txt
 	// Rewrite of Nevermore Necromastery
 	// Author: Noya
 	// Date: April 5, 2015
@@ -39259,10 +37698,6 @@
 		}
 	}
 	
-	//End of file nevermore_necromastery_datadriven.txt
-
-
-	//Start of file nevermore_requiem_datadriven.txt
 	"nevermore_requiem_datadriven"
 	{
 		// General
@@ -39359,10 +37794,6 @@
 		}
 	}
 	
-	//End of file nevermore_requiem_datadriven.txt
-
-
-	//Start of file nevermore_shadowraze1_datadriven.txt
 	// Rewrite of Nevermore Shadowraze 1
 	// Author: Noya
 	// Date: April 5, 2015
@@ -39447,10 +37878,6 @@
 			}
 		}
 	}
-	//End of file nevermore_shadowraze1_datadriven.txt
-
-
-	//Start of file nevermore_shadowraze2_datadriven.txt
 	// Rewrite of Nevermore Shadowraze 2
 	// Author: Noya
 	// Date: April 5, 2015
@@ -39504,10 +37931,6 @@
 		}
 	}
 	
-	//End of file nevermore_shadowraze2_datadriven.txt
-
-
-	//Start of file nevermore_shadowraze3_datadriven.txt
 	// Rewrite of Nevermore Shadowraze 3
 	// Author: Noya
 	// Date: April 5, 2015
@@ -39561,10 +37984,6 @@
 		}
 	}
 	
-	//End of file nevermore_shadowraze3_datadriven.txt
-
-
-	//Start of file night_stalker_crippling_fear_datadriven.txt
 	// Rewrite of the Nightstalker Crippling Fear ability
 	// Author: Pizzalol
 	// Date: 11.01.2015.
@@ -39683,10 +38102,6 @@
 		}
 	}
 	
-	//End of file night_stalker_crippling_fear_datadriven.txt
-
-
-	//Start of file night_stalker_darkness_datadriven.txt
 	// Rewrite of the Nightstalker Darkness ability
 	// Author: Pizzalol
 	// Date: 11.01.2015.
@@ -39803,10 +38218,6 @@
 		}
 	}
 	
-	//End of file night_stalker_darkness_datadriven.txt
-
-
-	//Start of file night_stalker_hunter_in_the_night_datadriven.txt
 	// Rewrite of the Nightstalker Hunter In The Night ability
 	// Author: Pizzalol
 	// Date: 11.01.2015.
@@ -39902,10 +38313,6 @@
 		}
 	}
 	
-	//End of file night_stalker_hunter_in_the_night_datadriven.txt
-
-
-	//Start of file night_stalker_void_datadriven.txt
 	// Rewrite of the Nightstalker Void ability
 	// Author: Pizzalol
 	// Date: 10.01.2015.
@@ -40025,10 +38432,6 @@
 		}
 	}
 	
-	//End of file night_stalker_void_datadriven.txt
-
-
-	//Start of file nyx_assassin_impale_datadriven.txt
 	"nyx_assassin_impale_datadriven"
 	{
 		// General
@@ -40175,10 +38578,6 @@
 			}
 		}
 	}
-	//End of file nyx_assassin_impale_datadriven.txt
-
-
-	//Start of file nyx_assassin_mana_burn_datadriven.txt
 	"nyx_assassin_mana_burn_datadriven"
 	{
 		// General
@@ -40235,10 +38634,6 @@
 			}
 		}
 	}
-	//End of file nyx_assassin_mana_burn_datadriven.txt
-
-
-	//Start of file nyx_assassin_spiked_carapace_datadriven.txt
 	// Need to fix attachment point for particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf
 	"nyx_assassin_spiked_carapace_datadriven"
 	{
@@ -40373,10 +38768,6 @@
 			}
 		}
 	}
-	//End of file nyx_assassin_spiked_carapace_datadriven.txt
-
-
-	//Start of file nyx_assassin_vendetta_datadriven.txt
 	"nyx_assassin_vendetta_datadriven"
 	{
 		// General
@@ -40504,10 +38895,6 @@
 			}
 		}
 	}
-	//End of file nyx_assassin_vendetta_datadriven.txt
-
-
-	//Start of file obsidian_destroyer_arcane_orb_datadriven.txt
 	// Rewrite of the Obsidian Destroyer Arcane Orb
 	// Author: chrislotix
 	// Date: 05.01.2015.
@@ -40593,10 +38980,6 @@
 		}
 	}	
 	
-	//End of file obsidian_destroyer_arcane_orb_datadriven.txt
-
-
-	//Start of file obsidian_destroyer_astral_imprisonment_datadriven.txt
 	// Rewrite of the Obsidian Destroyer Astral Imprisonment
 	// Author: chrislotix
 	// Date: 06.01.2015.
@@ -40792,10 +39175,6 @@
 	}
 	
 	
-	//End of file obsidian_destroyer_astral_imprisonment_datadriven.txt
-
-
-	//Start of file obsidian_destroyer_essence_aura_datadriven.txt
 	// Rewrite of the Obsidian Destroyer Essence Aura
 	// Author: chrislotix
 	// Date: 07.01.2015.
@@ -40900,10 +39279,6 @@
 			}
 		}
 	}
-	//End of file obsidian_destroyer_essence_aura_datadriven.txt
-
-
-	//Start of file obsidian_destroyer_sanity_eclipse_datadriven.txt
 	// Rewrite of the Obsidian Destroyer Sanity Eclipse
 	// Author: chrislotix
 	// Date: 08.01.2015.
@@ -41037,10 +39412,6 @@
 		}
 	}
 	
-	//End of file obsidian_destroyer_sanity_eclipse_datadriven.txt
-
-
-	//Start of file ogre_magi_bloodlust_datadriven.txt
 	"ogre_magi_bloodlust_datadriven"
 	{
 		// General
@@ -41094,10 +39465,6 @@
 		}
 	}
 	
-	//End of file ogre_magi_bloodlust_datadriven.txt
-
-
-	//Start of file ogre_magi_fireblast_datadriven.txt
 	"ogre_magi_fireblast_datadriven"
 	{
 		// General
@@ -41145,10 +39512,6 @@
 		}
 	}
 	
-	//End of file ogre_magi_fireblast_datadriven.txt
-
-
-	//Start of file ogre_magi_frost_armor_datadriven.txt
 	"ogre_magi_frost_armor_datadriven"
 	{
 		// General
@@ -41201,10 +39564,6 @@
 		}
 	}
 	
-	//End of file ogre_magi_frost_armor_datadriven.txt
-
-
-	//Start of file ogre_magi_ignite_datadriven.txt
 	"ogre_magi_ignite_datadriven"
 	{
 		// General
@@ -41266,10 +39625,6 @@
 		}
 	}
 	
-	//End of file ogre_magi_ignite_datadriven.txt
-
-
-	//Start of file ogre_magi_multicast_datadriven.txt
 	"ogre_magi_multicast_datadriven"
 	{
 		// General
@@ -41359,10 +39714,6 @@
 	}
 	
 	
-	//End of file ogre_magi_multicast_datadriven.txt
-
-
-	//Start of file ogre_magi_unrefined_fireblast_datadriven.txt
 	"ogre_magi_unrefined_fireblast_datadriven"
 	{
 		// General
@@ -41417,10 +39768,6 @@
 		}
 	}
 	
-	//End of file ogre_magi_unrefined_fireblast_datadriven.txt
-
-
-	//Start of file omniknight_degen_aura_datadriven.txt
 	// Rewrite of Omniknight Degen Aura
 	// Author: Noya
 	// Date: 8.1.2015.
@@ -41497,10 +39844,6 @@
 	
 	}
 	
-	//End of file omniknight_degen_aura_datadriven.txt
-
-
-	//Start of file omniknight_guardian_angel_datadriven.txt
 	// Rewrite of Omniknight Guardian Angel
 	// Author: Noya
 	// Date: 8.1.2015.
@@ -41625,10 +39968,6 @@
 		}
 	}
 	
-	//End of file omniknight_guardian_angel_datadriven.txt
-
-
-	//Start of file omniknight_purification_datadriven.txt
 	// Rewrite of Omniknight Purification
 	// Author: Noya
 	// Date: 8.1.2015.
@@ -41747,10 +40086,6 @@
 		}
 	}
 	
-	//End of file omniknight_purification_datadriven.txt
-
-
-	//Start of file omniknight_repel_datadriven.txt
 	// Rewrite of Omniknight Repel
 	// Author: Noya
 	// Date: 8.1.2015.
@@ -41843,10 +40178,6 @@
 		}
 	}
 	
-	//End of file omniknight_repel_datadriven.txt
-
-
-	//Start of file oracle_false_promise_datadriven.txt
 	"oracle_false_promise_datadriven"
 	{
 		// General
@@ -41884,10 +40215,6 @@
 	
 	
 	
-	//End of file oracle_false_promise_datadriven.txt
-
-
-	//Start of file oracle_fates_edict_datadriven.txt
 	"oracle_fates_edict_datadriven"
 	{
 		// General
@@ -41934,10 +40261,6 @@
 		}
 	}
 	
-	//End of file oracle_fates_edict_datadriven.txt
-
-
-	//Start of file oracle_fortunes_end_datadriven.txt
 	"oracle_fortunes_end_datadriven"
 	{
 		// General
@@ -42003,10 +40326,6 @@
 		}
 	}
 	
-	//End of file oracle_fortunes_end_datadriven.txt
-
-
-	//Start of file oracle_purifying_flames_datadriven.txt
 	"oracle_purifying_flames_datadriven"
 	{
 		// General
@@ -42066,10 +40385,6 @@
 		}
 	} 
 	
-	//End of file oracle_purifying_flames_datadriven.txt
-
-
-	//Start of file phantom_assassin_blur_datadriven.txt
 	// Rewrite of the Phantom Assassin Blur ability
 	// Author: Pizzalol
 	// Date: 21.12.2014.
@@ -42151,10 +40466,6 @@
 		}
 	}
 	
-	//End of file phantom_assassin_blur_datadriven.txt
-
-
-	//Start of file phantom_assassin_coup_de_grace_datadriven.txt
 	// Rewrite of the Phantom Assassin Coup de Grace ability
 	// Author: Pizzalol
 	// Date: 21.12.2014.
@@ -42268,10 +40579,6 @@
 		}
 	}
 	
-	//End of file phantom_assassin_coup_de_grace_datadriven.txt
-
-
-	//Start of file phantom_assassin_phantom_strike_datadriven.txt
 	// Rewrite of the Phantom Assassin Phantom Strike ability
 	// Author: Pizzalol
 	// Date: 29.09.2015.
@@ -42393,10 +40700,6 @@
 		}
 	}
 	
-	//End of file phantom_assassin_phantom_strike_datadriven.txt
-
-
-	//Start of file phantom_assassin_stifling_dagger_datadriven.txt
 	// Rewrite of the Phantom Assassin Stifling Dagger ability
 	// Author: Pizzalol
 	// Date: 21.12.2014.
@@ -42540,10 +40843,6 @@
 		}
 	}
 	
-	//End of file phantom_assassin_stifling_dagger_datadriven.txt
-
-
-	//Start of file phantom_lancer_doppelwalk_datadriven.txt
 	"phantom_lancer_doppelwalk_datadriven"
 	{
 		// General
@@ -42613,10 +40912,6 @@
 		}
 	}
 	
-	//End of file phantom_lancer_doppelwalk_datadriven.txt
-
-
-	//Start of file phantom_lancer_juxtapose_datadriven.txt
 	"phantom_lancer_juxtapose_datadriven"
 	{
 		// General
@@ -42677,10 +40972,6 @@
 		}
 	}
 	
-	//End of file phantom_lancer_juxtapose_datadriven.txt
-
-
-	//Start of file phantom_lancer_phantom_edge_datadriven.txt
 	"phantom_lancer_phantom_edge_datadriven"
 	{
 		// General
@@ -42714,10 +41005,6 @@
 		}
 	}
 	
-	//End of file phantom_lancer_phantom_edge_datadriven.txt
-
-
-	//Start of file phantom_lancer_spirit_lance_datadriven.txt
 	"phantom_lancer_spirit_lance_datadriven"
 	{
 		// General
@@ -42803,10 +41090,6 @@
 		}	
 	}
 	
-	//End of file phantom_lancer_spirit_lance_datadriven.txt
-
-
-	//Start of file phoenix_fire_spirits_datadriven.txt
 	"phoenix_fire_spirits_datadriven"
 	{
 		// General
@@ -42952,10 +41235,6 @@
 		}
 	}
 	
-	//End of file phoenix_fire_spirits_datadriven.txt
-
-
-	//Start of file phoenix_icarus_dive_datadriven.txt
 	"phoenix_icarus_dive_datadriven"
 	{
 		// General
@@ -43195,10 +41474,6 @@
 		}
 	}
 	
-	//End of file phoenix_icarus_dive_datadriven.txt
-
-
-	//Start of file phoenix_icarus_dive_stop_datadriven.txt
 	"phoenix_icarus_dive_stop_datadriven"
 	{
 		// General
@@ -43233,10 +41508,6 @@
 		}
 	}
 	
-	//End of file phoenix_icarus_dive_stop_datadriven.txt
-
-
-	//Start of file phoenix_launch_fire_spirit_datadriven.txt
 	"phoenix_launch_fire_spirit_datadriven"
 	{
 		// General
@@ -43421,10 +41692,6 @@
 		}
 	}
 	
-	//End of file phoenix_launch_fire_spirit_datadriven.txt
-
-
-	//Start of file phoenix_sun_ray_datadriven.txt
 	"phoenix_sun_ray_datadriven"
 	{
 		// General
@@ -43744,10 +42011,6 @@
 		}
 	}
 	
-	//End of file phoenix_sun_ray_datadriven.txt
-
-
-	//Start of file phoenix_sun_ray_stop_datadriven.txt
 	"phoenix_sun_ray_stop_datadriven"
 	{
 		// General
@@ -43786,10 +42049,6 @@
 		}
 	}
 	
-	//End of file phoenix_sun_ray_stop_datadriven.txt
-
-
-	//Start of file phoenix_sun_ray_toggle_move_datadriven.txt
 	"phoenix_sun_ray_toggle_move_datadriven"
 	{
 		// General
@@ -43829,10 +42088,6 @@
 		}
 	}
 	
-	//End of file phoenix_sun_ray_toggle_move_datadriven.txt
-
-
-	//Start of file phoenix_sun_ray_toggle_move_empty_datadriven.txt
 	"phoenix_sun_ray_toggle_move_empty_datadriven"
 	{
 		// General
@@ -43843,10 +42098,6 @@
 		"AbilityTextureName"			"phoenix_sun_ray_toggle_move_empty"
 	}
 	
-	//End of file phoenix_sun_ray_toggle_move_empty_datadriven.txt
-
-
-	//Start of file phoenix_supernova_datadriven.txt
 	"phoenix_supernova_datadriven"
 	{
 		// General
@@ -44153,10 +42404,6 @@
 		}
 	}
 	
-	//End of file phoenix_supernova_datadriven.txt
-
-
-	//Start of file polar_furbolg_ursa_warrior_thunder_clap_datadriven.txt
 	"polar_furbolg_ursa_warrior_thunder_clap_datadriven"
 	{
 		// General
@@ -44200,10 +42447,6 @@
 		}
 	}
 	
-	//End of file polar_furbolg_ursa_warrior_thunder_clap_datadriven.txt
-
-
-	//Start of file puck_dream_coil_datadriven.txt
 	"puck_dream_coil_datadriven"
 	{
 		// General
@@ -44447,10 +42690,6 @@
 	}
 	
 	
-	//End of file puck_dream_coil_datadriven.txt
-
-
-	//Start of file puck_ethereal_jaunt_datadriven.txt
 	"puck_ethereal_jaunt_datadriven"
 	{
 		// General
@@ -44493,10 +42732,6 @@
 		}
 	}
 	
-	//End of file puck_ethereal_jaunt_datadriven.txt
-
-
-	//Start of file puck_illusory_orb_datadriven.txt
 	"puck_illusory_orb_datadriven"
 	{
 		// General
@@ -44656,10 +42891,6 @@
 		}
 	}
 	
-	//End of file puck_illusory_orb_datadriven.txt
-
-
-	//Start of file puck_phase_shift_datadriven.txt
 	"puck_phase_shift_datadriven"
 	{
 		// General
@@ -44773,10 +43004,6 @@
 		}
 	}
 	
-	//End of file puck_phase_shift_datadriven.txt
-
-
-	//Start of file puck_waning_rift_datadriven.txt
 	"puck_waning_rift_datadriven"
 	{
 		// General
@@ -44893,10 +43120,6 @@
 		}
 	}
 	
-	//End of file puck_waning_rift_datadriven.txt
-
-
-	//Start of file pudge_dismember_lua.txt
 	// Rewrite of the Pudge Dismember ability
 	// Author: Valve
 	// Date: 25.09.2015.
@@ -44964,10 +43187,6 @@
 			}
 		}
 	}
-	//End of file pudge_dismember_lua.txt
-
-
-	//Start of file pudge_flesh_heap_lua.txt
 	// Rewrite of the Pudge Flesh Heap ability
 	// Author: Valve
 	// Date: 25.09.2015.
@@ -45008,10 +43227,6 @@
 			}
 		}
 	}
-	//End of file pudge_flesh_heap_lua.txt
-
-
-	//Start of file pudge_meat_hook_lua.txt
 	// Rewrite of the Pudge Meat Hook ability
 	// Author: Valve
 	// Date: 25.09.2015.
@@ -45091,10 +43306,6 @@
 			}
 		}
 	}
-	//End of file pudge_meat_hook_lua.txt
-
-
-	//Start of file pudge_rot_lua.txt
 	// Rewrite of the Pudge Rot ability
 	// Author: Valve
 	// Date: 25.09.2015.
@@ -45149,10 +43360,6 @@
 			}
 		}
 	}
-	//End of file pudge_rot_lua.txt
-
-
-	//Start of file pugna_decrepify_datadriven.txt
 	// Rewrite of Pugna Decrepify
 	// Author: Noya
 	// Date: April 5, 2015
@@ -45288,10 +43495,6 @@
 		}
 	}
 	
-	//End of file pugna_decrepify_datadriven.txt
-
-
-	//Start of file pugna_life_drain_datadriven.txt
 	// Rewrite of Pugna Life Drain
 	// Author: Noya
 	// Date: April 5, 2015
@@ -45440,10 +43643,6 @@
 		}
 	}
 	
-	//End of file pugna_life_drain_datadriven.txt
-
-
-	//Start of file pugna_nether_blast_datadriven.txt
 	// Rewrite of Pugna Nether Blast
 	// Author: Noya
 	// Date: April 5, 2015
@@ -45593,10 +43792,6 @@
 		}
 	}
 	
-	//End of file pugna_nether_blast_datadriven.txt
-
-
-	//Start of file pugna_nether_ward_datadriven.txt
 	// Rewrite of Pugna Nether Ward
 	// Author: Noya
 	// Date: April 5, 2015
@@ -45925,10 +44120,6 @@
 		}
 	}
 	
-	//End of file pugna_nether_ward_datadriven.txt
-
-
-	//Start of file queenofpain_blink_datadriven.txt
 	// Rewrite of the Queen of Pain Blink ability
 	// Author: Pizzalol
 	// Date: 19.12.2014.
@@ -46016,10 +44207,6 @@
 		}
 	}
 	
-	//End of file queenofpain_blink_datadriven.txt
-
-
-	//Start of file queenofpain_scream_of_pain_datadriven.txt
 	// Rewrite of the Queen of Pain Scream of Pain ability
 	// Author: Pizzalol
 	// Date: 19.12.2014.
@@ -46126,10 +44313,6 @@
 		}
 	}
 	
-	//End of file queenofpain_scream_of_pain_datadriven.txt
-
-
-	//Start of file queenofpain_shadow_strike_datadriven.txt
 	// Rewrite of the Queen of Pain Shadow Strike ability
 	// Author: Pizzalol
 	// Date: 28.09.2015.
@@ -46290,10 +44473,6 @@
 		}
 	}
 	
-	//End of file queenofpain_shadow_strike_datadriven.txt
-
-
-	//Start of file queenofpain_sonic_wave_datadriven.txt
 	// Rewrite of the Queen of Pain Sonic Wave ability
 	// Author: Pizzalol
 	// Date: 19.12.2014.
@@ -46409,10 +44588,6 @@
 	
 	}
 	
-	//End of file queenofpain_sonic_wave_datadriven.txt
-
-
-	//Start of file rattletrap_battery_assault_datadriven.txt
 	"rattletrap_battery_assault_datadriven"
 	{
 		// General
@@ -46466,10 +44641,6 @@
 		}
 	}
 	
-	//End of file rattletrap_battery_assault_datadriven.txt
-
-
-	//Start of file rattletrap_hookshot_datadriven.txt
 	"rattletrap_hookshot_datadriven"
 	{
 		// General
@@ -46538,10 +44709,6 @@
 		}
 	}
 	
-	//End of file rattletrap_hookshot_datadriven.txt
-
-
-	//Start of file rattletrap_power_cogs_datadriven.txt
 	"rattletrap_power_cogs_datadriven"
 	{
 		// General
@@ -46605,10 +44772,6 @@
 		}
 	}
 	
-	//End of file rattletrap_power_cogs_datadriven.txt
-
-
-	//Start of file rattletrap_rocket_flare_datadriven.txt
 	"rattletrap_rocket_flare_datadriven"
 	{
 		// General
@@ -46664,10 +44827,6 @@
 		}
 	}
 	
-	//End of file rattletrap_rocket_flare_datadriven.txt
-
-
-	//Start of file razor_eye_of_the_storm_datadriven.txt
 	"razor_eye_of_the_storm_datadriven"
 	{
 		// General
@@ -46733,10 +44892,6 @@
 		}
 	}
 	
-	//End of file razor_eye_of_the_storm_datadriven.txt
-
-
-	//Start of file razor_plasma_field_datadriven.txt
 	"razor_plasma_field_datadriven"
 	{
 		// General
@@ -46788,10 +44943,6 @@
 		}
 	}
 	
-	//End of file razor_plasma_field_datadriven.txt
-
-
-	//Start of file razor_static_link_datadriven.txt
 	"razor_static_link_datadriven"
 	{
 		// General
@@ -46863,10 +45014,6 @@
 		}
 	}
 	
-	//End of file razor_static_link_datadriven.txt
-
-
-	//Start of file razor_unstable_current_datadriven.txt
 	"razor_unstable_current_datadriven"
 	{
 		// General
@@ -46912,10 +45059,6 @@
 		}
 	}
 	
-	//End of file razor_unstable_current_datadriven.txt
-
-
-	//Start of file riki_backstab_datadriven.txt
 	"riki_backstab_datadriven"
 	{
 		// General
@@ -46942,10 +45085,6 @@
 		}
 	}
 	
-	//End of file riki_backstab_datadriven.txt
-
-
-	//Start of file riki_blink_strike_datadriven.txt
 	"riki_blink_strike_datadriven"
 	{
 		// General
@@ -46999,10 +45138,6 @@
 		}
 	}
 	
-	//End of file riki_blink_strike_datadriven.txt
-
-
-	//Start of file riki_permanent_invisibility_datadriven.txt
 	"riki_permanent_invisibility_datadriven"
 	{
 		// General
@@ -47032,10 +45167,6 @@
 		}
 	}
 	
-	//End of file riki_permanent_invisibility_datadriven.txt
-
-
-	//Start of file riki_smoke_screen_datadriven.txt
 	"riki_smoke_screen_datadriven"
 	{
 		// General
@@ -47085,10 +45216,6 @@
 		}
 	}
 	
-	//End of file riki_smoke_screen_datadriven.txt
-
-
-	//Start of file roshan_bash_datadriven.txt
 	"roshan_bash_datadriven"
 	{
 		// General
@@ -47119,10 +45246,6 @@
 		}
 	}
 	
-	//End of file roshan_bash_datadriven.txt
-
-
-	//Start of file roshan_devotion_datadriven.txt
 	"roshan_devotion_datadriven"
 	{
 		// General
@@ -47142,10 +45265,6 @@
 		}
 	}
 	
-	//End of file roshan_devotion_datadriven.txt
-
-
-	//Start of file roshan_halloween_angry_datadriven.txt
 	"roshan_halloween_angry_datadriven"
 	{
 		// General
@@ -47181,10 +45300,6 @@
 		}
 	}
 	
-	//End of file roshan_halloween_angry_datadriven.txt
-
-
-	//Start of file roshan_halloween_apocalypse_datadriven.txt
 	"roshan_halloween_apocalypse_datadriven"
 	{
 		// General
@@ -47230,10 +45345,6 @@
 		}
 	}
 	
-	//End of file roshan_halloween_apocalypse_datadriven.txt
-
-
-	//Start of file roshan_halloween_burn_datadriven.txt
 	"roshan_halloween_burn_datadriven"
 	{
 		// General
@@ -47290,10 +45401,6 @@
 		}
 	}
 	
-	//End of file roshan_halloween_burn_datadriven.txt
-
-
-	//Start of file roshan_halloween_candy_datadriven.txt
 	"roshan_halloween_candy_datadriven"
 	{
 		// General
@@ -47329,10 +45436,6 @@
 		}
 	}
 	
-	//End of file roshan_halloween_candy_datadriven.txt
-
-
-	//Start of file roshan_halloween_fed_datadriven.txt
 	"roshan_halloween_fed_datadriven"
 	{
 	    // General
@@ -47374,10 +45477,6 @@
 	
 	    }
 	}
-	//End of file roshan_halloween_fed_datadriven.txt
-
-
-	//Start of file roshan_halloween_fireball_datadriven.txt
 	"roshan_halloween_fireball_datadriven"
 	{
 		// General
@@ -47428,10 +45527,6 @@
 		}
 	}
 	
-	//End of file roshan_halloween_fireball_datadriven.txt
-
-
-	//Start of file roshan_halloween_greater_bash_datadriven.txt
 	"roshan_halloween_greater_bash_datadriven"
 	{
 		// General
@@ -47472,10 +45567,6 @@
 		}
 	}
 	
-	//End of file roshan_halloween_greater_bash_datadriven.txt
-
-
-	//Start of file roshan_halloween_levels_datadriven.txt
 	"roshan_halloween_levels_datadriven"
 	{
 		// General
@@ -47516,10 +45607,6 @@
 		}
 	}
 	
-	//End of file roshan_halloween_levels_datadriven.txt
-
-
-	//Start of file roshan_halloween_shell_datadriven.txt
 	"roshan_halloween_shell_datadriven"
 	{
 		// General
@@ -47550,10 +45637,6 @@
 		}
 	}
 	
-	//End of file roshan_halloween_shell_datadriven.txt
-
-
-	//Start of file roshan_halloween_spell_block_datadriven.txt
 	"roshan_halloween_spell_block_datadriven"
 	{
 		// General
@@ -47566,10 +45649,6 @@
 		"AbilityCooldown"				"10.0"
 	}
 	
-	//End of file roshan_halloween_spell_block_datadriven.txt
-
-
-	//Start of file roshan_halloween_summon_datadriven.txt
 	"roshan_halloween_summon_datadriven"
 	{
 		// General
@@ -47601,10 +45680,6 @@
 		}
 	}
 	
-	//End of file roshan_halloween_summon_datadriven.txt
-
-
-	//Start of file roshan_halloween_toss_datadriven.txt
 	"roshan_halloween_toss_datadriven"
 	{
 		// General
@@ -47672,10 +45747,6 @@
 		}
 	}
 	
-	//End of file roshan_halloween_toss_datadriven.txt
-
-
-	//Start of file roshan_halloween_wave_of_force_datadriven.txt
 	"roshan_halloween_wave_of_force_datadriven"
 	{
 		// General
@@ -47739,10 +45810,6 @@
 		}
 	}
 	
-	//End of file roshan_halloween_wave_of_force_datadriven.txt
-
-
-	//Start of file roshan_inherent_buffs_datadriven.txt
 	"roshan_inherent_buffs_datadriven"
 	{
 		// General
@@ -47751,10 +45818,6 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 	
-	//End of file roshan_inherent_buffs_datadriven.txt
-
-
-	//Start of file roshan_slam_datadriven.txt
 	"roshan_slam_datadriven"
 	{
 		// General
@@ -47804,10 +45867,6 @@
 		}
 	}
 	
-	//End of file roshan_slam_datadriven.txt
-
-
-	//Start of file roshan_spell_block_datadriven.txt
 	"roshan_spell_block_datadriven"
 	{
 		// General
@@ -47820,10 +45879,6 @@
 		"AbilityCooldown"				"15.0"
 	}
 	
-	//End of file roshan_spell_block_datadriven.txt
-
-
-	//Start of file roshan__halloween_shell_datadriven.txt
 	"roshan__halloween_shell_datadriven"
 	{
 	    // General
@@ -47865,10 +45920,6 @@
 	
 	    }
 	}
-	//End of file roshan__halloween_shell_datadriven.txt
-
-
-	//Start of file rubick_empty1_datadriven.txt
 	"rubick_empty1_datadriven"
 	{
 		// General
@@ -47878,10 +45929,6 @@
 		"MaxLevel"						"0"
 	}
 	
-	//End of file rubick_empty1_datadriven.txt
-
-
-	//Start of file rubick_empty2_datadriven.txt
 	"rubick_empty2_datadriven"
 	{
 		// General
@@ -47891,10 +45938,6 @@
 		"MaxLevel"						"0"
 	}
 	
-	//End of file rubick_empty2_datadriven.txt
-
-
-	//Start of file rubick_fade_bolt_datadriven.txt
 	"rubick_fade_bolt_datadriven"
 	{
 		// General
@@ -47970,10 +46013,6 @@
 		}
 	}	
 	
-	//End of file rubick_fade_bolt_datadriven.txt
-
-
-	//Start of file rubick_hidden1_datadriven.txt
 	"rubick_hidden1_datadriven"
 	{
 		// General
@@ -47983,10 +46022,6 @@
 		"MaxLevel"						"0"
 	}
 	
-	//End of file rubick_hidden1_datadriven.txt
-
-
-	//Start of file rubick_hidden2_datadriven.txt
 	"rubick_hidden2_datadriven"
 	{
 		// General
@@ -47996,10 +46031,6 @@
 		"MaxLevel"						"0"
 	}
 	
-	//End of file rubick_hidden2_datadriven.txt
-
-
-	//Start of file rubick_hidden3_datadriven.txt
 	"rubick_hidden3_datadriven"
 	{
 		// General
@@ -48010,10 +46041,6 @@
 	}
 	
 	
-	//End of file rubick_hidden3_datadriven.txt
-
-
-	//Start of file rubick_null_field_datadriven.txt
 	"rubick_null_field_datadriven"
 	{
 		// General
@@ -48038,10 +46065,6 @@
 		}
 	}
 	
-	//End of file rubick_null_field_datadriven.txt
-
-
-	//Start of file rubick_spell_steal_datadriven.txt
 	"rubick_spell_steal_datadriven"
 	{
 		// General
@@ -48100,10 +46123,6 @@
 		}
 	}	
 	
-	//End of file rubick_spell_steal_datadriven.txt
-
-
-	//Start of file rubick_telekinesis_datadriven.txt
 	"rubick_telekinesis_datadriven"
 	{
 	// General
@@ -48167,10 +46186,6 @@
 		}
 	}	
 	
-	//End of file rubick_telekinesis_datadriven.txt
-
-
-	//Start of file rubick_telekinesis_land_datadriven.txt
 	"rubick_telekinesis_land_datadriven"
 	{
 		// General
@@ -48191,10 +46206,6 @@
 		}
 	}
 	
-	//End of file rubick_telekinesis_land_datadriven.txt
-
-
-	//Start of file rune_doubledamage_datadriven.txt
 	"rune_doubledamage_datadriven"
 	{
 	    // General
@@ -48236,10 +46247,6 @@
 	
 	    }
 	}
-	//End of file rune_doubledamage_datadriven.txt
-
-
-	//Start of file rune_haste_datadriven.txt
 	"rune_haste_datadriven"
 	{
 	    // General
@@ -48281,10 +46288,6 @@
 	
 	    }
 	}
-	//End of file rune_haste_datadriven.txt
-
-
-	//Start of file rune_invis_datadriven.txt
 	"rune_invis_datadriven"
 	{
 	    // General
@@ -48326,10 +46329,6 @@
 	
 	    }
 	}
-	//End of file rune_invis_datadriven.txt
-
-
-	//Start of file rune_regen_datadriven.txt
 	"rune_regen_datadriven"
 	{
 	    // General
@@ -48371,10 +46370,6 @@
 	
 	    }
 	}
-	//End of file rune_regen_datadriven.txt
-
-
-	//Start of file sandking_burrowstrike_datadriven.txt
 	// Comment:
 	// NOTE1: Missing one particle somewhere...
 	
@@ -48573,10 +46568,6 @@
 			}
 		}
 	}
-	//End of file sandking_burrowstrike_datadriven.txt
-
-
-	//Start of file sandking_caustic_finale_datadriven.txt
 	"sandking_caustic_finale_datadriven"
 	{
 		// General
@@ -48673,10 +46664,6 @@
 			}
 		}
 	}
-	//End of file sandking_caustic_finale_datadriven.txt
-
-
-	//Start of file sandking_epicenter_datadriven.txt
 	// Comment:
 	// NOTE1: Need adjustment for sound
 	// NOTE2: Post death attack(?) should not be working
@@ -49529,10 +47516,6 @@
 			}
 		}
 	}
-	//End of file sandking_epicenter_datadriven.txt
-
-
-	//Start of file sandking_sand_storm_datadriven.txt
 	// TODO:
 	// NOTE1: OnUpgrade: While channeling, only damage is increased, the channeling time remains the same
 	// Note2: Channeling animation needs to be fixed
@@ -49774,10 +47757,6 @@
 			}
 		}
 	}
-	//End of file sandking_sand_storm_datadriven.txt
-
-
-	//Start of file satyr_hellcaller_shockwave_datadriven.txt
 	"satyr_hellcaller_shockwave_datadriven"
 	{
 		// General
@@ -49829,10 +47808,6 @@
 		}
 	}
 	
-	//End of file satyr_hellcaller_shockwave_datadriven.txt
-
-
-	//Start of file satyr_hellcaller_unholy_aura_datadriven.txt
 	"satyr_hellcaller_unholy_aura_datadriven"
 	{
 		// General
@@ -49858,10 +47833,6 @@
 		}
 	}
 	
-	//End of file satyr_hellcaller_unholy_aura_datadriven.txt
-
-
-	//Start of file satyr_soulstealer_mana_burn_datadriven.txt
 	"satyr_soulstealer_mana_burn_datadriven"
 	{
 		// General
@@ -49896,10 +47867,6 @@
 		}
 	}
 	
-	//End of file satyr_soulstealer_mana_burn_datadriven.txt
-
-
-	//Start of file satyr_trickster_purge_datadriven.txt
 	"satyr_trickster_purge_datadriven"
 	{
 		// General
@@ -49943,10 +47910,6 @@
 		}
 	}
 	
-	//End of file satyr_trickster_purge_datadriven.txt
-
-
-	//Start of file shadow_demon_demonic_purge_datadriven.txt
 	"shadow_demon_demonic_purge_datadriven"
 	{
 		// General
@@ -50017,10 +47980,6 @@
 		}
 	}
 	
-	//End of file shadow_demon_demonic_purge_datadriven.txt
-
-
-	//Start of file shadow_demon_disruption_datadriven.txt
 	"shadow_demon_disruption_datadriven"
 	{
 		// General
@@ -50085,10 +48044,6 @@
 		}
 	}
 	
-	//End of file shadow_demon_disruption_datadriven.txt
-
-
-	//Start of file shadow_demon_shadow_poison_datadriven.txt
 	"shadow_demon_shadow_poison_datadriven"
 	{
 		// General
@@ -50157,10 +48112,6 @@
 		}
 	}
 	
-	//End of file shadow_demon_shadow_poison_datadriven.txt
-
-
-	//Start of file shadow_demon_shadow_poison_release_datadriven.txt
 	"shadow_demon_shadow_poison_release_datadriven"
 	{
 		// General
@@ -50178,10 +48129,6 @@
 		"AbilityCooldown"				"1.0"
 	}
 	
-	//End of file shadow_demon_shadow_poison_release_datadriven.txt
-
-
-	//Start of file shadow_demon_soul_catcher_datadriven.txt
 	"shadow_demon_soul_catcher_datadriven"
 	{
 		// General
@@ -50229,10 +48176,6 @@
 		}
 	}
 	
-	//End of file shadow_demon_soul_catcher_datadriven.txt
-
-
-	//Start of file shadow_shaman_ether_shock_datadriven.txt
 	// Rewrite of the Shadow Shaman Ether Shock ability
 	// Author: Noya
 	// Date: April 4, 2015.
@@ -50315,10 +48258,6 @@
 		}
 	}
 	
-	//End of file shadow_shaman_ether_shock_datadriven.txt
-
-
-	//Start of file shadow_shaman_mass_serpent_ward_datadriven.txt
 	// Rewrite of the Shadow Shaman Mass Serpent Ward ability
 	// Author: Noya
 	// Date: April 20, 2015.
@@ -50556,10 +48495,6 @@
 			}
 		}
 	}
-	//End of file shadow_shaman_mass_serpent_ward_datadriven.txt
-
-
-	//Start of file shadow_shaman_shackles_datadriven.txt
 	// Rewrite of the Shadow Shaman Shackles ability
 	// Author: Noya
 	// Date: April 4, 2015.
@@ -50715,10 +48650,6 @@
 		}
 	}
 	
-	//End of file shadow_shaman_shackles_datadriven.txt
-
-
-	//Start of file shadow_shaman_voodoo_datadriven.txt
 	// Rewrite of the Shadow Shaman Voodoo ability
 	// Author: Noya
 	// Date: 27.09.2015.
@@ -50796,10 +48727,6 @@
 		}
 	}
 	
-	//End of file shadow_shaman_voodoo_datadriven.txt
-
-
-	//Start of file shoot_firework_datadriven.txt
 	"shoot_firework_datadriven"
 	{
 		// General
@@ -50813,10 +48740,6 @@
 	}
 	
 	
-	//End of file shoot_firework_datadriven.txt
-
-
-	//Start of file shredder_chakram_2_datadriven.txt
 	"shredder_chakram_2_datadriven"
 	{
 		// General
@@ -50895,10 +48818,6 @@
 		}
 	}
 	
-	//End of file shredder_chakram_2_datadriven.txt
-
-
-	//Start of file shredder_chakram_datadriven.txt
 	"shredder_chakram_datadriven"
 	{
 		// General
@@ -50977,10 +48896,6 @@
 		}
 	}
 	
-	//End of file shredder_chakram_datadriven.txt
-
-
-	//Start of file shredder_reactive_armor_datadriven.txt
 	"shredder_reactive_armor_datadriven"
 	{
 		// General
@@ -51016,10 +48931,6 @@
 		}
 	}
 	
-	//End of file shredder_reactive_armor_datadriven.txt
-
-
-	//Start of file shredder_return_chakram_2_datadriven.txt
 	"shredder_return_chakram_2_datadriven"
 	{
 		// General
@@ -51038,10 +48949,6 @@
 	}
 	
 	
-	//End of file shredder_return_chakram_2_datadriven.txt
-
-
-	//Start of file shredder_return_chakram_datadriven.txt
 	"shredder_return_chakram_datadriven"
 	{
 		// General
@@ -51059,10 +48966,6 @@
 		"AbilityCooldown"				"0.0 0.0 0.0"
 	}
 	
-	//End of file shredder_return_chakram_datadriven.txt
-
-
-	//Start of file shredder_timber_chain_datadriven.txt
 	"shredder_timber_chain_datadriven"
 	{
 		// General
@@ -51119,10 +49022,6 @@
 		}
 	}
 	
-	//End of file shredder_timber_chain_datadriven.txt
-
-
-	//Start of file shredder_whirling_death_datadriven.txt
 	"shredder_whirling_death_datadriven"
 	{
 		// General
@@ -51179,10 +49078,6 @@
 		}
 	}
 	
-	//End of file shredder_whirling_death_datadriven.txt
-
-
-	//Start of file silencer_curse_of_the_silent_datadriven.txt
 	// Rewrite of the Silencer Curse of the Silent
 	// Author: chrislotix
 	// Date: 09.01.2015.
@@ -51350,10 +49245,6 @@
 			}
 		}
 	}	
-	//End of file silencer_curse_of_the_silent_datadriven.txt
-
-
-	//Start of file silencer_glaives_of_wisdom_datadriven.txt
 	// Rewrite of the Silencer Glaives of Wisdom
 	// Author: chrislotix
 	// Date: 10.01.2015.
@@ -51449,10 +49340,6 @@
 		}
 	}
 	
-	//End of file silencer_glaives_of_wisdom_datadriven.txt
-
-
-	//Start of file silencer_global_silence_datadriven.txt
 	// Rewrite of the Silencer Last Word
 	// Author: chrislotix
 	// Date: 11.01.2015.
@@ -51577,10 +49464,6 @@
 	
 	
 	
-	//End of file silencer_global_silence_datadriven.txt
-
-
-	//Start of file silencer_last_word_datadriven.txt
 	// Rewrite of the Silencer Last Word
 	// Author: chrislotix
 	// Date: 11.01.2015.
@@ -51785,10 +49668,6 @@
 	
 	
 	
-	//End of file silencer_last_word_datadriven.txt
-
-
-	//Start of file skeleton_king_hellfire_blast_datadriven.txt
 	// Rewrite of Skeleton Wraith King Hellfire Blast
 	// Author: Noya
 	// Date: 12.1.2015.
@@ -52020,10 +49899,6 @@
 		}
 	}
 	
-	//End of file skeleton_king_hellfire_blast_datadriven.txt
-
-
-	//Start of file skeleton_king_mortal_strike_datadriven.txt
 	// Rewrite of Skeleton Wraith King Mortal Strike
 	// Author: Noya
 	// Date: 12.1.2015.
@@ -52132,10 +50007,6 @@
 		}
 	}
 	
-	//End of file skeleton_king_mortal_strike_datadriven.txt
-
-
-	//Start of file skeleton_king_reincarnation_datadriven.txt
 	// Rewrite of Skeleton Wraith King Reincarnation
 	// Author: Noya
 	// Date: 12.1.2015.
@@ -52235,10 +50106,6 @@
 		}
 	}
 	
-	//End of file skeleton_king_reincarnation_datadriven.txt
-
-
-	//Start of file skeleton_king_vampiric_aura_datadriven.txt
 	// Rewrite of Skeleton Wraith King Vampiric Aura
 	// Author: Noya
 	// Date: 12.1.2015.
@@ -52313,10 +50180,6 @@
 		}
 	}
 		
-	//End of file skeleton_king_vampiric_aura_datadriven.txt
-
-
-	//Start of file skywrath_mage_ancient_seal_datadriven.txt
 	"skywrath_mage_ancient_seal_datadriven"
 	{
 		// General
@@ -52448,10 +50311,6 @@
 			}
 		}
 	}
-	//End of file skywrath_mage_ancient_seal_datadriven.txt
-
-
-	//Start of file skywrath_mage_arcane_bolt_datadriven.txt
 	"skywrath_mage_arcane_bolt_datadriven"
 	{
 		// General
@@ -52557,10 +50416,6 @@
 			}
 		}
 	}
-	//End of file skywrath_mage_arcane_bolt_datadriven.txt
-
-
-	//Start of file skywrath_mage_concussive_shot_datadriven.txt
 	"skywrath_mage_concussive_shot_datadriven"
 	{
 		// General
@@ -52715,10 +50570,6 @@
 			}
 		}
 	}
-	//End of file skywrath_mage_concussive_shot_datadriven.txt
-
-
-	//Start of file skywrath_mage_mystic_flare_datadriven.txt
 	// NOTE: Three particles making the ground dome did not show up for me, so I manually put them into the spell. If you try without those three and show up fine for you, it is safe to delete them.
 	"skywrath_mage_mystic_flare_datadriven"
 	{
@@ -52867,10 +50718,6 @@
 			}
 		}
 	}
-	//End of file skywrath_mage_mystic_flare_datadriven.txt
-
-
-	//Start of file slardar_amplify_damage_datadriven.txt
 	// Rewrite of the Slardar Amplify Damage
 	// Author: chrislotix
 	// Date: 01.01.2015.
@@ -53026,10 +50873,6 @@
 	}
 	
 	
-	//End of file slardar_amplify_damage_datadriven.txt
-
-
-	//Start of file slardar_bash_datadriven.txt
 	// Rewrite of the Slardar Bash
 	// Author: chrislotix
 	// Date: 01.01.2015.
@@ -53154,10 +50997,6 @@
 		}
 	}
 	
-	//End of file slardar_bash_datadriven.txt
-
-
-	//Start of file slardar_slithereen_crush_datadriven.txt
 	// Rewrite of the Slardar Slithereen Crush
 	// Author: chrislotix
 	// Date: 01.01.2015.
@@ -53308,10 +51147,6 @@
 	
 	}
 	
-	//End of file slardar_slithereen_crush_datadriven.txt
-
-
-	//Start of file slardar_sprint_datadriven.txt
 	// Rewrite of the Slardar Sprint
 	// Author: chrislotix
 	// Date: 01.01.2015.
@@ -53397,10 +51232,6 @@
 	
 	}	
 	
-	//End of file slardar_sprint_datadriven.txt
-
-
-	//Start of file slark_dark_pact_datadriven.txt
 	"slark_dark_pact_datadriven"
 	{
 		// General
@@ -53462,10 +51293,6 @@
 		}
 	}
 	
-	//End of file slark_dark_pact_datadriven.txt
-
-
-	//Start of file slark_essence_shift_datadriven.txt
 	// Rewrite of Slark's Essence Shift
 	// Author: Rook
 	// Date: January 28, 2015
@@ -53580,10 +51407,6 @@
 		}
 	}
 	
-	//End of file slark_essence_shift_datadriven.txt
-
-
-	//Start of file slark_pounce_datadriven.txt
 	"slark_pounce_datadriven"
 	{
 		// General
@@ -53645,10 +51468,6 @@
 		}
 	}
 	
-	//End of file slark_pounce_datadriven.txt
-
-
-	//Start of file slark_shadow_dance_datadriven.txt
 	"slark_shadow_dance_datadriven"
 	{
 		// General
@@ -53706,10 +51525,6 @@
 		}
 	}
 	
-	//End of file slark_shadow_dance_datadriven.txt
-
-
-	//Start of file sniper_assassinate_datadriven.txt
 	"sniper_assassinate_datadriven"
 	{
 		// General
@@ -53897,10 +51712,6 @@
 			}
 		}
 	}
-	//End of file sniper_assassinate_datadriven.txt
-
-
-	//Start of file sniper_headshot_datadriven.txt
 	"sniper_headshot_datadriven"
 	{
 		// General
@@ -54008,10 +51819,6 @@
 			}
 		}
 	}
-	//End of file sniper_headshot_datadriven.txt
-
-
-	//Start of file sniper_shrapnel_datadriven.txt
 	"sniper_shrapnel_datadriven"
 	{
 		// General
@@ -54249,10 +52056,6 @@
 			}
 		}
 	}
-	//End of file sniper_shrapnel_datadriven.txt
-
-
-	//Start of file sniper_take_aim_datadriven.txt
 	"sniper_take_aim_datadriven"
 	{
 		// General
@@ -54289,10 +52092,6 @@
 			}
 		}
 	}
-	//End of file sniper_take_aim_datadriven.txt
-
-
-	//Start of file spectre_desolate_datadriven.txt
 	"spectre_desolate_datadriven"
 	{
 		// General
@@ -54319,10 +52118,6 @@
 		}
 	}
 	
-	//End of file spectre_desolate_datadriven.txt
-
-
-	//Start of file spectre_dispersion_datadriven.txt
 	"spectre_dispersion_datadriven"
 	{
 		// General
@@ -54354,10 +52149,6 @@
 		}
 	}
 	
-	//End of file spectre_dispersion_datadriven.txt
-
-
-	//Start of file spectre_haunt_datadriven.txt
 	"spectre_haunt_datadriven"
 	{
 		// General
@@ -54418,10 +52209,6 @@
 		}
 	}
 	
-	//End of file spectre_haunt_datadriven.txt
-
-
-	//Start of file spectre_reality_datadriven.txt
 	"spectre_reality_datadriven"
 	{
 		// General
@@ -54440,10 +52227,6 @@
 		"AbilityCooldown"				"0"
 	}
 	
-	//End of file spectre_reality_datadriven.txt
-
-
-	//Start of file spectre_spectral_dagger_datadriven.txt
 	"spectre_spectral_dagger_datadriven"
 	{
 		// General
@@ -54532,10 +52315,6 @@
 		}
 	}
 	
-	//End of file spectre_spectral_dagger_datadriven.txt
-
-
-	//Start of file spirit_breaker_charge_of_darkness_datadriven.txt
 	"spirit_breaker_charge_of_darkness_datadriven"
 	{
 		// General
@@ -54597,10 +52376,6 @@
 		}
 	}
 	
-	//End of file spirit_breaker_charge_of_darkness_datadriven.txt
-
-
-	//Start of file spirit_breaker_empowering_haste_datadriven.txt
 	"spirit_breaker_empowering_haste_datadriven"
 	{
 		// General
@@ -54640,10 +52415,6 @@
 		}
 	}
 	
-	//End of file spirit_breaker_empowering_haste_datadriven.txt
-
-
-	//Start of file spirit_breaker_greater_bash_datadriven.txt
 	"spirit_breaker_greater_bash_datadriven"
 	{
 		// General
@@ -54708,10 +52479,6 @@
 		}
 	}
 	
-	//End of file spirit_breaker_greater_bash_datadriven.txt
-
-
-	//Start of file spirit_breaker_nether_strike_datadriven.txt
 	"spirit_breaker_nether_strike_datadriven"
 	{
 		// General
@@ -54778,10 +52545,6 @@
 		}
 	}
 	
-	//End of file spirit_breaker_nether_strike_datadriven.txt
-
-
-	//Start of file storm_spirit_ball_lightning_datadriven.txt
 	"storm_spirit_ball_lightning_datadriven"
 	{
 		// General
@@ -54984,10 +52747,6 @@
 			}
 		}
 	}
-	//End of file storm_spirit_ball_lightning_datadriven.txt
-
-
-	//Start of file storm_spirit_electric_vortex_datadriven.txt
 	"storm_spirit_electric_vortex_datadriven"
 	{
 		// General
@@ -55125,10 +52884,6 @@
 			}
 		}
 	}
-	//End of file storm_spirit_electric_vortex_datadriven.txt
-
-
-	//Start of file storm_spirit_overload_datadriven.txt
 	"storm_spirit_overload_datadriven"
 	{
 		// General
@@ -55288,10 +53043,6 @@
 			}
 		}
 	}
-	//End of file storm_spirit_overload_datadriven.txt
-
-
-	//Start of file storm_spirit_static_remnant_datadriven.txt
 	"storm_spirit_static_remnant_datadriven"
 	{
 		// General
@@ -55393,10 +53144,6 @@
 			}
 		}
 	}
-	//End of file storm_spirit_static_remnant_datadriven.txt
-
-
-	//Start of file sven_gods_strength_datadriven.txt
 	// Rewrite of the Sven Gods Strength ability
 	// Author: Pizzalol
 	// Date: 28.12.2014.
@@ -55494,10 +53241,6 @@
 		}
 	}
 	
-	//End of file sven_gods_strength_datadriven.txt
-
-
-	//Start of file sven_great_cleave_datadriven.txt
 	// Rewrite of the Sven Great Cleave ability
 	// Author: Pizzalol
 	// Date: 28.12.2014.
@@ -55556,10 +53299,6 @@
 	
 	}
 	
-	//End of file sven_great_cleave_datadriven.txt
-
-
-	//Start of file sven_storm_bolt_datadriven.txt
 	// Rewrite of the Sven Storm Bolt ability
 	// Author: Pizzalol
 	// Date: 28.12.2014.
@@ -55720,10 +53459,6 @@
 		}
 	}
 	
-	//End of file sven_storm_bolt_datadriven.txt
-
-
-	//Start of file sven_warcry_datadriven.txt
 	// Rewrite of the Sven Warcry ability
 	// Author: Pizzalol
 	// Date: 28.12.2014.
@@ -55833,10 +53568,6 @@
 		}
 	}
 	
-	//End of file sven_warcry_datadriven.txt
-
-
-	//Start of file techies_focused_detonate_datadriven.txt
 	// Rewrite of the Techies Focused Detonate ability
 	// Author: Pizzalol
 	// Date: 25.03.2015.
@@ -55877,10 +53608,6 @@
 			}
 		}
 	}
-	//End of file techies_focused_detonate_datadriven.txt
-
-
-	//Start of file techies_land_mines_datadriven.txt
 	// Rewrite of the Techies Land Mines ability
 	// Author: Pizzalol
 	// Date: 24.03.2015.
@@ -56137,10 +53864,6 @@
 		}
 	}
 	
-	//End of file techies_land_mines_datadriven.txt
-
-
-	//Start of file techies_remote_mines_datadriven.txt
 	// Rewrite of the Techies Remote Mines ability
 	// Author: Pizzalol
 	// Date: 25.03.2015.
@@ -56386,10 +54109,6 @@
 	}
 	
 	
-	//End of file techies_remote_mines_datadriven.txt
-
-
-	//Start of file techies_remote_mines_self_detonate_datadriven.txt
 	// Rewrite of the Techies Remote Mines Self Detonate ability
 	// Author: Pizzalol
 	// Date: 25.03.2015.
@@ -56428,10 +54147,6 @@
 		}
 	}
 	
-	//End of file techies_remote_mines_self_detonate_datadriven.txt
-
-
-	//Start of file techies_stasis_trap_datadriven.txt
 	// Rewrite of the Techies Stasis Trap ability
 	// Author: Pizzalol
 	// Date: 25.03.2015.
@@ -56698,10 +54413,6 @@
 		}
 	}
 	
-	//End of file techies_stasis_trap_datadriven.txt
-
-
-	//Start of file techies_suicide_datadriven.txt
 	// Rewrite of the Techies Suicide ability
 	// Author: Pizzalol
 	// Date: 25.03.2015.
@@ -56874,10 +54585,6 @@
 		}
 	}
 	
-	//End of file techies_suicide_datadriven.txt
-
-
-	//Start of file templar_assassin_meld_datadriven.txt
 	"templar_assassin_meld_datadriven"
 	{
 		// General
@@ -56922,10 +54629,6 @@
 		}
 	}
 	
-	//End of file templar_assassin_meld_datadriven.txt
-
-
-	//Start of file templar_assassin_psionic_trap_datadriven.txt
 	"templar_assassin_psionic_trap_datadriven"
 	{
 		// General
@@ -56980,10 +54683,6 @@
 		}
 	}
 	
-	//End of file templar_assassin_psionic_trap_datadriven.txt
-
-
-	//Start of file templar_assassin_psi_blades_datadriven.txt
 	"templar_assassin_psi_blades_datadriven"
 	{
 		// General
@@ -57015,10 +54714,6 @@
 		}
 	}	
 	
-	//End of file templar_assassin_psi_blades_datadriven.txt
-
-
-	//Start of file templar_assassin_refraction_damage_datadriven.txt
 	"templar_assassin_refraction_damage_datadriven"
 	{
 	    // General
@@ -57060,10 +54755,6 @@
 	
 	    }
 	}
-	//End of file templar_assassin_refraction_damage_datadriven.txt
-
-
-	//Start of file templar_assassin_refraction_datadriven.txt
 	"templar_assassin_refraction_datadriven"
 	{
 		// General
@@ -57112,10 +54803,6 @@
 		}
 	}
 	
-	//End of file templar_assassin_refraction_datadriven.txt
-
-
-	//Start of file templar_assassin_self_trap_datadriven.txt
 	"templar_assassin_self_trap_datadriven"
 	{
 		// General
@@ -57164,10 +54851,6 @@
 		}
 	}
 	
-	//End of file templar_assassin_self_trap_datadriven.txt
-
-
-	//Start of file templar_assassin_trap_datadriven.txt
 	"templar_assassin_trap_datadriven"
 	{
 		// General
@@ -57220,10 +54903,6 @@
 		}
 	}
 	
-	//End of file templar_assassin_trap_datadriven.txt
-
-
-	//Start of file terrorblade_conjure_image_datadriven.txt
 	// Rewrite of Terrorblade Conjure Image
 	// Author: Noya
 	// Date: 10.1.2015.
@@ -57299,10 +54978,6 @@
 		}
 	}
 	
-	//End of file terrorblade_conjure_image_datadriven.txt
-
-
-	//Start of file terrorblade_metamorphosis_datadriven.txt
 	// Rewrite of Terrorblade Metamorphosis
 	// Author: Noya
 	// Date: 10.1.2015.
@@ -57460,10 +55135,6 @@
 		}
 	}
 	
-	//End of file terrorblade_metamorphosis_datadriven.txt
-
-
-	//Start of file terrorblade_reflection_datadriven.txt
 	// Rewrite of Terrorblade Reflection
 	// Author: Noya
 	// Date: 11.1.2015.
@@ -57599,10 +55270,6 @@
 		}
 	}
 	
-	//End of file terrorblade_reflection_datadriven.txt
-
-
-	//Start of file terrorblade_sunder_datadriven.txt
 	// Rewrite of Terrorblade Sunder
 	// Author: Noya
 	// Date: 11.1.2015.
@@ -57671,10 +55338,6 @@
 		}
 	}
 	
-	//End of file terrorblade_sunder_datadriven.txt
-
-
-	//Start of file test_ability.txt
 	"test_ability"
 	{
 		// General
@@ -57732,10 +55395,6 @@
 		}
 	}
 	
-	//End of file test_ability.txt
-
-
-	//Start of file throw_coal_datadriven.txt
 	"throw_coal_datadriven"
 	{
 		// General
@@ -57775,10 +55434,6 @@
 		}
 	}
 	
-	//End of file throw_coal_datadriven.txt
-
-
-	//Start of file throw_snowball_datadriven.txt
 	"throw_snowball_datadriven"
 	{
 		// General
@@ -57818,10 +55473,6 @@
 		}
 	}
 	
-	//End of file throw_snowball_datadriven.txt
-
-
-	//Start of file tidehunter_anchor_smash_datadriven.txt
 	"tidehunter_anchor_smash_datadriven"
 	{
 		// General
@@ -57872,10 +55523,6 @@
 		}
 	}
 	
-	//End of file tidehunter_anchor_smash_datadriven.txt
-
-
-	//Start of file tidehunter_gush_datadriven.txt
 	"tidehunter_gush_datadriven"
 	{
 		// General
@@ -57929,10 +55576,6 @@
 		}
 	}
 	
-	//End of file tidehunter_gush_datadriven.txt
-
-
-	//Start of file tidehunter_kraken_shell_datadriven.txt
 	"tidehunter_kraken_shell_datadriven"
 	{
 		// General
@@ -57962,10 +55605,6 @@
 		}
 	}
 	
-	//End of file tidehunter_kraken_shell_datadriven.txt
-
-
-	//Start of file tidehunter_ravage_datadriven.txt
 	"tidehunter_ravage_datadriven"
 	{
 		// General
@@ -58017,10 +55656,6 @@
 		}
 	}
 	
-	//End of file tidehunter_ravage_datadriven.txt
-
-
-	//Start of file tinker_heat_seeking_missile_datadriven.txt
 	"tinker_heat_seeking_missile_datadriven"
 	{
 		// General
@@ -58144,10 +55779,6 @@
 			}
 		}
 	}
-	//End of file tinker_heat_seeking_missile_datadriven.txt
-
-
-	//Start of file tinker_laser_datadriven.txt
 	"tinker_laser_datadriven"
 	{
 		// General
@@ -58295,10 +55926,6 @@
 			}
 		}
 	}
-	//End of file tinker_laser_datadriven.txt
-
-
-	//Start of file tinker_march_of_the_machines_datadriven.txt
 	"tinker_march_of_the_machines_datadriven"
 	{
 		// General
@@ -58447,10 +56074,6 @@
 			}
 		}
 	}
-	//End of file tinker_march_of_the_machines_datadriven.txt
-
-
-	//Start of file tinker_rearm_datadriven.txt
 	"tinker_rearm_datadriven"
 	{
 		// General
@@ -58586,10 +56209,6 @@
 			}
 		}
 	}
-	//End of file tinker_rearm_datadriven.txt
-
-
-	//Start of file tiny_avalanche_datadriven.txt
 	"tiny_avalanche_datadriven"
 	{
 		// General
@@ -58651,10 +56270,6 @@
 		}
 	}
 	
-	//End of file tiny_avalanche_datadriven.txt
-
-
-	//Start of file tiny_craggy_exterior_datadriven.txt
 	"tiny_craggy_exterior_datadriven"
 	{
 		// General
@@ -58698,10 +56313,6 @@
 		}
 	}
 	
-	//End of file tiny_craggy_exterior_datadriven.txt
-
-
-	//Start of file tiny_grow_datadriven.txt
 	"tiny_grow_datadriven"
 	{
 		// General
@@ -58763,10 +56374,6 @@
 		}
 	}
 	
-	//End of file tiny_grow_datadriven.txt
-
-
-	//Start of file tiny_toss_datadriven.txt
 	"tiny_toss_datadriven"
 	{
 		// General
@@ -58840,10 +56447,6 @@
 		}
 	}
 	
-	//End of file tiny_toss_datadriven.txt
-
-
-	//Start of file tornado_tempest_datadriven.txt
 	"tornado_tempest_datadriven"
 	{
 		// General
@@ -58895,10 +56498,6 @@
 		}
 	}
 	
-	//End of file tornado_tempest_datadriven.txt
-
-
-	//Start of file treant_eyes_in_the_forest_datadriven.txt
 	"treant_eyes_in_the_forest_datadriven"
 	{
 		// General
@@ -58945,10 +56544,6 @@
 		}
 	}
 	
-	//End of file treant_eyes_in_the_forest_datadriven.txt
-
-
-	//Start of file treant_leech_seed_datadriven.txt
 	"treant_leech_seed_datadriven"
 	{
 		"BaseClass"				"ability_datadriven"
@@ -59008,10 +56603,6 @@
 		}
 	}
 	
-	//End of file treant_leech_seed_datadriven.txt
-
-
-	//Start of file treant_living_armor_datadriven.txt
 	"treant_living_armor_datadriven"
 	{
 		// General
@@ -59062,10 +56653,6 @@
 		}
 	}
 	
-	//End of file treant_living_armor_datadriven.txt
-
-
-	//Start of file treant_natures_guise_datadriven.txt
 	"treant_natures_guise_datadriven"
 	{
 		// General
@@ -59131,10 +56718,6 @@
 		}
 	}	
 	
-	//End of file treant_natures_guise_datadriven.txt
-
-
-	//Start of file treant_overgrowth_datadriven.txt
 	"treant_overgrowth_datadriven"
 	{
 		// General
@@ -59181,10 +56764,6 @@
 		}
 	}
 	
-	//End of file treant_overgrowth_datadriven.txt
-
-
-	//Start of file troll_warlord_battle_trance_datadriven.txt
 	// Rewrite of the Troll Warlord Battle Trance ability
 	// Author: Pizzalol
 	// Date: 09.03.2015.
@@ -59289,10 +56868,6 @@
 		}
 	}
 	
-	//End of file troll_warlord_battle_trance_datadriven.txt
-
-
-	//Start of file troll_warlord_berserkers_rage_datadriven.txt
 	// Rewrite of the Troll Warlord Berserkers Rage ability
 	// Author: Pizzalol
 	// Date: 14.03.2015.
@@ -59483,10 +57058,6 @@
 		}
 	}
 	
-	//End of file troll_warlord_berserkers_rage_datadriven.txt
-
-
-	//Start of file troll_warlord_fervor_datadriven.txt
 	// Rewrite of the Troll Warlord Fervor ability
 	// Author: Pizzalol
 	// Date: 11.03.2015.
@@ -59545,10 +57116,6 @@
 		}
 	}
 	
-	//End of file troll_warlord_fervor_datadriven.txt
-
-
-	//Start of file troll_warlord_whirling_axes_melee_datadriven.txt
 	// Rewrite of the Troll Warlord Whirling Axes Melee ability
 	// Author: Pizzalol
 	// Date: 18.03.2015.
@@ -59730,10 +57297,6 @@
 		}
 	}
 	
-	//End of file troll_warlord_whirling_axes_melee_datadriven.txt
-
-
-	//Start of file troll_warlord_whirling_axes_ranged_datadriven.txt
 	// Rewrite of the Troll Warlord Whirling Axes Ranged ability
 	// Author: Pizzalol
 	// Date: 14.03.2015.
@@ -59890,10 +57453,6 @@
 		}
 	}
 	
-	//End of file troll_warlord_whirling_axes_ranged_datadriven.txt
-
-
-	//Start of file tusk_frozen_sigil_datadriven.txt
 	"tusk_frozen_sigil_datadriven"
 	{
 		// General
@@ -59942,10 +57501,6 @@
 		}
 	}
 	
-	//End of file tusk_frozen_sigil_datadriven.txt
-
-
-	//Start of file tusk_ice_shards_datadriven.txt
 	"tusk_ice_shards_datadriven"
 	{
 		// General
@@ -60022,10 +57577,6 @@
 	}
 	
 	
-	//End of file tusk_ice_shards_datadriven.txt
-
-
-	//Start of file tusk_launch_snowball_datadriven.txt
 	"tusk_launch_snowball_datadriven"
 	{
 		// General
@@ -60039,10 +57590,6 @@
 		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
 	}
 	
-	//End of file tusk_launch_snowball_datadriven.txt
-
-
-	//Start of file tusk_snowball_datadriven.txt
 	"tusk_snowball_datadriven"
 	{
 		// General
@@ -60127,10 +57674,6 @@
 		}
 	}
 	
-	//End of file tusk_snowball_datadriven.txt
-
-
-	//Start of file tusk_walrus_punch_datadriven.txt
 	"tusk_walrus_punch_datadriven"
 	{
 		// General
@@ -60197,10 +57740,6 @@
 		}
 	}
 	
-	//End of file tusk_walrus_punch_datadriven.txt
-
-
-	//Start of file undying_decay_datadriven.txt
 	"undying_decay_datadriven"
 	{
 		// General
@@ -60257,10 +57796,6 @@
 		}
 	}
 	
-	//End of file undying_decay_datadriven.txt
-
-
-	//Start of file undying_flesh_golem_datadriven.txt
 	"undying_flesh_golem_datadriven"
 	{
 		// General
@@ -60352,10 +57887,6 @@
 		}
 	}
 	
-	//End of file undying_flesh_golem_datadriven.txt
-
-
-	//Start of file undying_soul_rip_datadriven.txt
 	"undying_soul_rip_datadriven"
 	{
 	// General
@@ -60411,10 +57942,6 @@
 		}
 	}	
 	
-	//End of file undying_soul_rip_datadriven.txt
-
-
-	//Start of file undying_tombstone_datadriven.txt
 	"undying_tombstone_datadriven"
 	{
 		// General
@@ -60475,10 +58002,6 @@
 		}
 	}
 	
-	//End of file undying_tombstone_datadriven.txt
-
-
-	//Start of file undying_tombstone_zombie_aura_datadriven.txt
 	"undying_tombstone_zombie_aura_datadriven"
 	{
 		// General
@@ -60514,10 +58037,6 @@
 		}
 	}
 	
-	//End of file undying_tombstone_zombie_aura_datadriven.txt
-
-
-	//Start of file undying_tombstone_zombie_deathstrike_datadriven.txt
 	"undying_tombstone_zombie_deathstrike_datadriven"
 	{
 		// General
@@ -60563,10 +58082,6 @@
 		}
 	}
 	
-	//End of file undying_tombstone_zombie_deathstrike_datadriven.txt
-
-
-	//Start of file ursa_earthshock_datadriven.txt
 	"ursa_earthshock_datadriven"
 	{
 		// General
@@ -60686,10 +58201,6 @@
 			}
 		}
 	}
-	//End of file ursa_earthshock_datadriven.txt
-
-
-	//Start of file ursa_enrage_datadriven.txt
 	"ursa_enrage_datadriven"
 	{
 		// General
@@ -60893,10 +58404,6 @@
 			}
 		}
 	}
-	//End of file ursa_enrage_datadriven.txt
-
-
-	//Start of file ursa_fury_swipes_datadriven.txt
 	"ursa_fury_swipes_datadriven"
 	{
 		// General
@@ -60975,10 +58482,6 @@
 			}
 		}
 	}
-	//End of file ursa_fury_swipes_datadriven.txt
-
-
-	//Start of file ursa_overpower_datadriven.txt
 	"ursa_overpower_datadriven"
 	{
 		// General
@@ -61088,10 +58591,6 @@
 			}
 		}
 	}
-	//End of file ursa_overpower_datadriven.txt
-
-
-	//Start of file vengefulspirit_command_aura_datadriven.txt
 	// Rewrite of the Vengeful Spirit Command Aura ability
 	// Author: Pizzalol
 	// Date: 26.01.2015.
@@ -61230,10 +58729,6 @@
 		}	
 	}
 	
-	//End of file vengefulspirit_command_aura_datadriven.txt
-
-
-	//Start of file vengefulspirit_magic_missile_datadriven.txt
 	// Rewrite of the Vengeful Spirit Magic Missile ability
 	// Author: Pizzalol
 	// Date: 26.01.2015.
@@ -61335,10 +58830,6 @@
 		}	
 	}
 	
-	//End of file vengefulspirit_magic_missile_datadriven.txt
-
-
-	//Start of file vengefulspirit_nether_swap_datadriven.txt
 	// Rewrite of the Vengeful Spirit Nether Swap ability
 	// Author: Pizzalol
 	// Date: 29.09.2015.
@@ -61447,10 +58938,6 @@
 		}	
 	}
 	
-	//End of file vengefulspirit_nether_swap_datadriven.txt
-
-
-	//Start of file vengefulspirit_wave_of_terror_datadriven.txt
 	// Rewrite of the Vengeful Spirit Wave of Terror ability
 	// Author: Pizzalol
 	// Date: 12.07.2015.
@@ -61588,15 +59075,9 @@
 		}
 	}
 	
-	//End of file vengefulspirit_wave_of_terror_datadriven.txt
-
-
-	//Start of file venomancer_plague_ward_datadriven.txt
 	// Rewrite of the Venomancer Plague Ward ability
 	// Author: Pizzalol and Rook
-	// Date: 26.12.2014.
-	// Known bugs:
-	//     The Plague Ward faces an incorrect direction when idling and attacking.
+	// Date: 30.09.2015.
 	"venomancer_plague_ward_datadriven"
 	{
 		// General
@@ -61612,6 +59093,7 @@
 		"precache"
 		{
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+			"model"				"models/heroes/venomancer/venomancer_ward.vmdl"
 		}
 	
 		// Casting
@@ -61727,14 +59209,10 @@
 			}
 		}		
 	}
-	//End of file venomancer_plague_ward_datadriven.txt
-
-
-	//Start of file venomancer_poison_nova_datadriven.txt
 	// Rewrite of the Venomancer Poison Nova ability
 	// Author: Pizzalol
 	// Date: 26.12.2014.
-	// NOTE: Doesnt travel as a "projectile" around the hero but instead acts as an instant AOE ability
+	// NOTE: Doesnt travel as an expanding circle around the hero but instead acts as an instant AOE ability
 	// NOTE2: Poison Nova launch particle doesnt work
 	"venomancer_poison_nova_datadriven"
 	{
@@ -61839,10 +59317,15 @@
 			{
 				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
 				"EffectAttachType"	"start_at_customorigin"
+				
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_origin"
+				}
+	
 				"ControlPoints"
 				{
-					"00"	"CASTER"
-					"01"	"0 0 0"
+					"01"	"1 1 1"
 					"02"	"0 0 0"
 				}
 			}
@@ -61863,6 +59346,7 @@
 					{
 						"ModifierName"		"modifier_poison_nova_debuff_datadriven"
 						"Target"			"TARGET"
+						"Duration"			"%duration"
 					}
 				}
 			}
@@ -61873,14 +59357,12 @@
 			"modifier_poison_nova_debuff_datadriven"
 			{
 				"IsDebuff"	"1"
-				"IsPurgable"	"0"
-	
-				"Duration"		"%duration"
-				"ThinkInterval"	"1.0"
+				"IsPurgable"	"0"			
 	
 				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
 				"EffectAttachType"	"follow_origin"
 	
+				"ThinkInterval"	"1.0"
 				"OnIntervalThink"
 				{
 					"RunScript"
@@ -61910,10 +59392,6 @@
 		}
 	}
 	
-	//End of file venomancer_poison_nova_datadriven.txt
-
-
-	//Start of file venomancer_poison_sting_datadriven.txt
 	// Rewrite of the Venomancer Poison Sting ability
 	// Author: Pizzalol and Rook
 	// Date: 22.12.2014.
@@ -62018,14 +59496,9 @@
 			}
 		}
 	}
-	//End of file venomancer_poison_sting_datadriven.txt
-
-
-	//Start of file venomancer_venomous_gale_datadriven.txt
 	// Rewrite of the Venomancer Venomous Gale ability
 	// Author: Pizzalol
-	// Date: 26.12.2014.
-	// NOTE: Slow stacks with itself currently
+	// Date: 30.09.2015.
 	"venomancer_venomous_gale_datadriven"
 	{
 		// General
@@ -62103,11 +59576,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"distance"					"800 800 800 800"
 			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"movement_slow_small"			"-3.33 -3.33 -3.33 -3.33"
-			}
 		}
 	
 		"OnSpellStart"
@@ -62130,7 +59598,7 @@
 			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
 			    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 			    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
-			    "HasFrontalCone"    "1"
+			    "HasFrontalCone"    "0"
 			    "ProvidesVision" "0"
 			}
 		}
@@ -62139,126 +59607,37 @@
 		{
 			"DeleteOnHit"	"0"
 	
-			"Damage"
-			{
-				"Target"	"TARGET"
-				"Type"		"DAMAGE_TYPE_MAGICAL"
-				"Damage"	"%strike_damage"
-			}
-	
 			"FireSound"
 			{
 				"EffectName"	"Hero_Venomancer.VenomousGaleImpact"
 				"Target"		"TARGET"
 			}
 	
-			"ApplyModifier"
+			"Damage"
 			{
-				"ModifierName"		"modifier_venomous_gale_debuff_datadriven"
-				"Target"			"TARGET"
-			}
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%strike_damage"
+			}		
 	
-			"ApplyModifier"
+			"RunScript"
 			{
-				"ModifierName"		"modifier_venomous_gale_thinker_datadriven"
-				"Target"			"TARGET"
-			}
-	
-			// Decaying slow part
-	
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			// 5
-	
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			// 10
-	
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-				"Target"			"TARGET"
-			}
-			// 15
+				"ScriptFile"	"heroes/hero_venomancer/venomous_gale.lua"
+				"Function"		"VenomousGaleImpact"
+				"modifier"		"modifier_venomous_gale_debuff_datadriven"
+			}	
 		}
 	
 		"Modifiers"
 		{
 			"modifier_venomous_gale_debuff_datadriven"
 			{
-				"IsDebuff"	"1"
-				"Duration"	"%duration"
-				"ThinkInterval"		"%tick_interval"
+				"IsDebuff"	"1"			
 	
 				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_gale_poison_debuff.vpcf"
-				"EffectAttachType"	"attach_origin"
+				"EffectAttachType"	"follow_origin"
 	
+				"ThinkInterval"		"%tick_interval"
 				"OnIntervalThink"
 				{
 					"Damage"
@@ -62268,43 +59647,15 @@
 						"Damage"	"%tick_damage"
 					}
 				}
-			}
-	
-			"modifier_venomous_gale_slow_datadriven"
-			{
-				"IsHidden"	"1"
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 	
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow_small"
-				}
-			}
-	
-			"modifier_venomous_gale_thinker_datadriven"
-			{
-				"IsHidden"	"1"
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
-				"Duration"		"%duration"
-	
-				"ThinkInterval"	"1.0"
-	
-				"OnIntervalThink"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_venomous_gale_slow_datadriven"
-						"Target"		"TARGET"
-					}
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-1"
 				}
 			}
 		}
 	}
 	
-	//End of file venomancer_venomous_gale_datadriven.txt
-
-
-	//Start of file viper_corrosive_skin_datadriven.txt
 	// Rewrite of the Viper Corrosive Skin ability
 	// Author: Pizzalol
 	// Date: 17.12.2014.
@@ -62427,10 +59778,6 @@
 		}
 	}
 	
-	//End of file viper_corrosive_skin_datadriven.txt
-
-
-	//Start of file viper_nethertoxin_datadriven.txt
 	// Rewrite of the Viper Nethertoxin ability
 	// Author: Pizzalol
 	// Date: 19.12.2014.
@@ -62684,10 +60031,6 @@
 		}
 	}
 	
-	//End of file viper_nethertoxin_datadriven.txt
-
-
-	//Start of file viper_poison_attack_datadriven.txt
 	// Rewrite of the Viper Poison Attack ability
 	// Author: Pizzalol
 	// Date: 18.12.2014.
@@ -62828,10 +60171,6 @@
 		}
 	}
 	
-	//End of file viper_poison_attack_datadriven.txt
-
-
-	//Start of file viper_viper_strike_datadriven.txt
 	// Rewrite of the Viper Viper Strike ability
 	// Author: Pizzalol
 	// Date: 19.12.2014.
@@ -63065,10 +60404,6 @@
 		}
 	}
 	
-	//End of file viper_viper_strike_datadriven.txt
-
-
-	//Start of file visage_gravekeepers_cloak_datadriven.txt
 	"visage_gravekeepers_cloak_datadriven"
 	{
 		// General
@@ -63104,10 +60439,6 @@
 		}
 	}
 	
-	//End of file visage_gravekeepers_cloak_datadriven.txt
-
-
-	//Start of file visage_grave_chill_datadriven.txt
 	"visage_grave_chill_datadriven"
 	{
 		// General
@@ -63158,10 +60489,6 @@
 		}
 	}	
 	
-	//End of file visage_grave_chill_datadriven.txt
-
-
-	//Start of file visage_soul_assumption_datadriven.txt
 	"visage_soul_assumption_datadriven"
 	{
 		// General
@@ -63243,10 +60570,6 @@
 		}
 	}	
 	
-	//End of file visage_soul_assumption_datadriven.txt
-
-
-	//Start of file visage_summon_familiars_datadriven.txt
 	"visage_summon_familiars_datadriven"
 	{
 		// General
@@ -63310,10 +60633,6 @@
 		}
 	}
 	
-	//End of file visage_summon_familiars_datadriven.txt
-
-
-	//Start of file visage_summon_familiars_stone_form_datadriven.txt
 	"visage_summon_familiars_stone_form_datadriven"
 	{
 		// General
@@ -63372,10 +60691,6 @@
 		}
 	}
 	
-	//End of file visage_summon_familiars_stone_form_datadriven.txt
-
-
-	//Start of file warlock_fatal_bonds_datadriven.txt
 	"warlock_fatal_bonds_datadriven"
 	{
 		// General
@@ -63439,10 +60754,6 @@
 		}
 	}
 	
-	//End of file warlock_fatal_bonds_datadriven.txt
-
-
-	//Start of file warlock_golem_flaming_fists_datadriven.txt
 	"warlock_golem_flaming_fists_datadriven"
 	{
 		// General
@@ -63476,10 +60787,6 @@
 		}
 	}
 	
-	//End of file warlock_golem_flaming_fists_datadriven.txt
-
-
-	//Start of file warlock_golem_permanent_immolation_datadriven.txt
 	"warlock_golem_permanent_immolation_datadriven"
 	{
 		// General
@@ -63508,10 +60815,6 @@
 		}
 	}
 	
-	//End of file warlock_golem_permanent_immolation_datadriven.txt
-
-
-	//Start of file warlock_rain_of_chaos_datadriven.txt
 	"warlock_rain_of_chaos_datadriven"
 	{
 		// General
@@ -63606,10 +60909,6 @@
 		}
 	}
 	
-	//End of file warlock_rain_of_chaos_datadriven.txt
-
-
-	//Start of file warlock_shadow_word_datadriven.txt
 	"warlock_shadow_word_datadriven"
 	{
 		// General
@@ -63665,10 +60964,6 @@
 		}
 	}	
 	
-	//End of file warlock_shadow_word_datadriven.txt
-
-
-	//Start of file warlock_upheaval_datadriven.txt
 	"warlock_upheaval_datadriven"
 	{
 		// General
@@ -63725,10 +61020,6 @@
 		}
 	}
 	
-	//End of file warlock_upheaval_datadriven.txt
-
-
-	//Start of file weaver_geminate_attack_datadriven.txt
 	"weaver_geminate_attack_datadriven"
 	{
 		// General
@@ -63740,10 +61031,6 @@
 	}
 	
 	
-	//End of file weaver_geminate_attack_datadriven.txt
-
-
-	//Start of file weaver_shukuchi_datadriven.txt
 	"weaver_shukuchi_datadriven"
 	{
 		// General
@@ -63794,10 +61081,6 @@
 	}
 	
 	
-	//End of file weaver_shukuchi_datadriven.txt
-
-
-	//Start of file weaver_the_swarm_datadriven.txt
 	"weaver_the_swarm_datadriven"
 	{
 		// General
@@ -63871,10 +61154,6 @@
 	}
 	
 	
-	//End of file weaver_the_swarm_datadriven.txt
-
-
-	//Start of file weaver_time_lapse_datadriven.txt
 	"weaver_time_lapse_datadriven"
 	{
 		// General
@@ -63890,10 +61169,6 @@
 		"AbilityManaCost"				"150 75 0"			
 	}
 	
-	//End of file weaver_time_lapse_datadriven.txt
-
-
-	//Start of file windrunner_focusfire_datadriven.txt
 	// CHANGELIST:
 	// 09.01.2015 - Change focusfire_on_attack_start to focusfire_on_attack_landed to reduce redundancy
 	
@@ -64045,10 +61320,6 @@
 			}
 		}
 	}
-	//End of file windrunner_focusfire_datadriven.txt
-
-
-	//Start of file windrunner_powershot_datadriven.txt
 	"windrunner_powershot_datadriven"
 	{
 		// General
@@ -64248,10 +61519,6 @@
 			}
 		}
 	}
-	//End of file windrunner_powershot_datadriven.txt
-
-
-	//Start of file windrunner_shackleshot_datadriven.txt
 	// Rewrite of the Windrunner Shackleshot ability
 	// Author: jacklarnes
 	// Date: 15.04.2015.
@@ -64373,10 +61640,6 @@
 		}
 	}
 	
-	//End of file windrunner_shackleshot_datadriven.txt
-
-
-	//Start of file windrunner_windrun_datadriven.txt
 	// Rewrite of the Windrunner Windrun ability
 	// Author: kritth
 	// NOTE: Need to find the proper sound. It doesn't seem to fire.
@@ -64540,10 +61803,6 @@
 			}
 		}
 	}
-	//End of file windrunner_windrun_datadriven.txt
-
-
-	//Start of file wisp_empty1_datadriven.txt
 	"wisp_empty1_datadriven"
 	{
 		// General
@@ -64553,10 +61812,6 @@
 		"MaxLevel"						"0"
 	}
 	
-	//End of file wisp_empty1_datadriven.txt
-
-
-	//Start of file wisp_empty2_datadriven.txt
 	"wisp_empty2_datadriven"
 	{
 		// General
@@ -64566,10 +61821,6 @@
 		"MaxLevel"						"0"
 	}
 	
-	//End of file wisp_empty2_datadriven.txt
-
-
-	//Start of file wisp_overcharge_datadriven.txt
 	"wisp_overcharge_datadriven"
 	{
 		// General
@@ -64784,10 +62035,6 @@
 		}
 	}	
 	
-	//End of file wisp_overcharge_datadriven.txt
-
-
-	//Start of file wisp_relocate_datadriven.txt
 	"wisp_relocate_datadriven"
 	{
 		// General
@@ -65078,10 +62325,6 @@
 		}
 	}
 	
-	//End of file wisp_relocate_datadriven.txt
-
-
-	//Start of file wisp_spirits_datadriven.txt
 	"wisp_spirits_datadriven"
 	{
 		// General
@@ -65477,10 +62720,6 @@
 		}
 	}	
 	
-	//End of file wisp_spirits_datadriven.txt
-
-
-	//Start of file wisp_spirits_in_datadriven.txt
 	"wisp_spirits_in_datadriven"
 	{
 		// General
@@ -65518,10 +62757,6 @@
 		}
 	}
 	
-	//End of file wisp_spirits_in_datadriven.txt
-
-
-	//Start of file wisp_spirits_out_datadriven.txt
 	"wisp_spirits_out_datadriven"
 	{
 		// General
@@ -65559,10 +62794,6 @@
 		}
 	}
 	
-	//End of file wisp_spirits_out_datadriven.txt
-
-
-	//Start of file wisp_tether_break_datadriven.txt
 	"wisp_tether_break_datadriven"
 	{
 		// General
@@ -65602,10 +62833,6 @@
 		}
 	}
 	
-	//End of file wisp_tether_break_datadriven.txt
-
-
-	//Start of file wisp_tether_datadriven.txt
 	// Rewrite of the Wisp Tether
 	// Author: Ractidous
 	// Date: 29.09.2015.
@@ -66042,10 +63269,6 @@
 		}
 	}
 	
-	//End of file wisp_tether_datadriven.txt
-
-
-	//Start of file witch_doctor_death_ward_datadriven.txt
 	"witch_doctor_death_ward_datadriven"
 	{
 		// General
@@ -66105,10 +63328,6 @@
 		}
 	}
 	
-	//End of file witch_doctor_death_ward_datadriven.txt
-
-
-	//Start of file witch_doctor_maledict_datadriven.txt
 	"witch_doctor_maledict_datadriven"
 	{
 		// General
@@ -66171,10 +63390,6 @@
 		}
 	}
 	
-	//End of file witch_doctor_maledict_datadriven.txt
-
-
-	//Start of file witch_doctor_paralyzing_cask_datadriven.txt
 	"witch_doctor_paralyzing_cask_datadriven"
 	{
 		// General
@@ -66256,10 +63471,6 @@
 		}
 	}
 	
-	//End of file witch_doctor_paralyzing_cask_datadriven.txt
-
-
-	//Start of file witch_doctor_voodoo_restoration_datadriven.txt
 	"witch_doctor_voodoo_restoration_datadriven"
 	{
 		// General
@@ -66302,10 +63513,6 @@
 		}
 	}
 	
-	//End of file witch_doctor_voodoo_restoration_datadriven.txt
-
-
-	//Start of file zuus_arc_lightning_datadriven.txt
 	"zuus_arc_lightning_datadriven"
 	{
 		// General
@@ -66356,10 +63563,6 @@
 		}
 	}
 	
-	//End of file zuus_arc_lightning_datadriven.txt
-
-
-	//Start of file zuus_lightning_bolt_datadriven.txt
 	"zuus_lightning_bolt_datadriven"
 	{
 		// General
@@ -66427,10 +63630,6 @@
 		}
 	}
 	
-	//End of file zuus_lightning_bolt_datadriven.txt
-
-
-	//Start of file zuus_static_field_datadriven.txt
 	"zuus_static_field_datadriven"
 	{
 		// General
@@ -66462,10 +63661,6 @@
 		}
 	}
 	
-	//End of file zuus_static_field_datadriven.txt
-
-
-	//Start of file zuus_thundergods_wrath_datadriven.txt
 	"zuus_thundergods_wrath_datadriven"
 	{
 		// General
@@ -66527,5 +63722,4 @@
 		}
 	}
 	
-	//End of file zuus_thundergods_wrath_datadriven.txt
 }

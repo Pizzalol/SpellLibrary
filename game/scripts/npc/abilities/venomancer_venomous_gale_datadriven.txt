@@ -1,7 +1,6 @@
 // Rewrite of the Venomancer Venomous Gale ability
 // Author: Pizzalol
-// Date: 26.12.2014.
-// NOTE: Slow stacks with itself currently
+// Date: 30.09.2015.
 "venomancer_venomous_gale_datadriven"
 {
 	// General
@@ -79,11 +78,6 @@
 			"var_type"				"FIELD_INTEGER"
 			"distance"					"800 800 800 800"
 		}
-		"09"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"movement_slow_small"			"-3.33 -3.33 -3.33 -3.33"
-		}
 	}
 
 	"OnSpellStart"
@@ -106,7 +100,7 @@
 		    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
 		    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
-		    "HasFrontalCone"    "1"
+		    "HasFrontalCone"    "0"
 		    "ProvidesVision" "0"
 		}
 	}
@@ -115,126 +109,37 @@
 	{
 		"DeleteOnHit"	"0"
 
-		"Damage"
-		{
-			"Target"	"TARGET"
-			"Type"		"DAMAGE_TYPE_MAGICAL"
-			"Damage"	"%strike_damage"
-		}
-
 		"FireSound"
 		{
 			"EffectName"	"Hero_Venomancer.VenomousGaleImpact"
 			"Target"		"TARGET"
 		}
 
-		"ApplyModifier"
+		"Damage"
 		{
-			"ModifierName"		"modifier_venomous_gale_debuff_datadriven"
-			"Target"			"TARGET"
-		}
+			"Target"	"TARGET"
+			"Type"		"DAMAGE_TYPE_MAGICAL"
+			"Damage"	"%strike_damage"
+		}		
 
-		"ApplyModifier"
+		"RunScript"
 		{
-			"ModifierName"		"modifier_venomous_gale_thinker_datadriven"
-			"Target"			"TARGET"
-		}
-
-		// Decaying slow part
-
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		// 5
-
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		// 10
-
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		"ApplyModifier"
-		{
-			"ModifierName"		"modifier_venomous_gale_slow_datadriven"
-			"Target"			"TARGET"
-		}
-		// 15
+			"ScriptFile"	"heroes/hero_venomancer/venomous_gale.lua"
+			"Function"		"VenomousGaleImpact"
+			"modifier"		"modifier_venomous_gale_debuff_datadriven"
+		}	
 	}
 
 	"Modifiers"
 	{
 		"modifier_venomous_gale_debuff_datadriven"
 		{
-			"IsDebuff"	"1"
-			"Duration"	"%duration"
-			"ThinkInterval"		"%tick_interval"
+			"IsDebuff"	"1"			
 
 			"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_gale_poison_debuff.vpcf"
-			"EffectAttachType"	"attach_origin"
+			"EffectAttachType"	"follow_origin"
 
+			"ThinkInterval"		"%tick_interval"
 			"OnIntervalThink"
 			{
 				"Damage"
@@ -244,34 +149,10 @@
 					"Damage"	"%tick_damage"
 				}
 			}
-		}
-
-		"modifier_venomous_gale_slow_datadriven"
-		{
-			"IsHidden"	"1"
-			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow_small"
-			}
-		}
-
-		"modifier_venomous_gale_thinker_datadriven"
-		{
-			"IsHidden"	"1"
-			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
-			"Duration"		"%duration"
-
-			"ThinkInterval"	"1.0"
-
-			"OnIntervalThink"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName"	"modifier_venomous_gale_slow_datadriven"
-					"Target"		"TARGET"
-				}
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-1"
 			}
 		}
 	}

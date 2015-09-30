@@ -1,7 +1,7 @@
 // Rewrite of the Venomancer Poison Nova ability
 // Author: Pizzalol
 // Date: 26.12.2014.
-// NOTE: Doesnt travel as a "projectile" around the hero but instead acts as an instant AOE ability
+// NOTE: Doesnt travel as an expanding circle around the hero but instead acts as an instant AOE ability
 // NOTE2: Poison Nova launch particle doesnt work
 "venomancer_poison_nova_datadriven"
 {
@@ -106,10 +106,15 @@
 		{
 			"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
 			"EffectAttachType"	"start_at_customorigin"
+			
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_origin"
+			}
+
 			"ControlPoints"
 			{
-				"00"	"CASTER"
-				"01"	"0 0 0"
+				"01"	"1 1 1"
 				"02"	"0 0 0"
 			}
 		}
@@ -130,6 +135,7 @@
 				{
 					"ModifierName"		"modifier_poison_nova_debuff_datadriven"
 					"Target"			"TARGET"
+					"Duration"			"%duration"
 				}
 			}
 		}
@@ -140,14 +146,12 @@
 		"modifier_poison_nova_debuff_datadriven"
 		{
 			"IsDebuff"	"1"
-			"IsPurgable"	"0"
-
-			"Duration"		"%duration"
-			"ThinkInterval"	"1.0"
+			"IsPurgable"	"0"			
 
 			"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
 			"EffectAttachType"	"follow_origin"
 
+			"ThinkInterval"	"1.0"
 			"OnIntervalThink"
 			{
 				"RunScript"

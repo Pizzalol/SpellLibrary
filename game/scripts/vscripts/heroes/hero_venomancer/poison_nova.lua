@@ -1,34 +1,21 @@
 --[[Author: Pizzalol
-	Date: 26.12.2014.
+	Date: 30.09.2015.
 	Deals non lethal magic damage to the target]]
-
 function PoisonNova( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local abilityDamage = ability:GetLevelSpecialValueFor("damage", (ability:GetLevel() - 1))
-	local targetHP = target:GetHealth()
-	local targetMagicResist = target:GetMagicalArmorValue()
-	-- Calculating damage that would be dealt
-	local damagePostReduction = abilityDamage * (1 - targetMagicResist)
-	print("Damage post reduction: " .. tonumber(damagePostReduction))
+	local ability_level = ability:GetLevel() - 1
 
-	local damageTable = {}
-	damageTable.attacker = caster
-	damageTable.victim = target
-	damageTable.damage_type = ability:GetAbilityDamageType()
-	damageTable.ability = ability
-	damageTable.damage = abilityDamage
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 
-	-- Checking if its lethal damage
-	-- Set hp to 1
-	if targetHP <= damagePostReduction then
-		-- Adjusting it to non lethal damage
-		damageTable.damage = ((targetHP / (1 - targetMagicResist)) - 1.8)
-		print("Adjusted non lethal damage: " .. tonumber(damageTable.damage))
-	end
+	local damage_table = {}
+	damage_table.attacker = caster
+	damage_table.victim = target
+	damage_table.damage_type = ability:GetAbilityDamageType()
+	damage_table.ability = ability
+	damage_table.damage = damage
+	damage_table.damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL
 
-	print("TARGET HEALTH: " .. tonumber(targetHP))
-	print("DEALING DAMAGE: " .. tonumber(damageTable.damage))
-	ApplyDamage(damageTable)
+	ApplyDamage(damage_table)
 end
