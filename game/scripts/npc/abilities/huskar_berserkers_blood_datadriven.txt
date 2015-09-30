@@ -3,7 +3,6 @@
 // Date: 30.09.2015
 // NOTE: Particles and Effects do not work at all
 //		 Model size increase is probably inaccurate and also not very smooth
-//		 Health percentages (and max stacks) is static for now
 "huskar_berserkers_blood_datadriven"
 {
 	// General
