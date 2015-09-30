@@ -23917,6 +23917,12 @@
 
 
 	//Start of file huskar_berserkers_blood_datadriven.txt
+	// Rewrite of the Huskar Berserkers Blood ability
+	// Author: Bude
+	// Date: 30.09.2015
+	// NOTE: Particles and Effects do not work at all
+	//		 Model size increase is probably inaccurate and also not very smooth
+	//		 Health percentages (and max stacks) is static for now
 	"huskar_berserkers_blood_datadriven"
 	{
 		// General
@@ -23953,12 +23959,12 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"OnUpgrade"
 		{
-			//ApplyModifier 
+			//ApplyLuaModifier 
 			"RunScript"
 			{
 				"ModifierName"	"modifier_huskar_berserkers_blood_lua"
 				"ScriptFile"	"heroes/hero_huskar/berserkers_blood.lua"
-				"Function"		"ApplyModifier"
+				"Function"		"ApplyLuaModifier"
 			}
 		}
 	}
@@ -23967,6 +23973,9 @@
 
 
 	//Start of file huskar_burning_spear_datadriven.txt
+	// Rewrite of the Huskar Burning Spear ability
+	// Author: Bude
+	// Date: 30.09.2015
 	"huskar_burning_spear_datadriven"
 	{
 		// General
@@ -24141,6 +24150,9 @@
 
 
 	//Start of file huskar_inner_vitality_datadriven.txt
+	// Rewrite of the Huskar Inner Vitality ability
+	// Author: Bude
+	// Date: 30.09.2015
 	"huskar_inner_vitality_datadriven"
 	{
 		// General
@@ -24238,12 +24250,12 @@
 				}
 			}
 	
-			//ApplyModifier
+			//ApplyLuaModifier
 			"RunScript"
 			{
 				"ModifierName"	"modifier_huskar_inner_vitality_lua"
 				"ScriptFile"	"heroes/hero_huskar/inner_vitality.lua"
-				"Function"		"ApplyModifier"
+				"Function"		"ApplyLuaModifier"
 				"Target"		"TARGET"
 			}
 		}
@@ -24252,6 +24264,9 @@
 
 
 	//Start of file huskar_life_break_datadriven.txt
+	// Rewrite of the Huskar Life Break ability
+	// Author: Bude
+	// Date: 30.09.2015
 	"huskar_life_break_datadriven"
 	{
 		// General
@@ -24343,8 +24358,8 @@
 			}
 			"11"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"auto_attack_target"				"1"
+				"var_type"							"FIELD_FLOAT"
+				"max_distance"						"1400"
 			}
 		}
 	
@@ -24353,8 +24368,6 @@
 		"precache"
 		{
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
-			// Hero_Huskar.Life_Break
-			// Hero_Huskar.Life_Break.Impact
 			"particle"  "particles/units/heroes/hero_huskar/huskar_life_break.vpcf"
 			"particle"  "particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf"
 			"particles" "particles/status_fx/status_effect_huskar_lifebreak.vpcf"
@@ -24375,6 +24388,8 @@
 			{
 				"ScriptFile"	"heroes/hero_huskar/life_break.lua"
 				"Function"		"LifeBreak"
+				"ModifierName"			"modifier_huskar_life_break_datadriven"
+			    "ModifierName_Debuff"	"modifier_huskar_life_break_datadriven_debuff"
 			}
 	
 			"FireSound"
@@ -24395,8 +24410,8 @@
 			{
 				"Target"		"CASTER"
 			    "ScriptFile"    "heroes/hero_huskar/life_break.lua"
-			    "HorizontalControlFunction" "LeapHorizonal"
-			    "VerticalControlFunction" 	"LeapVertical"
+			    "HorizontalControlFunction" "JumpHorizonal"
+			    "VerticalControlFunction" 	"JumpVertical"
 			}
 		}
 	

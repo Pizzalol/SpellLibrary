@@ -3,9 +3,10 @@ if modifier_huskar_berserkers_blood_lua == nil then
 end
 
 --[[Author: Bude
-	Date: 29.09.2015.
+	Date: 30.09.2015.
 	Grants magical resistance and attackspeed and increases model size per modifier stack
 	TODO: Particles and status effects need to be implemented correctly
+	NOTE: Model size increase is probably inaccurate and also awfully jumpy
 ]]--
 
 function modifier_huskar_berserkers_blood_lua:GetAttributes()
@@ -14,6 +15,7 @@ function modifier_huskar_berserkers_blood_lua:GetAttributes()
 	return attrib
 end
 
+--As described: Could not get the particles to work ...
 --[[
 function modifier_huskar_berserkers_blood_lua:GetStatusEffectName()
 	return "particles/units/heroes/hero_huskar/huskar_berserker_blood_hero_effect.vpcf"

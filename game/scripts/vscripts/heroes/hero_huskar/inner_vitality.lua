@@ -6,7 +6,7 @@ LinkLuaModifier( "modifier_huskar_inner_vitality_lua" , "heroes/hero_huskar/modi
     Simply applies the lua modifier
 --]]
 
-function ApplyModifier( keys )
+function ApplyLuaModifier( keys )
     local caster = keys.caster
     local target = keys.target
     local ability = keys.ability

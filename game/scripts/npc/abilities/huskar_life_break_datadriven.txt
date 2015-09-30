@@ -1,3 +1,6 @@
+// Rewrite of the Huskar Life Break ability
+// Author: Bude
+// Date: 30.09.2015
 "huskar_life_break_datadriven"
 {
 	// General
@@ -87,6 +90,11 @@
 			"var_type"							"FIELD_FLOAT"
 			"Costoldown_scepter"				"4"
 		}
+		"11"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"max_distance"						"1400"
+		}
 	}
 
 	// Precache
@@ -114,6 +122,8 @@
 		{
 			"ScriptFile"	"heroes/hero_huskar/life_break.lua"
 			"Function"		"LifeBreak"
+			"ModifierName"			"modifier_huskar_life_break_datadriven"
+		    "ModifierName_Debuff"	"modifier_huskar_life_break_datadriven_debuff"
 		}
 
 		"FireSound"
@@ -134,8 +144,8 @@
 		{
 			"Target"		"CASTER"
 		    "ScriptFile"    "heroes/hero_huskar/life_break.lua"
-		    "HorizontalControlFunction" "LeapHorizonal"
-		    "VerticalControlFunction" 	"LeapVertical"
+		    "HorizontalControlFunction" "JumpHorizonal"
+		    "VerticalControlFunction" 	"JumpVertical"
 		}
 	}
 
@@ -168,15 +178,6 @@
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movespeed_slow"
-			}
-
-			"OnCreated"
-			{
-				"FireSound"
-				{
-					"EffectName"	"Hero_Huskar.Life_Break.Impact"
-					"Target" 		"TARGET"
-				}
 			}
 		}
 	}

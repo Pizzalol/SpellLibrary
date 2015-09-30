@@ -2,11 +2,10 @@ LinkLuaModifier( "modifier_huskar_berserkers_blood_lua" , "heroes/hero_huskar/mo
 
 --[[
     Author: Bude
-    Date: 29.09.2015
+    Date: 30.09.2015
     Simply applies the lua modifier
 --]]
-
-function ApplyModifier( keys )
+function ApplyLuaModifier( keys )
     local caster = keys.caster
     local ability = keys.ability
     local modifiername = keys.ModifierName

@@ -4,7 +4,7 @@ end
 
 --[[
     Author: Bude
-    Date: 29.09.2015.
+    Date: 30.09.2015.
     Checks target health every interval and adjusts health regen accordingly
 ]]--
 
@@ -26,7 +26,6 @@ function modifier_huskar_inner_vitality_lua:OnCreated()
         local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
         self:AddParticle( nFXIndex, false, false, -1, false, false )
 
-        self:OnIntervalThink()
         self:StartIntervalThink(0.1)
     end
 end
@@ -62,9 +61,9 @@ function modifier_huskar_inner_vitality_lua:OnIntervalThink()
 
         -- calculate the bonus health depending on the targets health
         if health_perc <= hurt_perc then
-        bonus_heal = primary_attribute_value * hurt_attrib_bonus   
+            bonus_heal = primary_attribute_value * hurt_attrib_bonus   
         else
-        bonus_heal = primary_attribute_value * attrib_bonus
+            bonus_heal = primary_attribute_value * attrib_bonus
         end
 
 

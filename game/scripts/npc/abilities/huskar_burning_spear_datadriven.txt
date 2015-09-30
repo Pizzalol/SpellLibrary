@@ -1,3 +1,6 @@
+// Rewrite of the Huskar Burning Spear ability
+// Author: Bude
+// Date: 30.09.2015
 "huskar_burning_spear_datadriven"
 {
 	// General

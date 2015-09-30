@@ -1,6 +1,6 @@
 --[[
     Author: Bude
-    Date: 07.09.2015
+    Date: 30.09.2015
 
     Removes HP for using Burning Spear
     This is called everytime the ability is used (manual left-click or via auto-cast right-click)
@@ -21,7 +21,7 @@ end
 
 --[[
     Author: Bude
-    Date: 07.09.2015
+    Date: 30.09.2015
 
     Increases stack count on the visual modifier
     This is called everytime an enemy is hit by burning_spear
@@ -50,7 +50,7 @@ end
 
 --[[
     Author: Bude
-    Date: 07.09.2015
+    Date: 30.09.2015
 
     Decreases stack count on the visual modifier 
     This is called whenever the debuff modifier runs out
