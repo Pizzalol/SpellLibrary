@@ -10,15 +10,6 @@ projectile_speeds = {base = 900}
 	Much help from Noya and BMD
 ]]
 
---[[
-	possible concerns that i haven't tested:
-	  attacking your allied hero (from spells like WW ultimate)
-	  i think if you try to deny an allied creep (or hero) it'll bounce to further allied units... 
-	    not sure if desired results, fairly easy to "fix" though, just change the team number of the dummy unit to always be the enemy of the hero
-]]
-
-
-
 -- this finds the units particle infomation, if they're melee then it'll just use lunas default glaives
 -- the results are stored in partile_names and projectile_speeds so it doesn't have to reload the KV file each time
 function findProjectileInfo(class_name)
@@ -40,108 +31,129 @@ function findProjectileInfo(class_name)
 	return particle_names[class_name], projectile_speeds[class_name]
 end
 
-
+--[[Author: jacklarnes, Pizzalol
+	Date: 29.09.2015.
+	Save relevant information for future use and create the first bounce projectile]]
 function moon_glaive_start_create_dummy( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
 
-	local dummy = CreateUnitByName( "npc_dummy_blank", target:GetAbsOrigin(), false, caster, caster, target:GetTeamNumber() )
+	-- Create the dummy unit which keeps track of bounces
+	local dummy = CreateUnitByName( "npc_dummy_blank", target:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber() )
 	dummy:AddAbility("luna_moon_glaive_dummy_datadriven")
-	dummy:FindAbilityByName("luna_moon_glaive_dummy_datadriven"):ApplyDataDrivenModifier( caster, dummy, "modifier_moon_glaive_dummy_unit", {} )
-end
+	local dummy_ability =  dummy:FindAbilityByName("luna_moon_glaive_dummy_datadriven")
+	dummy_ability:ApplyDataDrivenModifier( caster, dummy, "modifier_moon_glaive_dummy_unit", {} )
 
+	-- Ability variables
+	dummy_ability.damage = caster:GetAverageTrueAttackDamage()
+	dummy_ability.bounceTable = {}
+	dummy_ability.bounceCount = 0
+	dummy_ability.maxBounces = ability:GetLevelSpecialValueFor("bounces", ability_level)
+	dummy_ability.bounceRange = ability:GetLevelSpecialValueFor("range", ability_level) 
+	dummy_ability.dmgMultiplier = ability:GetLevelSpecialValueFor("damage_reduction_percent", ability_level) / 100
+	dummy_ability.original_ability = ability
 
+	dummy_ability.particle_name, dummy_ability.projectile_speed = findProjectileInfo(caster:GetClassname())
+	dummy_ability.projectileFrom = target
+	dummy_ability.projectileTo = nil
 
-function moon_glaive_dummy_created( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
+	-- Find the closest target that fits the search criteria
+	local iTeam = DOTA_UNIT_TARGET_TEAM_ENEMY
+	local iType = DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING + DOTA_UNIT_TARGET_MECHANICAL
+	local iFlag = DOTA_UNIT_TARGET_FLAG_NONE
+	local bounce_targets = FindUnitsInRadius(caster:GetTeamNumber(), dummy:GetAbsOrigin(), nil, dummy_ability.bounceRange, iTeam, iType, iFlag, FIND_CLOSEST, false)
 
-	-- if it's first bounce then we need to initialize the ability variables since we're dealing with a dummy unit
-	-- else we apply damage to the target since it'll be the second bounce
-	local first = false
-	if caster:GetOwner():GetClassname() == "player" then
-		local unit_ability = caster:FindAbilityByName("luna_moon_glaive_datadriven")
-
-		ability.damage = caster:GetAverageTrueAttackDamage()
-		ability.bounceTable = {}
-		ability.bounceCount = 1
-		ability.maxBounces = unit_ability:GetLevelSpecialValueFor("bounces", unit_ability:GetLevel() - 1)
-		ability.bounceRange = unit_ability:GetLevelSpecialValueFor("range", unit_ability:GetLevel() - 1)
-		ability.dmgMultiplier = unit_ability:GetLevelSpecialValueFor("damage_reduction_percent", unit_ability:GetLevel() - 1) / 100
-
-		ability.particle_name, ability.projectile_speed = findProjectileInfo(caster:GetClassname())
-		first = true
-	else
-		local damageTable = {
-						victim = ability.projectileTo,
-						attacker = caster:GetOwner(),
-						damage = ability.damage * (1 - ability.dmgMultiplier),
-						damage_type = DAMAGE_TYPE_PHYSICAL} -- change to physical
-		ApplyDamage(damageTable)
-
-		ability.damage = ability.damage * (1 - ability.dmgMultiplier)
-	end
-
-	if ability.bounceCount > ability.maxBounces then
-		killDummy(caster, target)
-		return
-	end
-
-	local unitsNearTarget = FindUnitsInRadius(target:GetTeamNumber(),
-                            target:GetAbsOrigin(),
-                            nil,
-                            ability.bounceRange,
-                            DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-                            DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_MECHANICAL + DOTA_UNIT_TARGET_BUILDING,
-                            DOTA_UNIT_TARGET_FLAG_NONE,
-                            FIND_CLOSEST,
-                            false)
-
-	local lastTarget = ability.projectileFrom
-
-	ability.projectileFrom = nil
-	ability.projectileTo = nil
-
-	-- find closest target, the first unit is always the projectileFrom
-	-- the projectileTo will be with closest unit that wasn't the last unit (unless no others exist)
-	-- this logic is a bit different from the base luna
-	for k,v in pairs(unitsNearTarget) do
-		if ability.projectileFrom == nil then
-			ability.projectileFrom = v
-		else
-			ability.projectileTo = v
-			if v ~= lastTarget then
-				ability.projectileTo = v
-				break
-			end
+	-- It has to be a target different from the current one
+	for _,v in pairs(bounce_targets) do
+		if v ~= target then
+			dummy_ability.projectileTo = v
+			break
 		end
 	end
 
-	if ability.projectileTo == nil then
-		killDummy(caster, target)
+	-- If we didnt find a new target then kill the dummy and end the function
+	if dummy_ability.projectileTo == nil then
+		killDummy(dummy, dummy)
+	else
+	-- Otherwise continue with creating a bounce projectile
+		dummy_ability.bounceCount = dummy_ability.bounceCount + 1
+		local info = {
+        Target = dummy_ability.projectileTo,
+        Source = dummy_ability.projectileFrom,
+        EffectName = dummy_ability.particle_name,
+        Ability = dummy_ability,
+        bDodgeable = false,
+        bProvidesVision = false,
+        iMoveSpeed = dummy_ability.projectile_speed,
+        iSourceAttachment = target:GetAttachmentOrigin(target:ScriptLookupAttachment("attach_hitloc"))
+    	}
+    	ProjectileManager:CreateTrackingProjectile( info )
+    end
+end
+
+--[[Author: Pizzalol
+	Date: 29.09.2015.
+	Creates bounce projectiles to the nearest target if there is any]]
+function moon_glaive_bounce( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+
+	-- Initialize the damage table
+	local damage_table = {}
+	damage_table.attacker = caster:GetOwner()
+	damage_table.victim = target
+	damage_table.ability = ability.original_ability
+	damage_table.damage_type = DAMAGE_TYPE_PHYSICAL
+	damage_table.damage = ability.damage * (1 - ability.dmgMultiplier)
+
+	ApplyDamage(damage_table)
+	-- Save the new damage for future bounces
+	ability.damage = damage_table.damage
+
+	-- If we exceeded the bounce limit then remove the dummy and stop the function
+	if ability.bounceCount >= ability.maxBounces then
+		killDummy(caster,caster)
 		return
 	end
 
-	-- increment the bounceTable which keeps track of which targets have been hit, i currently
-	-- don't use it but if someone wants to go back and fix the bounce logic then it's here
-	ability.bounceTable[ability.projectileTo] = ((ability.bounceTable[ability.projectileTo] or 0) + 1)
-	ability.bounceCount = ability.bounceCount + 1
+	-- Reset target data and find new targets
+	ability.projectileFrom = ability.projectileTo
+	ability.projectileTo = nil
 
-    local info = {
+	local iTeam = DOTA_UNIT_TARGET_TEAM_ENEMY
+	local iType = DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING + DOTA_UNIT_TARGET_MECHANICAL
+	local iFlag = DOTA_UNIT_TARGET_FLAG_NONE
+	local bounce_targets = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, ability.bounceRange, iTeam, iType, iFlag, FIND_CLOSEST, false)
+
+	-- Find a new target that is not the current one
+	for _,v in pairs(bounce_targets) do
+		if v ~= target then
+			ability.projectileTo = v
+			break
+		end
+	end
+
+	-- If we didnt find a new target then kill the dummy
+	if ability.projectileTo == nil then
+		killDummy(caster, caster)
+	else
+	-- Otherwise increase the bounce count and create a new bounce projectile
+		ability.bounceCount = ability.bounceCount + 1
+		local info = {
         Target = ability.projectileTo,
         Source = ability.projectileFrom,
         EffectName = ability.particle_name,
         Ability = ability,
         bDodgeable = false,
-        bProvidesVision = true,
+        bProvidesVision = false,
         iMoveSpeed = ability.projectile_speed,
-        iVisionRadius = 0,
-        iVisionTeamNumber = target:GetTeamNumber(),
-        iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
-    }
-    ProjectileManager:CreateTrackingProjectile( info )
+        iSourceAttachment = target:GetAttachmentOrigin(target:ScriptLookupAttachment("attach_hitloc"))
+    	}
+    	ProjectileManager:CreateTrackingProjectile( info )
+    end
 end
 
 function killDummy(caster, target)
