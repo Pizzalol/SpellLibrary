@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"venomancer_venomous_gale_datadriven"
+	"Ability1"	"windrunner_shackleshot_datadriven"
 	"Ability2"	"windrunner_powershot_datadriven"
-	"Ability3"	"venomancer_plague_ward_datadriven"
-	"Ability4"	"venomancer_poison_nova_datadriven"
+	"Ability3"	"windrunner_windrun_datadriven"
+	"Ability4"	"windrunner_focusfire_datadriven"
 }

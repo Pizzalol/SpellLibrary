@@ -59211,9 +59211,8 @@
 	}
 	// Rewrite of the Venomancer Poison Nova ability
 	// Author: Pizzalol
-	// Date: 26.12.2014.
+	// Date: 30.09.2015.
 	// NOTE: Doesnt travel as an expanding circle around the hero but instead acts as an instant AOE ability
-	// NOTE2: Poison Nova launch particle doesnt work
 	"venomancer_poison_nova_datadriven"
 	{
 		// General
@@ -61169,9 +61168,9 @@
 		"AbilityManaCost"				"150 75 0"			
 	}
 	
-	// CHANGELIST:
-	// 09.01.2015 - Change focusfire_on_attack_start to focusfire_on_attack_landed to reduce redundancy
-	
+	// Rewrite of the Windrunner Focusfire
+	// Author: kritth
+	// Date: 01.10.2015.
 	"windrunner_focusfire_datadriven"
 	{
 		// General
@@ -61244,6 +61243,7 @@
 			{
 				"Target"						"CASTER"
 				"ModifierName"					"modifier_focusfire_caster_datadriven"
+				"Duration"						"%AbilityDuration"
 			}
 			
 			"RunScript"
@@ -61259,7 +61259,6 @@
 			{
 				"IsHidden"			"0"
 				"IsPurgable"		"0"
-				"Duration"			"%AbilityDuration"
 			
 				// when attack start, remove attackspeed
 				"OnAttackStart"
@@ -61320,6 +61319,9 @@
 			}
 		}
 	}
+	// Rewrite of the Windrunner Powershot
+	// Author: kritth, Pizzalol
+	// Date: 01.10.2015.
 	"windrunner_powershot_datadriven"
 	{
 		// General
@@ -61423,24 +61425,25 @@
 		
 		"OnSpellStart"
 		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Ability.PowershotPull"
+			}
+	
 			// Reset speed and damage variables and set timer for channel
 			"RunScript"
 			{
 				"ScriptFile"			"heroes/hero_windrunner/powershot.lua"
 				"Function"				"powershot_initialize"
+				"Target"				"POINT"
 			}
 			
 			"ApplyModifier"
 			{
 				"Target"				"CASTER"
 				"ModifierName"			"modifier_powershot_charge_datadriven"
-			}
-			
-			"FireSound"
-			{
-				"Target"				"CASTER"
-				"EffectName"			"Ability.PowershotPull"
-			}
+			}		
 		}
 		
 		"OnChannelFinish"
@@ -61453,7 +61456,6 @@
 			
 			"RunScript"
 			{
-				"Target"				"POINT"
 				"ScriptFile"			"heroes/hero_windrunner/powershot.lua"
 				"Function"				"powershot_start_traverse"
 			}
@@ -61493,28 +61495,6 @@
 						"ScriptFile"	"heroes/hero_windrunner/powershot.lua"
 						"Function"		"powershot_charge"
 					}
-				}
-			}
-			
-			// For destroying tree
-			"modifier_powershot_dummy_datadriven"
-			{
-				"OnCreated"
-				{
-					"DestroyTrees"
-					{
-						"Target"		"TARGET"
-						"Radius"		"%tree_width * 2"			// I feel 75 is way too small and it shouldn't be right
-					}
-				}
-			
-				"States"
-				{
-					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -61642,7 +61622,7 @@
 	
 	// Rewrite of the Windrunner Windrun ability
 	// Author: kritth
-	// NOTE: Need to find the proper sound. It doesn't seem to fire.
+	// Date: 01.10.2015.
 	"windrunner_windrun_datadriven"
 	{
 		// General

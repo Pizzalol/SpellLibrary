@@ -1,3 +1,6 @@
+// Rewrite of the Windrunner Powershot
+// Author: kritth, Pizzalol
+// Date: 01.10.2015.
 "windrunner_powershot_datadriven"
 {
 	// General
@@ -101,24 +104,25 @@
 	
 	"OnSpellStart"
 	{
+		"FireSound"
+		{
+			"Target"				"CASTER"
+			"EffectName"			"Ability.PowershotPull"
+		}
+
 		// Reset speed and damage variables and set timer for channel
 		"RunScript"
 		{
 			"ScriptFile"			"heroes/hero_windrunner/powershot.lua"
 			"Function"				"powershot_initialize"
+			"Target"				"POINT"
 		}
 		
 		"ApplyModifier"
 		{
 			"Target"				"CASTER"
 			"ModifierName"			"modifier_powershot_charge_datadriven"
-		}
-		
-		"FireSound"
-		{
-			"Target"				"CASTER"
-			"EffectName"			"Ability.PowershotPull"
-		}
+		}		
 	}
 	
 	"OnChannelFinish"
@@ -131,7 +135,6 @@
 		
 		"RunScript"
 		{
-			"Target"				"POINT"
 			"ScriptFile"			"heroes/hero_windrunner/powershot.lua"
 			"Function"				"powershot_start_traverse"
 		}
@@ -171,28 +174,6 @@
 					"ScriptFile"	"heroes/hero_windrunner/powershot.lua"
 					"Function"		"powershot_charge"
 				}
-			}
-		}
-		
-		// For destroying tree
-		"modifier_powershot_dummy_datadriven"
-		{
-			"OnCreated"
-			{
-				"DestroyTrees"
-				{
-					"Target"		"TARGET"
-					"Radius"		"%tree_width * 2"			// I feel 75 is way too small and it shouldn't be right
-				}
-			}
-		
-			"States"
-			{
-				"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
-				"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
 			}
 		}
 	}

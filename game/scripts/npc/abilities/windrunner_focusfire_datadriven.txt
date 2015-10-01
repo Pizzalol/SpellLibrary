@@ -1,6 +1,6 @@
-// CHANGELIST:
-// 09.01.2015 - Change focusfire_on_attack_start to focusfire_on_attack_landed to reduce redundancy
-
+// Rewrite of the Windrunner Focusfire
+// Author: kritth
+// Date: 01.10.2015.
 "windrunner_focusfire_datadriven"
 {
 	// General
@@ -73,6 +73,7 @@
 		{
 			"Target"						"CASTER"
 			"ModifierName"					"modifier_focusfire_caster_datadriven"
+			"Duration"						"%AbilityDuration"
 		}
 		
 		"RunScript"
@@ -88,7 +89,6 @@
 		{
 			"IsHidden"			"0"
 			"IsPurgable"		"0"
-			"Duration"			"%AbilityDuration"
 		
 			// when attack start, remove attackspeed
 			"OnAttackStart"

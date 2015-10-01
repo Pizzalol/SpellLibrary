@@ -1,8 +1,7 @@
 // Rewrite of the Venomancer Poison Nova ability
 // Author: Pizzalol
-// Date: 26.12.2014.
+// Date: 30.09.2015.
 // NOTE: Doesnt travel as an expanding circle around the hero but instead acts as an instant AOE ability
-// NOTE2: Poison Nova launch particle doesnt work
 "venomancer_poison_nova_datadriven"
 {
 	// General
