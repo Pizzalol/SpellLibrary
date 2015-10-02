@@ -1,8 +1,16 @@
 // Rewrite of Alchemist Unstable Concoction Throw (Sub-Ability)
 // Author: Noya
-// Date: 10.1.2015.
-// Notes: Used together with "alchemist_unstable_concoction_datadriven", hero needs both abilities (this one starts hidden)
-"alchemist_unstable_concoction_throw_datadriven"
+// Date: 10.01.2015.
+// Version: 6.83
+// Type: Datadriven
+//
+// ----- FILES REQUIRED -----
+// Script files:
+// scripts/vscripts/heroes/hero_alchemist/unstable_concoction.lua
+//
+// KV files:
+// scripts/npc/abilities/alchemist/unstable_concoction_datadriven.txt
+"unstable_concoction_throw_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -107,7 +115,7 @@
 		{
 			"ScriptFile"			"heroes/hero_alchemist/unstable_concoction.lua"
 			"Function"				"EndBrewing"
-			"main_ability_name"		"alchemist_unstable_concoction_datadriven"
+			"main_ability_name"		"unstable_concoction_datadriven"
 		}
 	}
 
@@ -157,7 +165,7 @@
 		{
 			"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
 			"Function"		"LevelUpAbility"
-			"ability_name"	"alchemist_unstable_concoction_datadriven"
+			"ability_name"	"unstable_concoction_datadriven"
 		}
 	}
 

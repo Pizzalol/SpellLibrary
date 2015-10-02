@@ -352,689 +352,6 @@
 				}
 			}
 		}
-	// Rewrite of Alchemist Acid Spray
-	// Author: Noya
-	// Date: 9.1.2015.
-	// Notes: Particle color is a bit different from the original (less Alpha?)
-	"alchemist_acid_spray_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityTextureName"			"alchemist_acid_spray"
-		"AOERadius"						"625"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.2"
-		"AbilityCastRange"				"900"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22.0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"130 140 150 160"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"625"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"16.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"12 16 20 24"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"-4 -5 -6 -7"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_rate"				"1.0"
-			}
-		}
-	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
-			"particle"  "particles/units/heroes/hero_alchemist/alchemist_acid_spray.vpcf"
-		}
-	
-		"OnSpellStart"
-		{
-		 	"CreateThinker"
-		 	{
-		 		"ModifierName"	"modifier_acid_spray_thinker"
-		 		"Target" 		"POINT"
-		 	}
-		} 
-	
-		"Modifiers"
-		{
-			"modifier_acid_spray_thinker"
-			{
-				"Aura"					"modifier_acid_spray"
-				"Aura_Radius"			"%radius"
-				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
-				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				"Duration"				"%duration"
-	
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_alchemist/acid_spray.lua"
-						"Function"		"AcidSpraySound"
-					}
-	
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_alchemist/alchemist_acid_spray.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"TARGET"
-						"ControlPoints"
-						{
-							"00" "0 0 0"
-							"01" "%radius 1 1"
-							"15" "25 150 25"
-							"16" "0 0 0"
-						}
-					}
-				}
-			}
-	
-			"modifier_acid_spray"
-			{
-				"IsDebuff"		"1"
-				"ThinkInterval"	"%tick_rate"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_reduction"
-				}
-				"OnIntervalThink"
-				{
-					"FireSound"
-					{
-						"EffectName" 	"Hero_Alchemist.AcidSpray.Damage"
-						"Target"		"TARGET"
-					}
-					"Damage"
-					{
-						"Target"		 "TARGET"
-						"Type"			 "DAMAGE_TYPE_PHYSICAL"
-						"Damage"		 "%damage"
-					}
-				}
-			}
-	
-		}
-	
-	}
-	
-	// Rewrite of Alchemist Chemical Rage
-	// Author: Noya
-	// Date: 9.1.2015.
-	// Notes: Didn't add the obnoxious "Hero_Alchemist.ChemicalRage" looping sound. 
-	//		  Neither the attack sounds, as they overlap with the original weapon sounds.
-	"alchemist_chemical_rage_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"alchemist_chemical_rage"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"45.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50 100 150"
-	
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"25.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"transformation_time"	"0.35"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"base_attack_time"		"1.4 1.2 1.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"50 75 100"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"3.0 7.5 12.0"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"30 40 60"
-			}
-		}
-	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
-			"particle"	"particles/status_fx/status_effect_chemical_rage.vpcf"
-			"particle"	"particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Alchemist.ChemicalRage.Cast"
-				"Target"		"CASTER"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_chemical_rage_transform"
-				"Target"		"CASTER"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_chemical_rage_transform"
-			{
-				"IsBuff"	"1"
-				"IsHidden"	"1"
-				"Duration"	"%transformation_time"
-	
-				"OnCreated"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_invulnerable"
-						"Target"		"CASTER"
-						"Duration"		"0.03"
-					}
-				}
-				
-				"OnDestroy"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_chemical_rage"
-						"Target" 		"CASTER"
-					}
-				}
-			}
-	
-			"modifier_chemical_rage"
-			{
-				"IsBuff"	"1"
-				"Duration"	"%duration"
-	
-				"EffectName"		"particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				"StatusEffectName"	"particles/status_fx/status_effect_chemical_rage.vpcf"
-				"StatusEffectPriority"	"5"
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"	"%base_attack_time"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
-					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"			"%bonus_mana_regen"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movespeed"
-				}
-			}
-		}
-	}
-	
-	// Rewrite of Alchemist Greevils Greed
-	// Author: Noya
-	// Date: 9.1.2015.
-	// Notes: 
-	"alchemist_goblins_greed_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"alchemist_goblins_greed"
-	
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"25"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"4 6 8 10"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_bonus_gold"		"1 2 3 4"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_gold_cap"		"30"
-			}
-		}
-	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
-			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"
-			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_msg_gold.vpcf"
-		}
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_alchemist/goblins_greed.lua"
-				"Function"		"GoblinsGreedBaseBonus"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_goblins_greed"
-			{
-				"Passive"	"1"
-				"IsHidden"	"0"
-	
-				"OnKill"
-				{
-				    "RunScript"
-					{
-						"ScriptFile"	"heroes/hero_alchemist/goblins_greed.lua"
-						"Function"		"GoblinsGreed"
-					}
-			    }
-			}
-		}
-		
-	}
-	
-	// Rewrite of Alchemist Unstable Concoction
-	// Author: Noya
-	// Date: 10.1.2015.
-	// Notes: Used together with "alchemist_unstable_concoction_throw_datadriven"
-	"alchemist_unstable_concoction_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"alchemist_unstable_concoction"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16.0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"120"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"brew_time"					"5.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"brew_explosion"			"5.5"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"min_stun"					"0.25"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"max_stun"					"1.75 2.5 3.25 4.0"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"min_damage"				"0"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_damage"				"150 220 290 360"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"175"
-			}
-		}
-	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
-			"particle"	"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_timer.vpcf"
-	
-			// This particle isn't used because it would need a separate rule to attach to the hands or weapons for each hero
-			// CP1 and CP2 are left and right hands respectively
-			"particle"  "particles/units/heroes/hero_alchemist/alchemist_unstableconc_bottles.vpcf" 
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"heroes/hero_alchemist/unstable_concoction.lua"
-				"Function"				"StartBrewing"
-				"sub_ability_name"		"alchemist_unstable_concoction_throw_datadriven"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_unstable_concoction_brewing"
-				"Target"		"CASTER"
-			}
-		}
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-				"Function"		"LevelUpAbility"
-				"ability_name"	"alchemist_unstable_concoction_throw_datadriven"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_unstable_concoction_brewing"
-			{
-				"IsHidden"			"1"
-				"Duration"			"%brew_explosion"
-				"ThinkInterval"		"0.5"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-						"Function"		"UpdateTimerParticle"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"heroes/hero_alchemist/unstable_concoction.lua"
-						"Function"				"CheckSelfStun"
-						"sub_ability_name"		"alchemist_unstable_concoction_throw_datadriven"
-						"Target"
-				        {
-				        	"Center"  		"CASTER"
-				        	"Radius" 		"%radius"
-				        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				        	"Types" 		"DOTA_UNIT_TARGET_HERO"
-				        }
-					}
-				}
-			}
-	
-			"modifier_unstable_concoction_stun"
-			{
-				"IsDebuff"	"1"
-	
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-				"OverrideAnimation"	"ACT_DOTA_DISABLED"
-				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-				"EffectAttachType"	"follow_overhead"
-			}
-		}
-	}
-	
-	// Rewrite of Alchemist Unstable Concoction Throw (Sub-Ability)
-	// Author: Noya
-	// Date: 10.1.2015.
-	// Notes: Used together with "alchemist_unstable_concoction_datadriven", hero needs both abilities (this one starts hidden)
-	"alchemist_unstable_concoction_throw_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"			"alchemist_unstable_concoction_throw"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"775"
-		"AbilityCastPoint"				"0.2"
-		"AoERadius"                 	"%midair_explosion_radius"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportBonus"	"120"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"brew_time"					"5.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"min_stun"					"0.25"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"max_stun"					"1.75 2.5 3.25 4.0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"min_damage"				"0"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_damage"				"150 220 290 360"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_speed"			"900"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"vision_range"				"400"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"midair_explosion_radius"	"175"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"brew_explosion"			"7.0"
-			}
-		}
-	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
-			"particle"	"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf"
-			"particle"	"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_explosion.vpcf"
-			"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
-		}
-	
-		"OnSpellStart"
-		{
-			"TrackingProjectile"
-	        {
-	            "Target"			"TARGET"
-	            "EffectName"        "particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf"
-	            "Dodgeable"         "0"
-	            "ProvidesVision"    "1"
-	            "VisionRadius"      "%vision_range"
-	            "MoveSpeed"         "%movement_speed"
-	            "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
-	        }
-	
-	        "FireSound"
-	        {
-	        	"EffectName"		"Hero_Alchemist.UnstableConcoction.Throw"
-	        	"Target"			"CASTER"
-	        }
-	
-	        "RunScript"
-			{
-				"ScriptFile"			"heroes/hero_alchemist/unstable_concoction.lua"
-				"Function"				"EndBrewing"
-				"main_ability_name"		"alchemist_unstable_concoction_datadriven"
-			}
-		}
-	
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"	"1"
-	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Alchemist.UnstableConcoction.Stun"
-				"Target" 		"TARGET"
-			}
-	
-			"FireEffect"
-			{
-				"EffectName"		"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_explosion.vpcf"
-				"EffectAttachType" 	"attach_hitloc"
-				"Target" 			"TARGET"
-	
-				//This is required for the explosion to actually attach on the projectile hit location
-				"ControlPointEntities"
-				{
-					"TARGET"	"attach_hitloc"	
-					"TARGET"	"attach_hitloc"
-					"TARGET"	"attach_hitloc"
-					"TARGET"	"attach_hitloc"
-				}			
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-				"Function"		"ConcoctionHit"
-				"Target"
-		        {
-		        	"Center"  		"TARGET"
-		        	"Radius" 		"%midair_explosion_radius"
-		        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		        	"Types" 		"DOTA_UNIT_TARGET_HERO"
-		        }
-			}
-		}
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
-				"Function"		"LevelUpAbility"
-				"ability_name"	"alchemist_unstable_concoction_datadriven"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_unstable_concoction_stun"
-			{
-				"IsDebuff"	"1"
-	
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-				"OverrideAnimation"	"ACT_DOTA_DISABLED"
-				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-				"EffectAttachType"	"follow_overhead"
-			}
-		}
-	}
-	
 	"alpha_wolf_command_aura_datadriven"
 	{
 		// General
@@ -63718,6 +63035,715 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
 				}
+			}
+		}
+	}
+	
+	// Rewrite of Alchemist Acid Spray
+	// Author: Noya
+	// Date: 09.01.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILES REQUIRED -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_alchemist/acid_spray.lua
+	"acid_spray_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"alchemist_acid_spray"
+		"AOERadius"						"625"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"				"900"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"22.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"130 140 150 160"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"625"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"16.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"15 20 25 30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_reduction"		"-4 -5 -6 -7"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_rate"				"1.0"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"particle"  "particles/units/heroes/hero_alchemist/alchemist_acid_spray.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+		 	"CreateThinker"
+		 	{
+		 		"ModifierName"	"modifier_acid_spray_thinker"
+		 		"Target" 		"POINT"
+		 	}
+		} 
+	
+		"Modifiers"
+		{
+			"modifier_acid_spray_thinker"
+			{
+				"Aura"					"modifier_acid_spray"
+				"Aura_Radius"			"%radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Duration"				"%duration"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_alchemist/acid_spray.lua"
+						"Function"		"AcidSpraySound"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_alchemist/alchemist_acid_spray.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+						"ControlPoints"
+						{
+							"00" "0 0 0"
+							"01" "%radius 1 1"
+							"15" "25 150 25"
+							"16" "0 0 0"
+						}
+					}
+				}
+			}
+	
+			"modifier_acid_spray"
+			{
+				"IsDebuff"		"1"
+				"ThinkInterval"	"%tick_rate"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_reduction"
+				}
+				"OnIntervalThink"
+				{
+					"FireSound"
+					{
+						"EffectName" 	"Hero_Alchemist.AcidSpray.Damage"
+						"Target"		"TARGET"
+					}
+					"Damage"
+					{
+						"Target"		 "TARGET"
+						"Type"			 "DAMAGE_TYPE_PHYSICAL"
+						"Damage"		 "%damage"
+					}
+				}
+			}
+		}
+	}
+	
+	// Rewrite of Alchemist Chemical Rage
+	// Author: Noya
+	// Date: 09.01.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	// Notes: Didn't add the obnoxious "Hero_Alchemist.ChemicalRage" looping sound. 
+	//		  Neither the attack sounds, as they overlap with the original weapon sounds.
+	"chemical_rage_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"alchemist_chemical_rage"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"45.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 100 150"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"25.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"0.35"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"base_attack_time"		"1.4 1.2 1.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"50 75 100"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"3.0 7.5 12.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"30 40 60"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"particle"	"particles/status_fx/status_effect_chemical_rage.vpcf"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Alchemist.ChemicalRage.Cast"
+				"Target"		"CASTER"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_chemical_rage_transform"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_chemical_rage_transform"
+			{
+				"IsBuff"	"1"
+				"IsHidden"	"1"
+				"Duration"	"%transformation_time"
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_invulnerable"
+						"Target"		"CASTER"
+						"Duration"		"0.03"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_chemical_rage"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+	
+			"modifier_chemical_rage"
+			{
+				"IsBuff"	"1"
+				"Duration"	"%duration"
+	
+				"EffectName"		"particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"StatusEffectName"	"particles/status_fx/status_effect_chemical_rage.vpcf"
+				"StatusEffectPriority"	"5"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"	"%base_attack_time"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"			"%bonus_mana_regen"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movespeed"
+				}
+			}
+		}
+	}
+	
+	// Rewrite of Alchemist Greevils Greed
+	// Author: Noya
+	// Date: 09.01.2015.
+	// Version: 6.82
+	// Type: Datadriven
+	//
+	// ----- FILES REQUIRED -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_alchemist/goblins_greed.lua 
+	"goblins_greed_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"alchemist_goblins_greed"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"25"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_gold"			"4 6 8 10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_bonus_gold"		"1 2 3 4"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_gold_cap"		"30"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_msg_gold.vpcf"
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_alchemist/goblins_greed.lua"
+				"Function"		"GoblinsGreedBaseBonus"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_goblins_greed"
+			{
+				"Passive"	"1"
+				"IsHidden"	"0"
+	
+				"OnKill"
+				{
+				    "RunScript"
+					{
+						"ScriptFile"	"heroes/hero_alchemist/goblins_greed.lua"
+						"Function"		"GoblinsGreed"
+					}
+			    }
+			}
+		}
+		
+	}
+	
+	// Rewrite of Alchemist Unstable Concoction
+	// Author: Noya
+	// Date: 10.01.2015.
+	// Version: 6.83
+	// Type: Datadriven
+	//
+	// ----- FILES REQUIRED -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_alchemist/unstable_concoction.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/alchemist/unstable_concoction_throw_datadriven.txt
+	"unstable_concoction_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"alchemist_unstable_concoction"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"120"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"brew_time"					"5.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"brew_explosion"			"5.5"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"min_stun"					"0.25"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"max_stun"					"1.75 2.5 3.25 4.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_damage"				"0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_damage"				"150 220 290 360"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"175"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_timer.vpcf"
+	
+			// This particle isn't used because it would need a separate rule to attach to the hands or weapons for each hero
+			// CP1 and CP2 are left and right hands respectively
+			"particle"  "particles/units/heroes/hero_alchemist/alchemist_unstableconc_bottles.vpcf" 
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_alchemist/unstable_concoction.lua"
+				"Function"				"StartBrewing"
+				"sub_ability_name"		"unstable_concoction_throw_datadriven"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_unstable_concoction_brewing"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"unstable_concoction_throw_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_unstable_concoction_brewing"
+			{
+				"IsHidden"			"1"
+				"Duration"			"%brew_explosion"
+				"ThinkInterval"		"0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
+						"Function"		"UpdateTimerParticle"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_alchemist/unstable_concoction.lua"
+						"Function"				"CheckSelfStun"
+						"sub_ability_name"		"unstable_concoction_throw_datadriven"
+						"Target"
+				        {
+				        	"Center"  		"CASTER"
+				        	"Radius" 		"%radius"
+				        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				        	"Types" 		"DOTA_UNIT_TARGET_HERO"
+				        }
+					}
+				}
+			}
+	
+			"modifier_unstable_concoction_stun"
+			{
+				"IsDebuff"	"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+			}
+		}
+	}
+	
+	// Rewrite of Alchemist Unstable Concoction Throw (Sub-Ability)
+	// Author: Noya
+	// Date: 10.01.2015.
+	// Version: 6.83
+	// Type: Datadriven
+	//
+	// ----- FILES REQUIRED -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_alchemist/unstable_concoction.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/alchemist/unstable_concoction_datadriven.txt
+	"unstable_concoction_throw_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"alchemist_unstable_concoction_throw"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"775"
+		"AbilityCastPoint"				"0.2"
+		"AoERadius"                 	"%midair_explosion_radius"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportBonus"	"120"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"brew_time"					"5.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"min_stun"					"0.25"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"max_stun"					"1.75 2.5 3.25 4.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_damage"				"0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_damage"				"150 220 290 360"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed"			"900"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vision_range"				"400"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"midair_explosion_radius"	"175"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"brew_explosion"			"7.0"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_explosion.vpcf"
+			"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+	        {
+	            "Target"			"TARGET"
+	            "EffectName"        "particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf"
+	            "Dodgeable"         "0"
+	            "ProvidesVision"    "1"
+	            "VisionRadius"      "%vision_range"
+	            "MoveSpeed"         "%movement_speed"
+	            "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+	        }
+	
+	        "FireSound"
+	        {
+	        	"EffectName"		"Hero_Alchemist.UnstableConcoction.Throw"
+	        	"Target"			"CASTER"
+	        }
+	
+	        "RunScript"
+			{
+				"ScriptFile"			"heroes/hero_alchemist/unstable_concoction.lua"
+				"Function"				"EndBrewing"
+				"main_ability_name"		"unstable_concoction_datadriven"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"1"
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Alchemist.UnstableConcoction.Stun"
+				"Target" 		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_explosion.vpcf"
+				"EffectAttachType" 	"attach_hitloc"
+				"Target" 			"TARGET"
+	
+				//This is required for the explosion to actually attach on the projectile hit location
+				"ControlPointEntities"
+				{
+					"TARGET"	"attach_hitloc"	
+					"TARGET"	"attach_hitloc"
+					"TARGET"	"attach_hitloc"
+					"TARGET"	"attach_hitloc"
+				}			
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
+				"Function"		"ConcoctionHit"
+				"Target"
+		        {
+		        	"Center"  		"TARGET"
+		        	"Radius" 		"%midair_explosion_radius"
+		        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		        	"Types" 		"DOTA_UNIT_TARGET_HERO"
+		        }
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_alchemist/unstable_concoction.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"unstable_concoction_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_unstable_concoction_stun"
+			{
+				"IsDebuff"	"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
 			}
 		}
 	}

@@ -168,7 +168,7 @@ function ConcoctionHit( event )
 	local ability = event.ability
 	local heroes_around = event.target_entities
 	local brew_time = ability:GetLevelSpecialValueFor( "brew_time", ability:GetLevel() - 1 )
-	local mainAbility = caster:FindAbilityByName("alchemist_unstable_concoction_datadriven")
+	local mainAbility = caster:FindAbilityByName("unstable_concoction_datadriven")
 	local mainAbilityDamageType = mainAbility:GetAbilityDamageType()
 	local min_stun = ability:GetLevelSpecialValueFor( "min_stun", ability:GetLevel() - 1 )
 	local max_stun = ability:GetLevelSpecialValueFor( "max_stun", ability:GetLevel() - 1 )

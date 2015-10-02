@@ -1,8 +1,13 @@
 // Rewrite of Alchemist Acid Spray
 // Author: Noya
-// Date: 9.1.2015.
-// Notes: Particle color is a bit different from the original (less Alpha?)
-"alchemist_acid_spray_datadriven"
+// Date: 09.01.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILES REQUIRED -----
+// Script files:
+// scripts/vscripts/heroes/hero_alchemist/acid_spray.lua
+"acid_spray_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -43,7 +48,7 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"damage"				"12 16 20 24"
+			"damage"				"15 20 25 30"
 		}
 		"04"
 		{
@@ -130,8 +135,6 @@
 				}
 			}
 		}
-
 	}
-
 }
 

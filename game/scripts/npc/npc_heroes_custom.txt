@@ -15,9 +15,10 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"death_coil_datadriven"
-		"Ability2"	"aphotic_shield_datadriven"
-		"Ability3"	"frostmourne_datadriven"
-		"Ability4"	"borrowed_time_datadriven"
+		"Ability1"	"acid_spray_datadriven"
+		"Ability2"	"unstable_concoction_datadriven"
+		"Ability3"	"goblins_greed_datadriven"
+		"Ability4"	"chemical_rage_datadriven"
+		"Ability5"	"unstable_concoction_throw_datadriven"
 	}
 }

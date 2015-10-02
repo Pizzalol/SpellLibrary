@@ -1,8 +1,13 @@
 // Rewrite of Alchemist Greevils Greed
 // Author: Noya
-// Date: 9.1.2015.
-// Notes: 
-"alchemist_goblins_greed_datadriven"
+// Date: 09.01.2015.
+// Version: 6.82
+// Type: Datadriven
+//
+// ----- FILES REQUIRED -----
+// Script files:
+// scripts/vscripts/heroes/hero_alchemist/goblins_greed.lua 
+"goblins_greed_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
