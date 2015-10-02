@@ -1,8 +1,6 @@
 // Rewrite of the Windrunner Shackleshot ability
-// Author: jacklarnes
-// Date: 15.04.2015.
-// NOTE: Lacks the ability to latch to tress
-// NOTE2: The latch particle is difficult to figure out
+// Author: jacklarnes, Pizzalol
+// Date: 02.10.2015.
 "windrunner_shackleshot_datadriven"
 {
 	// General
