@@ -15,9 +15,9 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"windrunner_shackleshot_datadriven"
-		"Ability2"	"windrunner_powershot_datadriven"
-		"Ability3"	"windrunner_windrun_datadriven"
-		"Ability4"	"windrunner_focusfire_datadriven"
+		"Ability1"	"death_coil_datadriven"
+		"Ability2"	"aphotic_shield_datadriven"
+		"Ability3"	"frostmourne_datadriven"
+		"Ability4"	"borrowed_time_datadriven"
 	}
 }

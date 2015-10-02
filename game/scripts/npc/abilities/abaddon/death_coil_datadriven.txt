@@ -1,8 +1,14 @@
 // Rewrite of Abaddon Death Coil
 // Author: Noya
 // Date: 29.09.2015.
+// Version: 6.85
+// Type: Datadriven
 // Notes: Projectile is only cosmetic, the damage/heal is not tied to it
-"abaddon_death_coil_datadriven"
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_abaddon/death_coil.lua
+"death_coil_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -23,7 +29,7 @@
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"5.0 5.0 5.0 5.0"
+	"AbilityCooldown"				"4.5 4.5 4.5 4.5"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------

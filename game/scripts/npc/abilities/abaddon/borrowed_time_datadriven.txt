@@ -1,9 +1,15 @@
 // Rewrite of Abaddon Borrowed Time
 // Author: Noya
-// Date: 9.1.2015.
+// Date: 09.01.2015.
+// Version: 6.78
+// Type: Datadriven
 // Notes: The damage isn't really prevented, just healed twice so it looks like every damage instance is a heal.
 //	  	  This is not consistent with the Dota 2 mechanics for damage absorb, which has effects like denying lifesteal
-"abaddon_borrowed_time_datadriven"
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_abaddon/borrowed_time.lua
+"borrowed_time_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

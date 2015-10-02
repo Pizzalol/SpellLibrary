@@ -1,475 +1,5 @@
 "DOTAAbilities"
 {
-	// Rewrite of Abaddon Aphotic Shield
-	// Author: Noya
-	// Date: 9.1.2015.
-	// Notes: Strong Dispel mechanic is missing for now
-	"abaddon_aphotic_shield_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"abaddon_aphotic_shield"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
-		"AbilityCastPoint"				"0.452 0.452 0.452 0.452"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0 10.0 8.0 6.0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 105 110 115"
-	
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"15.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_absorb"			"110.0 140.0 170.0 200.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"675"
-			}
-		}
-	
-		"precache"
-		{	
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
-			"particle"  "particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
-			"particle"	"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf"
-			"particle"	"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
-				"Function"		"AphoticShield"
-			}
-	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Abaddon.AphoticShield.Cast"
-				"Target"        "TARGET"  
-			}
-	
-			"RemoveModifier"
-			{
-				"Target" 		"TARGET"
-				"ModifierName"	"modifier_aphotic_shield"
-			}
-	
-			"ApplyModifier"
-			{
-				"Target" 		"TARGET"
-				"ModifierName"	"modifier_aphotic_shield"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_aphotic_shield"
-			{
-				"IsBuff"			"1"
-				"Duration"			"%duration"
-			
-				"ThinkInterval"		"0.03"
-	
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
-						"Function"		"AphoticShieldHealth"
-					}
-				}
-	
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
-						"Function"		"AphoticShieldAbsorb"
-						"DamageTaken"	"%attack_damage"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"AttachEffect"
-					{
-					 	"EffectName"		"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
-					 	"EffectAttachType"	"follow_origin"
-					 	"Target"			"TARGET"
-					 	"ControlPointEntities"
-			            {
-			                "TARGET"    "attach_origin"
-			                "TARGET"    "attach_origin"
-			            }
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
-						"Function"		"EndShieldParticle"
-					}
-	
-					"Damage"
-					{
-						"Target"
-						{
-							"Center"  			"TARGET"
-							"Radius"			"%radius"
-							"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-						"Type"			 "DAMAGE_TYPE_MAGICAL"
-						"Damage"		 "%damage_absorb"
-					}
-				}
-			}
-		}
-	}
-	
-	// Rewrite of Abaddon Borrowed Time
-	// Author: Noya
-	// Date: 9.1.2015.
-	// Notes: The damage isn't really prevented, just healed twice so it looks like every damage instance is a heal.
-	//	  	  This is not consistent with the Dota 2 mechanics for damage absorb, which has effects like denying lifesteal
-	"abaddon_borrowed_time_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"abaddon_borrowed_time"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.452 0.452 0.452"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60.0 50.0 40.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0 0 0"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hp_threshold"				"400"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.0 4.0 5.0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration_scepter"			"5.0 6.0 7.0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"redirect"					"0.35"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"redirect_range_tooltip_scepter"		"900"
-			}
-		}
-	
-		"precache"
-		{	
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
-			"particle"  "particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
-			"particle"	"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
-		}
-	
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target" 		"CASTER"
-				"ModifierName"	"modifier_borrowed_time"
-				"Duration"		"%duration"
-			}
-			
-			"FireSound"
-			{
-				"Target" 		"CASTER"
-				"EffectName"	"Hero_Abaddon.BorrowedTime"	
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_abaddon/borrowed_time.lua"
-				"Function"		"BorrowedTimePurge"
-			}
-			
-		}
-	
-		"Modifiers"
-		{
-			"modifier_borrowed_time_passive"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-	
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_abaddon/borrowed_time.lua"
-						"Function"		"BorrowedTimeActivate"
-					}
-				}
-			}
-	
-			"modifier_borrowed_time"
-			{
-				"IsBuff"			"1"
-	
-				"EffectName"		"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				"StatusEffectName"		"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
-				"StatusEffectPriority"  "15"
-				
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_abaddon/borrowed_time.lua"
-						"Function"		"BorrowedTimeHeal"
-						"DamageTaken"	"%attack_damage"
-					}
-				}
-	
-			}
-		}
-	}
-	
-	// Rewrite of Abaddon Death Coil
-	// Author: Noya
-	// Date: 29.09.2015.
-	// Notes: Projectile is only cosmetic, the damage/heal is not tied to it
-	"abaddon_death_coil_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"abaddon_death_coil"
-		"CastFilterRejectCaster" 		"1"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
-		"AbilityCastPoint"				"0.452 0.452 0.452 0.452"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5.0 5.0 5.0 5.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50 60 70 80"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"1250"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"self_damage"			"75 100 125 150"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"target_damage"			"100 150 200 250"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"100 150 200 250"
-			}
-		}
-	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
-			"particle" 	"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_abaddon/death_coil.lua"
-				"Function"		"DeathCoil"
-			}
-		}
-	}
-	
-	// Rewrite of Abaddon Curse of Avernus
-	// Author: Noya
-	// Date: 9.1.2015.
-	// Notes: This will be placed when attacking every type of units, including team friendly.
-	//		  To control the debuff only placing on enemies, apply the debuff through a lua RunScript
-	"abaddon_frostmourne_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellImmunityType"		"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityTextureName"	"abaddon_frostmourne"
-		
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"debuff_duration"				"2.5"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"buff_duration"					"4.5"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"slow_pct"						"5 10 15 20"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"attack_slow_tooltip"			"5 10 15 20"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"move_speed_pct"				"15"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"attack_speed"					"10 20 30 40"
-			}
-		}
-	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-			"particle"  "particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-		}
-	
-		"Modifiers"
-		{
-			"modifier_frostmourne"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-	
-				"OnAttackLanded"
-				{
-					"ApplyModifier"
-					{
-						"Target"			"TARGET"
-						"ModifierName"		"modifier_frostmourne_debuff"
-					}
-					"ApplyModifier"
-					{
-						"Target"			"CASTER"
-						"ModifierName"		"modifier_frostmourne_buff"
-					}
-				}
-			}
-	
-			"modifier_frostmourne_debuff"
-			{
-				"IsDebuff"	"1"
-				"Duration"	"%debuff_duration"
-				"EffectName"	"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_pct"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
-				}
-				
-				"OnAttacked"
-				{
-					"ApplyModifier"
-					{
-						"Target"			"ATTACKER"
-						"ModifierName"		"modifier_frostmourne_buff"
-					}
-				}
-			}
-	
-			"modifier_frostmourne_buff"
-			{
-				"IsBuff"		"1"
-				"Duration"		"%buff_duration"
-				"EffectName"	"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
-		}
-	}
-	
 	"ability_base_datadriven"
 	{
 		// General
@@ -63696,6 +63226,498 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_scepter"		"440 540 640"
+			}
+		}
+	}
+	
+	// Rewrite of Abaddon Aphotic Shield
+	// Author: Noya
+	// Date: 09.01.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_abaddon/aphotic_shield.lua
+	"aphotic_shield_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"abaddon_aphotic_shield"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.452 0.452 0.452 0.452"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12.0 10.0 8.0 6.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 105 110 115"
+	
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"15.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_absorb"			"110.0 140.0 170.0 200.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"675"
+			}
+		}
+	
+		"precache"
+		{	
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle"  "particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
+			"particle"	"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf"
+			"particle"	"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
+				"Function"		"AphoticShield"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Abaddon.AphoticShield.Cast"
+				"Target"        "TARGET"  
+			}
+	
+			"RemoveModifier"
+			{
+				"Target" 		"TARGET"
+				"ModifierName"	"modifier_aphotic_shield"
+			}
+	
+			"ApplyModifier"
+			{
+				"Target" 		"TARGET"
+				"ModifierName"	"modifier_aphotic_shield"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_aphotic_shield"
+			{
+				"IsBuff"			"1"
+				"Duration"			"%duration"
+			
+				"ThinkInterval"		"0.03"
+	
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
+						"Function"		"AphoticShieldHealth"
+					}
+				}
+	
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
+						"Function"		"AphoticShieldAbsorb"
+						"DamageTaken"	"%attack_damage"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"AttachEffect"
+					{
+					 	"EffectName"		"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
+					 	"EffectAttachType"	"follow_origin"
+					 	"Target"			"TARGET"
+					 	"ControlPointEntities"
+			            {
+			                "TARGET"    "attach_origin"
+			                "TARGET"    "attach_origin"
+			            }
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_abaddon/aphotic_shield.lua"
+						"Function"		"EndShieldParticle"
+					}
+	
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  			"TARGET"
+							"Radius"			"%radius"
+							"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+						"Type"			 "DAMAGE_TYPE_MAGICAL"
+						"Damage"		 "%damage_absorb"
+					}
+				}
+			}
+		}
+	}
+	
+	// Rewrite of Abaddon Borrowed Time
+	// Author: Noya
+	// Date: 09.01.2015.
+	// Version: 6.78
+	// Type: Datadriven
+	// Notes: The damage isn't really prevented, just healed twice so it looks like every damage instance is a heal.
+	//	  	  This is not consistent with the Dota 2 mechanics for damage absorb, which has effects like denying lifesteal
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_abaddon/borrowed_time.lua
+	"borrowed_time_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"abaddon_borrowed_time"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.452 0.452 0.452"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"60.0 50.0 40.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0 0 0"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_threshold"				"400"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.0 4.0 5.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_scepter"			"5.0 6.0 7.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"redirect"					"0.35"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"redirect_range_tooltip_scepter"		"900"
+			}
+		}
+	
+		"precache"
+		{	
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle"  "particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+			"particle"	"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" 		"CASTER"
+				"ModifierName"	"modifier_borrowed_time"
+				"Duration"		"%duration"
+			}
+			
+			"FireSound"
+			{
+				"Target" 		"CASTER"
+				"EffectName"	"Hero_Abaddon.BorrowedTime"	
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_abaddon/borrowed_time.lua"
+				"Function"		"BorrowedTimePurge"
+			}
+			
+		}
+	
+		"Modifiers"
+		{
+			"modifier_borrowed_time_passive"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+	
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_abaddon/borrowed_time.lua"
+						"Function"		"BorrowedTimeActivate"
+					}
+				}
+			}
+	
+			"modifier_borrowed_time"
+			{
+				"IsBuff"			"1"
+	
+				"EffectName"		"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+				"StatusEffectPriority"  "15"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_abaddon/borrowed_time.lua"
+						"Function"		"BorrowedTimeHeal"
+						"DamageTaken"	"%attack_damage"
+					}
+				}
+	
+			}
+		}
+	}
+	
+	// Rewrite of Abaddon Death Coil
+	// Author: Noya
+	// Date: 29.09.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	// Notes: Projectile is only cosmetic, the damage/heal is not tied to it
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_abaddon/death_coil.lua
+	"death_coil_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"abaddon_death_coil"
+		"CastFilterRejectCaster" 		"1"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.452 0.452 0.452 0.452"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"4.5 4.5 4.5 4.5"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 60 70 80"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"1250"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"self_damage"			"75 100 125 150"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"target_damage"			"100 150 200 250"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_amount"			"100 150 200 250"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle" 	"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_abaddon/death_coil.lua"
+				"Function"		"DeathCoil"
+			}
+		}
+	}
+	
+	// Rewrite of Abaddon Curse of Avernus
+	// Author: Noya
+	// Date: 02.10.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	"frostmourne_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"		"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"	"abaddon_frostmourne"
+		
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"debuff_duration"				"2.5"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"buff_duration"					"4.5"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"slow_pct"						"-5 -10 -15 -20"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"attack_slow_tooltip"			"-5 -10 -15 -20"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"move_speed_pct"				"15"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"attack_speed"					"10 20 30 40"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+			"particle"  "particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_frostmourne"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnAttackLanded"
+				{
+					"ApplyModifier"
+					{
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						}
+						"ModifierName"		"modifier_frostmourne_debuff"
+						"Duration"			"%debuff_duration"
+					}
+					"ApplyModifier"
+					{
+						"Target"			"CASTER"
+						"ModifierName"		"modifier_frostmourne_buff"
+						"Duration"			"%buff_duration"
+					}
+				}
+			}
+	
+			"modifier_frostmourne_debuff"
+			{
+				"IsDebuff"	"1"
+				"EffectName"	"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_pct"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
+				}
+				
+				"OnAttacked"
+				{
+					"ApplyModifier"
+					{
+						"Target"			"ATTACKER"
+						"ModifierName"		"modifier_frostmourne_buff"
+						"Duration"			"%buff_duration"
+					}
+				}
+			}
+	
+			"modifier_frostmourne_buff"
+			{
+				"IsBuff"		"1"
+				"EffectName"	"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+				}
 			}
 		}
 	}

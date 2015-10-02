@@ -1,9 +1,9 @@
 // Rewrite of Abaddon Curse of Avernus
 // Author: Noya
-// Date: 9.1.2015.
-// Notes: This will be placed when attacking every type of units, including team friendly.
-//		  To control the debuff only placing on enemies, apply the debuff through a lua RunScript
-"abaddon_frostmourne_datadriven"
+// Date: 02.10.2015.
+// Version: 6.85
+// Type: Datadriven
+"frostmourne_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -30,12 +30,12 @@
 		"03"
 		{
 			"var_type"						"FIELD_INTEGER"
-			"slow_pct"						"5 10 15 20"
+			"slow_pct"						"-5 -10 -15 -20"
 		}
 		"04"
 		{
 			"var_type"						"FIELD_INTEGER"
-			"attack_slow_tooltip"			"5 10 15 20"
+			"attack_slow_tooltip"			"-5 -10 -15 -20"
 		}
 		"05"
 		{
@@ -66,13 +66,19 @@
 			{
 				"ApplyModifier"
 				{
-					"Target"			"TARGET"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					}
 					"ModifierName"		"modifier_frostmourne_debuff"
+					"Duration"			"%debuff_duration"
 				}
 				"ApplyModifier"
 				{
 					"Target"			"CASTER"
 					"ModifierName"		"modifier_frostmourne_buff"
+					"Duration"			"%buff_duration"
 				}
 			}
 		}
@@ -80,7 +86,6 @@
 		"modifier_frostmourne_debuff"
 		{
 			"IsDebuff"	"1"
-			"Duration"	"%debuff_duration"
 			"EffectName"	"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
 			"EffectAttachType"	"follow_origin"
 			"Properties"
@@ -95,6 +100,7 @@
 				{
 					"Target"			"ATTACKER"
 					"ModifierName"		"modifier_frostmourne_buff"
+					"Duration"			"%buff_duration"
 				}
 			}
 		}
@@ -102,7 +108,6 @@
 		"modifier_frostmourne_buff"
 		{
 			"IsBuff"		"1"
-			"Duration"		"%buff_duration"
 			"EffectName"	"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
 			"EffectAttachType"	"follow_origin"
 			"Properties"
