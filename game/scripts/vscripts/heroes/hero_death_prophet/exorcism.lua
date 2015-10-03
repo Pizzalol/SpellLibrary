@@ -113,6 +113,7 @@ function ExorcismPhysics( event )
 
 	-- Find one target point at random which will be used for the first acquisition.
 	local point = caster:GetAbsOrigin() + RandomVector(RandomInt(radius/2, radius))
+	point.z = GetGroundHeight(point,nil)
 
 	-- This is set to repeat on each frame
 	unit:OnPhysicsFrame(function(unit)
@@ -219,6 +220,8 @@ function ExorcismPhysics( event )
 					unit.current_target = nil
 					unit.idling = true
 					point = source + RandomVector(RandomInt(radius/2, radius))
+					point.z = GetGroundHeight(point,nil)
+					
 					--print("Acquiring -> Random Point Target acquired")
 					if Debug then DebugDrawCircle(point, idleColor, 100, 25, true, draw_duration) end
 				end
@@ -229,6 +232,8 @@ function ExorcismPhysics( event )
 				unit.current_target = nil
 				unit.idling = true
 				point = source + RandomVector(RandomInt(radius/2, radius))
+				point.z = GetGroundHeight(point,nil)
+				
 				print("Waiting for attack time. Acquiring -> Random Point Target acquired")
 				if Debug then DebugDrawCircle(point, idleColor, 100, 25, true, draw_duration) end
 			end
