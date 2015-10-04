@@ -108,7 +108,7 @@ function spin_web( keys )
 		local charge_replenish_time = ability:GetLevelSpecialValueFor( "charge_restore_time", ( ability:GetLevel() - 1 ) )
 
 		-- Dummy
-		local dummy = CreateUnitByName("npc_dummy_blank", target, false, caster, caster, caster:GetTeam())
+		local dummy = CreateUnitByName("npc_dummy_unit", target, false, caster, caster, caster:GetTeam())
 		ability:ApplyDataDrivenModifier(caster, dummy, dummy_modifier, {})
 		dummy:SetControllableByPlayer(player, true)
 		

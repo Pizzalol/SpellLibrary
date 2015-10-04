@@ -87,7 +87,7 @@ function ghostship_start_traverse( keys )
 			)
 			
 			-- Fire sound event
-			local dummy = CreateUnitByName( "npc_dummy_blank", impactPoint, false, caster, caster, caster:GetTeamNumber() )
+			local dummy = CreateUnitByName( "npc_dummy_unit", impactPoint, false, caster, caster, caster:GetTeamNumber() )
 			StartSoundEvent( "Ability.Ghostship.crash", dummy )
 			dummy:ForceKill( true )
 			

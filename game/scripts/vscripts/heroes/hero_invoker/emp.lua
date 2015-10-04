@@ -15,7 +15,7 @@ function invoker_emp_datadriven_on_spell_start(keys)
 		local mana_to_burn = keys.ability:GetLevelSpecialValueFor("mana_burned", wex_level - 1)
 		
 		--Create a dummy unit that will provide sound and particles.
-		local emp_dummy_unit = CreateUnitByName("npc_dummy_blank", target_point, false, nil, nil, keys.caster:GetTeam())
+		local emp_dummy_unit = CreateUnitByName("npc_dummy_unit", target_point, false, nil, nil, keys.caster:GetTeam())
 		emp_dummy_unit:AddAbility("invoker_emp_datadriven")
 		local emp_unit_ability = emp_dummy_unit:FindAbilityByName("invoker_emp_datadriven")
 		if emp_unit_ability ~= nil then

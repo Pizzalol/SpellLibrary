@@ -1654,7 +1654,7 @@ function Physics:PhysicsTestCommand(...)
       Physics.testUnitNum = Physics.testUnitNum + m
       print (Physics.testUnitNum)
       for i=1,m do 
-        local unit = CreateUnitByName('npc_dummy_blank', hero:GetAbsOrigin(), true, hero, hero, hero:GetTeamNumber())
+        local unit = CreateUnitByName('npc_dummy_unit', hero:GetAbsOrigin(), true, hero, hero, hero:GetTeamNumber())
         unit:AddNewModifier(unit, nil, "modifier_phased", {})
         unit:SetModel('models/heroes/lycan/lycan_wolf.vmdl')
         unit:SetOriginalModel('models/heroes/lycan/lycan_wolf.vdl')
@@ -1689,7 +1689,7 @@ function Physics:PhysicsTestCommand(...)
       Physics.testUnitNum = Physics.testUnitNum + m
       print (Physics.testUnitNum)
       for i=1,m do 
-        local unit = CreateUnitByName('npc_dummy_blank', hero:GetAbsOrigin(), true, hero, hero, hero:GetTeamNumber())
+        local unit = CreateUnitByName('npc_dummy_unit', hero:GetAbsOrigin(), true, hero, hero, hero:GetTeamNumber())
         unit:AddNewModifier(unit, nil, "modifier_phased", {})
         unit:SetModel('models/heroes/lycan/lycan_wolf.vmdl')
         unit:SetOriginalModel('models/heroes/lycan/lycan_wolf.vmdl')

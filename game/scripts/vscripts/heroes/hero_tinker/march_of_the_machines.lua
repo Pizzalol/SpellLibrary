@@ -41,7 +41,7 @@ function march_of_the_machines_spawn( keys )
 	perpendicularVec = perpendicularVec:Normalized()
 	
 	-- Create dummy to store data in case of multiple instances are called
-	local dummy = CreateUnitByName( "npc_dummy_blank", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber() )
+	local dummy = CreateUnitByName( "npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber() )
 	ability:ApplyDataDrivenModifier( caster, dummy, dummyModifierName, {} )
 	dummy.march_of_the_machines_num = 0
 	

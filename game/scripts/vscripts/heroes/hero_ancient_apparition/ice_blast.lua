@@ -46,7 +46,7 @@ function ice_blast_launch( keys )
 	SwitchAbilities(caster, main_ability_name, sub_ability_name)
 
 	-- Tracer dummy
-	caster.ice_blast_tracer = CreateUnitByName("npc_dummy_blank", caster_location, false, caster, caster, caster:GetTeam())
+	caster.ice_blast_tracer = CreateUnitByName("npc_dummy_unit", caster_location, false, caster, caster, caster:GetTeam())
 	ability:ApplyDataDrivenModifier(caster, caster.ice_blast_tracer, tracer_modifier, {})
 
 	-- Setting up the tracer variables

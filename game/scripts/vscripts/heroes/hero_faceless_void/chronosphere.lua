@@ -15,7 +15,7 @@ function Chronosphere( keys )
 
 	-- Dummy
 	local dummy_modifier = keys.dummy_aura
-	local dummy = CreateUnitByName("npc_dummy_blank", target_point, false, caster, caster, caster:GetTeam())
+	local dummy = CreateUnitByName("npc_dummy_unit", target_point, false, caster, caster, caster:GetTeam())
 	dummy:AddNewModifier(caster, nil, "modifier_phased", {})
 	ability:ApplyDataDrivenModifier(caster, dummy, dummy_modifier, {duration = duration})
 

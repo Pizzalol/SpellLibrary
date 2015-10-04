@@ -36,7 +36,7 @@ function invoker_tornado_datadriven_on_spell_start(keys)
 	--Create a dummy unit that will follow the path of the tornado, providing flying vision and sound.
 	--Its invoker_tornado_datadriven ability also applies the cyclone modifier to hit enemy units, since if Invoker uninvokes Tornado,
 	--existing modifiers linked to that ability can cause errors.
-	local tornado_dummy_unit = CreateUnitByName("npc_dummy_blank", caster_origin, false, nil, nil, keys.caster:GetTeam())
+	local tornado_dummy_unit = CreateUnitByName("npc_dummy_unit", caster_origin, false, nil, nil, keys.caster:GetTeam())
 	tornado_dummy_unit:AddAbility("invoker_tornado_datadriven")
 	local emp_unit_ability = tornado_dummy_unit:FindAbilityByName("invoker_tornado_datadriven")
 	if emp_unit_ability ~= nil then

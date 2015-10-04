@@ -37,7 +37,7 @@ function WallOfReplica( keys )
 	num_of_dummies = num_of_dummies / 2
 
 	-- Create the main wall dummy
-	local dummy = CreateUnitByName("npc_dummy_blank", target_point, false, caster, caster, caster_team)
+	local dummy = CreateUnitByName("npc_dummy_unit", target_point, false, caster, caster, caster_team)
 	ability:ApplyDataDrivenModifier(dummy, dummy, dummy_modifier, {})
 	EmitSoundOn(dummy_sound, dummy)	
 
@@ -48,7 +48,7 @@ function WallOfReplica( keys )
 
 		-- Create the secondary dummy and apply the dummy aura to it, make sure the caster of the aura is the main dummmy
 		-- otherwise you wont be able to save illusion targets
-		local dummy_secondary = CreateUnitByName("npc_dummy_blank", temporary_point, false, caster, caster, caster_team)
+		local dummy_secondary = CreateUnitByName("npc_dummy_unit", temporary_point, false, caster, caster, caster_team)
 		ability:ApplyDataDrivenModifier(dummy, dummy_secondary, dummy_modifier, {})
 
 		Timers:CreateTimer(duration, function()
@@ -63,7 +63,7 @@ function WallOfReplica( keys )
 		
 		-- Create the secondary dummy and apply the dummy aura to it, make sure the caster of the aura is the main dummmy
 		-- otherwise you wont be able to save illusion targets
-		local dummy_secondary = CreateUnitByName("npc_dummy_blank", temporary_point, false, caster, caster, caster_team)
+		local dummy_secondary = CreateUnitByName("npc_dummy_unit", temporary_point, false, caster, caster, caster_team)
 		ability:ApplyDataDrivenModifier(dummy, dummy_secondary, dummy_modifier, {})
 
 		Timers:CreateTimer(duration, function()

@@ -140,7 +140,7 @@ end
 function shrapnel_damage( caster, ability, target, damage_delay, dummyModifierName, dummy_duration )
 	Timers:CreateTimer( damage_delay, function()
 			-- create dummy to do damage and apply debuff modifier
-			local dummy = CreateUnitByName( "npc_dummy_blank", target, false, caster, caster, caster:GetTeamNumber() )
+			local dummy = CreateUnitByName( "npc_dummy_unit", target, false, caster, caster, caster:GetTeamNumber() )
 			ability:ApplyDataDrivenModifier( caster, dummy, dummyModifierName, {} )
 			Timers:CreateTimer( dummy_duration, function()
 					dummy:ForceKill( true )

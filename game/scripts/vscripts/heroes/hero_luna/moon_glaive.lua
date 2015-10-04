@@ -41,7 +41,7 @@ function moon_glaive_start_create_dummy( keys )
 	local ability_level = ability:GetLevel() - 1
 
 	-- Create the dummy unit which keeps track of bounces
-	local dummy = CreateUnitByName( "npc_dummy_blank", target:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber() )
+	local dummy = CreateUnitByName( "npc_dummy_unit", target:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber() )
 	dummy:AddAbility("luna_moon_glaive_dummy_datadriven")
 	local dummy_ability =  dummy:FindAbilityByName("luna_moon_glaive_dummy_datadriven")
 	dummy_ability:ApplyDataDrivenModifier( caster, dummy, "modifier_moon_glaive_dummy_unit", {} )
@@ -87,7 +87,7 @@ function moon_glaive_start_create_dummy( keys )
         bDodgeable = false,
         bProvidesVision = false,
         iMoveSpeed = dummy_ability.projectile_speed,
-        iSourceAttachment = target:GetAttachmentOrigin(target:ScriptLookupAttachment("attach_hitloc"))
+        iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
     	}
     	ProjectileManager:CreateTrackingProjectile( info )
     end
@@ -150,7 +150,7 @@ function moon_glaive_bounce( keys )
         bDodgeable = false,
         bProvidesVision = false,
         iMoveSpeed = ability.projectile_speed,
-        iSourceAttachment = target:GetAttachmentOrigin(target:ScriptLookupAttachment("attach_hitloc"))
+        iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
     	}
     	ProjectileManager:CreateTrackingProjectile( info )
     end

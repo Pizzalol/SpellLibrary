@@ -27,7 +27,7 @@ function mystic_flare_start( keys )
 	local soundTarget = "Hero_SkywrathMage.MysticFlare.Target"
 	
 	-- Create for VFX particles on ground
-	local dummy = CreateUnitByName( "npc_dummy_blank", target, false, caster, caster, caster:GetTeamNumber() )
+	local dummy = CreateUnitByName( "npc_dummy_unit", target, false, caster, caster, caster:GetTeamNumber() )
 	ability:ApplyDataDrivenModifier( caster, dummy, dummyModifierName, {} )
 	
 	-- Referencing total damage done per interval

@@ -21,7 +21,7 @@ function deafening_blast_start( keys )
 	local direction = (target_point - caster_location):Normalized()
 
 	-- Create the dummy
-	local deafening_dummy = CreateUnitByName("npc_dummy_blank", caster_location, false, caster, caster, caster:GetTeamNumber())
+	local deafening_dummy = CreateUnitByName("npc_dummy_unit", caster_location, false, caster, caster, caster:GetTeamNumber())
 	deafening_dummy:AddAbility(dummy_ability_name)
 
 	-- Set up the dummy ability

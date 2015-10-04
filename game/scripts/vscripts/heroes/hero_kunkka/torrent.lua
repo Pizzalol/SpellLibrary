@@ -34,7 +34,7 @@ end
 	Emit sound at location
 ]]
 function torrent_emit_sound( keys )
-	local dummy = CreateUnitByName( "npc_dummy_blank", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber() )
+	local dummy = CreateUnitByName( "npc_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber() )
 	EmitSoundOn( "Ability.Torrent", dummy )
 	dummy:ForceKill( true )
 end

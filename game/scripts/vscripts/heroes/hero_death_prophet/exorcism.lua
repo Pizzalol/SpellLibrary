@@ -11,7 +11,7 @@ function ExorcismStart( event )
 	local duration = ability:GetLevelSpecialValueFor( "duration", ability:GetLevel() - 1 )
 	local spirits = ability:GetLevelSpecialValueFor( "spirits", ability:GetLevel() - 1 )
 	local delay_between_spirits = ability:GetLevelSpecialValueFor( "delay_between_spirits", ability:GetLevel() - 1 )
-	local unit_name = "npc_dummy_blank"
+	local unit_name = "npc_dummy_unit"
 
 	-- Witchcraft level
 	local witchcraft_ability = caster:FindAbilityByName("death_prophet_witchcraft_datadriven")

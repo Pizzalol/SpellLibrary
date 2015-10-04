@@ -90,7 +90,7 @@ function freezing_field_explode( keys )
 	ParticleManager:SetParticleControl( fxIndex, 0, attackPoint )
 	
 	-- Fire sound at dummy
-	local dummy = CreateUnitByName( "npc_dummy_blank", attackPoint, false, caster, caster, caster:GetTeamNumber() )
+	local dummy = CreateUnitByName( "npc_dummy_unit", attackPoint, false, caster, caster, caster:GetTeamNumber() )
 	ability:ApplyDataDrivenModifier( caster, dummy, refModifierName, {} )
 	StartSoundEvent( soundEventName, dummy )
 	Timers:CreateTimer( 0.1, function()

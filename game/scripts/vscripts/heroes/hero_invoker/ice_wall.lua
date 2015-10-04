@@ -52,7 +52,7 @@ function invoker_ice_wall_datadriven_on_spell_start(keys)
 	
 	--Create dummy units in a line that slow nearby enemies with their aura.
 	for i=0, keys.NumWallElements, 1 do
-		local ice_wall_unit = CreateUnitByName("npc_dummy_blank", one_end_point + direction_to_target_point_normal * (keys.WallElementSpacing * i), false, nil, nil, keys.caster:GetTeam())
+		local ice_wall_unit = CreateUnitByName("npc_dummy_unit", one_end_point + direction_to_target_point_normal * (keys.WallElementSpacing * i), false, nil, nil, keys.caster:GetTeam())
 		
 		--We give the ice wall dummy unit its own instance of Ice Wall both to more easily make it apply the correct intensity of slow (based on Quas' level)
 		--and because if Invoker uninvokes Ice Wall and the spell is removed from his toolbar, existing modifiers originating from that ability can start to error out.

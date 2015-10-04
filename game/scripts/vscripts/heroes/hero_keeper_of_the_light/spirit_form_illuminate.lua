@@ -16,7 +16,7 @@ function SpiritFormIlluminateInitialize( keys )
 
 	local max_channel_time = ability:GetLevelSpecialValueFor("max_channel_time", (ability:GetLevel() - 1)) + 0.03 -- Apply it for 1 frame longer than the duration
 
-	caster.spirit_form_illuminate_dummy = CreateUnitByName("npc_dummy_blank", caster_location, false, caster, caster, caster:GetTeam())
+	caster.spirit_form_illuminate_dummy = CreateUnitByName("npc_dummy_unit", caster_location, false, caster, caster, caster:GetTeam())
 	caster.spirit_form_illuminate_dummy:SetForwardVector(caster_direction)
 	caster.spirit_form_illuminate_dummy.spirit_form_illuminate_vision_position = caster_location
 	caster.spirit_form_illuminate_dummy.spirit_form_illuminate_position = caster_location
