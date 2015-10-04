@@ -1,7 +1,7 @@
 "DOTAUnits"
 {
 	// Made by BMD
-	"npc_dummy_blank"
+	"npc_dummy_unit"
 	{
 		// General
 		//
