@@ -4,7 +4,7 @@
 // Version: 6.82
 // Type: Datadriven
 //
-// ----- FILES REQUIRED -----
+// ----- FILE REQUIREMENTS -----
 // Script files:
 // scripts/vscripts/heroes/hero_alchemist/goblins_greed.lua 
 "goblins_greed_datadriven"

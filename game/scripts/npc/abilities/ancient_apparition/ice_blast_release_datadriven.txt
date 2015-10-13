@@ -1,8 +1,19 @@
 // Rewrite of the Ancient Apparition Ice Blast Release ability
 // Author: Pizzalol
 // Date: 21.02.2015.
-// NOTE: ------------------------- THIS ABILITY IS PART OF THE ancient_apparition_ice_blast_datadriven ABILITY ---------------------
-"ancient_apparition_ice_blast_release_datadriven"
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_ancient_apparition/ice_blast.lua
+//
+// KV files:
+// scripts/npc/abilities/ancient_apparition/ice_blast_datadriven.txt
+//
+// Unit files:
+// scripts/npc/units/npc_dummy_unit.txt
+"ice_blast_release_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

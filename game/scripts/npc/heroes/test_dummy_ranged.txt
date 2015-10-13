@@ -4,9 +4,9 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"acid_spray_datadriven"
-	"Ability2"	"luna_moon_glaive_datadriven"
-	"Ability3"	"goblins_greed_datadriven"
-	"Ability4"	"chemical_rage_datadriven"
-	"Ability5"	"unstable_concoction_throw_datadriven"
+	"Ability1"	"cold_feet_datadriven"
+	"Ability2"	"ice_vortex_datadriven"
+	"Ability3"	"chilling_touch_datadriven"
+	"Ability4"	"ice_blast_datadriven"
+	"Ability5"	"ice_blast_release_datadriven"
 }

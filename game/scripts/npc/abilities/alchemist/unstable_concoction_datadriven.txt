@@ -4,7 +4,7 @@
 // Version: 6.83
 // Type: Datadriven
 //
-// ----- FILES REQUIRED -----
+// ----- FILE REQUIREMENTS -----
 // Script files:
 // scripts/vscripts/heroes/hero_alchemist/unstable_concoction.lua
 //

@@ -1,7 +1,13 @@
 // Rewrite of the Ancient Apparition Cold Feet ability
 // Author: Pizzalol
-// Date: 13.02.2015.
-"ancient_apparition_cold_feet_datadriven"
+// Date: 13.10.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_ancient_apparition/cold_feet.lua
+"cold_feet_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -27,7 +33,7 @@
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastRange"				"700 700 700 700"
+	"AbilityCastRange"				"700 800 900 1000"
 	"AbilityCastPoint"				"0.01 0.01 0.01 0.01"
 
 	// Time		

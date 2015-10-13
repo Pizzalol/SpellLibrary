@@ -1,8 +1,14 @@
 // Rewrite of the Ancient Apparition Chilling Touch ability
 // Author: Pizzalol
 // Date: 14.02.2015.
+// Version: 6.83
+// Type: Datadriven
 // NOTE: Cast particle is missing the falling snow
-"ancient_apparition_chilling_touch_datadriven"
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_ancient_apparition/chilling_touch.lua
+"chilling_touch_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

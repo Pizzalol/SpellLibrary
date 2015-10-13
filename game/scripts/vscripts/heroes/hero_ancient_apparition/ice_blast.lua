@@ -4,7 +4,7 @@ ice_blast_target_type = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 ice_blast_target_flag = DOTA_UNIT_TARGET_FLAG_NONE
 
 --[[Author: Pizzalol
-	Date: 21.02.2015.
+	Date: 13.10.2015.
 	Launches a dummy unit which acts as a tracer projectile
 	The tracer travels until it is stopped or reaches the map boundaries
 	After stopping the tracer a hail projectile is launched which provides vision along the path, applies
@@ -20,6 +20,7 @@ function ice_blast_launch( keys )
 	local caster_location = caster:GetAbsOrigin()
 	local target_point = keys.target_points[1]
 	local direction = (target_point - caster_location):Normalized()
+	caster.ice_blast_ability = ability
 
 	-- Tracer
 	local radius_min = ability:GetLevelSpecialValueFor("radius_min", ability_level)
@@ -46,34 +47,34 @@ function ice_blast_launch( keys )
 	SwitchAbilities(caster, main_ability_name, sub_ability_name)
 
 	-- Tracer dummy
-	caster.ice_blast_tracer = CreateUnitByName("npc_dummy_unit", caster_location, false, caster, caster, caster:GetTeam())
-	ability:ApplyDataDrivenModifier(caster, caster.ice_blast_tracer, tracer_modifier, {})
+	ability.ice_blast_tracer = CreateUnitByName("npc_dummy_unit", caster_location, false, caster, caster, caster:GetTeam())
+	ability:ApplyDataDrivenModifier(caster, ability.ice_blast_tracer, tracer_modifier, {})
 
 	-- Setting up the tracer variables
-	caster.ice_blast_tracer_traveling = true
-	caster.ice_blast_tracer_start = GameRules:GetGameTime()
-	caster.ice_blast_tracer_location = caster_location
+	ability.ice_blast_tracer_traveling = true
+	ability.ice_blast_tracer_start = GameRules:GetGameTime()
+	ability.ice_blast_tracer_location = caster_location
 
 	-- Timer to move the tracer
 	-- First it checks if its traveling and within the map boundaries
 	-- If its not traveling then it launches the hail projectile
 	-- If its not within the map boundaries then it kills the dummy and reverts the abilities
 	Timers:CreateTimer(function()
-		if caster.ice_blast_tracer_traveling and 
-		(caster.ice_blast_tracer_location.x < GetWorldMaxX() and caster.ice_blast_tracer_location.x > GetWorldMinX()) and
-		(caster.ice_blast_tracer_location.y < GetWorldMaxY() and caster.ice_blast_tracer_location.y > GetWorldMinY()) then
+		if ability.ice_blast_tracer_traveling and 
+		(ability.ice_blast_tracer_location.x < GetWorldMaxX() and ability.ice_blast_tracer_location.x > GetWorldMinX()) and
+		(ability.ice_blast_tracer_location.y < GetWorldMaxY() and ability.ice_blast_tracer_location.y > GetWorldMinY()) then
 
 			-- Calculate the new location
-			caster.ice_blast_tracer_location = caster.ice_blast_tracer_location + Vector(speed * direction.x, speed * direction.y, 0)
+			ability.ice_blast_tracer_location = ability.ice_blast_tracer_location + Vector(speed * direction.x, speed * direction.y, 0)
 			-- Set the proper height
-			caster.ice_blast_tracer_location = GetGroundPosition(caster.ice_blast_tracer_location, caster.ice_blast_tracer) + Vector(0,0,128)
-			caster.ice_blast_tracer:SetAbsOrigin(caster.ice_blast_tracer_location)
+			ability.ice_blast_tracer_location = GetGroundPosition(ability.ice_blast_tracer_location, ability.ice_blast_tracer) + Vector(0,0,128)
+			ability.ice_blast_tracer:SetAbsOrigin(ability.ice_blast_tracer_location)
 			tracer_distance_traveled = tracer_distance_traveled + speed
 
 			return 1/30
 
 		-- If the tracer is within the map boundaries but not traveling	
-		elseif not caster.ice_blast_tracer_traveling then
+		elseif not ability.ice_blast_tracer_traveling then
 			-- Swap out the abilities
 			SwitchAbilities(caster, sub_ability_name, main_ability_name )
 
@@ -84,10 +85,10 @@ function ice_blast_launch( keys )
 
 			-- Radius
 			-- Increase the radius size by the radius growth for every second traveled
-			caster.ice_blast_radius = radius_min + (GameRules:GetGameTime() - caster.ice_blast_tracer_start) * radius_grow
+			ability.ice_blast_radius = radius_min + (GameRules:GetGameTime() - ability.ice_blast_tracer_start) * radius_grow
 			-- Need to make sure its within the ability radius boundaries
-			if caster.ice_blast_radius > radius_max then
-				caster.ice_blast_radius = radius_max
+			if ability.ice_blast_radius > radius_max then
+				ability.ice_blast_radius = radius_max
 			end
 
 			-- Get the new positions of the caster and tracer and prepare for launching the hail projectile
@@ -95,8 +96,8 @@ function ice_blast_launch( keys )
 			local hail_location = caster_location
 			local hail_traveled_distance = 0
 			local hail_speed = projectile_speed * 1/30 -- This is the distance per frame
-			local distance = (caster.ice_blast_tracer_location - caster_location):Length2D()
-			local projectile_direction = (caster.ice_blast_tracer_location - caster_location):Normalized()
+			local distance = (ability.ice_blast_tracer_location - caster_location):Length2D()
+			local projectile_direction = (ability.ice_blast_tracer_location - caster_location):Normalized()
 
 			-- Launch the projectile
 			ProjectileManager:CreateLinearProjectile( {
@@ -130,7 +131,7 @@ function ice_blast_launch( keys )
 					return 1/30
 				else
 					-- End path area vision
-					caster.ice_blast_tracer:RemoveSelf()
+					ability.ice_blast_tracer:RemoveSelf()
 					AddFOWViewer(caster:GetTeamNumber(), hail_location, area_vision, area_vision_duration, false)
 					return nil
 				end
@@ -141,8 +142,8 @@ function ice_blast_launch( keys )
 		else
 			-- Swap out the abilities
 			SwitchAbilities(caster, sub_ability_name, main_ability_name )
-			caster.ice_blast_tracer_traveling = false
-			caster.ice_blast_tracer:RemoveSelf()
+			ability.ice_blast_tracer_traveling = false
+			ability.ice_blast_tracer:RemoveSelf()
 			return nil
 		end
 	end)
@@ -152,12 +153,12 @@ end
 function ice_blast_release( keys )
 	local caster = keys.caster
 
-	caster.ice_blast_tracer_traveling = false
+	caster.ice_blast_ability.ice_blast_tracer_traveling = false
 end
 
 
 --[[ Author: Pizzalol
-	Date: 21.02.2015.
+	Date: 13.10.2015.
 	Triggers when the hail projectile reaches the end point
 	Applies the frostbite debuff and deals damage in an area
 	Radius is calculated according to the distance that the tracer traveled]]
@@ -178,13 +179,13 @@ function ice_blast_explode( keys )
 	damage_table.damage = ability:GetAbilityDamage()
 
 	-- Plays the explosion sound and explosion particle
-	EmitSoundOn(sound, caster.ice_blast_tracer)
-	local particle = ParticleManager:CreateParticle(explosion_particle, PATTACH_ABSORIGIN_FOLLOW, caster.ice_blast_tracer)
-	ParticleManager:SetParticleControl(particle, 0, caster.ice_blast_tracer_location)
-	ParticleManager:SetParticleControl(particle, 3, caster.ice_blast_tracer_location)
+	EmitSoundOn(sound, ability.ice_blast_tracer)
+	local particle = ParticleManager:CreateParticle(explosion_particle, PATTACH_ABSORIGIN_FOLLOW, ability.ice_blast_tracer)
+	ParticleManager:SetParticleControl(particle, 0, ability.ice_blast_tracer_location)
+	ParticleManager:SetParticleControl(particle, 3, ability.ice_blast_tracer_location)
 	ParticleManager:ReleaseParticleIndex(particle)
 
-	local units_to_damage = FindUnitsInRadius(caster:GetTeam(), caster.ice_blast_tracer_location, nil, caster.ice_blast_radius, ice_blast_target_team, ice_blast_target_type, ice_blast_target_flag, FIND_CLOSEST, false)
+	local units_to_damage = FindUnitsInRadius(caster:GetTeam(), ability.ice_blast_tracer_location, nil, ability.ice_blast_radius, ice_blast_target_team, ice_blast_target_type, ice_blast_target_flag, FIND_CLOSEST, false)
 
 	for _,v in pairs(units_to_damage) do
 		-- Apply the frostbite modifier only to heroes

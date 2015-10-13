@@ -1,7 +1,13 @@
 // Rewrite of the Ancient Apparition Ice Vortex ability
 // Author: Pizzalol
-// Date: 11.02.2015.
-"ancient_apparition_ice_vortex_datadriven"
+// Date: 13.10.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_ancient_apparition/ice_vortex.lua
+"ice_vortex_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -98,7 +104,6 @@
 			"Aura_Radius"			"%radius"
 			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
-			"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 
 			"OnCreated"
 			{
@@ -148,4 +153,3 @@
 		}
 	}
 }
-

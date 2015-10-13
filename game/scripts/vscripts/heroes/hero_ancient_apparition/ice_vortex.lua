@@ -1,5 +1,5 @@
 --[[Author: Pizzalol
-	Date: 11.02.2015.
+	Date: 13.10.2015.
 	Provides vision over the targeted area]]
 function IceVortexVision( keys )
 	local caster = keys.caster
@@ -10,7 +10,7 @@ function IceVortexVision( keys )
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 	local vision_aoe = ability:GetLevelSpecialValueFor("vision_aoe", ability_level)
 
-	ability:CreateVisibilityNode(target_point, vision_aoe, duration)
+	AddFOWViewer(caster:GetTeamNumber(), target_point, vision_aoe, duration, true)
 end
 
 --[[Author: Pizzalol

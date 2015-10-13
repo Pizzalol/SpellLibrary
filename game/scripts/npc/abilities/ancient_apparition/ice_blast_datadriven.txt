@@ -1,11 +1,22 @@
 // Rewrite of the Ancient Apparition Ice Blast ability
 // Author: Pizzalol
-// Date: 21.02.2015.
-// NOTE: --------------------------- THIS ABILITY REQUIRES THE ancient_apparition_ice_blast_release_datadriven ABILITY TO WORK PROPERLY -------------------------
-// NOTE2: Tracer projectile is teal instead of blue
-// NOTE3: Hail particles arent working so there is no marker particle and the original tracer projectile
+// Date: 13.10.2015.
+// Version: 6.85
+// Type: Datadriven
+// NOTE: Tracer projectile is teal instead of blue
+// NOTE2: Hail particles arent working so there is no marker particle and the original tracer projectile
 // is used as the hail projectile instead
-"ancient_apparition_ice_blast_datadriven"
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_ancient_apparition/ice_blast.lua
+//
+// KV files:
+// scripts/npc/abilities/ancient_apparition/ice_blast_release_datadriven.txt
+//
+// Unit files:
+// scripts/npc/units/npc_dummy_unit.txt
+"ice_blast_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -161,8 +172,8 @@
 			"tracer_modifier"	"modifier_dummy_tracer"
 			"tracer_sphere"		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_sphere_b.vpcf"
 			"tracer_grid"		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_initial_grid.vpcf"
-			"main_ability_name"	"ancient_apparition_ice_blast_datadriven"
-			"sub_ability_name"	"ancient_apparition_ice_blast_release_datadriven"
+			"main_ability_name"	"ice_blast_datadriven"
+			"sub_ability_name"	"ice_blast_release_datadriven"
 		}
 	}
 
@@ -171,7 +182,7 @@
 		"LevelUpAbility"
 		{
 			"Target" 		"CASTER"
-			"AbilityName"	"ancient_apparition_ice_blast_release_datadriven"
+			"AbilityName"	"ice_blast_release_datadriven"
 		}
 	}
 
@@ -182,7 +193,11 @@
 		"ApplyModifier"
 		{
 			"ModifierName"	"modifier_ice_blast_debuff_datadriven"
-			"Target" 		"TARGET"
+			"Target"
+			{
+				"Center"	"TARGET"
+				"Types"		"DOTA_UNIT_TARGET_HERO"
+			}
 			"Duration"		"%frostbite_duration"
 		}
 	}
@@ -304,4 +319,3 @@
 		}
 	}
 }
-
