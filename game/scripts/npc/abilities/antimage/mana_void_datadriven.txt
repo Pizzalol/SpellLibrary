@@ -1,8 +1,13 @@
 // Rewrite of the Antimage Mana Void ability
 // Author: Pizzalol
-// Date: 17.12.2014.
-// Game version: 6.84
-"antimage_mana_void_datadriven"
+// Date: 13.10.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_antimage/mana_void.lua
+"mana_void_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -56,7 +61,7 @@
 		"02"
 		{
 			"var_type"						"FIELD_FLOAT"
-			"mana_void_ministun"			"0.1 0.2 0.3"
+			"mana_void_ministun"			"0.15"
 		}
 		
 		"03"
@@ -91,7 +96,7 @@
 			}
 		}
 
-		"AttachEffect"
+		"FireEffect"
 		{
 			"EffectName"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
 			"EffectAttachType"	"attach_hitloc"
@@ -116,6 +121,7 @@
 				"Center"	"TARGET"
 				"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 			}
+			"Duration"	"%mana_void_ministun"
 		}
 
 		"RunScript"
@@ -130,7 +136,6 @@
 	{
 		"modifier_mana_void_ministun_datadriven"
 		{
-			"Duration"	"%mana_void_ministun"
 			"IsDebuff"	"1"
 			"States"
 			{

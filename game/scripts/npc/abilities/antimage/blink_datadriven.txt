@@ -1,8 +1,13 @@
 // Rewrite of the Antimage Blink ability
 // Author: Pizzalol
-// Date: 11.07.2015.
-// Game version: 6.84
-"antimage_blink_datadriven"
+// Date: 13.10.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_antimage/blink.lua
+"blink_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -38,7 +43,7 @@
 		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"blink_range"			"1000 1075 1150 1150"
+			"blink_range"			"925 1000 1075 1150"
 		}
 		
 		"02"

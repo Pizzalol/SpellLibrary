@@ -402,346 +402,6 @@
 		}
 	}
 	
-	// Rewrite of the Antimage Blink ability
-	// Author: Pizzalol
-	// Date: 11.07.2015.
-	// Game version: 6.84
-	"antimage_blink_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		"AbilityTextureName"			"antimage_blink"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
-			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
-			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0 9.0 7.0 5.0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60 60 60 60"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"blink_range"			"1000 1075 1150 1150"
-			}
-			
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"min_blink_range"		"200"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/blink.lua"
-				"Function"		"Blink"
-				"Target"		"POINT"
-			}
-	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Antimage.Blink_out"
-				"Target"		"CASTER"
-			}
-	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Antimage.Blink_in"
-				"Target"		"CASTER"
-			}
-	
-			"AttachEffect"
-			{
-				"EffectName"	"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
-				"Target"		"CASTER"
-				"EffectAttachType"	"follow_origin"
-			}
-		}
-	}
-	
-	// Rewrite of the Antimage Mana Break ability
-	// Author: Pizzalol
-	// Date: 11.07.2015.
-	// Game version: 6.84
-	// NOTE: Sound and particle will play even on units with no mana, to fix that just run a script on the "OnOrbFire"
-	// event and check if the unit has mana, if it does then launch the particle and sound through lua
-	"antimage_mana_break_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"		
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"			"antimage_mana_break"
-	
-		// Precache	
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"	"particles/generic_gameplay/generic_manaburn.vpcf"
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
-		}
-	
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_per_burn"		"0.6"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_per_hit"			"28 40 52 64"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_mana_break_orb_datadriven"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-	
-				"Orb"
-				{
-					"Priority"	"DOTA_ORB_PRIORITY_ABILITY"
-				}
-	
-				"OnOrbImpact"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Antimage.ManaBreak"
-						"Target"		"TARGET"
-					}
-	
-					"AttachEffect"
-					{
-						"EffectName"	"particles/generic_gameplay/generic_manaburn.vpcf"
-						"EffectAttachType"	"attach_hitloc"
-						"Target"		"TARGET"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/mana_break.lua"
-						"Function"		"ManaBreak"
-						"Target"		"TARGET"
-					}				
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Antimage Mana Void ability
-	// Author: Pizzalol
-	// Date: 17.12.2014.
-	// Game version: 6.84
-	"antimage_mana_void_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"		
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"antimage_mana_void"
-		"AOERadius"						"%mana_void_aoe_radius"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"70.0 70.0 70.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 200 275"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.0"	// damage only
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"mana_void_damage_per_mana"		"0.6 0.85 1.1"
-			}
-			
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"mana_void_ministun"			"0.1 0.2 0.3"
-			}
-			
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"mana_void_aoe_radius"			"500"
-			}
-		}
-	
-		"OnAbilityPhaseStart"
-		{
-			"FireSound"
-			{
-				"EffectName"		"Hero_Antimage.ManaVoidCast"
-				"Target"
-				{
-					"Center"	"TARGET"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"		"Hero_Antimage.ManaVoid"
-				"Target"
-				{
-					"Center"	"TARGET"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
-	
-			"AttachEffect"
-			{
-				"EffectName"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
-				"EffectAttachType"	"attach_hitloc"
-				"Target"
-				{
-					"Center"	"TARGET"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-	
-				"ControlPoints"
-				{
-					"00"	"0 0 0"
-					"01"	"%mana_void_aoe_radius 0 0"
-				}
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_mana_void_ministun_datadriven"
-				"Target"
-				{
-					"Center"	"TARGET"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/mana_void.lua"
-				"Function"		"ManaVoid"
-				"Target"		"TARGET"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_mana_void_ministun_datadriven"
-			{
-				"Duration"	"%mana_void_ministun"
-				"IsDebuff"	"1"
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	
-	
-	// Remwrite of the Antimage Spellshield ability
-	// Author: Pizzalol
-	// Date: 16.12.2014.
-	// Game version: 6.84
-	"antimage_spell_shield_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"antimage_spell_shield"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"spell_shield_resistance"		"26 34 42 50"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_spell_shield_datadriven"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%spell_shield_resistance"
-				}
-			}
-		}
-	}
-	
-	
 	"arc_warden_flux"
 		{
 
@@ -63785,6 +63445,370 @@
 				{
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"%spell_resist_pct"
 				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed_pct" 
+				}
+			}
+		}
+	}
+	// Rewrite of the Antimage Blink ability
+	// Author: Pizzalol
+	// Date: 13.10.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_antimage/blink.lua
+	"blink_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityTextureName"			"antimage_blink"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12.0 9.0 7.0 5.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60 60 60 60"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blink_range"			"925 1000 1075 1150"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_blink_range"		"200"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/blink.lua"
+				"Function"		"Blink"
+				"Target"		"POINT"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Antimage.Blink_out"
+				"Target"		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Antimage.Blink_in"
+				"Target"		"CASTER"
+			}
+	
+			"AttachEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+				"Target"		"CASTER"
+				"EffectAttachType"	"follow_origin"
+			}
+		}
+	}
+	
+	// Rewrite of the Antimage Mana Break ability
+	// Author: Pizzalol
+	// Date: 13.10.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_antimage/mana_break.lua
+	"mana_break_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"		
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"antimage_mana_break"
+	
+		// Precache	
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"	"particles/generic_gameplay/generic_manaburn.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+		}
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_burn"		"0.6"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_per_hit"			"28 40 52 64"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_mana_break_orb_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"Orb"
+				{
+					"Priority"	"DOTA_ORB_PRIORITY_ABILITY"
+				}
+	
+				"OnOrbImpact"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Antimage.ManaBreak"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_MANA_ONLY"
+						}
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"	"particles/generic_gameplay/generic_manaburn.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_MANA_ONLY"
+						}
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/mana_break.lua"
+						"Function"		"ManaBreak"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_MANA_ONLY"
+						}
+					}				
+				}
+			}
+		}
+	}
+	
+	// Rewrite of the Antimage Mana Void ability
+	// Author: Pizzalol
+	// Date: 13.10.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_antimage/mana_void.lua
+	"mana_void_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"		
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"antimage_mana_void"
+		"AOERadius"						"%mana_void_aoe_radius"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"70.0 70.0 70.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 200 275"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.0"	// damage only
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"mana_void_damage_per_mana"		"0.6 0.85 1.1"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"mana_void_ministun"			"0.15"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"mana_void_aoe_radius"			"500"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Antimage.ManaVoidCast"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Antimage.ManaVoid"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
+				"EffectAttachType"	"attach_hitloc"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+	
+				"ControlPoints"
+				{
+					"00"	"0 0 0"
+					"01"	"%mana_void_aoe_radius 0 0"
+				}
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mana_void_ministun_datadriven"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+				"Duration"	"%mana_void_ministun"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/mana_void.lua"
+				"Function"		"ManaVoid"
+				"Target"		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_mana_void_ministun_datadriven"
+			{
+				"IsDebuff"	"1"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	
+	
+	// Remwrite of the Antimage Spellshield ability
+	// Author: Pizzalol
+	// Date: 13.10.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	"spell_shield_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"antimage_spell_shield"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"spell_shield_resistance"		"26 34 42 50"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_spell_shield_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%spell_shield_resistance"
 				}
 			}
 		}

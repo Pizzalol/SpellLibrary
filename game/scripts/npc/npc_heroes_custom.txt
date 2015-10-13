@@ -15,10 +15,9 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"cold_feet_datadriven"
-		"Ability2"	"ice_vortex_datadriven"
-		"Ability3"	"chilling_touch_datadriven"
-		"Ability4"	"ice_blast_datadriven"
-		"Ability5"	"ice_blast_release_datadriven"
+		"Ability1"	"mana_break_datadriven"
+		"Ability2"	"blink_datadriven"
+		"Ability3"	"spell_shield_datadriven"
+		"Ability4"	"mana_void_datadriven"
 	}
 }

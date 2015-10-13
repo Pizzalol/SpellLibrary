@@ -1,10 +1,13 @@
 // Rewrite of the Antimage Mana Break ability
 // Author: Pizzalol
-// Date: 11.07.2015.
-// Game version: 6.84
-// NOTE: Sound and particle will play even on units with no mana, to fix that just run a script on the "OnOrbFire"
-// event and check if the unit has mana, if it does then launch the particle and sound through lua
-"antimage_mana_break_datadriven"
+// Date: 13.10.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_antimage/mana_break.lua
+"mana_break_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -55,21 +58,33 @@
 				"FireSound"
 				{
 					"EffectName"	"Hero_Antimage.ManaBreak"
-					"Target"		"TARGET"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_MANA_ONLY"
+					}
 				}
 
-				"AttachEffect"
+				"FireEffect"
 				{
 					"EffectName"	"particles/generic_gameplay/generic_manaburn.vpcf"
 					"EffectAttachType"	"attach_hitloc"
-					"Target"		"TARGET"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_MANA_ONLY"
+					}
 				}
 
 				"RunScript"
 				{
 					"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/mana_break.lua"
 					"Function"		"ManaBreak"
-					"Target"		"TARGET"
+					"Target"
+					{
+						"Center"	"TARGET"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_MANA_ONLY"
+					}
 				}				
 			}
 		}
