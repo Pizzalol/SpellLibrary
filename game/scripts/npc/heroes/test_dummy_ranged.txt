@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"mana_break_datadriven"
-	"Ability2"	"blink_datadriven"
-	"Ability3"	"spell_shield_datadriven"
-	"Ability4"	"mana_void_datadriven"
+	"Ability1"	"berserkers_call_datadriven"
+	"Ability2"	"battle_hunger_datadriven"
+	"Ability3"	"counter_helix_datadriven"
+	"Ability4"	"culling_blade_datadriven"
 }

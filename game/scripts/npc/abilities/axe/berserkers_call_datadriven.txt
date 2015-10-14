@@ -1,7 +1,13 @@
 // Rewrite of the Axe Berserkers Call ability
 // Author: Pizzalol
-// Date: 09.02.2015.
-"axe_berserkers_call_datadriven"
+// Date: 14.10.2015.
+// Version: 6.83
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_axe/berserkers_call.lua
+"berserkers_call_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

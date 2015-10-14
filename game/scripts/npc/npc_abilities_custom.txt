@@ -637,642 +637,6 @@
 	
 	    }
 	}
-	// Rewrite of the Axe Battle Hunger ability
-	// Author: Pizzalol
-	// Date: 09.02.2015.
-	"axe_battle_hunger_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"axe_battle_hunger"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
-			"particle"			"particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
-			"particle"			"particles/status_fx/status_effect_battle_hunger.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20.0 15.0 10.0 5.0"
-	
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"16 24 32 40"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75"		
-		
-		// Cast Range
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"750"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.1"	// Primarily about the damage
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"10.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow"						"-12"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed_bonus"						"12"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Axe.Battle_Hunger"
-				"Target" 		"TARGET"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_battle_hunger_enemy_datadriven"
-				"Target" 		"TARGET"
-				"Duration"		"%duration"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_battle_hunger_caster_datadriven"
-			{
-				"IsBuff"		"1"
-				"IsPurgable"	"0"
-			}
-	
-			"modifier_battle_hunger_caster_speed_datadriven"
-			{
-				"IsHidden"		"1"
-				"IsPurgable"	"0"
-	
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_bonus" 
-				}
-			}
-	
-			"modifier_battle_hunger_enemy_datadriven"
-			{
-				"IsDebuff"		"1"
-	
-				"StatusEffectName" 		"particles/status_fx/status_effect_battle_hunger.vpcf" 	   
-				"StatusEffectPriority"  "9"
-	
-				"ThinkInterval"  "1.0"
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Target"		"TARGET"
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Damage"		"%AbilityDamage"
-					}
-				}
-	
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"        "particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
-						"EffectAttachType"  "follow_overhead"
-						"Target"            "TARGET"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_axe/battle_hunger.lua"
-						"Function"		"BattleHungerStart"
-						"caster_modifier"	"modifier_battle_hunger_caster_datadriven"
-						"speed_modifier"	"modifier_battle_hunger_caster_speed_datadriven"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_axe/battle_hunger.lua"
-						"Function"		"BattleHungerEnd"
-						"caster_modifier"	"modifier_battle_hunger_caster_datadriven"
-						"speed_modifier"	"modifier_battle_hunger_caster_speed_datadriven"
-					}
-				}
-	
-				"OnKill"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_axe/battle_hunger.lua"
-						"Function"		"BattleHungerKill"
-						"modifier"		"modifier_battle_hunger_enemy_datadriven"
-					}
-				}
-			}
-		}	
-	}
-	
-	// Rewrite of the Axe Berserkers Call ability
-	// Author: Pizzalol
-	// Date: 09.02.2015.
-	"axe_berserkers_call_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"axe_berserkers_call"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
-			"particle"			"particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
-			"particle"			"particles/status_fx/status_effect_beserkers_call.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16 14 12 10"
-	
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"0 0 0 0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"80 90 100 110"	
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"300"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"40"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.0 2.4 2.8 3.2"
-			}	
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Axe.Berserkers_Call"
-				"Target" 		"CASTER"
-			}
-	
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_berserkers_call_caster_datadriven"
-				"Target" 		"CASTER"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_berserkers_call_caster_datadriven"
-				"Target" 		"CASTER"
-				"Duration"		"%duration"
-			}
-	
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"  	"CASTER"
-					"Radius" 	"%radius"
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-				}
-			
-				"Action"    
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_beserkers_call_enemy_datadriven"
-						"Target" 		"TARGET"
-						"Duration"		"%duration"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_berserkers_call_caster_datadriven"
-			{
-				"IsPurgable"		"0"
-				"IsBuff"			"1"
-		
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"			"CASTER"
-						"EffectName"        "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
-						"EffectAttachType" 	"follow_origin"
-						"ControlPoints"
-						{
-							"02"		"%radius 1 1"	//Required for Rampant Outrage (axe immortal)
-						}
-						"ControlPointEntities"
-						{
-							"CASTER"	"follow_origin"
-							"CASTER"	"follow_origin"
-							"CASTER"	"follow_origin"
-						}
-					}
-				}
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
-				}
-			}
-	
-			"modifier_beserkers_call_enemy_datadriven"
-			{
-				"IsPurgable"		"0"
-				"IsDebuff"			"1"
-	
-				"StatusEffectName" 		"particles/status_fx/status_effect_beserkers_call.vpcf" 	   
-				"StatusEffectPriority"  "10"
-	
-				"ThinkInterval"  "0.1"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_axe/berserkers_call.lua"
-						"Function"		"BerserkersCall"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_axe/berserkers_call.lua"
-						"Function"		"BerserkersCallEnd"
-					}
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Axe Counter Helix ability
-	// Author: Pizzalol
-	// Date: 09.02.2015.
-	"axe_counter_helix_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityTextureName"			"axe_counter_helix"
-		"AOERadius"						"%radius"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
-			"particle"			"particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf"
-		}
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.45 0.4 0.35 0.3"
-		
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"100 135 170 205"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"275"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"trigger_chance"			"20"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown"					"0.45 0.4 0.35 0.3"
-			}
-			// Extra
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"trigger_radius"			"1000"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_counter_helix_aura_datadriven"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-		
-				"Aura" 			"modifier_counter_helix_enemy_datadriven"
-				"Aura_Radius" 	"%trigger_radius"
-				"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
-			}
-	
-			"modifier_counter_helix_enemy_datadriven"
-			{
-				"IsHidden"			"1"
-	
-				"OnAttackStart"
-				{
-					"Random"
-					{
-						"Chance"			"%trigger_chance"
-						"PseudoRandom" 		"DOTA_PSEUDO_RANDOM_JUGG_CRIT"
-						"OnSuccess"
-						{
-							"RunScript"
-							{
-								"ScriptFile"	"heroes/hero_axe/counter_helix.lua"
-								"Function"		"CounterHelix"
-								"helix_modifier"	"modifier_counter_helix_datadriven"
-							}
-						}
-					}
-				}
-			}
-	
-			"modifier_counter_helix_datadriven"
-			{
-				"Duration"		"%cooldown"
-				"IsHidden"		"1"
-	
-				"EffectName"	"particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf"
-				"EffectAttachType"	"follow_origin"			
-	
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Axe.CounterHelix"
-						"Target" 		"CASTER"
-					}
-	
-					"ActOnTargets"
-					{
-						"Target"
-						{
-							"Center"  	"CASTER"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
-						}
-					
-						"Action"    
-						{
-							"Damage"
-							{
-								"Target"		"TARGET"
-								"Type"			"DAMAGE_TYPE_PHYSICAL"
-								"Damage"		"%AbilityDamage"
-							}
-						}
-					}
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_counter_helix_rotate_datadriven"
-						"Target" 		"CASTER"
-						"Duration"		"0.15"
-					}
-				}
-			}
-	
-			"modifier_counter_helix_rotate_datadriven"
-			{
-				"IsHidden"	"1"
-	
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
-				{
-					"Rotate"
-					{
-						"Target"	"CASTER"
-						"PitchYawRoll"	"0 72 0"
-					}
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Axe Culling Blade ability
-	// Author: Pizzalol
-	// Date: 10.02.2015.
-	// NOTE: You need to specify the modifiers that need to be removed (only if they cant be purged)
-	// which would otherwise prevent death in the culling_blade.lua file
-	"axe_culling_blade_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"		
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"axe_culling_blade"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
-			"particle"			"particles/units/heroes/hero_axe/axe_culling_blade.vpcf"
-			"particle"			"particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf"
-			"particle"			"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
-			"particle"			"particles/units/heroes/hero_axe/axe_cullingblade_sprint.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"75.0 65.0 55.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60 120 180"		
-		
-		// Cast Range
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"150"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"kill_threshold"			"250 350 450"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"150 250 300"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed_bonus"				"40"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"speed_duration"			"6"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed_aoe"					"900"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"6.0 6.0 6.0"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"kill_threshold_scepter"	"300 450 625"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"speed_duration_scepter"	"10"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_axe/axe_culling_blade.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"            "TARGET"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"		"heroes/hero_axe/culling_blade.lua"
-				"Function"			"CullingBlade"
-				"sound_fail"		"Hero_Axe.Culling_Blade_Fail"
-				"sound_success"		"Hero_Axe.Culling_Blade_Success"
-				"particle_kill"		"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
-				"modifier_sprint"	"modifier_culling_blade_sprint_datadriven"	
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_culling_blade_sprint_datadriven"
-			{
-				"IsBuff"	"1"
-		
-				"EffectName"		"particles/units/heroes/hero_axe/axe_cullingblade_sprint.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				"OnCreated"
-				{
-					"FireEffect"
-					{
-						"EffectName"        "particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf"
-						"EffectAttachType"  "start_at_customorigin"
-						
-						"ControlPointEntities"
-						{
-							"TARGET"	"follow_origin"
-							"TARGET"	"follow_origin"
-						}
-					}
-				}
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%speed_bonus"
-				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_bonus" 
-				}
-			}
-		}
-	}	
-	
 	"backdoor_protection_datadriven"
 	{
 		// General
@@ -63813,4 +63177,664 @@
 			}
 		}
 	}
+	// Rewrite of the Axe Battle Hunger ability
+	// Author: Pizzalol
+	// Date: 14.10.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_axe/battle_hunger.lua
+	"battle_hunger_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"axe_battle_hunger"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
+			"particle"			"particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
+			"particle"			"particles/status_fx/status_effect_battle_hunger.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20.0 15.0 10.0 5.0"
+	
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"16 24 32 40"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75"		
+		
+		// Cast Range
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"750"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.1"	// Primarily about the damage
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"10.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow"						"-12"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed_bonus"						"12"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Axe.Battle_Hunger"
+				"Target" 		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_battle_hunger_enemy_datadriven"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_battle_hunger_caster_datadriven"
+			{
+				"IsBuff"		"1"
+				"IsPurgable"	"0"
+			}
+	
+			"modifier_battle_hunger_caster_speed_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_bonus" 
+				}
+			}
+	
+			"modifier_battle_hunger_enemy_datadriven"
+			{
+				"IsDebuff"		"1"
+	
+				"StatusEffectName" 		"particles/status_fx/status_effect_battle_hunger.vpcf" 	   
+				"StatusEffectPriority"  "9"
+	
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%AbilityDamage"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
+						"EffectAttachType"  "follow_overhead"
+						"Target"            "TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_axe/battle_hunger.lua"
+						"Function"		"BattleHungerStart"
+						"caster_modifier"	"modifier_battle_hunger_caster_datadriven"
+						"speed_modifier"	"modifier_battle_hunger_caster_speed_datadriven"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_axe/battle_hunger.lua"
+						"Function"		"BattleHungerEnd"
+						"caster_modifier"	"modifier_battle_hunger_caster_datadriven"
+						"speed_modifier"	"modifier_battle_hunger_caster_speed_datadriven"
+					}
+				}
+	
+				"OnKill"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_axe/battle_hunger.lua"
+						"Function"		"BattleHungerKill"
+						"modifier"		"modifier_battle_hunger_enemy_datadriven"
+					}
+				}
+			}
+		}	
+	}
+	
+	// Rewrite of the Axe Berserkers Call ability
+	// Author: Pizzalol
+	// Date: 14.10.2015.
+	// Version: 6.83
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_axe/berserkers_call.lua
+	"berserkers_call_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"axe_berserkers_call"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
+			"particle"			"particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
+			"particle"			"particles/status_fx/status_effect_beserkers_call.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16 14 12 10"
+	
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"0 0 0 0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"80 90 100 110"	
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.0 2.4 2.8 3.2"
+			}	
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Axe.Berserkers_Call"
+				"Target" 		"CASTER"
+			}
+	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_berserkers_call_caster_datadriven"
+				"Target" 		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_berserkers_call_caster_datadriven"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  	"CASTER"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				}
+			
+				"Action"    
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_beserkers_call_enemy_datadriven"
+						"Target" 		"TARGET"
+						"Duration"		"%duration"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_berserkers_call_caster_datadriven"
+			{
+				"IsPurgable"		"0"
+				"IsBuff"			"1"
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"        "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
+						"EffectAttachType" 	"follow_origin"
+						"ControlPoints"
+						{
+							"02"		"%radius 1 1"	//Required for Rampant Outrage (axe immortal)
+						}
+						"ControlPointEntities"
+						{
+							"CASTER"	"follow_origin"
+							"CASTER"	"follow_origin"
+							"CASTER"	"follow_origin"
+						}
+					}
+				}
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
+				}
+			}
+	
+			"modifier_beserkers_call_enemy_datadriven"
+			{
+				"IsPurgable"		"0"
+				"IsDebuff"			"1"
+	
+				"StatusEffectName" 		"particles/status_fx/status_effect_beserkers_call.vpcf" 	   
+				"StatusEffectPriority"  "10"
+	
+				"ThinkInterval"  "0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_axe/berserkers_call.lua"
+						"Function"		"BerserkersCall"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_axe/berserkers_call.lua"
+						"Function"		"BerserkersCallEnd"
+					}
+				}
+			}
+		}
+	}
+	
+	// Rewrite of the Axe Counter Helix ability
+	// Author: Pizzalol
+	// Date: 14.10.2015.
+	// Version: 6.83c
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_axe/counter_helix.lua
+	"counter_helix_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"axe_counter_helix"
+		"AOERadius"						"%radius"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
+			"particle"			"particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf"
+		}
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.45 0.4 0.35 0.3"
+		
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"100 135 170 205"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"275"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"trigger_chance"			"20"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown"					"0.45 0.4 0.35 0.3"
+			}
+			// Extra
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"trigger_radius"			"1000"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_counter_helix_aura_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"Aura" 			"modifier_counter_helix_enemy_datadriven"
+				"Aura_Radius" 	"%trigger_radius"
+				"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+			}
+	
+			"modifier_counter_helix_enemy_datadriven"
+			{
+				"IsHidden"			"1"
+	
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"			"%trigger_chance"
+						"PseudoRandom" 		"DOTA_PSEUDO_RANDOM_JUGG_CRIT"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"	"heroes/hero_axe/counter_helix.lua"
+								"Function"		"CounterHelix"
+								"helix_modifier"	"modifier_counter_helix_datadriven"
+							}
+						}
+					}
+				}
+			}
+	
+			"modifier_counter_helix_datadriven"
+			{
+				"Duration"		"%cooldown"
+				"IsHidden"		"1"
+	
+				"EffectName"	"particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf"
+				"EffectAttachType"	"follow_origin"			
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Axe.CounterHelix"
+						"Target" 		"CASTER"
+					}
+	
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"CASTER"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+						}
+					
+						"Action"    
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Type"			"DAMAGE_TYPE_PHYSICAL"
+								"Damage"		"%AbilityDamage"
+							}
+						}
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_counter_helix_rotate_datadriven"
+						"Target" 		"CASTER"
+						"Duration"		"0.15"
+					}
+				}
+			}
+	
+			"modifier_counter_helix_rotate_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"Rotate"
+					{
+						"Target"	"CASTER"
+						"PitchYawRoll"	"0 72 0"
+					}
+				}
+			}
+		}
+	}
+	
+	// Rewrite of the Axe Culling Blade ability
+	// Author: Pizzalol
+	// Date: 14.10.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	// NOTE: You need to specify the modifiers that need to be removed (only if they cant be purged)
+	// which would otherwise prevent death in the culling_blade.lua file
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_axe/culling_blade.lua
+	"culling_blade_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"		
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"axe_culling_blade"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
+			"particle"			"particles/units/heroes/hero_axe/axe_culling_blade.vpcf"
+			"particle"			"particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf"
+			"particle"			"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
+			"particle"			"particles/units/heroes/hero_axe/axe_cullingblade_sprint.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"75.0 65.0 55.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60 120 180"		
+		
+		// Cast Range
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"150"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"kill_threshold"			"250 325 400"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"150 250 300"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed_bonus"				"30"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"speed_duration"			"6"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed_aoe"					"900"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_scepter"			"6.0 6.0 6.0"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"kill_threshold_scepter"	"300 450 625"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"speed_duration_scepter"	"10"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_axe/axe_culling_blade.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_axe/culling_blade.lua"
+				"Function"			"CullingBlade"
+				"sound_fail"		"Hero_Axe.Culling_Blade_Fail"
+				"sound_success"		"Hero_Axe.Culling_Blade_Success"
+				"particle_kill"		"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
+				"modifier_sprint"	"modifier_culling_blade_sprint_datadriven"	
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_culling_blade_sprint_datadriven"
+			{
+				"IsBuff"	"1"
+		
+				"EffectName"		"particles/units/heroes/hero_axe/axe_cullingblade_sprint.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						
+						"ControlPointEntities"
+						{
+							"TARGET"	"follow_origin"
+							"TARGET"	"follow_origin"
+						}
+					}
+				}
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%speed_bonus"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_bonus" 
+				}
+			}
+		}
+	}	
+	
 }

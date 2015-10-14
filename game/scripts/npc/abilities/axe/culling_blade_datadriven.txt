@@ -1,9 +1,15 @@
 // Rewrite of the Axe Culling Blade ability
 // Author: Pizzalol
-// Date: 10.02.2015.
+// Date: 14.10.2015.
+// Version: 6.85
+// Type: Datadriven
 // NOTE: You need to specify the modifiers that need to be removed (only if they cant be purged)
 // which would otherwise prevent death in the culling_blade.lua file
-"axe_culling_blade_datadriven"
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_axe/culling_blade.lua
+"culling_blade_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -52,7 +58,7 @@
 		"01"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"kill_threshold"			"250 350 450"
+			"kill_threshold"			"250 325 400"
 		}
 		"02"
 		{
@@ -62,7 +68,7 @@
 		"03"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"speed_bonus"				"40"
+			"speed_bonus"				"30"
 		}
 		"04"
 		{
