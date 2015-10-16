@@ -10,7 +10,6 @@ function LifeBreak( keys )
     local target = keys.target
     local ability = keys.ability
     local charge_speed = ability:GetLevelSpecialValueFor("charge_speed", (ability:GetLevel() - 1)) * 1/30
-    local auto_attack_target = ability:GetLevelSpecialValueFor("auto_attack_target", (ability:GetLevel() - 1))
 
     -- Save modifiernames in ability
     ability.modifiername = keys.ModifierName
