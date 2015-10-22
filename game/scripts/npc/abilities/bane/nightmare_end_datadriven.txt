@@ -1,8 +1,16 @@
-// Rewrite of the Bane Nightmare End ability
+// Rewrite of the Bane Nightmare End Sub-ability
 // Author: Pizzalol
-// Date: 12.02.2015.
-// NOTE: This ability is part of the bane_nightmare_datadriven ability and it will NOT function without it
-"bane_nightmare_end_datadriven"
+// Date: 22.10.2015.
+// Version: 6.83
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_bane/nightmare.lua
+//
+// KV files:
+// scripts/npc/abilities/bane/nightmare_datadriven.txt
+"nightmare_end_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -40,4 +48,3 @@
         }
 	}
 }
-

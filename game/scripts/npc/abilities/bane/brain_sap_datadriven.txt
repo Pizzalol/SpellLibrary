@@ -1,17 +1,20 @@
-// Rewrite of the Bane Enfeeble
+// Rewrite of the Bane Brain Sap
 // Author: chrislotix
-// Date: 11.01.2015.
-"bane_enfeeble_datadriven"
+// Date: 22.10.2015.
+// Version: 6.85
+// Type: Datadriven
+"brain_sap_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"		
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-	"AbilityTextureName"			"bane_enfeeble"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"bane_brain_sap"
 
 	// Precache
 	//-------------------------------------------------------------------------------------------------------------
@@ -23,27 +26,28 @@
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastRange"				"1000"
 	"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
-	"AbilityCastAnimation"			"ACT_DOTA_ENFEEBLE"
+	"AbilityCastRange"				"600"
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"10.0"
-	"AbilityDuration"				"20.0 20.0 20.0 20.0"
+	"AbilityCooldown"				"14.0 14.0 14.0 14.0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"90 160 230 300"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"95 105 115 125"		
+	"AbilityManaCost"				"70 100 130 160"
 
-	// Special
-	//-------------------------------------------------------------------------------------------------------------
+	
 	"AbilitySpecial"
 	{
-		"01"
+	"01"
 		{
 			"var_type"						"FIELD_INTEGER"
-			"enfeeble_attack_reduction"		"-30 -60 -90 -120"
+			"tooltip_brain_sap_heal_amt"		"90 160 230 300"
 		}
 	}
 
@@ -51,37 +55,39 @@
 	{
 		"FireSound"
 		{
-			"EffectName"	"Hero_Bane.Enfeeble.Cast"
+			"EffectName" "Hero_Bane.BrainSap.Target"
 			"Target"	"TARGET"
 		}
 
 		"FireSound"
 		{
-			"EffectName"	"Hero_Bane.Enfeeble"
-			"Target"		"TARGET"
+			"EffectName"	"Hero_Bane.BrainSap"
+			"Target"	"CASTER"
 		}
 
-		"ApplyModifier"
+		"FireEffect"
 		{
-			"ModifierName"	"modifier_enfeeble_datadriven"
-			"Target"		"TARGET"
-		}
-	}
+			"EffectName"	"particles/units/heroes/hero_bane/bane_sap.vpcf"
+			"EffectAttachType"	"follow_origin"
 
-	"Modifiers"
-	{
-		"modifier_enfeeble_datadriven"
-		{
-			"IsDebuff"	"1"
-			"Duration"	"%AbilityDuration"
-			"IsPurgable"	"0"
-			"EffectName"	"particles/units/heroes/hero_bane/bane_enfeeble.vpcf"
-			"EffectAttachType"	"follow_overhead"			
-
-			"Properties"
+			"ControlPointEntities"
 			{
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%enfeeble_attack_reduction"
+				"CASTER" "follow_origin"
+				"TARGET" "follow_origin"		
 			}
+		}
+
+		"Damage"
+		{
+			"Target"	"TARGET"
+			"Type"		"DAMAGE_TYPE_PURE"
+			"Damage"	"%tooltip_brain_sap_heal_amt"
+		}
+
+		"Heal"
+		{
+			"Target"	"CASTER"
+			"HealAmount"	"%tooltip_brain_sap_heal_amt"
 		}
 	}
 }

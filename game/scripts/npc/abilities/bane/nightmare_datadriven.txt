@@ -1,8 +1,16 @@
 // Rewrite of the Bane Nightmare ability
 // Author: Pizzalol, chrislotix
-// Date: 12.02.2015.
-// NOTE: This ability requires the bane_nightmare_end_datadriven ability to fully function!
-"bane_nightmare_datadriven"
+// Date: 22.10.2015.
+// Version: 6.83
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_bane/nightmare.lua
+//
+// KV files:
+// scripts/npc/abilities/bane/nightmare_end_datadriven.txt
+"nightmare_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -145,9 +153,9 @@
             	{
             		"ScriptFile"		"scripts/vscripts/heroes/hero_bane/nightmare.lua"
             		"Function"			"NightmareCasterCheck"
-            		"main_ability_name"	"bane_nightmare_datadriven"
-            		"sub_ability_name"	"bane_nightmare_end_datadriven"
-            		"check_ability"		"bane_nightmare_datadriven"
+            		"main_ability_name"	"nightmare_datadriven"
+            		"sub_ability_name"	"nightmare_end_datadriven"
+            		"check_ability"		"nightmare_datadriven"
             	}
             }
 
@@ -184,9 +192,9 @@
             	{
             		"ScriptFile"		"scripts/vscripts/heroes/hero_bane/nightmare.lua"
             		"Function"			"NightmareCasterCheck"
-            		"sub_ability_name"	"bane_nightmare_datadriven"
-            		"main_ability_name"	"bane_nightmare_end_datadriven"
-            		"check_ability"		"bane_nightmare_datadriven"
+            		"sub_ability_name"	"nightmare_datadriven"
+            		"main_ability_name"	"nightmare_end_datadriven"
+            		"check_ability"		"nightmare_datadriven"
             	}
             }         
 

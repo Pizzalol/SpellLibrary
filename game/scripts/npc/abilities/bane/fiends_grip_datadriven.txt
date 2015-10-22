@@ -1,10 +1,13 @@
 // Rewrite of the Bane Fiends Grip
 // Author: chrislotix, Pizzalol
-// Date: 11.01.2015.
-// Changed: 11.03.2015.
-// Changed by: Pizzalol
-// Reason: Fixed a few issues, optimized code
-"bane_fiends_grip_datadriven"
+// Date: 22.10.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_bane/fiends_grip.lua
+"fiends_grip_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
