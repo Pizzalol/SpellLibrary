@@ -30,7 +30,8 @@ function Reincarnation( event )
 		-- Kill, counts as death for the player but doesn't count the kill for the killer unit
 		caster:SetHealth(1)
 		caster:Kill(caster, nil)
-
+		-- Disable buyback.
+		caster:SetBuybackEnabled(false)
 		-- Set the gold back
 		caster:SetGold(casterGold, false)
 
@@ -47,6 +48,7 @@ function Reincarnation( event )
 		-- End Particle after reincarnating
 		Timers:CreateTimer(reincarnate_time, function() 
 			ParticleManager:DestroyParticle(caster.ReincarnateParticle, false)
+			caster:SetBuybackEnabled(true)
 		end)
 
 		-- Grave and rock particles
