@@ -141,10 +141,11 @@ end
 -- Ends the the ability, repositioning the hero on the latest active split unit
 function PrimalSplitEnd( event )
 	local caster = event.caster
-
+	local facing_direction = caster.ActiveSplit:GetForwardVector()
 	if caster.ActiveSplit then
 		local position = caster.ActiveSplit:GetAbsOrigin()
 		FindClearSpaceForUnit(caster, position, true)
+		caster:SetForwardVector(facing_direction)
 	end
 
 end
