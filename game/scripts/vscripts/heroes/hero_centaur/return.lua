@@ -15,8 +15,9 @@ function Return( event )
 	local return_damage = damage + ( casterSTR * str_return )
 
 	-- Damage
-	ApplyDamage({ victim = attacker, attacker = caster, damage = return_damage, damage_type = damageType })
-
-	print("done "..return_damage)
+	if attacker:GetTeamNumber() ~= caster:GetTeamNumber() then
+		ApplyDamage({ victim = attacker, attacker = caster, damage = return_damage, damage_type = damageType })
+		print("done "..return_damage)
+	end
 
 end
