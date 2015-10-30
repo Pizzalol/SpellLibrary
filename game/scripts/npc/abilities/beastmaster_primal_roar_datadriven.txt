@@ -126,6 +126,13 @@
 			"Duration"		"%duration"
 		}
 
++		"ApplyModifier"
++		{
++			"ModifierName"	"modifier_primal_roar_slow"
++			"Target" 		"TARGET"
++			"Duration"		"%slow_duration"
++		}
+
 		"ActOnTargets"
 		{
 			"Target"
@@ -186,10 +193,11 @@
 		"modifier_primal_roar_slow"
 		{
 			"IsDebuff"		"1"
+			"IsPurgable"		"0"
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%slow_attack_speed_pct"
-			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_movement_speed_pct" 
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_movement_speed_pct" 
 			}
 		}
 	}
