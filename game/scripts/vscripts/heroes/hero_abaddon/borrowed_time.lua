@@ -16,6 +16,7 @@ function BorrowedTimeActivate( event )
 		BorrowedTimePurge( event )
 		ability:ApplyDataDrivenModifier( caster, caster, "modifier_borrowed_time", { duration = dur })
 		ability:StartCooldown( cooldown )
+		caster:Stop()
 		caster:EmitSound("Hero_Abaddon.BorrowedTime")
 	end
 end
