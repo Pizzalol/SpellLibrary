@@ -35,7 +35,7 @@ function shrapnel_start_charge( keys )
 				-- Calculate stacks
 				local next_charge = caster.shrapnel_charges + 1
 				caster:RemoveModifierByName( modifierName )
-				if next_charge ~= 3 then
+				if next_charge ~= maximum_charges then
 					ability:ApplyDataDrivenModifier( caster, caster, modifierName, { Duration = charge_replenish_time } )
 					shrapnel_start_cooldown( caster, charge_replenish_time )
 				else
