@@ -1,10 +1,13 @@
 // Rewrite of the Bounty Hunter Track ability
 // Author: Pizzalol, chrislotix
-// Date: 02.01.2015.
-// NOTE: Doesnt have the smokey trail particle
-// Changed: 07.02.2015. - Track reveals invisible units properly
-// Changed: 19.03.2015. - Fixed and added all the required particles
-"bounty_hunter_track_datadriven"
+// Date: 28.11.2015.
+// Version: 6.83
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_bounty_hunter/track.lua
+"track_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -35,7 +38,7 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"1200"
 	"AbilityCastPoint"				"0.3 0.3 0.3"
-	"AbilityCooldown"				"10.0 7.0 5.0"
+	"AbilityCooldown"				"4.0"
 	"AbilityManaCost"				"50"
 		
 	// Special
@@ -60,7 +63,7 @@
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_gold_self"		"150 200 250"
+			"bonus_gold_self"		"200 275 350"
 		}
 		"05"
 		{
@@ -212,6 +215,7 @@
 		{
 			"IsHidden"		"1"
 			"IsPurgable"	"0"
+			"Priority"		"MODIFIER_PRIORITY_HIGH"
 			"States"
 			{
 				"MODIFIER_STATE_INVISIBLE" 			"MODIFIER_STATE_VALUE_DISABLED"
@@ -219,4 +223,3 @@
 		}
 	}
 }
-

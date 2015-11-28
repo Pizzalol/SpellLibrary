@@ -1,7 +1,13 @@
 // Rewrite of the Bounty Hunter Jinda
 // Author: chrislotix
-// Date: 01.01.2015.
-"bounty_hunter_jinada_datadriven"
+// Date: 28.11.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_bounty_hunter/jinada.lua
+"jinada_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

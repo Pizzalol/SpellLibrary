@@ -126,12 +126,12 @@
 			"Duration"		"%duration"
 		}
 
-+		"ApplyModifier"
-+		{
-+			"ModifierName"	"modifier_primal_roar_slow"
-+			"Target" 		"TARGET"
-+			"Duration"		"%slow_duration"
-+		}
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_primal_roar_slow"
+			"Target" 		"TARGET"
+			"Duration"		"%slow_duration"
+		}
 
 		"ActOnTargets"
 		{

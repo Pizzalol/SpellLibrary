@@ -115,8 +115,7 @@
             "EffectAttachType"      "follow_overhead"
 
             "OverrideAnimation"     "ACT_DOTA_FLAIL"
-            // Doesnt work for modifiers it seems
-            "AnimationPlaybackRate"	"%animation_rate"
+            "OverrideAnimationRate"	"%animation_rate"
 
             "OnTakeDamage"
             {

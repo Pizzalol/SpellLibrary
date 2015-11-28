@@ -1,7 +1,9 @@
-// Rewrite of the Bounty Hunter Shurikan Toss
+// Rewrite of the Bounty Hunter Shuriken Toss
 // Author: chrislotix
-// Date: 01.01.2015.
-"bounty_hunter_shuriken_toss_datadriven"
+// Date: 28.11.2015.
+// Version: 6.81
+// Type: Datadriven
+"shuriken_toss_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -94,15 +96,7 @@
     		"EffectName"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_impact.vpcf"
     		"Target"		"TARGET"
     		"EffectAttachType"	"attach_hitloc"
-    	}
-
-
-        "Damage"
-        {
-        	"Type"		"DAMAGE_TYPE_MAGICAL"
-        	"Damage"	"%bonus_damage"
-        	"Target"	"TARGET"
-        }
+    	}        
 
         "Stun"
         {
@@ -116,7 +110,11 @@
         	"Target"		"TARGET"
         }
 
+        "Damage"
+        {
+        	"Type"		"DAMAGE_TYPE_MAGICAL"
+        	"Damage"	"%bonus_damage"
+        	"Target"	"TARGET"
+        }
     }
-
 }
-
