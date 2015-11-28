@@ -1,7 +1,9 @@
 // Rewrite of Brewmaster Drunken Haze
 // Author: Noya
-// Date: 20.01.2015.
-"brewmaster_drunken_haze_datadriven"
+// Date: 28.11.2015.
+// Version: 6.85
+// Type: Datadriven
+"drunken_haze_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -138,4 +140,3 @@
 		}
 	}
 }
-

@@ -13,13 +13,11 @@
 	{
 		"override_hero" "npc_dota_hero_ancient_apparition"
 	
-		"AbilityLayout"	"5"
+		"AbilityLayout"	"4"
 	
-		"Ability1"	"call_of_the_wild_boar_datadriven"
-		"Ability2"	"call_of_the_wild_hawk_datadriven"
-		"Ability3"	"inner_beast_datadriven"
-		"Ability4"	"nightmare_datadriven"
-		"Ability5"	"primal_roar_datadriven"
-		"Ability6"	"nightmare_end_datadriven"
+		"Ability1"	"thunder_clap_datadriven"
+		"Ability2"	"drunken_haze_datadriven"
+		"Ability3"	"drunken_brawler_datadriven"
+		"Ability4"	"primal_split_datadriven"
 	}
 }

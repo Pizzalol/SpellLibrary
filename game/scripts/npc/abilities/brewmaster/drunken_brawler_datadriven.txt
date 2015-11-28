@@ -1,8 +1,14 @@
 // Rewrite of Brewmaster Drunken Brawler
 // Author: Noya
-// Date: 20.01.2015.
-// Note: Icon changing is originally done with flash scaleform, in this ability there will just be a buff icon to display when the player has a guaranteed crit/miss.
-"brewmaster_drunken_brawler_datadriven"
+// Date: 28.11.2015.
+// Version: 6.85
+// Type: Datadriven
+// Notes: Icon changing is originally done with flash scaleform, in this ability there will just be a buff icon to display when the player has a guaranteed crit/miss.
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_brewmaster/drunken_brawler.lua
+"drunken_brawler_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

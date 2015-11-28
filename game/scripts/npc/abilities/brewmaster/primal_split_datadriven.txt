@@ -1,7 +1,13 @@
 // Rewrite of Brewmaster Primal Split
 // Author: Noya
-// Date: 21.01.2015.
-"brewmaster_primal_split_datadriven"
+// Date: 28.11.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_brewmaster/primal_split.lua
+"primal_split_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -188,4 +194,3 @@
 		}
 	}	
 }
-
