@@ -15,9 +15,9 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"viscous_nasal_goo_datadriven"
-		"Ability2"	"quill_spray_datadriven"
-		"Ability3"	"bristleback_datadriven"
-		"Ability4"	"warpath_datadriven"
+		"Ability1"	"spawn_spiderlings_datadriven"
+		"Ability2"	"spin_web_datadriven"
+		"Ability3"	"incapacitating_bite_datadriven"
+		"Ability4"	"insatiable_hunger_datadriven"
 	}
 }

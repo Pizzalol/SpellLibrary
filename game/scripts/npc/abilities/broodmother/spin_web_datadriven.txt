@@ -1,8 +1,19 @@
 // Rewrite of the Broodmother Spin Web ability
 // Author: Pizzalol
-// Date: 18.01.2015.
-// NOTE: This ability requires Broodmother Spin Web Destroy (datadriven version) for full functionality
-"broodmother_spin_web_datadriven"
+// Date: 28.11.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_broodmother/spin_web.lua
+//
+// KV files:
+// scripts/npc/abilities/broodmother/spin_web_destroy_datadriven.txt
+//
+// Unit files:
+// scripts/npc/units/npc_dummy_unit.txt
+"spin_web_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -120,7 +131,7 @@
 			"Target"				"POINT"			
 			"stack_modifier"		"modifier_web_stack_counter_datadriven"
 			"dummy_modifier"		"modifier_web_dummy_aura_datadriven"
-			"dummy_ability"			"broodmother_spin_web_destroy_datadriven"
+			"dummy_ability"			"spin_web_destroy_datadriven"
 		}
 	}
 

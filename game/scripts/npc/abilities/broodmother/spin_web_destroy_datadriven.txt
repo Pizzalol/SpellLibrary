@@ -1,8 +1,16 @@
 // Rewrite of the Broodmother Spin Web Destroy ability
 // Author: Pizzalol
-// Date: 18.01.2015.
-// NOTE: This spell is part of the Broodmother Spin Web ability
-"broodmother_spin_web_destroy_datadriven"
+// Date: 28.11.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_broodmother/spin_web.lua
+//
+// KV files:
+// scripts/npc/abilities/broodmother/spin_web_datadriven.txt
+"spin_web_destroy_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

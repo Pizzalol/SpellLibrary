@@ -1,7 +1,9 @@
 // Rewrite of the Broodmother Incapacitating Bite ability
 // Author: Pizzalol
-// Date: 12.01.2015.
-"broodmother_incapacitating_bite_datadriven"
+// Date: 28.11.2015.
+// Version: 6.85
+// Type: Datadriven
+"incapacitating_bite_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

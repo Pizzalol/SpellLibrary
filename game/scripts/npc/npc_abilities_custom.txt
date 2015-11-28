@@ -1720,183 +1720,6 @@
 		}
 	}
 	
-	// Rewrite of the Broodmother Incapacitating Bite ability
-	// Author: Pizzalol
-	// Date: 12.01.2015.
-	"broodmother_incapacitating_bite_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"broodmother_incapacitating_bite"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"			"particles/units/heroes/hero_broodmother/broodmother_incapacitatingbite_debuff.vpcf"
-		}
-			
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"miss_chance"			"30 40 50 60"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"-10 -20 -30 -40"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"			"2.0 2.0 2.0 2.0"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_incapacitating_bite_datadriven"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-	
-				"OnAttackLanded"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_incapacitating_bite_debuff_datadriven"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					}
-				}
-			}
-	
-			"modifier_incapacitating_bite_debuff_datadriven"
-			{
-				"IsDebuff"	"1"
-				"Duration"	"%duration"
-	
-				"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_incapacitatingbite_debuff.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
-					"MODIFIER_PROPERTY_MISS_PERCENTAGE"				"%miss_chance"
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Broodmother Insatiable Hunger ability
-	// Author: Pizzalol
-	// Date: 12.01.2015.
-	"broodmother_insatiable_hunger_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"broodmother_insatiable_hunger"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.2 0.2 0.2"
-		"AbilityCooldown"				"45.0 45.0 45.0"
-		"AbilityManaCost"				"100 100 100"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
-			"particle"			"particles/units/heroes/hero_broodmother/broodmother_hunger_buff.vpcf"
-		}
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"60 80 100"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lifesteal_pct"			"60 80 100"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"14.0 14.0 14.0"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Broodmother.InsatiableHunger"
-				"Target"		"CASTER"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_insatiable_hunger_datadriven"
-				"Target"		"CASTER"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_insatiable_hunger_datadriven"
-			{
-				"Duration"	"%duration"
-				"IsBuff"	"1"
-	
-				"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_hunger_buff.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				"OnAttackLanded"
-				{
-					"Lifesteal"
-					{
-						"Target"	"CASTER"
-						"LifestealPercent"	"%lifesteal_pct"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_broodmother/insatiable_hunger.lua"
-						"Function"		"InsatiableHungerStopSound"
-						"sound"			"Hero_Broodmother.InsatiableHunger"
-					}
-				}
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
-				}
-			}
-		}
-	}
-	
 	"broodmother_poison_sting_datadriven"
 	{
 		// General
@@ -1962,625 +1785,6 @@
 	}
 	
 	
-	// Rewrite of the Broodmother Spawn Spiderlings ability
-	// Author: Pizzalol
-	// Date: 14.01.2015.
-	// NOTE2: ------------------ Uses the normal dota spiderlings NOT custom ones -----------------
-	"broodmother_spawn_spiderlings_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"broodmother_spawn_spiderlings"
-		
-		// Unit Targeting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.2 0.2 0.2 0.2"
-		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
-		"AbilityManaCost"				"120 120 120 120"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
-			"particle"			"particles/units/heroes/hero_broodmother/broodmother_spiderlings_debuff.vpcf"
-			"particle"			"particles/units/heroes/hero_broodmother/broodmother_web_cast.vpcf"
-			"particle"			"particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
-		}
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.0"	// Modifier has no support value
-			
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"buff_duration"			"2.0 2.0 2.0 2.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"spiderling_duration"	"60.0 60.0 60.0 60.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"75 150 225 300"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"count"					"1 2 3 4"
-			}	 
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"	"1200"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Broodmother.SpawnSpiderlingsCast"
-				"Target"		"CASTER"
-			}
-	
-			"TrackingProjectile"
-			{
-				"Target" "TARGET"
-				"EffectName" "particles/units/heroes/hero_broodmother/broodmother_web_cast.vpcf"
-				"Dodgeable" "1"
-				"ProvidesVision" "0"
-				"MoveSpeed" "%projectile_speed"
-				"SourceAttachment" "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
-			}
-		}
-	
-		"OnProjectileHitUnit"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Broodmother.SpawnSpiderlingsImpact"
-				"Target"		"TARGET"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_spawn_spiderlings_datadriven"
-				"Target"		"TARGET"
-			}
-	
-			"Damage"
-			{
-				"Target"	"TARGET"
-				"Type"		"DAMAGE_TYPE_MAGICAL"
-				"Damage"	"%damage"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_spawn_spiderlings_datadriven"
-			{
-				"Duration"	"%buff_duration"
-				"IsDebuff"	"1"
-	
-				"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_spiderlings_debuff.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				"OnDeath"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Broodmother.SpawnSpiderlings"
-						"Target"
-						{
-							"Center"	"UNIT"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-					}
-	
-					"FireEffect"
-					{
-						"EffectName"        "particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"
-						{
-							"Center"	"UNIT"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-					}
-	
-					"SpawnUnit"
-					{
-						"UnitName"	"npc_dota_broodmother_spiderling"
-						"UnitCount"	"%count"
-						"SpawnRadius"	"50"
-						"Duration"	"%spiderling_duration"
-						"Target"
-						{
-							"Center"	"UNIT"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-	
-						"OnSpawn"
-						{
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_phased"
-								"Target"		"TARGET"
-								"Duration"		"0.03"
-							}
-						}
-	
-						"GrantsGold"	"1"
-						"GrantsXP"		"1"
-					}
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Broodmother Spin Web ability
-	// Author: Pizzalol
-	// Date: 18.01.2015.
-	// NOTE: This ability requires Broodmother Spin Web Destroy (datadriven version) for full functionality
-	"broodmother_spin_web_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityTextureName"			"broodmother_spin_web"
-		"AOERadius"						"%radius"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.4"
-		"AbilityCooldown"				"0.0"
-		"AbilityManaCost"				"50"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
-			"particle"			"particles/units/heroes/hero_broodmother/broodmother_web.vpcf"
-			"particle"			"particles/units/heroes/hero_broodmother/broodmother_spin_web_cast.vpcf"
-		}
-			
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"count"					"2 4 6 8"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"2 4 6 8"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"20 25 30 35"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"invis_movespeed_tooltip"		"40 50 60 70"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"fade_delay"			"2.0"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_time"			"6.0"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"1 2 3 4"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"charge_restore_time"	"40.0"
-			}
-			// Extra
-			// Set this value to 1 if you want it to affect every player controlled unit
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"all_units"			"0"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"linger_time"	"0.15"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"aura_interval"	"0.1"
-			}
-		}
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
-				"Function"				"web_start_charge"
-				"modifier_name"			"modifier_web_stack_counter_datadriven"
-			}
-		}
-	
-		"OnSpellStart"
-		{	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Broodmother.SpinWebCast"
-				"Target"		"CASTER"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
-				"Function"				"spin_web"
-				"Target"				"POINT"			
-				"stack_modifier"		"modifier_web_stack_counter_datadriven"
-				"dummy_modifier"		"modifier_web_dummy_aura_datadriven"
-				"dummy_ability"			"broodmother_spin_web_destroy_datadriven"
-			}
-		}
-	
-		"Modifiers"
-		{
-			// Cosmetic modifier for stacks
-			"modifier_web_stack_counter_datadriven"
-			{
-				"Passive"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsDebuff"				"0"
-			}
-	
-			// Cosmetic modifier for the web tooltip
-			"modifier_web_tooltip_datadriven"
-			{
-				"IsPurgable"	"0"
-				"IsDebuff"		"0"
-			}
-	
-			// Runs a script which checks all the units in an area around the dummy
-			// checks if its the caster or any of the specified units belonging to the caster
-			// applies the aura modifier along with the other required modifiers
-			"modifier_web_dummy_aura_datadriven"
-			{			
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_web.vpcf"
-						"EffectAttachType"	"attach_origin"
-						"Target"		"TARGET"
-	
-						"ControlPoints"
-						{
-							"00"	"0 0 0"
-							"01"	"%radius 0 150"
-						}
-					}
-				}
-	
-				"ThinkInterval"		"%aura_interval"
-	
-				"OnIntervalThink"
-				{
-					"ActOnTargets"
-					{
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Radius"	"%radius"
-							"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-							"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-						}
-	
-						"Action"
-						{
-							"RunScript"
-							{
-								"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
-								"Function"				"spin_web_aura"
-								"unit_spiderling"		"npc_dota_broodmother_spiderling"
-								"unit_spiderite"		"npc_dota_broodmother_spiderite"
-								"aura_modifier"			"modifier_web_regen_datadriven"
-								"pathing_modifier"		"modifier_web_pathing_datadriven"
-								"pathing_fade_modifier"	"modifier_web_pathing_fade_datadriven"
-								"invis_modifier"		"modifier_web_invis_datadriven"
-								"invis_fade_modifier"	"modifier_web_invis_fade_datadriven"
-							}
-						}
-					}				
-				}
-	
-	
-				"States"
-				{
-					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_TEAM_SELECT"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
-			// Pathing
-			"modifier_web_pathing_datadriven"
-			{
-				"IsHidden"	"1"
-	
-				"OnTakeDamage"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_web_pathing_fade_datadriven"
-						"Target"		"UNIT"
-					}
-	
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_web_pathing_datadriven"
-						"Target"		"UNIT"
-					}
-				}
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_FLYING"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
-			"modifier_web_pathing_fade_datadriven"
-			{
-				"IsHidden"	"1"
-				"Duration"	"%damage_time"
-	
-				"OnTakeDamage"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_web_pathing_fade_datadriven"
-						"Target"		"UNIT"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_web_pathing_datadriven"
-						"Target"		"TARGET"	
-					}
-				}
-			}
-	
-			// The modifier which gets applied by the aura
-			"modifier_web_regen_datadriven"
-			{
-				"IsHidden"	"1"
-				"Duration"	"%linger_time"
-	
-				"OnCreated"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_web_tooltip_datadriven"
-						"Target"		"TARGET"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					// Remove all the modifiers
-					// Pathing
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_web_pathing_fade_datadriven"
-						"Target"		"TARGET"
-					}
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_web_pathing_datadriven"
-						"Target"		"TARGET"
-					}
-					// Cosmetic
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_web_tooltip_datadriven"
-						"Target"		"TARGET"
-					}
-					// Invis
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_web_invis_fade_datadriven"
-						"Target"		"TARGET"
-					}
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_web_invis_datadriven"
-						"Target"		"TARGET"
-					}
-				}
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen"
-				}
-			}		
-	
-			// Invisibility
-			"modifier_web_invis_datadriven"
-			{
-				"IsHidden"	"1"
-	
-				"OnAttack"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_web_invis_fade_datadriven"
-						"Target"		"ATTACKER"
-					}
-				}
-	
-				"OnAbilityExecuted"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_web_invis_fade_datadriven"
-						"Target"		"UNIT"
-					}
-				}
-	
-				"OnCreated"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_invisible"
-						"Target"		"TARGET"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_invisible"
-						"Target"		"TARGET"
-					}
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
-			"modifier_web_invis_fade_datadriven"
-			{
-				"Duration"	"%fade_delay"
-				"IsHidden"	"1"
-	
-				"OnAttack"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_web_invis_fade_datadriven"
-						"Target"		"ATTACKER"
-					}
-				}
-	
-				"OnAbilityExecuted"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_web_invis_fade_datadriven"
-						"Target"		"UNIT"
-					}
-				}
-	
-				"OnCreated"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_web_invis_datadriven"
-						"Target"		"TARGET"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_web_invis_datadriven"
-						"Target"		"TARGET"
-					}
-				}
-			}
-		}
-	}
-	// Rewrite of the Broodmother Spin Web Destroy ability
-	// Author: Pizzalol
-	// Date: 18.01.2015.
-	// NOTE: This spell is part of the Broodmother Spin Web ability
-	"broodmother_spin_web_destroy_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"MaxLevel"						"1"
-		"AbilityTextureName"			"broodmother_spin_web_destroy"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
-				"Function"				"spin_web_destroy"
-			}
-		}
-	}
 	// Rewrite of Centaur Double Edge
 	// Author: Noya
 	// Date: 9.1.2015.
@@ -63896,6 +63100,829 @@
 						"Function"		"stack_destroyed"
 					}
 				}
+			}
+		}
+	}
+	// Rewrite of the Broodmother Incapacitating Bite ability
+	// Author: Pizzalol
+	// Date: 28.11.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	"incapacitating_bite_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"broodmother_incapacitating_bite"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_incapacitatingbite_debuff.vpcf"
+		}
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"miss_chance"			"30 40 50 60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"-10 -20 -30 -40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"			"2.0 2.0 2.0 2.0"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_incapacitating_bite_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnAttackLanded"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_incapacitating_bite_debuff_datadriven"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					}
+				}
+			}
+	
+			"modifier_incapacitating_bite_debuff_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+	
+				"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_incapacitatingbite_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"				"%miss_chance"
+				}
+			}
+		}
+	}
+	
+	// Rewrite of the Broodmother Insatiable Hunger ability
+	// Author: Pizzalol
+	// Date: 28.11.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_broodmother/insatiable_hunger.lua
+	"insatiable_hunger_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"broodmother_insatiable_hunger"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.2 0.2 0.2"
+		"AbilityCooldown"				"45.0 45.0 45.0"
+		"AbilityManaCost"				"100 100 100"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_hunger_buff.vpcf"
+		}
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"60 90 120"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lifesteal_pct"			"60 80 100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"14.0 14.0 14.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Broodmother.InsatiableHunger"
+				"Target"		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_insatiable_hunger_datadriven"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_insatiable_hunger_datadriven"
+			{
+				"Duration"	"%duration"
+				"IsBuff"	"1"
+	
+				"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_hunger_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnAttackLanded"
+				{
+					"Lifesteal"
+					{
+						"Target"	"CASTER"
+						"LifestealPercent"	"%lifesteal_pct"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_broodmother/insatiable_hunger.lua"
+						"Function"		"InsatiableHungerStopSound"
+						"sound"			"Hero_Broodmother.InsatiableHunger"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
+				}
+			}
+		}
+	}
+	// Rewrite of the Broodmother Spawn Spiderlings ability
+	// Author: Pizzalol
+	// Date: 28.11.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	// Notes: Uses the normal dota spiderlings NOT custom ones
+	"spawn_spiderlings_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"broodmother_spawn_spiderlings"
+		
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.2 0.2 0.2 0.2"
+		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
+		"AbilityManaCost"				"120 120 120 120"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_spiderlings_debuff.vpcf"
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_web_cast.vpcf"
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
+		}
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.0"	// Modifier has no support value
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"buff_duration"			"2.0 2.0 2.0 2.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"spiderling_duration"	"60.0 60.0 60.0 60.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"75 150 225 300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"count"					"1 2 3 4"
+			}	 
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"	"1200"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Broodmother.SpawnSpiderlingsCast"
+				"Target"		"CASTER"
+			}
+	
+			"TrackingProjectile"
+			{
+				"Target" "TARGET"
+				"EffectName" "particles/units/heroes/hero_broodmother/broodmother_web_cast.vpcf"
+				"Dodgeable" "1"
+				"ProvidesVision" "0"
+				"MoveSpeed" "%projectile_speed"
+				"SourceAttachment" "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Broodmother.SpawnSpiderlingsImpact"
+				"Target"		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_spawn_spiderlings_datadriven"
+				"Target"		"TARGET"
+			}
+	
+			"Damage"
+			{
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%damage"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_spawn_spiderlings_datadriven"
+			{
+				"Duration"	"%buff_duration"
+				"IsDebuff"	"1"
+	
+				"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_spiderlings_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnDeath"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Broodmother.SpawnSpiderlings"
+						"Target"
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+	
+					"SpawnUnit"
+					{
+						"UnitName"	"npc_dota_broodmother_spiderling"
+						"UnitCount"	"%count"
+						"SpawnRadius"	"50"
+						"Duration"	"%spiderling_duration"
+						"Target"
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+	
+						"OnSpawn"
+						{
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_phased"
+								"Target"		"TARGET"
+								"Duration"		"0.03"
+							}
+						}
+	
+						"GrantsGold"	"1"
+						"GrantsXP"		"1"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of the Broodmother Spin Web ability
+	// Author: Pizzalol
+	// Date: 28.11.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_broodmother/spin_web.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/broodmother/spin_web_destroy_datadriven.txt
+	//
+	// Unit files:
+	// scripts/npc/units/npc_dummy_unit.txt
+	"spin_web_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"broodmother_spin_web"
+		"AOERadius"						"%radius"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCooldown"				"0.0"
+		"AbilityManaCost"				"50"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_web.vpcf"
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_spin_web_cast.vpcf"
+		}
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"count"					"2 4 6 8"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_regen"			"2 4 6 8"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"20 25 30 35"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"invis_movespeed_tooltip"		"40 50 60 70"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_delay"			"2.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_time"			"6.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"1 2 3 4"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_restore_time"	"40.0"
+			}
+			// Extra
+			// Set this value to 1 if you want it to affect every player controlled unit
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"all_units"			"0"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"linger_time"	"0.15"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aura_interval"	"0.1"
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
+				"Function"				"web_start_charge"
+				"modifier_name"			"modifier_web_stack_counter_datadriven"
+			}
+		}
+	
+		"OnSpellStart"
+		{	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Broodmother.SpinWebCast"
+				"Target"		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
+				"Function"				"spin_web"
+				"Target"				"POINT"			
+				"stack_modifier"		"modifier_web_stack_counter_datadriven"
+				"dummy_modifier"		"modifier_web_dummy_aura_datadriven"
+				"dummy_ability"			"spin_web_destroy_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			// Cosmetic modifier for stacks
+			"modifier_web_stack_counter_datadriven"
+			{
+				"Passive"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+				"IsDebuff"				"0"
+			}
+	
+			// Cosmetic modifier for the web tooltip
+			"modifier_web_tooltip_datadriven"
+			{
+				"IsPurgable"	"0"
+				"IsDebuff"		"0"
+			}
+	
+			// Runs a script which checks all the units in an area around the dummy
+			// checks if its the caster or any of the specified units belonging to the caster
+			// applies the aura modifier along with the other required modifiers
+			"modifier_web_dummy_aura_datadriven"
+			{			
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_web.vpcf"
+						"EffectAttachType"	"attach_origin"
+						"Target"		"TARGET"
+	
+						"ControlPoints"
+						{
+							"00"	"0 0 0"
+							"01"	"%radius 0 150"
+						}
+					}
+				}
+	
+				"ThinkInterval"		"%aura_interval"
+	
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Radius"	"%radius"
+							"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+						}
+	
+						"Action"
+						{
+							"RunScript"
+							{
+								"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
+								"Function"				"spin_web_aura"
+								"unit_spiderling"		"npc_dota_broodmother_spiderling"
+								"unit_spiderite"		"npc_dota_broodmother_spiderite"
+								"aura_modifier"			"modifier_web_regen_datadriven"
+								"pathing_modifier"		"modifier_web_pathing_datadriven"
+								"pathing_fade_modifier"	"modifier_web_pathing_fade_datadriven"
+								"invis_modifier"		"modifier_web_invis_datadriven"
+								"invis_fade_modifier"	"modifier_web_invis_fade_datadriven"
+							}
+						}
+					}				
+				}
+	
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_TEAM_SELECT"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			// Pathing
+			"modifier_web_pathing_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"OnTakeDamage"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_pathing_fade_datadriven"
+						"Target"		"UNIT"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_pathing_datadriven"
+						"Target"		"UNIT"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_FLYING"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_web_pathing_fade_datadriven"
+			{
+				"IsHidden"	"1"
+				"Duration"	"%damage_time"
+	
+				"OnTakeDamage"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_pathing_fade_datadriven"
+						"Target"		"UNIT"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_pathing_datadriven"
+						"Target"		"TARGET"	
+					}
+				}
+			}
+	
+			// The modifier which gets applied by the aura
+			"modifier_web_regen_datadriven"
+			{
+				"IsHidden"	"1"
+				"Duration"	"%linger_time"
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_tooltip_datadriven"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					// Remove all the modifiers
+					// Pathing
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_pathing_fade_datadriven"
+						"Target"		"TARGET"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_pathing_datadriven"
+						"Target"		"TARGET"
+					}
+					// Cosmetic
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_tooltip_datadriven"
+						"Target"		"TARGET"
+					}
+					// Invis
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_invis_fade_datadriven"
+						"Target"		"TARGET"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_invis_datadriven"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen"
+				}
+			}		
+	
+			// Invisibility
+			"modifier_web_invis_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"OnAttack"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_invis_fade_datadriven"
+						"Target"		"ATTACKER"
+					}
+				}
+	
+				"OnAbilityExecuted"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_invis_fade_datadriven"
+						"Target"		"UNIT"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_web_invis_fade_datadriven"
+			{
+				"Duration"	"%fade_delay"
+				"IsHidden"	"1"
+	
+				"OnAttack"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_invis_fade_datadriven"
+						"Target"		"ATTACKER"
+					}
+				}
+	
+				"OnAbilityExecuted"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_invis_fade_datadriven"
+						"Target"		"UNIT"
+					}
+				}
+	
+				"OnCreated"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_web_invis_datadriven"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_web_invis_datadriven"
+						"Target"		"TARGET"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of the Broodmother Spin Web Destroy ability
+	// Author: Pizzalol
+	// Date: 28.11.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_broodmother/spin_web.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/broodmother/spin_web_datadriven.txt
+	"spin_web_destroy_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"broodmother_spin_web_destroy"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_broodmother/spin_web.lua"
+				"Function"				"spin_web_destroy"
 			}
 		}
 	}
