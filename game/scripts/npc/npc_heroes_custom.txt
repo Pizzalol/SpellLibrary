@@ -15,11 +15,11 @@
 	
 		"AbilityLayout"	"5"
 	
-		"Ability1"	"shuriken_toss_datadriven"
-		"Ability2"	"jinada_datadriven"
-		"Ability3"	"wind_walk_datadriven"
+		"Ability1"	"call_of_the_wild_boar_datadriven"
+		"Ability2"	"call_of_the_wild_hawk_datadriven"
+		"Ability3"	"inner_beast_datadriven"
 		"Ability4"	"nightmare_datadriven"
-		"Ability5"	"track_datadriven"
+		"Ability5"	"primal_roar_datadriven"
 		"Ability6"	"nightmare_end_datadriven"
 	}
 }

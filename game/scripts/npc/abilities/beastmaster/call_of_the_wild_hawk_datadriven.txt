@@ -1,21 +1,30 @@
-// Rewrite of Beastmaster Call of the Wild Boar
+// Rewrite of Beastmaster Call of the Wild
 // Author: Noya
-// Date: April 5, 2015
-// This ability is used with beastmaster_call_of_the_wild_datadriven, skilling one will attempt to upgrade the other
-"beastmaster_call_of_the_wild_boar_datadriven"
+// Date: 28.11.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_beastmaster/call_of_the_wild.lua
+//
+// KV files:
+// scripts/npc/abilities/beastmaster/call_of_the_wild_boar_datadriven.txt
+"call_of_the_wild_hawk_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"						"ability_datadriven"
+	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	
+	"AbilityTextureName"	"beastmaster_call_of_the_wild_hawk"
+		
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastPoint"				"0.3"
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"40.0 40.0 40.0 40.0"
+	"AbilityCooldown"				"40"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
@@ -28,74 +37,60 @@
 		"01"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"hawk_duration"				"60 60 60 60"
+			"boar_duration"				"60 60 60 60"
 		}
 		"02"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"boar_hp_tooltip"			"200 300 400 500"
+			"hawk_hp_tooltip"			"40 60 80 100"
 		}
 		"03"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"boar_damage_tooltip"		"15 30 45 60"
+			"hawk_speed_tooltip"		"250 300 350 400"
 		}
 		"04"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"boar_moveslow_tooltip"		"10 20 30 40"
+			"hawk_daysight_tooltip"		"700 1000 1300 1600"
 		}
 		"05"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"boar_attackslow_tooltip"	"10 20 30 40"
+			"hawk_nightsight_tooltip"	"700 800 900 1000"
 		}
 		"06"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"poison_duration_tooltip"	"3"
-		}
-		"07"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"boar_duration"				"60 60 60 60"
+			"hawk_duration"				"60 60 60 60"
 		}
 
 		// Extra		
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hawk_1_count"			"1 0 0 0"
+		}
 		"08"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"boar_1_count"			"1 0 0 0"
+			"hawk_2_count"			"0 1 0 0"
 		}
 		"09"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"boar_2_count"			"0 1 0 0"
+			"hawk_3_count"			"0 0 1 0"
 		}
 		"10"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"boar_3_count"			"0 0 1 0"
+			"hawk_4_count"			"0 0 0 1"
 		}
 		"11"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"boar_4_count"			"0 0 0 1"
-		}
-		"12"
-		{
-			"var_type"				"FIELD_INTEGER"
 			"distance"				"150" // The distance in front of the target at which units will be created
 		}
-	}
-
-	"precache"
-	{
-		"particle"	"particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
-		"particle"	"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
-		"particle"	"particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"
-		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
-		"model"		"models/heroes/beastmaster/beastmaster_beast.vmdl"
 	}
 
 	"OnUpgrade"
@@ -104,7 +99,7 @@
 		{
 			"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
 			"Function"		"LevelUpAbility"
-			"ability_name"	"beastmaster_call_of_the_wild_datadriven"
+			"ability_name"	"call_of_the_wild_boar_datadriven"
 		}
 	}
 
@@ -112,13 +107,13 @@
 	{
 		"FireSound"
 	    {
-	    	"EffectName"	"Hero_Beastmaster.Call.Boar"
+	    	"EffectName"	"Hero_Beastmaster.Call.Hawk"
 	    	"Target"		"CASTER"
 	    }
 
 		"SpawnUnit"
 		{
-			"UnitName"			"npc_dota_beastmaster_boar_1"
+			"UnitName"			"npc_dota_beastmaster_hawk_1"
 			"Target"
 			{
 				"Center"				"CASTER"
@@ -131,13 +126,56 @@
 				}
 			}
 
-			"UnitCount"			"%boar_1_count"
-			"Duration"			"%boar_duration"
+			"UnitCount"			"%hawk_1_count"
+			"Duration"			"%hawk_duration"
 
 			"GrantsGold"		"1"
 			"GrantsXP"			"1"
 
-			// This makes sure units never get stuck
+			"OnSpawn"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_phased"
+					"Target"		"TARGET"
+					"Duration"		"0.03"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
+					"Function"		"SetUnitsMoveForward"
+				}
+
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_beastmaster_hawk"
+					"Target"		"TARGET"
+				}
+			}
+		}
+
+		"SpawnUnit"
+		{
+			"UnitName"			"npc_dota_beastmaster_hawk_2"
+			"Target"
+			{
+				"Center"				"CASTER"
+				"ScriptSelectPoints"
+				{
+					"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
+        			"Function"      "GetFrontPoint"
+					"Target"		"CASTER"
+					"Distance"		"%distance"
+				}
+			}
+
+			"UnitCount"			"%hawk_2_count"
+			"Duration"			"%hawk_duration"
+
+			"GrantsGold"		"1"
+			"GrantsXP"			"1"
+
 			"OnSpawn"
 			{
 				"ApplyModifier"
@@ -149,7 +187,7 @@
 
 				"ApplyModifier"
 				{
-					"ModifierName"	"modifier_beastmaster_boar"
+					"ModifierName"	"modifier_beastmaster_hawk"
 					"Target"		"TARGET"
 				}
 
@@ -163,7 +201,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"			"npc_dota_beastmaster_boar_4"
+			"UnitName"			"npc_dota_beastmaster_hawk_4"
 			"Target"
 			{
 				"Center"				"CASTER"
@@ -176,13 +214,12 @@
 				}
 			}
 
-			"UnitCount"			"%boar_2_count"
-			"Duration"			"%boar_duration"
+			"UnitCount"			"%hawk_3_count"
+			"Duration"			"%hawk_duration"
 
 			"GrantsGold"		"1"
 			"GrantsXP"			"1"
 
-			// This makes sure units never get stuck
 			"OnSpawn"
 			{
 				"ApplyModifier"
@@ -194,7 +231,7 @@
 
 				"ApplyModifier"
 				{
-					"ModifierName"	"modifier_beastmaster_boar"
+					"ModifierName"	"modifier_beastmaster_hawk"
 					"Target"		"TARGET"
 				}
 
@@ -208,7 +245,7 @@
 
 		"SpawnUnit"
 		{
-			"UnitName"			"npc_dota_beastmaster_boar_3"
+			"UnitName"			"npc_dota_beastmaster_hawk_4"
 			"Target"
 			{
 				"Center"				"CASTER"
@@ -221,13 +258,12 @@
 				}
 			}
 
-			"UnitCount"			"%boar_1_count"
-			"Duration"			"%boar_duration"
+			"UnitCount"			"%hawk_4_count"
+			"Duration"			"%hawk_duration"
 
 			"GrantsGold"		"1"
 			"GrantsXP"			"1"
 
-			// This makes sure units never get stuck
 			"OnSpawn"
 			{
 				"ApplyModifier"
@@ -239,55 +275,10 @@
 
 				"ApplyModifier"
 				{
-					"ModifierName"	"modifier_beastmaster_boar"
+					"ModifierName"	"modifier_beastmaster_hawk"
 					"Target"		"TARGET"
 				}
 
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
-					"Function"		"SetUnitsMoveForward"
-				}
-			}
-		}
-
-		"SpawnUnit"
-		{
-			"UnitName"			"npc_dota_beastmaster_boar_4"
-			"Target"
-			{
-				"Center"				"CASTER"
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/hero_beastmaster/call_of_the_wild.lua"
-        			"Function"      "GetFrontPoint"
-					"Target"		"CASTER"
-					"Distance"		"%distance"
-				}
-			}
-
-			"UnitCount"			"%boar_4_count"
-			"Duration"			"%boar_duration"
-
-			"GrantsGold"		"1"
-			"GrantsXP"			"1"
-
-			// This makes sure units never get stuck
-			"OnSpawn"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_phased"
-					"Target"		"TARGET"
-					"Duration"		"0.03"
-				}
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_beastmaster_boar"
-					"Target"		"TARGET"
-				}
-				
 				"RunScript"
 				{
 					"ScriptFile"	"heroes/hero_beastmaster/call_of_the_wild.lua"
@@ -299,7 +290,7 @@
 
 	"Modifiers"
 	{
-		"modifier_beastmaster_boar"
+		"modifier_beastmaster_hawk"
 		{
 			"IsHidden"		"1"
 
@@ -308,7 +299,7 @@
 				"FireEffect"
 				{
 					"Target"			"TARGET"
-					"EffectName"		"particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
+					"EffectName"		"particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
 					"EffectAttachType"	"follow_origin"
 				}
 			}
@@ -325,7 +316,7 @@
 					"EffectName"		"particles/units/heroes/hero_lone_druid/lone_druid_spirit_bear_death.vpcf"
 					"EffectAttachType"	"follow_origin"
 				}
-				
+
 				"FireSound"
 				{
 					"Target"			
@@ -333,7 +324,7 @@
 						"Center"	"UNIT"
 						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
 					}
-					"EffectName"	"Hero_Beastmaster_Boar.Death"
+					"EffectName"	"Hero_Beastmaster_Bird.Death"
 				}
 			}
 		}

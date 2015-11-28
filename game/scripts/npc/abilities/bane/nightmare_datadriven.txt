@@ -75,7 +75,7 @@
 		"04"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"animation_rate"			"0.2 0.2 0.2 0.2"
+			"animation_rate"			"0.2"
 		}
 		"05"
 		{
@@ -115,7 +115,7 @@
             "EffectAttachType"      "follow_overhead"
 
             "OverrideAnimation"     "ACT_DOTA_FLAIL"
-            "OverrideAnimationRate"	"%animation_rate"
+            //"OverrideAnimationRate"	"%animation_rate"
 
             "OnTakeDamage"
             {

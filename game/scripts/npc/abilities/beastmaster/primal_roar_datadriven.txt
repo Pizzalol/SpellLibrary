@@ -1,7 +1,9 @@
 // Rewrite of Beastmaster Primal Roar
 // Author: Noya
-// Date: April 5, 2015
-"beastmaster_primal_roar_datadriven"
+// Date: 28.11.2015.
+// Version: 6.85
+// Type: Datadriven
+"primal_roar_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -96,6 +98,12 @@
 			"var_type"					"FIELD_FLOAT"
 			"cooldown_scepter"			"45.0 45.0 45.0"
 		}
+		// Extra
+		"12"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cast_range"				"600"
+		}
 	}
 
 	"precache"
@@ -107,6 +115,12 @@
 
 	"OnSpellStart"
 	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Beastmaster.Primal_Roar"
+			"Target" 		"TARGET"
+		}
+
 		"FireEffect"
 		{
 			"EffectName"        "particles/units/heroes/hero_beastmaster/beastmaster_primal_roar.vpcf"
@@ -140,19 +154,20 @@
 				"Center"  	"TARGET"
 				"Line"
 				{
-					"Length" 		"%AbilityCastRange" //THIS IS QUESTIONABLE
+					"Length" 		"%cast_range"
 					"Thickness" 	"%damage_radius"
 				}
 				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 			}
-		
+			
+			// Causes the primary target to be knocked back as well
 			"Action"    
 			{
 				"Knockback"
 				{
 					"Target"            "TARGET"
-					"Center" 	        "CASTER"
+					"Center" 	        "UNIT"
 					"Distance"	        "%push_distance"
 					"Duration"	        "%push_duration"
 					"Height"	        "0"
@@ -202,4 +217,3 @@
 		}
 	}
 }
-
