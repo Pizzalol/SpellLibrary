@@ -57,26 +57,34 @@ function bristleback_takedamage(params)
 	if result_angle >= (180 - (ability:GetSpecialValueFor("side_angle") / 2)) and result_angle <= (180 + (ability:GetSpecialValueFor("side_angle") / 2)) then 
 		-- Check for back angle. If this check doesn't pass, then do side angle "damage reduction".
 		if result_angle >= (180 - (ability:GetSpecialValueFor("back_angle") / 2)) and result_angle <= (180 + (ability:GetSpecialValueFor("back_angle") / 2)) then 
-			-- This is the actual "damage reduction".
-			params.unit:Heal((params.Damage * back_reduction_percentage), ability)
-			-- Play the sound on Bristleback.
-			EmitSoundOn(params.sound, params.unit)
-			-- Create the back particle effect.
-			local back_damage_particle = ParticleManager:CreateParticle(params.back_particle, PATTACH_ABSORIGIN_FOLLOW, params.unit) 
-			-- Set Control Point 1 for the back damage particle; this controls where it's positioned in the world. In this case, it should be positioned on Bristleback.
-			ParticleManager:SetParticleControlEnt(back_damage_particle, 1, params.unit, PATTACH_POINT_FOLLOW, "attach_hitloc", params.unit:GetAbsOrigin(), true) 
-			-- Increase the Quill Spray damage counter based on how much damage was done *post-Bristleback mitigation*.
-			params.unit.quill_threshold_counter = params.unit.quill_threshold_counter + (params.Damage - (params.Damage * back_reduction_percentage))
+			-- Check if the reduced damage is lethal
+			if((params.unit:GetHealth() - (params.Damage * (1 - back_reduction_percentage))) >= 1) then
+				-- This is the actual "damage reduction".
+				params.unit:SetHealth((params.Damage * back_reduction_percentage) + params.unit:GetHealth())
+				-- Play the sound on Bristleback.
+				EmitSoundOn(params.sound, params.unit)
+				-- Create the back particle effect.
+				local back_damage_particle = ParticleManager:CreateParticle(params.back_particle, PATTACH_ABSORIGIN_FOLLOW, params.unit) 
+				-- Set Control Point 1 for the back damage particle; this controls where it's positioned in the world. In this case, it should be positioned on Bristleback.
+				ParticleManager:SetParticleControlEnt(back_damage_particle, 1, params.unit, PATTACH_POINT_FOLLOW, "attach_hitloc", params.unit:GetAbsOrigin(), true) 
+				-- Increase the Quill Spray damage counter based on how much damage was done *post-Bristleback mitigation*.
+				params.unit.quill_threshold_counter = params.unit.quill_threshold_counter + (params.Damage - (params.Damage * back_reduction_percentage))
+			end
 		else
-			params.unit:Heal((params.Damage * back_reduction_percentage), ability)
-			EmitSoundOn(params.sound, params.unit)
-			-- Create the side particle effect.
-			local side_damage_particle = ParticleManager:CreateParticle(params.side_particle, PATTACH_ABSORIGIN_FOLLOW, params.unit) 
-			-- Set Control Point 1 for the side damage particle; same stuff as the back damage particle.
-			ParticleManager:SetParticleControlEnt(side_damage_particle, 1, params.unit, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", params.unit:GetAbsOrigin(), true) 
-			ParticleManager:SetParticleControlEnt(side_damage_particle, 2, params.unit, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", Vector(0, result_angle, 0), true)
-			-- Increase the Quill Spray damage counter based on how much damage was done *post-Bristleback mitigation*.
-			params.unit.quill_threshold_counter = params.unit.quill_threshold_counter + (params.Damage - (params.Damage * side_reduction_percentage))
+			-- Check if the reduced damage is lethal
+			if((params.unit:GetHealth() - (params.Damage * (1 - side_reduction_percentage))) >= 1) then
+				-- This is the actual "damage reduction".
+				params.unit:SetHealth((params.Damage * side_reduction_percentage) + params.unit:GetHealth())
+				-- Play the sound on Bristleback.
+				EmitSoundOn(params.sound, params.unit)
+				-- Create the side particle effect.
+				local side_damage_particle = ParticleManager:CreateParticle(params.side_particle, PATTACH_ABSORIGIN_FOLLOW, params.unit) 
+				-- Set Control Point 1 for the side damage particle; same stuff as the back damage particle.
+				ParticleManager:SetParticleControlEnt(side_damage_particle, 1, params.unit, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", params.unit:GetAbsOrigin(), true) 
+				ParticleManager:SetParticleControlEnt(side_damage_particle, 2, params.unit, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", Vector(0, result_angle, 0), true)
+				-- Increase the Quill Spray damage counter based on how much damage was done *post-Bristleback mitigation*.
+				params.unit.quill_threshold_counter = params.unit.quill_threshold_counter + (params.Damage - (params.Damage * side_reduction_percentage))
+			end
 		end
 	end
 
@@ -87,7 +95,7 @@ function bristleback_takedamage(params)
 
 		-- Just in case GetAbilityByIndex fails or something.
 		if ability_index_1 ~= nil then 
-			if ability_index_1:GetAbilityName() == "bristleback_quill_spray_datadriven" or ability_index_1:GetAbilityName() == "bristleback_quill_spray" then
+			if ability_index_1:GetAbilityName() == "quill_spray_datadriven" or ability_index_1:GetAbilityName() == "bristleback_quill_spray" then
 				ability_index_1:CastAbility()
 			end
 		end

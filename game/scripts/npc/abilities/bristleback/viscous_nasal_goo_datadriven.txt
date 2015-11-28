@@ -1,7 +1,13 @@
+// Rewrite of the Bristleback Viscous Nasal Goo ability
 // Author: Ragnar Homsar
-// Date: July 13, 2015
-
-"bristleback_viscous_nasal_goo_datadriven"
+// Date: 28.11.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_bristleback/viscous_nasal_goo.lua
+"viscous_nasal_goo_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

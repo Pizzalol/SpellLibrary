@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"thunder_clap_datadriven"
-	"Ability2"	"drunken_haze_datadriven"
-	"Ability3"	"drunken_brawler_datadriven"
-	"Ability4"	"primal_split_datadriven"
+	"Ability1"	"viscous_nasal_goo_datadriven"
+	"Ability2"	"quill_spray_datadriven"
+	"Ability3"	"bristleback_datadriven"
+	"Ability4"	"warpath_datadriven"
 }

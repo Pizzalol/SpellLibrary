@@ -1,8 +1,16 @@
 // Ability: Bristleback
 // By: Ragnar Homsar
-// Date: July 10, 2015
-
-"bristleback_bristleback_datadriven"
+// Date: 28.11.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_bristleback/bristleback.lua
+//
+// KV files:
+// scripts/npc/abilities/bristleback/quill_spray_datadriven.txt
+"bristleback_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -37,7 +45,7 @@
 		"05"
 		{
 			"var_type"						"FIELD_FLOAT"
-			"quill_release_threshold"		"250.0"
+			"quill_release_threshold"		"230.0"
 		}
 	}
 

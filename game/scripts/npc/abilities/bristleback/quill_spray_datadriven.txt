@@ -1,0 +1,237 @@
+// Rewrite of the Bristleback Quill Spray ability
+// Author: Ragnar Homsar
+// Date: 28.11.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_bristleback/quill_spray.lua
+"quill_spray_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"bristleback_quill_spray"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"625"
+	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"3.0 3.0 3.0 3.0"
+	
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"35 35 35 35"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"625"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"quill_base_damage"		"20.0 40.0 60.0 80.0"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"quill_stack_damage"	"30.0 32.0 34.0 36.0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"quill_stack_duration"	"14.0"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"max_damage"			"400.0"
+		}
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_bristleback/bristleback_quill_spray.vpcf"
+		"particle"	"particles/units/heroes/hero_bristleback/bristleback_quill_spray_impact.vpcf"
+		"particle"	"particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit.vpcf"
+		"particle"	"particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit_creep.vpcf"
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_bristleback.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target"
+			{
+				"Center"	"CASTER"
+				"Radius"	"%radius"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+
+			"ModifierName"	"modifier_quill_spray_datadriven_determiner"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray.vpcf"
+			"EffectAttachType"	"attach_hitloc"
+			"EffectRadius"		"%radius"
+			"Target"			"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"		"Hero_Bristleback.QuillSpray.Cast"
+			"Target"			"CASTER"
+		}
+
+		"FireSound"
+		{
+			"EffectName"		"Hero_Bristleback.QuillSpray.Target"
+			"Target"
+			{
+				"Center"	"CASTER"
+				"Radius"	"%radius"
+				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_quill_spray_datadriven_user_display"
+		{
+			"IsDebuff"	"1"
+		}
+
+		"modifier_quill_spray_datadriven_stack_creep" // with thanks to BMD for explaining MODIFIER_ATTRIBUTE_MULTIPLE and telling me a good way to handle this
+		{
+			"IsHidden"		"1"
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"Duration"		"%quill_stack_duration"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
+					"Function"			"stack_created"
+					"stack_duration"	"%quill_stack_duration"
+					"base_damage"		"%quill_base_damage"
+					"stack_damage"		"%quill_stack_damage"
+					"max_damage"		"%max_damage"
+				}
+
+				"FireEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray_impact.vpcf"
+					"EffectAttachType"	"follow_hitloc"
+					"Target"			"TARGET"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit_creep.vpcf"
+					"EffectAttachType"	"follow_hitloc"
+					"Target"			"TARGET"
+					"ControlPointEntities"
+					{
+						"TARGET"		"attach_hitloc"
+						"TARGET"		"attach_hitloc"
+						"TARGET"		"attach_hitloc"
+					}
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
+					"Function"		"stack_destroyed"
+				}
+			}
+		}
+
+		"modifier_quill_spray_datadriven_stack_hero"
+		{
+			"IsHidden"		"1"
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			"Duration"		"%quill_stack_duration"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
+					"Function"			"stack_created"
+					"stack_duration"	"%quill_stack_duration"
+					"base_damage"		"%quill_base_damage"
+					"stack_damage"		"%quill_stack_damage"
+					"max_damage"		"%max_damage"
+				}
+
+				"FireEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray_impact.vpcf"
+					"EffectAttachType"	"follow_hitloc"
+					"Target"			"TARGET"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit.vpcf"
+					"EffectAttachType"	"follow_hitloc"
+					"Target"			"TARGET"
+					"ControlPointEntities"
+					{
+						"TARGET"		"attach_hitloc"
+						"TARGET"		"attach_hitloc"
+						"TARGET"		"attach_hitloc"
+						"TARGET"		"attach_hitloc"
+					}
+				}
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
+					"Function"		"stack_destroyed"
+				}
+			}
+		}
+
+		"modifier_quill_spray_datadriven_determiner"
+		{
+			"IsHidden"		"1"
+			"Duration"		"0.01"
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_bristleback/quill_spray.lua"
+					"Function"		"determine_debuff"
+				}
+			}
+		}
+	}
+}
