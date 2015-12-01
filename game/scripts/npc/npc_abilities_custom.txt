@@ -1785,87 +1785,6 @@
 	}
 	
 	
-	// Rewrite of Centaur Double Edge
-	// Author: Noya
-	// Date: 9.1.2015.
-	// Notes: Particle is fucked up in Source 2 (even the original spell)
-	"centaur_double_edge_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"centaur_double_edge"
-	
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"8.0 8.0 8.0 8.0"
-		"AbilityCastRange"				"150 150 150 150"
-		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
-	
-		//------------------------------------------------------------------------------
-		"AbilityManaCost"				"0 0 0 0"
-	
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"edge_damage"					"175 250 325 400"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"190"
-			}
-		}
-	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
-			"particle"	"particles/units/heroes/hero_centaur/centaur_double_edge.vpcf"
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"Target" 			"CASTER"
-				"EffectName"		"Hero_Centaur.DoubleEdge"
-			}
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_centaur/double_edge.lua"
-				"Function"		"DoubleEdgeParticle"
-			}
-			"Damage"
-			{
-				"Target"
-				{
-					"Center"  	"TARGET"
-					"Radius" 	"%radius"
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-				"Type"			"DAMAGE_TYPE_MAGICAL"
-				"Damage"		"%edge_damage"
-			}
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_centaur/double_edge.lua"
-				"Function"		"DoubleEdgeSelfDamage"
-			}
-		}
-	}
-	
 	"centaur_great_fortitude_datadriven"
 	{
 	    // General
@@ -1907,118 +1826,6 @@
 	
 	    }
 	}
-	// Rewrite of Centaur Hoof Stomp 
-	// Author: Noya
-	// Date: 9.1.2015.
-	"centaur_hoof_stomp_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"centaur_hoof_stomp"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
-		"AbilityCooldown"				"13.0 13.0 13.0 13.0"
-		"AbilityManaCost"				"130"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"315"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"2.0 2.25 2.5 2.75"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"stomp_damage"					"100 150 200 250"
-			}
-		}
-	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
-			"particle"	"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
-			"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
-		}
-	
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{
-				"EffectName"		"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
-				"EffectAttachType" 	"follow_origin"
-				"EffectRadius"		"%radius"
-				"Target" 			"CASTER"
-				"ControlPoints"
-				{
-					"01"	"%radius 0 %radius"
-				}
-			}
-	
-			"FireSound"
-			{
-				"EffectName"		"Hero_Centaur.HoofStomp"
-				"Target" 			"CASTER"
-			}
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"  				"CASTER"
-					"Radius" 				"%radius"
-					"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-	
-				"Action"
-				{
-					"Damage"
-					{
-						"Target"	"TARGET"
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%stomp_damage"
-					}
-	
-					"ApplyModifier"
-					{
-						"Target" 		"TARGET"
-						"ModifierName"	"modifier_hoof_stomp"
-					}
-				}
-			}		
-		}
-	
-		"Modifiers"
-		{
-			"modifier_hoof_stomp"
-			{
-				"IsDebuff"	"1"
-				"Duration"	"%stun_duration"
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"			
-				}
-				"OverrideAnimation"	"ACT_DOTA_DISABLED"
-				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-				"EffectAttachType"	"follow_overhead"
-			}
-		}
-	}
-	
 	"centaur_khan_endurance_aura_datadriven"
 	{
 		// General
@@ -2078,240 +1885,6 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"hero_stun_duration"			"2.0"
-			}
-		}
-	}
-	
-	// Rewrite of Centaur Return
-	// Author: Noya
-	// Date: 9.1.2015.
-	// Notes: Unlike the original version, the damage is returned after the hit lands. That effect is just a legacy and not useful.
-	//		  To change it to apply the damage when the attack starts, would need to do hidden aura that applies a debuff that checks OnAttackStart on the caster and does the damage.		  
-	"centaur_return_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"AbilityTextureName"			"centaur_return"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"return_damage"				"16 18 20 22"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"strength_pct"				"26 34 42 50"
-			}
-		}
-	
-		"precache"
-		{
-			"particle"	"particles/units/heroes/hero_centaur/centaur_return.vpcf"
-		}
-	
-		"Modifiers"
-		{
-			"modifier_return"
-			{
-				"Passive"	"1"
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_centaur/return.lua"
-						"Function"		"Return"
-					}
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_centaur/centaur_return.vpcf"
-						"EffectAttachType"  "attach_hitloc"
-						"Target" 			"CASTER"
-						"ControlPointEntities"
-						{
-							"CASTER" 		"attach_hitloc"
-							"ATTACKER" 		"attach_hitloc"
-						}
-					}
-				}	
-			}
-		}
-	}
-	
-	// Rewrite of Centaur Stampede
-	// Author: Noya
-	// Date: 9.1.2015.
-	"centaur_stampede_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"centaur_stampede"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"90.0 75.0 60.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.2"	// hits everything on the map
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"3.75"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"base_damage"		"0"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"strength_damage"	"1.0 2.0 3.0"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"slow_duration"		"1.5"
-			}
-			"05"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"105"
-			}
-			"06"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"slow_movement_speed"			"100"
-			}
-		}
-	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
-			"particle"	"particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
-			"particle"	"particles/units/heroes/hero_centaur/centaur_stampede.vpcf"
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_centaur/stampede.lua"
-				"Function"		"StampedeStart"
-			}
-	
-			"ApplyModifier"
-			{
-				"Target"
-				{
-					"Center"  				"CASTER"
-					"Radius" 				"GLOBAL"
-					"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" 
-					"ExcludeTypes"			"DOTA_UNIT_TARGET_BASIC"
-				}
-				"ModifierName"		"modifier_stampede"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_stampede"
-			{
-				"Duration"	"%duration"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"50000"
-				}
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-				"EffectName" 		"particles/units/heroes/hero_centaur/centaur_stampede.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
-						"EffectAttachType"	"follow_overhead"
-						"Target"			"TARGET"
-					}
-				}
-	
-				"OnUnitMoved"
-				{
-					"Random"
-					{
-						"Chance"	"3.22"
-						"OnSuccess"
-						{
-							"FireSound"
-							{
-								"EffectName"		"Hero_Centaur.Stampede.Movement"
-								"Target" 			"UNIT"
-							}
-						}
-					}				
-				}
-	
-				"Aura"        	"modifier_stampede_collision"
-	    		"Aura_Radius" 	"%radius"
-	    		"Aura_Teams"  	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-	    		"Aura_Types"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			}
-	
-			"modifier_stampede_collision"
-			{
-				"IsHidden"	"1"
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_centaur/stampede.lua"
-						"Function"		"Stampede"
-					}
-					"FireSound"
-					{
-						"EffectName"	"Hero_Centaur.Stampede.Stun"
-						"Target"		"TARGET"
-					}
-				}
-			}
-	
-			"modifier_stampede_debuff"
-			{
-				"IsDebuff"	"1"
-				"Duration"	"%slow_duration"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"%slow_movement_speed"
-				}
 			}
 		}
 	}
@@ -63926,4 +63499,446 @@
 			}
 		}
 	}
+	// Rewrite of Centaur Double Edge
+	// Author: Noya
+	// Date: 01.12.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_centaur/double_edge.lua
+	"double_edge_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"centaur_double_edge"
+	
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"8.0 8.0 8.0 8.0"
+		"AbilityCastRange"				"150 150 150 150"
+		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+	
+		//------------------------------------------------------------------------------
+		"AbilityManaCost"				"0 0 0 0"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"edge_damage"					"175 250 325 400"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"190"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"particle"	"particles/units/heroes/hero_centaur/centaur_double_edge.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target" 			"CASTER"
+				"EffectName"		"Hero_Centaur.DoubleEdge"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_centaur/double_edge.lua"
+				"Function"		"DoubleEdgeParticle"
+			}
+			"Damage"
+			{
+				"Target"
+				{
+					"Center"  	"TARGET"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"Type"			"DAMAGE_TYPE_MAGICAL"
+				"Damage"		"%edge_damage"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_centaur/double_edge.lua"
+				"Function"		"DoubleEdgeSelfDamage"
+			}
+		}
+	}
+	// Rewrite of Centaur Hoof Stomp 
+	// Author: Noya
+	// Date: 01.12.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	"hoof_stomp_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"centaur_hoof_stomp"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+		"AbilityCooldown"				"13.0 13.0 13.0 13.0"
+		"AbilityManaCost"				"130"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"315"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"2.0 2.25 2.5 2.75"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stomp_damage"					"100 150 200 250"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"particle"	"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
+			"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
+				"EffectAttachType" 	"follow_origin"
+				"EffectRadius"		"%radius"
+				"Target" 			"CASTER"
+				"ControlPoints"
+				{
+					"01"	"%radius 0 %radius"
+				}
+			}
+	
+			"FireSound"
+			{
+				"EffectName"		"Hero_Centaur.HoofStomp"
+				"Target" 			"CASTER"
+			}
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  				"CASTER"
+					"Radius" 				"%radius"
+					"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+	
+				"Action"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%stomp_damage"
+					}
+	
+					"ApplyModifier"
+					{
+						"Target" 		"TARGET"
+						"ModifierName"	"modifier_hoof_stomp"
+					}
+				}
+			}		
+		}
+	
+		"Modifiers"
+		{
+			"modifier_hoof_stomp"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%stun_duration"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"			
+				}
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+			}
+		}
+	}
+	
+	// Rewrite of Centaur Return
+	// Author: Noya
+	// Date: 01.12.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_centaur/return.lua
+	"return_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"			"centaur_return"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"return_damage"				"16 18 20 22"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"strength_pct"				"30 42 54 66"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_centaur/centaur_return.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_return"
+			{
+				"Passive"	"1"
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_centaur/return.lua"
+						"Function"		"Return"
+					}
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_centaur/centaur_return.vpcf"
+						"EffectAttachType"  "attach_hitloc"
+						"Target" 			"CASTER"
+						"ControlPointEntities"
+						{
+							"CASTER" 		"attach_hitloc"
+							"ATTACKER" 		"attach_hitloc"
+						}
+					}
+				}	
+			}
+		}
+	}
+	// Rewrite of Centaur Stampede
+	// Author: Noya
+	// Date: 01.12.2015.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_centaur/stampede.lua
+	"stampede_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"centaur_stampede"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"90.0 75.0 60.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.2"	// hits everything on the map
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"3.75"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"base_damage"		"0"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"strength_damage"	"1.0 2.0 3.0"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow_duration"		"1.5"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"105"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"slow_movement_speed"			"100"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"particle"	"particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
+			"particle"	"particles/units/heroes/hero_centaur/centaur_stampede.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_centaur/stampede.lua"
+				"Function"		"StampedeStart"
+			}
+	
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"  				"CASTER"
+					"Radius" 				"GLOBAL"
+					"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" 
+					"ExcludeTypes"			"DOTA_UNIT_TARGET_BASIC"
+				}
+				"ModifierName"		"modifier_stampede"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_stampede"
+			{
+				"Duration"	"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"50000"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"EffectName" 		"particles/units/heroes/hero_centaur/centaur_stampede.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"TARGET"
+					}
+				}
+	
+				"OnUnitMoved"
+				{
+					"Random"
+					{
+						"Chance"	"3.22"
+						"OnSuccess"
+						{
+							"FireSound"
+							{
+								"EffectName"		"Hero_Centaur.Stampede.Movement"
+								"Target" 			"UNIT"
+							}
+						}
+					}				
+				}
+	
+				"Aura"        	"modifier_stampede_collision"
+	    		"Aura_Radius" 	"%radius"
+	    		"Aura_Teams"  	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    		"Aura_Types"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+	
+			"modifier_stampede_collision"
+			{
+				"IsHidden"	"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_centaur/stampede.lua"
+						"Function"		"Stampede"
+					}
+					"FireSound"
+					{
+						"EffectName"	"Hero_Centaur.Stampede.Stun"
+						"Target"		"TARGET"
+					}
+				}
+			}
+	
+			"modifier_stampede_debuff"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%slow_duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"%slow_movement_speed"
+				}
+			}
+		}
+	}
+	
 }

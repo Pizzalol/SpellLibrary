@@ -8,21 +8,10 @@ function DoubleEdgeSelfDamage( event )
 	local caster = event.caster
 	local ability = event.ability
 	local self_damage = ability:GetLevelSpecialValueFor( "edge_damage" , ability:GetLevel() - 1  )
-	local HP = caster:GetHealth()
-	local MagicResist = caster:GetMagicalArmorValue()
 	local damageType = ability:GetAbilityDamageType()
 
-	-- Calculate the magic damage
-	local damagePostReduction = self_damage * (1 - MagicResist)
-	
-	-- If its lethal damage, set hp to 1, else do the full self damage
-	if HP <= damagePostReduction then
-		caster:SetHealth(1)
-	else
-		-- Self Damage
-		ApplyDamage({ victim = caster, attacker = caster, damage = self_damage,	damage_type = damageType })
-	end
-
+	-- Self damage
+	ApplyDamage({ victim = caster, attacker = caster, damage = self_damage,	damage_type = damageType, damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL })
 end
 
 function DoubleEdgeParticle( event )

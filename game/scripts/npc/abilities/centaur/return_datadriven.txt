@@ -1,9 +1,13 @@
 // Rewrite of Centaur Return
 // Author: Noya
-// Date: 9.1.2015.
-// Notes: Unlike the original version, the damage is returned after the hit lands. That effect is just a legacy and not useful.
-//		  To change it to apply the damage when the attack starts, would need to do hidden aura that applies a debuff that checks OnAttackStart on the caster and does the damage.		  
-"centaur_return_datadriven"
+// Date: 01.12.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_centaur/return.lua
+"return_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -25,7 +29,7 @@
 		"02"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"strength_pct"				"26 34 42 50"
+			"strength_pct"				"30 42 54 66"
 		}
 	}
 
@@ -61,4 +65,3 @@
 		}
 	}
 }
-

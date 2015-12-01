@@ -8,9 +8,6 @@
 !Game
 /Game/*
 !/Game/scripts
-!/Game/resource
-/Game/resource/*
-!/Game/resource/flash3
 
 
 

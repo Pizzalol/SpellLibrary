@@ -1,7 +1,13 @@
 // Rewrite of Centaur Stampede
 // Author: Noya
-// Date: 9.1.2015.
-"centaur_stampede_datadriven"
+// Date: 01.12.2015.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_centaur/stampede.lua
+"stampede_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
