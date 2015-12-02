@@ -78,7 +78,7 @@ Recommended resources
 =====================
 - [Tutorials](https://moddota.com/forums/categories/tutorials) the great tutorials made by [Noya](https://moddota.com/forums/profile/5/Noya)
 
-- [Dota 2 Modkit](https://github.com/Myll/Dota-2-ModKit/releases) great tool when it comes to everything Dota 2 modding related, made by [Myll](https://github.com/Myll)
+- [Dota 2 Modkit](https://github.com/stephenfournier/Dota-2-ModKit/releases) great tool when it comes to everything Dota 2 modding related, made by [Myll](https://github.com/Myll)
 
 - [Sound editor](https://dl.dropboxusercontent.com/u/19417676/dota_sound_editor_v1.3.1.zip) the sound editor for finding the proper ability sounds, made by [pingzing](https://github.com/pingzing)
 
