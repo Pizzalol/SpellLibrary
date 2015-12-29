@@ -40,7 +40,7 @@ function DoDamage(caster, target, ability)
                                 victim = caster,
                                 attacker = caster,
                                 damage = dmg_to_caster,
-                                damage_type = DAMAGE_TYPE_MAGICAL
+                                damage_type = DAMAGE_TYPE_MAGICAL,
                             	damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL 
                             }
     ApplyDamage(dmg_table_caster)
