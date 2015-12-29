@@ -3180,7 +3180,7 @@
 					"CastAttack"			"0"
 				}
 	
-				"OnOrbImpact"
+				"OnOrbFire"
 				{
 					"ApplyModifier"
 					{

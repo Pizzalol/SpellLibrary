@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"spawn_spiderlings_datadriven"
-	"Ability2"	"spin_web_datadriven"
-	"Ability3"	"incapacitating_bite_datadriven"
-	"Ability4"	"insatiable_hunger_datadriven"
+	"Ability1"	"chaos_knight_chaos_bolt_datadriven"
+	"Ability2"	"chaos_knight_reality_rift_datadriven"
+	"Ability3"	"chaos_knight_chaos_strike_datadriven"
+	"Ability4"	"chaos_knight_phantasm_datadriven"
 }
