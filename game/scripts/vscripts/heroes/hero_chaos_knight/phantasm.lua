@@ -165,7 +165,7 @@ function Phantasm( keys )
 	end
 end
 
---[[Creates vision around the caster while shuffling the illusions]]
+--[[Creates unobstructed vision around the caster while shuffling the illusions]]
 function PhantasmVision( keys )
 	local caster = keys.caster
 	local caster_location = caster:GetAbsOrigin()
@@ -175,5 +175,5 @@ function PhantasmVision( keys )
 	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level) 
 	local vision_duration = ability:GetLevelSpecialValueFor("invuln_duration", ability_level)
 
-	ability:CreateVisibilityNode(caster_location, vision_radius, vision_duration)
+	AddFOWViewer(caster:GetTeamNumber(), caster_location, vision_radius, vision_duration, true)
 end

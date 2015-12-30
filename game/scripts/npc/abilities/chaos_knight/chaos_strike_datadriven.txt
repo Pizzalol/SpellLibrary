@@ -1,7 +1,9 @@
 // Rewrite of the Chaos Knight Chaos Strike ability
 // Author: Pizzalol
-// Date: 07.04.2015.
-"chaos_knight_chaos_strike_datadriven"
+// Date: 30.12.2015.
+// Version: 6.86
+// Type: Datadriven
+"chaos_strike_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -30,6 +32,16 @@
 		{
 			"var_type"					"FIELD_INTEGER"
 			"crit_chance"				"10 10 10 10"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"armor_reduction"			"-5"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"armor_reduction_duration"	"8"
 		}
 	}
 
@@ -84,6 +96,16 @@
 		        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
 		    }
 
+		    "OnAttack"
+		    {
+		    	"ApplyModifier"
+		    	{
+		    		"ModifierName"	"modifier_chaos_strike_armor_datadriven"
+		    		"Target" 		"TARGET"
+		    		"Duration"		"%armor_reduction_duration"
+		    	}
+		    }
+
 		    "OnAttackLanded"
 		    {
 		        "RemoveModifier"
@@ -93,6 +115,16 @@
 		        }
 		    }
 		}
+
+		"modifier_chaos_strike_armor_datadriven"
+		{
+			"IsHidden"	"1"
+			"IsDebuff"	"1"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_reduction"
+			}
+		}
 	}
 }
-

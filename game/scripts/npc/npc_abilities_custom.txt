@@ -1889,497 +1889,6 @@
 		}
 	}
 	
-	// Rewrite of the Chaos Knight Chaos Bolt ability
-	// Author: Pizzalol
-	// Date: 08.04.2015.
-	"chaos_knight_chaos_bolt_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"chaos_knight_chaos_bolt"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
-			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_chaos_bolt.vpcf"
-			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_bolt_msg.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
-		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"140 140 140 140"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"chaos_bolt_speed"		"1000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stun_min"				"1 1 1 2"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stun_max"				"2 3 4 4"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_min"			"1 50 75 100"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_max"			"200 225 250 275"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_ChaosKnight.ChaosBolt.Cast"
-				"Target" 		"CASTER"
-			}
-	
-			"TrackingProjectile"
-			{
-				"Target"           	"TARGET"
-				"EffectName"		"particles/units/heroes/hero_chaos_knight/chaos_knight_chaos_bolt.vpcf"
-				"Dodgeable"			"1"
-				"ProvidesVision"	"0"
-				"MoveSpeed"        	"%chaos_bolt_speed"
-				"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
-			}
-		}
-	
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"	"1"
-	
-			"FireSound"
-			{
-				"EffectName"	"Hero_ChaosKnight.ChaosBolt.Impact"
-				"Target" 		"TARGET"
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_chaos_knight/chaos_bolt.lua"
-				"Function"		"ChaosBolt"
-				"chaos_bolt_particle"	"particles/units/heroes/hero_chaos_knight/chaos_knight_bolt_msg.vpcf"
-			}
-		}
-	}
-	
-	// Rewrite of the Chaos Knight Chaos Strike ability
-	// Author: Pizzalol
-	// Date: 07.04.2015.
-	"chaos_knight_chaos_strike_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"chaos_knight_chaos_strike"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
-			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
-		}
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"150 200 250 300"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"10 10 10 10"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_chaos_strike_datadriven"
-			{
-			    "Passive"   "1"
-			    "IsHidden"  "1"
-	
-			    "OnAttackStart"
-			    {
-			        "RemoveModifier"
-			        {
-			            "ModifierName" 	"modifier_chaos_strike_crit_datadriven"
-			            "Target" 		"CASTER"
-			        }
-	
-			        "Random"
-			        {
-			            "Chance" 	"%crit_chance"
-			            "OnSuccess"
-			            {
-			            	"FireSound"
-					        {
-					        	"EffectName"	"Hero_ChaosKnight.ChaosStrike"
-					        	"Target"		"CASTER"
-					        }
-	
-					        "FireEffect"
-					        {
-					       		"EffectName" 		"particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
-					            "EffectAttachType"  "attach_attack1"
-					            "Target"    		"CASTER"
-					        }
-	
-			                "ApplyModifier"
-			                {
-			                    "ModifierName" 	"modifier_chaos_strike_crit_datadriven"
-			                    "Target"    	"CASTER"    
-			                }        
-			            }
-			        }
-			    }
-			}
-	
-			"modifier_chaos_strike_crit_datadriven"
-			{
-			    "IsHidden"  "1"
-			    "Properties"
-			    {
-			        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
-			    }
-	
-			    "OnAttackLanded"
-			    {
-			        "RemoveModifier"
-			        {
-			            "ModifierName"  "modifier_chaos_strike_crit_datadriven"
-			            "Target"   		"CASTER"    
-			        }
-			    }
-			}
-		}
-	}
-	
-	// Rewrite of the Chaos Knight Phantasm ability
-	// Author: Pizzalol
-	// Date: 08.04.2015.
-	"chaos_knight_phantasm_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"chaos_knight_phantasm"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
-			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_phantasm.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.4 0.4 0.4"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"140.0 140.0 140.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 200 275"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"images_count"				"1 2 3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"extra_phantasm_chance_pct_tooltip"			"50"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_duration"			"34"
-			}	
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"outgoing_damage"			"0 0 0"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"outgoing_damage_tooltip"			"100 100 100"
-			}	
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"incoming_damage"			"100 100 100"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"incoming_damage_tooltip"			"200 200 200"
-			}			
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"invuln_duration"		"0.5"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"400"
-			}			
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_chaos_knight/phantasm.lua"
-				"Function"		"PhantasmVision"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_phantasm_datadriven"
-				"Target" 		"CASTER"
-				"Duration"		"%invuln_duration"
-			}		
-		}
-	
-		"Modifiers"
-		{
-			"modifier_phantasm_datadriven"
-			{
-				"IsHidden"		"1"
-				"IsPurgable"	"0"
-	
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_chaos_knight/chaos_knight_phantasm.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"CASTER"
-					}
-	
-					"FireSound"
-					{
-						"EffectName"	"Hero_ChaosKnight.Phantasm"
-						"Target"		"CASTER"
-					}
-			    }
-	
-			    "OnDestroy"
-			    {
-			    	"RunScript"
-				    {
-				        "ScriptFile"    "heroes/hero_chaos_knight/phantasm.lua"
-				        "Function"      "Phantasm"
-				        "sound"			"Hero_ChaosKnight.Phantasm.Plus"
-				    }
-			    }
-	
-			    "States"
-				{
-					"MODIFIER_STATE_INVULNERABLE" 			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Chaos Knight Reality Rift ability
-	// Author: Pizzalol
-	// Date: 27.09.2015.
-	"chaos_knight_reality_rift_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"chaos_knight_reality_rift"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
-			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
-			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift_buff.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550 600 650 700"
-		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"24 18 12 6"
-	
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"70 70 70 70"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"550 600 650 700"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"25 50 75 100"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"bonus_duration"			"1.2"
-			}
-			// Extra
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_search_radius"	"1375"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"min_range"					"0.3"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"max_range"					"0.8"
-			}
-		}
-	
-		"OnAbilityPhaseStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_ChaosKnight.RealityRift"
-				"Target" 		"CASTER"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_chaos_knight/reality_rift.lua"
-				"Function"		"RealityRiftPosition"
-				"reality_rift_particle"	"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_ChaosKnight.RealityRift.Target"
-				"Target" 		"TARGET"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_reality_rift_datadriven"
-				"Target" 		"CASTER"
-				"Duration"		"%bonus_duration"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_chaos_knight/reality_rift.lua"
-				"Function"		"RealityRift"
-				"bonus_modifier"	"modifier_reality_rift_datadriven"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_reality_rift_datadriven"
-			{
-				"IsBuff"		"1"
-		
-				"EffectName"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift_buff.vpcf"
-				"EffectAttachType"	"attach_attack"
-	
-				"OnAttackLanded"
-				// "%attack_damage" is set to the damage value before mitigation
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_reality_rift_datadriven"
-						"Target" 		"ATTACKER"
-					}
-				}
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
-				}
-			}
-		}
-	}
-	
 	// Rewrite of the Chen Hand of God ability
 	// Author: Pizzalol
 	// Date: 06.04.2014.
@@ -63941,4 +63450,543 @@
 		}
 	}
 	
+	// Rewrite of the Chaos Knight Chaos Bolt ability
+	// Author: Pizzalol
+	// Date: 30.12.2015.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_chaos_knight/chaos_bolt.lua
+	"chaos_bolt_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"chaos_knight_chaos_bolt"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_chaos_bolt.vpcf"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_bolt_msg.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"140 140 140 140"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chaos_bolt_speed"		"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stun_min"				"1 1 1 2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stun_max"				"2 3 4 4"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_min"			"75 100 125 150"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_max"			"200 225 250 275"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_ChaosKnight.ChaosBolt.Cast"
+				"Target" 		"CASTER"
+			}
+	
+			"TrackingProjectile"
+			{
+				"Target"           	"TARGET"
+				"EffectName"		"particles/units/heroes/hero_chaos_knight/chaos_knight_chaos_bolt.vpcf"
+				"Dodgeable"			"1"
+				"ProvidesVision"	"0"
+				"MoveSpeed"        	"%chaos_bolt_speed"
+				"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"1"
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_ChaosKnight.ChaosBolt.Impact"
+				"Target" 		"TARGET"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_chaos_knight/chaos_bolt.lua"
+				"Function"		"ChaosBolt"
+				"chaos_bolt_particle"	"particles/units/heroes/hero_chaos_knight/chaos_knight_bolt_msg.vpcf"
+			}
+		}
+	}
+	// Rewrite of the Chaos Knight Chaos Strike ability
+	// Author: Pizzalol
+	// Date: 30.12.2015.
+	// Version: 6.86
+	// Type: Datadriven
+	"chaos_strike_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"chaos_knight_chaos_strike"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
+		}
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_damage"				"150 200 250 300"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_chance"				"10 10 10 10"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"armor_reduction"			"-5"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"armor_reduction_duration"	"8"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_chaos_strike_datadriven"
+			{
+			    "Passive"   "1"
+			    "IsHidden"  "1"
+	
+			    "OnAttackStart"
+			    {
+			        "RemoveModifier"
+			        {
+			            "ModifierName" 	"modifier_chaos_strike_crit_datadriven"
+			            "Target" 		"CASTER"
+			        }
+	
+			        "Random"
+			        {
+			            "Chance" 	"%crit_chance"
+			            "OnSuccess"
+			            {
+			            	"FireSound"
+					        {
+					        	"EffectName"	"Hero_ChaosKnight.ChaosStrike"
+					        	"Target"		"CASTER"
+					        }
+	
+					        "FireEffect"
+					        {
+					       		"EffectName" 		"particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
+					            "EffectAttachType"  "attach_attack1"
+					            "Target"    		"CASTER"
+					        }
+	
+			                "ApplyModifier"
+			                {
+			                    "ModifierName" 	"modifier_chaos_strike_crit_datadriven"
+			                    "Target"    	"CASTER"    
+			                }        
+			            }
+			        }
+			    }
+			}
+	
+			"modifier_chaos_strike_crit_datadriven"
+			{
+			    "IsHidden"  "1"
+			    "Properties"
+			    {
+			        "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
+			    }
+	
+			    "OnAttack"
+			    {
+			    	"ApplyModifier"
+			    	{
+			    		"ModifierName"	"modifier_chaos_strike_armor_datadriven"
+			    		"Target" 		"TARGET"
+			    		"Duration"		"%armor_reduction_duration"
+			    	}
+			    }
+	
+			    "OnAttackLanded"
+			    {
+			        "RemoveModifier"
+			        {
+			            "ModifierName"  "modifier_chaos_strike_crit_datadriven"
+			            "Target"   		"CASTER"    
+			        }
+			    }
+			}
+	
+			"modifier_chaos_strike_armor_datadriven"
+			{
+				"IsHidden"	"1"
+				"IsDebuff"	"1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_reduction"
+				}
+			}
+		}
+	}
+	// Rewrite of the Chaos Knight Phantasm ability
+	// Author: Pizzalol
+	// Date: 30.12.2015.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_chaos_knight/phantasm.lua
+	"phantasm_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"chaos_knight_phantasm"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_phantasm.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4 0.4 0.4"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"140.0 140.0 140.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 200 275"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"images_count"				"1 2 3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"extra_phantasm_chance_pct_tooltip"			"50"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"illusion_duration"			"42"
+			}	
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"outgoing_damage"			"0 0 0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"outgoing_damage_tooltip"			"100 100 100"
+			}	
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"incoming_damage"			"100 100 100"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"incoming_damage_tooltip"			"200 200 200"
+			}			
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"invuln_duration"		"0.5"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"400"
+			}			
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_chaos_knight/phantasm.lua"
+				"Function"		"PhantasmVision"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_phantasm_datadriven"
+				"Target" 		"CASTER"
+				"Duration"		"%invuln_duration"
+			}		
+		}
+	
+		"Modifiers"
+		{
+			"modifier_phantasm_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_chaos_knight/chaos_knight_phantasm.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"CASTER"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_ChaosKnight.Phantasm"
+						"Target"		"CASTER"
+					}
+			    }
+	
+			    "OnDestroy"
+			    {
+			    	"RunScript"
+				    {
+				        "ScriptFile"    "heroes/hero_chaos_knight/phantasm.lua"
+				        "Function"      "Phantasm"
+				        "sound"			"Hero_ChaosKnight.Phantasm.Plus"
+				    }
+			    }
+	
+			    "States"
+				{
+					"MODIFIER_STATE_INVULNERABLE" 			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	
+	// Rewrite of the Chaos Knight Reality Rift ability
+	// Author: Pizzalol
+	// Date: 30.12.2015.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_chaos_knight/reality_rift.lua
+	"reality_rift_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"chaos_knight_reality_rift"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift_buff.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"550 600 650 700"
+		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"24 18 12 6"
+	
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 50 50 50"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"550 600 650 700"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"60 100 140 180"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_duration"			"1.2"
+			}
+			// Extra
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"illusion_search_radius"	"1375"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"min_range"					"0.3"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"max_range"					"0.8"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_ChaosKnight.RealityRift"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_chaos_knight/reality_rift.lua"
+				"Function"		"RealityRiftPosition"
+				"reality_rift_particle"	"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_ChaosKnight.RealityRift.Target"
+				"Target" 		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_reality_rift_datadriven"
+				"Target" 		"CASTER"
+				"Duration"		"%bonus_duration"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_chaos_knight/reality_rift.lua"
+				"Function"		"RealityRift"
+				"bonus_modifier"	"modifier_reality_rift_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_reality_rift_datadriven"
+			{
+				"IsBuff"		"1"
+		
+				"EffectName"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift_buff.vpcf"
+				"EffectAttachType"	"attach_attack"
+	
+				"OnAttackLanded"
+				// "%attack_damage" is set to the damage value before mitigation
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_reality_rift_datadriven"
+						"Target" 		"ATTACKER"
+					}
+				}
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
+				}
+			}
+		}
+	}
 }

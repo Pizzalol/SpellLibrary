@@ -1,7 +1,13 @@
 // Rewrite of the Chaos Knight Chaos Bolt ability
 // Author: Pizzalol
-// Date: 08.04.2015.
-"chaos_knight_chaos_bolt_datadriven"
+// Date: 30.12.2015.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_chaos_knight/chaos_bolt.lua
+"chaos_bolt_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -58,7 +64,7 @@
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"damage_min"			"1 50 75 100"
+			"damage_min"			"75 100 125 150"
 		}
 		"05"
 		{
@@ -104,4 +110,3 @@
 		}
 	}
 }
-
