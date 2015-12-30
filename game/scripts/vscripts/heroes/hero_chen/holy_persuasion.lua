@@ -1,5 +1,5 @@
 --[[Author: Pizzalol
-	Date: 06.04.2015.
+	Date: 30.12.2015.
 	Takes ownership of the target unit]]
 function HolyPersuasion( keys )
 	local caster = keys.caster
@@ -21,9 +21,11 @@ function HolyPersuasion( keys )
 	target:SetTeam(caster_team)
 	target:SetOwner(caster)
 	target:SetControllableByPlayer(player, true)
-	target:SetMaxHealth(target:GetMaxHealth() + health_bonus)
-	target:Heal(health_bonus, ability)
 	target:GiveMana(target:GetMaxMana())
+	-- Set the minimum health bonus as max hp if the current is lower than that
+	if target:GetMaxHealth() < health_bonus then
+		target:SetBaseMaxHealth(health_bonus)
+	end	
 
 	-- Track the unit
 	ability.holy_persuasion_unit_count = ability.holy_persuasion_unit_count + 1

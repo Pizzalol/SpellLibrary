@@ -1,7 +1,13 @@
 // Rewrite of the Chen Holy Persuasion ability
 // Author: Pizzalol
-// Date: 06.04.2014.
-"chen_holy_persuasion_datadriven"
+// Date: 30.12.2015.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_chen/holy_persuasion.lua
+"holy_persuasion_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -45,7 +51,7 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"health_bonus"			"75 150 225 300"
+			"health_bonus"			"700 800 900 1000"
 		}
 	}
 
@@ -110,4 +116,3 @@
 		}
 	}
 }
-

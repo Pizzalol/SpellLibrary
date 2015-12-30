@@ -2,10 +2,11 @@
 {
 	"override_hero" "npc_dota_hero_ancient_apparition"
 
-	"AbilityLayout"	"4"
+	"AbilityLayout"	"5"
 
-	"Ability1"	"chaos_bolt_datadriven"
-	"Ability2"	"reality_rift_datadriven"
-	"Ability3"	"chaos_strike_datadriven"
-	"Ability4"	"phantasm_datadriven"
+	"Ability1"	"penitence_datadriven"
+	"Ability2"	"test_of_faith_datadriven"
+	"Ability3"	"test_of_faith_teleport_datadriven"
+	"Ability4"	"holy_persuasion_datadriven"
+    "Ability5"  "hand_of_god_datadriven"
 }

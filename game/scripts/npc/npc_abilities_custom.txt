@@ -1889,592 +1889,6 @@
 		}
 	}
 	
-	// Rewrite of the Chen Hand of God ability
-	// Author: Pizzalol
-	// Date: 06.04.2014.
-	"chen_hand_of_god_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"chen_hand_of_god"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
-			"particle"			"particles/units/heroes/hero_chen/chen_hand_of_god.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"160.0 140.0 120.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 300 400"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"200 300 400"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown_scepter"		"30"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ancient_creeps_scepter"		"1 2 3"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"  	"CASTER"
-					"Radius" 	"GLOBAL"
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO"
-				}
-			
-				"Action"    
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Chen.HandOfGodHealHero"
-						"Target" 		"TARGET"
-					}
-	
-					"FireEffect"
-					{
-						"EffectName"        "particles/units/heroes/hero_chen/chen_hand_of_god.vpcf"
-						"EffectAttachType"  "attach_hitloc"
-						"Target"            "TARGET"
-					}
-	
-					"Heal"
-					{
-						"Target"        "TARGET"
-						"HealAmount"	"%heal_amount"
-					}
-				}
-			}
-	
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"  	"CASTER"
-					"Radius" 	"GLOBAL"
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types" 	"DOTA_UNIT_TARGET_ALL"
-					"Flags"     "DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
-				}
-			
-				"Action"    
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_chen/hand_of_god.lua"
-						"Function"		"HandOfGod"
-						"sound"			"Hero_Chen.HandOfGodHealCreep"
-						"hand_particle"	"particles/units/heroes/hero_chen/chen_hand_of_god.vpcf"
-					}
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Chen Holy Persuasion ability
-	// Author: Pizzalol
-	// Date: 06.04.2014.
-	"chen_holy_persuasion_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-		"AbilityTextureName"			"chen_holy_persuasion"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
-			"particle"			"particles/units/heroes/hero_chen/chen_holy_persuasion.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900 900 900 900"
-		"AbilityCooldown"				"30.0 26.0 22.0 18.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 100 100 100"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_units"				"1 1 2 3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_bonus"			"75 150 225 300"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Chen.HolyPersuasionCast"
-				"Target" 		"CASTER"
-			}
-	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Chen.HolyPersuasionEnemy"
-				"Target" 		"TARGET"
-			}
-	
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_chen/chen_holy_persuasion.vpcf"
-				"EffectAttachType"  "start_at_customorigin"
-	
-				"ControlPointEntities"
-				{
-					"TARGET"	"attach_origin"
-					"TARGET"	"attach_origin"
-				}
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_chen/holy_persuasion.lua"
-				"Function"		"HolyPersuasion"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_holy_persuasion_datadriven"
-				"Target" 		"TARGET"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_holy_persuasion_datadriven"
-			{
-				"IsBuff"		"1"
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_chen/holy_persuasion.lua"
-						"Function"		"HolyPersuasionRemove"
-					}
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Chen Penitence ability
-	// Author: Pizzalol
-	// Date: 05.04.2014.
-	"chen_penitence_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"			"chen_penitence"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
-			"particle"			"particles/units/heroes/hero_chen/chen_penitence.vpcf"
-			"particle"			"particles/units/heroes/hero_chen/chen_penitence_debuff.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
-		"AbilityCooldown"				"14.0 13.0 12.0 11.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 100 100 100"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"5 6 7 8"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"2000 2000 2000 2000"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"-14 -18 -22 -26"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage_taken"	"14 18 22 26"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Chen.PenitenceCast"
-				"Target" 		"CASTER"
-			}
-	
-			"TrackingProjectile"
-			{
-				"Target"           	"TARGET"
-				"EffectName"		""
-				"Dodgeable"			"0"
-				"ProvidesVision"	"0"
-				"MoveSpeed"        	"%speed"
-				"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
-			}
-		}
-	
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"	"1"
-			
-			"FireSound"
-			{
-				"EffectName"	"Hero_Chen.PenitenceImpact"
-				"Target" 		"TARGET"
-			}
-	
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_chen/chen_penitence.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"            "TARGET"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_penitence_datadriven"
-				"Target" 		"TARGET"
-				"Duration"		"%duration"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_penitence_datadriven"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"1"
-		
-				"EffectName"		"particles/units/heroes/hero_chen/chen_penitence_debuff.vpcf"
-				"EffectAttachType"	"follow_origin"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" "%bonus_damage_taken"
-				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Chen Test of Faith ability
-	// Author: Pizzalol
-	// Date: 05.04.2014.
-	// NOTE: Used together with chen_test_of_faith_teleport_datadriven
-	"chen_test_of_faith_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"chen_test_of_faith"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
-			"particle"			"particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600 600 600 600"
-		"AbilityCooldown"				"24.0 24.0 24.0 24.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175 175 175 175"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_min"			"50 100 150 200"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_max"			"100 200 300 400"
-			}
-		}
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
-				"Function"		"LevelUpAbility"
-				"ability_name"	"chen_test_of_faith_teleport_datadriven"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Chen.TestOfFaith"
-				"Target" 		"TARGET"
-			}
-	
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"            "TARGET"
-			}
-	
-			"Damage"
-			{
-				"Target"		"TARGET"
-				"Type"			"DAMAGE_TYPE_PURE"
-				"Damage"		"? %damage_min %damage_max"
-			}
-		}
-	}
-	
-	// Rewrite of the Chen Test of Faith ability
-	// Author: Pizzalol
-	// Date: 06.04.2014.
-	// NOTE: Used together with chen_test_of_faith_datadriven
-	// NOTE2: Teleport loop sound seems to be bugged
-	// NOTE3: Teleports targets to the middle of the map instead of fountain
-	"chen_test_of_faith_teleport_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
-		"AbilityTextureName"			"chen_test_of_faith_teleport"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
-			"particle"			"particles/units/heroes/hero_chen/chen_teleport_cast.vpcf"
-			"particle"			"particles/units/heroes/hero_chen/chen_teleport.vpcf"
-			"particle"			"particles/units/heroes/hero_chen/chen_teleport_flash.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600 600 600 600"
-		"AbilityCooldown"				"24.0 24.0 24.0 24.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 200 200 200"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hero_teleport_delay"	"6.0 5.0 4.0 3.0"
-			}
-		}
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
-				"Function"		"LevelUpAbility"
-				"ability_name"	"chen_test_of_faith_datadriven"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_chen/chen_teleport_cast.vpcf"
-				"EffectAttachType"  "attach_attack1"
-				"Target"            "CASTER"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
-				"Function"		"TestOfFaithTeleportTarget"
-				"sound_tp_out"	"Hero_Chen.TeleportOut"
-				"sound_tp_in"	"Hero_Chen.TeleportIn"
-				"teleport_modifier"	"modifier_test_of_faith_teleport_datadriven"
-				"teleport_particle"	"particles/units/heroes/hero_chen/chen_teleport_flash.vpcf"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_test_of_faith_teleport_datadriven"
-			{
-				"IsBuff"		"1"
-		
-				"EffectName"		"particles/units/heroes/hero_chen/chen_teleport.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				// Loop sound seems to be bugged
-				//"OnCreated"
-				//{
-				//	"FireSound"
-				//	{
-				//		"EffectName"	"Hero_Chen.TeleportLoop"
-				//		"Target" 		"TARGET"
-				//	}
-				//}
-		
-				//"OnDestroy"
-				//{
-				//	"RunScript"
-				//	{
-				//		"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
-				//		"Function"		"TestOfFaithStopSound"
-				//		"sound"			"Hero_Chen.TeleportLoop"
-				//	}
-				//}
-	
-				"ThinkInterval"  "%hero_teleport_delay"
-				"OnIntervalThink"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Chen.TeleportOut"
-						"Target" 		"TARGET"
-					}
-	
-					"FireSound"
-					{
-						"EffectName"	"Hero_Chen.TeleportIn"
-						"Target" 		"TARGET"
-					}
-	
-					"FireEffect"
-					{
-						"EffectName"        "particles/units/heroes/hero_chen/chen_teleport_flash.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"            "TARGET"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
-						"Function"		"TestOfFaithTeleport"
-					}
-				}
-			}
-		}
-	}
-	
 	// Rewrite of Clinkz Death Pact
 	// Author: Noya
 	// Date: April 5, 2015
@@ -63985,6 +63399,616 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
+				}
+			}
+		}
+	}
+	// Rewrite of the Chen Hand of God ability
+	// Author: Pizzalol
+	// Date: 30.12.2015.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_chen/hand_of_god.lua
+	"hand_of_god_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"chen_hand_of_god"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
+			"particle"			"particles/units/heroes/hero_chen/chen_hand_of_god.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"160.0 140.0 120.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200 300 400"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_amount"			"200 300 400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cooldown_scepter"		"30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ancient_creeps_scepter"		"1 2 3"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  	"CASTER"
+					"Radius" 	"GLOBAL"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO"
+				}
+			
+				"Action"    
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Chen.HandOfGodHealHero"
+						"Target" 		"TARGET"
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_chen/chen_hand_of_god.vpcf"
+						"EffectAttachType"  "attach_hitloc"
+						"Target"            "TARGET"
+					}
+	
+					"Heal"
+					{
+						"Target"        "TARGET"
+						"HealAmount"	"%heal_amount"
+					}
+				}
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  	"CASTER"
+					"Radius" 	"GLOBAL"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 	"DOTA_UNIT_TARGET_ALL"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
+				}
+			
+				"Action"    
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_chen/hand_of_god.lua"
+						"Function"		"HandOfGod"
+						"sound"			"Hero_Chen.HandOfGodHealCreep"
+						"hand_particle"	"particles/units/heroes/hero_chen/chen_hand_of_god.vpcf"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of the Chen Holy Persuasion ability
+	// Author: Pizzalol
+	// Date: 30.12.2015.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_chen/holy_persuasion.lua
+	"holy_persuasion_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"AbilityTextureName"			"chen_holy_persuasion"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
+			"particle"			"particles/units/heroes/hero_chen/chen_holy_persuasion.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900 900 900 900"
+		"AbilityCooldown"				"30.0 26.0 22.0 18.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 100 100 100"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_units"				"1 1 2 3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_bonus"			"700 800 900 1000"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Chen.HolyPersuasionCast"
+				"Target" 		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Chen.HolyPersuasionEnemy"
+				"Target" 		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_chen/chen_holy_persuasion.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+	
+				"ControlPointEntities"
+				{
+					"TARGET"	"attach_origin"
+					"TARGET"	"attach_origin"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_chen/holy_persuasion.lua"
+				"Function"		"HolyPersuasion"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_holy_persuasion_datadriven"
+				"Target" 		"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_holy_persuasion_datadriven"
+			{
+				"IsBuff"		"1"
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_chen/holy_persuasion.lua"
+						"Function"		"HolyPersuasionRemove"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	// Rewrite of the Chen Penitence ability
+	// Author: Pizzalol
+	// Date: 30.12.2015.
+	// Version: 6.86
+	// Type: Datadriven
+	"penitence_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"chen_penitence"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
+			"particle"			"particles/units/heroes/hero_chen/chen_penitence.vpcf"
+			"particle"			"particles/units/heroes/hero_chen/chen_penitence_debuff.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCooldown"				"14.0 13.0 12.0 11.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70 70 70 70"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"8"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"2000 2000 2000 2000"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"-15 -20 -25 -30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage_taken"	"15 20 25 30"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Chen.PenitenceCast"
+				"Target" 		"CASTER"
+			}
+	
+			"TrackingProjectile"
+			{
+				"Target"           	"TARGET"
+				"EffectName"		""
+				"Dodgeable"			"0"
+				"ProvidesVision"	"0"
+				"MoveSpeed"        	"%speed"
+				"SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"1"
+			
+			"FireSound"
+			{
+				"EffectName"	"Hero_Chen.PenitenceImpact"
+				"Target" 		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_chen/chen_penitence.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_penitence_datadriven"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_penitence_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+		
+				"EffectName"		"particles/units/heroes/hero_chen/chen_penitence_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" "%bonus_damage_taken"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
+				}
+			}
+		}
+	}
+	
+	// Rewrite of the Chen Test of Faith ability
+	// Author: Pizzalol
+	// Date: 30.12.2015.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_chen/test_of_faith.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/chen/test_of_faith_teleport_datadriven.txt
+	"test_of_faith_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"chen_test_of_faith"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
+			"particle"			"particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600 600 600 600"
+		"AbilityCooldown"				"16 16 16 16"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90 100 110 120"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_min"			"50 100 150 200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_max"			"100 200 300 400"
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"test_of_faith_teleport_datadriven"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Chen.TestOfFaith.Target"
+				"Target" 		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_chen/chen_test_of_faith.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}
+	
+			"Damage"
+			{
+				"Target"		"TARGET"
+				"Type"			"DAMAGE_TYPE_PURE"
+				"Damage"		"? %damage_min %damage_max"
+			}
+		}
+	}
+	// Rewrite of the Chen Test of Faith ability
+	// Author: Pizzalol
+	// Date: 30.12.2015.
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTE: Teleports targets to the middle of the map instead of fountain
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_chen/test_of_faith.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/chen/test_of_faith_datadriven.txt
+	"test_of_faith_teleport_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
+		"AbilityTextureName"			"chen_test_of_faith_teleport"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
+			"particle"			"particles/units/heroes/hero_chen/chen_teleport_cast.vpcf"
+			"particle"			"particles/units/heroes/hero_chen/chen_teleport.vpcf"
+			"particle"			"particles/units/heroes/hero_chen/chen_teleport_flash.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600 600 600 600"
+		"AbilityCooldown"				"24.0 24.0 24.0 24.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200 200 200 200"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hero_teleport_delay"	"6.0 5.0 4.0 3.0"
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"test_of_faith_datadriven"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_chen/chen_teleport_cast.vpcf"
+				"EffectAttachType"  "attach_attack1"
+				"Target"            "CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
+				"Function"		"TestOfFaithTeleportTarget"
+				"sound_tp_out"	"Hero_Chen.TeleportOut"
+				"sound_tp_in"	"Hero_Chen.TeleportIn"
+				"teleport_modifier"	"modifier_test_of_faith_teleport_datadriven"
+				"teleport_particle"	"particles/units/heroes/hero_chen/chen_teleport_flash.vpcf"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_test_of_faith_teleport_datadriven"
+			{
+				"IsBuff"		"1"
+		
+				"EffectName"		"particles/units/heroes/hero_chen/chen_teleport.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Chen.TeleportLoop"
+						"Target" 		"TARGET"
+					}
+				}
+		
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
+						"Function"		"TestOfFaithStopSound"
+						"sound"			"Hero_Chen.TeleportLoop"
+					}
+				}
+	
+				"ThinkInterval"  "%hero_teleport_delay"
+				"OnIntervalThink"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Chen.TeleportOut"
+						"Target" 		"TARGET"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Chen.TeleportIn"
+						"Target" 		"TARGET"
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_chen/chen_teleport_flash.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
+						"Function"		"TestOfFaithTeleport"
+					}
 				}
 			}
 		}

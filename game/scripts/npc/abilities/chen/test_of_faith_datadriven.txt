@@ -1,8 +1,16 @@
 // Rewrite of the Chen Test of Faith ability
 // Author: Pizzalol
-// Date: 05.04.2014.
-// NOTE: Used together with chen_test_of_faith_teleport_datadriven
-"chen_test_of_faith_datadriven"
+// Date: 30.12.2015.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_chen/test_of_faith.lua
+//
+// KV files:
+// scripts/npc/abilities/chen/test_of_faith_teleport_datadriven.txt
+"test_of_faith_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -31,11 +39,11 @@
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"600 600 600 600"
-	"AbilityCooldown"				"24.0 24.0 24.0 24.0"
+	"AbilityCooldown"				"16 16 16 16"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"175 175 175 175"
+	"AbilityManaCost"				"90 100 110 120"
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -59,7 +67,7 @@
 		{
 			"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
 			"Function"		"LevelUpAbility"
-			"ability_name"	"chen_test_of_faith_teleport_datadriven"
+			"ability_name"	"test_of_faith_teleport_datadriven"
 		}
 	}
 
@@ -67,7 +75,7 @@
 	{
 		"FireSound"
 		{
-			"EffectName"	"Hero_Chen.TestOfFaith"
+			"EffectName"	"Hero_Chen.TestOfFaith.Target"
 			"Target" 		"TARGET"
 		}
 
@@ -86,4 +94,3 @@
 		}
 	}
 }
-

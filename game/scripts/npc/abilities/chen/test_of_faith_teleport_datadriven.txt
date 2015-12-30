@@ -1,10 +1,17 @@
 // Rewrite of the Chen Test of Faith ability
 // Author: Pizzalol
-// Date: 06.04.2014.
-// NOTE: Used together with chen_test_of_faith_datadriven
-// NOTE2: Teleport loop sound seems to be bugged
-// NOTE3: Teleports targets to the middle of the map instead of fountain
-"chen_test_of_faith_teleport_datadriven"
+// Date: 30.12.2015.
+// Version: 6.86
+// Type: Datadriven
+// NOTE: Teleports targets to the middle of the map instead of fountain
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_chen/test_of_faith.lua
+//
+// KV files:
+// scripts/npc/abilities/chen/test_of_faith_datadriven.txt
+"test_of_faith_teleport_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -56,7 +63,7 @@
 		{
 			"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
 			"Function"		"LevelUpAbility"
-			"ability_name"	"chen_test_of_faith_datadriven"
+			"ability_name"	"test_of_faith_datadriven"
 		}
 	}
 
@@ -89,25 +96,24 @@
 			"EffectName"		"particles/units/heroes/hero_chen/chen_teleport.vpcf"
 			"EffectAttachType"	"follow_origin"
 
-			// Loop sound seems to be bugged
-			//"OnCreated"
-			//{
-			//	"FireSound"
-			//	{
-			//		"EffectName"	"Hero_Chen.TeleportLoop"
-			//		"Target" 		"TARGET"
-			//	}
-			//}
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Chen.TeleportLoop"
+					"Target" 		"TARGET"
+				}
+			}
 	
-			//"OnDestroy"
-			//{
-			//	"RunScript"
-			//	{
-			//		"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
-			//		"Function"		"TestOfFaithStopSound"
-			//		"sound"			"Hero_Chen.TeleportLoop"
-			//	}
-			//}
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
+					"Function"		"TestOfFaithStopSound"
+					"sound"			"Hero_Chen.TeleportLoop"
+				}
+			}
 
 			"ThinkInterval"  "%hero_teleport_delay"
 			"OnIntervalThink"
@@ -140,4 +146,3 @@
 		}
 	}
 }
-

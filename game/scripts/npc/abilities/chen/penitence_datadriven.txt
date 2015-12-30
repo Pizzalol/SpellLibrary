@@ -1,7 +1,9 @@
 // Rewrite of the Chen Penitence ability
 // Author: Pizzalol
-// Date: 05.04.2014.
-"chen_penitence_datadriven"
+// Date: 30.12.2015.
+// Version: 6.86
+// Type: Datadriven
+"penitence_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -32,7 +34,7 @@
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"100 100 100 100"
+	"AbilityManaCost"				"70 70 70 70"
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -41,7 +43,7 @@
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"duration"				"5 6 7 8"
+			"duration"				"8"
 		}
 		"02"
 		{
@@ -51,12 +53,12 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_movement_speed"	"-14 -18 -22 -26"
+			"bonus_movement_speed"	"-15 -20 -25 -30"
 		}
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_damage_taken"	"14 18 22 26"
+			"bonus_damage_taken"	"15 20 25 30"
 		}
 	}
 
