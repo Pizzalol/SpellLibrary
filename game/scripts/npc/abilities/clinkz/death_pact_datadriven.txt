@@ -1,7 +1,13 @@
 // Rewrite of Clinkz Death Pact
 // Author: Noya
-// Date: April 5, 2015
-"clinkz_death_pact_datadriven"
+// Date: 31.12.2015.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_clinkz/death_pact.lua
+"death_pact_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -20,7 +26,7 @@
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"45.0 40.0 35.0"
+	"AbilityCooldown"				"45.0 35.0 25.0"
 	
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
@@ -162,4 +168,3 @@
 		}
 	}
 }
-

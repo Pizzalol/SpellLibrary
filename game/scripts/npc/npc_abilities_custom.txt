@@ -1889,492 +1889,6 @@
 		}
 	}
 	
-	// Rewrite of Clinkz Death Pact
-	// Author: Noya
-	// Date: April 5, 2015
-	"clinkz_death_pact_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityTextureName"			"clinkz_death_pact"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400"
-		"AbilityCastPoint"				"0.5 0.5 0.5"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"45.0 40.0 35.0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 100 100"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"35.0 35.0 35.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_gain_pct"		"50 65 80"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_gain_pct"		"5.0 6.5 8.0"
-			}
-		}
-	
-		"precache"
-		{
-			"particle" 	"particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
-			"particle"  "particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Clinkz.DeathPact.Cast"
-				"Target" 		"CASTER"
-			}
-	
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"            "TARGET"
-				"ControlPointEntities"
-				{
-					"TARGET"	"attach_origin"
-					"CASTER"	"attach_origin"
-				}
-			}
-			
-			"FireSound"
-			{
-				"EffectName"	"Hero_Clinkz.DeathPact"
-				"Target" 		"TARGET"
-			}
-	
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_death_pact"
-				"Target" 		"CASTER"
-			}
-	
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_death_pact_damage"
-				"Target" 		"CASTER"
-			}
-	
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_death_pact_health"
-				"Target" 		"CASTER"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_death_pact"
-				"Target" 		"CASTER"
-				"Duration"		"%duration"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
-				"Function"		"DeathPact"
-			}	
-		}
-	
-		"Modifiers"
-		{
-			"modifier_death_pact"
-			{	
-				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
-						"Function"		"DeathPactHealth"
-					}
-				}
-			}
-	
-			"modifier_death_pact_damage"
-			{
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "1"
-				}
-			}
-	
-			"modifier_death_pact_health"
-			{
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_BONUS" "1"
-				}
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
-						"Function"		"SetCurrentHealth"
-					}
-				}
-			}
-		}
-	}
-	
-	// Rewrite of Clinkz Searing Arrows
-	// Author: Noya
-	// Date: April 5, 2015
-	// This uses the old Orb mechanic. Orb Labels seem to be malfunctioning, need to warn Valve about this issue.
-	// A non-orb rewrite might be impossible because OnAttackStart triggers earlier than OnOrbFire (i.e. there's no OnAttackLaunched)
-	"clinkz_searing_arrows_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"AbilityTextureName"			"clinkz_searing_arrows"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0 0.0 0.0 0.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"10"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_bonus"					"30 40 50 60"
-			}
-		}
-	
-		"precache"
-		{
-			"particle"  "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
-		}
-	
-		"Modifiers"
-		{
-			"modifier_searing_arrow"
-			{
-				"Passive"               "1"
-				"IsHidden"				"1"
-	
-				"Orb"
-				{
-					"Priority"			"DOTA_ORB_PRIORITY_DEFAULT"
-					"ProjectileName"    "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
-					"CastAttack"		"1"
-				}
-	
-				"OnOrbFire"
-				{
-					"SpendMana"
-					{
-						"Mana"    		"%AbilityManaCost"
-					}
-	
-					"FireSound"
-					{
-						"EffectName"	"Hero_Clinkz.SearingArrows"
-						"Target"		"CASTER"
-					}
-				}
-				
-				"OnOrbImpact"
-				{
-					"Damage"
-					{
-						"Type"          "DAMAGE_TYPE_PHYSICAL"
-						"Damage"        "%AbilityDamage"
-						"Target"		"TARGET"
-					}
-	
-					"FireSound"
-					{
-						"EffectName"	"Hero_Clinkz.SearingArrows.Impact"
-						"Target"		"CASTER"
-					}
-				}
-			}
-		}
-	}
-	
-	// Rewrite of Clinkz Strafe
-	// Author: Noya
-	// Date: April 5, 2015
-	"clinkz_strafe_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"clinkz_strafe"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"45.0 40.0 35.0 30.0"
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90 90 90 90"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.0 6.0 8.0 10.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_speed_bonus_pct"	"130"
-			}
-		}
-	
-		"precache"
-		{
-			"particle"  "particles/units/heroes/hero_clinkz/clinkz_strafe_fire.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
-		}
-	
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_clinkz/clinkz_strafe_fire.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"            "CASTER"
-			}
-	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Clinkz.Strafe"
-				"Target" 		"CASTER"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_strafe"
-				"Target" 		"CASTER"
-				"Duration"		"%duration"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_strafe"
-			{
-				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_strafe.vpcf"
-				"EffectAttachType"	"follow_origin"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_bonus_pct"
-				}
-			}
-		}
-	}
-	// Rewrite of Clinkz Wind Walk
-	// Author: Noya
-	// Date: April 5, 2015
-	"clinkz_wind_walk_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"clinkz_wind_walk"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20.0 20.0 20.0 20.0"
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75 75 75 75"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"20.0 25.0 30.0 35.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"fade_time"					"0.6 0.6 0.6 0.6"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"move_speed_bonus_pct"		"11 22 33 44"
-			}
-		}
-	
-		"precache"
-		{
-			"particle"  "particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
-		}
-	
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{
-				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
-				"EffectAttachType"	"attach_origin"
-				"Target"			"CASTER"
-			}
-	
-			"FireSound"
-			{
-				"Target"		"CASTER"
-				"EffectName"	"Hero_Clinkz.WindWalk"
-			}
-	
-			"ApplyModifier"
-			{
-				"Target"		"CASTER"
-				"ModifierName"	"modifier_wind_walk_fade"
-				"Duration"		"%fade_time"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_wind_walk_fade"
-			{
-				"IsHidden"			"1"
-				"EffectName"		"particles/generic_hero_status/status_invisibility_start.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				"OnDestroy"
-				{
-					"ApplyModifier"
-					{
-						"Target"		"CASTER"
-						"ModifierName"	"modifier_wind_walk"
-						"Duration"		"%duration"
-					}
-					"ApplyModifier"
-					{
-						"Target"		"CASTER"
-						"ModifierName"	"modifier_invisible"
-						"Duration"		"%duration"
-					}
-				}
-			}
-	
-			"modifier_wind_walk"
-			{
-				"OnAttackLanded"
-				{
-					"RemoveModifier"
-					{
-						"Target"		"CASTER"
-						"ModifierName"	"modifier_wind_walk"
-					}
-					"RemoveModifier"
-					{
-						"Target"		"CASTER"
-						"ModifierName"	"modifier_invisible"
-					}
-				}
-	
-				"OnAbilityExecuted"
-				{
-					"RemoveModifier"
-					{
-						"Target"		"CASTER"
-						"ModifierName"	"modifier_wind_walk"
-					}
-					"RemoveModifier"
-					{
-						"Target"		"CASTER"
-						"ModifierName"	"modifier_invisible"
-					}
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED" 
-				}
-	
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"Target"
-						{
-							"Center"	"CASTER"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-						"ModifierName"	"modifier_invisible"
-					}
-				}
-			}
-		}
-	}
-	
 	"courier_burst_datadriven"
 	{
 		// General
@@ -64008,6 +63522,506 @@
 					{
 						"ScriptFile"	"heroes/hero_chen/test_of_faith.lua"
 						"Function"		"TestOfFaithTeleport"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of Clinkz Death Pact
+	// Author: Noya
+	// Date: 31.12.2015.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_clinkz/death_pact.lua
+	"death_pact_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"			"clinkz_death_pact"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400"
+		"AbilityCastPoint"				"0.5 0.5 0.5"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"45.0 35.0 25.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 100 100"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"35.0 35.0 35.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_gain_pct"		"50 65 80"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_gain_pct"		"5.0 6.5 8.0"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
+			"particle"  "particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Clinkz.DeathPact.Cast"
+				"Target" 		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+				"ControlPointEntities"
+				{
+					"TARGET"	"attach_origin"
+					"CASTER"	"attach_origin"
+				}
+			}
+			
+			"FireSound"
+			{
+				"EffectName"	"Hero_Clinkz.DeathPact"
+				"Target" 		"TARGET"
+			}
+	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_death_pact"
+				"Target" 		"CASTER"
+			}
+	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_death_pact_damage"
+				"Target" 		"CASTER"
+			}
+	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_death_pact_health"
+				"Target" 		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_death_pact"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
+				"Function"		"DeathPact"
+			}	
+		}
+	
+		"Modifiers"
+		{
+			"modifier_death_pact"
+			{	
+				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
+						"Function"		"DeathPactHealth"
+					}
+				}
+			}
+	
+			"modifier_death_pact_damage"
+			{
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "1"
+				}
+			}
+	
+			"modifier_death_pact_health"
+			{
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS" "1"
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_clinkz/death_pact.lua"
+						"Function"		"SetCurrentHealth"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of Clinkz Searing Arrows
+	// Author: Noya
+	// Date: 31.12.2015.
+	// Version: 6.81
+	// Type: Datadriven
+	// NOTE: This uses the old Orb mechanic. Orb Labels seem to be malfunctioning, need to warn Valve about this issue.
+	// A non-orb rewrite might be impossible because OnAttackStart triggers earlier than OnOrbFire (i.e. there's no OnAttackLaunched)
+	"searing_arrows_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"			"clinkz_searing_arrows"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0 0.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"10"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_bonus"					"30 40 50 60"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_searing_arrow"
+			{
+				"Passive"               "1"
+				"IsHidden"				"1"
+	
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_DEFAULT"
+					"ProjectileName"    "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+					"CastAttack"		"1"
+				}
+	
+				"OnOrbFire"
+				{
+					"SpendMana"
+					{
+						"Mana"    		"%AbilityManaCost"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Clinkz.SearingArrows"
+						"Target"		"CASTER"
+					}
+				}
+				
+				"OnOrbImpact"
+				{
+					"Damage"
+					{
+						"Type"          "DAMAGE_TYPE_PHYSICAL"
+						"Damage"        "%AbilityDamage"
+						"Target"		"TARGET"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Clinkz.SearingArrows.Impact"
+						"Target"		"CASTER"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of Clinkz Strafe
+	// Author: Noya
+	// Date: 31.12.2015.
+	// Version: 6.86
+	// Type: Datadriven
+	"strafe_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"clinkz_strafe"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40.0 35.0 30.0 25.0"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90 90 90 90"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"4.0 6.0 8.0 10.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_speed_bonus_pct"	"130"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_clinkz/clinkz_strafe_fire.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_clinkz/clinkz_strafe_fire.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Clinkz.Strafe"
+				"Target" 		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_strafe"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_strafe"
+			{
+				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_strafe.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_bonus_pct"
+				}
+			}
+		}
+	}
+	// Rewrite of Clinkz Wind Walk
+	// Author: Noya
+	// Date: 31.12.2015.
+	// Version: 6.86
+	// Type: Datadriven
+	"wind_walk_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"clinkz_wind_walk"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20.0 19.0 18.0 17.0"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75 75 75 75"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"20.0 25.0 30.0 35.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fade_time"					"0.6 0.6 0.6 0.6"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"move_speed_bonus_pct"		"11 22 33 44"
+			}
+		}
+	
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
+				"EffectAttachType"	"attach_origin"
+				"Target"			"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"Target"		"CASTER"
+				"EffectName"	"Hero_Clinkz.WindWalk"
+			}
+	
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_wind_walk_fade"
+				"Duration"		"%fade_time"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_wind_walk_fade"
+			{
+				"IsHidden"			"1"
+				"EffectName"		"particles/generic_hero_status/status_invisibility_start.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_wind_walk"
+						"Duration"		"%duration"
+					}
+					"ApplyModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_invisible"
+						"Duration"		"%duration"
+					}
+				}
+			}
+	
+			"modifier_wind_walk"
+			{
+				"OnAttackLanded"
+				{
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_wind_walk"
+					}
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_invisible"
+					}
+				}
+	
+				"OnAbilityExecuted"
+				{
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_wind_walk"
+					}
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_invisible"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED" 
+				}
+	
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%move_speed_bonus_pct" 
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"Target"
+						{
+							"Center"	"CASTER"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+						"ModifierName"	"modifier_invisible"
 					}
 				}
 			}

@@ -1,9 +1,11 @@
 // Rewrite of Clinkz Searing Arrows
 // Author: Noya
-// Date: April 5, 2015
-// This uses the old Orb mechanic. Orb Labels seem to be malfunctioning, need to warn Valve about this issue.
+// Date: 31.12.2015.
+// Version: 6.81
+// Type: Datadriven
+// NOTE: This uses the old Orb mechanic. Orb Labels seem to be malfunctioning, need to warn Valve about this issue.
 // A non-orb rewrite might be impossible because OnAttackStart triggers earlier than OnOrbFire (i.e. there's no OnAttackLaunched)
-"clinkz_searing_arrows_datadriven"
+"searing_arrows_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -92,4 +94,3 @@
 		}
 	}
 }
-

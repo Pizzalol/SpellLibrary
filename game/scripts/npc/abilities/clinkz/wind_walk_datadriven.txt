@@ -1,7 +1,9 @@
 // Rewrite of Clinkz Wind Walk
 // Author: Noya
-// Date: April 5, 2015
-"clinkz_wind_walk_datadriven"
+// Date: 31.12.2015.
+// Version: 6.86
+// Type: Datadriven
+"wind_walk_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -11,7 +13,7 @@
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"20.0 20.0 20.0 20.0"
+	"AbilityCooldown"				"20.0 19.0 18.0 17.0"
 	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
 	
 	// Cost
@@ -128,6 +130,11 @@
 				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED" 
 			}
 
+			"Properties"
+			{
+			    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%move_speed_bonus_pct" 
+			}
+
 			"OnDestroy"
 			{
 				"RemoveModifier"
@@ -143,4 +150,3 @@
 		}
 	}
 }
-

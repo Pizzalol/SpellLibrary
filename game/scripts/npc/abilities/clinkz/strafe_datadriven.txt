@@ -1,7 +1,9 @@
 // Rewrite of Clinkz Strafe
 // Author: Noya
-// Date: April 5, 2015
-"clinkz_strafe_datadriven"
+// Date: 31.12.2015.
+// Version: 6.86
+// Type: Datadriven
+"strafe_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -12,7 +14,7 @@
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"45.0 40.0 35.0 30.0"
+	"AbilityCooldown"				"40.0 35.0 30.0 25.0"
 	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
 	
 	// Cost
