@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"strafe_datadriven"
-	"Ability2"	"searing_arrows_datadriven"
-	"Ability3"	"wind_walk_datadriven"
-	"Ability4"	"death_pact_datadriven"
+	"Ability1"	"crystal_nova_datadriven"
+	"Ability2"	"frostbite_datadriven"
+	"Ability3"	"brilliance_aura_datadriven"
+	"Ability4"	"freezing_field_datadriven"
 }

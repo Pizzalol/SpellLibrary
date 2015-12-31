@@ -1,4 +1,9 @@
-"crystal_maiden_brilliance_aura_datadriven"
+// Rewrite of Crystal Maiden Arcane Aura
+// Author: kritth
+// Date: 31.12.2015.
+// Version: 6.86
+// Type: Datadriven
+"brilliance_aura_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -14,7 +19,7 @@
 		"01"
 		{
 			"var_type"			"FIELD_FLOAT"
-			"mana_regen"		"1.0 1.5 2.0 2.5"
+			"mana_regen"		"1.0 1.5 2.0 3"
 		}
 		// Extra variables
 		"02"

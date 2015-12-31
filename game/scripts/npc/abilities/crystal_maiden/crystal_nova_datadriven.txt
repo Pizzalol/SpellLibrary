@@ -1,4 +1,13 @@
-"crystal_maiden_crystal_nova_datadriven"
+// Rewrite of Crystal Maiden Crystal Nova
+// Author: kritth
+// Date: 31.12.2015.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_crystal_maiden/crystal_nova.lua
+"crystal_nova_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -18,7 +27,7 @@
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"15.0 15.0 15.0 15.0"
+	"AbilityCooldown"				"12.0 12.0 12.0 12.0"
 	
 	// Damage.
 	//-------------------------------------------------------------------------------------------------------------
@@ -35,7 +44,7 @@
 		"01"
 		{
 			"var_type"			"FIELD_FLOAT"
-			"duration"			"3.5 4.0 4.5 5.0"
+			"duration"			"4.5"
 		}
 		"02"
 		{
@@ -45,12 +54,12 @@
 		"03"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"movespeed_slow"	"-30"
+			"movespeed_slow"	"-20 -30 -40 -50"
 		}
 		"04"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"attackspeed_slow"	"-20"
+			"attackspeed_slow"	"-20 -30 -40 -50"
 		}
 		"05"
 		{

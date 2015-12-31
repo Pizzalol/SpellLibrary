@@ -175,5 +175,5 @@ function PhantasmVision( keys )
 	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level) 
 	local vision_duration = ability:GetLevelSpecialValueFor("invuln_duration", ability_level)
 
-	AddFOWViewer(caster:GetTeamNumber(), caster_location, vision_radius, vision_duration, true)
+	AddFOWViewer(caster:GetTeamNumber(), caster_location, vision_radius, vision_duration, false)
 end
