@@ -1,8 +1,17 @@
 // Rewrite of the Dark Seer Wall of Replica ability
 // Author: Pizzalol
-// Date: 05.04.2015.
-// NOTE: Has the normal illusion behavior for enemies
-"dark_seer_wall_of_replica_datadriven"
+// Date: 01.01.2016.
+// Version: 6.86
+// Type: Datadriven
+// NOTE: Shows up as an illusion only for friendly units
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_dark_seer/wall_of_replica.lua
+//
+// Unit files:
+// scripts/npc/units/npc_dummy_unit.txt
+"wall_of_replica_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -33,7 +42,7 @@
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"200 300 400"
+	"AbilityManaCost"				"125 250 375"
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -47,17 +56,17 @@
 		"02"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"duration"				"15.0 30.0 45.0"
+			"duration"				"45.0"
 		}			
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"replica_damage_outgoing"	"-30 -20 -10"
+			"replica_damage_outgoing"	"-40 -25 -10"
 		}
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"tooltip_outgoing"	"70 80 90"
+			"tooltip_outgoing"	"60 75 90"
 		}
 		"05"
 		{
@@ -166,4 +175,3 @@
 		}
 	}
 }
-

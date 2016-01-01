@@ -2063,570 +2063,6 @@
 		"MaxLevel"		"1"
 	}
 	
-	// Rewrite of the Dark Seer Ion Shell ability
-	// Author: Pizzalol
-	// Date: 02.04.2015.
-	"dark_seer_ion_shell_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"dark_seer_ion_shell"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
-			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf"
-			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell_damage.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"9"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"70 90 110 130"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.0"	// just does damage
-			
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"250"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"30 50 70 90"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"20"
-			}
-			// Extra
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"think_interval"		"0.1"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_ion_shell_datadriven"
-				"Target" 		"TARGET"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_ion_shell_datadriven"
-				"Target" 		"TARGET"
-				"Duration"		"%duration"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_ion_shell_datadriven"
-			{
-				"IsBuff"		"1"
-				"IsPurgable"	"0"
-		
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Dark_Seer.Ion_Shield_Start"
-						"Target" 		"TARGET"
-					}
-	
-					"AttachEffect"
-					{
-						"EffectName"        "particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf"
-						"EffectAttachType"  "attach_hitloc"
-						"Target"            "TARGET"
-	
-						"ControlPoints"
-						{
-							"01"	"100 100 100"
-						}
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Dark_Seer.Ion_Shield_end"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-					}
-				}
-	
-				"ThinkInterval"  "%think_interval"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_dark_seer/ion_shell.lua"
-						"Function"		"IonShell"
-						"ion_particle"	"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell_damage.vpcf"
-					}
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Dark Seer Surge ability
-	// Author: Pizzalol
-	// Date: 01.04.2015.
-	"dark_seer_surge_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"  
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
-		"AbilityTextureName"			"dark_seer_surge"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
-			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0 11.0 10.0 9.0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"20 30 40 50"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"2.5"	// Value much higher than manacost
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 4.5 6.0 7.5"
-			}
-			// Extra
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"move_speed"			"522"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Dark_Seer.Surge"
-				"Target" 		"TARGET"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_surge_datadriven"
-				"Target" 		"TARGET"
-				"Duration"		"%duration"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_surge_datadriven"
-			{
-				"IsBuff"		"1"
-		
-				"EffectName"		"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
-				"EffectAttachType"	"follow_hitloc"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE" 	"%move_speed"
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Dark Seer Vacuum ability
-	// Author: Pizzalol
-	// Date: 03.04.2015.
-	"dark_seer_vacuum_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"dark_seer_vacuum"
-		"AOERadius"						"%radius"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
-			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_vacuum.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
-		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"28"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 130 160 190"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"250 350 450 550"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"0.4 0.4 0.4 0.4"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"40 80 120 160"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_tree"				"275"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_dark_seer/dark_seer_vacuum.vpcf"
-				"EffectAttachType"  "start_at_customorigin"
-				"TargetPoint"       "POINT"
-	
-				"ControlPoints"
-				{
-					"01"	"%radius 0 0"
-				}
-			}
-	
-			"CreateThinker"
-			{
-				"ModifierName"	"modifier_vacuum_thinker_datadriven"
-				"Target" 		"POINT"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_vacuum_thinker_datadriven"
-			{
-				"Duration"		"%duration"
-	
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Dark_Seer.Vacuum"
-						"Target" 		"TARGET"
-					}
-	
-					"DestroyTrees"
-					{
-						"Target" 		"TARGET"
-						"Radius"		"%radius_tree"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_dark_seer/vacuum.lua"
-						"Function"		"VacuumStart"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"ActOnTargets"
-					{
-						"Target"
-						{
-							"Center"  	"TARGET"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							"Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-						}
-					
-						"Action"    
-						{
-							"Damage"
-							{
-								"Target"		"TARGET"
-								"Type"			"DAMAGE_TYPE_MAGICAL"
-								"Damage"		"%damage"
-							}
-						}
-					}
-				}
-	
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_dark_seer/vacuum.lua"
-						"Function"		"Vacuum"
-						"vacuum_modifier"	"modifier_vacuum_datadriven"
-					}
-				}
-			}
-	
-			"modifier_vacuum_datadriven"
-			{
-				"IsPurgable"	"0"
-	
-				"OverrideAnimation"     "ACT_DOTA_FLAIL"
-	
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Dark Seer Wall of Replica ability
-	// Author: Pizzalol
-	// Date: 05.04.2015.
-	// NOTE: Has the normal illusion behavior for enemies
-	"dark_seer_wall_of_replica_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"dark_seer_wall_of_replica"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
-			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500 900 1300"
-		"AbilityCastPoint"				"0.4 0.4 0.4"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"100.0 100.0 100.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 300 400"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"150 150 150"
-			}	
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"15.0 30.0 45.0"
-			}			
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replica_damage_outgoing"	"-30 -20 -10"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_outgoing"	"70 80 90"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replica_damage_incoming"	"300 300 300"
-			}	
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_replica_total_damage_incoming"	"400 400 400"
-			}				
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"length"				"1000 1000 1000"
-			}			
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replica_scale"	"0"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"500 900 1300"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replica_damage_outgoing_scepter"	"0 20 40"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_outgoing_scepter"	"100 120 140"
-			}
-			// Extra
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"width"					"50 50 50"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Dark_Seer.Wall_of_Replica_Start"
-				"Target" 		"CASTER"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
-				"Function"		"WallOfReplica"
-				"Target"		"POINT"
-				"wall_particle"	"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
-				"dummy_modifier"	"modifier_wall_of_replica_dummy_datadriven"
-				"dummy_sound"		"Hero_Dark_Seer.Wall_of_Replica_lp"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_wall_of_replica_dummy_datadriven"
-			{
-				"IsHidden"		"1"
-				"IsPurgable"	"0"
-	
-				"ThinkInterval"  "0.2"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
-						"Function"		"WallOfReplicaAura"
-						"aura_modifier"	"modifier_wall_of_replica_datadriven"
-					}
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				
-					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
-			"modifier_wall_of_replica_datadriven"
-			{
-				"IsHidden"	"1"
-	
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-	
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
-						"Function"		"WallOfReplicaIllusionCheck"
-					}
-				}
-			}
-		}
-	}
-	
 	"dark_troll_warlord_ensnare_datadriven"
 	{
 		// General
@@ -64053,6 +63489,589 @@
 						"Target"	"TARGET"
 						"Damage"	"%damage_per_second_tooltip / 2"
 						"Type"		"DAMAGE_TYPE_MAGICAL"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of the Dark Seer Ion Shell ability
+	// Author: Pizzalol
+	// Date: 01.01.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_dark_seer/ion_shell.lua
+	"ion_shell_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"dark_seer_ion_shell"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf"
+			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell_damage.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"9"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70 90 110 130"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.0"	// just does damage
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"250"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"30 50 70 90"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"25"
+			}
+			// Extra
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"think_interval"		"0.1"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_ion_shell_datadriven"
+				"Target" 		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_ion_shell_datadriven"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_ion_shell_datadriven"
+			{
+				"IsBuff"		"1"
+				"IsPurgable"	"1"
+		
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Dark_Seer.Ion_Shield_Start"
+						"Target" 		"TARGET"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf"
+						"EffectAttachType"  "attach_hitloc"
+						"Target"            "TARGET"
+	
+						"ControlPoints"
+						{
+							"01"	"100 100 100"
+						}
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Dark_Seer.Ion_Shield_end"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+				}
+	
+				"ThinkInterval"  "%think_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_dark_seer/ion_shell.lua"
+						"Function"		"IonShell"
+						"ion_particle"	"particles/units/heroes/hero_dark_seer/dark_seer_ion_shell_damage.vpcf"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of the Dark Seer Surge ability
+	// Author: Pizzalol
+	// Date: 01.01.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	"surge_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"  
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"AbilityTextureName"			"dark_seer_surge"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12.0 11.0 10.0 9.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"2.5"	// Value much higher than manacost
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0 4.5 6.0 7.5"
+			}
+			// Extra
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_speed"			"522"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Dark_Seer.Surge"
+				"Target" 		"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_surge_datadriven"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_surge_datadriven"
+			{
+				"IsBuff"		"1"
+		
+				"EffectName"		"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+				"EffectAttachType"	"follow_hitloc"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE" 	"%move_speed"
+				}
+			}
+		}
+	}
+	// Rewrite of the Dark Seer Vacuum ability
+	// Author: Pizzalol
+	// Date: 01.01.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_dark_seer/vacuum.lua
+	"vacuum_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"dark_seer_vacuum"
+		"AOERadius"						"%radius"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_vacuum.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"28"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 130 160 190"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"250 350 450 550"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0.5 0.5 0.5 0.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"40 80 120 160"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_tree"				"275"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_dark_seer/dark_seer_vacuum.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				"TargetPoint"       "POINT"
+	
+				"ControlPoints"
+				{
+					"01"	"%radius 0 0"
+				}
+			}
+	
+			"CreateThinker"
+			{
+				"ModifierName"	"modifier_vacuum_thinker_datadriven"
+				"Target" 		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_vacuum_thinker_datadriven"
+			{
+				"Duration"		"%duration"
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Dark_Seer.Vacuum"
+						"Target" 		"TARGET"
+					}
+	
+					"DestroyTrees"
+					{
+						"Target" 		"TARGET"
+						"Radius"		"%radius_tree"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_dark_seer/vacuum.lua"
+						"Function"		"VacuumStart"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+						}
+					
+						"Action"    
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+								"Damage"		"%damage"
+							}
+						}
+					}
+				}
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_dark_seer/vacuum.lua"
+						"Function"		"Vacuum"
+						"vacuum_modifier"	"modifier_vacuum_datadriven"
+					}
+				}
+			}
+	
+			"modifier_vacuum_datadriven"
+			{
+				"IsPurgable"	"0"
+	
+				"OverrideAnimation"     "ACT_DOTA_FLAIL"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	// Rewrite of the Dark Seer Wall of Replica ability
+	// Author: Pizzalol
+	// Date: 01.01.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTE: Shows up as an illusion only for friendly units
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_dark_seer/wall_of_replica.lua
+	//
+	// Unit files:
+	// scripts/npc/units/npc_dummy_unit.txt
+	"wall_of_replica_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"dark_seer_wall_of_replica"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500 900 1300"
+		"AbilityCastPoint"				"0.4 0.4 0.4"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"100.0 100.0 100.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 250 375"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"150 150 150"
+			}	
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"45.0"
+			}			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replica_damage_outgoing"	"-40 -25 -10"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_outgoing"	"60 75 90"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replica_damage_incoming"	"300 300 300"
+			}	
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_replica_total_damage_incoming"	"400 400 400"
+			}				
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"length"				"1000 1000 1000"
+			}			
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replica_scale"	"0"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range_tooltip"			"500 900 1300"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replica_damage_outgoing_scepter"	"0 20 40"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_outgoing_scepter"	"100 120 140"
+			}
+			// Extra
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"width"					"50 50 50"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Dark_Seer.Wall_of_Replica_Start"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
+				"Function"		"WallOfReplica"
+				"Target"		"POINT"
+				"wall_particle"	"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
+				"dummy_modifier"	"modifier_wall_of_replica_dummy_datadriven"
+				"dummy_sound"		"Hero_Dark_Seer.Wall_of_Replica_lp"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_wall_of_replica_dummy_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"ThinkInterval"  "0.2"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
+						"Function"		"WallOfReplicaAura"
+						"aura_modifier"	"modifier_wall_of_replica_datadriven"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_wall_of_replica_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_dark_seer/wall_of_replica.lua"
+						"Function"		"WallOfReplicaIllusionCheck"
 					}
 				}
 			}

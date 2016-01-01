@@ -15,9 +15,9 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"crystal_nova_datadriven"
-		"Ability2"	"frostbite_datadriven"
-		"Ability3"	"brilliance_aura_datadriven"
-		"Ability4"	"freezing_field_datadriven"
+		"Ability1"	"vacuum_datadriven"
+		"Ability2"	"ion_shell_datadriven"
+		"Ability3"	"surge_datadriven"
+		"Ability4"	"wall_of_replica_datadriven"
 	}
 }

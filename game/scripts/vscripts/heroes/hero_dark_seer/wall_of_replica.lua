@@ -1,5 +1,5 @@
 --[[Author: Pizzalol, kritth
-	Date: 05.04.2015.
+	Date: 01.01.2016.
 	Create the wall dummies at along the wall]]
 function WallOfReplica( keys )
 	local caster = keys.caster
@@ -39,7 +39,7 @@ function WallOfReplica( keys )
 	-- Create the main wall dummy
 	local dummy = CreateUnitByName("npc_dummy_unit", target_point, false, caster, caster, caster_team)
 	ability:ApplyDataDrivenModifier(dummy, dummy, dummy_modifier, {})
-	EmitSoundOn(dummy_sound, dummy)	
+	EmitSoundOn(dummy_sound, dummy)
 
 	-- Create the secondary dummies for the left half of the wall
 	for i=1,num_of_dummies + 2 do
@@ -78,7 +78,7 @@ function WallOfReplica( keys )
 	dummy.wall_table = dummy.wall_table or {}
 
 	-- Create the wall particle
-	local particle = ParticleManager:CreateParticle(wall_particle, PATTACH_POINT_FOLLOW, dummy)
+	local particle = ParticleManager:CreateParticle(wall_particle, PATTACH_CUSTOMORIGIN, dummy)
 	ParticleManager:SetParticleControl(particle, 0, end_point_left) 
 	ParticleManager:SetParticleControl(particle, 1, end_point_right)
 

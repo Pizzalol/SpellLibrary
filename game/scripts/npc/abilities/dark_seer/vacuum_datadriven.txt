@@ -1,7 +1,13 @@
 // Rewrite of the Dark Seer Vacuum ability
 // Author: Pizzalol
-// Date: 03.04.2015.
-"dark_seer_vacuum_datadriven"
+// Date: 01.01.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_dark_seer/vacuum.lua
+"vacuum_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -49,7 +55,7 @@
 		"02"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"duration"				"0.4 0.4 0.4 0.4"
+			"duration"				"0.5 0.5 0.5 0.5"
 		}
 		"03"
 		{
@@ -162,4 +168,3 @@
 		}
 	}
 }
-
