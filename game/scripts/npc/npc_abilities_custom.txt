@@ -63104,91 +63104,184 @@
 			}
 		}
 	}
-	// Rewrite of Death Prophet Witchcraft
-	// Author: Noya
-	// Date: 02.02.2015.
-	// Note: There is nothing exposed to change cooldowns and mana which reflects on the UI directly. 
-	// The only way of doing this at the moment is making new copies of the abilities with reduced cd-mana and swap them OnUpgrade.
-	"death_prophet_witchcraft_datadriven"
+	// Rewrite of Death Prophet Soul Siphon
+	// Author: Pizzalol
+	// Date: 26.01.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTES: This implementation doesn't have an error message in case you try to cast multiple siphons on the same target
+	// Instead, it will just interrupt the cast if you try to cast it on a haunted target
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_death_prophet/spirit_siphon.lua
+	"spirit_siphon_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"death_prophet_witchcraft"
-				
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"death_prophet_spirit_siphon"
+	
+		// Precache
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_death_prophet/death_prophet_spiritsiphon.vpcf"
+			"soundfile" 	"soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
+		}
+			
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.1"
+			
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70 65 60 55"
+	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"5 10 15 20"
-			}			
+				"var_type"						"FIELD_FLOAT"
+				"damage"					"20"
+			}
 			"02"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"carrion_swarm_mana_cost_adjust"	"-10 -15 -20 -25"
+				"var_type"						"FIELD_FLOAT"
+				"damage_pct"					"1 2 3 4"
 			}
 			"03"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"carrion_swarm_cooldown_adjust"		"-1.0 -2.0 -3.0 -4.0"
+				"var_type"						"FIELD_FLOAT"
+				"haunt_duration"				"5"
 			}
 			"04"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"silence_mana_cost_adjust"			"-10 -15 -20 -25"
+				"var_type"				"FIELD_INTEGER"
+				"movement_slow"					"-5 -10 -15 -20"
 			}
 			"05"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"silence_cooldown_adjust"			"-1.0 -2.0 -3.0 -4.0"
+				"var_type"				"FIELD_INTEGER"
+				"siphon_buffer"			"300"
 			}
 			"06"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"exorcism_1_extra_spirits"			"3 4 5 6"
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"1 2 3 4"
 			}
 			"07"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"exorcism_2_extra_spirits"			"3 4 5 6"
+				"var_type"				"FIELD_INTEGER"
+				"charge_restore_time"	"45"
 			}
+			// Extra
 			"08"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"exorcism_3_extra_spirits"			"3 4 5 6"
+				"var_type"				"FIELD_FLOAT"
+				"think_interval"		"0.25"
 			}
 		}
 	
-		// Update other abilities
-		// exorcism_datadriven just directly checks the level of this ability on cast
 		"OnUpgrade"
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"heroes/hero_death_prophet/witchcraft.lua"
-				"Function"		"WitchCraft"
-				"Ability1Name"	"death_prophet_carrion_swarm_datadriven"
-				"Ability2Name"	"death_prophet_silence_datadriven"
+				"ScriptFile"			"heroes/hero_death_prophet/spirit_siphon.lua"
+				"Function"				"siphon_start_charge"
+				"modifier_name"			"modifier_spirit_siphon_counter_datadriven"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_death_prophet/spirit_siphon.lua"
+				"Function"		"SpiritSiphonCheck"
+				"modifier"		"modifier_spirit_siphon_datadriven"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_death_prophet/spirit_siphon.lua"
+				"Function"		"SpiritSiphonCast"
+				"modifier"		"modifier_spirit_siphon_datadriven"
+				"stack_modifier"	"modifier_spirit_siphon_counter_datadriven"
+				"sound"			"Hero_DeathProphet.SpiritSiphon.Cast"
 			}
 		}
 	
 		"Modifiers"
 		{
-			"modifier_witchcraft"
+			"modifier_spirit_siphon_datadriven"
 			{
-				"Passive"			"1"
+				"IsPurgable"		"0"
 				"IsHidden"			"1"
+				"IsDebuff"			"1"
+	
+				"ThinkInterval"  "%think_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_death_prophet/spirit_siphon.lua"
+						"Function"		"SpiritSiphon"
+						"modifier"		"modifier_spirit_siphon_datadriven"
+					}
+				}
 		
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_DeathProphet.SpiritSiphon.Target"
+						"Target" 		"TARGET"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_death_prophet/death_prophet_spiritsiphon.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"Target"		"TARGET"
+	
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_hitloc"
+							"TARGET"	"attach_hitloc"
+						}
+					}
+				}
+	
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed" 
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_slow" 
 				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_PROVIDES_VISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_spirit_siphon_counter_datadriven"
+			{
+				"IsBuff"		"1"
+				"IsPurgable"	"0"
+				"Passive"		"1"
 			}
 		}
 	}
-	
 }

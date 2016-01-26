@@ -6,6 +6,6 @@
 
 	"Ability1"	"carrion_swarm_datadriven"
 	"Ability2"	"silence_datadriven"
-	"Ability3"	"exorcism_datadriven"
+	"Ability3"	"spirit_siphon_datadriven"
 	"Ability4"	"exorcism_datadriven"
 }
