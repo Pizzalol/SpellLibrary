@@ -93,7 +93,7 @@
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
-				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage"
+				"MODIFIER_PROPERTY_PREATTACK_BONUSDAMAGE"		"%bonus_damage"
 			}
 			
 			"OnCreated"
