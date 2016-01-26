@@ -1,7 +1,13 @@
 // Rewrite of the Dazzle Poison Touch ability
 // Author: Pizzalol
-// Date: 05.02.2015.
-"dazzle_poison_touch_datadriven"
+// Date: 26.01.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_dazzle/poison_touch.lua
+"poison_touch_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -35,11 +41,11 @@
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"100 115 130 145"
+	"AbilityManaCost"				"70"
 	
 	// Damage.
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityDamage"					"14 20 26 32"
+	"AbilityDamage"					"14 20 26 36"
 	"AbilityDuration"				"10"
 	
 	// Stats
@@ -273,4 +279,3 @@
 		}
 	}
 }
-

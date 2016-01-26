@@ -1,7 +1,13 @@
 // Rewrite of the Dazzle Shadow Wave ability
 // Author: Pizzalol
-// Date: 09.02.2015.
-"dazzle_shadow_wave_datadriven"
+// Date: 26.01.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_dazzle/shadow_wave.lua
+"shadow_wave_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -33,7 +39,7 @@
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"80 90 100 110"
+	"AbilityManaCost"				"90 100 110 120"
 	
 	// Damage.
 	//-------------------------------------------------------------------------------------------------------------
@@ -99,4 +105,3 @@
 		}
 	}
 }
-

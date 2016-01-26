@@ -1,7 +1,13 @@
 // Rewrite of the Dazzle Weave ability
 // Author: Pizzalol
-// Date: 02.02.2015.
-"dazzle_weave_datadriven"
+// Date: 26.01.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_dazzle/weave.lua
+"weave_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -48,7 +54,7 @@
 		"02"
 		{	
 			"var_type"					"FIELD_INTEGER"
-			"vision"					"800"
+			"vision"					"575"
 		}
 		"03"
 		{	
@@ -89,7 +95,7 @@
 		"10"
 		{	
 			"var_type"					"FIELD_FLOAT"
-			"vision_duration"				"8.0"
+			"vision_duration"				"3.0"
 		}
 
 	}
@@ -165,6 +171,8 @@
 			"Passive"			"0"
 			"IsHidden"			"0"
 			"IsBuff"			"1"
+
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 	
 			"OnCreated"
 			{
@@ -175,17 +183,16 @@
 					"particle_name"		"particles/units/heroes/hero_dazzle/dazzle_armor_friend.vpcf"
 					"modifier"		"modifier_weave_friendly_datadriven"
 				}
-			}
-
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}			
 	
 			"ThinkInterval"  "%tick_interval"
 			"OnIntervalThink"
 			{
-				"ApplyModifier"
+				"RunScript"
 				{
-					"ModifierName"	"modifier_weave_positive_datadriven"
-					"Target" 		"TARGET"
+					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+					"Function"		"WeaveIncrement"
+					"modifier"		"modifier_weave_friendly_datadriven"
 				}
 			}
 
@@ -194,22 +201,30 @@
 				"RunScript"
 				{
 					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
-					"Function"		"WeaveRemovePositive"
-					"modifier"		"modifier_weave_positive_datadriven"
+					"Function"		"WeaveRemoveModifier"
+					"modifier"		"modifier_weave_friendly_datadriven"
 				}
 
 				"RunScript"
 				{
 					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
-					"Function"		"EndWeavePositiveParticle"
+					"Function"		"EndWeaveParticle"
 					"modifier"		"modifier_weave_friendly_datadriven"
+					"particle_type"	"1"
 				}
+			}
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_per_second" 
 			}
 		}
 
 		"modifier_weave_enemy_datadriven"
 		{
 			"IsDebuff"			"1"
+
+			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 			"OnCreated"
 			{
@@ -220,17 +235,16 @@
 					"particle_name"		"particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
 					"modifier"		"modifier_weave_enemy_datadriven"
 				}
-			}
-
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}			
 
 			"ThinkInterval"  "%tick_interval"
 			"OnIntervalThink"
 			{
-				"ApplyModifier"
+				"RunScript"
 				{
-					"ModifierName"	"modifier_weave_negative_datadriven"
-					"Target" 		"TARGET"
+					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
+					"Function"		"WeaveIncrement"
+					"modifier"		"modifier_weave_enemy_datadriven"
 				}
 			}
 
@@ -239,37 +253,18 @@
 				"RunScript"
 				{
 					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
-					"Function"		"WeaveRemoveNegative"
-					"modifier"		"modifier_weave_negative_datadriven"
+					"Function"		"WeaveRemoveModifier"
+					"modifier"		"modifier_weave_enemy_datadriven"
 				}
 
 				"RunScript"
 				{
 					"ScriptFile"	"heroes/hero_dazzle/weave.lua"
-					"Function"		"EndWeaveNegativeParticle"
+					"Function"		"EndWeaveParticle"
 					"modifier"		"modifier_weave_enemy_datadriven"
+					"particle_type"	"0"
 				}
-
 			}
-		}
-
-		"modifier_weave_positive_datadriven"
-		{
-			"IsHidden"		"1"
-
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_per_second" 
-			}
-		}
-
-		"modifier_weave_negative_datadriven"
-		{
-			"IsHidden"		"1"
-
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 			"Properties"
 			{
@@ -278,4 +273,3 @@
 		}
 	}
 }
-
