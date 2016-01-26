@@ -1,9 +1,15 @@
 // Rewrite of Death Prophet Exorcism
 // Author: Noya
-// Date: 01.02.2015.
-// Note: The Targeting & Movement AI is "smarter" than the original ability, so the overall DPS is way higher when all spirits focus the same target
+// Date: 26.01.2016.
+// Version: 6.86
+// Type: Datadriven
+// NOTES: The Targeting & Movement AI is "smarter" than the original ability, so the overall DPS is way higher when all spirits focus the same target
 // To go around this, there is a min_time_between_attacks value which if it isn't reached after returning to the hero, the spirit will idle
-"death_prophet_exorcism_datadriven"
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_death_prophet/exorcism.lua
+"exorcism_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -41,7 +47,7 @@
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"spirits"				"4 12 21"
+			"spirits"				"8 16 24"
 		}
 		"03"
 		{
@@ -87,7 +93,7 @@
 		"11"	
 		{
 			"var_type"					"FIELD_FLOAT"
-			"delay_between_spirits"		"0.1"
+			"delay_between_spirits"		"0.3"
 		}
 		"12"
 		{
@@ -235,5 +241,4 @@
 			}
 		}
 	}
-}	
-
+}

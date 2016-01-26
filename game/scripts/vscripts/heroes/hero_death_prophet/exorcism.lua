@@ -1,6 +1,6 @@
 --[[
 	Author: Noya, physics by BMD
-	Date: 02.02.2015.
+	Date: 26.01.2016.
 	Spawns spirits for exorcism and applies the modifier that takes care of its logic
 ]]
 function ExorcismStart( event )
@@ -13,22 +13,8 @@ function ExorcismStart( event )
 	local delay_between_spirits = ability:GetLevelSpecialValueFor( "delay_between_spirits", ability:GetLevel() - 1 )
 	local unit_name = "npc_dummy_unit"
 
-	-- Witchcraft level
-	local witchcraft_ability = caster:FindAbilityByName("death_prophet_witchcraft_datadriven")
-	if not witchcraft_ability then
-		caster:FindAbilityByName("death_prophet_witchcraft")
-	end
-
-	-- If witchcraft ability found, get the number of extra spirits and increase
-	if witchcraft_ability then
-		local extra_spirits = witchcraft_ability:GetLevelSpecialValueFor( "exorcism_1_extra_spirits", witchcraft_ability:GetLevel() - 1 )
-		if extra_spirits then
-			spirits = spirits + extra_spirits
-		end
-	end
-
 	-- Initialize the table to keep track of all spirits
-	caster.spirits = {}
+	ability.spirits = {}
 	print("Spawning "..spirits.." spirits")
 	for i=1,spirits do
 		Timers:CreateTimer(i * delay_between_spirits, function()
@@ -38,7 +24,7 @@ function ExorcismStart( event )
 			ability:ApplyDataDrivenModifier(caster, unit, "modifier_exorcism_spirit", {})
 			
 			-- Add the spawned unit to the table
-			table.insert(caster.spirits, unit)
+			table.insert(ability.spirits, unit)
 
 			-- Initialize the number of hits, to define the heal done after the ability ends
 			unit.numberOfHits = 0
@@ -192,7 +178,7 @@ function ExorcismPhysics( event )
 
 				-- Check the possible enemies
 				-- Focus the last attacked target if there's any
-				local last_targeted = caster.last_targeted
+				local last_targeted = ability.last_targeted
 				local target_enemy = nil
 				for _,enemy in pairs(enemies) do
 
@@ -357,7 +343,8 @@ end
 -- Change the state to end when the modifier is removed
 function ExorcismEnd( event )
 	local caster = event.caster
-	local targets = caster.spirits
+	local ability = event.ability
+	local targets = ability.spirits
 
 	print("Exorcism End")
 	caster:StopSound("Hero_DeathProphet.Exorcism")
@@ -368,22 +355,23 @@ function ExorcismEnd( event )
 	end
 
 	-- Reset the last_targeted
-	caster.last_targeted = nil
+	ability.last_targeted = nil
 end
 
 -- Updates the last_targeted enemy, to focus the ghosts on it.
 function ExorcismAttack( event )
-	local caster = event.caster
+	local ability = event.ability
 	local target = event.target
 
-	caster.last_targeted = target
+	ability.last_targeted = target
 	--print("LAST TARGET: "..target:GetUnitName())
 end
 
 -- Kill all units when the owner dies or the spell is cast while the first one is still going
 function ExorcismDeath( event )
 	local caster = event.caster
-	local targets = caster.spirits or {}
+	local ability = event.ability
+	local targets = ability.spirits or {}
 
 	print("Exorcism Death")
 	caster:StopSound("Hero_DeathProphet.Exorcism")

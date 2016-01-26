@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"poison_touch_datadriven"
-	"Ability2"	"shallow_grave_datadriven"
-	"Ability3"	"shadow_wave_datadriven"
-	"Ability4"	"weave_datadriven"
+	"Ability1"	"carrion_swarm_datadriven"
+	"Ability2"	"silence_datadriven"
+	"Ability3"	"exorcism_datadriven"
+	"Ability4"	"exorcism_datadriven"
 }
