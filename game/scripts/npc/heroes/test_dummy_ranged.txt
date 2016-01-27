@@ -2,12 +2,10 @@
 {
 	"override_hero" "npc_dota_hero_ancient_apparition"
 
-	"AbilityLayout"	"6"
+	"AbilityLayout"	"4"
 
-	"Ability1"	"devour_datadriven"
-	"Ability2"	"scorched_earth_datadriven"
-	"Ability3"	"lvl_death_datadriven"
-	"Ability4"	"doom_bringer_empty1_datadriven"
-    "Ability5"  "doom_bringer_empty2_datadriven"
-    "Ability6"  "doom_datadriven"
+	"Ability1"	"breathe_fire_datadriven"
+	"Ability2"	"dragon_tail_datadriven"
+	"Ability3"	"dragon_blood_datadriven"
+	"Ability4"	"elder_dragon_form_datadriven"
 }

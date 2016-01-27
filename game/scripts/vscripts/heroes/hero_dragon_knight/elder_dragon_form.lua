@@ -1,4 +1,6 @@
---[[Author: chirslotix/Pizzalol
+LinkLuaModifier("modifier_elder_dragon_form_model_lua", "heroes/hero_dragon_knight/modifiers/modifier_elder_dragon_form_model_lua.lua", LUA_MODIFIER_MOTION_NONE)
+
+--[[Author: chirslotix,Pizzalol
 	Date: 10.01.2015.
 	Deals splash auto attack damage to nearby targets depending on distance]]
 function Splash( keys )
@@ -76,12 +78,14 @@ function Splash( keys )
 end
 
 --[[Author: Pizzalol
-	Date: 10.01.2015.
+	Date: 27.01.2016.
 	It transforms the caster into a different dragon depending on the ability level]]
 function Transform( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local level = ability:GetLevel()
+
+	local duration = ability:GetLevelSpecialValueFor("duration",level - 1)
 	local modifier_one = keys.modifier_one
 	local modifier_two = keys.modifier_two
 	local modifier_three = keys.modifier_three
@@ -92,66 +96,31 @@ function Transform( keys )
 	elseif level == 2 then modifier = modifier_two
 	else modifier = modifier_three end
 
-	ability:ApplyDataDrivenModifier(caster, caster, modifier, {})
+	ability:ApplyDataDrivenModifier(caster, caster, modifier, {duration = duration})
+	caster:AddNewModifier(caster,ability,"modifier_elder_dragon_form_model_lua",{duration = duration})
 end
 
---[[Author: Pizzalol/Noya
-	Date: 12.01.2015.
-	Swaps the auto attack projectile and the caster model]]
+--[[Author: Pizzalol,Noya
+	Date: 27.01.2016.
+	Swaps the auto attack projectile and the caster attack capability]]
 function ModelSwapStart( keys )
 	local caster = keys.caster
-	local model = keys.model
 	local projectile_model = keys.projectile_model
 
-	-- Saves the original model and attack capability
-	if caster.caster_model == nil then
-		caster.caster_model = caster:GetModelName()
-	end
+	-- Saves the original attack capability
 	caster.caster_attack = caster:GetAttackCapability()
 
-	-- Sets the new model and projectile
-	caster:SetOriginalModel(model)
+	-- Sets the new projectile
 	caster:SetRangedProjectileName(projectile_model)
 
 	-- Sets the new attack type
 	caster:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
 end
 
---[[Author: Pizzalol/Noya
-	Date: 12.01.2015.
-	Reverts back to the original model and attack type]]
+--[[Author: Pizzalol,Noya
+	Date: 27.01.2016.
+	Reverts back to the original attack type]]
 function ModelSwapEnd( keys )
 	local caster = keys.caster
-
-	caster:SetModel(caster.caster_model)
-	caster:SetOriginalModel(caster.caster_model)
 	caster:SetAttackCapability(caster.caster_attack)
-end
-
-
---[[Author: Noya
-	Date: 09.08.2015.
-	Hides all dem hats
-]]
-function HideWearables( event )
-	local hero = event.caster
-	local ability = event.ability
-
-	hero.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
-    local model = hero:FirstMoveChild()
-    while model ~= nil do
-        if model:GetClassname() == "dota_item_wearable" then
-            model:AddEffects(EF_NODRAW) -- Set model hidden
-            table.insert(hero.hiddenWearables, model)
-        end
-        model = model:NextMovePeer()
-    end
-end
-
-function ShowWearables( event )
-	local hero = event.caster
-
-	for i,v in pairs(hero.hiddenWearables) do
-		v:RemoveEffects(EF_NODRAW)
-	end
 end

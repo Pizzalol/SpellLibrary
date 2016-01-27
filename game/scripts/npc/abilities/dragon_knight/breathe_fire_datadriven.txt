@@ -1,8 +1,9 @@
 // Rewrite of the Dragon Knight Breathe Fire
-// Author: chrislotix
-// Date: 02.01.2015.
-
-"dragon_knight_breathe_fire_datadriven"
+// Author: chrislotix, Pizzalol
+// Date: 27.01.2016.
+// Version: 6.86
+// Type: Datadriven
+"breathe_fire_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -66,7 +67,16 @@
 			"var_type"				"FIELD_INTEGER"
 			"speed"					"1050"
 		}
-				
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"dmg_reduction_pct"		"-20 -25 -30 -35"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"reduction_duration"	"11.0"
+		}
 	}
 	
 	"OnSpellStart"
@@ -92,14 +102,36 @@
 			"Target" "CASTER"
 		}
 	}
-		"OnProjectileHitUnit"
+	
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit" "0"
+
+		"ApplyModifier"
 		{
-			"DeleteOnHit" "0"
-			"Damage"
+			"ModifierName"	"modifier_breathe_fire_reduction_datadriven"
+			"Target" 		"TARGET"
+			"Duration"		"%reduction_duration"
+		}
+
+		"Damage"
+		{
+			"Target" "TARGET"
+			"Type" "DAMAGE_TYPE_MAGICAL"
+			"Damage" "%AbilityDamage"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_breathe_fire_reduction_datadriven"
+		{
+			"IsDebuff"	"1"
+
+			"Properties"
 			{
-				"Target" "TARGET"
-				"Type" "DAMAGE_TYPE_MAGICAL"
-				"Damage" "%AbilityDamage"
+				"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%dmg_reduction_pct"
 			}
 		}
+	}
 }

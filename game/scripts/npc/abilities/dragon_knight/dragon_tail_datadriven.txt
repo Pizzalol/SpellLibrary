@@ -1,8 +1,9 @@
 // Rewrite of the Dragon Knight Dragon Tail
 // Author: chrislotix
-// Date: 02.01.2015.
-// NOTE: the particle has probably bad attach points
-"dragon_knight_dragon_tail_datadriven"
+// Date: 27.01.2016.
+// Version: 6.86
+// Type: Datadriven
+"dragon_tail_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -57,13 +58,6 @@
 	}
 	"OnSpellStart"
 	{
-		"Damage"
-		{
-			"Target"	"TARGET"
-			"Type"		"DOTA_TYPE_MAGICAL"
-			"Damage"	"%AbilityDamage"
-		}
-
 		"Stun"
 		{
 			"Target"	"TARGET"
@@ -82,7 +76,11 @@
 			"Target"		"TARGET"
 		}
 
+		"Damage"
+		{
+			"Target"	"TARGET"
+			"Type"		"DOTA_TYPE_MAGICAL"
+			"Damage"	"%AbilityDamage"
+		}
 	}
-
 }
-

@@ -1,16 +1,16 @@
 // Rewrite of the Dragon Knight Elder Dragon Form
-// Author: chrislotix/Pizzalol
-// Date: 03.01.2015.
-// Changed: 12.01.2015.
-// Reason: Fixed wearables
-// NOTE: Dragon Form is always a Green Dragon
-// NOTE2: -------------------------- Projectile model will be the corresponding dragon form auto attack model --------------------------
-// Until Valve implements a way to retrieve the original attack projectile
-// NOTE3: Its important to include
-// SendToServerConsole("dota_combine_models 0")
-// SendToConsole("dota_combine_models 0")
-// in your addon, check barebones.lua in CaptureGameMode() to see how its done
-"dragon_knight_elder_dragon_form_datadriven"
+// Author: chrislotix,Pizzalol
+// Date: 27.01.2016.
+// Version: 6.86
+// Type: Datadriven/Lua
+// NOTES: #1 Dragon Form is always a Green Dragon
+// #2 Autoattack projectile model will be the most recent dragon form AA model
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua
+// scripts/vscripts/heroes/hero_dragon_knight/modifiers/modifier_elder_dragon_form_model_lua.lua
+"elder_dragon_form_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -80,7 +80,7 @@
 		"07"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"splash_radius"				"100 200 250"
+			"splash_radius"				"150 225 300"
 		}
 		"08"
 		{
@@ -105,7 +105,7 @@
 		"12"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"frost_aoe"					"250"
+			"frost_aoe"					"300"
 		}		
 	}
 
@@ -125,15 +125,14 @@
 			"modifier_two"			"modifier_red_dragon_datadriven"
 			"modifier_three"		"modifier_blue_dragon_datadriven"
 		}
-
 	}
 
 	"Modifiers"
 	{
 		"modifier_green_dragon_datadriven"
 		{
-			"Duration"	"%duration"
 			"IsHidden"	"1"
+			"IsPurgable"	"0"
 			"AllowIllusionDuplicate"    "1"
 
 			"OnCreated"
@@ -149,20 +148,14 @@
 				{
 					"ModifierName"	"modifier_corrosive_breath_attack_datadriven"
 					"Target"		"CASTER"
+					"Duration"		"%duration"
 				}
 
 				"RunScript"
 				{
 					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
 					"Function"				"ModelSwapStart"
-					"model"					"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
 					"projectile_model"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
-					"Function"				"HideWearables"
 				}
 			}
 
@@ -189,12 +182,6 @@
 					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
 					"Function"				"ModelSwapEnd"
 				}
-
-				"RunScript"
-				{
-					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
-					"Function"				"ShowWearables"
-				}
 			}
 
 			"OnAttackLanded"
@@ -215,8 +202,8 @@
 
 		"modifier_red_dragon_datadriven"
 		{
-			"Duration"	"%duration"
 			"IsHidden"	"1"
+			"IsPurgable"	"0"
 			"AllowIllusionDuplicate"    "1"
 
 			"OnCreated"
@@ -232,26 +219,21 @@
 				{
 					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
 					"Function"				"ModelSwapStart"
-					"model"					"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
 					"projectile_model"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
-					"Function"				"HideWearables"
 				}
 
 				"ApplyModifier"
 				{
 					"ModifierName"	"modifier_corrosive_breath_attack_datadriven"
 					"Target"		"CASTER"
+					"Duration"		"%duration"
 				}
 
 				"ApplyModifier"
 				{
 					"ModifierName"	"modifier_splash_attack_datadriven"
 					"Target"		"CASTER"
+					"Duration"		"%duration"
 				}
 			}
 
@@ -269,12 +251,6 @@
 					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
 					"Function"				"ModelSwapEnd"
 				}
-
-				"RunScript"
-				{
-					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
-					"Function"				"ShowWearables"
-				}
 			}
 
 			"OnAttack"
@@ -285,7 +261,6 @@
 					"Target"	"CASTER"
 				}
 			}
-
 			
 			"OnAttackLanded"
 			{
@@ -305,8 +280,8 @@
 
 		"modifier_blue_dragon_datadriven"
 		{
-			"Duration"	"%duration"
 			"IsHidden"	"1"
+			"IsPurgable"	"0"
 			"AllowIllusionDuplicate"    "1"
 
 			"OnCreated"
@@ -322,32 +297,28 @@
 				{
 					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
 					"Function"				"ModelSwapStart"
-					"model"					"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
 					"projectile_model"		"particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
-					"Function"				"HideWearables"
 				}
 
 				"ApplyModifier"
 				{
 					"ModifierName"	"modifier_corrosive_breath_attack_datadriven"
 					"Target"		"CASTER"
+					"Duration"		"%duration"
 				}
 
 				"ApplyModifier"
 				{
 					"ModifierName"	"modifier_splash_attack_datadriven"
 					"Target"		"CASTER"
+					"Duration"		"%duration"
 				}
 
 				"ApplyModifier"
 				{
 					"ModifierName"	"modifier_frost_breath_attack_datadriven"
 					"Target"		"CASTER"
+					"Duration"		"%duration"
 				}
 			}
 
@@ -365,12 +336,6 @@
 					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
 					"Function"				"ModelSwapEnd"
 				}
-
-				"RunScript"
-				{
-					"ScriptFile"			"scripts/vscripts/heroes/hero_dragon_knight/elder_dragon_form.lua"
-					"Function"				"ShowWearables"
-				}
 			}
 
 			"OnAttack"
@@ -381,7 +346,6 @@
 					"Target"	"CASTER"
 				}
 			}
-
 
 			"OnAttacklanded"
 			{
@@ -402,7 +366,8 @@
 
 		"modifier_corrosive_breath_attack_datadriven"
 		{
-			"Duration"	"%duration"
+			"IsPurgable"	"0"
+			"IsBuff"		"1"
 
 			"OnAttackLanded"
 			{
@@ -410,13 +375,15 @@
 				{
 					"ModifierName"	"modifier_corrosive_breath_datadriven"
 					"Target"	"TARGET"
+					"Duration"	"%corrosive_breath_duration"
 				}
 			}
 		}
 
 		"modifier_splash_attack_datadriven"
 		{
-			"Duration"	"%duration"
+			"IsPurgable"	"0"
+			"IsBuff"		"1"
 
 			"OnAttackLanded"
 			{
@@ -430,7 +397,8 @@
 
 		"modifier_frost_breath_attack_datadriven"
 		{
-			"Duration"	"%duration"
+			"IsPurgable"	"0"
+			"IsBuff"		"1"
 
 			"OnAttackLanded"
 			{
@@ -450,6 +418,7 @@
 						{
 							"ModifierName"	"modifier_frost_breath_slow_datadriven"
 							"Target"		"TARGET"
+							"Duration"		"%frost_duration"
 						}
 					}
 				}
@@ -458,11 +427,9 @@
 
 		"modifier_corrosive_breath_datadriven"
 		{
-			"IsDebuff"	"1"
-			"Duration"	"%corrosive_breath_duration"
+			"IsDebuff"	"1"			
 
 			"ThinkInterval"	"1.0"
-
 			"OnIntervalThink"
 			{
 				"Damage"
@@ -476,8 +443,7 @@
 
 		"modifier_frost_breath_slow_datadriven"
 		{
-			"IsDebuff"	"1"
-			"Duration"	"%frost_duration"
+			"IsDebuff"	"1"			
 
 			"Properties"
 			{
