@@ -1,7 +1,13 @@
 // Rewrite of the Drow Ranger Wave of silence
 // Author: kritth
-// Date: 03.01.2015.
-"drow_ranger_wave_of_silence_datadriven"
+// Date: 27.01.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_drow_ranger/wave_of_silence.lua
+"wave_of_silence_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

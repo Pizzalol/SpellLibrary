@@ -1,7 +1,13 @@
 // Rewrite of the Drow Ranger Trueshot aura
 // Author: kritth, Pizzalol
-// Date: 27.09.2015.
-"drow_ranger_trueshot_datadriven"
+// Date: 27.01.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_drow_ranger/trueshot.lua
+"trueshot_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -17,7 +23,7 @@
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"120"
+	"AbilityCooldown"				"100"
 	"AbilityDuration"				"5.0"
 
 	// Special
@@ -27,7 +33,7 @@
 		"01"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"trueshot_ranged_damage"	"18 24 30 36"
+			"trueshot_ranged_damage"	"20 26 32 38"
 		}
 		
 		// extra variable

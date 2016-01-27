@@ -4,8 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"breathe_fire_datadriven"
-	"Ability2"	"dragon_tail_datadriven"
-	"Ability3"	"dragon_blood_datadriven"
-	"Ability4"	"elder_dragon_form_datadriven"
+	"Ability1"	"frost_arrows_datadriven"
+	"Ability2"	"wave_of_silence_datadriven"
+	"Ability3"	"trueshot_datadriven"
+	"Ability4"	"marksmanship_datadriven"
 }
