@@ -1,7 +1,13 @@
 // Rewrite of the Doom Doom ability
 // Author: Pizzalol
-// Date: 25.02.2015.
-"doom_bringer_doom_datadriven"
+// Date: 27.01.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_doom_bringer/doom.lua
+"doom_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -32,7 +38,7 @@
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"550 550 550"
-	"AbilityCooldown"				"100.0"
+	"AbilityCooldown"				"125.0"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
@@ -195,4 +201,3 @@
 		}
 	}
 }
-

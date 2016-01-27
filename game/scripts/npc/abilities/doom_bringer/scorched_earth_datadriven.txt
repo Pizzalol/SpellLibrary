@@ -1,7 +1,13 @@
 // Rewrite of the Doom Scorched Earth ability
 // Author: Pizzalol
-// Date: 24.02.2015.
-"doom_bringer_scorched_earth_datadriven"
+// Date: 27.01.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_doom_bringer/scorched_earth.lua
+"scorched_earth_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -29,7 +35,7 @@
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"600 600 600 600"
-	"AbilityCooldown"				"60.0 55.0 50.0 45.0"
+	"AbilityCooldown"				"55.0"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
@@ -42,7 +48,7 @@
 		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"damage_per_second"		"12 18 24 30"
+			"damage_per_second"		"10 20 30 40"
 		}
 		"02"
 		{
@@ -52,7 +58,7 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_movement_speed_pct"	"16 16 16 16"
+			"bonus_movement_speed_pct"	"14 14 14 14"
 		}
 		"04"
 		{
@@ -181,4 +187,3 @@
 		}
 	}
 }
-

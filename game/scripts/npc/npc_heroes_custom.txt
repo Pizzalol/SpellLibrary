@@ -13,11 +13,13 @@
 	{
 		"override_hero" "npc_dota_hero_ancient_apparition"
 	
-		"AbilityLayout"	"4"
+		"AbilityLayout"	"6"
 	
-		"Ability1"	"carrion_swarm_datadriven"
-		"Ability2"	"silence_datadriven"
-		"Ability3"	"spirit_siphon_datadriven"
-		"Ability4"	"exorcism_datadriven"
+		"Ability1"	"devour_datadriven"
+		"Ability2"	"scorched_earth_datadriven"
+		"Ability3"	"lvl_death_datadriven"
+		"Ability4"	"doom_bringer_empty1_datadriven"
+	    "Ability5"  "doom_bringer_empty2_datadriven"
+	    "Ability6"  "doom_datadriven"
 	}
 }

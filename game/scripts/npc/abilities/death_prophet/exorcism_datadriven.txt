@@ -9,6 +9,9 @@
 // ----- FILE REQUIREMENTS -----
 // Script files:
 // scripts/vscripts/heroes/hero_death_prophet/exorcism.lua
+//
+// Unit files:
+// scripts/npc/units/npc_dummy_unit.txt
 "exorcism_datadriven"
 {
 	// General
@@ -29,7 +32,7 @@
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCooldown"				"145.0"
-	"AbilityDuration"				"30.0 30.0 30.0"
+	"AbilityDuration"				"35.0 35.0 35.0"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
@@ -88,7 +91,7 @@
 		"10"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"duration"				"30"	//Always have a duration AbilitySpecial, don't believe Valves lies.
+			"duration"				"35"	//Always have a duration AbilitySpecial, don't believe Valves lies.
 		}
 		"11"	
 		{

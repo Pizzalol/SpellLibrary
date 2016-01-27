@@ -1,0 +1,22 @@
+// Rewrite of the Doom Empty2 ability
+// Author: Pizzalol
+// Date: 27.01.2016.
+// Version: 6.86
+// Type: Datadriven
+// NOTES: This is a placeholder ability for the Devour ability
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_doom_bringer/devour.lua
+//
+// KV files:
+// scripts/npc/abilities/doom_bringer/devour_datadriven.txt
+// scripts/npc/abilities/doom_bringer/doom_bringer_empty1_datadriven.txt
+"doom_bringer_empty2_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"MaxLevel"						"0"
+}

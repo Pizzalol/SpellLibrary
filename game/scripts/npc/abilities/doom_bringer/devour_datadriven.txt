@@ -1,10 +1,18 @@
 // Rewrite of the Doom Devour ability
 // Author: Pizzalol
-// Date: 04.03.2015.
-// NOTE: ---------------------------- THIS ABILITY REQUIRES doom_bringer_empty1_datadriven and
-// doom_bringer_empty2_datadriven TO WORK CORRECTLY ----------------------------------------------
-// NOTE2: You have to add the specific units in the Lua table to be able to steal their abilities
-"doom_bringer_devour_datadriven"
+// Date: 27.01.2016.
+// Version: 6.86
+// Type: Datadriven
+// NOTES: You have to add the specific units to the Lua table to be able to steal their abilities
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_doom_bringer/devour.lua
+//
+// KV files:
+// scripts/npc/abilities/doom_bringer/doom_bringer_empty1_datadriven.txt
+// scripts/npc/abilities/doom_bringer/doom_bringer_empty2_datadriven.txt
+"devour_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -109,4 +117,3 @@
 		}
 	}
 }
-

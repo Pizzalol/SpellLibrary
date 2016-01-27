@@ -2356,624 +2356,6 @@
 		}
 	}
 	
-	// Rewrite of the Doom Devour ability
-	// Author: Pizzalol
-	// Date: 04.03.2015.
-	// NOTE: ---------------------------- THIS ABILITY REQUIRES doom_bringer_empty1_datadriven and
-	// doom_bringer_empty2_datadriven TO WORK CORRECTLY ----------------------------------------------
-	// NOTE2: You have to add the specific units in the Lua table to be able to steal their abilities
-	"doom_bringer_devour_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"AbilityTextureName"			"doom_bringer_devour"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
-			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_devour.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"300 300 300 300"
-		"AbilityCooldown"				"70.0 60.0 50.0 40.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"25 50 75 100"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_per_second"		"20 20 20 20"
-			}
-		}
-	
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_doom_bringer/devour.lua"
-				"Function"		"DevourCheck"
-				"modifier"		"modifier_devour_datadriven"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_DoomBringer.DevourCast"
-				"Target" 		"TARGET"
-			}
-	
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_doom_bringer/doom_bringer_devour.vpcf"
-				"EffectAttachType"  "follow_origin"
-				
-				"ControlPointEntities"
-				{
-					"TARGET"	"attach_origin"
-					"CASTER"	"attach_origin"
-				}
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_doom_bringer/devour.lua"
-				"Function"		"Devour"
-				"modifier"		"modifier_devour_datadriven"
-				"doom_empty1"	"doom_bringer_empty1_datadriven"
-				"doom_empty2"	"doom_bringer_empty2_datadriven"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_devour_datadriven"
-			{
-				"IsDebuff"			"1"
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_doom_bringer/devour.lua"
-						"Function"		"DevourGold"
-					}				
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Doom Doom ability
-	// Author: Pizzalol
-	// Date: 25.02.2015.
-	"doom_bringer_doom_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"doom_bringer_doom"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
-			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_doom_ring.vpcf"
-			"particle"			"particles/status_fx/status_effect_doom.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550 550 550"
-		"AbilityCooldown"				"100.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 200 250"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"15.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"20 35 50"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_scepter"		"16.0 16.0 16.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"40 60 80"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"deniable_pct"			"25 25 25"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_DoomBringer.Doom"
-				"Target"
-				{
-					"Center"	"TARGET"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_doom_bringer/doom.lua"
-				"Function"		"DoomPurge"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_doom_datadriven"
-				"Target" 
-				{
-					"Center"	"TARGET"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-				"Duration"		"%duration"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_doom_deny_check_datadriven"
-				"Target" 
-				{
-					"Center"	"TARGET"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-				"Duration"		"%duration"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_doom_datadriven"
-			{
-				"IsDebuff"			"1"
-				"IsPurgable"		"0"
-		
-				"StatusEffectName" 		"particles/status_fx/status_effect_doom.vpcf" 	   
-				"StatusEffectPriority"  "10"
-		
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"        "particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-	
-						"ControlPoints"
-						{
-							"04"	"TARGET"
-						}
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_doom_bringer/doom.lua"
-						"Function"		"StopSound"
-						"sound"			"Hero_DoomBringer.Doom"
-					}
-				}
-	
-				"ThinkInterval"  "1.0"
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Target"		"TARGET"
-						"Type"			"DAMAGE_TYPE_PURE"
-						"Damage"		"%damage"
-					}
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
-			"modifier_doom_deny_check_datadriven"
-			{
-				"IsHidden"		"1"
-				"IsPurgable"	"0"
-	
-				"ThinkInterval"  "0.03"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_doom_bringer/doom.lua"
-						"Function"		"DoomDenyCheck"
-						"modifier"		"modifier_doom_deny_datadriven"
-					}
-				}
-			}
-	
-			"modifier_doom_deny_datadriven"
-			{
-				"IsHidden"		"1"
-				"IsPurgable"	"0"
-	
-				"States"
-				{
-					"MODIFIER_STATE_SPECIALLY_DENIABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	
-	"doom_bringer_empty1_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-	}
-	
-	"doom_bringer_empty2_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-	}
-	
-	// Rewrite of the Doom Lvl Death ability
-	// Author: Pizzalol
-	// Date: 25.02.2015.
-	"doom_bringer_lvl_death_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"doom_bringer_lvl_death"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
-			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf"
-			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death_bonus.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600 600 600 600"
-		"AbilityCooldown"				"8.0 8.0 8.0 8.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 110 110 110"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.0"	// damage only
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"125 175 225 275"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"lvl_bonus_damage"		"20"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lvl_bonus_multiple"	"6 5 4 3"
-			}
-			// Extra
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"0.01"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_DoomBringer.LvlDeath"
-				"Target" 		"TARGET"
-			}
-	
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"            "TARGET"
-			}
-	
-			"Stun"
-			{
-				"Duration"   "%stun_duration"
-				"Target" 	 "TARGET"
-			}
-	
-			"Damage"
-			{
-				"Target"		"TARGET"
-				"Type"			"DAMAGE_TYPE_MAGICAL"
-				"Damage"		"%damage"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_doom_bringer/lvl_death.lua"
-				"Function"		"LvlDeath"
-				"bonus_particle"	"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death_bonus.vpcf"
-			}
-		}
-	}
-	
-	// Rewrite of the Doom Scorched Earth ability
-	// Author: Pizzalol
-	// Date: 24.02.2015.
-	"doom_bringer_scorched_earth_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"doom_bringer_scorched_earth"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
-			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_scorched_earth_buff.vpcf"
-			"particle"			"particles/units/heroes/hero_doom_bringer/doom_scorched_earth.vpcf"
-			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_scorched_earth_debuff.vpcf"				
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600 600 600 600"
-		"AbilityCooldown"				"60.0 55.0 50.0 45.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60 65 70 75"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"12 18 24 30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"600 600 600 600"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed_pct"	"16 16 16 16"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"10.0 12.0 14.0 16.0"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_scorched_earth_datadriven"
-				"Target" 		"CASTER"
-				"Duration"		"%duration"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_scorched_earth_datadriven"
-			{
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-		
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_scorched_earth.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"TARGET"
-	
-						"ControlPoints"
-						{
-							"01"	"%radius 0 0"
-						}
-					}
-				}
-		
-				"Aura"          	"modifier_scorched_earth_check_datadriven"
-				"Aura_Radius"   	"%radius"
-				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
-				"Aura_ApplyToCaster" "1"
-	
-				"ThinkInterval"  "1.0"
-				"OnIntervalThink"
-				{
-					"ActOnTargets"
-					{
-						"Target"
-						{
-							"Center"  	"CASTER"
-							"Radius" 	"%radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					
-						"Action"    
-						{
-							"Damage"
-							{
-								"Target"		"TARGET"
-								"Type"			"DAMAGE_TYPE_MAGICAL"
-								"Damage"		"%damage_per_second"
-							}
-						}
-					}
-				}
-			}
-	
-			"modifier_scorched_earth_check_datadriven"
-			{
-				"IsHidden"	"1"
-	
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_doom_bringer/scorched_earth.lua"
-						"Function"		"ScorchedEarthCheck"
-						"modifier"		"modifier_scorched_earth_buff_datadriven"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_scorched_earth_buff_datadriven"
-						"Target" 		"TARGET"
-					}
-				}
-			}
-	
-			"modifier_scorched_earth_buff_datadriven"
-			{
-				"IsHidden"	"1"
-	
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_DoomBringer.ScorchedEarthAura"
-						"Target" 		"TARGET"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_doom_bringer/scorched_earth.lua"
-						"Function"		"StopSound"
-						"sound"			"Hero_DoomBringer.ScorchedEarthAura"
-					}
-				}
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%damage_per_second"
-				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed_pct" 
-				}
-			}
-		}
-	}
-	
 	// Rewrite of the Dragon Knight Breathe Fire
 	// Author: chrislotix
 	// Date: 02.01.2015.
@@ -62751,6 +62133,9 @@
 	// ----- FILE REQUIREMENTS -----
 	// Script files:
 	// scripts/vscripts/heroes/hero_death_prophet/exorcism.lua
+	//
+	// Unit files:
+	// scripts/npc/units/npc_dummy_unit.txt
 	"exorcism_datadriven"
 	{
 		// General
@@ -62771,7 +62156,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"145.0"
-		"AbilityDuration"				"30.0 30.0 30.0"
+		"AbilityDuration"				"35.0 35.0 35.0"
 	
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -62830,7 +62215,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"30"	//Always have a duration AbilitySpecial, don't believe Valves lies.
+				"duration"				"35"	//Always have a duration AbilitySpecial, don't believe Valves lies.
 			}
 			"11"	
 			{
@@ -63281,6 +62666,673 @@
 				"IsBuff"		"1"
 				"IsPurgable"	"0"
 				"Passive"		"1"
+			}
+		}
+	}
+	// Rewrite of the Doom Devour ability
+	// Author: Pizzalol
+	// Date: 27.01.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTES: You have to add the specific units to the Lua table to be able to steal their abilities
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_doom_bringer/devour.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/doom_bringer/doom_bringer_empty1_datadriven.txt
+	// scripts/npc/abilities/doom_bringer/doom_bringer_empty2_datadriven.txt
+	"devour_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"AbilityTextureName"			"doom_bringer_devour"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
+			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_devour.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"300 300 300 300"
+		"AbilityCooldown"				"70.0 60.0 50.0 40.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_gold"			"25 50 75 100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_per_second"		"20 20 20 20"
+			}
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_doom_bringer/devour.lua"
+				"Function"		"DevourCheck"
+				"modifier"		"modifier_devour_datadriven"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_DoomBringer.DevourCast"
+				"Target" 		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_doom_bringer/doom_bringer_devour.vpcf"
+				"EffectAttachType"  "follow_origin"
+				
+				"ControlPointEntities"
+				{
+					"TARGET"	"attach_origin"
+					"CASTER"	"attach_origin"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_doom_bringer/devour.lua"
+				"Function"		"Devour"
+				"modifier"		"modifier_devour_datadriven"
+				"doom_empty1"	"doom_bringer_empty1_datadriven"
+				"doom_empty2"	"doom_bringer_empty2_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_devour_datadriven"
+			{
+				"IsDebuff"			"1"
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_doom_bringer/devour.lua"
+						"Function"		"DevourGold"
+					}				
+				}
+			}
+		}
+	}
+	// Rewrite of the Doom Empty1 ability
+	// Author: Pizzalol
+	// Date: 27.01.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTES: This is a placeholder ability for the Devour ability
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_doom_bringer/devour.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/doom_bringer/devour_datadriven.txt
+	// scripts/npc/abilities/doom_bringer/doom_bringer_empty2_datadriven.txt
+	"doom_bringer_empty1_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"0"
+	}
+	// Rewrite of the Doom Empty2 ability
+	// Author: Pizzalol
+	// Date: 27.01.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTES: This is a placeholder ability for the Devour ability
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_doom_bringer/devour.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/doom_bringer/devour_datadriven.txt
+	// scripts/npc/abilities/doom_bringer/doom_bringer_empty1_datadriven.txt
+	"doom_bringer_empty2_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"0"
+	}
+	// Rewrite of the Doom Doom ability
+	// Author: Pizzalol
+	// Date: 27.01.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_doom_bringer/doom.lua
+	"doom_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"doom_bringer_doom"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
+			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_doom_ring.vpcf"
+			"particle"			"particles/status_fx/status_effect_doom.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.5"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"550 550 550"
+		"AbilityCooldown"				"125.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 200 250"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"15.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"20 35 50"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_scepter"		"16.0 16.0 16.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_scepter"		"40 60 80"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"deniable_pct"			"25 25 25"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_DoomBringer.Doom"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_doom_bringer/doom.lua"
+				"Function"		"DoomPurge"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_doom_datadriven"
+				"Target" 
+				{
+					"Center"	"TARGET"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+				"Duration"		"%duration"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_doom_deny_check_datadriven"
+				"Target" 
+				{
+					"Center"	"TARGET"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_doom_datadriven"
+			{
+				"IsDebuff"			"1"
+				"IsPurgable"		"0"
+		
+				"StatusEffectName" 		"particles/status_fx/status_effect_doom.vpcf" 	   
+				"StatusEffectPriority"  "10"
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+	
+						"ControlPoints"
+						{
+							"04"	"TARGET"
+						}
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_doom_bringer/doom.lua"
+						"Function"		"StopSound"
+						"sound"			"Hero_DoomBringer.Doom"
+					}
+				}
+	
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_PURE"
+						"Damage"		"%damage"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_doom_deny_check_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_doom_bringer/doom.lua"
+						"Function"		"DoomDenyCheck"
+						"modifier"		"modifier_doom_deny_datadriven"
+					}
+				}
+			}
+	
+			"modifier_doom_deny_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"States"
+				{
+					"MODIFIER_STATE_SPECIALLY_DENIABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	// Rewrite of the Doom Lvl Death ability
+	// Author: Pizzalol
+	// Date: 27.01.2016.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_doom_bringer/lvl_death.lua
+	"lvl_death_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"doom_bringer_lvl_death"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
+			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf"
+			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death_bonus.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600 600 600 600"
+		"AbilityCooldown"				"7.0 7.0 7.0 7.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110 110 110 110"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.0"	// damage only
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"125 175 225 275"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"lvl_bonus_damage"		"20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lvl_bonus_multiple"	"6 5 4 3"
+			}
+			// Extra
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"0.01"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_DoomBringer.LvlDeath"
+				"Target" 		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}
+	
+			"Stun"
+			{
+				"Duration"   "%stun_duration"
+				"Target" 	 "TARGET"
+			}
+	
+			"Damage"
+			{
+				"Target"		"TARGET"
+				"Type"			"DAMAGE_TYPE_MAGICAL"
+				"Damage"		"%damage"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_doom_bringer/lvl_death.lua"
+				"Function"		"LvlDeath"
+				"bonus_particle"	"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death_bonus.vpcf"
+			}
+		}
+	}
+	
+	// Rewrite of the Doom Scorched Earth ability
+	// Author: Pizzalol
+	// Date: 27.01.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_doom_bringer/scorched_earth.lua
+	"scorched_earth_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"doom_bringer_scorched_earth"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
+			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_scorched_earth_buff.vpcf"
+			"particle"			"particles/units/heroes/hero_doom_bringer/doom_scorched_earth.vpcf"
+			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_scorched_earth_debuff.vpcf"				
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600 600 600 600"
+		"AbilityCooldown"				"55.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60 65 70 75"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"10 20 30 40"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"600 600 600 600"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed_pct"	"14 14 14 14"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10.0 12.0 14.0 16.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_scorched_earth_datadriven"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_scorched_earth_datadriven"
+			{
+				"IsBuff"			"1"
+				"IsPurgable"		"0"
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_scorched_earth.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+	
+						"ControlPoints"
+						{
+							"01"	"%radius 0 0"
+						}
+					}
+				}
+		
+				"Aura"          	"modifier_scorched_earth_check_datadriven"
+				"Aura_Radius"   	"%radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
+				"Aura_ApplyToCaster" "1"
+	
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"CASTER"
+							"Radius" 	"%radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					
+						"Action"    
+						{
+							"Damage"
+							{
+								"Target"		"TARGET"
+								"Type"			"DAMAGE_TYPE_MAGICAL"
+								"Damage"		"%damage_per_second"
+							}
+						}
+					}
+				}
+			}
+	
+			"modifier_scorched_earth_check_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_doom_bringer/scorched_earth.lua"
+						"Function"		"ScorchedEarthCheck"
+						"modifier"		"modifier_scorched_earth_buff_datadriven"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_scorched_earth_buff_datadriven"
+						"Target" 		"TARGET"
+					}
+				}
+			}
+	
+			"modifier_scorched_earth_buff_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_DoomBringer.ScorchedEarthAura"
+						"Target" 		"TARGET"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_doom_bringer/scorched_earth.lua"
+						"Function"		"StopSound"
+						"sound"			"Hero_DoomBringer.ScorchedEarthAura"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%damage_per_second"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed_pct" 
+				}
 			}
 		}
 	}

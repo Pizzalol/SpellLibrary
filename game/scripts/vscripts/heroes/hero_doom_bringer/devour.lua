@@ -92,7 +92,7 @@ end
 
 --[[Author: igo95862, Noya
 	Used by: Pizzalol
-	Date: 04.03.2015.
+	Date: 27.01.2016.
 	Disallows eating another unit while Devour is in progress]]
 function DevourCheck( keys )
 	local caster = keys.caster
@@ -101,12 +101,9 @@ function DevourCheck( keys )
 	local pID = caster:GetPlayerOwnerID()
 
 	if caster:HasModifier(modifier) then
-		caster:Stop()
+		caster:Interrupt()
 
 		-- Play Error Sound
 		EmitSoundOnClient("General.CastFail_InvalidTarget_Hero", player)
-
-		-- This makes use of the Custom Error Flash module by zedor. https://github.com/zedor/CustomError
-		FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "Can't Devour While Mouth is Full" } )
 	end
 end

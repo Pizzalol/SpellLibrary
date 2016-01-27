@@ -1,7 +1,13 @@
 // Rewrite of the Doom Lvl Death ability
 // Author: Pizzalol
-// Date: 25.02.2015.
-"doom_bringer_lvl_death_datadriven"
+// Date: 27.01.2016.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_doom_bringer/lvl_death.lua
+"lvl_death_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -30,7 +36,7 @@
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityCastRange"				"600 600 600 600"
-	"AbilityCooldown"				"8.0 8.0 8.0 8.0"
+	"AbilityCooldown"				"7.0 7.0 7.0 7.0"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
