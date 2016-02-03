@@ -1,7 +1,7 @@
 // Rewrite of the Obsidian Destroyer Arcane Orb
 // Author: chrislotix
-// Date: 05.01.2015.
-
+// Edit: YOLOSPAGHETTI
+// Date: 02.02.2016
 
 "obsidian_destroyer_arcane_orb_datadriven"
 {
@@ -41,14 +41,39 @@
 			"var_type"				"FIELD_INTEGER"
 			"illusion_damage"		"100 200 300 400"
 		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"int_gain"				"2 3 4 5"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"int_steal"				"-2 -3 -4 -5"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"steal_duration"		"50"
+		}
 		
 	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/arcane_orb.lua"
+			"Function"	"LevelTime"
+		}
+	}
+	
 	"Modifiers"
 	{
 		"modifier_arcane_orb_datadriven"
 		{
 			"Passive"	"1"
-			"IsHidden"	"0"
+			"IsHidden"	"1"
 
 			"Orb"
 			{
@@ -78,8 +103,78 @@
 					"Function"	"ArcaneOrb"
 					"Target"	"TARGET"
 				}
+				
+				"ApplyModifier"
+				{
+					"Target"	"TARGET"
+					"ModifierName"	"modifier_arcane_orb_int_steal_target_datadriven"
+				}
+				
+				"ApplyModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_arcane_orb_int_steal_datadriven"
+				}
 			}
 		}
+		
+		"modifier_arcane_orb_int_steal_target_datadriven"
+		{
+			"Duration"	"%steal_duration"
+			"IsPurgable"	"0"
+			"IsHidden"		"1"
+
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"OnCreated"
+			{			
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/arcane_orb.lua"
+					"Function"	"AddStacks"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_obsidian_destroyer/arcane_orb.lua"
+					"Function"	"RemoveStacks"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%int_steal"
+			}
+		}
+		
+		"modifier_arcane_orb_int_steal_datadriven"
+		{
+			"Duration"	"%steal_duration"
+			"IsPurgable"	"0"
+			"IsHidden"		"1"
+			
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%int_gain"
+			}
+		}
+		
+		//Aesthetic Stack Modifiers
+		"modifier_arcane_orb_status_target"
+		{
+			"IsDebuff"	"1"
+		}
+		
+		"modifier_arcane_orb_status"
+		{
+			"IsBuff"	"1"
+		}
+		
 	}
 }	
 
