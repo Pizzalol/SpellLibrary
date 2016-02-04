@@ -1,0 +1,126 @@
+// Rewrite of Cloak and Dagger
+// Author: YOLOSPAGHETTI
+// Date: February 04, 2016
+
+"riki_cloak_and_dagger_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AbilityTextureName"			"riki_permanent_invisibility"
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	 {
+	  "soundfile"   "sounds/weapons/hero/riki/riki_backstab.vsnd"
+	  "soundfile"	"sounds/weapons/hero/riki/riki_attack1.vsnd"
+	  "particle"	"particles/units/heroes/hero_riki/riki_backstab.vpcf"
+	  "particle"	"particles/generic_hero_status/status_invisibility_start.vpcf"
+	 
+	 }
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"fade_time"					"6.0 5.0 4.0 3.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"agility_damage"			"50 75 100 125"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"backstab_angle"			"105"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_invisibility_fade_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+			
+			"Duration"	"%fade_time"
+			"EffectName"	"particles/generic_hero_status/status_invisibility_start.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_permanent_invisibility_datadriven"
+				}
+				"ApplyModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_invisible"
+				}
+			}  
+		}
+		"modifier_backstab_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_riki/cloak_and_dagger.lua"
+					"Function"			"CheckBackstab"
+					"particle"			"particles/units/heroes/hero_riki/riki_backstab.vpcf"
+					"sound"				"Hero_Riki.Backstab"
+					"sound2"			"Hero_Riki.Attack"
+				}
+				"RemoveModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_permanent_invisibility_datadriven"
+				}
+				"RemoveModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_invisible"
+				}
+				"ApplyModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_invisibility_fade_datadriven"
+				}
+			}
+		}
+
+		"modifier_permanent_invisibility_datadriven"	
+		{	
+			"IsHidden"	"1"
+			
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED" 
+			}
+
+			"OnDestroy"
+			{
+				"RemoveModifier"
+				{
+					"Target"
+					{
+						"Center"	"CASTER"
+						"Flags"	"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+					"ModifierName"	"modifier_invisible"
+				}
+			}
+		}
+	}
+}
