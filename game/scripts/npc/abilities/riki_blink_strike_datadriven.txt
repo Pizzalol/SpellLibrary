@@ -1,28 +1,39 @@
+// Rewrite of Cloak and Dagger
+// Author: YOLOSPAGHETTI
+// Date: February 05, 2016
 "riki_blink_strike_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
-	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"riki_blink_strike"
+	"CastFilterRejectCaster" 		"1"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"sounds/weapons/hero/riki/riki_blinkstrike.vsnd"
+		"particle"			"particles/units/heroes/hero_riki/riki_blink_strike.vpcf"
+	}
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastRange"				"800"
-	"AbilityCastPoint"				"0.4"
+	"AbilityCastRange"				"800 800 800 800"
+	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"0"
+	"AbilityCooldown"				"16 12 8 4"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"40"
+	"AbilityManaCost"				"50 50 50 50"
 	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -30,24 +41,35 @@
 	{
 		"01"
 		{
-			"var_type"					"FIELD_INTEGER"
-			"tooltip_range"					"800"
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage"			"20 40 60 80"
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_damage"			"50 70 90"
+			"tooltip_range"			"800 800 800 800"
 		}
-		"03"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"max_charges"			"3 4 5"
+			"EffectName"		"Hero_Riki.Blink_Strike"
+			"Target"			"CASTER"
 		}
-		"04"
+
+		"AttachEffect"
 		{
-			"var_type"				"FIELD_FLOAT"
-			"charge_restore_time"	"30.0"
+			"EffectName"		"particles/units/heroes/hero_riki/riki_blink_strike.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"			"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_riki/blink_strike.lua"
+			"Function"		"BlinkStrike"
 		}
 	}
 }
-
