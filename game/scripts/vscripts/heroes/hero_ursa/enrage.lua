@@ -1,78 +1,62 @@
---[[
-	CHANGELIST
-	09.01.2015 - Standized the variables
-]]
-
---[[
-	Author: kritth
-	Date: 7.1.2015.
-	Create a timer to periodically add/remove damage base on health
-]]
-function enrage_init( keys )
-	-- Local variables
+--[[Author: YOLOSPAGHETTI
+	Date: February 4, 2016
+	Applies a strong dispel to Ursa]]
+function Purge(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-	local modifierName = "modifier_enrage_buff_datadriven"
-	local percent = ability:GetLevelSpecialValueFor( "life_damage_bonus_percent", ability:GetLevel() - 1)
+	local model_scale = ability:GetLevelSpecialValueFor( "model_scale", ability:GetLevel() - 1 )
 	
-	-- Necessary data to pass into the timer iteration
-	local prefix = "modifier_enrage_damage_mod_"
-	local bitTable = { 512, 256, 128, 64, 32, 16, 8, 4, 2, 1 }
+	-- Strong Dispel
+	local RemovePositiveBuffs = false
+	local RemoveDebuffs = true
+	local BuffsCreatedThisFrameOnly = false
+	local RemoveStuns = true
+	local RemoveExceptions = false
+	caster:Purge( RemovePositiveBuffs, RemoveDebuffs, BuffsCreatedThisFrameOnly, RemoveStuns, RemoveExceptions)
+	
+	-- Gives Ursa a red tint
+	caster:SetRenderColor(255, 0, 0)
+	
+	-- Scales Ursa's model by 120%
+	caster:SetModelScale(model_scale)
+end
 
+--[[Author: YOLOSPAGHETTI
+	Date: February 4, 2016
+	Applies the bonus fury swipe damage]]
+function BonusDamage(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local fury_swipes = caster:FindAbilityByName("ursa_fury_swipes_datadriven")
+	local modifierName = "modifier_fury_swipes_target_datadriven"
+	local damageType = fury_swipes:GetAbilityDamageType()
 	
-	-- Remove existing damage
-	keys.caster.enrage_damage = 0
+	local damage_multiplier = ability:GetLevelSpecialValueFor( "damage_multiplier", ability:GetLevel() - 1 )
+	local damage_per_stack = fury_swipes:GetLevelSpecialValueFor( "damage_per_stack", ability:GetLevel() - 1 )
+
+	-- Applies the fury swipes multiplier damage
+	if target:HasModifier( modifierName ) then
+		local current_stack = target:GetModifierStackCount( modifierName, fury_swipes )
+		local ability_damage = current_stack * damage_multiplier
+		
+		-- Deal damage
+		local damage_table = {
+			victim = target,
+			attacker = caster,
+			damage = damage_per_stack * ability_damage,
+			damage_type = damageType
+		}
+		ApplyDamage( damage_table )
+	end
+end
+
+--[[Author: YOLOSPAGHETTI
+	Date: February 4, 2016
+	Changes Ursa back to his original color and size]]
+function ChangeAppearance(keys)
+	local caster = keys.caster
 	
-	-- Create Timer
-	Timers:CreateTimer(
-		function()
-			-- Variables for each loop
-			local damage = caster:GetMaxHealth() * ( percent / 100.0 )
-			
-			-- Check if user needs additional modifiers
-			if caster.enrage_damage ~= damage then
-				-- Remove all damage modifiers
-				local modCount = caster:GetModifierCount()
-				for i = 0, modCount do
-					for u = 1, #bitTable do
-						local val = bitTable[u]
-						if caster:GetModifierNameByIndex(i) == prefix .. val then
-							caster:RemoveModifierByName( prefix .. val )
-						end
-					end
-				end
-				
-				-- Add damage modifiers
-				local damage_tmp = damage
-				for i = 1, #bitTable do
-					local val = bitTable[i]
-					local count = math.floor( damage_tmp / val )
-					if count >= 1 then
-						ability:ApplyDataDrivenModifier( caster, caster, prefix .. val, {} )
-						damage_tmp = damage_tmp - val
-					end
-				end
-			end
-			
-			-- Updates
-			caster.enrage_damage = damage
-			
-			-- Check if it is time to remove the buff
-			if caster:HasModifier( modifierName ) == false then
-				-- Remove all damage modifiers
-				local modCount = caster:GetModifierCount()
-				for i = 0, modCount do
-					for u = 1, #bitTable do
-						local val = bitTable[u]
-						if caster:GetModifierNameByIndex(i) == prefix .. val then
-							caster:RemoveModifierByName( prefix .. val )
-						end
-					end
-				end
-				return nil
-			else
-				return 0.1
-			end
-		end
-	)
+	caster:SetRenderColor(255, 255, 255)
+	caster:SetModelScale(1)
 end
