@@ -1,3 +1,6 @@
+// Rewrite of Enrage
+// Author: YOLOSPAGHETTI
+// Date: February 5, 2016
 "ursa_enrage_datadriven"
 {
 	// General
@@ -16,8 +19,8 @@
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"25.0 25.0 25.0"
-	"AbilityDuration"				"15.0 15.0 15.0"
+	"AbilityCooldown"				"50.0 40.0 30.0"
+	"AbilityDuration"				"4.0 4.0 4.0"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
@@ -30,7 +33,27 @@
 		"01"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"life_damage_bonus_percent" "5 6 7"
+			"damage_reduction" 			"-80 -80 -80"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"damage_multiplier" 		"1.5 1.75 2"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration" 					"4.0 4.0 4.0"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"scepter_cooldown" 			"30 24 18"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"model_scale" 				"1.2"
 		}
 	}
 	
@@ -59,7 +82,7 @@
 		"RunScript"
 		{
 			"ScriptFile"				"heroes/hero_ursa/enrage.lua"
-			"Function"					"enrage_init"
+			"Function"					"Purge"
 		}
 	}
 	
@@ -69,6 +92,7 @@
 		{
 			"IsHidden"					"0"
 			"IsPurgable"				"0"
+			"IsBuff"					"1"
 			
 			"OnCreated"
 			{
@@ -95,109 +119,30 @@
 				}
 			}
 			
-			"Duration"					"%AbilityDuration"
-		}
-	
-		// bit fields
-		"modifier_enrage_damage_mod_1"
-		{
-			"IsPurgable"			"0"
-			"IsHidden"				"1"  
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"				"heroes/hero_ursa/enrage.lua"
+					"Function"					"BonusDamage"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_ursa/enrage.lua"
+					"Function"		"ChangeAppearance"
+				}
+			}
+			
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"1"
+				"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%damage_reduction"
 			}
-		}
-		"modifier_enrage_damage_mod_2"
-		{
-			"IsPurgable"			"0"
-			"IsHidden"				"1"  
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"2"
-			}
-		}
-		"modifier_enrage_damage_mod_4"
-		{
-			"IsPurgable"			"0"
-			"IsHidden"				"1"  
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"4"
-			}
-		}
-		"modifier_enrage_damage_mod_8"
-		{
-			"IsPurgable"			"0"
-			"IsHidden"				"1"  
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"8"
-			}
-		}
-		"modifier_enrage_damage_mod_16"
-		{
-			"IsPurgable"			"0"
-			"IsHidden"				"1"  
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"16"
-			}
-		}
-		"modifier_enrage_damage_mod_32"
-		{
-			"IsPurgable"			"0"
-			"IsHidden"				"1"  
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"32"
-			}
-		}
-		"modifier_enrage_damage_mod_64"
-		{
-			"IsPurgable"			"0"
-			"IsHidden"				"1"  
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"64"
-			}
-		}
-		"modifier_enrage_damage_mod_128"
-		{
-			"IsPurgable"			"0"
-			"IsHidden"				"1"  
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"128"
-			}
-		}
-		"modifier_enrage_damage_mod_256"
-		{
-			"IsPurgable"			"0"
-			"IsHidden"				"1"  
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"256"
-			}
-		}
-		"modifier_enrage_damage_mod_512"
-		{
-			"IsPurgable"			"0"
-			"IsHidden"				"1"  
-			"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"512"
-			}
+			
+			"Duration"					"%duration"
 		}
 	}
 }
