@@ -12,7 +12,7 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-	"AbilityCastRange"				"600 650 700"
+	"AbilityCastRange"				"700 700 700"
 	"AbilityCastPoint"				"0.25 0.25 0.25"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
@@ -65,18 +65,8 @@
 		"04"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"cast_range"					"600 650 700"
+			"cast_range"					"700 700 700"
 		}
-		"05"
-		{
-			"var_type"						"FIELD_INTEGER"
-			"damage_multiplier_scepter"		"9 10 11"
-		}			
-		"06"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"cast_range_scepter"				"700 750 800"
-		}			
 	}
 
 	"OnSpellStart"
