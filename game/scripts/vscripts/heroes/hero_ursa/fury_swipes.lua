@@ -42,5 +42,14 @@ function fury_swipes_attack( keys )
 	else
 		ability:ApplyDataDrivenModifier( caster, target, modifierName, { Duration = duration } )
 		target:SetModifierStackCount( modifierName, ability, 1 )
+		
+		-- Deal damage
+		local damage_table = {
+			victim = target,
+			attacker = caster,
+			damage = damage_per_stack,
+			damage_type = damageType
+		}
+		ApplyDamage( damage_table )
 	end
 end
