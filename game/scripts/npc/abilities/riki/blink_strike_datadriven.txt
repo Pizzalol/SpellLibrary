@@ -1,7 +1,13 @@
 // Rewrite of Cloak and Dagger
 // Author: YOLOSPAGHETTI
-// Date: February 05, 2016
-"riki_blink_strike_datadriven"
+// Date: 05.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_riki/blink_strike.lua
+"blink_strike_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

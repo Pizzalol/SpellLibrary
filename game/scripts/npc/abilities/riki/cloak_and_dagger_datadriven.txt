@@ -1,8 +1,13 @@
 // Rewrite of Cloak and Dagger
 // Author: YOLOSPAGHETTI
-// Date: February 04, 2016
-
-"riki_cloak_and_dagger_datadriven"
+// Date: 04.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_riki/cloak_and_dagger.lua
+"cloak_and_dagger_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

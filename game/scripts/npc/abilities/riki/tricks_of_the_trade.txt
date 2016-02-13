@@ -1,10 +1,17 @@
 // Rewrite of Trick of the Trade
 // Author: YOLOSPAGHETTI
-// Date: February 4, 2016
+// Date: 13.02.2016.
+// Version: 6.86
+// Type: Datadriven
 // Notes: Caster needs cloak_and_dagger_datadriven as an ability or ProcBackstab will not work
-// Daggers on edge of circle are not showing for me
-
-"riki_tricks_of_the_trade_datadriven"
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_riki/tricks_of_the_trade.lua
+//
+// KV files:
+// scripts/npc/abilities/riki/cloak_and_dagger_datadriven.txt
+"tricks_of_the_trade_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -180,8 +187,9 @@
 					"Target"			"CASTER"
 					"ControlPoints"
 					{
-						"00" "0 0 0"
-						"01" "%radius %radius %radius"
+						"00" 	"0 0 0"
+						"01" 	"%radius %radius %radius"
+						"02"	"%duration 0 0"
 					}
 				}
 			}

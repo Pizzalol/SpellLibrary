@@ -14,7 +14,7 @@ end
 function ProcBackstab(keys)
 	local caster = keys.caster
 	local target = keys.target
-	local cloak_and_dagger = caster:FindAbilityByName("riki_cloak_and_dagger_datadriven")
+	local cloak_and_dagger = caster:FindAbilityByName("cloak_and_dagger_datadriven")
 	local ability_level = cloak_and_dagger:GetLevel() - 1
 
 	local agility_damage_multiplier = cloak_and_dagger:GetLevelSpecialValueFor("agility_damage", ability_level) / 100

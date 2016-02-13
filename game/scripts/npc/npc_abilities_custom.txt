@@ -29451,546 +29451,6 @@
 		}
 	}
 	
-	// Rewrite of Cloak and Dagger
-	// Author: YOLOSPAGHETTI
-	// Date: February 05, 2016
-	"riki_blink_strike_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"			"riki_blink_strike"
-		"CastFilterRejectCaster" 		"1"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"sounds/weapons/hero/riki/riki_blinkstrike.vsnd"
-			"particle"			"particles/units/heroes/hero_riki/riki_blink_strike.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800 800 800 800"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16 12 8 4"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50 50 50 50"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"20 40 60 80"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"800 800 800 800"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"		"Hero_Riki.Blink_Strike"
-				"Target"			"CASTER"
-			}
-	
-			"AttachEffect"
-			{
-				"EffectName"		"particles/units/heroes/hero_riki/riki_blink_strike.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Target"			"CASTER"
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_riki/blink_strike.lua"
-				"Function"		"BlinkStrike"
-			}
-		}
-	}
-	// Rewrite of Cloak and Dagger
-	// Author: YOLOSPAGHETTI
-	// Date: February 04, 2016
-	
-	"riki_cloak_and_dagger_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"AbilityTextureName"			"riki_permanent_invisibility"
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		 {
-		  "soundfile"   "sounds/weapons/hero/riki/riki_backstab.vsnd"
-		  "soundfile"	"sounds/weapons/hero/riki/riki_attack1.vsnd"
-		  "particle"	"particles/units/heroes/hero_riki/riki_backstab.vpcf"
-		  "particle"	"particles/generic_hero_status/status_invisibility_start.vpcf"
-		 
-		 }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"fade_time"					"6.0 5.0 4.0 3.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"agility_damage"			"50 75 100 125"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"backstab_angle"			"105"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_invisibility_fade_datadriven"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-				
-				"Duration"	"%fade_time"
-				"EffectName"	"particles/generic_hero_status/status_invisibility_start.vpcf"
-				"EffectAttachType"	"follow_origin"
-				
-				"OnDestroy"
-				{
-					"ApplyModifier"
-					{
-						"Target"	"CASTER"
-						"ModifierName"	"modifier_permanent_invisibility_datadriven"
-					}
-					"ApplyModifier"
-					{
-						"Target"	"CASTER"
-						"ModifierName"	"modifier_invisible"
-					}
-				}  
-			}
-			"modifier_backstab_datadriven"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-	
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"heroes/hero_riki/cloak_and_dagger.lua"
-						"Function"			"CheckBackstab"
-						"particle"			"particles/units/heroes/hero_riki/riki_backstab.vpcf"
-						"sound"				"Hero_Riki.Backstab"
-						"sound2"			"Hero_Riki.Attack"
-					}
-					"RemoveModifier"
-					{
-						"Target"	"CASTER"
-						"ModifierName"	"modifier_permanent_invisibility_datadriven"
-					}
-					"RemoveModifier"
-					{
-						"Target"	"CASTER"
-						"ModifierName"	"modifier_invisible"
-					}
-					"ApplyModifier"
-					{
-						"Target"	"CASTER"
-						"ModifierName"	"modifier_invisibility_fade_datadriven"
-					}
-				}
-			}
-	
-			"modifier_permanent_invisibility_datadriven"	
-			{	
-				"IsHidden"	"1"
-				
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED" 
-				}
-	
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"Target"
-						{
-							"Center"	"CASTER"
-							"Flags"	"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-						"ModifierName"	"modifier_invisible"
-					}
-				}
-			}
-		}
-	}
-	// Rewrite of Smoke Screen
-	// Author: YOLOSPAGHETTI
-	// Date: February 4, 2016
-	
-	"riki_smoke_screen_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityTextureName"			"riki_smoke_screen"
-		"AOERadius"						"250 275 300 325"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.4"
-		"AbilityCastRange"				"550"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"11.0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75 80 85 90"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"250 275 300 325"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"linger_duration"		"0.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"-25"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"miss_chance"			"40 50 60 70"
-			}
-		}
-	
-		"precache"
-		{
-			"soundfile"	"sounds/weapons/hero/riki/riki_smokescreen.vsnd"
-			"particle"  "particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
-			"particle"  "particles/units/heroes/hero_riki/riki_smokebomb_b.vpcf"
-		}
-	
-		"OnSpellStart"
-		{
-		 	"CreateThinker"
-		 	{
-		 		"ModifierName"	"modifier_smoke_screen"
-		 		"Target" 		"POINT"
-		 	}
-		} 
-	
-		"Modifiers"
-		{
-			"modifier_smoke_screen"
-			{
-				"Aura"					"modifier_smoke_screen_debuff"
-				"Aura_Radius"			"%radius"
-				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
-				"Duration"				"%duration"
-	
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						//fix sound!
-						"EffectName"	"Hero_Riki.Smoke_Screen"
-						"Target"		"CASTER"
-					}
-	
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"TARGET"
-						"ControlPoints"
-						{
-							"00" "0 0 0"
-							"01" "%radius %radius %radius"
-						}
-					}
-				}
-			}
-	
-			"modifier_smoke_screen_debuff"
-			{
-				"IsDebuff"		"1"
-				"EffectName"	"particles/generic_gameplay/generic_silence.vpcf"
-				"EffectAttachType"	"follow_overhead"
-				"Duration"			"%linger_duration"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_slow"
-					"MODIFIER_PROPERTY_MISS_PERCENTAGE"				"%miss_chance"
-				}
-				"States"
-				{
-					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	// Rewrite of Trick of the Trade
-	// Author: YOLOSPAGHETTI
-	// Date: February 4, 2016
-	// Notes: Caster needs cloak_and_dagger_datadriven as an ability or ProcBackstab will not work
-	// Daggers on edge of circle are not showing for me
-	
-	"riki_tricks_of_the_trade_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityTextureName"			"riki_tricks_of_the_trade"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"		"sounds/weapons/hero/riki/tricks_of_the_trade.vsnd"		
-			"soundfile"		"sounds/weapons/hero/riki/tricks_of_the_trade_cast.vsnd"
-			"soundfile"   	"sounds/weapons/hero/riki/riki_backstab.vsnd"
-			"particle"		"particles/units/heroes/hero_riki/riki_tricks.vpcf"
-			"particle"		"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
-			"particle"		"particles/units/heroes/hero_riki/riki_tricks_end.vpcf"
-			//"particle"		"particles/units/heroes/hero_riki/riki_tricks_dagger_parent.vpcf"
-			"particle"		"particles/units/heroes/hero_riki/riki_backstab.vpcf"
-			
-		}
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"40.0"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.4 0.4 0.4"
-		"AbilityChannelTime"			"4.0 5.0 6.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75 75 75"
-	
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"500"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0 5.0 6.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_interval"		"1.0"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"AttachEffect"
-			{
-				"EffectName"	"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
-				"EffectAttachType"	"attach_origin"
-				"Target"	"CASTER"
-			}
-		
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_riki/tricks_of_the_trade.lua"
-				"Function"		"RemoveModel"
-			}		
-			
-			"FireSound"
-			{
-				"EffectName" "Hero_Riki.TricksOfTheTrade"
-				"Target"	"TARGET"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_banish"
-				"Target"		"CASTER"
-			}
-			
-			"ApplyModifier"
-		 	{
-		 		"ModifierName"	"modifier_tricks_of_the_trade"
-		 		"Target" 		"CASTER"
-		 	}
-		}
-			
-		"OnChannelFinish"
-		{	
-			"AttachEffect"
-			{
-				"EffectName"	"particles/units/heroes/hero_riki/riki_tricks_end.vpcf"
-				"EffectAttachType"	"attach_origin"
-				"Target"	"CASTER"
-			}
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_banish"
-				"Target"		"CASTER"
-			}
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_tricks_of_the_trade"
-				"Target"		"CASTER"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_banish"
-			{
-				"Duration"	"%duration"
-				
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_riki/tricks_of_the_trade.lua"
-						"Function"		"ProcBackstab"
-						"particle"		"particles/units/heroes/hero_riki/riki_backstab.vpcf"
-						"sound"			"Hero_Riki.Backstab"
-					}
-				}
-				
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_riki/tricks_of_the_trade.lua"
-						"Function"		"DrawModel"
-					}
-				}
-	
-				"States"
-				{
-					//"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"	// Don't use these state for a channeling ability.
-					//"MODIFIER_STATE_OUT_OF_GAME"			"MODIFIER_STATE_VALUE_ENABLED"
-				
-					"MODIFIER_STATE_ATTACK_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
-				}				
-			}
-			
-			"modifier_tricks_of_the_trade"
-			{
-				"Aura"					"modifier_tricks_of_the_trade_debuff"
-				"Aura_Radius"			"%radius"
-				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
-				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-				"Duration"				"%duration"
-	
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Riki.TricksOfTheTrade"
-						"Target"		"CASTER"
-					}
-	
-					"AttachEffect"
-					{
-						// Dagger particle is not working for me for some reason.
-						"EffectName"		"particles/units/heroes/hero_riki/riki_tricks.vpcf"
-						"EffectAttachType"	"attach_origin"
-						"Target"			"CASTER"
-						"ControlPoints"
-						{
-							"00" "0 0 0"
-							"01" "%radius %radius %radius"
-						}
-					}
-				}
-			}
-			
-			"modifier_tricks_of_the_trade_debuff"
-			{
-				"IsHidden" "1"
-				
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_riki/tricks_of_the_trade.lua"
-						"Function"		"PerformAttacks"
-					}
-				}
-				
-				"ThinkInterval"	"%damage_interval"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_riki/tricks_of_the_trade.lua"
-						"Function"		"PerformAttacks"
-					}
-				}
-			}
-		}
-	}
 	"roshan_bash_datadriven"
 	{
 		// General
@@ -64471,6 +63931,566 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%creep_damage_penalty"
+				}
+			}
+		}
+	}
+	// Rewrite of Cloak and Dagger
+	// Author: YOLOSPAGHETTI
+	// Date: 05.02.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_riki/blink_strike.lua
+	"blink_strike_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"riki_blink_strike"
+		"CastFilterRejectCaster" 		"1"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"sounds/weapons/hero/riki/riki_blinkstrike.vsnd"
+			"particle"			"particles/units/heroes/hero_riki/riki_blink_strike.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800 800 800 800"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16 12 8 4"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 50 50 50"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"20 40 60 80"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"800 800 800 800"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Riki.Blink_Strike"
+				"Target"			"CASTER"
+			}
+	
+			"AttachEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_riki/riki_blink_strike.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_riki/blink_strike.lua"
+				"Function"		"BlinkStrike"
+			}
+		}
+	}
+	// Rewrite of Cloak and Dagger
+	// Author: YOLOSPAGHETTI
+	// Date: 04.02.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_riki/cloak_and_dagger.lua
+	"cloak_and_dagger_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"			"riki_permanent_invisibility"
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		 {
+		  "soundfile"   "sounds/weapons/hero/riki/riki_backstab.vsnd"
+		  "soundfile"	"sounds/weapons/hero/riki/riki_attack1.vsnd"
+		  "particle"	"particles/units/heroes/hero_riki/riki_backstab.vpcf"
+		  "particle"	"particles/generic_hero_status/status_invisibility_start.vpcf"
+		 
+		 }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fade_time"					"6.0 5.0 4.0 3.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"agility_damage"			"50 75 100 125"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"backstab_angle"			"105"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_invisibility_fade_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				
+				"Duration"	"%fade_time"
+				"EffectName"	"particles/generic_hero_status/status_invisibility_start.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"Target"	"CASTER"
+						"ModifierName"	"modifier_permanent_invisibility_datadriven"
+					}
+					"ApplyModifier"
+					{
+						"Target"	"CASTER"
+						"ModifierName"	"modifier_invisible"
+					}
+				}  
+			}
+			"modifier_backstab_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_riki/cloak_and_dagger.lua"
+						"Function"			"CheckBackstab"
+						"particle"			"particles/units/heroes/hero_riki/riki_backstab.vpcf"
+						"sound"				"Hero_Riki.Backstab"
+						"sound2"			"Hero_Riki.Attack"
+					}
+					"RemoveModifier"
+					{
+						"Target"	"CASTER"
+						"ModifierName"	"modifier_permanent_invisibility_datadriven"
+					}
+					"RemoveModifier"
+					{
+						"Target"	"CASTER"
+						"ModifierName"	"modifier_invisible"
+					}
+					"ApplyModifier"
+					{
+						"Target"	"CASTER"
+						"ModifierName"	"modifier_invisibility_fade_datadriven"
+					}
+				}
+			}
+	
+			"modifier_permanent_invisibility_datadriven"	
+			{	
+				"IsHidden"	"1"
+				
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED" 
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"Target"
+						{
+							"Center"	"CASTER"
+							"Flags"	"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+						"ModifierName"	"modifier_invisible"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of Smoke Screen
+	// Author: YOLOSPAGHETTI
+	// Date: 04.02.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	"smoke_screen_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"riki_smoke_screen"
+		"AOERadius"						"%radius"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4"
+		"AbilityCastRange"				"550"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"11.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75 80 85 90"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"250 275 300 325"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"6.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"linger_duration"		"0.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_slow"				"-25"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"miss_chance"			"40 50 60 70"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"sounds/weapons/hero/riki/riki_smokescreen.vsnd"
+			"particle"  "particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
+			"particle"  "particles/units/heroes/hero_riki/riki_smokebomb_b.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+		 	"CreateThinker"
+		 	{
+		 		"ModifierName"	"modifier_smoke_screen"
+		 		"Target" 		"POINT"
+		 	}
+		} 
+	
+		"Modifiers"
+		{
+			"modifier_smoke_screen"
+			{
+				"Aura"					"modifier_smoke_screen_debuff"
+				"Aura_Radius"			"%radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+				"Duration"				"%duration"
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						//fix sound!
+						"EffectName"	"Hero_Riki.Smoke_Screen"
+						"Target"		"CASTER"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+						"ControlPoints"
+						{
+							"00" "0 0 0"
+							"01" "%radius %radius %radius"
+						}
+					}
+				}
+			}
+	
+			"modifier_smoke_screen_debuff"
+			{
+				"IsDebuff"		"1"
+				"EffectName"	"particles/generic_gameplay/generic_silence.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"Duration"			"%linger_duration"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_slow"
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"				"%miss_chance"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	// Rewrite of Trick of the Trade
+	// Author: YOLOSPAGHETTI
+	// Date: 13.02.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	// Notes: Caster needs cloak_and_dagger_datadriven as an ability or ProcBackstab will not work
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_riki/tricks_of_the_trade.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/riki/cloak_and_dagger_datadriven.txt
+	"tricks_of_the_trade_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"			"riki_tricks_of_the_trade"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"sounds/weapons/hero/riki/tricks_of_the_trade.vsnd"		
+			"soundfile"		"sounds/weapons/hero/riki/tricks_of_the_trade_cast.vsnd"
+			"soundfile"   	"sounds/weapons/hero/riki/riki_backstab.vsnd"
+			"particle"		"particles/units/heroes/hero_riki/riki_tricks.vpcf"
+			"particle"		"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
+			"particle"		"particles/units/heroes/hero_riki/riki_tricks_end.vpcf"
+			//"particle"		"particles/units/heroes/hero_riki/riki_tricks_dagger_parent.vpcf"
+			"particle"		"particles/units/heroes/hero_riki/riki_backstab.vpcf"
+			
+		}
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40.0"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4 0.4 0.4"
+		"AbilityChannelTime"			"4.0 5.0 6.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75 75 75"
+	
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0 5.0 6.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_interval"		"1.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"AttachEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
+				"EffectAttachType"	"attach_origin"
+				"Target"	"CASTER"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_riki/tricks_of_the_trade.lua"
+				"Function"		"RemoveModel"
+			}		
+			
+			"FireSound"
+			{
+				"EffectName" "Hero_Riki.TricksOfTheTrade"
+				"Target"	"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_banish"
+				"Target"		"CASTER"
+			}
+			
+			"ApplyModifier"
+		 	{
+		 		"ModifierName"	"modifier_tricks_of_the_trade"
+		 		"Target" 		"CASTER"
+		 	}
+		}
+			
+		"OnChannelFinish"
+		{	
+			"AttachEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_riki/riki_tricks_end.vpcf"
+				"EffectAttachType"	"attach_origin"
+				"Target"	"CASTER"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_banish"
+				"Target"		"CASTER"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_tricks_of_the_trade"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_banish"
+			{
+				"Duration"	"%duration"
+				
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_riki/tricks_of_the_trade.lua"
+						"Function"		"ProcBackstab"
+						"particle"		"particles/units/heroes/hero_riki/riki_backstab.vpcf"
+						"sound"			"Hero_Riki.Backstab"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_riki/tricks_of_the_trade.lua"
+						"Function"		"DrawModel"
+					}
+				}
+	
+				"States"
+				{
+					//"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"	// Don't use these state for a channeling ability.
+					//"MODIFIER_STATE_OUT_OF_GAME"			"MODIFIER_STATE_VALUE_ENABLED"
+				
+					"MODIFIER_STATE_ATTACK_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+				}				
+			}
+			
+			"modifier_tricks_of_the_trade"
+			{
+				"Aura"					"modifier_tricks_of_the_trade_debuff"
+				"Aura_Radius"			"%radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
+				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+				"Duration"				"%duration"
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Riki.TricksOfTheTrade"
+						"Target"		"CASTER"
+					}
+	
+					"AttachEffect"
+					{
+						// Dagger particle is not working for me for some reason.
+						"EffectName"		"particles/units/heroes/hero_riki/riki_tricks.vpcf"
+						"EffectAttachType"	"attach_origin"
+						"Target"			"CASTER"
+						"ControlPoints"
+						{
+							"00" 	"0 0 0"
+							"01" 	"%radius %radius %radius"
+							"02"	"%duration 0 0"
+						}
+					}
+				}
+			}
+			
+			"modifier_tricks_of_the_trade_debuff"
+			{
+				"IsHidden" "1"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_riki/tricks_of_the_trade.lua"
+						"Function"		"PerformAttacks"
+					}
+				}
+				
+				"ThinkInterval"	"%damage_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_riki/tricks_of_the_trade.lua"
+						"Function"		"PerformAttacks"
+					}
 				}
 			}
 		}

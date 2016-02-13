@@ -1,15 +1,16 @@
 // Rewrite of Smoke Screen
 // Author: YOLOSPAGHETTI
-// Date: February 4, 2016
-
-"riki_smoke_screen_datadriven"
+// Date: 04.02.2016.
+// Version: 6.86
+// Type: Datadriven
+"smoke_screen_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	"AbilityTextureName"			"riki_smoke_screen"
-	"AOERadius"						"250 275 300 325"
+	"AOERadius"						"%radius"
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
