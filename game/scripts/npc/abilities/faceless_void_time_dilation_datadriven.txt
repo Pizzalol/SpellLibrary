@@ -1,0 +1,159 @@
+// Rewrite of the Faceless Void Time Dilation ability
+// Author: YOLOSPAGHETTI
+// Date: February 7, 2016
+"faceless_void_time_dilation_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"faceless_void_time_dilation"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"sounds/weapons/hero/faceless_void/time_dilation_cast.vsnd"
+		"soundfile"			"sounds/weapons/hero/faceless_void/time_dilation_target.vsnd"
+		"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_timedialate.vpcf"
+		"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_dialatedebuf.vpcf"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.1 0.1 0.1 0.1"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"36.0 30.0 24.0 18.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"6 8 10 12"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"725"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"move_speed_slow"		"-7.0 -8.0 -9.0 -10.0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"attack_speed_slow"		"-7 -8 -9 -10"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		// Name?
+		//"FireSound"
+		//{
+			//"EffectName"	"Hero_FacelessVoid.TimeDilation"
+			//"Target"		"CASTER"
+		//}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_faceless_void/faceless_void_timedialate.vpcf"
+			"EffectAttachType" 	"follow_origin"
+			"EffectRadius"		"%radius"
+			"Target" 			"CASTER"
+			"ControlPoints"
+			{
+				"00"	"0 0 0"
+				"01" "%radius %radius %radius"
+			}
+		}
+		
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"  				"CASTER"
+				"Radius" 				"%radius"
+				"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 				"DOTA_UNIT_TARGET_HERO"
+			}
+
+			"Action"
+			{
+				"ApplyModifier"
+				{
+					"Target" 		"TARGET"
+					"ModifierName"	"modifier_time_dilation_cooldown_freeze"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_faceless_void/time_dilation.lua"
+					"Function"			"CooldownFreeze"
+				}
+			}
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_time_dilation_cooldown_freeze"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+			
+			"EffectName"		"particles/units/heroes/hero_faceless_void/faceless_void_dialatedebuf.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
+			// Name?
+			//"FireSound"
+			//{
+				//"EffectName"	"Hero_FacelessVoid.TimeDilation_Target"
+				//"Target"		"CASTER"
+			//}
+			
+			"OnAbilityExecuted"
+			{
+				"DelayedAction"
+                {
+                    "Delay" "0.01"
+                    "Action"
+                    {
+                        "RunScript"
+						{
+							"ScriptFile"		"heroes/hero_faceless_void/time_dilation.lua"
+							"Function"			"SlowCooldown"
+						}
+					}
+				}
+			}
+		}
+		
+		"modifier_time_dilation_slow"
+		{
+			"IsHidden" "1"
+			"IsDebuff" "1"
+			
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_slow"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_slow"
+			}
+		
+		}
+	}
+}
