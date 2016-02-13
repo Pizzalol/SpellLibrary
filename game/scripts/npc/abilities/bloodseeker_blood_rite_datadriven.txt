@@ -1,0 +1,167 @@
+// Rewrite of the Bloodseeker Blood Rite ability
+// Author: YOLOSPAGHETTI
+// Date: February 13, 2016
+
+"bloodseeker_blood_rite_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"bloodseeker_blood_bath"
+	
+	// Prechache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_bloodseeker/bloodseeker_bloodritual_ring_lv.vpcf"
+		"soundfile"			"sounds/weapons/hero/bloodseeker/blood_rite.vsnd"
+		"soundfile"			"sounds/weapons/hero/bloodseeker/blood_rite_cast.vsnd"
+		"soundfile"			"sounds/weapons/hero/bloodseeker/blood_rite_silence.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1500"
+	"AbilityCastPoint"				"0.4"
+	"AoERadius"						"600"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"30 25 20 15"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100"
+
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"						"600"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"silence_duration"			"3 4 5 6"
+		}			
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage"					"120 160 200 240"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"delay"						"2.6"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"delay_plus_castpoint_tooltip"						"3.0"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"flying_vision"					"400"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"vision_duration"				"6.0"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Bloodseeker.BloodRite.Cast"
+			"Target"		"TARGET"
+		}
+		
+		"CreateThinker"
+		{
+			"ModifierName"	"modifier_blood_rite_delay"
+			"Target"		"POINT"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_bloodseeker/blood_rite.lua"
+			"Function"		"GiveVision"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_blood_rite_delay"
+		{
+			"Duration"	"%delay"
+			
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"hero_bloodseeker.bloodRite"
+					"Target"		"TARGET"
+				}
+				
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_bloodseeker/bloodseeker_bloodritual_ring_lv.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"TARGET"
+					"ControlPoints"
+					{
+						"00" "0 0 0"
+						"01" "%radius %radius %radius"
+					}
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  				"TARGET"
+						"Radius" 				"%radius"
+						"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+					}
+
+					"Action"
+					{
+						"FireSound"
+						{
+							"EffectName"	"hero_bloodseeker.bloodRite.silence"
+							"Target"		"TARGET"
+						}
+					
+						"ApplyModifier"
+						{
+							"Target" 		"TARGET"
+							"ModifierName"	"modifier_silence"
+							"Duration"		"%silence_duration"
+						}
+						
+						"Damage"
+						{
+							"Target"	"TARGET"
+							"Type"		"DAMAGE_TYPE_PURE"
+							"Damage"	"%damage"
+						}
+					}
+				}
+			}
+		}
+	}
+}
