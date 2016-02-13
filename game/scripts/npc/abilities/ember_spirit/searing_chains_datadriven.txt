@@ -1,4 +1,13 @@
-"ember_spirit_searing_chains_datadriven"
+// Rewrite of the Ember Spirit Searing Chains ability
+// Author: kritth
+// Date: 13.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_ember_spirit/searing_chains.lua
+"searing_chains_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

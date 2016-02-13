@@ -1,4 +1,13 @@
-"ember_spirit_sleight_of_fist_datadriven"
+// Rewrite of the Ember Spirit Sleight of Fist ability
+// Author: kritth
+// Date: 13.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_ember_spirit/sleight_of_fist.lua
+"sleight_of_fist_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -11,7 +20,7 @@
 	"AbilityCastPoint"				"0"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"ember_spirit_sleight_of_fist"
-	"AOERadius"						"250 350 450 550"
+	"AOERadius"						"%radius"
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------

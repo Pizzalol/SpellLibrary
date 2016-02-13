@@ -1,4 +1,16 @@
-"ember_spirit_activate_fire_remnant_datadriven"
+// Rewrite of the Ember Spirit Fire Remnant ability
+// Author: kritth
+// Date: 13.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_ember_spirit/fire_remnant.lua
+//
+// KV files:
+// scripts/npc/abilities/ember_spirit/fire_remnant_datadriven.txt
+"activate_fire_remnant_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

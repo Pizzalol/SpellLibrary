@@ -2,10 +2,11 @@
 {
 	"override_hero" "npc_dota_hero_ancient_apparition"
 
-	"AbilityLayout"	"4"
+	"AbilityLayout"	"5"
 
-	"Ability1"	"frost_arrows_datadriven"
-	"Ability2"	"wave_of_silence_datadriven"
-	"Ability3"	"trueshot_datadriven"
-	"Ability4"	"marksmanship_datadriven"
+	"Ability1"	"searing_chains_datadriven"
+	"Ability2"	"sleight_of_fist_datadriven"
+	"Ability3"	"flame_guard_datadriven"
+	"Ability4"	"activate_fire_remnant_datadriven"
+    "Ability5"  "fire_remnant_datadriven"
 }

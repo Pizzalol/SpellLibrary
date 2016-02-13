@@ -1,5 +1,14 @@
+// Rewrite of the Ember Spirit Flame Guard ability
+// Author: kritth
+// Date: 13.02.2016.
+// Version: 6.86
+// Type: Datadriven
 // NOTE: This ability will only absorb damage whose AbilityUnitDamageType field is marked as DAMAGE_TYPE_MAGICAL
-"ember_spirit_flame_guard_datadriven"
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_ember_spirit/flame_guard.lua
+"flame_guard_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -124,6 +133,7 @@
 					"ScriptFile"			"heroes/hero_ember_spirit/flame_guard.lua"
 					"Function"				"flame_guard_on_take_damage"
 					"Damage"				"%attack_damage"
+					"modifier"				"modifier_flame_guard_buff_datadriven"
 				}
 			}
 			

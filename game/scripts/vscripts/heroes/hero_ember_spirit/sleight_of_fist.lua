@@ -83,7 +83,7 @@ function sleight_of_fist_init( keys )
 						ability:ApplyDataDrivenModifier( caster, caster, modifierCreepName, {} )
 					end
 					
-					caster:PerformAttack( target, true, false, true, false )
+					caster:PerformAttack( target, true, true, true, false, false )
 					
 					-- Slash particles
 					local slashFxIndex = ParticleManager:CreateParticle( particleSlashName, PATTACH_ABSORIGIN_FOLLOW, target )

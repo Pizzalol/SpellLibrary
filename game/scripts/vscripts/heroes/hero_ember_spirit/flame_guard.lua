@@ -67,12 +67,12 @@ function flame_guard_on_take_damage( keys )
 	local targetUnit = keys.unit
 	local attackerEnt = keys.attacker:entindex()
 	local damageTaken = keys.Damage
-	local modifierName = "modifier_flame_guard_target_datadriven"
+	local modifierName = keys.modifier
 	
 	-- Forcefully dispell the modifier
 	if targetUnit.flame_guard_absorb_amount < 0 then
 		targetUnit:RemoveModifierByName( modifierName )
-		keys.target.take_next = nil
+		keys.attacker.take_next = nil
 		targetUnit.listener = false
 		return
 	end
@@ -88,7 +88,7 @@ function flame_guard_on_take_damage( keys )
 		if targetUnit.flame_guard_absorb_amount < 0 then
 			targetUnit:SetHealth( targetUnit:GetHealth() + targetUnit.flame_guard_absorb_amount )
 			targetUnit:RemoveModifierByName( modifierName )
-			keys.target.take_next = nil
+			keys.attacker.take_next = nil
 			targetUnit.listener = false
 			return
 		end
