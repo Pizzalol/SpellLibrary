@@ -1,8 +1,13 @@
 // Rewrite of Infernal Blade
 // Author: YOLOSPAGHETTI
-// Date: February 8, 2016
-
-"doom_bringer_infernal_blade_datadriven"
+// Date: 08.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_doom_bringer/infernal_blade.lua
+"infernal_blade_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

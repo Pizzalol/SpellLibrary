@@ -1,0 +1,74 @@
+// Rewrite of the Faceless Void Backtrack ability
+// Author: Pizzalol
+// Date: 06.01.2015.
+"faceless_void_backtrack_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"faceless_void_backtrack"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf"
+	}
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"dodge_chance_pct"		"10 15 20 25"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_backtrack_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"ThinkInterval"		"0.03"
+
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/backtrack.lua"
+					"Function"		"BacktrackHealth"
+				}
+			}
+
+			"OnTakeDamage"
+			{
+				"Random"
+				{
+					"Chance"	"%dodge_chance_pct"
+
+					"OnSuccess"
+					{
+						"FireEffect"
+						{
+							"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf"
+							"EffectAttachType"	"follow_origin"
+							"Target"		"CASTER"
+						}
+
+						"RunScript"
+						{
+							"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/backtrack.lua"
+							"Function"		"BacktrackHeal"
+						}
+					}
+				}
+			}
+		}			
+	}
+}
+

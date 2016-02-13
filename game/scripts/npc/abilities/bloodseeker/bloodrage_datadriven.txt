@@ -1,7 +1,13 @@
 // Rewrite of the Bloodseeker Bloodrage ability
 // Author: YOLOSPAGHETTI
-// Date: February 13, 2016
-"bloodseeker_bloodrage_datadriven"
+// Date: 13.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_bloodseeker/bloodrage.lua
+"bloodrage_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

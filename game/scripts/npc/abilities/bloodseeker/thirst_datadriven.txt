@@ -1,0 +1,150 @@
+// Rewrite of the Bloodseeker Thirst ability
+// Author: YOLOSPAGHETTI
+// Date: 13.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_bloodseeker/thirst.lua
+"thirst_datadriven" 
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+
+	"BaseClass" "ability_datadriven"
+	"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"SpellImmunityType" "SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"bloodseeker_thirst"
+
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_bloodseeker/bloodseeker_thirst_owner.vpcf"
+		"particle"			"particles/status_fx/status_effect_thirst_vision.vpcf"
+		"particle"			"particles/units/heroes/hero_bloodseeker/bloodseeker_vision.vpcf"
+	}
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+
+	"AbilitySpecial"
+
+	{
+		"01"
+		{
+			"var_type" "FIELD_INTEGER"
+			"visibility_threshold_pct" "25"
+		}
+		"02"
+		{
+			"var_type" "FIELD_INTEGER"
+			"buff_threshold_pct" "75"
+		}
+		"03"
+		{
+			"var_type" "FIELD_INTEGER"
+			"bonus_movement_speed" "10 20 30 40"
+		} 
+		"04"
+		{
+			"var_type" "FIELD_INTEGER"
+			"bonus_damage" "10 20 30 40"
+		}
+		"05"
+		{
+			"var_type" "FIELD_FLOAT"
+			"bonus_movement_speed_per_stack" "0.2 0.4 0.6 0.8"
+		} 
+		"06"
+		{
+			"var_type" "FIELD_FLOAT"
+			"bonus_damage_per_stack" "0.2 0.4 0.6 0.8"
+		}
+		"07"
+		{
+			"var_type" "FIELD_INTEGER"
+			"global_radius" "100000"
+		}
+	} 
+
+	"Modifiers"
+	{
+		"modifier_thirst_datadriven"
+		{
+			"IsHidden"	"1"
+			"Passive"	"1"
+				
+			"Aura"					"modifier_thirst_check_health_datadriven"
+			"Aura_Radius"			"%global_radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
+			"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		}
+			
+		"modifier_thirst_check_health_datadriven"
+		{
+			"IsDebuff" "1"
+			"IsPurgable" "0"
+			"IsHidden"      "1"
+
+			"OnTakeDamage" 
+			{
+				"RunScript"
+				{                             
+					"ScriptFile" "heroes/hero_bloodseeker/thirst.lua"
+					"Function" "AddThirst"
+                   }
+			}
+
+			"OnHealReceived" 
+			{
+				"RunScript"
+				{
+					"ScriptFile" "heroes/hero_bloodseeker/thirst.lua"
+					"Function" "RemoveThirst"
+				}
+			}
+		} 
+			
+		"modifier_thirst_buff"
+		{
+			"IsHidden"	"1"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%bonus_damage_per_stack"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed_per_stack"
+			}
+		}
+			
+		"modifier_thirst_visual"
+		{
+			"EffectName" "particles/units/heroes/hero_bloodseeker/bloodseeker_thirst_owner.vpcf"
+			"EffectAttachType" "follow_origin"
+		}
+
+		"modifier_thirst_debuff_datadriven"
+		{
+			"IsDebuff"        "1"                          
+				
+			"EffectName" "particles/units/heroes/hero_bloodseeker/bloodseeker_vision.vpcf"
+			"EffectAttachType" "follow_origin"
+				
+			"ThinkInterval"	"0.03"
+			"OnIntervalThink"
+				
+			{
+				"RunScript"
+				{
+					"ScriptFile" "heroes/hero_bloodseeker/thirst.lua"
+					"Function" "GiveVision"
+				}
+			}
+				
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE" 	"MODIFIER_STATE_VALUE_DISABLED"
+			}
+		}
+	}
+}
