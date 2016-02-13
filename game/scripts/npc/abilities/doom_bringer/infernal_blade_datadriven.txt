@@ -1,0 +1,165 @@
+// Rewrite of Infernal Blade
+// Author: YOLOSPAGHETTI
+// Date: February 8, 2016
+
+"doom_bringer_infernal_blade_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ATTACK | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"doom_bringer_infernal_blade"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/generic_gameplay/generic_stunned.vpcf"
+		"particle"		"particles/units/heroes/hero_doom_bringer/doom_infernal_blade.vpcf"
+		"particle"		"particles/units/heroes/hero_doom_bringer/doom_infernal_blade_debuff.vpcf"
+		"particle"		"particles/units/heroes/hero_doom_bringer/doom_infernal_blade_impact.vpcf"
+		"soundfile"		"sounds/weapons/hero/doom_bringer/infernal_blade_preattack.vsnd"
+		"soundfile"		"sounds/weapons/hero/doom_bringer/infernal_blade_target.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"150"
+	
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"40"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"16 12 8 4"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"damage"			"40"		
+		}
+		"02"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"health_damage_pct"			"1.25 2.5 3.75 5"		
+		}
+		"03"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"burn_duration"			"4.0"		
+		}
+		"04"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"stun_duration"		"0.3"		
+		}
+		"05"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"burn_interval"			"1.0"		
+		}
+	}
+	
+	"Modifiers"
+	{		
+		"modifier_infernal_blade_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"Orb"
+			{
+				"Priority"	"DOTA_ORB_PRIORITY_ABILITY"
+				"CastAttack"	"1"
+			}
+
+			"OnOrbFire"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_doom_bringer/infernal_blade.lua"
+					"Function"		"CheckCooldown"
+					"particle"		"particles/units/heroes/hero_doom_bringer/doom_infernal_blade.vpcf"
+					//Name?
+					"sound"			"Hero_DoomBringer.InfernalBlade"
+				}
+			}
+
+			"OnOrbImpact"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_doom_bringer/infernal_blade.lua"
+					"Function"		"ApplyModifiers"
+				}
+			}
+		}
+	
+		"modifier_infernal_blade_damage"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%burn_duration"
+		
+			"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_infernal_blade_debuff.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
+			"OnCreated"
+			{
+				"FireEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_infernal_blade_impact.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"TARGET"
+				}
+				
+				//Name?
+				"FireSound"
+				{
+					"EffectName"	"Hero_DoomBringer.InfernalBlade_Target"
+					"Target"		"TARGET"
+				}
+			}
+		
+			"ThinkInterval"	"%burn_interval"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"  "TARGET"
+					"Type"    "DAMAGE_TYPE_MAGICAL"
+					"Damage"  "%damage"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_doom_bringer/infernal_blade.lua"
+					"Function"		"DealDamage"
+				}
+			}
+		}
+		
+		"modifier_infernal_blade_stun"
+		{
+			"IsHidden"	"1"
+			"Duration"	"%stun_duration"
+		
+			"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"	"follow_overhead"
+		
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}
