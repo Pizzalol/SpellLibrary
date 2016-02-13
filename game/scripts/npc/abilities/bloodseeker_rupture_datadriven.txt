@@ -1,3 +1,6 @@
+// Rewrite of the Bloodseeker Rupture ability
+// Author: YOLOSPAGHETTI
+// Date: February 13, 2016
 "bloodseeker_rupture_datadriven"
 {
 	// General
@@ -12,6 +15,13 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
 	"FightRecapLevel"				"2"
 	"AbilityTextureName"			"bloodseeker_rupture"
+	
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
+		"soundfile"			"sounds/weapons/hero/bloodseeker/rupture.vsnd"
+		"soundfile"			"sounds/weapons/hero/bloodseeker/rupture_cast.vsnd"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -50,7 +60,7 @@
 		"03"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"damage_cap_amount"			"200"
+			"damage_cap_amount"			"1300"
 		}
 		"04"
 		{
@@ -63,7 +73,50 @@
 			"cast_range_tooltip"		"1000"
 		}
 	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_rupture_datadriven"
+			"Target"	"TARGET"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Bloodseeker.Rupture"
+			"Target"		"TARGET"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_rupture_datadriven"
+		{
+			"Duration"	"%duration"
+			"IsDebuff"	"1"
+			
+			"EffectName"	"particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
+			"EffectAttachType"	"attach_origin"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_bloodseeker/rupture.lua"
+					"Function"		"DistanceCheck"
+				}
+			}
+			
+			"ThinkInterval"	"%damage_cap_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_bloodseeker/rupture.lua"
+					"Function"		"DistanceCheck"
+				}
+			}
+		}
+	}
 }
-
-
-
