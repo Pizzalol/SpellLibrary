@@ -1,3 +1,6 @@
+// Rewrite of the Bloodseeker Bloodrage ability
+// Author: YOLOSPAGHETTI
+// Date: February 13, 2016
 "bloodseeker_bloodrage_datadriven"
 {
 	// General
@@ -11,6 +14,12 @@
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"bloodseeker_bloodrage"
+	
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_bloodseeker/bloodseeker_bloodrage.vpcf"
+		"soundfile"			"sounds/weapons/hero/bloodseeker/rage.vsnd"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -49,13 +58,57 @@
 		"03"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"health_bonus_pct"			"25"
+			"health_bonus_pct"			"19 21 23 25"
 		}
-		"04"
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
 		{
-			"var_type"					"FIELD_INTEGER"
-			"health_bonus_creep_pct"	"25"
+			"ModifierName"	"modifier_blood_rage_datadriven"
+			"Target"		"TARGET"
+		}
+		
+		"FireSound"
+		{
+			"Target"					"TARGET"
+			"EffectName"				"Hero_Bloodseeker.Rage"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_blood_rage_datadriven"
+		{
+			"Duration"	"%duration"
+			
+			"EffectName"	"particles/units/heroes/hero_bloodseeker/bloodseeker_bloodrage.vpcf"
+			"EffectAttachType"	"attach_origin"
+			
+			"OnKill"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_bloodseeker/bloodrage.lua"
+					"Function"		"HealKiller"
+				}
+			}
+			
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_bloodseeker/bloodrage.lua"
+					"Function"		"HealKiller"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%damage_increase_pct"
+				"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%damage_increase_pct"
+			}
 		}
 	}
 }
-
