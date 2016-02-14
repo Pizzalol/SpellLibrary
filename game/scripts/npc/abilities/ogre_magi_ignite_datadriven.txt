@@ -1,9 +1,13 @@
+// Rewrite of the Ogre Magi Ignite ability
+// Author: YOLOSPAGHETTI
+// Date: February 14, 2016
+// Notes: Modifying cast range in a Datadriven ability with Lua scripts may turn out buggy
 "ogre_magi_ignite_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -11,10 +15,21 @@
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"ogre_magi_ignite"
 
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_ogre_magi/ogre_magi_ignite.vpcf"
+		"particle"		"particles/units/heroes/hero_ogre_magi/ogre_magi_ignite_debuff.vpcf"
+		"soundfile"		"sounds/weapons/hero/ogre_magi/ignite_cast.vsnd"
+		"soundfile"		"sounds/weapons/hero/ogre_magi/ignite_target.vsnd"
+	}
+	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.45"
+	//Dynamic Cast Range
+	"AbilityCastRange"				"1150"
+	"AbilityCastPoint"				"0"
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
@@ -55,7 +70,182 @@
 		{
 			"var_type"			"FIELD_FLOAT"
 			"multicast_delay"	"0.4"
+		}
+		"06"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"normal_range"		"700"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"multicast_range"		"1400"
+		}
+		//Based on Multicast Level
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"multicast_cast_range_bonus"		"150 300 450"
+		}
+		//Based on Multicast Level
+		"09"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"ignite_aoe"		"150 300 450"
+		}
+		"10"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"tick_rate"			"1.0"
+		}
+	}
+	
+	"OnSpellStart"
+	{		
+		"RunScript"
+		{
+			"ScriptFile"	"ignite.lua"
+			"Function"		"CheckDistance"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"FireSound"
+		{
+			"Target"		"TARGET"
+			"EffectName"	"Hero_OgreMagi.Ignite.Target"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"ignite.lua"
+			"Function"		"AOEEffect"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_animation"
+		{
+			"IsHidden"		"1"
+			"Duration"		"1"
+			
+			"OverrideAnimation" "ACT_DOTA_CAST_ABILITY_2"
+		}
+	
+		"modifier_check_distance"
+		{
+			"IsHidden"	"1"
+		
+			"OnUnitMoved"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"ignite.lua"
+					"Function"		"CheckDistance"
+				}
+			}
+			
+			"OnOrder"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_check_distance"
+					"Target"		"CASTER"
+				}
+			}
+		}
+	
+		"modifier_ignite_multicast"
+		{
+			"IsHidden"	"1"
+			
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"OnCreated"
+			{
+				"DelayedAction"
+				{
+					"Delay" "0.45"
+					"Action"
+					{
+						"TrackingProjectile"
+						{
+							"Target"           	"TARGET"
+							"EffectName"       	"particles/units/heroes/hero_ogre_magi/ogre_magi_ignite.vpcf"
+							"Dodgeable"        	"1"
+							"ProvidesVision"   	"0"
+							"MoveSpeed"        	"%projectile_speed"
+							"SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+							"TargetTypes"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+		
+						"FireSound"
+						{
+							"Target"		"CASTER"
+							"EffectName"	"Hero_OgreMagi.Ignite.Cast"
+						}
+					}	
+				}
+			}
 		}	
+	
+		"modifier_ignite_multicast_action"
+		{
+			"IsHidden"	"1"
+			
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"OnDestroy"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  				"CASTER"
+						"Radius" 				"%multicast_range"
+						"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						"MaxTargets" 			"1"
+						"Random" 				"1"
+					}
+	
+					"Action"
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"ignite.lua"
+							"Function"		"CheckTargets"
+						}
+					}
+				}
+			}
+		}
+		
+		"modifier_ignite_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+			
+			"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_ignite_debuff.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed_pct"
+			}
+			
+			"ThinkInterval"	"%tick_rate"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"  "TARGET"
+					"Type"    "DAMAGE_TYPE_MAGICAL"
+					"Damage"  "%burn_damage"
+				}
+			}
+		}
 	}
 }
-
