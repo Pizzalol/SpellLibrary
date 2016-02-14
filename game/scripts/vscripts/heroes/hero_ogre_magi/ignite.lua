@@ -72,7 +72,7 @@ function CheckDistance(keys)
 		end
 		-- This only runs if the caster is in range initially or after the second cast
 		-- Applies the animation and throws a projectile at the target
-		ability:ApplyDataDrivenModifier( caster, caster, "modifier_animation", {} )
+		caster:StartGesture(ACT_DOTA_CAST_ABILITY_2)
 		ability:ApplyDataDrivenModifier( caster, target, "modifier_ignite_multicast", {} )
 	else
 		-- Checks if this is the first run of this function (immediately after cast)
