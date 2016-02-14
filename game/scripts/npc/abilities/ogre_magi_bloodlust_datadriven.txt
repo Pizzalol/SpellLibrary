@@ -1,3 +1,7 @@
+// Rewrite of the Ogre Magi Bloodlust ability
+// Author: YOLOSPAGHETTI
+// Date: February 14, 2016
+// Notes: Autocast does nothing, Instant model scaling
 "ogre_magi_bloodlust_datadriven"
 {
 	// General
@@ -7,6 +11,17 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+	"AbilityTextureName"			"ogre_magi_bloodlust"
+	
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_cast.vpcf"
+		"particle"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+		"soundfile"		"sounds/weapons/hero/ogre_magi/bloodlust_cast.vsnd"
+		"soundfile"		"sounds/weapons/hero/ogre_magi/bloodlust_target.vsnd"
+	}
 
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -34,7 +49,7 @@
 		"02"
 		{
 			"var_type"			"FIELD_FLOAT"
-			"modelscale"		"25"
+			"model_scale"		"1.25"
 		}	
 
 		"03"
@@ -48,6 +63,106 @@
 			"var_type"				"FIELD_INTEGER"
 			"bonus_attack_speed"	"20 30 40 50"
 		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"multicast_radius"		"575"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_bloodlust_datadriven"
+			"Target"	"TARGET"
+		}
+		
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_cast.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Target"			"TARGET"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_OgreMagi.Bloodlust.Cast"
+			"Target"		"CASTER"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_bloodlust_multicast_action"
+		{
+			"IsHidden"	"1"
+			"Duration"	"0.01"
+			
+			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"OnCreated"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  				"CASTER"
+						"Radius" 				"%multicast_radius"
+						"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+						"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+						"MaxTargets" 			"1"
+						"Random" 				"1"
+					}
+
+					"Action"
+					{
+						"ApplyModifier"
+						{
+							"Target" 		"TARGET"
+							"ModifierName"	"modifier_bloodlust_datadriven"
+						}
+					}
+				}
+			}
+		}
+	
+		"modifier_bloodlust_datadriven"
+		{
+			"Duration"	"%duration"
+			
+			"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_ogre_magi/bloodlust.lua"
+					"Function"		"ChangeModel"
+				}
+				
+				"FireSound"
+				{
+					"EffectName"	"Hero_OgreMagi.Bloodlust.Target"
+					"Target"		"TARGET"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_ogre_magi/bloodlust.lua"
+					"Function"		"RevertModel"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movement_speed"
+			}
+		}
 	}
 }
-
