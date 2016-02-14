@@ -1,6 +1,7 @@
 // Rewrite of the Ogre Magi Multicast ability
 // Author: YOLOSPAGHETTI
 // Date: February 14, 2016
+// Notes: No working particles
 "ogre_magi_multicast_datadriven"
 {
 	// General
