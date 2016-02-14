@@ -14,7 +14,7 @@ function CooldownFreeze(keys)
 	local frozen_abilities = 0
 	
 	-- Adds spell duration to cooldowns of all of the target's abilities currently on cooldown
-	for i=0, 16 do
+	for i=0, 15 do
 		if target:GetAbilityByIndex(i) ~= null then
 			local cd = target:GetAbilityByIndex(i):GetCooldownTimeRemaining()
 			if cd > 0 then
