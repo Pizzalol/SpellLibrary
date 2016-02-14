@@ -1,7 +1,16 @@
 // Rewrite of the Invoker Sun Strike ability
 // Author: Pizzalol
-// Date: 20.04.2015.
-"invoker_sun_strike_datadriven"
+// Date: 14.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_invoker/sun_strike.lua
+//
+// KV files:
+// scripts/npc/abilities/invoker/exort_datadriven.txt
+"sun_strike_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -137,4 +146,3 @@
 		}
 	}
 }
-

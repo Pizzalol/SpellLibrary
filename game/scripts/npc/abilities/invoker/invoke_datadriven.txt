@@ -1,7 +1,30 @@
 // Rewrite of Invoke
 // Author: Rook, Pizzalol
-// Date: April 12, 2015
-"invoker_invoke_datadriven"
+// Date: 14.02.2016.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_invoker/invoke.lua
+//
+// KV files:
+// scripts/npc/abilities/invoker/quas_datadriven.txt
+// scripts/npc/abilities/invoker/wex_datadriven.txt
+// scripts/npc/abilities/invoker/exort_datadriven.txt
+// scripts/npc/abilities/invoker/cold_snap_datadriven.txt
+// scripts/npc/abilities/invoker/emp_datadriven.txt
+// scripts/npc/abilities/invoker/sun_strike_datadriven.txt
+// scripts/npc/abilities/invoker/ice_wall_datadriven.txt
+// scripts/npc/abilities/invoker/chaos_meteor_datadriven.txt
+// scripts/npc/abilities/invoker/alacrity_datadriven.txt
+// scripts/npc/abilities/invoker/ghost_walk_datadriven.txt
+// scripts/npc/abilities/invoker/forge_spirit_datadriven.txt
+// scripts/npc/abilities/invoker/tornado_datadriven.txt
+// scripts/npc/abilities/invoker/deafening_blast_datadriven.txt
+// scripts/npc/abilities/invoker/invoker_empty1_datadriven.txt
+// scripts/npc/abilities/invoker/invoker_empty2_datadriven.txt
+"invoke_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

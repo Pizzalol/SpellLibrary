@@ -6,8 +6,8 @@ function ForgeSpirit( keys )
 	local caster_location = caster:GetAbsOrigin() 
 	local player = caster:GetPlayerOwnerID()
 	local ability = keys.ability
-	local quas_level = caster:FindAbilityByName("invoker_quas_datadriven"):GetLevel() - 1
-	local exort_level = caster:FindAbilityByName("invoker_exort_datadriven"):GetLevel() - 1
+	local quas_level = caster:FindAbilityByName("quas_datadriven"):GetLevel() - 1
+	local exort_level = caster:FindAbilityByName("exort_datadriven"):GetLevel() - 1
 
 	-- Ability variables
 	local spirit_damage = ability:GetLevelSpecialValueFor("spirit_damage", exort_level) 

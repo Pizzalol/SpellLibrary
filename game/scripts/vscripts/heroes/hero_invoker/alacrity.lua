@@ -7,8 +7,8 @@ function Alacrity( keys )
 	local ability = keys.ability
 
 	-- Ability variables
-	local wex_level = caster:FindAbilityByName("invoker_wex_datadriven"):GetLevel() - 1
-	local exort_level = caster:FindAbilityByName("invoker_exort_datadriven"):GetLevel() - 1
+	local wex_level = caster:FindAbilityByName("wex_datadriven"):GetLevel() - 1
+	local exort_level = caster:FindAbilityByName("exort_datadriven"):GetLevel() - 1
 	local damage = ability:GetLevelSpecialValueFor("bonus_damage", exort_level) 
 	local attack_speed = ability:GetLevelSpecialValueFor("bonus_attack_speed", wex_level)
 	local damage_modifier = keys.damage_modifier

@@ -13,11 +13,23 @@
 	{
 		"override_hero" "npc_dota_hero_ancient_apparition"
 	
-		"AbilityLayout"	"4"
+		"AbilityLayout"	"6"
 	
-		"Ability1"	"inner_vitality_datadriven"
-		"Ability2"	"burning_spear_datadriven"
-		"Ability3"	"berserkers_blood_datadriven"
-		"Ability4"	"life_break_datadriven"
+		"Ability1"	"quas_datadriven"
+		"Ability2"	"wex_datadriven"
+		"Ability3"	"exort_datadriven"
+		"Ability4"	"invoker_empty1_datadriven"
+	    "Ability5"  "invoker_empty2_datadriven"
+	    "Ability6"  "invoke_datadriven"
+	    "Ability7"  "cold_snap_datadriven"
+	    "Ability8"  "emp_datadriven"
+	    "Ability9"  "sun_strike_datadriven"
+	    "Ability10"  "tornado_datadriven"
+	    "Ability11"  "ice_wall_datadriven"
+	    "Ability12"  "forge_spirit_datadriven"
+	    "Ability13"  "alacrity_datadriven"
+	    "Ability14"  "ghost_walk_datadriven"
+	    "Ability15"  "deafening_blast_datadriven"
+	    "Ability16"  "chaos_meteor_datadriven"
 	}
 }

@@ -1,7 +1,17 @@
 // Rewrite of one of Invoker's empty slots
 // Author: Rook
-// Date: April 02, 2015
-
+// Date: 14.02.2016.
+// Version: 6.86
+// Type: Datadriven
+// NOTES: This is a placeholder ability for the Invoke ability
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_invoker/invoke.lua
+//
+// KV files:
+// scripts/npc/abilities/invoker/invoke_datadriven.txt
+// scripts/npc/abilities/invoker/invoker_empty1_datadriven.txt
 "invoker_empty2_datadriven"
 {
 	// General

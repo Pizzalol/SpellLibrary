@@ -28,11 +28,11 @@ function Invoke( keys )
 		local num_wex_orbs = 0
 		local num_exort_orbs = 0
 		for i=1, 3, 1 do
-			if keys.caster.invoked_orbs[i]:GetName() == "invoker_quas_datadriven" then
+			if keys.caster.invoked_orbs[i]:GetName() == "quas_datadriven" then
 				num_quas_orbs = num_quas_orbs + 1
-			elseif keys.caster.invoked_orbs[i]:GetName() == "invoker_wex_datadriven" then
+			elseif keys.caster.invoked_orbs[i]:GetName() == "wex_datadriven" then
 				num_wex_orbs = num_wex_orbs + 1
-			elseif keys.caster.invoked_orbs[i]:GetName() == "invoker_exort_datadriven" then
+			elseif keys.caster.invoked_orbs[i]:GetName() == "exort_datadriven" then
 				num_exort_orbs = num_exort_orbs + 1
 			end
 		end
@@ -42,25 +42,25 @@ function Invoke( keys )
 
 		-- Determine the invoked spell depending on which orbs are in use.
 		if num_quas_orbs == 3 then
-			spell_to_be_invoked = "invoker_cold_snap_datadriven"
+			spell_to_be_invoked = "cold_snap_datadriven"
 		elseif num_quas_orbs == 2 and num_wex_orbs == 1 then
-			spell_to_be_invoked = "invoker_ghost_walk_datadriven"
+			spell_to_be_invoked = "ghost_walk_datadriven"
 		elseif num_quas_orbs == 2 and num_exort_orbs == 1 then
-			spell_to_be_invoked = "invoker_ice_wall_datadriven"
+			spell_to_be_invoked = "ice_wall_datadriven"
 		elseif num_wex_orbs == 3 then
-			spell_to_be_invoked = "invoker_emp_datadriven"
+			spell_to_be_invoked = "emp_datadriven"
 		elseif num_wex_orbs == 2 and num_quas_orbs == 1 then
-			spell_to_be_invoked = "invoker_tornado_datadriven"
+			spell_to_be_invoked = "tornado_datadriven"
 		elseif num_wex_orbs == 2 and num_exort_orbs == 1 then
-			spell_to_be_invoked = "invoker_alacrity_datadriven"
+			spell_to_be_invoked = "alacrity_datadriven"
 		elseif num_exort_orbs == 3 then
-			spell_to_be_invoked = "invoker_sun_strike_datadriven"
+			spell_to_be_invoked = "sun_strike_datadriven"
 		elseif num_exort_orbs == 2 and num_quas_orbs == 1 then
-			spell_to_be_invoked = "invoker_forge_spirit_datadriven"
+			spell_to_be_invoked = "forge_spirit_datadriven"
 		elseif num_exort_orbs == 2 and num_wex_orbs == 1 then
-			spell_to_be_invoked = "invoker_chaos_meteor_datadriven"
+			spell_to_be_invoked = "chaos_meteor_datadriven"
 		elseif num_quas_orbs == 1 and num_wex_orbs == 1 and num_exort_orbs == 1 then
-			spell_to_be_invoked = "invoker_deafening_blast_datadriven"
+			spell_to_be_invoked = "deafening_blast_datadriven"
 		end
 
 		-- If its only 1 max invoke spell then just swap abilities in the same slot

@@ -1,8 +1,20 @@
 // Rewrite of Chaos Meteor
 // Author: Rook
-// Date: April 06, 2015
-// Dependencies: npc_dummy_blank in npc_units_custom.txt (source found in scripts/npc/units in the SpellLibrary)
-"invoker_chaos_meteor_datadriven"
+// Date: 14.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_invoker/chaos_meteor.lua
+//
+// KV files:
+// scripts/npc/abilities/invoker/wex_datadriven.txt
+// scripts/npc/abilities/invoker/exort_datadriven.txt
+//
+// Unit files:
+// scripts/npc/units/npc_dummy_unit.txt
+"chaos_meteor_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

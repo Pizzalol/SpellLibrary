@@ -1,8 +1,22 @@
 // Rewrite of the Invoker Deafening Blast ability
 // Author: Pizzalol
-// Date: 21.04.2015.
-// NOTE: Knockback calculation is static
-"invoker_deafening_blast_datadriven"
+// Date: 14.02.2016.
+// Version: 6.84
+// Type: Datadriven
+// NOTES: Knockback calculation is static
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_invoker/deafening_blast.lua
+//
+// KV files:
+// scripts/npc/abilities/invoker/quas_datadriven.txt
+// scripts/npc/abilities/invoker/wex_datadriven.txt
+// scripts/npc/abilities/invoker/exort_datadriven.txt
+//
+// Unit files:
+// scripts/npc/units/npc_dummy_unit.txt
+"deafening_blast_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

@@ -1,12 +1,20 @@
 // Rewrite of Tornado
 // Author: Rook
-// Date: April 06, 2015
-// Dependencies: npc_dummy_blank in npc_units_custom.txt (source found in scripts/npc/units in the SpellLibrary)
-// Known bugs:
-//     Part of the invoker_tornado_child.vpcf particle (which appears when enemy units are hit by the tornado and cycloned)
-//         follows Invoker when it shouldn't, due to the particle properties.
-
-"invoker_tornado_datadriven"
+// Date: 14.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_invoker/tornado.lua
+//
+// KV files:
+// scripts/npc/abilities/invoker/quas_datadriven.txt
+// scripts/npc/abilities/invoker/wex_datadriven.txt
+//
+// Unit files:
+// scripts/npc/units/npc_dummy_unit.txt
+"tornado_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -202,4 +210,3 @@
 		}
 	}
 }
-

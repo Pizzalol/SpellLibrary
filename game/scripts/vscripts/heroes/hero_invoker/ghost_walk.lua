@@ -4,7 +4,7 @@
 function GhostWalkSelfSlow( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local wex_level = caster:FindAbilityByName("invoker_wex_datadriven"):GetLevel() - 1 -- Self slow depends on wex level
+	local wex_level = caster:FindAbilityByName("wex_datadriven"):GetLevel() - 1 -- Self slow depends on wex level
 
 	-- Ability variables
 	local self_slow = ability:GetLevelSpecialValueFor("self_slow", wex_level) 
@@ -30,7 +30,7 @@ function GhostWalkEnemySlow( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local quas_level = caster:FindAbilityByName("invoker_quas_datadriven"):GetLevel() - 1
+	local quas_level = caster:FindAbilityByName("quas_datadriven"):GetLevel() - 1
 
 	-- Ability variables
 	local enemy_slow = ability:GetLevelSpecialValueFor("enemy_slow", quas_level) 

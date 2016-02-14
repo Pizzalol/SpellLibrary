@@ -1,7 +1,16 @@
 // Rewrite of the Invoker Cold Snap ability
 // Author: Pizzalol
-// Date: 13.04.2015.
-"invoker_cold_snap_datadriven"
+// Date: 14.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_invoker/cold_snap.lua
+//
+// KV files:
+// scripts/npc/abilities/invoker/quas_datadriven.txt
+"cold_snap_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -167,4 +176,3 @@
 		}
 	}
 }
-

@@ -24,7 +24,7 @@ function invoker_ice_wall_datadriven_on_spell_start(keys)
 	ParticleManager:SetParticleControl(ice_wall_particle_effect_b, 1, target_point + vector_distance_from_center)
 	
 	--Ice Wall's duration is dependent on the level of Quas.
-	local quas_ability = keys.caster:FindAbilityByName("invoker_quas_datadriven")
+	local quas_ability = keys.caster:FindAbilityByName("quas_datadriven")
 	local ice_wall_duration = 0
 	local quas_level = 1
 	if quas_ability ~= nil then
@@ -33,7 +33,7 @@ function invoker_ice_wall_datadriven_on_spell_start(keys)
 	end
 	
 	--Ice Wall's damage per second is dependent on the level of Exort.
-	local exort_ability = keys.caster:FindAbilityByName("invoker_exort_datadriven")
+	local exort_ability = keys.caster:FindAbilityByName("exort_datadriven")
 	local exort_level = 1
 	local ice_wall_damage_per_second = 0
 	if exort_ability ~= nil then
@@ -56,8 +56,8 @@ function invoker_ice_wall_datadriven_on_spell_start(keys)
 		
 		--We give the ice wall dummy unit its own instance of Ice Wall both to more easily make it apply the correct intensity of slow (based on Quas' level)
 		--and because if Invoker uninvokes Ice Wall and the spell is removed from his toolbar, existing modifiers originating from that ability can start to error out.
-		ice_wall_unit:AddAbility("invoker_ice_wall_datadriven")
-		local ice_wall_unit_ability = ice_wall_unit:FindAbilityByName("invoker_ice_wall_datadriven")
+		ice_wall_unit:AddAbility("ice_wall_datadriven")
+		local ice_wall_unit_ability = ice_wall_unit:FindAbilityByName("ice_wall_datadriven")
 		if ice_wall_unit_ability ~= nil then
 			ice_wall_unit_ability:SetLevel(quas_level) --This ensures the correct slow intensity is applied.
 			ice_wall_unit_ability:ApplyDataDrivenModifier(ice_wall_unit, ice_wall_unit, "modifier_invoker_ice_wall_datadriven_unit_ability", {duration = -1})

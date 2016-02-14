@@ -26,7 +26,7 @@ function invoker_chaos_meteor_datadriven_on_spell_start(keys)
 	ParticleManager:SetParticleControl(chaos_meteor_fly_particle_effect, 2, Vector(1.3, 0, 0))
 	
 	--Chaos Meteor's main and burn damage is dependent on the level of Exort.  This values are stored now since leveling up Exort while the meteor is in midair should have no effect.
-	local exort_ability = keys.caster:FindAbilityByName("invoker_exort_datadriven")
+	local exort_ability = keys.caster:FindAbilityByName("exort_datadriven")
 	local main_damage = 0
 	local burn_dps = 0
 	if exort_ability ~= nil then
@@ -36,7 +36,7 @@ function invoker_chaos_meteor_datadriven_on_spell_start(keys)
 	end
 	
 	--Chaos Meteor's travel distance is dependent on the level of Wex.  This value is stored now since leveling up Wex while the meteor is in midair should have no effect.
-	local wex_ability = keys.caster:FindAbilityByName("invoker_wex_datadriven")
+	local wex_ability = keys.caster:FindAbilityByName("wex_datadriven")
 	local travel_distance = 0
 	if wex_ability ~= nil then
 		travel_distance = keys.ability:GetLevelSpecialValueFor("travel_distance", wex_ability:GetLevel() - 1)
@@ -48,8 +48,8 @@ function invoker_chaos_meteor_datadriven_on_spell_start(keys)
 		callback = function()
 			--Create a dummy unit will follow the path of the meteor, providing flying vision, sound, damage, etc.			
 			local chaos_meteor_dummy_unit = CreateUnitByName("npc_dummy_unit", target_point, false, nil, nil, keys.caster:GetTeam())
-			chaos_meteor_dummy_unit:AddAbility("invoker_chaos_meteor_datadriven")
-			local chaos_meteor_unit_ability = chaos_meteor_dummy_unit:FindAbilityByName("invoker_chaos_meteor_datadriven")
+			chaos_meteor_dummy_unit:AddAbility("chaos_meteor_datadriven")
+			local chaos_meteor_unit_ability = chaos_meteor_dummy_unit:FindAbilityByName("chaos_meteor_datadriven")
 			if chaos_meteor_unit_ability ~= nil then
 				chaos_meteor_unit_ability:SetLevel(1)
 				chaos_meteor_unit_ability:ApplyDataDrivenModifier(chaos_meteor_dummy_unit, chaos_meteor_dummy_unit, "modifier_invoker_chaos_meteor_datadriven_unit_ability", {duration = -1})

@@ -8,7 +8,7 @@ function deafening_blast_start( keys )
 	local target_point = keys.target_points[1]
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local quas_level = caster:FindAbilityByName("invoker_quas_datadriven"):GetLevel() - 1
+	local quas_level = caster:FindAbilityByName("quas_datadriven"):GetLevel() - 1
 
 	-- Ability and projectile variables
 	local knockback_duration = ability:GetLevelSpecialValueFor("knockback_duration", quas_level) + 0.1
@@ -80,9 +80,9 @@ function deafening_blast_hit( keys )
 	local caster_owner = caster:GetOwner() -- Hero
 	local target = keys.target
 	local ability = keys.ability
-	local owner_ability = caster_owner:FindAbilityByName("invoker_deafening_blast_datadriven")
-	local exort_level = caster_owner:FindAbilityByName("invoker_exort_datadriven"):GetLevel() - 1
-	local quas_level = caster_owner:FindAbilityByName("invoker_quas_datadriven"):GetLevel() - 1
+	local owner_ability = caster_owner:FindAbilityByName("deafening_blast_datadriven")
+	local exort_level = caster_owner:FindAbilityByName("exort_datadriven"):GetLevel() - 1
+	local quas_level = caster_owner:FindAbilityByName("quas_datadriven"):GetLevel() - 1
 
 	-- Ability variables
 	local damage = owner_ability:GetLevelSpecialValueFor("damage", exort_level) 
@@ -137,8 +137,8 @@ function deafening_blast_disarm( keys )
 	local target = keys.target
 	local caster = target.deafening_caster -- Hero
 	local ability = keys.ability -- Dummy ability
-	local owner_ability = caster:FindAbilityByName("invoker_deafening_blast_datadriven")
-	local wex_level = caster:FindAbilityByName("invoker_wex_datadriven"):GetLevel() - 1
+	local owner_ability = caster:FindAbilityByName("deafening_blast_datadriven")
+	local wex_level = caster:FindAbilityByName("wex_datadriven"):GetLevel() - 1
 
 	local disarm_duration = owner_ability:GetLevelSpecialValueFor("disarm_duration", wex_level)
 	local disarm_modifier = keys.disarm_modifier

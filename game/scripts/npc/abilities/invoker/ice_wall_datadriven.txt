@@ -1,8 +1,20 @@
 // Rewrite of Ice Wall
 // Author: Rook
-// Date: April 06, 2015
-// Dependencies: npc_dummy_blank in npc_units_custom.txt (source found in scripts/npc/units in the SpellLibrary)
-"invoker_ice_wall_datadriven"
+// Date: 14.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_invoker/ice_wall.lua
+//
+// KV files:
+// scripts/npc/abilities/invoker/quas_datadriven.txt
+// scripts/npc/abilities/invoker/exort_datadriven.txt
+//
+// Unit files:
+// scripts/npc/units/npc_dummy_unit.txt
+"ice_wall_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -205,4 +217,3 @@
 		}
 	}
 }
-

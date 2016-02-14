@@ -1,14 +1,19 @@
-// Rewrite of Wex
+// Rewrite of Exort
 // Author: Rook
-// Date: April 02, 2015
-
-"invoker_wex_datadriven"
+// Date: 14.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_invoker/exort.lua
+"exort_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	"AbilityTextureName" 			"invoker_wex"
+	"AbilityTextureName" 			"invoker_exort"
 	"MaxLevel"						"7"
 
 	// Stats
@@ -18,7 +23,7 @@
 	
 	"precache"
 	{
-		"particle"			"particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf"
+		"particle"			"particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf"
 	}
 	
 	// Special
@@ -28,17 +33,12 @@
 		"01"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"attack_speed_per_instance"	"2 4 6 8 10 12 14"
+			"bonus_damage_per_instance"	"3 6 9 12 15 18 21"
 		}
 		"02"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"move_speed_per_instance"	"1 2 3 4 5 6 7"
-		}
-		"03"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"bonus_agility"				"2 4 6 8 10 12 14"
+			"bonus_intelligence"		"2 4 6 8 10 12 14"
 		}
 	}
 	
@@ -46,8 +46,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"						"heroes/hero_invoker/wex.lua"
-			"Function"							"invoker_wex_datadriven_on_spell_start"
+			"ScriptFile"						"heroes/hero_invoker/exort.lua"
+			"Function"							"invoker_exort_datadriven_on_spell_start"
 		}
 	}
 	
@@ -55,7 +55,7 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"						"heroes/hero_invoker/wex.lua"
+			"ScriptFile"						"heroes/hero_invoker/exort.lua"
 			"Function"							"invoker_replace_orb_modifiers"
 		}
 	}
@@ -64,24 +64,24 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"						"heroes/hero_invoker/wex.lua"
+			"ScriptFile"						"heroes/hero_invoker/exort.lua"
 			"Function"							"invoker_replace_orb_modifiers"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"modifier_invoker_wex_datadriven"
+		"modifier_invoker_exort_datadriven"
 		{
 			"Passive"  			"1"
 			"IsHidden" 			"1"
 			
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agility"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
 			}
 		}
-		"modifier_invoker_wex_datadriven_instance"
+		"modifier_invoker_exort_datadriven_instance"
 		{
 			"Passive"  			"0"
 			"IsHidden" 			"0"
@@ -92,8 +92,7 @@
 			
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_speed_per_instance"
-				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_speed_per_instance"
+				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage_per_instance"
 			}
 		}
 	}

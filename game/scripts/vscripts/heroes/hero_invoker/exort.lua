@@ -82,18 +82,18 @@ function invoker_replace_orb_modifiers(keys)
 	for i=1, 3, 1 do
 		if keys.caster.invoked_orbs[i] ~= nil then
 			local orb_name = keys.caster.invoked_orbs[i]:GetName()
-			if orb_name == "invoker_quas_datadriven" then
-				local exort_ability = keys.caster:FindAbilityByName("invoker_quas_datadriven")
+			if orb_name == "quas_datadriven" then
+				local exort_ability = keys.caster:FindAbilityByName("quas_datadriven")
 				if exort_ability ~= nil then
 					exort_ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_invoker_quas_datadriven_instance", nil)
 				end
-			elseif orb_name == "invoker_wex_datadriven" then
-				local wex_ability = keys.caster:FindAbilityByName("invoker_wex_datadriven")
+			elseif orb_name == "wex_datadriven" then
+				local wex_ability = keys.caster:FindAbilityByName("wex_datadriven")
 				if wex_ability ~= nil then
 					wex_ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_invoker_wex_datadriven_instance", nil)
 				end
-			elseif orb_name == "invoker_exort_datadriven" then
-				local exort_ability = keys.caster:FindAbilityByName("invoker_exort_datadriven")
+			elseif orb_name == "exort_datadriven" then
+				local exort_ability = keys.caster:FindAbilityByName("exort_datadriven")
 				if exort_ability ~= nil then
 					exort_ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_invoker_exort_datadriven_instance", nil)
 				end

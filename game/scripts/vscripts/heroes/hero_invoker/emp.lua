@@ -8,7 +8,7 @@ function invoker_emp_datadriven_on_spell_start(keys)
 	local target_point = keys.target_points[1]
 
 	--The amount of mana to burn depends on Wex.
-	local wex_ability = keys.caster:FindAbilityByName("invoker_wex_datadriven")
+	local wex_ability = keys.caster:FindAbilityByName("wex_datadriven")
 	
 	if wex_ability ~= nil then		
 		local wex_level = wex_ability:GetLevel()		
@@ -16,8 +16,8 @@ function invoker_emp_datadriven_on_spell_start(keys)
 		
 		--Create a dummy unit that will provide sound and particles.
 		local emp_dummy_unit = CreateUnitByName("npc_dummy_unit", target_point, false, nil, nil, keys.caster:GetTeam())
-		emp_dummy_unit:AddAbility("invoker_emp_datadriven")
-		local emp_unit_ability = emp_dummy_unit:FindAbilityByName("invoker_emp_datadriven")
+		emp_dummy_unit:AddAbility("emp_datadriven")
+		local emp_unit_ability = emp_dummy_unit:FindAbilityByName("emp_datadriven")
 		if emp_unit_ability ~= nil then
 			emp_unit_ability:SetLevel(1)
 			emp_unit_ability:ApplyDataDrivenModifier(emp_dummy_unit, emp_dummy_unit, "modifier_invoker_emp_datadriven_unit_ability", {duration = -1})

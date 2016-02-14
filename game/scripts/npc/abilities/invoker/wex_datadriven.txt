@@ -1,14 +1,19 @@
-// Rewrite of Quas
+// Rewrite of Wex
 // Author: Rook
-// Date: April 02, 2015
-
-"invoker_quas_datadriven"
+// Date: 14.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_invoker/wex.lua
+"wex_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	"AbilityTextureName" 			"invoker_quas"
+	"AbilityTextureName" 			"invoker_wex"
 	"MaxLevel"						"7"
 
 	// Stats
@@ -18,7 +23,7 @@
 	
 	"precache"
 	{
-		"particle"			"particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf"
+		"particle"			"particles/units/heroes/hero_invoker/invoker_wex_orb.vpcf"
 	}
 	
 	// Special
@@ -27,13 +32,18 @@
 	{
 		"01"
 		{
-			"var_type"					"FIELD_FLOAT"
-			"health_regen_per_instance"	"1.0 2.0 3.0 4.0 5.0 6.0 7.0"
+			"var_type"					"FIELD_INTEGER"
+			"attack_speed_per_instance"	"2 4 6 8 10 12 14"
 		}
 		"02"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"bonus_strength"			"2 4 6 8 10 12 14"
+			"move_speed_per_instance"	"1 2 3 4 5 6 7"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_agility"				"2 4 6 8 10 12 14"
 		}
 	}
 	
@@ -41,8 +51,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"						"heroes/hero_invoker/quas.lua"
-			"Function"							"invoker_quas_datadriven_on_spell_start"
+			"ScriptFile"						"heroes/hero_invoker/wex.lua"
+			"Function"							"invoker_wex_datadriven_on_spell_start"
 		}
 	}
 	
@@ -50,7 +60,7 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"						"heroes/hero_invoker/quas.lua"
+			"ScriptFile"						"heroes/hero_invoker/wex.lua"
 			"Function"							"invoker_replace_orb_modifiers"
 		}
 	}
@@ -59,24 +69,24 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"						"heroes/hero_invoker/quas.lua"
+			"ScriptFile"						"heroes/hero_invoker/wex.lua"
 			"Function"							"invoker_replace_orb_modifiers"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"modifier_invoker_quas_datadriven"
+		"modifier_invoker_wex_datadriven"
 		{
 			"Passive"  			"1"
 			"IsHidden" 			"1"
 			
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agility"
 			}
 		}
-		"modifier_invoker_quas_datadriven_instance"
+		"modifier_invoker_wex_datadriven_instance"
 		{
 			"Passive"  			"0"
 			"IsHidden" 			"0"
@@ -87,7 +97,8 @@
 			
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen_per_instance"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_speed_per_instance"
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_speed_per_instance"
 			}
 		}
 	}

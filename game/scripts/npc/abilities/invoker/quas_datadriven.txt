@@ -1,14 +1,19 @@
-// Rewrite of Exort
+// Rewrite of Quas
 // Author: Rook
-// Date: April 02, 2015
-
-"invoker_exort_datadriven"
+// Date: 14.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_invoker/quas.lua
+"quas_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	"AbilityTextureName" 			"invoker_exort"
+	"AbilityTextureName" 			"invoker_quas"
 	"MaxLevel"						"7"
 
 	// Stats
@@ -18,7 +23,7 @@
 	
 	"precache"
 	{
-		"particle"			"particles/units/heroes/hero_invoker/invoker_exort_orb.vpcf"
+		"particle"			"particles/units/heroes/hero_invoker/invoker_quas_orb.vpcf"
 	}
 	
 	// Special
@@ -27,13 +32,13 @@
 	{
 		"01"
 		{
-			"var_type"					"FIELD_INTEGER"
-			"bonus_damage_per_instance"	"3 6 9 12 15 18 21"
+			"var_type"					"FIELD_FLOAT"
+			"health_regen_per_instance"	"1.0 2.0 3.0 4.0 5.0 6.0 7.0"
 		}
 		"02"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"bonus_intelligence"		"2 4 6 8 10 12 14"
+			"bonus_strength"			"2 4 6 8 10 12 14"
 		}
 	}
 	
@@ -41,8 +46,8 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"						"heroes/hero_invoker/exort.lua"
-			"Function"							"invoker_exort_datadriven_on_spell_start"
+			"ScriptFile"						"heroes/hero_invoker/quas.lua"
+			"Function"							"invoker_quas_datadriven_on_spell_start"
 		}
 	}
 	
@@ -50,7 +55,7 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"						"heroes/hero_invoker/exort.lua"
+			"ScriptFile"						"heroes/hero_invoker/quas.lua"
 			"Function"							"invoker_replace_orb_modifiers"
 		}
 	}
@@ -59,24 +64,24 @@
 	{
 		"RunScript"
 		{
-			"ScriptFile"						"heroes/hero_invoker/exort.lua"
+			"ScriptFile"						"heroes/hero_invoker/quas.lua"
 			"Function"							"invoker_replace_orb_modifiers"
 		}
 	}
 	
 	"Modifiers"
 	{
-		"modifier_invoker_exort_datadriven"
+		"modifier_invoker_quas_datadriven"
 		{
 			"Passive"  			"1"
 			"IsHidden" 			"1"
 			
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
 			}
 		}
-		"modifier_invoker_exort_datadriven_instance"
+		"modifier_invoker_quas_datadriven_instance"
 		{
 			"Passive"  			"0"
 			"IsHidden" 			"0"
@@ -87,7 +92,7 @@
 			
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%bonus_damage_per_instance"
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen_per_instance"
 			}
 		}
 	}

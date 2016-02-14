@@ -14,7 +14,7 @@ function invoker_tornado_datadriven_on_spell_start(keys)
 	local caster_origin = keys.caster:GetAbsOrigin()
 
 	--Tornado's travel distance and lift duration are dependent on the level of Quas.
-	local quas_ability = keys.caster:FindAbilityByName("invoker_quas_datadriven")
+	local quas_ability = keys.caster:FindAbilityByName("quas_datadriven")
 	local quas_level = 1
 	local tornado_travel_distance = 0
 	local tornado_lift_duration = 0
@@ -25,7 +25,7 @@ function invoker_tornado_datadriven_on_spell_start(keys)
 	end
 	
 	--Tornado's landing damage bonus is dependent on the level of Wex.
-	local wex_ability = keys.caster:FindAbilityByName("invoker_wex_datadriven")
+	local wex_ability = keys.caster:FindAbilityByName("wex_datadriven")
 	local wex_level = 1
 	local tornado_landing_damage_bonus = 0
 	if wex_ability ~= nil then
@@ -34,11 +34,11 @@ function invoker_tornado_datadriven_on_spell_start(keys)
 	end
 
 	--Create a dummy unit that will follow the path of the tornado, providing flying vision and sound.
-	--Its invoker_tornado_datadriven ability also applies the cyclone modifier to hit enemy units, since if Invoker uninvokes Tornado,
+	--Its tornado_datadriven ability also applies the cyclone modifier to hit enemy units, since if Invoker uninvokes Tornado,
 	--existing modifiers linked to that ability can cause errors.
 	local tornado_dummy_unit = CreateUnitByName("npc_dummy_unit", caster_origin, false, nil, nil, keys.caster:GetTeam())
-	tornado_dummy_unit:AddAbility("invoker_tornado_datadriven")
-	local emp_unit_ability = tornado_dummy_unit:FindAbilityByName("invoker_tornado_datadriven")
+	tornado_dummy_unit:AddAbility("tornado_datadriven")
+	local emp_unit_ability = tornado_dummy_unit:FindAbilityByName("tornado_datadriven")
 	if emp_unit_ability ~= nil then
 		emp_unit_ability:SetLevel(1)
 		emp_unit_ability:ApplyDataDrivenModifier(tornado_dummy_unit, tornado_dummy_unit, "modifier_invoker_tornado_datadriven_unit_ability", {duration = -1})
@@ -221,7 +221,7 @@ function modifier_invoker_tornado_datadriven_cyclone_on_created(keys)
 	if keys.caster.invoker_tornado_lift_duration ~= nil then
 		duration = keys.caster.invoker_tornado_lift_duration
 	else
-		local quas_ability = keys.caster:FindAbilityByName("invoker_quas_datadriven")
+		local quas_ability = keys.caster:FindAbilityByName("quas_datadriven")
 		if quas_ability ~= nil then
 			duration = keys.ability:GetLevelSpecialValueFor("duration", quas_ability:GetLevel() - 1)
 		end
