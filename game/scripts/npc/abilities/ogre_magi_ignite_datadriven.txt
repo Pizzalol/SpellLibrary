@@ -126,14 +126,6 @@
 	
 	"Modifiers"
 	{
-		"modifier_animation"
-		{
-			"IsHidden"		"1"
-			"Duration"		"1"
-			
-			"OverrideAnimation" "ACT_DOTA_CAST_ABILITY_2"
-		}
-	
 		"modifier_check_distance"
 		{
 			"IsHidden"	"1"
