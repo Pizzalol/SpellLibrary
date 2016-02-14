@@ -1,7 +1,13 @@
 // Rewrite of the Faceless Void Backtrack ability
 // Author: Pizzalol
-// Date: 06.01.2015.
-"faceless_void_backtrack_datadriven"
+// Date: 14.02.2016.
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_faceless_void/backtrack.lua
+"backtrack_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -71,4 +77,3 @@
 		}			
 	}
 }
-

@@ -1,7 +1,13 @@
 // Rewrite of the Faceless Void Time Dilation ability
 // Author: YOLOSPAGHETTI
-// Date: February 7, 2016
-"faceless_void_time_dilation_datadriven"
+// Date: 07.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_faceless_void/time_dilation.lua
+"time_dilation_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

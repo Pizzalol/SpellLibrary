@@ -1,8 +1,9 @@
 // Rewrite of the Faceless Void Time Lock ability
 // Author: Pizzalol
-// Date: 06.01.2015.
-// Changed 14.01.2015 - Reason: Added Timelock-Chronos Particle (Noya)
-"faceless_void_time_lock_datadriven"
+// Date: 14.02.2016.
+// Version: 6.86
+// Type: Datadriven
+"time_lock_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -124,4 +125,3 @@
 		}
 	}
 }
-

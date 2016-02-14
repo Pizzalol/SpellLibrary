@@ -15,8 +15,8 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"smoke_screen_datadriven"
-		"Ability2"	"blink_strike_datadriven"
+		"Ability1"	"time_walk_datadriven"
+		"Ability2"	"time_dilation_datadriven"
 		"Ability3"	"cloak_and_dagger_datadriven"
 		"Ability4"	"tricks_of_the_trade_datadriven"
 	}

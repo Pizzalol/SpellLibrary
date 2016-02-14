@@ -1,9 +1,13 @@
 // Rewrite of the Faceless Void Time Walk ability
-// Author: Pizzalol
-//Edit: YOLOSPAGHETTI
-// Date: February 7, 2016
-// Notes: Particles not perfect
-"faceless_void_time_walk_datadriven"
+// Author: Pizzalol, YOLOSPAGHETTI
+// Date: 07.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_faceless_void/time_walk.lua
+"time_walk_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

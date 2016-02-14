@@ -3569,714 +3569,6 @@
 		}
 	}
 	
-	// Rewrite of the Faceless Void Backtrack ability
-	// Author: Pizzalol
-	// Date: 06.01.2015.
-	"faceless_void_backtrack_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"faceless_void_backtrack"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"dodge_chance_pct"		"10 15 20 25"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_backtrack_datadriven"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-	
-				"ThinkInterval"		"0.03"
-	
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/backtrack.lua"
-						"Function"		"BacktrackHealth"
-					}
-				}
-	
-				"OnTakeDamage"
-				{
-					"Random"
-					{
-						"Chance"	"%dodge_chance_pct"
-	
-						"OnSuccess"
-						{
-							"FireEffect"
-							{
-								"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf"
-								"EffectAttachType"	"follow_origin"
-								"Target"		"CASTER"
-							}
-	
-							"RunScript"
-							{
-								"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/backtrack.lua"
-								"Function"		"BacktrackHeal"
-							}
-						}
-					}
-				}
-			}			
-		}
-	}
-	
-	// Rewrite of the Faceless Void Chronosphere ability
-	// Author: Pizzalol
-	// Date: 26.09.2015.
-	"faceless_void_chronosphere_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"faceless_void_chronosphere"
-		"AOERadius"						"%radius"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
-			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
-			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.35 0.35 0.35"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"130.0 110.0 90.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 175 200"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportBonus"		"50"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"425"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0 4.5 5.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_scepter"		"4.0 5.0 6.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown_scepter"		"60.0 60.0 60.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"475"
-			}
-			// Extra
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"aura_interval"			"0.1"
-			}
-			// If you want the Chronosphere to ignore Faceless Void then keep it at 1 otherwise set it to 0
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ignore_void"			"1"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1000"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"		"Hero_FacelessVoid.Chronosphere"
-				"Target"			"CASTER"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"		"scripts/vscripts/heroes/hero_faceless_void/chronosphere.lua"
-				"Function"			"Chronosphere"
-				"Target"			"POINT"
-				"dummy_aura"		"modifier_chronosphere_aura_datadriven"
-			}
-		}
-	
-		"Modifiers"
-		{
-			// Cosmetic
-			"modifier_chronosphere_tooltip_datadriven"
-			{
-				"IsDebuff"		"1"
-				"IsPurgable"	"0"
-			}
-	
-			"modifier_chronosphere_aura_datadriven"
-			{
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
-						"EffectAttachType"	"attach_origin"
-						"Target"		"TARGET"
-	
-						"ControlPoints"
-						{
-							"01"	"%radius %radius 0"
-						}
-					}
-				}
-				
-				"ThinkInterval"		"%aura_interval"
-	
-				"OnIntervalThink"
-				{
-					"ActOnTargets"
-					{
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Types"		"DOTA_UNIT_TARGET_ALL"
-							"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-							"Radius"	"%radius"
-						}
-	
-						"Action"
-						{
-							"RunScript"
-							{
-								"ScriptFile"		"scripts/vscripts/heroes/hero_faceless_void/chronosphere.lua"
-								"Function"			"ChronosphereAura"
-								"Target"			"TARGET"
-								"aura_modifier"		"modifier_chronosphere_datadriven"
-							}
-						}
-					}
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				
-					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
-			"modifier_chronosphere_datadriven"
-			{
-				"IsHidden"	"1"
-	
-				"OnCreated"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_chronosphere_tooltip_datadriven"
-						"Target"		"TARGET"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_chronosphere_tooltip_datadriven"
-						"Target"		"TARGET"
-					}
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_FROZEN"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Faceless Void Time Dilation ability
-	// Author: YOLOSPAGHETTI
-	// Date: February 7, 2016
-	"faceless_void_time_dilation_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"			"faceless_void_time_dilation"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"sounds/weapons/hero/faceless_void/time_dilation_cast.vsnd"
-			"soundfile"			"sounds/weapons/hero/faceless_void/time_dilation_target.vsnd"
-			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_timedialate.vpcf"
-			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_dialatedebuf.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.1 0.1 0.1 0.1"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"36.0 30.0 24.0 18.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"6 8 10 12"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"725"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"move_speed_slow"		"-7.0 -8.0 -9.0 -10.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attack_speed_slow"		"-7 -8 -9 -10"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			// Name?
-			//"FireSound"
-			//{
-				//"EffectName"	"Hero_FacelessVoid.TimeDilation"
-				//"Target"		"CASTER"
-			//}
-	
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_faceless_void/faceless_void_timedialate.vpcf"
-				"EffectAttachType" 	"follow_origin"
-				"EffectRadius"		"%radius"
-				"Target" 			"CASTER"
-				"ControlPoints"
-				{
-					"00"	"0 0 0"
-					"01" "%radius %radius %radius"
-				}
-			}
-			
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"  				"CASTER"
-					"Radius" 				"%radius"
-					"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 				"DOTA_UNIT_TARGET_HERO"
-				}
-	
-				"Action"
-				{
-					"ApplyModifier"
-					{
-						"Target" 		"TARGET"
-						"ModifierName"	"modifier_time_dilation_cooldown_freeze"
-					}
-					
-					"RunScript"
-					{
-						"ScriptFile"		"heroes/hero_faceless_void/time_dilation.lua"
-						"Function"			"CooldownFreeze"
-					}
-				}
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_time_dilation_cooldown_freeze"
-			{
-				"IsDebuff"	"1"
-				"Duration"	"%duration"
-				
-				"EffectName"		"particles/units/heroes/hero_faceless_void/faceless_void_dialatedebuf.vpcf"
-				"EffectAttachType"	"follow_origin"
-				
-				// Name?
-				//"FireSound"
-				//{
-					//"EffectName"	"Hero_FacelessVoid.TimeDilation_Target"
-					//"Target"		"CASTER"
-				//}
-				
-				"OnAbilityExecuted"
-				{
-					"DelayedAction"
-	                {
-	                    "Delay" "0.01"
-	                    "Action"
-	                    {
-	                        "RunScript"
-							{
-								"ScriptFile"		"heroes/hero_faceless_void/time_dilation.lua"
-								"Function"			"SlowCooldown"
-							}
-						}
-					}
-				}
-			}
-			
-			"modifier_time_dilation_slow"
-			{
-				"IsHidden" "1"
-				"IsDebuff" "1"
-				
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_slow"
-				}
-			
-			}
-		}
-	}
-	// Rewrite of the Faceless Void Time Lock ability
-	// Author: Pizzalol
-	// Date: 06.01.2015.
-	// Changed 14.01.2015 - Reason: Added Timelock-Chronos Particle (Noya)
-	"faceless_void_time_lock_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityTextureName"			"faceless_void_time_lock"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
-			"particle"			"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-			"particle"			"particles/generic_gameplay/generic_stunned.vpcf"
-		}
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportBonus"		"25"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_creep"		"2.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"chance_pct"			"10 15 20 25"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"40 50 60 70"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_time_lock_datadriven"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-	
-				"OnAttackLanded"
-				{
-					"Random"
-					{
-						"Chance"	"%chance_pct"
-						"PseudoRandom"	"DOTA_PSEUDO_RANDOM_FACELESS_BASH"
-	
-						"OnSuccess"
-						{
-							"FireSound"
-							{
-								"EffectName"	"Hero_FacelessVoid.TimeLockImpact"
-								"Target"		"TARGET"
-							}
-	
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_time_lock_stun_datadriven"
-								"Duration"		"%duration"
-								"Target"
-								{
-									"Center"	"TARGET"
-									"Types"		"DOTA_UNIT_TARGET_HERO"
-								}
-							}
-	
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_time_lock_stun_datadriven"
-								"Duration"		"%duration_creep"
-								"Target"
-								{
-									"Center"	"TARGET"
-									"Types"		"DOTA_UNIT_TARGET_BASIC"
-								}
-							}
-	
-							"Damage"
-							{
-								"Target"	"TARGET"
-								"Type"		"DAMAGE_TYPE_MAGICAL"
-								"Damage"	"%bonus_damage"
-							}
-						}
-					}
-				}
-			}
-	
-			"modifier_time_lock_stun_datadriven"
-			{
-				"IsDebuff"	"1"
-	
-				"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
-				"EffectAttachType"	"follow_overhead"
-	
-				"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-				"StatusEffectPriority"	"1"
-	
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_FROZEN"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Faceless Void Time Walk ability
-	// Author: Pizzalol
-	//Edit: YOLOSPAGHETTI
-	// Date: February 7, 2016
-	// Notes: Particles not perfect
-	"faceless_void_time_walk_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"			"faceless_void_time_walk"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
-			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf"
-			"particle"  		"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf"
-			"particle"  		"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"625"
-		"AbilityCastPoint"				"0.2 0.2 0.2 0.2"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"24.0 18.0 12.0 6.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"40"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.25"	// mostly about the blink
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"3000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"backtrack_time"			"2.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"		"625"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_FacelessVoid.TimeWalk"
-				"Target"		"CASTER"
-			}
-			
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf"
-				"EffectAttachType"  "start_at_customorigin"
-	
-				"ControlPointEntities"
-				{
-					"CASTER"	"attach_origin"
-				}
-	
-				"ControlPoints"
-				{
-					"01"	"POINT"
-				}
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_faceless_void/time_walk.lua"
-				"Function"		"TimeWalk"
-				"Target"		"POINT"
-				"modifier"		"modifier_time_walk_datadriven"
-			}
-	
-			"ApplyMotionController"
-			// For this: gfycat.com/BraveHideousGiantschnauzer -> check: bit.ly/1KWulqA
-			{
-			    "Target"
-			    {
-			    	"Center"	"CASTER"
-			    	"Flags"     "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-			    }
-			    "ScriptFile"    "heroes/hero_faceless_void/time_walk.lua"
-			    "HorizontalControlFunction" "TimeWalkMotion"  
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_faceless_void/time_walk.lua"
-				"Function"		"RemoveDamage"
-				"BacktrackTime"	"%backtrack_time"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_damage_checker_datadriven"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-				
-				"OnTakeDamage"
-				{	
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_faceless_void/time_walk.lua"
-						"Function"		"CalculateDamage"
-						"DamageTaken"	"%attack_damage"
-						"BacktrackTime"	"%backtrack_time"
-					}
-				}
-			}
-		
-			"modifier_time_walk_datadriven"
-			{
-				"IsHidden"	"1"
-	
-				// Use this if you want to achieve a "time walk" effect for heroes other than faceless
-				"EffectName"		"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
-				"EffectAttachType"	"follow_origin"
-				
-				"States"
-				{
-					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
 	"forest_troll_high_priest_heal_datadriven"
 	{
 		// General
@@ -23804,6 +23096,10 @@
 		}
 	}
 	
+	// Rewrite of the Ogre Magi Bloodlust ability
+	// Author: YOLOSPAGHETTI
+	// Date: February 14, 2016
+	// Notes: Autocast does nothing, Instant model scaling
 	"ogre_magi_bloodlust_datadriven"
 	{
 		// General
@@ -23813,6 +23109,17 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"AbilityTextureName"			"ogre_magi_bloodlust"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_cast.vpcf"
+			"particle"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+			"soundfile"		"sounds/weapons/hero/ogre_magi/bloodlust_cast.vsnd"
+			"soundfile"		"sounds/weapons/hero/ogre_magi/bloodlust_target.vsnd"
+		}
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -23840,7 +23147,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"modelscale"		"25"
+				"model_scale"		"1.25"
 			}	
 	
 			"03"
@@ -23854,9 +23161,112 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_attack_speed"	"20 30 40 50"
 			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"multicast_radius"		"575"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_bloodlust_datadriven"
+				"Target"	"TARGET"
+			}
+			
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_cast.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"TARGET"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"	"Hero_OgreMagi.Bloodlust.Cast"
+				"Target"		"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_bloodlust_multicast_action"
+			{
+				"IsHidden"	"1"
+				"Duration"	"0.01"
+				
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"OnCreated"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  				"CASTER"
+							"Radius" 				"%multicast_radius"
+							"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+							"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+							"MaxTargets" 			"1"
+							"Random" 				"1"
+						}
+	
+						"Action"
+						{
+							"ApplyModifier"
+							{
+								"Target" 		"TARGET"
+								"ModifierName"	"modifier_bloodlust_datadriven"
+							}
+						}
+					}
+				}
+			}
+		
+			"modifier_bloodlust_datadriven"
+			{
+				"Duration"	"%duration"
+				
+				"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_ogre_magi/bloodlust.lua"
+						"Function"		"ChangeModel"
+					}
+					
+					"FireSound"
+					{
+						"EffectName"	"Hero_OgreMagi.Bloodlust.Target"
+						"Target"		"TARGET"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_ogre_magi/bloodlust.lua"
+						"Function"		"RevertModel"
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movement_speed"
+				}
+			}
 		}
 	}
-	
+	// Rewrite of the Ogre Magi Fireblast ability
+	// Author: YOLOSPAGHETTI
+	// Date: February 14, 2016
 	"ogre_magi_fireblast_datadriven"
 	{
 		// General
@@ -23870,9 +23280,20 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"ogre_magi_fireblast"
 	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"		"particles/generic_gameplay/generic_stunned.vpcf"
+			"particle"		"particles/units/heroes/hero_ogre_magi/ogre_magi_fireblast.vpcf"
+			"particle"		"particles/units/heroes/hero_ogre_magi/ogre_magi_fireblast_cast.vpcf"
+			"soundfile"		"sounds/weapons/hero/ogre_magi/fireblast_cast.vsnd"
+			"soundfile"		"sounds/weapons/hero/ogre_magi/fireblast_target.vsnd"
+		}
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
+		"AbilityCastRange"				"475"
 		"AbilityCastPoint"				"0.45"
 		
 		// Time		
@@ -23884,7 +23305,7 @@
 		"AbilityManaCost"				"75 85 95 105"
 		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"60 120 180 240"
+		"AbilityDamage"					"55 110 165 220"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -23901,9 +23322,209 @@
 				"var_type"			"FIELD_FLOAT"
 				"multicast_delay"	"0.4"
 			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"multicast_delay3"	"0.8"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"multicast_delay4"	"1.2"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_fireblast_datadriven"
+				"Target"	"TARGET"
+			}
+			
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_fireblast.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"Target"			"TARGET"
+			}
+			
+			"FireSound"
+			{
+				"EffectName"	"Hero_OgreMagi.Fireblast.Cast"
+				"Target"		"CASTER"
+			}
+			
+			"Damage"
+			{
+				"Target"  "TARGET"
+				"Type"    "DAMAGE_TYPE_MAGICAL"
+				"Damage"  "%AbilityDamage"
+			}
+		}
+		
+		"Modifiers"
+		{		
+			"modifier_fireblast_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%stun_duration"
+				
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_fireblast_cast.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"TARGET"
+					}
+				
+					"FireSound"
+					{
+						"EffectName"	"Hero_OgreMagi.Fireblast.Target"
+						"Target"		"TARGET"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_fireblast_multicast2"
+			{
+				"IsDebuff"	"1"
+				
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				
+				"OnCreated"
+				{
+					"DelayedAction"
+					{
+						"Delay" "%multicast_delay"
+						"Action"
+						{
+							"Damage"
+							{
+								"Target"  "TARGET"
+								"Type"    "DAMAGE_TYPE_MAGICAL"
+								"Damage"  "%AbilityDamage"
+							}
+					
+							"FireEffect"
+							{
+								"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_fireblast_cast.vpcf"
+								"EffectAttachType"	"follow_overhead"
+								"Target"			"TARGET"
+							}
+							
+							"FireSound"
+							{
+								"EffectName"	"Hero_OgreMagi.Fireblast.Target"
+								"Target"		"TARGET"
+							}
+						}
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_fireblast_multicast3"
+			{
+				"IsDebuff"	"1"
+				
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				
+				"OnCreated"
+				{
+					"DelayedAction"
+					{
+						"Delay" "%multicast_delay3"
+						"Action"
+						{
+							"Damage"
+							{
+								"Target"  "TARGET"
+								"Type"    "DAMAGE_TYPE_MAGICAL"
+								"Damage"  "%AbilityDamage"
+							}
+					
+							"FireEffect"
+							{
+								"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_fireblast_cast.vpcf"
+								"EffectAttachType"	"follow_overhead"
+								"Target"			"TARGET"
+							}
+							
+							"FireSound"
+							{
+								"EffectName"	"Hero_OgreMagi.Fireblast.Target"
+								"Target"		"TARGET"
+							}
+						}
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_fireblast_multicast4"
+			{
+				"IsDebuff"	"1"
+				
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				
+				"OnCreated"
+				{
+					"DelayedAction"
+					{
+						"Delay" "%multicast_delay4"
+						"Action"
+						{
+							"Damage"
+							{
+								"Target"  "TARGET"
+								"Type"    "DAMAGE_TYPE_MAGICAL"
+								"Damage"  "%AbilityDamage"
+							}
+					
+							"FireEffect"
+							{
+								"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_fireblast_cast.vpcf"
+								"EffectAttachType"	"follow_overhead"
+								"Target"			"TARGET"
+							}
+							
+							"FireSound"
+							{
+								"EffectName"	"Hero_OgreMagi.Fireblast.Target"
+								"Target"		"TARGET"
+							}
+						}
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
-	
 	"ogre_magi_frost_armor_datadriven"
 	{
 		// General
@@ -23956,12 +23577,16 @@
 		}
 	}
 	
+	// Rewrite of the Ogre Magi Ignite ability
+	// Author: YOLOSPAGHETTI
+	// Date: February 14, 2016
+	// Notes: Modifying cast range in a Datadriven ability with Lua scripts may turn out buggy
 	"ogre_magi_ignite_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -23969,10 +23594,21 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"ogre_magi_ignite"
 	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_ogre_magi/ogre_magi_ignite.vpcf"
+			"particle"		"particles/units/heroes/hero_ogre_magi/ogre_magi_ignite_debuff.vpcf"
+			"soundfile"		"sounds/weapons/hero/ogre_magi/ignite_cast.vsnd"
+			"soundfile"		"sounds/weapons/hero/ogre_magi/ignite_target.vsnd"
+		}
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.45"
+		//Dynamic Cast Range
+		"AbilityCastRange"				"1150"
+		"AbilityCastPoint"				"0"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -24013,10 +23649,181 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"multicast_delay"	"0.4"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"normal_range"		"700"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"multicast_range"		"1400"
+			}
+			//Based on Multicast Level
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"multicast_cast_range_bonus"		"150 300 450"
+			}
+			//Based on Multicast Level
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"ignite_aoe"		"150 300 450"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"tick_rate"			"1.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"	"ignite.lua"
+				"Function"		"CheckDistance"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"FireSound"
+			{
+				"Target"		"TARGET"
+				"EffectName"	"Hero_OgreMagi.Ignite.Target"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"	"ignite.lua"
+				"Function"		"AOEEffect"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_check_distance"
+			{
+				"IsHidden"	"1"
+			
+				"OnUnitMoved"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"ignite.lua"
+						"Function"		"CheckDistance"
+					}
+				}
+				
+				"OnOrder"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_check_distance"
+						"Target"		"CASTER"
+					}
+				}
+			}
+		
+			"modifier_ignite_multicast"
+			{
+				"IsHidden"	"1"
+				
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"OnCreated"
+				{
+					"DelayedAction"
+					{
+						"Delay" "0.45"
+						"Action"
+						{
+							"TrackingProjectile"
+							{
+								"Target"           	"TARGET"
+								"EffectName"       	"particles/units/heroes/hero_ogre_magi/ogre_magi_ignite.vpcf"
+								"Dodgeable"        	"1"
+								"ProvidesVision"   	"0"
+								"MoveSpeed"        	"%projectile_speed"
+								"SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+								"TargetTypes"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							}
+			
+							"FireSound"
+							{
+								"Target"		"CASTER"
+								"EffectName"	"Hero_OgreMagi.Ignite.Cast"
+							}
+						}	
+					}
+				}
 			}	
+		
+			"modifier_ignite_multicast_action"
+			{
+				"IsHidden"	"1"
+				
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"OnDestroy"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  				"CASTER"
+							"Radius" 				"%multicast_range"
+							"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							"MaxTargets" 			"1"
+							"Random" 				"1"
+						}
+		
+						"Action"
+						{
+							"RunScript"
+							{
+								"ScriptFile"	"ignite.lua"
+								"Function"		"CheckTargets"
+							}
+						}
+					}
+				}
+			}
+			
+			"modifier_ignite_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+				
+				"EffectName"		"particles/units/heroes/hero_ogre_magi/ogre_magi_ignite_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed_pct"
+				}
+				
+				"ThinkInterval"	"%tick_rate"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"  "TARGET"
+						"Type"    "DAMAGE_TYPE_MAGICAL"
+						"Damage"  "%burn_damage"
+					}
+				}
+			}
 		}
 	}
-	
+	// Rewrite of the Ogre Magi Multicast ability
+	// Author: YOLOSPAGHETTI
+	// Date: February 14, 2016
+	// Notes: No working particles
 	"ogre_magi_multicast_datadriven"
 	{
 		// General
@@ -24024,7 +23831,18 @@
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"			"ogre_magi_multicast"
 	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_ogre_magi/ogre_magi_multicast.vpcf"
+			"soundfile"		"sounds/weapons/hero/ogre_magi/multicast01.vsnd"
+			"soundfile"		"sounds/weapons/hero/ogre_magi/multicast02.vsnd"
+			"soundfile"		"sounds/weapons/hero/ogre_magi/multicast03.vsnd"
+		}
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -24032,19 +23850,19 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"multicast_2_times"		"0.4 0.5 0.6"
+				"multicast_2_times"		"40 50 60"
 			}
 	
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"multicast_3_times"		"0 0.2 0.25"
+				"multicast_3_times"		"0 20 25"
 			}
 	
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"multicast_4_times"		"0 0 0.125"
+				"multicast_4_times"		"0 0 12.5"
 			}
 	
 			"04"
@@ -24061,51 +23879,46 @@
 	
 			"06"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"ignite_aoe"		"150 300 450"
+				"var_type"				"FIELD_FLOAT"
+				"bloodlust_cooldown"	"5 10 15"
 			}
 			
 			"07"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"ignite_cast_range"	"150 300 450"
-			}
-	
-			"08"
-			{
 				"var_type"				"FIELD_FLOAT"
-				"bloodlust_aoe"			"575"
+				"ignite_range"			"85 100 115"
 			}
-	
-			"09"
+		}
+		
+		"Modifiers"
+		{
+			"modifier_multicast_datadriven"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"bloodlust_cooldown"	"5 10 15"
+				"Passive"	"1"
+				"IsHidden"	"1"
+				
+				"OnAbilityExecuted"
+				{
+					"DelayedAction"
+					{
+						"Delay" "0.01"
+						"Action"
+						{
+							"RunScript"
+							{
+								"ScriptFile"		"heroes/hero_ogre_magi/multicast.lua"
+								"Function"			"Multicast"
+								"particle"			"particles/units/heroes/hero_ogre_magi/ogre_magi_multicast.vpcf"
+								"sound1"			"Hero_OgreMagi.Fireblast.x1"
+								"sound2"			"Hero_OgreMagi.Fireblast.x2"
+								"sound3"			"Hero_OgreMagi.Fireblast.x3"
+							}
+						}
+					}
+				}
 			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"multicast_2_times_tooltip"		"40 50 60"
-			}
-	
-			"11"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"multicast_3_times_tooltip"		"0 20 25"
-			}
-	
-			"12"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"multicast_4_times_tooltip"		"0 0 12.5"
-			}
-			
-	
-	
 		}
 	}
-	
-	
 	"ogre_magi_unrefined_fireblast_datadriven"
 	{
 		// General
@@ -63931,6 +63744,739 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%creep_damage_penalty"
+				}
+			}
+		}
+	}
+	// Rewrite of the Faceless Void Backtrack ability
+	// Author: Pizzalol
+	// Date: 14.02.2016.
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_faceless_void/backtrack.lua
+	"backtrack_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"faceless_void_backtrack"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dodge_chance_pct"		"10 15 20 25"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_backtrack_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"ThinkInterval"		"0.03"
+	
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/backtrack.lua"
+						"Function"		"BacktrackHealth"
+					}
+				}
+	
+				"OnTakeDamage"
+				{
+					"Random"
+					{
+						"Chance"	"%dodge_chance_pct"
+	
+						"OnSuccess"
+						{
+							"FireEffect"
+							{
+								"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf"
+								"EffectAttachType"	"follow_origin"
+								"Target"		"CASTER"
+							}
+	
+							"RunScript"
+							{
+								"ScriptFile"	"scripts/vscripts/heroes/hero_faceless_void/backtrack.lua"
+								"Function"		"BacktrackHeal"
+							}
+						}
+					}
+				}
+			}			
+		}
+	}
+	// Rewrite of the Faceless Void Chronosphere ability
+	// Author: Pizzalol
+	// Date: 14.02.2016.
+	// Version: 6.86
+	// Type: Datadriven/Lua
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_faceless_void/chronosphere.lua
+	// scripts/vscripts/heroes/hero_faceless_void/modifiers/modifier_chronosphere_speed_lua.lua
+	//
+	// Unit files:
+	// scripts/npc/units/npc_dummy_unit.txt
+	"chronosphere_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"faceless_void_chronosphere"
+		"AOERadius"						"%radius"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.35 0.35 0.35"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"130.0 115.0 100.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 225 300"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportBonus"		"50"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"425"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0 4.5 5.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_scepter"		"4.0 5.0 6.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cooldown_scepter"		"60.0 60.0 60.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"475"
+			}
+			// Extra
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aura_interval"			"0.1"
+			}
+			// If you want the Chronosphere to ignore Faceless Void then keep it at 1 otherwise set it to 0
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ignore_void"			"1"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1000"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_FacelessVoid.Chronosphere"
+				"Target"			"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/heroes/hero_faceless_void/chronosphere.lua"
+				"Function"			"Chronosphere"
+				"Target"			"POINT"
+				"dummy_aura"		"modifier_chronosphere_aura_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			// Cosmetic
+			"modifier_chronosphere_tooltip_datadriven"
+			{
+				"IsDebuff"		"1"
+				"IsPurgable"	"0"
+			}
+	
+			"modifier_chronosphere_aura_datadriven"
+			{
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+						"EffectAttachType"	"attach_origin"
+						"Target"		"TARGET"
+	
+						"ControlPoints"
+						{
+							"01"	"%radius %radius 0"
+						}
+					}
+				}
+				
+				"ThinkInterval"		"%aura_interval"
+	
+				"OnIntervalThink"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Types"		"DOTA_UNIT_TARGET_ALL"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+							"Radius"	"%radius"
+						}
+	
+						"Action"
+						{
+							"RunScript"
+							{
+								"ScriptFile"		"scripts/vscripts/heroes/hero_faceless_void/chronosphere.lua"
+								"Function"			"ChronosphereAura"
+								"Target"			"TARGET"
+								"aura_modifier"		"modifier_chronosphere_datadriven"
+							}
+						}
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR" 	"MODIFIER_STATE_VALUE_ENABLED"				
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" 	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_chronosphere_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_chronosphere_tooltip_datadriven"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_chronosphere_tooltip_datadriven"
+						"Target"		"TARGET"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FROZEN"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	
+	// Rewrite of the Faceless Void Time Dilation ability
+	// Author: YOLOSPAGHETTI
+	// Date: 07.02.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_faceless_void/time_dilation.lua
+	"time_dilation_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"faceless_void_time_dilation"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"sounds/weapons/hero/faceless_void/time_dilation_cast.vsnd"
+			"soundfile"			"sounds/weapons/hero/faceless_void/time_dilation_target.vsnd"
+			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_timedialate.vpcf"
+			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_dialatedebuf.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.1 0.1 0.1 0.1"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"36.0 30.0 24.0 18.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"6 8 10 12"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"725"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"move_speed_slow"		"-7.0 -8.0 -9.0 -10.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_speed_slow"		"-7 -8 -9 -10"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			// Name?
+			//"FireSound"
+			//{
+				//"EffectName"	"Hero_FacelessVoid.TimeDilation"
+				//"Target"		"CASTER"
+			//}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_faceless_void/faceless_void_timedialate.vpcf"
+				"EffectAttachType" 	"follow_origin"
+				"EffectRadius"		"%radius"
+				"Target" 			"CASTER"
+				"ControlPoints"
+				{
+					"00"	"0 0 0"
+					"01" "%radius %radius %radius"
+				}
+			}
+			
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  				"CASTER"
+					"Radius" 				"%radius"
+					"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 				"DOTA_UNIT_TARGET_HERO"
+				}
+	
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"Target" 		"TARGET"
+						"ModifierName"	"modifier_time_dilation_cooldown_freeze"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_faceless_void/time_dilation.lua"
+						"Function"			"CooldownFreeze"
+					}
+				}
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_time_dilation_cooldown_freeze"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+				
+				"EffectName"		"particles/units/heroes/hero_faceless_void/faceless_void_dialatedebuf.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				// Name?
+				//"FireSound"
+				//{
+					//"EffectName"	"Hero_FacelessVoid.TimeDilation_Target"
+					//"Target"		"CASTER"
+				//}
+				
+				"OnAbilityExecuted"
+				{
+					"DelayedAction"
+	                {
+	                    "Delay" "0.01"
+	                    "Action"
+	                    {
+	                        "RunScript"
+							{
+								"ScriptFile"		"heroes/hero_faceless_void/time_dilation.lua"
+								"Function"			"SlowCooldown"
+							}
+						}
+					}
+				}
+			}
+			
+			"modifier_time_dilation_slow"
+			{
+				"IsHidden" "1"
+				"IsDebuff" "1"
+				
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_slow"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_slow"
+				}
+			
+			}
+		}
+	}
+	// Rewrite of the Faceless Void Time Lock ability
+	// Author: Pizzalol
+	// Date: 14.02.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	"time_lock_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"faceless_void_time_lock"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+			"particle"			"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+			"particle"			"particles/generic_gameplay/generic_stunned.vpcf"
+		}
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportBonus"		"25"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"1.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_creep"		"2.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chance_pct"			"10 15 20 25"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"40 50 60 70"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_time_lock_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"	"%chance_pct"
+						"PseudoRandom"	"DOTA_PSEUDO_RANDOM_FACELESS_BASH"
+	
+						"OnSuccess"
+						{
+							"FireSound"
+							{
+								"EffectName"	"Hero_FacelessVoid.TimeLockImpact"
+								"Target"		"TARGET"
+							}
+	
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_time_lock_stun_datadriven"
+								"Duration"		"%duration"
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Types"		"DOTA_UNIT_TARGET_HERO"
+								}
+							}
+	
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_time_lock_stun_datadriven"
+								"Duration"		"%duration_creep"
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Types"		"DOTA_UNIT_TARGET_BASIC"
+								}
+							}
+	
+							"Damage"
+							{
+								"Target"	"TARGET"
+								"Type"		"DAMAGE_TYPE_MAGICAL"
+								"Damage"	"%bonus_damage"
+							}
+						}
+					}
+				}
+			}
+	
+			"modifier_time_lock_stun_datadriven"
+			{
+				"IsDebuff"	"1"
+	
+				"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+				"StatusEffectPriority"	"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FROZEN"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	// Rewrite of the Faceless Void Time Walk ability
+	// Author: Pizzalol, YOLOSPAGHETTI
+	// Date: 07.02.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_faceless_void/time_walk.lua
+	"time_walk_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"faceless_void_time_walk"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+			"particle"			"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf"
+			"particle"  		"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf"
+			"particle"  		"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"625"
+		"AbilityCastPoint"				"0.2 0.2 0.2 0.2"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"24.0 18.0 12.0 6.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"40"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.25"	// mostly about the blink
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"3000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"backtrack_time"			"2.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"		"625"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_FacelessVoid.TimeWalk"
+				"Target"		"CASTER"
+			}
+			
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+	
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_origin"
+				}
+	
+				"ControlPoints"
+				{
+					"01"	"POINT"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_faceless_void/time_walk.lua"
+				"Function"		"TimeWalk"
+				"Target"		"POINT"
+				"modifier"		"modifier_time_walk_datadriven"
+			}
+	
+			"ApplyMotionController"
+			// For this: gfycat.com/BraveHideousGiantschnauzer -> check: bit.ly/1KWulqA
+			{
+			    "Target"
+			    {
+			    	"Center"	"CASTER"
+			    	"Flags"     "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+			    }
+			    "ScriptFile"    "heroes/hero_faceless_void/time_walk.lua"
+			    "HorizontalControlFunction" "TimeWalkMotion"  
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_faceless_void/time_walk.lua"
+				"Function"		"RemoveDamage"
+				"BacktrackTime"	"%backtrack_time"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_damage_checker_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				
+				"OnTakeDamage"
+				{	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_faceless_void/time_walk.lua"
+						"Function"		"CalculateDamage"
+						"DamageTaken"	"%attack_damage"
+						"BacktrackTime"	"%backtrack_time"
+					}
+				}
+			}
+		
+			"modifier_time_walk_datadriven"
+			{
+				"IsHidden"	"1"
+	
+				// Use this if you want to achieve a "time walk" effect for heroes other than faceless
+				"EffectName"		"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
