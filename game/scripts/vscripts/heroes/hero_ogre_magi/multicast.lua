@@ -9,7 +9,7 @@ function Multicast(keys)
 	local two_times = ability:GetLevelSpecialValueFor( "multicast_2_times", ability:GetLevel() - 1 )
 	local three_times = ability:GetLevelSpecialValueFor( "multicast_3_times", ability:GetLevel() - 1 )
 	local four_times = ability:GetLevelSpecialValueFor( "multicast_4_times", ability:GetLevel() - 1 )
-	local rand = math.random(0,100)
+	local rand = math.random(1,100)
 	local multicast = 1
 	
 	-- Determines the mulicast multiplier
@@ -22,7 +22,7 @@ function Multicast(keys)
 	end
 	
 	-- Finds the ability that caused the event trigger by checking if the cooldown is equal to the full cooldown
-	for i=0, 16 do
+	for i=0, 15 do
 		if caster:GetAbilityByIndex(i) ~= null then
 			local cd = caster:GetAbilityByIndex(i):GetCooldownTimeRemaining()
 			local full_cd = caster:GetAbilityByIndex(i):GetCooldown(caster:GetAbilityByIndex(i):GetLevel()-1)
