@@ -1,3 +1,6 @@
+// Rewrite of the Ogre Magi Multicast ability
+// Author: YOLOSPAGHETTI
+// Date: February 14, 2016
 "ogre_magi_multicast_datadriven"
 {
 	// General
@@ -5,7 +8,18 @@
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityTextureName"			"ogre_magi_multicast"
 
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_ogre_magi/ogre_magi_multicast.vpcf"
+		"soundfile"		"sounds/weapons/hero/ogre_magi/multicast01.vsnd"
+		"soundfile"		"sounds/weapons/hero/ogre_magi/multicast02.vsnd"
+		"soundfile"		"sounds/weapons/hero/ogre_magi/multicast03.vsnd"
+	}
+	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
@@ -13,19 +27,19 @@
 		"01"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"multicast_2_times"		"0.4 0.5 0.6"
+			"multicast_2_times"		"40 50 60"
 		}
 
 		"02"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"multicast_3_times"		"0 0.2 0.25"
+			"multicast_3_times"		"0 20 25"
 		}
 
 		"03"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"multicast_4_times"		"0 0 0.125"
+			"multicast_4_times"		"0 0 12.5"
 		}
 
 		"04"
@@ -42,48 +56,43 @@
 
 		"06"
 		{
-			"var_type"			"FIELD_FLOAT"
-			"ignite_aoe"		"150 300 450"
+			"var_type"				"FIELD_FLOAT"
+			"bloodlust_cooldown"	"5 10 15"
 		}
 		
 		"07"
 		{
-			"var_type"			"FIELD_INTEGER"
-			"ignite_cast_range"	"150 300 450"
-		}
-
-		"08"
-		{
 			"var_type"				"FIELD_FLOAT"
-			"bloodlust_aoe"			"575"
+			"ignite_range"			"85 100 115"
 		}
-
-		"09"
+	}
+	
+	"Modifiers"
+	{
+		"modifier_multicast_datadriven"
 		{
-			"var_type"				"FIELD_FLOAT"
-			"bloodlust_cooldown"	"5 10 15"
+			"Passive"	"1"
+			"IsHidden"	"1"
+			
+			"OnAbilityExecuted"
+			{
+				"DelayedAction"
+				{
+					"Delay" "0.01"
+					"Action"
+					{
+						"RunScript"
+						{
+							"ScriptFile"		"heroes/hero_ogre_magi/multicast.lua"
+							"Function"			"Multicast"
+							"particle"			"particles/units/heroes/hero_ogre_magi/ogre_magi_multicast.vpcf"
+							"sound1"			"Hero_OgreMagi.Fireblast.x1"
+							"sound2"			"Hero_OgreMagi.Fireblast.x2"
+							"sound3"			"Hero_OgreMagi.Fireblast.x3"
+						}
+					}
+				}
+			}
 		}
-		"10"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"multicast_2_times_tooltip"		"40 50 60"
-		}
-
-		"11"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"multicast_3_times_tooltip"		"0 20 25"
-		}
-
-		"12"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"multicast_4_times_tooltip"		"0 0 12.5"
-		}
-		
-
-
 	}
 }
-
-
