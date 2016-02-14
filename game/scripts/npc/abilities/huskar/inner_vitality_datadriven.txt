@@ -1,7 +1,14 @@
 // Rewrite of the Huskar Inner Vitality ability
 // Author: Bude
-// Date: 30.09.2015
-"huskar_inner_vitality_datadriven"
+// Date: 14.02.2016.
+// Version: 6.86
+// Type: Datadriven/Lua
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_huskar/inner_vitality.lua
+// scripts/vscripts/heroes/hero_huskar/modifiers/modifier_inner_vitality_lua.lua
+"inner_vitality_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -107,4 +114,4 @@
 			"Target"		"TARGET"
 		}
 	}
-}	
+}

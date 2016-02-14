@@ -1,4 +1,4 @@
-LinkLuaModifier( "modifier_huskar_inner_vitality_lua" , "heroes/hero_huskar/modifiers/modifier_inner_vitality.lua" , LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_huskar_inner_vitality_lua" , "heroes/hero_huskar/modifiers/modifier_inner_vitality_lua.lua" , LUA_MODIFIER_MOTION_NONE )
 
 --[[
     Author: Bude

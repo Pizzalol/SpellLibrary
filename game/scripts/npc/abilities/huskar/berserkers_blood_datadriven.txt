@@ -1,9 +1,16 @@
 // Rewrite of the Huskar Berserkers Blood ability
 // Author: Bude
-// Date: 30.09.2015
-// NOTE: Particles and Effects do not work at all
+// Date: 14.02.2016.
+// Version: 6.85
+// Type: Datadriven/Lua
+// NOTES: Particles and Effects do not work at all
 //		 Model size increase is probably inaccurate and also not very smooth
-"huskar_berserkers_blood_datadriven"
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_huskar/berserkers_blood.lua
+// scripts/vscripts/heroes/hero_huskar/modifiers/modifier_berserkers_blood_lua.lua
+"berserkers_blood_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -23,7 +30,7 @@
 		"02"
 		{
 			"var_type"						"FIELD_INTEGER"
-			"resistance_per_stack"			"4 5 6 7"
+			"resistance_per_stack"			"3 4 5 6"
 		}
 		"03"
 		{
@@ -68,4 +75,3 @@
 		}
 	}
 }
-

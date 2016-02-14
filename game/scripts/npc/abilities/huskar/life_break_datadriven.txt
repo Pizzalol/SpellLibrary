@@ -1,8 +1,14 @@
 // Rewrite of the Huskar Life Break ability
 // Author: Bude
-// Date: 30.09.2015
-// NOTE: Modifier that keeps huskar from attacking does not get removed if Life Break is cancelled prematurely
-"huskar_life_break_datadriven"
+// Date: 14.02.2016.
+// Version: 6.86
+// Type: Datadriven
+// NOTES: Modifier that keeps huskar from attacking does not get removed if Life Break is cancelled prematurely
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_huskar/life_break.lua
+"life_break_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -183,4 +189,3 @@
 		}
 	}
 }
-

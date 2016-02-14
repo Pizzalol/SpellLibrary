@@ -1,4 +1,4 @@
-LinkLuaModifier( "modifier_huskar_berserkers_blood_lua" , "heroes/hero_huskar/modifiers/modifier_berserkers_blood.lua" , LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_huskar_berserkers_blood_lua" , "heroes/hero_huskar/modifiers/modifier_berserkers_blood_lua.lua" , LUA_MODIFIER_MOTION_NONE )
 
 --[[
     Author: Bude

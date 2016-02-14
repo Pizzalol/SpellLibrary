@@ -6508,546 +6508,6 @@
 		}
 	}
 	
-	// Rewrite of the Huskar Berserkers Blood ability
-	// Author: Bude
-	// Date: 30.09.2015
-	// NOTE: Particles and Effects do not work at all
-	//		 Model size increase is probably inaccurate and also not very smooth
-	"huskar_berserkers_blood_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"huskar_berserkers_blood"
-				
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"attack_speed_bonus_per_stack"	"14 16 18 20"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"resistance_per_stack"			"4 5 6 7"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"model_size_per_stack"			"0.02"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"hurt_health_ceiling"			"0.87"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"hurt_health_floor"				"0.03"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"hurt_health_step"				"0.07"
-			}
-		}
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"  "particles/units/heroes/hero_huskar/huskar_berserker_blood_hero_effect.vpcf"
-			"particle"  "particles/units/heroes/hero_huskar/huskar_berserkers_blood_glow.vpcf"
-		}
-	
-		//Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnUpgrade"
-		{
-			//ApplyLuaModifier 
-			"RunScript"
-			{
-				"ModifierName"	"modifier_huskar_berserkers_blood_lua"
-				"ScriptFile"	"heroes/hero_huskar/berserkers_blood.lua"
-				"Function"		"ApplyLuaModifier"
-			}
-		}
-	}
-	
-	// Rewrite of the Huskar Burning Spear ability
-	// Author: Bude
-	// Date: 30.09.2015
-	"huskar_burning_spear_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"			"huskar_burning_spear"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"450"
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0 0.0 0.0 0.0"
-		"AbilityDuration"				"8"
-	
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"5 10 15 20"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0 0 0 0"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_cost"			"15"
-			}
-		}
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
-			"particle"  "particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf"
-			"particle"  "particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
-		}
-	
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-	
-		"Modifiers"
-		{
-			// Modifier to handle OrbEffect-Behaviour
-			"modifier_burning_spear_datadriven"
-			{
-				// Will always stay on the caster once the ability is upgraded
-				// Hidden
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsBuff"			"0"
-				"IsDebuff"			"0"
-				"IsPurgable"		"0"
-	
-				// OrbEffect-Behaviour
-				"Orb"
-				{
-	                "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
-	                "ProjectileName"    "particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf"
-	                "CastAttack"        "1"
-	            }
-	
-	            // HealthCost is handled here
-				"OnOrbFire"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Huskar.Burning_Spear.Cast"
-						"Target"		"CASTER"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_huskar/burning_spear.lua"
-						"Function"		"DoHealthCost"
-					}
-				}
-	
-				// Apply the hidden dot modifier to the target here
-				// Call IncreaseStackCount to keep stack count on modifier_burning_spear_datadriven_debuff_counter updated
-				"OnOrbImpact"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Huskar.Burning_Spear"
-						"Target"		"TARGET"
-					}
-	
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_burning_spear_datadriven_debuff"
-						"Target" 		"TARGET"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_huskar/burning_spear.lua"
-						"Function"		"IncreaseStackCount"
-	
-						"modifier_counter_name"		"modifier_burning_spear_datadriven_debuff_counter"
-					}
-				}
-			}
-	
-			// Modifier to show stack count
-			// Only visual
-			"modifier_burning_spear_datadriven_debuff_counter"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsBuff"			"0"
-				"IsDebuff"			"1"
-				"IsPurgable"		"0"
-			}
-	
-			// Modifier to handle the dot
-			"modifier_burning_spear_datadriven_debuff"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsBuff"			"0"
-				"IsDebuff"			"1"
-				"IsPurgable"		"0"
-				"Duration"			"%AbilityDuration"
-	
-				// Allow multiple instances of this modifier on the target
-				// Modifiers stack additivly (dmg) with independent durations
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-				"EffectName"		"particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
-				"EffectAttachType"	"follow_origin"
-				
-				"ThinkInterval"  "1.0"
-				"OnIntervalThink"
-				{
-					// Damage of %AbilityDamage every %ThinkInterval seconds
-					"Damage"
-					{
-						"Target"		"TARGET"
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Damage"		"%AbilityDamage"
-					}
-				}
-	
-				// Updating visual modifier's stack count
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_huskar/burning_spear.lua"
-						"Function"		"DecreaseStackCount"
-	
-						"modifier_counter_name"		"modifier_burning_spear_datadriven_debuff_counter"
-					}
-				}
-			}
-		}
-	}
-	// Rewrite of the Huskar Inner Vitality ability
-	// Author: Bude
-	// Date: 30.09.2015
-	"huskar_inner_vitality_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName"			"huskar_inner_vitality"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22 18 14 10"
-		"AbilityDuration"				"16 16 16 16"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"170 170 170 170"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.0"	// already gets credit for the healing
-	
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"heal"							"10"
-			}
-			"02"
-			{	
-				"var_type"						"FIELD_FLOAT"
-				"attrib_bonus"					"0.05 0.10 0.15 0.20"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"hurt_attrib_bonus"				"0.20 0.40 0.60 0.80"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"hurt_percent"					"0.40"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tooltip_attrib_bonus"			"5 10 15 20"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tooltip_hurt_attrib_bonus"		"20 45 60 80"
-			}
-		}
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
-			"particle"  "particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf"
-			"particle"	"particles/units/heroes/hero_huskar/huskar_inner_vitality_cast.vpcf"
-		}
-	
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Huskar.Inner_Vitality"
-				"Target"		"TARGET"
-			}
-	
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_huskar/huskar_inner_vitality_cast.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"            "CASTER"
-	
-				"ControlPointEntities"
-				{
-					"CASTER"	"attach_origin"
-					"CASTER"	"attach_origin"
-				}
-			}
-	
-			//ApplyLuaModifier
-			"RunScript"
-			{
-				"ModifierName"	"modifier_huskar_inner_vitality_lua"
-				"ScriptFile"	"heroes/hero_huskar/inner_vitality.lua"
-				"Function"		"ApplyLuaModifier"
-				"Target"		"TARGET"
-			}
-		}
-	}	
-	// Rewrite of the Huskar Life Break ability
-	// Author: Bude
-	// Date: 30.09.2015
-	// NOTE: Modifier that keeps huskar from attacking does not get removed if Life Break is cancelled prematurely
-	"huskar_life_break_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"		
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"huskar_life_break"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0 0 0"		
-	
-		// Cast Range
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDuration"				"4 5 6"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"health_cost_percent"				"0.35"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"health_damage"						"0.35"
-			}
-			"03"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"health_damage_scepter"				"0.65"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"charge_speed"						"1000"
-			}
-			"05"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_damage"				"35"
-			}
-			"06"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_cost_percent"		"35"
-			}
-			"07"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"movespeed_slow"					"-40 -50 -60"
-			}
-			"08"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"slow_duration_tooltip"				"4 5 6"
-			}
-			"09"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_damage_scepter"		"65"
-			}
-			"10"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"Costoldown_scepter"				"4"
-			}
-			"11"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"max_distance"						"1400"
-			}
-		}
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile" "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
-			"particle"  "particles/units/heroes/hero_huskar/huskar_life_break.vpcf"
-			"particle"  "particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf"
-			"particles" "particles/status_fx/status_effect_huskar_lifebreak.vpcf"
-		}
-	
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_huskar_life_break_datadriven"
-				"Target" 		"CASTER"
-				"Duration"		"1"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_huskar/life_break.lua"
-				"Function"		"LifeBreak"
-				"ModifierName"			"modifier_huskar_life_break_datadriven"
-			    "ModifierName_Debuff"	"modifier_huskar_life_break_datadriven_debuff"
-			}
-	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Huskar.Life_Break"
-				"Target" 		"CASTER"
-			}
-	
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"            "CASTER"
-			}
-	
-			"ApplyMotionController"
-			// For this: gfycat.com/BraveHideousGiantschnauzer -> check: bit.ly/1KWulqA
-			{
-				"Target"		"CASTER"
-			    "ScriptFile"    "heroes/hero_huskar/life_break.lua"
-			    "HorizontalControlFunction" "JumpHorizonal"
-			    "VerticalControlFunction" 	"JumpVertical"
-			}
-		}
-	
-		"Modifiers"
-		{	
-			"modifier_huskar_life_break_datadriven"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
-				"Duration"			"1"
-	
-				"States"
-				{
-					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
-			"modifier_huskar_life_break_datadriven_debuff"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"1"
-				"Duration"			"%AbilityDuration"
-	
-				"StatusEffectName"		"particles/status_fx/status_effect_huskar_lifebreak.vpcf"
-				"StatusEffectPriority"	"15"	//What this
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movespeed_slow"
-				}
-			}
-		}
-	}
-	
 	// Rewrite of the Invoker Alacrity ability
 	// Author: Pizzalol
 	// Date: 12.04.2015.
@@ -64477,6 +63937,570 @@
 				"States"
 				{
 					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	// Rewrite of the Huskar Berserkers Blood ability
+	// Author: Bude
+	// Date: 14.02.2016.
+	// Version: 6.85
+	// Type: Datadriven/Lua
+	// NOTES: Particles and Effects do not work at all
+	//		 Model size increase is probably inaccurate and also not very smooth
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_huskar/berserkers_blood.lua
+	// scripts/vscripts/heroes/hero_huskar/modifiers/modifier_berserkers_blood_lua.lua
+	"berserkers_blood_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"huskar_berserkers_blood"
+				
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"attack_speed_bonus_per_stack"	"14 16 18 20"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"resistance_per_stack"			"3 4 5 6"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"model_size_per_stack"			"0.02"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"hurt_health_ceiling"			"0.87"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"hurt_health_floor"				"0.03"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"hurt_health_step"				"0.07"
+			}
+		}
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_huskar/huskar_berserker_blood_hero_effect.vpcf"
+			"particle"  "particles/units/heroes/hero_huskar/huskar_berserkers_blood_glow.vpcf"
+		}
+	
+		//Datadriven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnUpgrade"
+		{
+			//ApplyLuaModifier 
+			"RunScript"
+			{
+				"ModifierName"	"modifier_huskar_berserkers_blood_lua"
+				"ScriptFile"	"heroes/hero_huskar/berserkers_blood.lua"
+				"Function"		"ApplyLuaModifier"
+			}
+		}
+	}
+	// Rewrite of the Huskar Burning Spear ability
+	// Author: Bude
+	// Date: 14.02.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_huskar/burning_spear.lua
+	"burning_spear_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"huskar_burning_spear"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"450"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0 0.0"
+		"AbilityDuration"				"8"
+	
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"5 10 15 20"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0 0 0 0"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_cost"			"15"
+			}
+		}
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
+			"particle"  "particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf"
+			"particle"  "particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
+		}
+	
+		// Datadriven
+		//-------------------------------------------------------------------------------------------------------------
+	
+		"Modifiers"
+		{
+			// Modifier to handle OrbEffect-Behaviour
+			"modifier_burning_spear_datadriven"
+			{
+				// Will always stay on the caster once the ability is upgraded
+				// Hidden
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+	
+				// OrbEffect-Behaviour
+				"Orb"
+				{
+	                "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
+	                "ProjectileName"    "particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf"
+	                "CastAttack"        "1"
+	            }
+	
+	            // HealthCost is handled here
+				"OnOrbFire"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Huskar.Burning_Spear.Cast"
+						"Target"		"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_huskar/burning_spear.lua"
+						"Function"		"DoHealthCost"
+					}
+				}
+	
+				// Apply the hidden dot modifier to the target here
+				// Call IncreaseStackCount to keep stack count on modifier_burning_spear_datadriven_debuff_counter updated
+				"OnOrbImpact"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Huskar.Burning_Spear"
+						"Target"		"TARGET"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_burning_spear_datadriven_debuff"
+						"Target" 		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_huskar/burning_spear.lua"
+						"Function"		"IncreaseStackCount"
+	
+						"modifier_counter_name"		"modifier_burning_spear_datadriven_debuff_counter"
+					}
+				}
+			}
+	
+			// Modifier to show stack count
+			// Only visual
+			"modifier_burning_spear_datadriven_debuff_counter"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"0"
+			}
+	
+			// Modifier to handle the dot
+			"modifier_burning_spear_datadriven_debuff"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"0"
+				"Duration"			"%AbilityDuration"
+	
+				// Allow multiple instances of this modifier on the target
+				// Modifiers stack additivly (dmg) with independent durations
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+				"EffectName"		"particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"ThinkInterval"  "1.0"
+				"OnIntervalThink"
+				{
+					// Damage of %AbilityDamage every %ThinkInterval seconds
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%AbilityDamage"
+					}
+				}
+	
+				// Updating visual modifier's stack count
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_huskar/burning_spear.lua"
+						"Function"		"DecreaseStackCount"
+	
+						"modifier_counter_name"		"modifier_burning_spear_datadriven_debuff_counter"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of the Huskar Inner Vitality ability
+	// Author: Bude
+	// Date: 14.02.2016.
+	// Version: 6.86
+	// Type: Datadriven/Lua
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_huskar/inner_vitality.lua
+	// scripts/vscripts/heroes/hero_huskar/modifiers/modifier_inner_vitality_lua.lua
+	"inner_vitality_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"			"huskar_inner_vitality"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"22 18 14 10"
+		"AbilityDuration"				"16 16 16 16"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"170 170 170 170"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.0"	// already gets credit for the healing
+	
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"heal"							"10"
+			}
+			"02"
+			{	
+				"var_type"						"FIELD_FLOAT"
+				"attrib_bonus"					"0.05 0.10 0.15 0.20"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"hurt_attrib_bonus"				"0.20 0.40 0.60 0.80"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"hurt_percent"					"0.40"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tooltip_attrib_bonus"			"5 10 15 20"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tooltip_hurt_attrib_bonus"		"20 45 60 80"
+			}
+		}
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
+			"particle"  "particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf"
+			"particle"	"particles/units/heroes/hero_huskar/huskar_inner_vitality_cast.vpcf"
+		}
+	
+		// Datadriven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Huskar.Inner_Vitality"
+				"Target"		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_huskar/huskar_inner_vitality_cast.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+	
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_origin"
+					"CASTER"	"attach_origin"
+				}
+			}
+	
+			//ApplyLuaModifier
+			"RunScript"
+			{
+				"ModifierName"	"modifier_huskar_inner_vitality_lua"
+				"ScriptFile"	"heroes/hero_huskar/inner_vitality.lua"
+				"Function"		"ApplyLuaModifier"
+				"Target"		"TARGET"
+			}
+		}
+	}
+	// Rewrite of the Huskar Life Break ability
+	// Author: Bude
+	// Date: 14.02.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTES: Modifier that keeps huskar from attacking does not get removed if Life Break is cancelled prematurely
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_huskar/life_break.lua
+	"life_break_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"		
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"huskar_life_break"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0 0 0"		
+	
+		// Cast Range
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"550"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDuration"				"4 5 6"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"health_cost_percent"				"0.35"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"health_damage"						"0.35"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"health_damage_scepter"				"0.65"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"charge_speed"						"1000"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"tooltip_health_damage"				"35"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"tooltip_health_cost_percent"		"35"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"movespeed_slow"					"-40 -50 -60"
+			}
+			"08"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"slow_duration_tooltip"				"4 5 6"
+			}
+			"09"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"tooltip_health_damage_scepter"		"65"
+			}
+			"10"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"Costoldown_scepter"				"4"
+			}
+			"11"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"max_distance"						"1400"
+			}
+		}
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
+			"particle"  "particles/units/heroes/hero_huskar/huskar_life_break.vpcf"
+			"particle"  "particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf"
+			"particles" "particles/status_fx/status_effect_huskar_lifebreak.vpcf"
+		}
+	
+		// Datadriven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_huskar_life_break_datadriven"
+				"Target" 		"CASTER"
+				"Duration"		"1"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_huskar/life_break.lua"
+				"Function"		"LifeBreak"
+				"ModifierName"			"modifier_huskar_life_break_datadriven"
+			    "ModifierName_Debuff"	"modifier_huskar_life_break_datadriven_debuff"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Huskar.Life_Break"
+				"Target" 		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+	
+			"ApplyMotionController"
+			// For this: gfycat.com/BraveHideousGiantschnauzer -> check: bit.ly/1KWulqA
+			{
+				"Target"		"CASTER"
+			    "ScriptFile"    "heroes/hero_huskar/life_break.lua"
+			    "HorizontalControlFunction" "JumpHorizonal"
+			    "VerticalControlFunction" 	"JumpVertical"
+			}
+		}
+	
+		"Modifiers"
+		{	
+			"modifier_huskar_life_break_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsDebuff"			"0"
+				"Duration"			"1"
+	
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_huskar_life_break_datadriven_debuff"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+				"Duration"			"%AbilityDuration"
+	
+				"StatusEffectName"		"particles/status_fx/status_effect_huskar_lifebreak.vpcf"
+				"StatusEffectPriority"	"15"	//What this
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movespeed_slow"
 				}
 			}
 		}

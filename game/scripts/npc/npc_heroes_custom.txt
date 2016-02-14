@@ -15,9 +15,9 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"time_walk_datadriven"
-		"Ability2"	"time_dilation_datadriven"
-		"Ability3"	"cloak_and_dagger_datadriven"
-		"Ability4"	"tricks_of_the_trade_datadriven"
+		"Ability1"	"inner_vitality_datadriven"
+		"Ability2"	"burning_spear_datadriven"
+		"Ability3"	"berserkers_blood_datadriven"
+		"Ability4"	"life_break_datadriven"
 	}
 }

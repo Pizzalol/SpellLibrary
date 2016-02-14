@@ -1,7 +1,13 @@
 // Rewrite of the Huskar Burning Spear ability
 // Author: Bude
-// Date: 30.09.2015
-"huskar_burning_spear_datadriven"
+// Date: 14.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_huskar/burning_spear.lua
+"burning_spear_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
