@@ -54,7 +54,7 @@ function SlowCooldown(keys)
 	end
 	
 	-- Finds the ability that caused the event trigger by checking if the cooldown is equal to the full cooldown
-	for i=0, 16 do
+	for i=0, 15 do
 		if target:GetAbilityByIndex(i) ~= null then
 			local cd = target:GetAbilityByIndex(i):GetCooldownTimeRemaining()
 			local full_cd = target:GetAbilityByIndex(i):GetCooldown(target:GetAbilityByIndex(i):GetLevel()-1)
