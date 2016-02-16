@@ -1,0 +1,147 @@
+// Rewrite of the Phantom Lancer Doppelganger ability
+// Author: YOLOSPAGHETTI
+// Date: February 16, 2016
+// Notes: No working particles
+"phantom_lancer_doppelganger_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityTextureName"			"phantom_lancer_doppelwalk"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"sounds/weapons/hero/phantom_lancer/doppel_cast.vsnd"
+		"soundfile"		"sounds/weapons/hero/phantom_lancer/doppel_appear.vsnd"
+	}
+
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"600"
+	"AbilityCastPoint"				"0.1"
+	"AoERadius"						"325"
+	"AbilityCooldown"				"25 20 15 10"
+	"AbilityManaCost"				"50"
+		
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"target_radius"				"325"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"illusion_gather_radius"	"900"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"delay"					"1.0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"illusion_duration"		"8.0"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"first_illusion_outgoing_damage"	"-100.0"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"first_illusion_incoming_damage"	"0.0"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"second_illusion_outgoing_damage"	"-80.0"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"second_illusion_incoming_damage"	"500.0"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+
+		"FireSound"
+		{
+			"EffectName" "Hero_PhantomLancer.Doppelganger.Cast"
+			"Target"	"CASTER"
+		}
+		
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"  				"CASTER"
+				"Radius" 				"%illusion_gather_radius"
+				"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Types" 				"DOTA_UNIT_TARGET_HERO"
+			}
+			"Action"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_phantom_lancer/doppelganger.lua"
+					"Function"	"CheckUnits"	
+				}
+			}
+		}
+		
+	}
+
+	
+
+	"Modifiers"
+	{
+		"modifier_doppelganger_datadriven"
+		{			
+			"IsHidden"	"0"
+
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_phantom_lancer/doppelganger.lua"
+					"Function"	"DoppelgangerStart"				
+				}
+			}
+
+			"OnDestroy"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_PhantomLancer.Doppelganger.Appear"
+					"Target"	"CASTER"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_phantom_lancer/doppelganger.lua"
+					"Function"	"DoppelgangerEnd"					
+				}
+					
+			}				
+		}
+	}
+}
