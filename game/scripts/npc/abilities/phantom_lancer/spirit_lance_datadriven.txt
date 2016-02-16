@@ -1,0 +1,152 @@
+// Rewrite of the Phantom Lancer Spirit Lance ability
+// Author: YOLOSPAGHETTI
+// Date: February 16, 2016
+"phantom_lancer_spirit_lance_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"phantom_lancer_spirit_lance"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"750"
+	"AbilityCastPoint"				"0.3"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"7.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"125 130 135 140"
+	
+	//Damage
+	"AbilityDamage"					"100 150 200 250"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"damage_tooltip"					"100 150 200 250"
+		}
+		"02"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"slow"								"-10 -20 -30 -40"
+		}
+		"03"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"slow_duration"							"3.25"
+		}
+		"04"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"illusion_duration"					"2 4 6 8"
+		}
+		"05"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"illusion_outgoing_damage"			"-80.0"		
+		}
+		"06"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"illusion_outgoing_tooltip"			"20.0"
+		}
+		"07"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"illusion_incoming_damage"			"300.0"
+		}
+		"08"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"illusion_incoming_damage_total_tooltip"			"400.0"
+		}	
+		"08"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"projectile_speed"					"1000.0"
+		}		
+	}
+
+	"precache"
+	{
+		"soundfile"	"sounds/weapons/hero/phantom_lancer/spirit_lance_cast.vsnd"
+		"soundfile"	"sounds/weapons/hero/phantom_lancer/spirit_lance_impact.vsnd"
+		"particle"	"particles/units/heroes/hero_phantom_lancer/phantomlancer_spiritlance_projectile.vpcf"
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_PhantomLancer.SpiritLance.Throw"
+			"Target"			"CASTER"
+		}
+		
+		"TrackingProjectile"
+		{
+			"Target"           	"TARGET"
+		    "EffectName"       	"particles/units/heroes/hero_phantom_lancer/phantomlancer_spiritlance_projectile.vpcf"
+		    "Dodgeable"        	"1"
+		    "ProvidesVision"   	"0"
+		    "MoveSpeed"        	"%projectile_speed"
+		    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_PhantomLancer.SpiritLance.Impact"
+			"Target"			"TARGET"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"		"heroes/hero_phantom_lancer/spirit_lance.lua"
+			"Function"			"ConjureImage"
+		}
+		
+		"Damage"
+		{
+			"Target"	"TARGET"
+			"Type"		"DAMAGE_TYPE_MAGICAL"
+			"Damage"	"%AbilityDamage"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_spirit_lance_datadriven"
+			"Target"		"TARGET"
+		}
+	
+	}
+	
+	"Modifiers"
+	{
+		"modifier_spirit_lance_datadriven"
+		{
+			"Duration"	"%slow_duration"
+		
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
+			}
+			
+		}
+	
+	}
+}
