@@ -1,0 +1,98 @@
+// Rewrite of the Phantom Lancer Phantom Rush ability
+// Author: YOLOSPAGHETTI
+// Date: February 16, 2016
+"phantom_lancer_phantom_rush_datadriven"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"phantom_lancer_phantom_edge"
+	
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"16 12 8 4"
+	
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		
+	}
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"min_proc_distance"		"300"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"max_proc_distance"		"600 700 800 900"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"rush_speed"			"800"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"buff_duration"		"6.0"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_phantom_rush_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+			
+			"OnOrder"
+			{				
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_phantom_lancer/phantom_rush.lua"
+					"Function"		"ApplyBuff"
+				}
+			}
+		}
+		
+		"modifier_check_distance"
+		{
+			"IsHidden"	"1"
+			
+			"OnUnitMoved"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_phantom_lancer/phantom_rush.lua"
+					"Function"		"DistanceCheck"
+				}
+			}
+		}
+		
+		"modifier_speed_buff"
+		{
+			"Duration"	"%buff_duration"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"%rush_speed"
+			}
+			
+			"OnOrder"
+			{				
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_phantom_lancer/phantom_rush.lua"
+					"Function"		"RemoveBuff"
+				}
+			}
+		}
+	}
+}
