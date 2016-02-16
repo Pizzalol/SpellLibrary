@@ -1,0 +1,87 @@
+// Rewrite of the Phantom Lancer Juxtapose ability
+// Author: YOLOSPAGHETTI
+// Date: February 16, 2016
+"phantom_lancer_juxtapose_datadriven"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityTextureName"			"phantom_lancer_juxtapose"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hero_proc_chance"		"40 45 50"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"illusion_proc_chance"	"8"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"max_illusions"			"5 7 9"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"illusion_incoming_damage"	"500.0"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"illusion_outgoing_damage"	"-84.0"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"illusion_duration"		"4"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_juxtapose_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+		
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_phantom_lancer/juxtapose.lua"
+					"Function"		"ConjureImage"
+				}
+			}
+		}
+
+		"modifier_illusion_count"
+		{
+			"IsHidden"	"1"
+			
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_phantom_lancer/juxtapose.lua"
+					"Function"		"DecrementCount"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_phantom_lancer/juxtapose.lua"
+					"Function"		"DecrementCount"
+				}
+			}
+		}
+	}
+}
