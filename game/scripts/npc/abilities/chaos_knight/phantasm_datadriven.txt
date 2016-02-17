@@ -1,6 +1,6 @@
 // Rewrite of the Chaos Knight Phantasm ability
 // Author: Pizzalol
-// Date: 30.12.2015.
+// Date: December 30, 2015
 // Version: 6.86
 // Type: Datadriven
 //

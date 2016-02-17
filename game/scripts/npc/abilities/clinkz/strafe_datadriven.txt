@@ -1,6 +1,6 @@
 // Rewrite of Clinkz Strafe
 // Author: Noya
-// Date: 31.12.2015.
+// Date: December 31, 2015
 // Version: 6.86
 // Type: Datadriven
 "strafe_datadriven"

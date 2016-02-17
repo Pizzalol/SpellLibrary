@@ -1,6 +1,6 @@
 // Rewrite of Death Prophet Soul Siphon
 // Author: Pizzalol
-// Date: 26.01.2016.
+// Date: January 26, 2016
 // Version: 6.86
 // Type: Datadriven
 // NOTES: This implementation doesn't have an error message in case you try to cast multiple siphons on the same target

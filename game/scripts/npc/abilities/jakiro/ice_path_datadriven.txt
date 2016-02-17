@@ -1,6 +1,6 @@
 // Rewrite of the Jakiro Ice Path ability
 // Author: Ractidous
-// Date: 17.02.2016.
+// Date: February 17, 2016
 // Version: 6.86
 // Type: Datadriven
 //

@@ -1,6 +1,6 @@
 // Rewrite of the Phantom Lancer Phantom Rush ability
 // Author: YOLOSPAGHETTI
-// Date: 16.02.2016.
+// Date: February 16, 2016
 // Version: 6.86
 // Type: Datadriven
 //

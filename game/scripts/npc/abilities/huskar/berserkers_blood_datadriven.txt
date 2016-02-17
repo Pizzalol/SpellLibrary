@@ -1,6 +1,6 @@
 // Rewrite of the Huskar Berserkers Blood ability
 // Author: Bude
-// Date: 14.02.2016.
+// Date: February 14, 2016
 // Version: 6.85
 // Type: Datadriven/Lua
 // NOTES: Particles and Effects do not work at all

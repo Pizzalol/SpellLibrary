@@ -1,6 +1,6 @@
 // Rewrite of the Dark Seer Vacuum ability
 // Author: Pizzalol
-// Date: 01.01.2016.
+// Date: January 1, 2016
 // Version: 6.86
 // Type: Datadriven
 //

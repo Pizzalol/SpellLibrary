@@ -1,6 +1,6 @@
 // Rewrite of Brewmaster Drunken Brawler
 // Author: Noya
-// Date: 28.11.2015.
+// Date: November 28, 2015
 // Version: 6.85
 // Type: Datadriven
 // Notes: Icon changing is originally done with flash scaleform, in this ability there will just be a buff icon to display when the player has a guaranteed crit/miss.

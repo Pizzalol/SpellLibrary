@@ -1,6 +1,6 @@
 // Rewrite of Alchemist Chemical Rage
 // Author: Noya
-// Date: 09.01.2015.
+// Date: October 13, 2015
 // Version: 6.85
 // Type: Datadriven
 // Notes: Didn't add the obnoxious "Hero_Alchemist.ChemicalRage" looping sound. 

@@ -1,6 +1,6 @@
 // Rewrite of the Bane Brain Sap
 // Author: chrislotix
-// Date: 22.10.2015.
+// Date: October 22, 2015
 // Version: 6.85
 // Type: Datadriven
 "brain_sap_datadriven"

@@ -1,6 +1,6 @@
 // Rewrite of the Invoker Cold Snap ability
 // Author: Pizzalol
-// Date: 14.02.2016.
+// Date: February 14, 2016
 // Version: 6.86
 // Type: Datadriven
 //

@@ -1,6 +1,6 @@
 // Rewrite of Cloak and Dagger
 // Author: YOLOSPAGHETTI
-// Date: 04.02.2016.
+// Date: February 4, 2016
 // Version: 6.86
 // Type: Datadriven
 //

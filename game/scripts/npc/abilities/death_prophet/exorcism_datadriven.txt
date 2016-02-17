@@ -1,6 +1,6 @@
 // Rewrite of Death Prophet Exorcism
 // Author: Noya
-// Date: 26.01.2016.
+// Date: January 26, 2016
 // Version: 6.86
 // Type: Datadriven
 // NOTES: The Targeting & Movement AI is "smarter" than the original ability, so the overall DPS is way higher when all spirits focus the same target

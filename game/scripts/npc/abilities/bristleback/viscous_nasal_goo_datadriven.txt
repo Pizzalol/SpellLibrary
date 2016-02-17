@@ -1,6 +1,6 @@
 // Rewrite of the Bristleback Viscous Nasal Goo ability
 // Author: Ragnar Homsar
-// Date: 28.11.2015.
+// Date: November 28, 2015
 // Version: 6.85
 // Type: Datadriven
 //

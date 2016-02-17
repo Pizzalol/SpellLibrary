@@ -1,6 +1,6 @@
 // Rewrite of Beastmaster Call of the Wild Boar
 // Author: Noya
-// Date: 28.11.2015.
+// Date: November 28, 2015
 // Version: 6.85
 // Type: Datadriven
 //

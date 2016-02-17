@@ -1,6 +1,6 @@
 // Rewrite of the Antimage Blink ability
 // Author: Pizzalol
-// Date: 13.10.2015.
+// Date: October 13, 2015
 // Version: 6.85
 // Type: Datadriven
 //

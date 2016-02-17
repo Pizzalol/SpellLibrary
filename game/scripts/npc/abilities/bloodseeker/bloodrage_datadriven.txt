@@ -1,6 +1,6 @@
 // Rewrite of the Bloodseeker Bloodrage ability
 // Author: YOLOSPAGHETTI
-// Date: 13.02.2016.
+// Date: February 13, 2016
 // Version: 6.86
 // Type: Datadriven
 //

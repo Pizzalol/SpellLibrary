@@ -1,6 +1,6 @@
 // Rewrite of Alchemist Greevils Greed
 // Author: Noya
-// Date: 09.01.2015.
+// Date: October 13, 2015
 // Version: 6.82
 // Type: Datadriven
 //

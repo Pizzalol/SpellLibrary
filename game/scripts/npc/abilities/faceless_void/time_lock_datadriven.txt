@@ -1,6 +1,6 @@
 // Rewrite of the Faceless Void Time Lock ability
 // Author: Pizzalol
-// Date: 14.02.2016.
+// Date: February 14, 2016
 // Version: 6.86
 // Type: Datadriven
 "time_lock_datadriven"

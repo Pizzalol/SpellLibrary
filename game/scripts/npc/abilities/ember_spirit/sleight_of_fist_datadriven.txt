@@ -1,6 +1,6 @@
 // Rewrite of the Ember Spirit Sleight of Fist ability
 // Author: kritth
-// Date: 13.02.2016.
+// Date: February 13, 2016
 // Version: 6.86
 // Type: Datadriven
 //

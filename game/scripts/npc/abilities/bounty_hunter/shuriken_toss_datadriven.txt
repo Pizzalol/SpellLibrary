@@ -1,6 +1,6 @@
 // Rewrite of the Bounty Hunter Shuriken Toss
 // Author: chrislotix
-// Date: 28.11.2015.
+// Date: November 28, 2015
 // Version: 6.81
 // Type: Datadriven
 "shuriken_toss_datadriven"

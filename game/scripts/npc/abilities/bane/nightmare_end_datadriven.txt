@@ -1,6 +1,6 @@
 // Rewrite of the Bane Nightmare End Sub-ability
 // Author: Pizzalol
-// Date: 22.10.2015.
+// Date: October 22, 2015
 // Version: 6.83
 // Type: Datadriven
 //

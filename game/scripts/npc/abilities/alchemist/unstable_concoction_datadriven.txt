@@ -1,6 +1,6 @@
 // Rewrite of Alchemist Unstable Concoction
 // Author: Noya
-// Date: 10.01.2015.
+// Date: October 13, 2015
 // Version: 6.83
 // Type: Datadriven
 //

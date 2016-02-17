@@ -1,6 +1,6 @@
 // Rewrite of the Faceless Void Time Dilation ability
 // Author: YOLOSPAGHETTI
-// Date: 07.02.2016.
+// Date: February 7, 2016
 // Version: 6.86
 // Type: Datadriven
 //

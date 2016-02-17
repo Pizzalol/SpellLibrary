@@ -1,6 +1,6 @@
 // Rewrite of the Ancient Apparition Ice Blast Release ability
 // Author: Pizzalol
-// Date: 21.02.2015.
+// Date: October 13, 2015
 // Version: 6.85
 // Type: Datadriven
 //

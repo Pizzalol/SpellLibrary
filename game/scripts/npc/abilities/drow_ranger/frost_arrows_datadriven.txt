@@ -1,6 +1,6 @@
 // Rewrite of the Drow Ranger Frost Arrows
 // Author: kritth
-// Date: 27.01.2016.
+// Date: January 27, 2016
 // Version: 6.86
 // Type: Datadriven
 "frost_arrows_datadriven"

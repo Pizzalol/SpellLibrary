@@ -1,6 +1,6 @@
 // Rewrite of Infernal Blade
 // Author: YOLOSPAGHETTI
-// Date: 08.02.2016.
+// Date: February 8, 2016
 // Version: 6.86
 // Type: Datadriven
 //

@@ -1,6 +1,6 @@
 // Rewrite of Death Prophet Carrion Swarm
 // Author: Noya
-// Date: 26.01.2016.
+// Date: January 26, 2016
 // Version: 6.86
 // Type: Datadriven
 // NOTES: Default projectile particle can't be properly attached. This uses the economy arcana particle.

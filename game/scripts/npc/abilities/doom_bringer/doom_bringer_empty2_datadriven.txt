@@ -1,6 +1,6 @@
 // Rewrite of the Doom Empty2 ability
 // Author: Pizzalol
-// Date: 27.01.2016.
+// Date: January 27, 2016
 // Version: 6.86
 // Type: Datadriven
 // NOTES: This is a placeholder ability for the Devour ability

@@ -1,6 +1,6 @@
 // Rewrite of the Huskar Life Break ability
 // Author: Bude
-// Date: 14.02.2016.
+// Date: February 14, 2016
 // Version: 6.86
 // Type: Datadriven
 // NOTES: Modifier that keeps huskar from attacking does not get removed if Life Break is cancelled prematurely

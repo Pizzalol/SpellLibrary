@@ -1,6 +1,6 @@
 // Rewrite of the Doom Scorched Earth ability
 // Author: Pizzalol
-// Date: 27.01.2016.
+// Date: January 27, 2016
 // Version: 6.86
 // Type: Datadriven
 //

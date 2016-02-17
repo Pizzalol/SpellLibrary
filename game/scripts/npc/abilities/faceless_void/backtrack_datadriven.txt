@@ -1,6 +1,6 @@
 // Rewrite of the Faceless Void Backtrack ability
 // Author: Pizzalol
-// Date: 14.02.2016.
+// Date: February 14, 2016
 // Version: 6.85
 // Type: Datadriven
 //

@@ -1,6 +1,6 @@
 // Rewrite of the Bounty Hunter Track ability
 // Author: Pizzalol, chrislotix
-// Date: 28.11.2015.
+// Date: November 28, 2015
 // Version: 6.83
 // Type: Datadriven
 //

@@ -1,6 +1,6 @@
 // Rewrite of the Bounty Hunter Windwalk
 // Author: chrislotix
-// Date: 28.11.2015.
+// Date: November 28, 2015
 // Version: 6.85
 // Type: Datadriven
 "wind_walk_datadriven"

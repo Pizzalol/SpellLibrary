@@ -1,6 +1,6 @@
 // Rewrite of the Axe Battle Hunger ability
 // Author: Pizzalol
-// Date: 14.10.2015.
+// Date: October 14, 2015
 // Version: 6.85
 // Type: Datadriven
 //

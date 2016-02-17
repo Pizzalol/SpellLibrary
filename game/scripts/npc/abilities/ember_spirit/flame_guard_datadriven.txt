@@ -1,6 +1,6 @@
 // Rewrite of the Ember Spirit Flame Guard ability
 // Author: kritth
-// Date: 13.02.2016.
+// Date: February 13, 2016
 // Version: 6.86
 // Type: Datadriven
 // NOTE: This ability will only absorb damage whose AbilityUnitDamageType field is marked as DAMAGE_TYPE_MAGICAL

@@ -43908,7 +43908,7 @@
 	
 	// Rewrite of Abaddon Aphotic Shield
 	// Author: Noya
-	// Date: 09.01.2015.
+	// Date: October 13, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -44065,7 +44065,7 @@
 	
 	// Rewrite of Abaddon Borrowed Time
 	// Author: Noya
-	// Date: 09.01.2015.
+	// Date: October 13, 2015
 	// Version: 6.78
 	// Type: Datadriven
 	// Notes: The damage isn't really prevented, just healed twice so it looks like every damage instance is a heal.
@@ -44200,7 +44200,7 @@
 	
 	// Rewrite of Abaddon Death Coil
 	// Author: Noya
-	// Date: 29.09.2015.
+	// Date: October 13, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	// Notes: Projectile is only cosmetic, the damage/heal is not tied to it
@@ -44279,7 +44279,7 @@
 	
 	// Rewrite of Abaddon Curse of Avernus
 	// Author: Noya
-	// Date: 02.10.2015.
+	// Date: October 13, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	"frostmourne_datadriven"
@@ -44400,7 +44400,7 @@
 	
 	// Rewrite of Alchemist Acid Spray
 	// Author: Noya
-	// Date: 09.01.2015.
+	// Date: October 13, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -44540,7 +44540,7 @@
 	
 	// Rewrite of Alchemist Chemical Rage
 	// Author: Noya
-	// Date: 09.01.2015.
+	// Date: October 13, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	// Notes: Didn't add the obnoxious "Hero_Alchemist.ChemicalRage" looping sound. 
@@ -44681,7 +44681,7 @@
 	
 	// Rewrite of Alchemist Greevils Greed
 	// Author: Noya
-	// Date: 09.01.2015.
+	// Date: October 13, 2015
 	// Version: 6.82
 	// Type: Datadriven
 	//
@@ -44760,7 +44760,7 @@
 	
 	// Rewrite of Alchemist Unstable Concoction
 	// Author: Noya
-	// Date: 10.01.2015.
+	// Date: October 13, 2015
 	// Version: 6.83
 	// Type: Datadriven
 	//
@@ -44921,7 +44921,7 @@
 	
 	// Rewrite of Alchemist Unstable Concoction Throw (Sub-Ability)
 	// Author: Noya
-	// Date: 10.01.2015.
+	// Date: October 13, 2015
 	// Version: 6.83
 	// Type: Datadriven
 	//
@@ -45109,7 +45109,7 @@
 	
 	// Rewrite of the Ancient Apparition Chilling Touch ability
 	// Author: Pizzalol
-	// Date: 14.02.2015.
+	// Date: October 13, 2015
 	// Version: 6.83
 	// Type: Datadriven
 	// NOTE: Cast particle is missing the falling snow
@@ -45310,7 +45310,7 @@
 	
 	// Rewrite of the Ancient Apparition Cold Feet ability
 	// Author: Pizzalol
-	// Date: 13.10.2015.
+	// Date: October 13, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -45548,7 +45548,7 @@
 	
 	// Rewrite of the Ancient Apparition Ice Blast ability
 	// Author: Pizzalol
-	// Date: 13.10.2015.
+	// Date: October 13, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	// NOTE: Tracer projectile is teal instead of blue
@@ -45869,7 +45869,7 @@
 	}
 	// Rewrite of the Ancient Apparition Ice Blast Release ability
 	// Author: Pizzalol
-	// Date: 21.02.2015.
+	// Date: October 13, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -45936,7 +45936,7 @@
 	
 	// Rewrite of the Ancient Apparition Ice Vortex ability
 	// Author: Pizzalol
-	// Date: 13.10.2015.
+	// Date: October 13, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -46091,7 +46091,7 @@
 	}
 	// Rewrite of the Antimage Blink ability
 	// Author: Pizzalol
-	// Date: 13.10.2015.
+	// Date: October 13, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -46176,7 +46176,7 @@
 	
 	// Rewrite of the Antimage Mana Break ability
 	// Author: Pizzalol
-	// Date: 13.10.2015.
+	// Date: October 13, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -46269,7 +46269,7 @@
 	
 	// Rewrite of the Antimage Mana Void ability
 	// Author: Pizzalol
-	// Date: 13.10.2015.
+	// Date: October 13, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -46417,7 +46417,7 @@
 	
 	// Remwrite of the Antimage Spellshield ability
 	// Author: Pizzalol
-	// Date: 13.10.2015.
+	// Date: October 13, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	"spell_shield_datadriven"
@@ -46455,7 +46455,7 @@
 	}
 	// Rewrite of the Axe Battle Hunger ability
 	// Author: Pizzalol
-	// Date: 14.10.2015.
+	// Date: October 14, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -46629,7 +46629,7 @@
 	
 	// Rewrite of the Axe Berserkers Call ability
 	// Author: Pizzalol
-	// Date: 14.10.2015.
+	// Date: October 14, 2015
 	// Version: 6.83
 	// Type: Datadriven
 	//
@@ -46801,7 +46801,7 @@
 	
 	// Rewrite of the Axe Counter Helix ability
 	// Author: Pizzalol
-	// Date: 14.10.2015.
+	// Date: October 14, 2015
 	// Version: 6.83c
 	// Type: Datadriven
 	//
@@ -46963,7 +46963,7 @@
 	
 	// Rewrite of the Axe Culling Blade ability
 	// Author: Pizzalol
-	// Date: 14.10.2015.
+	// Date: October 14, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	// NOTE: You need to specify the modifiers that need to be removed (only if they cant be purged)
@@ -47115,7 +47115,7 @@
 	
 	// Rewrite of the Bane Brain Sap
 	// Author: chrislotix
-	// Date: 22.10.2015.
+	// Date: October 22, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	"brain_sap_datadriven"
@@ -47209,7 +47209,7 @@
 	
 	// Rewrite of the Bane Enfeeble
 	// Author: chrislotix
-	// Date: 22.10.2015.
+	// Date: October 22, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	"enfeeble_datadriven"
@@ -47299,7 +47299,7 @@
 	
 	// Rewrite of the Bane Fiends Grip
 	// Author: chrislotix, Pizzalol
-	// Date: 22.10.2015.
+	// Date: October 22, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -47580,7 +47580,7 @@
 	}
 	// Rewrite of the Bane Nightmare ability
 	// Author: Pizzalol, chrislotix
-	// Date: 22.10.2015.
+	// Date: October 22, 2015
 	// Version: 6.83
 	// Type: Datadriven
 	//
@@ -47842,7 +47842,7 @@
 	}	
 	// Rewrite of the Bane Nightmare End Sub-ability
 	// Author: Pizzalol
-	// Date: 22.10.2015.
+	// Date: October 22, 2015
 	// Version: 6.83
 	// Type: Datadriven
 	//
@@ -47892,7 +47892,7 @@
 	}
 	// Rewrite of Beastmaster Call of the Wild Boar
 	// Author: Noya
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -48242,7 +48242,7 @@
 	}
 	// Rewrite of Beastmaster Call of the Wild
 	// Author: Noya
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -48574,7 +48574,7 @@
 	}
 	// Rewrite of Beastmaster Inner Beast
 	// Author: Noya
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	"inner_beast_datadriven"
@@ -48627,7 +48627,7 @@
 	
 	// Rewrite of Beastmaster Primal Roar
 	// Author: Noya
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	"primal_roar_datadriven"
@@ -48846,7 +48846,7 @@
 	}
 	// Rewrite of the Bloodseeker Bloodrage ability
 	// Author: YOLOSPAGHETTI
-	// Date: 13.02.2016.
+	// Date: February 13, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -48966,7 +48966,7 @@
 	}
 	// Rewrite of the Bloodseeker Blood Rite ability
 	// Author: YOLOSPAGHETTI
-	// Date: 13.02.2016.
+	// Date: February 13, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -49138,7 +49138,7 @@
 	}
 	// Rewrite of the Bloodseeker Rupture ability
 	// Author: YOLOSPAGHETTI
-	// Date: 13.02.2016.
+	// Date: February 13, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -49266,7 +49266,7 @@
 	}
 	// Rewrite of the Bloodseeker Thirst ability
 	// Author: YOLOSPAGHETTI
-	// Date: 13.02.2016.
+	// Date: February 13, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -49416,7 +49416,7 @@
 	}
 	// Rewrite of the Bounty Hunter Jinda
 	// Author: chrislotix
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -49538,7 +49538,7 @@
 	
 	// Rewrite of the Bounty Hunter Shuriken Toss
 	// Author: chrislotix
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.81
 	// Type: Datadriven
 	"shuriken_toss_datadriven"
@@ -49658,7 +49658,7 @@
 	}
 	// Rewrite of the Bounty Hunter Track ability
 	// Author: Pizzalol, chrislotix
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.83
 	// Type: Datadriven
 	//
@@ -49883,7 +49883,7 @@
 	}
 	// Rewrite of the Bounty Hunter Windwalk
 	// Author: chrislotix
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	"wind_walk_datadriven"
@@ -50059,7 +50059,7 @@
 	}
 	// Rewrite of Brewmaster Drunken Brawler
 	// Author: Noya
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	// Notes: Icon changing is originally done with flash scaleform, in this ability there will just be a buff icon to display when the player has a guaranteed crit/miss.
@@ -50305,7 +50305,7 @@
 	}
 	// Rewrite of Brewmaster Drunken Haze
 	// Author: Noya
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	"drunken_haze_datadriven"
@@ -50447,7 +50447,7 @@
 	}
 	// Rewrite of Brewmaster Primal Split
 	// Author: Noya
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -50643,7 +50643,7 @@
 	}
 	// Rewrite of Brewmaster Thunder Clap
 	// Author: Noya
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	"thunder_clap_datadriven"
@@ -50801,7 +50801,7 @@
 	}
 	// Ability: Bristleback
 	// By: Ragnar Homsar
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -50881,7 +50881,7 @@
 	}
 	// Rewrite of the Bristleback Quill Spray ability
 	// Author: Ragnar Homsar
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -51118,7 +51118,7 @@
 	}
 	// Rewrite of the Bristleback Viscous Nasal Goo ability
 	// Author: Ragnar Homsar
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -51323,8 +51323,9 @@
 			}
 		}
 	}
+	// Rewrite of Bristleback Warpath ability
 	// Author: Ragnar Homsar
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	// Notes: Warpath is currently missing its particle effects and run/idle animations.
@@ -51437,7 +51438,7 @@
 	}
 	// Rewrite of the Broodmother Incapacitating Bite ability
 	// Author: Pizzalol
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	"incapacitating_bite_datadriven"
@@ -51516,7 +51517,7 @@
 	
 	// Rewrite of the Broodmother Insatiable Hunger ability
 	// Author: Pizzalol
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -51621,7 +51622,7 @@
 	}
 	// Rewrite of the Broodmother Spawn Spiderlings ability
 	// Author: Pizzalol
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	// Notes: Uses the normal dota spiderlings NOT custom ones
@@ -51798,7 +51799,7 @@
 	}
 	// Rewrite of the Broodmother Spin Web ability
 	// Author: Pizzalol
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -52218,7 +52219,7 @@
 	}
 	// Rewrite of the Broodmother Spin Web Destroy ability
 	// Author: Pizzalol
-	// Date: 28.11.2015.
+	// Date: November 28, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -52260,7 +52261,7 @@
 	}
 	// Rewrite of Centaur Double Edge
 	// Author: Noya
-	// Date: 01.12.2015.
+	// Date: December 1, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -52345,7 +52346,7 @@
 	}
 	// Rewrite of Centaur Hoof Stomp 
 	// Author: Noya
-	// Date: 01.12.2015.
+	// Date: December 1, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	"hoof_stomp_datadriven"
@@ -52459,7 +52460,7 @@
 	
 	// Rewrite of Centaur Return
 	// Author: Noya
-	// Date: 01.12.2015.
+	// Date: December 1, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -52526,7 +52527,7 @@
 	}
 	// Rewrite of Centaur Stampede
 	// Author: Noya
-	// Date: 01.12.2015.
+	// Date: December 1, 2015
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -52702,7 +52703,7 @@
 	
 	// Rewrite of the Chaos Knight Chaos Bolt ability
 	// Author: Pizzalol
-	// Date: 30.12.2015.
+	// Date: December 30, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -52814,7 +52815,7 @@
 	}
 	// Rewrite of the Chaos Knight Chaos Strike ability
 	// Author: Pizzalol
-	// Date: 30.12.2015.
+	// Date: December 30, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	"chaos_strike_datadriven"
@@ -52944,7 +52945,7 @@
 	}
 	// Rewrite of the Chaos Knight Phantasm ability
 	// Author: Pizzalol
-	// Date: 30.12.2015.
+	// Date: December 30, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -53095,7 +53096,7 @@
 	
 	// Rewrite of the Chaos Knight Reality Rift ability
 	// Author: Pizzalol
-	// Date: 30.12.2015.
+	// Date: December 30, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -53241,7 +53242,7 @@
 	}
 	// Rewrite of the Chen Hand of God ability
 	// Author: Pizzalol
-	// Date: 30.12.2015.
+	// Date: December 30, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -53361,7 +53362,7 @@
 	}
 	// Rewrite of the Chen Holy Persuasion ability
 	// Author: Pizzalol
-	// Date: 30.12.2015.
+	// Date: December 30, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -53479,7 +53480,7 @@
 	}
 	// Rewrite of the Chen Penitence ability
 	// Author: Pizzalol
-	// Date: 30.12.2015.
+	// Date: December 30, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	"penitence_datadriven"
@@ -53607,7 +53608,7 @@
 	
 	// Rewrite of the Chen Test of Faith ability
 	// Author: Pizzalol
-	// Date: 30.12.2015.
+	// Date: December 30, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -53703,7 +53704,7 @@
 	}
 	// Rewrite of the Chen Test of Faith ability
 	// Author: Pizzalol
-	// Date: 30.12.2015.
+	// Date: December 30, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTE: Teleports targets to the middle of the map instead of fountain
@@ -53851,7 +53852,7 @@
 	}
 	// Rewrite of Clinkz Death Pact
 	// Author: Noya
-	// Date: 31.12.2015.
+	// Date: December 31, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -54021,7 +54022,7 @@
 	}
 	// Rewrite of Clinkz Searing Arrows
 	// Author: Noya
-	// Date: 31.12.2015.
+	// Date: December 31, 2015
 	// Version: 6.81
 	// Type: Datadriven
 	// NOTE: This uses the old Orb mechanic. Orb Labels seem to be malfunctioning, need to warn Valve about this issue.
@@ -54117,7 +54118,7 @@
 	}
 	// Rewrite of Clinkz Strafe
 	// Author: Noya
-	// Date: 31.12.2015.
+	// Date: December 31, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	"strafe_datadriven"
@@ -54199,7 +54200,7 @@
 	}
 	// Rewrite of Clinkz Wind Walk
 	// Author: Noya
-	// Date: 31.12.2015.
+	// Date: December 31, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	"wind_walk_datadriven"
@@ -54351,7 +54352,7 @@
 	}
 	// Rewrite of Crystal Maiden Arcane Aura
 	// Author: kritth
-	// Date: 31.12.2015.
+	// Date: December 31, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	"brilliance_aura_datadriven"
@@ -54411,7 +54412,7 @@
 	}
 	// Rewrite of Crystal Maiden Crystal Nova
 	// Author: kritth
-	// Date: 31.12.2015.
+	// Date: December 31, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -54567,7 +54568,7 @@
 	}
 	// Rewrite of Crystal Maiden Freezing Field
 	// Author: kritth
-	// Date: 31.12.2015.
+	// Date: December 31, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -54876,7 +54877,7 @@
 	}
 	// Rewrite of Crystal Maiden Frostbite
 	// Author: kritth
-	// Date: 31.12.2015.
+	// Date: December 31, 2015
 	// Version: 6.86
 	// Type: Datadriven
 	"frostbite_datadriven"
@@ -55077,7 +55078,7 @@
 	}
 	// Rewrite of the Dark Seer Ion Shell ability
 	// Author: Pizzalol
-	// Date: 01.01.2016.
+	// Date: January 1, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -55223,7 +55224,7 @@
 	}
 	// Rewrite of the Dark Seer Surge ability
 	// Author: Pizzalol
-	// Date: 01.01.2016.
+	// Date: January 1, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	"surge_datadriven"
@@ -55313,7 +55314,7 @@
 	}
 	// Rewrite of the Dark Seer Vacuum ability
 	// Author: Pizzalol
-	// Date: 01.01.2016.
+	// Date: January 1, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -55483,7 +55484,7 @@
 	}
 	// Rewrite of the Dark Seer Wall of Replica ability
 	// Author: Pizzalol
-	// Date: 01.01.2016.
+	// Date: January 1, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTE: Shows up as an illusion only for friendly units
@@ -55660,7 +55661,7 @@
 	}
 	// Rewrite of the Dazzle Poison Touch ability
 	// Author: Pizzalol
-	// Date: 26.01.2016.
+	// Date: January 26, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -55941,7 +55942,7 @@
 	}
 	// Rewrite of the Dazzle Shadow Wave ability
 	// Author: Pizzalol
-	// Date: 26.01.2016.
+	// Date: January 26, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -56048,7 +56049,7 @@
 	}
 	// Rewrite of the Dazzle Shallow Grave ability
 	// Author: Pizzalol
-	// Date: 26.01.2016.
+	// Date: January 26, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	"shallow_grave_datadriven"
@@ -56146,7 +56147,7 @@
 	}
 	// Rewrite of the Dazzle Weave ability
 	// Author: Pizzalol
-	// Date: 26.01.2016.
+	// Date: January 26, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -56421,7 +56422,7 @@
 	}
 	// Rewrite of Death Prophet Carrion Swarm
 	// Author: Noya
-	// Date: 26.01.2016.
+	// Date: January 26, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTES: Default projectile particle can't be properly attached. This uses the economy arcana particle.
@@ -56531,7 +56532,7 @@
 	}
 	// Rewrite of Death Prophet Exorcism
 	// Author: Noya
-	// Date: 26.01.2016.
+	// Date: January 26, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTES: The Targeting & Movement AI is "smarter" than the original ability, so the overall DPS is way higher when all spirits focus the same target
@@ -56778,7 +56779,7 @@
 	}
 	// Rewrite of Death Prophet Silence
 	// Author: Noya
-	// Date: 26.01.2016.
+	// Date: January 26, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	"silence_datadriven"
@@ -56898,7 +56899,7 @@
 	}
 	// Rewrite of Death Prophet Soul Siphon
 	// Author: Pizzalol
-	// Date: 26.01.2016.
+	// Date: January 26, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTES: This implementation doesn't have an error message in case you try to cast multiple siphons on the same target
@@ -57078,7 +57079,7 @@
 	}
 	// Rewrite of the Doom Devour ability
 	// Author: Pizzalol
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTES: You have to add the specific units to the Lua table to be able to steal their abilities
@@ -57197,7 +57198,7 @@
 	}
 	// Rewrite of the Doom Empty1 ability
 	// Author: Pizzalol
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTES: This is a placeholder ability for the Devour ability
@@ -57219,7 +57220,7 @@
 	}
 	// Rewrite of the Doom Empty2 ability
 	// Author: Pizzalol
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTES: This is a placeholder ability for the Devour ability
@@ -57241,7 +57242,7 @@
 	}
 	// Rewrite of the Doom Doom ability
 	// Author: Pizzalol
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -57444,7 +57445,7 @@
 	}
 	// Rewrite of Infernal Blade
 	// Author: YOLOSPAGHETTI
-	// Date: 08.02.2016.
+	// Date: February 8, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -57614,7 +57615,7 @@
 	}
 	// Rewrite of the Doom Lvl Death ability
 	// Author: Pizzalol
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -57726,7 +57727,7 @@
 	
 	// Rewrite of the Doom Scorched Earth ability
 	// Author: Pizzalol
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -57915,7 +57916,7 @@
 	}
 	// Rewrite of the Dragon Knight Breathe Fire
 	// Author: chrislotix, Pizzalol
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	"breathe_fire_datadriven"
@@ -58052,7 +58053,7 @@
 	}
 	// Rewrite of the Dragon Knight Dragon Blood
 	// Author: chrislotix
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	"dragon_blood_datadriven"
@@ -58095,7 +58096,7 @@
 	}
 	// Rewrite of the Dragon Knight Dragon Tail
 	// Author: chrislotix
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	"dragon_tail_datadriven"
@@ -58181,7 +58182,7 @@
 	}
 	// Rewrite of the Dragon Knight Elder Dragon Form
 	// Author: chrislotix,Pizzalol
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.86
 	// Type: Datadriven/Lua
 	// NOTES: #1 Dragon Form is always a Green Dragon
@@ -58636,7 +58637,7 @@
 	}
 	// Rewrite of the Drow Ranger Frost Arrows
 	// Author: kritth
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	"frost_arrows_datadriven"
@@ -58767,7 +58768,7 @@
 	}
 	// Rewrite of the Drow Ranger Markshmanship
 	// Author: kritth
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -58870,7 +58871,7 @@
 	}
 	// Rewrite of the Drow Ranger Trueshot aura
 	// Author: kritth, Pizzalol
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -59009,7 +59010,7 @@
 	}
 	// Rewrite of the Drow Ranger Wave of silence
 	// Author: kritth
-	// Date: 27.01.2016.
+	// Date: January 27, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -59152,7 +59153,7 @@
 	}
 	// Rewrite of the Ember Spirit Fire Remnant ability
 	// Author: kritth
-	// Date: 13.02.2016.
+	// Date: February 13, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -59315,7 +59316,7 @@
 	}
 	// Rewrite of the Ember Spirit Fire Remnant ability
 	// Author: kritth
-	// Date: 13.02.2016.
+	// Date: February 13, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTE: Particles for remnant is wrong
@@ -59468,7 +59469,7 @@
 	}
 	// Rewrite of the Ember Spirit Flame Guard ability
 	// Author: kritth
-	// Date: 13.02.2016.
+	// Date: February 13, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTE: This ability will only absorb damage whose AbilityUnitDamageType field is marked as DAMAGE_TYPE_MAGICAL
@@ -59644,7 +59645,7 @@
 	}
 	// Rewrite of the Ember Spirit Searing Chains ability
 	// Author: kritth
-	// Date: 13.02.2016.
+	// Date: February 13, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -59790,7 +59791,7 @@
 	}
 	// Rewrite of the Ember Spirit Sleight of Fist ability
 	// Author: kritth
-	// Date: 13.02.2016.
+	// Date: February 13, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -59963,7 +59964,7 @@
 	}
 	// Rewrite of the Faceless Void Backtrack ability
 	// Author: Pizzalol
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -60042,7 +60043,7 @@
 	}
 	// Rewrite of the Faceless Void Chronosphere ability
 	// Author: Pizzalol
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven/Lua
 	//
@@ -60252,7 +60253,7 @@
 	
 	// Rewrite of the Faceless Void Time Dilation ability
 	// Author: YOLOSPAGHETTI
-	// Date: 07.02.2016.
+	// Date: February 7, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -60417,7 +60418,7 @@
 	}
 	// Rewrite of the Faceless Void Time Lock ability
 	// Author: Pizzalol
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	"time_lock_datadriven"
@@ -60544,7 +60545,7 @@
 	}
 	// Rewrite of the Faceless Void Time Walk ability
 	// Author: Pizzalol, YOLOSPAGHETTI
-	// Date: 07.02.2016.
+	// Date: February 7, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -60696,7 +60697,7 @@
 	}
 	// Rewrite of the Huskar Berserkers Blood ability
 	// Author: Bude
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.85
 	// Type: Datadriven/Lua
 	// NOTES: Particles and Effects do not work at all
@@ -60773,7 +60774,7 @@
 	}
 	// Rewrite of the Huskar Burning Spear ability
 	// Author: Bude
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -60952,7 +60953,7 @@
 	}
 	// Rewrite of the Huskar Inner Vitality ability
 	// Author: Bude
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven/Lua
 	//
@@ -61069,7 +61070,7 @@
 	}
 	// Rewrite of the Huskar Life Break ability
 	// Author: Bude
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTES: Modifier that keeps huskar from attacking does not get removed if Life Break is cancelled prematurely
@@ -61260,7 +61261,7 @@
 	}
 	// Rewrite of the Invoker Alacrity ability
 	// Author: Pizzalol
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -61416,7 +61417,7 @@
 	}
 	// Rewrite of Chaos Meteor
 	// Author: Rook
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -61622,7 +61623,7 @@
 	
 	// Rewrite of the Invoker Cold Snap ability
 	// Author: Pizzalol
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -61800,7 +61801,7 @@
 	}
 	// Rewrite of the Invoker Deafening Blast ability
 	// Author: Pizzalol
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.84
 	// Type: Datadriven
 	// NOTES: Knockback calculation is static
@@ -62041,7 +62042,7 @@
 	}
 	// Rewrite of EMP
 	// Author: Rook
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -62157,7 +62158,7 @@
 	}
 	// Rewrite of Exort
 	// Author: Rook
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -62256,7 +62257,7 @@
 	}
 	// Rewrite of the Invoker Forged Spirit Melting Strike ability
 	// Author: Pizzalol
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -62338,7 +62339,7 @@
 	}
 	// Rewrite of the Invoker Forge Spirit ability
 	// Author: Pizzalol
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTES: Setting the maximum mana doesnt work currently
@@ -62481,7 +62482,7 @@
 	}
 	// Rewrite of the Invoker Ghost Walk ability
 	// Author: Pizzalol
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -62738,7 +62739,7 @@
 	}
 	// Rewrite of Ice Wall
 	// Author: Rook
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -62957,7 +62958,7 @@
 	}
 	// Rewrite of one of Invoker's empty slots
 	// Author: Rook
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTES: This is a placeholder ability for the Invoke ability
@@ -62980,7 +62981,7 @@
 	}
 	// Rewrite of one of Invoker's empty slots
 	// Author: Rook
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTES: This is a placeholder ability for the Invoke ability
@@ -63003,7 +63004,7 @@
 	}
 	// Rewrite of Invoke
 	// Author: Rook, Pizzalol
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.85
 	// Type: Datadriven
 	//
@@ -63088,7 +63089,7 @@
 	}
 	// Rewrite of Quas
 	// Author: Rook
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -63187,7 +63188,7 @@
 	}
 	// Rewrite of the Invoker Sun Strike ability
 	// Author: Pizzalol
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -63335,7 +63336,7 @@
 	}
 	// Rewrite of Tornado
 	// Author: Rook
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -63547,7 +63548,7 @@
 	}
 	// Rewrite of Wex
 	// Author: Rook
-	// Date: 14.02.2016.
+	// Date: February 14, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -63652,7 +63653,7 @@
 	}
 	// Rewrite of the Jakiro Dual Breath ability
 	// Author: Ractidous
-	// Date: 17.02.2016.
+	// Date: February 17, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -63877,7 +63878,7 @@
 	}
 	// Rewrite of the Jakiro Dual Breath ability
 	// Author: Ractidous
-	// Date: 17.02.2016.
+	// Date: February 17, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -63931,7 +63932,7 @@
 	}
 	// Rewrite of the Jakiro Ice Path ability
 	// Author: Ractidous
-	// Date: 17.02.2016.
+	// Date: February 17, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -64111,7 +64112,7 @@
 	}
 	// Rewrite of the Jakiro Liquid fire ability
 	// Author: Ractidous
-	// Date: 17.02.2016.
+	// Date: February 17, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -64288,7 +64289,7 @@
 	
 	// Rewrite of the Jakiro Macropyre ability
 	// Author: Ractidous
-	// Date: 17.02.2016.
+	// Date: February 17, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -64458,7 +64459,7 @@
 	}
 	// Rewrite of the Phantom Lancer Doppelganger ability
 	// Author: YOLOSPAGHETTI
-	// Date: 16.02.2016.
+	// Date: February 16, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTES: Illusions are blue illusions instead of yellow
@@ -64607,7 +64608,7 @@
 	}
 	// Rewrite of the Phantom Lancer Juxtapose ability
 	// Author: YOLOSPAGHETTI
-	// Date: 16.02.2016.
+	// Date: February 16, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTES: Illusions are blue illusions instead of yellow
@@ -64701,7 +64702,7 @@
 	}
 	// Rewrite of the Phantom Lancer Phantom Rush ability
 	// Author: YOLOSPAGHETTI
-	// Date: 16.02.2016.
+	// Date: February 16, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -64813,7 +64814,7 @@
 	}
 	// Rewrite of the Phantom Lancer Spirit Lance ability
 	// Author: YOLOSPAGHETTI
-	// Date: 16.02.2016.
+	// Date: February 16, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// NOTES: Illusions are blue illusions instead of yellow
@@ -64967,7 +64968,7 @@
 	}
 	// Rewrite of Cloak and Dagger
 	// Author: YOLOSPAGHETTI
-	// Date: 05.02.2016.
+	// Date: February 5, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -65048,7 +65049,7 @@
 	}
 	// Rewrite of Cloak and Dagger
 	// Author: YOLOSPAGHETTI
-	// Date: 04.02.2016.
+	// Date: February 4, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	//
@@ -65179,7 +65180,7 @@
 	}
 	// Rewrite of Smoke Screen
 	// Author: YOLOSPAGHETTI
-	// Date: 04.02.2016.
+	// Date: February 4, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	"smoke_screen_datadriven"
@@ -65305,7 +65306,7 @@
 	}
 	// Rewrite of Trick of the Trade
 	// Author: YOLOSPAGHETTI
-	// Date: 13.02.2016.
+	// Date: February 13, 2016
 	// Version: 6.86
 	// Type: Datadriven
 	// Notes: Caster needs cloak_and_dagger_datadriven as an ability or ProcBackstab will not work

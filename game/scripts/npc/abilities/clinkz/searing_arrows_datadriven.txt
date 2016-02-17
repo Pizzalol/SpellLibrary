@@ -1,6 +1,6 @@
 // Rewrite of Clinkz Searing Arrows
 // Author: Noya
-// Date: 31.12.2015.
+// Date: December 31, 2015
 // Version: 6.81
 // Type: Datadriven
 // NOTE: This uses the old Orb mechanic. Orb Labels seem to be malfunctioning, need to warn Valve about this issue.

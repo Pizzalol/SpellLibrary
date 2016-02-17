@@ -1,6 +1,6 @@
 // Rewrite of the Ancient Apparition Chilling Touch ability
 // Author: Pizzalol
-// Date: 14.02.2015.
+// Date: October 13, 2015
 // Version: 6.83
 // Type: Datadriven
 // NOTE: Cast particle is missing the falling snow

@@ -1,6 +1,6 @@
 // Rewrite of the Broodmother Spawn Spiderlings ability
 // Author: Pizzalol
-// Date: 28.11.2015.
+// Date: November 28, 2015
 // Version: 6.85
 // Type: Datadriven
 // Notes: Uses the normal dota spiderlings NOT custom ones

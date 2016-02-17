@@ -1,6 +1,6 @@
 // Ability: Bristleback
 // By: Ragnar Homsar
-// Date: 28.11.2015.
+// Date: November 28, 2015
 // Version: 6.85
 // Type: Datadriven
 //

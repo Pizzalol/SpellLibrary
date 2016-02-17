@@ -1,6 +1,6 @@
 // Rewrite of the Dazzle Shallow Grave ability
 // Author: Pizzalol
-// Date: 26.01.2016.
+// Date: January 26, 2016
 // Version: 6.86
 // Type: Datadriven
 "shallow_grave_datadriven"

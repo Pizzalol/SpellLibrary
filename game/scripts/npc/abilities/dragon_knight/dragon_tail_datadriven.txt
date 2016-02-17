@@ -1,6 +1,6 @@
 // Rewrite of the Dragon Knight Dragon Tail
 // Author: chrislotix
-// Date: 27.01.2016.
+// Date: January 27, 2016
 // Version: 6.86
 // Type: Datadriven
 "dragon_tail_datadriven"
