@@ -1,7 +1,14 @@
 // Rewrite of the Phantom Lancer Juxtapose ability
 // Author: YOLOSPAGHETTI
-// Date: February 16, 2016
-"phantom_lancer_juxtapose_datadriven"
+// Date: 16.02.2016.
+// Version: 6.86
+// Type: Datadriven
+// NOTES: Illusions are blue illusions instead of yellow
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_phantom_lancer/juxtapose.lua
+"juxtapose_datadriven"
 {
 	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"

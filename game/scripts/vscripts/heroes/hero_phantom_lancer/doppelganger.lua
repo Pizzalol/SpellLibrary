@@ -4,16 +4,14 @@
 function DoppelgangerEnd( event )
 	local caster = event.caster
 	local target = event.target
-	local ability = event.ability
+	local ability = event.ability	
 	local radius = ability:GetLevelSpecialValueFor( "target_radius", ability:GetLevel() - 1 )
-	local rand_distance = math.random(0,radius)
-	local rand_position = ability.cursor + RandomVector(rand_distance)
 	
 	-- Draws the unit's model
 	target:RemoveNoDraw()	
 	-- Sets them in a random position in the target aoe
-	target:SetAbsOrigin(rand_position)
-	FindClearSpaceForUnit(target, rand_position, true)
+	target:SetAbsOrigin(target.doppleganger_position)
+	FindClearSpaceForUnit(target, target.doppleganger_position, true)
 	
 	if target == caster then
 		local player = caster:GetPlayerID()
@@ -105,11 +103,22 @@ function CheckUnits(keys)
 	local target = keys.target
 	local ability = keys.ability
 	local duration = ability:GetLevelSpecialValueFor( "delay", ability:GetLevel() - 1 )
-	-- Helps in determining the random position vectors
-	ability.cursor = ability:GetCursorPosition()
+	local radius = ability:GetLevelSpecialValueFor( "target_radius", ability:GetLevel() - 1 )
 
 	-- Checks that the unit is either the caster or one of his illusions, and applies the banish
 	if target:GetUnitName() == caster:GetUnitName() and target:GetMainControllingPlayer() == caster:GetMainControllingPlayer() then
+
+		-- Calculate the random positions for the illusions and caster
+		local rand_distance = math.random(0,radius)	
+		local rand_position = ability:GetCursorPosition() + RandomVector(rand_distance)
+		target.doppleganger_position = rand_position
+
+		-- Create the dopple disappear effect
+		local dopple_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_lancer/phantom_lancer_doppleganger_illlmove.vpcf",PATTACH_CUSTOMORIGIN,caster)
+		ParticleManager:SetParticleControl(dopple_particle,0,target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(dopple_particle,1,rand_position)
+		ParticleManager:ReleaseParticleIndex(dopple_particle)
+
 		ability:ApplyDataDrivenModifier(caster, target, "modifier_doppelganger_datadriven", {Duration = duration})
 	end
 end

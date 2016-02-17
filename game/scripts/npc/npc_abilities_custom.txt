@@ -21126,21 +21126,14 @@
 				
 				"OnAbilityExecuted"
 				{
-					"DelayedAction"
+					"RunScript"
 					{
-						"Delay" "0.01"
-						"Action"
-						{
-							"RunScript"
-							{
-								"ScriptFile"		"heroes/hero_ogre_magi/multicast.lua"
-								"Function"			"Multicast"
-								"particle"			"particles/units/heroes/hero_ogre_magi/ogre_magi_multicast.vpcf"
-								"sound1"			"Hero_OgreMagi.Fireblast.x1"
-								"sound2"			"Hero_OgreMagi.Fireblast.x2"
-								"sound3"			"Hero_OgreMagi.Fireblast.x3"
-							}
-						}
+						"ScriptFile"		"heroes/hero_ogre_magi/multicast.lua"
+						"Function"			"Multicast"
+						"particle"			"particles/units/heroes/hero_ogre_magi/ogre_magi_multicast.vpcf"
+						"sound1"			"Hero_OgreMagi.Fireblast.x1"
+						"sound2"			"Hero_OgreMagi.Fireblast.x2"
+						"sound3"			"Hero_OgreMagi.Fireblast.x3"
 					}
 				}
 			}
@@ -22273,253 +22266,6 @@
 				}
 			}
 		}
-	}
-	
-	"phantom_lancer_doppelwalk_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"phantom_lancer_doppelwalk"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"25 20 15 10"
-			
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_1_damage_out_pct"	"-100"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_1_damage_in_pct"	"0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_2_damage_out_pct"	"-80"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_2_damage_in_pct"	"500"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"target_aoe"	"325"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"search_radius"	"900"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"delay"			"1"
-			}			
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_duration"			"8"
-			}
-		}
-	}
-	
-	"phantom_lancer_juxtapose_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_illusions"			"5 7 9"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"proc_chance_pct"		"40 45 50"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"illusion_proc_chance_pct"		"8"
-			}			
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_duration"			"8"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_damage_out_pct"	"-84"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_illusion_damage"	"16"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_damage_in_pct"	"400"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_total_illusion_damage_in_pct"	"500"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_from_illusion_duration"	"4"
-			}
-		}
-	}
-	
-	"phantom_lancer_phantom_edge_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16 12 8 4"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"min_distance"		"300"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_distance"	"600 700 800 900"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_speed"		"800"
-			}
-		}
-	}
-	
-	"phantom_lancer_spirit_lance_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"phantom_lancer_spirit_lance"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7.0 7.0 7.0 7.0"
-	
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"100 150 200 250"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 130 135 140"		
-		
-		// Cast Range
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"750"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"lance_speed"				"1000 1000 1000 1000"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.25"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_speed_pct"		"-10 -20 -30 -40"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_duration"			"2.0 4.0 6.0 8.0"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_damage_out_pct"	"-80 -80 -80 -80"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_illusion_damage"	"20 20 20 20"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_damage_in_pct"	"300 300 300 300"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_illusion_total_damage_in_pct"	"400 400 400 400"
-			}			
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"fake_lance_distance"		"675"
-			}
-		}	
 	}
 	
 	"phoenix_fire_spirits_datadriven"
@@ -64662,6 +64408,515 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_speed_per_instance"
 				}
 			}
+		}
+	}
+	// Rewrite of the Phantom Lancer Doppelganger ability
+	// Author: YOLOSPAGHETTI
+	// Date: 16.02.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTES: Illusions are blue illusions instead of yellow
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_phantom_lancer/doppelganger.lua
+	"doppelganger_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"phantom_lancer_doppelwalk"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"
+			"particle"		"particles/units/heroes/hero_phantom_lancer/phantom_lancer_doppleganger_illlmove.vpcf"
+		}
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.1"
+		"AoERadius"						"325"
+		"AbilityCooldown"				"25 20 15 10"
+		"AbilityManaCost"				"50"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"target_radius"				"325"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illusion_gather_radius"	"900"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay"					"1.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"illusion_duration"		"8.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"first_illusion_outgoing_damage"	"-100.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"first_illusion_incoming_damage"	"0.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"second_illusion_outgoing_damage"	"-80.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"second_illusion_incoming_damage"	"500.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName" "Hero_PhantomLancer.Doppelganger.Cast"
+				"Target"	"CASTER"
+			}
+			
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  				"CASTER"
+					"Radius" 				"%illusion_gather_radius"
+					"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 				"DOTA_UNIT_TARGET_HERO"
+				}
+	
+				"Action"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_phantom_lancer/doppelganger.lua"
+						"Function"	"CheckUnits"	
+					}
+				}
+			}		
+		}	
+	
+		"Modifiers"
+		{
+			"modifier_doppelganger_datadriven"
+			{			
+				"IsHidden"	"0"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_phantom_lancer/doppelganger.lua"
+						"Function"	"DoppelgangerStart"				
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_PhantomLancer.Doppelganger.Appear"
+						"Target"	"CASTER"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_phantom_lancer/doppelganger.lua"
+						"Function"	"DoppelgangerEnd"					
+					}					
+				}				
+			}
+		}
+	}
+	// Rewrite of the Phantom Lancer Juxtapose ability
+	// Author: YOLOSPAGHETTI
+	// Date: 16.02.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTES: Illusions are blue illusions instead of yellow
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_phantom_lancer/juxtapose.lua
+	"juxtapose_datadriven"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"			"phantom_lancer_juxtapose"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_proc_chance"		"40 45 50"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illusion_proc_chance"	"8"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_illusions"			"5 7 9"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"illusion_incoming_damage"	"500.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"illusion_outgoing_damage"	"-84.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illusion_duration"		"4"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_juxtapose_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+			
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_phantom_lancer/juxtapose.lua"
+						"Function"		"ConjureImage"
+					}
+				}
+			}
+	
+			"modifier_illusion_count"
+			{
+				"IsHidden"	"1"
+				
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_phantom_lancer/juxtapose.lua"
+						"Function"		"DecrementCount"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_phantom_lancer/juxtapose.lua"
+						"Function"		"DecrementCount"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of the Phantom Lancer Phantom Rush ability
+	// Author: YOLOSPAGHETTI
+	// Date: 16.02.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_phantom_lancer/phantom_rush.lua
+	"phantom_rush_datadriven"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"phantom_lancer_phantom_edge"	
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16 12 8 4"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_proc_distance"		"300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_proc_distance"		"600 700 800 900"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rush_speed"			"800"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"buff_duration"		"6.0"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_phantom_rush_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				
+				"OnOrder"
+				{				
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_phantom_lancer/phantom_rush.lua"
+						"Function"		"ApplyBuff"
+					}
+				}
+			}
+			
+			"modifier_check_distance"
+			{
+				"IsHidden"	"1"
+				
+				"OnUnitMoved"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_phantom_lancer/phantom_rush.lua"
+						"Function"		"DistanceCheck"
+					}
+				}
+			}
+			
+			"modifier_speed_buff"
+			{
+				"Duration"	"%buff_duration"
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_PhantomLancer.PhantomEdge"
+						"Target" 		"CASTER"
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"%rush_speed"
+				}
+				
+				"OnOrder"
+				{				
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_phantom_lancer/phantom_rush.lua"
+						"Function"		"RemoveBuff"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of the Phantom Lancer Spirit Lance ability
+	// Author: YOLOSPAGHETTI
+	// Date: 16.02.2016.
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTES: Illusions are blue illusions instead of yellow
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_phantom_lancer/spirit_lance.lua
+	"spirit_lance_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"phantom_lancer_spirit_lance"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"750"
+		"AbilityCastPoint"				"0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"7.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 130 135 140"
+		
+		//Damage
+		"AbilityDamage"					"100 150 200 250"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"damage_tooltip"					"100 150 200 250"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"slow"								"-10 -20 -30 -40"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"slow_duration"							"3.25"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"illusion_duration"					"2 4 6 8"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"illusion_outgoing_damage"			"-80.0"		
+			}
+			"06"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"illusion_outgoing_tooltip"			"20.0"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"illusion_incoming_damage"			"300.0"
+			}
+			"08"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"illusion_incoming_damage_total_tooltip"			"400.0"
+			}	
+			"08"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"projectile_speed"					"1000.0"
+			}		
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"
+			"particle"	"particles/units/heroes/hero_phantom_lancer/phantomlancer_spiritlance_projectile.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_PhantomLancer.SpiritLance.Throw"
+				"Target"			"CASTER"
+			}
+			
+			"TrackingProjectile"
+			{
+				"Target"           	"TARGET"
+			    "EffectName"       	"particles/units/heroes/hero_phantom_lancer/phantomlancer_spiritlance_projectile.vpcf"
+			    "Dodgeable"        	"1"
+			    "ProvidesVision"   	"0"
+			    "MoveSpeed"        	"%projectile_speed"
+			    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_PhantomLancer.SpiritLance.Impact"
+				"Target"			"TARGET"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_phantom_lancer/spirit_lance.lua"
+				"Function"			"ConjureImage"
+			}
+			
+			"Damage"
+			{
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%AbilityDamage"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_spirit_lance_datadriven"
+				"Target"		"TARGET"
+				"Duration"		"%slow_duration"
+			}	
+		}
+		
+		"Modifiers"
+		{
+			"modifier_spirit_lance_datadriven"
+			{		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
+				}			
+			}	
 		}
 	}
 	// Rewrite of Cloak and Dagger
