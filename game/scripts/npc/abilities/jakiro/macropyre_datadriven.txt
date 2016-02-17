@@ -1,4 +1,13 @@
-"jakiro_macropyre_datadriven"
+// Rewrite of the Jakiro Macropyre ability
+// Author: Ractidous
+// Date: 17.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_jakiro/macropyre.lua
+"macropyre_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -52,7 +61,7 @@
 		"05"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"path_radius"				"225"
+			"path_radius"				"240"
 		}			
 		"06"
 		{
@@ -134,7 +143,7 @@
 					"Target"			"TARGET"
 					
 					"path_radius"		"%path_radius"
-					"damage"			"%damage / 2"
+					"damage"			"%damage * %burn_interval"
 				}
 			}
 		}
@@ -159,4 +168,3 @@
 		}
 	}
 }
-

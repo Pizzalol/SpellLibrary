@@ -1,12 +1,21 @@
+// Rewrite of the Jakiro Dual Breath ability
 // Author: Ractidous
-// Date: 26.01.2015.
-// NOTE: This spell is part of the Jakiro Dual Breath ability
-"jakiro_dual_breath_fiery_datadriven"
+// Date: 17.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_jakiro/dual_breath.lua
+//
+// KV files:
+// scripts/npc/abilities/jakiro/dual_breath_datadriven.txt
+"dual_breath_fiery_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	"MaxLevel"						"1"
 	"AbilityTextureName"			"jakiro_dual_breath"
 
@@ -38,7 +47,7 @@
 			"ScriptFile"		"heroes/hero_jakiro/dual_breath.lua"
 			"Function"			"OnProjectileHit_Fiery"
 			
-			"main_ability_name"	"jakiro_dual_breath_datadriven"
+			"main_ability_name"	"dual_breath_datadriven"
 			"modifier_name"		"modifier_dual_breath_burn_datadriven"
 		}
 	}

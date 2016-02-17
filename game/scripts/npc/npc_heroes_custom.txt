@@ -15,9 +15,10 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"spirit_lance_datadriven"
-		"Ability2"	"doppelganger_datadriven"
-		"Ability3"	"phantom_rush_datadriven"
-		"Ability4"	"juxtapose_datadriven"
+		"Ability1"	"dual_breath_datadriven"
+		"Ability2"	"ice_path_datadriven"
+		"Ability3"	"liquid_fire_datadriven"
+		"Ability4"	"macropyre_datadriven"
+	    "Ability5"  "dual_breath_fiery_datadriven"
 	}
 }

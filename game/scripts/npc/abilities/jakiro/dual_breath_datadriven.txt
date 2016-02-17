@@ -1,7 +1,16 @@
+// Rewrite of the Jakiro Dual Breath ability
 // Author: Ractidous
-// Date: 26.01.2015.
-// NOTE: This ability requires Jakiro Dual Breath Fiery (datadriven version) for full functionality
-"jakiro_dual_breath_datadriven"
+// Date: 17.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_jakiro/dual_breath.lua
+//
+// KV files:
+// scripts/npc/abilities/jakiro/dual_breath_fiery_datadriven.txt
+"dual_breath_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -69,7 +78,7 @@
 		"06"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"burn_damage"			"16 36 56 76"
+			"burn_damage"			"20 40 60 80"
 		}
 		"07"
 		{
@@ -89,7 +98,13 @@
 		"10"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"speed_fire"			"850"
+			"speed_fire"			"1050"
+		}
+		// Extra
+		"11"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"burn_interval"			"0.5"
 		}
 	}
 	
@@ -114,8 +129,7 @@
 		{
 			"Target"			"POINT"
 			"ScriptFile"		"heroes/hero_jakiro/dual_breath.lua"
-			"Function"			"Launch_IcyBreath"
-			
+			"Function"			"Launch_IcyBreath"			
 			"distance"			"%range"
 			"start_radius"		"%start_radius"
 			"end_radius"		"%end_radius"
@@ -126,6 +140,7 @@
 		{
 			"Target"			"CASTER"
 			"ModifierName"		"modifier_dual_breath_pre_launch_fiery_breath_datadriven"
+			"Duration"			"%fire_delay"
 		}
 		
 		"DelayedAction"
@@ -139,7 +154,7 @@
 					"ScriptFile"		"heroes/hero_jakiro/dual_breath.lua"
 					"Function"			"Launch_FieryBreath"
 					
-					"fiery_ability_name"	"jakiro_dual_breath_fiery_datadriven"	
+					"fiery_ability_name"	"dual_breath_fiery_datadriven"	
 					"distance"			"%range"
 					"start_radius"		"%start_radius"
 					"end_radius"		"%end_radius"
@@ -157,6 +172,7 @@
 		{
 			"Target"		"TARGET"
 			"ModifierName"	"modifier_dual_breath_slow_datadriven"
+			"Duration"		"%AbilityDuration"
 		}
 	}
 	
@@ -166,7 +182,6 @@
 		{
 			"IsHidden"		"1"
 			"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
-			"Duration"		"%fire_delay"
 			
 			"States"
 			{
@@ -179,8 +194,6 @@
 			"IsHidden"		"0"
 			"IsDebuff"		"1"
 			"IsPurgable"	"1"
-			
-			"Duration"		"%AbilityDuration"
 			
 			"Properties"
 			{
@@ -196,7 +209,7 @@
 			"IsPurgable"	"1"
 			
 			"Duration"		"%AbilityDuration"
-			"ThinkInterval"	"0.5"
+			"ThinkInterval"	"%burn_interval"
 			
 			"OnIntervalThink"
 			{
@@ -204,10 +217,9 @@
 				{
 					"Target"	"TARGET"
 					"Type"		"DAMAGE_TYPE_MAGICAL"
-					"Damage"	"%burn_damage / 2"
+					"Damage"	"%burn_damage * %burn_interval"
 				}
 			}
 		}
 	}
 }
-

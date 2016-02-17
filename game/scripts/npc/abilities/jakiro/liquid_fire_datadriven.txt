@@ -1,4 +1,13 @@
-"jakiro_liquid_fire_datadriven"
+// Rewrite of the Jakiro Liquid fire ability
+// Author: Ractidous
+// Date: 17.02.2016.
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_jakiro/liquid_fire.lua
+"liquid_fire_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -39,7 +48,7 @@
 		"03"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"damage"				"15 20 25 30"
+			"damage"				"12 16 20 24"
 		}
 		"04"
 		{
