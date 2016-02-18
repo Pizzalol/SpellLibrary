@@ -1,0 +1,199 @@
+// Rewrite of the Enigma Black Hole ability
+// Author: YOLOSPAGHETTI
+// Date: February 17, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_enigma/black_hole.lua
+"black_hole_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"enigma_black_hole"
+	
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
+		"soundfile"		"sounds/weapons/hero/enigma/black_hole_loop.vsnd"
+		"soundfile"		"sounds/weapons/hero/enigma/black_hole_stop.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"275"
+	"AbilityCastPoint"				"0.3 0.3 0.3"
+	"AbilityChannelTime"			"4.0 4.0 4.0"
+	"AoERadius" 					"420"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"200.0 180.0 160.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"275 325 375"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"pull_speed"			"40 40 40"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"far_radius"			"420"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"near_radius"			"160"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"55 110 165"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"move_tick_rate"		"0.1 0.1 0.1"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"damage_tick_rate"		"1.0 1.0 1.0"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"4.0 4.0 4.0"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"vision_radius"			"800 800 800"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"CreateThinker"
+		{
+			"ModifierName"	"modifier_black_hole_datadriven"
+			"Target" 		"POINT"
+		}
+		
+			"RunScript"
+		  {
+			  "ScriptFile"	"heroes/hero_enigma/black_hole.lua"
+			  "Function"		"GiveVision"
+		  }
+	}
+	
+	"OnChannelFinish"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_enigma/black_hole.lua"
+			"Function"		"ChannelEnd"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_black_hole_datadriven"
+		{
+			"Aura"					"modifier_black_hole_debuff"
+			"Aura_Radius"			"%far_radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+			"Duration"				"%duration"
+
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Enigma.Black_Hole"
+					"Target"		"CASTER"
+				}
+				
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"TARGET"
+					"ControlPoints"
+					{
+						"00" "0 0 0"
+						"01" "%far_radius %far_radius %far_radius"
+					}
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_enigma/black_hole.lua"
+					"Function"		"MoveUnits"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Enigma.Black_Hole.Stop"
+					"Target"		"TARGET"
+				}
+			}
+			
+			"ThinkInterval"	"%move_tick_rate"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_enigma/black_hole.lua"
+					"Function"		"MoveUnits"
+				}
+			}
+		}
+		
+		"modifier_black_hole_debuff"
+		{
+			"IsPurgable"	"0"
+
+			"OverrideAnimation"     "ACT_DOTA_FLAIL"
+
+			"ThinkInterval"	"%damage_tick_rate"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%damage"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}
