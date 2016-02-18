@@ -1,0 +1,131 @@
+// Rewrite of the Enigma Midnight Pulse ability
+// Author: YOLOSPAGHETTI
+// Date: February 17, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_engima/midnight_pulse.lua
+"enigma_midnight_pulse_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AoERadius" 					"550"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"enigma_midnight_pulse"
+	
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf"
+		"soundfile"		"sounds/weapons/hero/enigma/midnight_pulse.vsnd"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.1 0.1 0.1 0.1"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"35"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"95 110 125 140"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"550"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"damage_percent"			"3 3.75 4.5 5.25"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"11"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"tick_rate"				"1.0 1.0 1.0 1.0"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+	 	"CreateThinker"
+	 	{
+	 		"ModifierName"	"modifier_midnight_pulse_datadriven"
+	 		"Target" 		"POINT"
+	 	}
+	} 
+
+	"Modifiers"
+	{
+		"modifier_midnight_pulse_datadriven"
+		{
+			"Aura"					"modifier_midnight_pulse_debuff"
+			"Aura_Radius"			"%radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+			"Duration"				"%duration"
+
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Enigma.Midnight_Pulse"
+					"Target"		"TARGET"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"TARGET"
+					"ControlPoints"
+					{
+						"00" "0 0 0"
+						"01" "%radius %radius %radius"
+					}
+				}
+				
+				"DestroyTrees"
+				{
+					"Target"	"TARGET"
+					"Radius"	"%radius"
+				}
+			}
+		}
+
+		"modifier_midnight_pulse_debuff"
+		{
+			"IsDebuff"		"1"
+			
+			"ThinkInterval"	"%tick_rate"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_engima/midnight_pulse.lua"
+					"Function"	"ApplyDPS"
+				}
+			}
+		}
+	}
+}
