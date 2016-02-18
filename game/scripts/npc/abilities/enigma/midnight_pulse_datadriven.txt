@@ -7,7 +7,7 @@
 // ----- FILE REQUIREMENTS -----
 // Script files:
 // scripts/vscripts/heroes/hero_engima/midnight_pulse.lua
-"enigma_midnight_pulse_datadriven"
+"midnight_pulse_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
