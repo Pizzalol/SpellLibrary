@@ -12,6 +12,8 @@
 // scripts/npc/abilities/enigma/eidelon_2_datadriven.txt
 // scripts/npc/abilities/enigma/eidelon_3_datadriven.txt
 // scripts/npc/abilities/enigma/eidelon_4_datadriven.txt
+//
+// Notes: Works on all creeps except for ancients
 "demonic_conversion_datadriven"
 {
 	// General
