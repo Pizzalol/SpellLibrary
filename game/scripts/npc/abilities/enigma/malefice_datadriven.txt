@@ -1,0 +1,145 @@
+// Rewrite of the Enigma Malefice ability
+// Author: YOLOSPAGHETTI
+// Date: February 17, 2016
+// Version: 6.86
+// Type: Datadriven
+"malefice_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"enigma_malefice"
+	
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/generic_gameplay/generic_stunned.vpcf"
+		"particle"		"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"
+		"soundfile"		"sounds/weapons/hero/enigma/malefice.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"600"
+	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"15.0 15.0 15.0 15.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"110 130 150 160"
+
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.33"	// Applies multiple modifiers
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"tick_rate"				"2.0 2.0 2.0 2.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"stun_duration"			"0.25 0.5 0.75 1.0"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"30 50 70 90"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"duration"				"4.0 4.0 4.0 4.0"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"tooltip_stuns"				"3 3 3 3"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_malefice_datadriven"
+			"Target"	"TARGET"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_malefice_datadriven"
+		{
+			"Duration"	"%duration"
+			"IsDebuff"	"1"
+			
+			"EffectName"		"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
+			"OnCreated"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_malefice_stun"
+					"Target"	"TARGET"
+				}
+			}
+			
+			"ThinkInterval"	"%tick_rate"
+			"OnIntervalThink"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_malefice_stun"
+					"Target"	"TARGET"
+				}
+			}
+		}
+		
+		"modifier_malefice_stun"
+		{
+			"Duration"	"%stun_duration"
+			"IsDebuff"	"1"
+			
+			"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"	"follow_overhead"
+			
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Enigma.Malefice"
+					"Target"		"TARGET"
+				}
+				
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%damage"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}
