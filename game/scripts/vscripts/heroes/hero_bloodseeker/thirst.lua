@@ -1,3 +1,5 @@
+LinkLuaModifier( "modifier_movespeed_cap", "libraries/modifiers/modifier_movespeed_cap.lua" ,LUA_MODIFIER_MOTION_NONE )
+
 --[[Author: YOLOSPAGHETTI
 	Date: February 13, 2016
 	Adds the thirst buff to the caster and vision debuff to the target if the target is below the required threshold]]
@@ -13,8 +15,8 @@ function AddThirst(keys)
 	local visibility_threshold = ability:GetLevelSpecialValueFor( "visibility_threshold_pct", ability:GetLevel() - 1 )/100
 	
 	-- Removes the 522 move speed cap
-	if caster:HasModifier("modifier_bloodseeker_thirst") == false then
-		caster:AddNewModifier(caster, nil, "modifier_bloodseeker_thirst", {})
+	if caster:HasModifier("modifier_movespeed_cap") == false then
+		caster:AddNewModifier(caster, nil, "modifier_movespeed_cap", {})
 	end
 	
 	-- Stacks of the thirst buff provided by our current target
@@ -46,12 +48,6 @@ function AddThirst(keys)
 		end
 		-- Adds the new stacks to the thirst buff
 		local new_stacks = math.floor((buff_threshold - healthPercentage)*100)
-		print("previous")
-		print(previous_stacks)
-		print("new_stacks")
-		print(new_stacks)
-		print("target")
-		print(target.stacks)
 		caster:SetModifierStackCount(buff_modifier, ability, new_stacks + previous_stacks - target.stacks)
 		target.stacks = new_stacks
 	else
@@ -119,12 +115,6 @@ function RemoveThirst(keys)
 		end
 		-- Adds the new stacks to the thirst buff
 		local new_stacks =	math.floor((buff_threshold - healthPercentage)*100)
-		print("previous")
-		print(previous_stacks)
-		print("new_stacks")
-		print(new_stacks)
-		print("target")
-		print(target.stacks)
 		caster:SetModifierStackCount(buff_modifier, ability, new_stacks + previous_stacks - target.stacks)
 		target.stacks = new_stacks
 	end
