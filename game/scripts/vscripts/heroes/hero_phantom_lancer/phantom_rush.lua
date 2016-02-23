@@ -1,3 +1,5 @@
+LinkLuaModifier( "modifier_movespeed_cap", "libraries/modifiers/modifier_movespeed_cap.lua" ,LUA_MODIFIER_MOTION_NONE )
+
 --[[Author: YOLOSPAGHETTI
 	Date: February 16, 2016
 	Applies the speed buff to the caster]]
@@ -22,7 +24,7 @@ function ApplyBuff(keys)
 			-- Checks if the caster is in range of the target
 			if distance >= min_distance and distance <= max_distance then
 				-- Removes the 522 move speed cap
-				caster:AddNewModifier(caster, nil, "modifier_bloodseeker_thirst", { duration = duration })
+				caster:AddNewModifier(caster, nil, "modifier_movespeed_cap", { duration = duration })
 				-- Apply the speed buff
 				ability:ApplyDataDrivenModifier(caster, caster, "modifier_speed_buff", {})
 				-- Start cooldown on the passive
@@ -55,7 +57,7 @@ function DistanceCheck(keys)
 		-- Checks if the caster is in range of the target
 		if distance >= min_distance and distance <= max_distance then
 			-- Removes the 522 move speed cap
-			caster:AddNewModifier(caster, nil, "modifier_bloodseeker_thirst", { duration = duration })
+			caster:AddNewModifier(caster, nil, "modifier_movespeed_cap", { duration = duration })
 			-- Apply the speed buff
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_speed_buff", {})
 			-- Start cooldown on the passive
