@@ -14,7 +14,19 @@ function CreateEidelons(keys)
 	local xp = target:GetDeathXP()
 	local units = FindUnitsInRadius(caster:GetTeamNumber(), target_origin, nil, xp_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
 	local shared_xp = xp/table.getn(units)
-	local eidelon_level = keys.ability:GetLevel()
+	local eidelon_level = ability:GetLevel()
+	
+	-- Determines which unit to spawn
+	local unit_name
+	if eidelon_level == 1 then
+		unit_name = "npc_dota_lesser_eidolon"
+	elseif eidelon_level == 2 then
+		unit_name = "npc_dota_eidolon"
+	elseif eidelon_level == 3 then
+		unit_name = "npc_dota_greater_eidolon"
+	elseif eidelon_level == 4 then
+		unit_name = "npc_dota_dire_eidolon"
+	end	
 	
 	if eidelon_level >= 1 and eidelon_level <= 4 then
 		-- Takes note of the caster for when the eidelons split
@@ -29,7 +41,7 @@ function CreateEidelons(keys)
 		end
 		-- Creates the eidelons on the target and facing the same direction
 		for i=0,count-1 do
-			local eidelon = CreateUnitByName("eidelon_" .. eidelon_level .. "_datadriven", target_origin, true, caster, nil, caster:GetTeam())
+			local eidelon = CreateUnitByName(unit_name, target_origin, true, caster, nil, caster:GetTeam())
 			eidelon:SetForwardVector(direction)
 			eidelon:SetControllableByPlayer(caster:GetPlayerID(), true)
 			eidelon:SetOwner(caster)
