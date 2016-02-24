@@ -1,4 +1,4 @@
-require('libraries/timers')
+require('timers')
 
 --[[Author: YOLOSPAGHETTI
 	Date: February 13, 2016
