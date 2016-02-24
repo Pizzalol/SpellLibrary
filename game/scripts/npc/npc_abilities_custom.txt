@@ -6386,130 +6386,6 @@
 		}
 	}
 	
-	// Rewrite of Legion Commander's Duel
-	// Author: Hewdraw
-	// Date: June 11, 2015
-	"legion_commander_duel_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                    	"ability_datadriven" 
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"legion_commander_duel"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"				"particles/units/heroes/hero_legion_commander/legion_duel_ring.vpcf"
-			"particle"				"particles/units/heroes/hero_legion_commander/legion_commander_duel_victory.vpcf"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"150"
-		"AbilityCastPoint"				"0.3"
-	
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"               "50.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"               "75"
-	
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"                 ""
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0 4.75 5.5"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"reward_damage"			"10 14 18"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_legion_commander/duel.lua"
-				"Function"		"legion_commander_duel_datadriven_on_spell_start"
-				"Duration"		"%duration"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_duel_datadriven"
-			{
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-				"IsDebuff"			"1"
-				"IsPurgable"		"0"
-	
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_legion_commander/duel.lua"
-						"Function"		"modifier_duel_datadriven_on_death"
-						"Target"		"UNIT"
-						"RewardDamage"	"%reward_damage"
-					}
-				}
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_legion_commander/duel.lua"
-						"Function"		"modifier_duel_datadriven_on_destroy"
-					}
-				}
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"0"
-					"MODIFIER_PROPERTY_DISABLE_AUTOATTACK"				"0"
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_ATTACK_IMMUNE" 			"MODIFIER_STATE_VALUE_DISABLED"
-					"MODIFIER_STATE_DISARMED"				"MODIFIER_STATE_VALUE_DISABLED"
-					"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_FLYING"					"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-	
-			"modifier_duel_damage_datadriven"
-			{
-				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
-	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"1"
-				}
-			}
-		}
-	}
 	"legion_commander_moment_of_courage_datadriven"
 	{
 		// General
@@ -64892,6 +64768,136 @@
 						"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
 						"Function"					"x_marks_the_spot_return"
 					}
+				}
+			}
+		}
+	}
+	// Rewrite of Legion Commander's Duel
+	// Author: Hewdraw
+	// Date: February 24, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_legion_commander/duel.lua
+	"duel_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                    	"ability_datadriven" 
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"legion_commander_duel"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_legion_commander/legion_duel_ring.vpcf"
+			"particle"				"particles/units/heroes/hero_legion_commander/legion_commander_duel_victory.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"150"
+		"AbilityCastPoint"				"0.3"
+	
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"               "50.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"               "75"
+	
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"                 ""
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0 4.75 5.5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"reward_damage"			"10 14 18"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_legion_commander/duel.lua"
+				"Function"		"legion_commander_duel_datadriven_on_spell_start"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_duel_datadriven"
+			{
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"IsDebuff"			"1"
+				"IsPurgable"		"0"
+	
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_legion_commander/duel.lua"
+						"Function"		"modifier_duel_datadriven_on_death"
+						"Target"		"UNIT"
+						"RewardDamage"	"%reward_damage"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_legion_commander/duel.lua"
+						"Function"		"modifier_duel_datadriven_on_destroy"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"0"
+					"MODIFIER_PROPERTY_DISABLE_AUTOATTACK"				"0"
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_ATTACK_IMMUNE" 			"MODIFIER_STATE_VALUE_DISABLED"
+					"MODIFIER_STATE_DISARMED"				"MODIFIER_STATE_VALUE_DISABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING"					"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_duel_damage_datadriven"
+			{
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"1"
 				}
 			}
 		}

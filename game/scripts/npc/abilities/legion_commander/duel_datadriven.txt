@@ -1,7 +1,13 @@
 // Rewrite of Legion Commander's Duel
 // Author: Hewdraw
-// Date: June 11, 2015
-"legion_commander_duel_datadriven"
+// Date: February 24, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_legion_commander/duel.lua
+"duel_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
