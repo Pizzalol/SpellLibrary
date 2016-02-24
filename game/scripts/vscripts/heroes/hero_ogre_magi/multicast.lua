@@ -1,5 +1,3 @@
-require('timers')
-
 --[[Author: YOLOSPAGHETTI
 	Date: February 13, 2016
 	Determines the multicast multiplier and applies it to the necessary spell]]
