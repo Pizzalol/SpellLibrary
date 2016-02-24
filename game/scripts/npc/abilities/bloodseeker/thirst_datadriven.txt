@@ -2,11 +2,12 @@
 // Author: YOLOSPAGHETTI
 // Date: February 13, 2016
 // Version: 6.86
-// Type: Datadriven
+// Type: Datadriven/Lua
 //
 // ----- FILE REQUIREMENTS -----
 // Script files:
 // scripts/vscripts/heroes/hero_bloodseeker/thirst.lua
+// scripts/vscripts/libraries/modifiers/modifier_movespeed_cap.lua
 "thirst_datadriven" 
 {
 	// General

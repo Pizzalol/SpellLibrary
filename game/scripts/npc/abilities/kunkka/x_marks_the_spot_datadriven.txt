@@ -1,4 +1,16 @@
-"kunkka_x_marks_the_spot_datadriven"
+// Rewrite of the Kunkka X marks the spot ability
+// Author: kritth
+// Date: February 24, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_kunkka/x_marks_the_spot.lua
+//
+// KV files:
+// scripts/npc/abilities/kunkka/return_datadriven.txt
+"x_marks_the_spot_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -13,16 +25,16 @@
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastRange"				"500 650 800 950"
+	"AbilityCastRange"				"400 600 800 1000"
 	"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"14 13 12 11"
+	"AbilityCooldown"				"26 20 14 8"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"80"
+	"AbilityManaCost"				"50"
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -31,22 +43,22 @@
 		"01"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"duration"					"3.0 2.0 3.0 4.0"
+			"duration"					"4.0"
 		}	
 		"02"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"allied_duration_tooltip"	"2.0 4.0 6.0 8.0"
+			"allied_duration_tooltip"	"8.0"
 		}
 		"03"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"tooltip_range"				"500 650 800 950"
+			"tooltip_range"				"400 600 800 1000"
 		}
 		"04"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"fow_range"				"400"
+			"fow_range"					"400"
 		}	  
 		"05"
 		{
@@ -69,7 +81,7 @@
 		{
 			"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
 			"Function"					"LevelUpAbility"
-			"ability_name"				"kunkka_return_datadriven"
+			"ability_name"				"return_datadriven"
 		}
 	}
 	

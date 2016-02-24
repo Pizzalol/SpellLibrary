@@ -1,4 +1,13 @@
-"kunkka_tidebringer_datadriven"
+// Rewrite of the Kunkka Tidebringer ability
+// Author: kritth
+// Date: February 24, 2016
+// Version: 6.85
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_kunkka/tidebringer.lua
+"tidebringer_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------

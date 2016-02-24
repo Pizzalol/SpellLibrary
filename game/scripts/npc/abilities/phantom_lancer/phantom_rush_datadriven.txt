@@ -2,11 +2,12 @@
 // Author: YOLOSPAGHETTI
 // Date: February 16, 2016
 // Version: 6.86
-// Type: Datadriven
+// Type: Datadriven/Lua
 //
 // ----- FILE REQUIREMENTS -----
 // Script files:
 // scripts/vscripts/heroes/hero_phantom_lancer/phantom_rush.lua
+// scripts/vscripts/libraries/modifiers/modifier_movespeed_cap.lua
 "phantom_rush_datadriven"
 {
 	"BaseClass"				"ability_datadriven"

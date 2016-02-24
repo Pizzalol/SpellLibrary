@@ -6386,706 +6386,6 @@
 		}
 	}
 	
-	"kunkka_ghostship_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"kunkka_ghostship"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.4 0.4 0.4"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60.0 50.0 40.0"
-	
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"250" // "400 500 600"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 200 250"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"tooltip_delay"				"3.07"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"ghostship_distance"		"1000 1000 1000"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"ghostship_width"			"425 425 425"
-			}			
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movespeed_bonus"			"10 10 10"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"buff_duration"				"10"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.4 1.4 1.4"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"ghostship_speed"			"650 650 650"
-			}
-			// Extra variable
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"rum_reduce_pct"			"50"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"damage_duration"			"10.0"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"damage_interval"			"1.0"
-			}
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
-			"particle"						"particles/units/heroes/hero_kunkka/kunkka_ghostship_marker.vpcf"
-			"particle"						"particles/units/heroes/hero_kunkka/kunkka_ghost_ship.vpcf"
-			"particle"						"particles/status_fx/status_effect_rum.vpcf"
-		}
-		
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"Target"					"CASTER"
-				"EffectName"				"Ability.Ghostship.bell"
-			}
-		
-			"FireSound"
-			{
-				"Target"					"CASTER"
-				"EffectName"				"Ability.Ghostship"
-			}
-		
-			"RunScript"
-			{
-				"ScriptFile"				"heroes/hero_kunkka/ghostship.lua"
-				"Function"					"ghostship_start_traverse"
-				"Target"					"POINT"
-			}
-		}
-		
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"					"0"
-			
-			"ApplyModifier"
-			{
-				"Target"					"TARGET"
-				"ModifierName"				"modifier_ghostship_rum_datadriven"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_ghostship_rum_datadriven"
-			{
-				"IsBuff"				"1"
-				
-				"Duration"				"%buff_duration"
-				
-				"StatusEffectName"		"particles/status_fx/status_effect_rum.vpcf"
-				"StatusEffectPriority"	"10"
-				
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"heroes/hero_kunkka/ghostship.lua"
-						"Function"			"ghostship_register_damage"
-						"DamageTaken"		"%attack_damage"
-					}
-				}
-				
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"heroes/hero_kunkka/ghostship.lua"
-						"Function"			"ghostship_spread_damage"
-						"Target"			"TARGET"
-					}
-				}
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%rum_reduce_pct"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_bonus"
-				}
-			}
-		}
-	}
-	// NOTE: This ability use same script as kunkka_x_marks_the_spot_datadriven
-	"kunkka_return_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"			"kunkka_return"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5.0 5.0 5.0 5.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"heroes/hero_kunkka/x_marks_the_spot.lua"
-				"Function"				"x_marks_the_spot_force_return"
-			}
-		}
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"heroes/hero_kunkka/x_marks_the_spot.lua"
-				"Function"				"LevelUpAbility"
-				"ability_name"			"kunkka_x_marks_the_spot_datadriven"
-			}
-		}
-	}
-	"kunkka_tidebringer_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityTextureName"			"kunkka_tidebringer"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13.0 10.0 7.0 4.0"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"500 500 500 600"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_bonus"				"15 30 45 60"
-			}
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"Modifiers"
-		{
-			"precache"
-			{
-				"soundfile"					"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
-				"particle"					"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
-				"particle"					"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
-			}
-		
-			"modifier_tidebringer_splash_datadriven"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-				
-				"OnCreated"
-				{
-					"FireEffect"
-					{
-						"Target"			"CASTER"
-						"EffectName"		"Hero_Kunkaa.Tidebringer"
-					}
-				
-					"AttachEffect"
-					{
-						"Target"			"CASTER"
-						"EffectName"		"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						"ControlPointEntities"
-						{
-							"CASTER"		"attach_sword"
-							"CASTER"		"attach_sword"
-							"CASTER"		"attach_sword"
-						}
-					}
-				}
-				
-				"OnAttackLanded"
-				{
-					"FireSound"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"Hero_Kunkka.Tidebringer.Attack"
-					}
-				
-					"ActOnTargets"
-					{
-						"Target"
-						{
-							"Center"		"TARGET"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						}
-						
-						"Action"
-						{
-							"FireSound"
-							{
-								"Target"			"TARGET"
-								"EffectName"		"Hero_Kunkka.TidebringerDamage"
-							}
-						
-							"CleaveAttack"
-							{
-								"CleavePercent"		"100"
-								"CleaveRadius"		"%radius"
-								"CleaveEffect"		"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
-							}
-							
-							"RunScript"
-							{
-								"ScriptFile"		"heroes/hero_kunkka/tidebringer.lua"
-								"Function"			"tidebringer_set_cooldown"
-							}
-						}
-					}
-				}
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_bonus"
-				}
-			}
-		}
-	}
-	"kunkka_torrent_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"kunkka_torrent"
-		"AOERadius"						"225"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"
-		"AbilityCastPoint"				"0.4"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0 12.0 12.0 12.0"
-	
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"120 180 240 300"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"120 120 120 120"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.5"	// applies 2 modifiers
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"225"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movespeed_bonus"			"-35"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"1.0 2.0 3.0 4.0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.53 1.53 1.53 1.53"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"delay"						"1.6 1.6 1.6 1.6"
-			}
-			// Extra variables
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tick_count"				"10"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"vision_duration"			"2.0"				// I just guess
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"torrent_height"			"400"
-			}
-		}
-	
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------	
-		"precache"
-		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
-			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_bubbles.vpcf"
-			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"heroes/hero_kunkka/torrent.lua"
-				"Function"					"torrent_bubble_allies"
-				"Target"					"POINT"
-			}
-			
-			"DelayedAction"
-			{
-				"Delay"						"%delay"
-				"Action"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"heroes/hero_kunkka/torrent.lua"
-						"Function"				"torrent_emit_sound"
-						"Target"				"POINT"
-					}
-				
-					"FireEffect"
-					{
-						"Target"				"CASTER"
-						"EffectName"			"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
-						"EffectAttachType"		"start_at_customorigin"
-						"EffectRadius"			"%radius"
-						"ControlPoints"
-						{
-							"00"				"POINT"
-						}
-					}
-				
-					"ActOnTargets"
-					{
-						"Target"
-						{
-							"Center"			"POINT"
-							"Radius"			"%radius"
-							"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-						
-						"Action"
-						{
-							"Damage"
-							{
-								"Target"			"TARGET"
-								"Damage"			"%AbilityDamage / 2"
-								"Type"				"DAMAGE_TYPE_MAGICAL"
-							}
-							
-							"RemoveModifier"
-							{
-								"Target"			"TARGET"
-								"ModifierName"		"modifier_knockback"
-							}
-							
-							"Knockback"
-							{
-								"Target"			"TARGET"
-								"Center"			"CASTER"
-								"Duration"			"%stun_duration"
-								"Distance"			"0"
-								"Height"			"%torrent_height"
-								"IsFixedDistance"	"1"
-								"ShouldStun"		"1"
-							}
-							
-							"ApplyModifier"
-							{
-								"Target"			"TARGET"
-								"ModifierName"		"modifier_torrent_damage_thinker_datadriven"
-							}
-							
-							"ApplyModifier"
-							{
-								"Target"			"TARGET"
-								"ModifierName"		"modifier_torrent_slow_debuff_datadriven"
-							}
-						}
-					}
-					
-					"RunScript"
-					{
-						"ScriptFile"				"heroes/hero_kunkka/torrent.lua"
-						"Function"					"torrent_post_vision"
-						"Target"					"POINT"
-					}
-				}
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_torrent_damage_thinker_datadriven"
-			{
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-				
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
-				
-				"Duration"					"%stun_duration"
-				"ThinkInterval"				"%stun_duration / %tick_count"
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Target"			"TARGET"
-						"Damage"			"%AbilityDamage / ( 2 * %tick_count )"
-						"Type"				"DAMAGE_TYPE_MAGICAL"
-					}
-				}
-				
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-			
-			"modifier_torrent_slow_debuff_datadriven"
-			{
-				"IsDebuff"					"1"
-			
-				"Duration"					"%stun_duration + %slow_duration"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"movespeed_bonus"
-				}
-			}
-		}
-	}
-	"kunkka_x_marks_the_spot_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"kunkka_x_marks_the_spot"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500 650 800 950"
-		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14 13 12 11"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"80"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.0 2.0 3.0 4.0"
-			}	
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"allied_duration_tooltip"	"2.0 4.0 6.0 8.0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_range"				"500 650 800 950"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"fow_range"				"400"
-			}	  
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"fow_duration"				"5.94"
-			}	
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
-			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
-		}
-		
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
-				"Function"					"LevelUpAbility"
-				"ability_name"				"kunkka_return_datadriven"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"
-				{
-					"Center"		"TARGET"
-					"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				}
-				"ModifierName"		"modifier_x_marks_the_spot_debuff_datadriven"
-				"Duration"			"%allied_duration_tooltip"
-			}
-			
-			"ApplyModifier"
-			{
-				"Target"
-				{
-					"Center"		"TARGET"
-					"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				}
-				"ModifierName"		"modifier_x_marks_the_spot_debuff_datadriven"
-				"Duration"			"%duration"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_x_marks_the_spot_debuff_datadriven"
-			{
-				"IsDebuff"			"1"
-				"IsHidden"			"0"
-				"IsPurgable"		"0"
-			
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"Target"					"TARGET"
-						"EffectName"				"Ability.XMarksTheSpot.Target"
-					}
-				
-					"AttachEffect"
-					{
-						"Target"					"TARGET"
-						"EffectName"				"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
-						"EffectAttachType"			"start_at_customorigin"
-						"ControlPointEntities"
-						{
-							"TARGET"				"attach_origin"
-						}
-					}
-				
-					"RunScript"
-					{
-						"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
-						"Function"					"x_marks_the_spot_init"
-					}
-				}
-				
-				"OnDestroy"
-				{
-					"FireSound"
-					{
-						"Target"					"TARGET"
-						"EffectName"				"Ability.XMarksTheSpot.Return"
-					}
-				
-					"RunScript"
-					{
-						"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
-						"Function"					"x_marks_the_spot_return"
-					}
-				}
-			}
-		}
-	}
 	// Rewrite of Legion Commander's Duel
 	// Author: Hewdraw
 	// Date: June 11, 2015
@@ -47758,11 +47058,12 @@
 	// Author: YOLOSPAGHETTI
 	// Date: February 13, 2016
 	// Version: 6.86
-	// Type: Datadriven
+	// Type: Datadriven/Lua
 	//
 	// ----- FILE REQUIREMENTS -----
 	// Script files:
 	// scripts/vscripts/heroes/hero_bloodseeker/thirst.lua
+	// scripts/vscripts/libraries/modifiers/modifier_movespeed_cap.lua
 	"thirst_datadriven" 
 	{
 		// General
@@ -64839,6 +64140,762 @@
 			}
 		}	
 	}
+	// Rewrite of the Kunkka Ghostship ability
+	// Author: kritth
+	// Date: February 24, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_kunkka/ghostship.lua
+	//
+	// Unit files:
+	// scripts/npc/units/npc_dummy_unit.txt
+	"ghostship_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"kunkka_ghostship"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"60.0 50.0 40.0"
+	
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"400 500 600"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 175 225"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tooltip_delay"				"3.07"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ghostship_distance"		"1000 1000 1000"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ghostship_width"			"425 425 425"
+			}			
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_bonus"			"10 10 10"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"buff_duration"				"10"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.4 1.4 1.4"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ghostship_speed"			"650 650 650"
+			}
+			// Extra variable
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rum_reduce_pct"			"50"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_duration"			"10.0"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_interval"			"1.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_ghostship_marker.vpcf"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_ghost_ship.vpcf"
+			"particle"						"particles/status_fx/status_effect_rum.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"Ability.Ghostship.bell"
+			}
+		
+			"FireSound"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"Ability.Ghostship"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"				"heroes/hero_kunkka/ghostship.lua"
+				"Function"					"ghostship_start_traverse"
+				"Target"					"POINT"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"					"0"
+			
+			"ApplyModifier"
+			{
+				"Target"					"TARGET"
+				"ModifierName"				"modifier_ghostship_rum_datadriven"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_ghostship_rum_datadriven"
+			{
+				"IsBuff"				"1"
+				
+				"Duration"				"%buff_duration"
+				
+				"StatusEffectName"		"particles/status_fx/status_effect_rum.vpcf"
+				"StatusEffectPriority"	"10"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_kunkka/ghostship.lua"
+						"Function"			"ghostship_register_damage"
+						"DamageTaken"		"%attack_damage"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_kunkka/ghostship.lua"
+						"Function"			"ghostship_spread_damage"
+						"Target"			"TARGET"
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%rum_reduce_pct"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_bonus"
+				}
+			}
+		}
+	}
+	// Rewrite of the Kunkka Retrun subability
+	// Author: kritth
+	// Date: February 24, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_kunkka/x_marks_the_spot.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/kunkka/x_marks_the_spot_datadriven.txt
+	"return_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"kunkka_return"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5.0 5.0 5.0 5.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_kunkka/x_marks_the_spot.lua"
+				"Function"				"x_marks_the_spot_force_return"
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_kunkka/x_marks_the_spot.lua"
+				"Function"				"LevelUpAbility"
+				"ability_name"			"x_marks_the_spot_datadriven"
+			}
+		}
+	}
+	// Rewrite of the Kunkka Tidebringer ability
+	// Author: kritth
+	// Date: February 24, 2016
+	// Version: 6.85
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_kunkka/tidebringer.lua
+	"tidebringer_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"kunkka_tidebringer"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13.0 10.0 7.0 4.0"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500 500 500 600"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_bonus"				"15 30 45 60"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"precache"
+			{
+				"soundfile"					"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+				"particle"					"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+				"particle"					"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
+			}
+		
+			"modifier_tidebringer_splash_datadriven"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+				
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"Hero_Kunkaa.Tidebringer"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+						}
+					}
+				}
+				
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"Hero_Kunkka.Tidebringer.Attack"
+					}
+				
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"		"TARGET"
+							"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						}
+						
+						"Action"
+						{
+							"FireSound"
+							{
+								"Target"			"TARGET"
+								"EffectName"		"Hero_Kunkka.TidebringerDamage"
+							}
+						
+							"CleaveAttack"
+							{
+								"CleavePercent"		"100"
+								"CleaveRadius"		"%radius"
+								"CleaveEffect"		"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
+							}
+							
+							"RunScript"
+							{
+								"ScriptFile"		"heroes/hero_kunkka/tidebringer.lua"
+								"Function"			"tidebringer_set_cooldown"
+							}
+						}
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_bonus"
+				}
+			}
+		}
+	}
+	// Rewrite of the Kunkka Torrent ability
+	// Author: kritth
+	// Date: February 24, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_kunkka/torrent.lua
+	//
+	// Unit files:
+	// scripts/npc/units/npc_dummy_unit.txt
+	"torrent_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"kunkka_torrent"
+		"AOERadius"						"%radius"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1500"
+		"AbilityCastPoint"				"0.4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
+	
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"120 180 240 300"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"120 120 120 120"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.5"	// applies 2 modifiers
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"225"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_bonus"			"-35"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration"				"1.0 2.0 3.0 4.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.53 1.53 1.53 1.53"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"delay"						"1.6 1.6 1.6 1.6"
+			}
+			// Extra variables
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tick_count"				"10"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_duration"			"4.73"				// delay time + 3.13 sec vision time
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"torrent_height"			"400"
+			}
+		}
+	
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------	
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_bubbles.vpcf"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"heroes/hero_kunkka/torrent.lua"
+				"Function"					"torrent_bubble_allies"
+				"Target"					"POINT"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"				"heroes/hero_kunkka/torrent.lua"
+				"Function"					"torrent_vision"
+				"Target"					"POINT"
+			}
+			
+			"DelayedAction"
+			{
+				"Delay"						"%delay"
+				"Action"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"heroes/hero_kunkka/torrent.lua"
+						"Function"				"torrent_emit_sound"
+						"Target"				"POINT"
+					}
+				
+					"FireEffect"
+					{
+						"Target"				"CASTER"
+						"EffectName"			"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+						"EffectRadius"			"%radius"
+						"ControlPoints"
+						{
+							"00"				"POINT"
+						}
+					}
+				
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"			"POINT"
+							"Radius"			"%radius"
+							"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+						
+						"Action"
+						{						
+							"RemoveModifier"
+							{
+								"Target"			"TARGET"
+								"ModifierName"		"modifier_knockback"
+							}
+							
+							"Knockback"
+							{
+								"Target"			"TARGET"
+								"Center"			"CASTER"
+								"Duration"			"%stun_duration"
+								"Distance"			"0"
+								"Height"			"%torrent_height"
+								"IsFixedDistance"	"1"
+								"ShouldStun"		"1"
+							}
+							
+							"ApplyModifier"
+							{
+								"Target"			"TARGET"
+								"ModifierName"		"modifier_torrent_damage_thinker_datadriven"
+							}
+	
+							"Damage"
+							{
+								"Target"			"TARGET"
+								"Damage"			"%AbilityDamage / 2"
+								"Type"				"DAMAGE_TYPE_MAGICAL"
+							}
+							
+							"ApplyModifier"
+							{
+								"Target"			"TARGET"
+								"ModifierName"		"modifier_torrent_slow_debuff_datadriven"
+							}						
+						}
+					}				
+				}
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_torrent_damage_thinker_datadriven"
+			{
+				"IsPurgable"				"0"
+				"IsHidden"					"1"
+				
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Duration"					"%stun_duration"
+				"ThinkInterval"				"%stun_duration / %tick_count"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"			"TARGET"
+						"Damage"			"%AbilityDamage / ( 2 * %tick_count )"
+						"Type"				"DAMAGE_TYPE_MAGICAL"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_torrent_slow_debuff_datadriven"
+			{
+				"IsDebuff"					"1"
+			
+				"Duration"					"%stun_duration + %slow_duration"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"movespeed_bonus"
+				}
+			}
+		}
+	}
+	// Rewrite of the Kunkka X marks the spot ability
+	// Author: kritth
+	// Date: February 24, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_kunkka/x_marks_the_spot.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/kunkka/return_datadriven.txt
+	"x_marks_the_spot_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"kunkka_x_marks_the_spot"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400 600 800 1000"
+		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"26 20 14 8"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"4.0"
+			}	
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"allied_duration_tooltip"	"8.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_range"				"400 600 800 1000"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fow_range"					"400"
+			}	  
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fow_duration"				"5.94"
+			}	
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
+				"Function"					"LevelUpAbility"
+				"ability_name"				"return_datadriven"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"		"TARGET"
+					"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				}
+				"ModifierName"		"modifier_x_marks_the_spot_debuff_datadriven"
+				"Duration"			"%allied_duration_tooltip"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"		"TARGET"
+					"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				}
+				"ModifierName"		"modifier_x_marks_the_spot_debuff_datadriven"
+				"Duration"			"%duration"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_x_marks_the_spot_debuff_datadriven"
+			{
+				"IsDebuff"			"1"
+				"IsHidden"			"0"
+				"IsPurgable"		"0"
+			
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"Target"					"TARGET"
+						"EffectName"				"Ability.XMarksTheSpot.Target"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"					"TARGET"
+						"EffectName"				"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
+						"EffectAttachType"			"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"				"attach_origin"
+						}
+					}
+				
+					"RunScript"
+					{
+						"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
+						"Function"					"x_marks_the_spot_init"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"FireSound"
+					{
+						"Target"					"TARGET"
+						"EffectName"				"Ability.XMarksTheSpot.Return"
+					}
+				
+					"RunScript"
+					{
+						"ScriptFile"				"heroes/hero_kunkka/x_marks_the_spot.lua"
+						"Function"					"x_marks_the_spot_return"
+					}
+				}
+			}
+		}
+	}
 	// Rewrite of the Phantom Lancer Doppelganger ability
 	// Author: YOLOSPAGHETTI
 	// Date: February 16, 2016
@@ -65086,11 +65143,12 @@
 	// Author: YOLOSPAGHETTI
 	// Date: February 16, 2016
 	// Version: 6.86
-	// Type: Datadriven
+	// Type: Datadriven/Lua
 	//
 	// ----- FILE REQUIREMENTS -----
 	// Script files:
 	// scripts/vscripts/heroes/hero_phantom_lancer/phantom_rush.lua
+	// scripts/vscripts/libraries/modifiers/modifier_movespeed_cap.lua
 	"phantom_rush_datadriven"
 	{
 		"BaseClass"				"ability_datadriven"

@@ -13,16 +13,12 @@
 	{
 		"override_hero" "npc_dota_hero_ancient_apparition"
 	
-		"AbilityLayout"	"6"
+		"AbilityLayout"	"4"
 	
-		"Ability1"	"illuminate_datadriven"
-		"Ability2"	"mana_leak_datadriven"
-		"Ability3"	"chakra_magic_datadriven"
-		"Ability4"	"recall_datadriven"
-	    "Ability5"  "blinding_light_datadriven"
-	    "Ability6"  "spirit_form_datadriven"
-	    "Ability7"  "spirit_form_illuminate_datadriven"
-	    "Ability8"  "spirit_form_illuminate_end_datadriven"
-	    "Ability9"  "illuminate_end_datadriven"
+		"Ability1"	"torrent_datadriven"
+		"Ability2"	"tidebringer_datadriven"
+		"Ability3"	"x_marks_the_spot_datadriven"
+		"Ability4"	"ghostship_datadriven"
+	    "Ability5"  "return_datadriven"
 	}
 }

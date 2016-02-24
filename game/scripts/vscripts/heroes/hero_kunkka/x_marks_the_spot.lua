@@ -8,7 +8,7 @@ function x_marks_the_spot_init( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local targetLoc = keys.target:GetAbsOrigin()
-	local x_marks_return_name = "kunkka_return_datadriven"
+	local x_marks_return_name = "return_datadriven"
 	
 	-- Set variables
 	caster.x_marks_target = target
@@ -37,8 +37,8 @@ end
 function x_marks_the_spot_return( keys )
   -- Variables
 	local caster = keys.caster
-	local x_marks = "kunkka_x_marks_the_spot_datadriven"
-	local x_marks_return = "kunkka_return_datadriven"
+	local x_marks = "x_marks_the_spot_datadriven"
+	local x_marks_return = "return_datadriven"
 	local modifierName = "modifier_x_marks_the_spot_debuff_datadriven"
 	
 	-- Check if there is target unit
@@ -60,8 +60,8 @@ end
 ]]
 function x_marks_start_cooldown( keys )
   -- Name of both abilities
-	local x_marks = "kunkka_x_marks_the_spot_datadriven"
-	local x_marks_return = "kunkka_return_datadriven"
+	local x_marks = "x_marks_the_spot_datadriven"
+	local x_marks_return = "return_datadriven"
 
   -- Loop to reset cooldown
 	for i = 0, keys.caster:GetAbilityCount() - 1 do
@@ -69,27 +69,6 @@ function x_marks_start_cooldown( keys )
 		if currentAbility ~= nil and ( currentAbility:GetAbilityName() == x_marks or currentAbility:GetAbilityName() == x_marks_return ) then
 			currentAbility:EndCooldown()
 			currentAbility:StartCooldown( currentAbility:GetCooldown( currentAbility:GetLevel() - 1 ) )
-		end
-	end
-end
-
---[[
-	Author: kritth
-	Date: 09.01.2015
-	Level up both skills at the same time
-]]
-function x_marks_the_spot_level_up( keys )
-  -- Variable for sub ability
-	local x_marks_return_name = "kunkka_return_datadriven"
-
-  -- loop to find the ability
-	for i = 0, keys.caster:GetAbilityCount() do
-		local currentAbility = keys.caster:GetAbilityByIndex( i )
-		if currentAbility ~= nil and currentAbility:GetAbilityName() == x_marks_return_name then
-			if currentAbility:GetLevel() ~= keys.ability:GetLevel() then
-				currentAbility:SetLevel( keys.ability:GetLevel() )
-			end
-			break
 		end
 	end
 end

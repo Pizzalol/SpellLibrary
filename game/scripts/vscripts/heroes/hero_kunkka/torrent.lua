@@ -40,15 +40,16 @@ function torrent_emit_sound( keys )
 end
 
 --[[
-	Author: kritth
-	Date: 9.1.2015.
-	Provide post vision
+	Author: kritth, Pizzalol
+	Date: February 24, 2016
+	Provides obstructed vision of the area
 ]]
-function torrent_post_vision( keys )
+function torrent_vision( keys )
+	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target_points[1]
 	local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 )
 	local duration = ability:GetLevelSpecialValueFor( "vision_duration", ability:GetLevel() - 1 )
 	
-	ability:CreateVisibilityNode( target, radius, duration )
+	AddFOWViewer(caster:GetTeamNumber(),target,radius,duration,true)
 end

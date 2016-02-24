@@ -1,5 +1,16 @@
-// NOTE: This ability use same script as kunkka_x_marks_the_spot_datadriven
-"kunkka_return_datadriven"
+// Rewrite of the Kunkka Retrun subability
+// Author: kritth
+// Date: February 24, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_kunkka/x_marks_the_spot.lua
+//
+// KV files:
+// scripts/npc/abilities/kunkka/x_marks_the_spot_datadriven.txt
+"return_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -18,7 +29,7 @@
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"50"
+	"AbilityManaCost"				"0"
 	
 	// Data driven
 	//-------------------------------------------------------------------------------------------------------------
@@ -37,7 +48,7 @@
 		{
 			"ScriptFile"			"heroes/hero_kunkka/x_marks_the_spot.lua"
 			"Function"				"LevelUpAbility"
-			"ability_name"			"kunkka_x_marks_the_spot_datadriven"
+			"ability_name"			"x_marks_the_spot_datadriven"
 		}
 	}
 }

@@ -1,4 +1,16 @@
-"kunkka_torrent_datadriven"
+// Rewrite of the Kunkka Torrent ability
+// Author: kritth
+// Date: February 24, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_kunkka/torrent.lua
+//
+// Unit files:
+// scripts/npc/units/npc_dummy_unit.txt
+"torrent_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -8,7 +20,7 @@
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"FightRecapLevel"				"1"
 	"AbilityTextureName"			"kunkka_torrent"
-	"AOERadius"						"225"
+	"AOERadius"						"%radius"
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
@@ -17,7 +29,7 @@
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"12.0 12.0 12.0 12.0"
+	"AbilityCooldown"				"10.0 10.0 10.0 10.0"
 
 	// Damage.
 	//-------------------------------------------------------------------------------------------------------------
@@ -69,7 +81,7 @@
 		"07"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"vision_duration"			"2.0"				// I just guess
+			"vision_duration"			"4.73"				// delay time + 3.13 sec vision time
 		}
 		"08"
 		{
@@ -93,6 +105,13 @@
 		{
 			"ScriptFile"				"heroes/hero_kunkka/torrent.lua"
 			"Function"					"torrent_bubble_allies"
+			"Target"					"POINT"
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"				"heroes/hero_kunkka/torrent.lua"
+			"Function"					"torrent_vision"
 			"Target"					"POINT"
 		}
 		
@@ -131,14 +150,7 @@
 					}
 					
 					"Action"
-					{
-						"Damage"
-						{
-							"Target"			"TARGET"
-							"Damage"			"%AbilityDamage / 2"
-							"Type"				"DAMAGE_TYPE_MAGICAL"
-						}
-						
+					{						
 						"RemoveModifier"
 						{
 							"Target"			"TARGET"
@@ -161,21 +173,21 @@
 							"Target"			"TARGET"
 							"ModifierName"		"modifier_torrent_damage_thinker_datadriven"
 						}
+
+						"Damage"
+						{
+							"Target"			"TARGET"
+							"Damage"			"%AbilityDamage / 2"
+							"Type"				"DAMAGE_TYPE_MAGICAL"
+						}
 						
 						"ApplyModifier"
 						{
 							"Target"			"TARGET"
 							"ModifierName"		"modifier_torrent_slow_debuff_datadriven"
-						}
+						}						
 					}
-				}
-				
-				"RunScript"
-				{
-					"ScriptFile"				"heroes/hero_kunkka/torrent.lua"
-					"Function"					"torrent_post_vision"
-					"Target"					"POINT"
-				}
+				}				
 			}
 		}
 	}
