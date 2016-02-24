@@ -28,7 +28,7 @@ function Multicast(keys)
     	function()
 	
 	-- Ensures the caster and ability still exist after the delay
-	if caster:IsValidEntity() and ability:IsValidEntity() then
+	if IsValidEntity(caster) and IsValidEntity(ability) then
 		-- Finds the ability that caused the event trigger by checking if the cooldown is equal to the full cooldown
 		for i=0, 15 do
 			if caster:GetAbilityByIndex(i) ~= null then
