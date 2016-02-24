@@ -1,9 +1,17 @@
 // Rewrite of the Keeper of the Light Recall ability
 // Author: Pizzalol
-// Date: 19.01.2015.
-// NOTE: This ability gets leveled up by KotL Spirit Form(datadriven version) and is also used by it
-// NOTE2: If you wish to use it as a standalone ability then just remove the NOT LEARNABLE behavior
-"keeper_of_the_light_recall_datadriven"
+// Date: February 24, 2016
+// Version: 6.86
+// Type: Datadriven
+// NOTES: If you wish to use it as a standalone ability then just remove the NOT LEARNABLE behavior
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_keeper_of_the_light/recall.lua
+//
+// KV files:
+// scripts/npc/abilities/keeper_of_the_light/spirit_form_datadriven.txt
+"recall_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -131,4 +139,3 @@
 		}
 	}
 }
-

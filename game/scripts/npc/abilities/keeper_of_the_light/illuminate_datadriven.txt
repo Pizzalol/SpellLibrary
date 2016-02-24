@@ -1,9 +1,17 @@
 // Rewrite of the Keeper of the Light Illuminate ability
 // Author: Pizzalol
-// Date: 24.01.2015.
-// NOTE: This ability is used together with the "keeper_of_the_light_illuminate_end_datadriven" ability
-// NOTE2: The projectile visual is missing horses
-"keeper_of_the_light_illuminate_datadriven"
+// Date: February 24, 2016
+// Version: 6.86
+// Type: Datadriven
+// NOTES: Projectile visual is missing horses
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_keeper_of_the_light/illuminate.lua
+//
+// KV files:
+// scripts/npc/abilities/keeper_of_the_light/illuminate_end_datadriven.txt
+"illuminate_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -113,7 +121,7 @@
 		{
 			"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
 			"Function"		"IlluminateStart"
-			"sub_ability_name"	"keeper_of_the_light_illuminate_end_datadriven"
+			"sub_ability_name"	"illuminate_end_datadriven"
 		}
 
 		"ApplyModifier"
@@ -129,7 +137,7 @@
 		{
 			"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
 			"Function"		"LevelUpAbility"
-			"ability_name"	"keeper_of_the_light_illuminate_end_datadriven"
+			"ability_name"	"illuminate_end_datadriven"
 		}
 	}
 
@@ -152,7 +160,7 @@
 		{
 			"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
 			"Function"		"IlluminateSwapEnd"
-			"sub_ability_name"	"keeper_of_the_light_illuminate_end_datadriven"
+			"sub_ability_name"	"illuminate_end_datadriven"
 		}
 
 		"RemoveModifier"
@@ -211,4 +219,3 @@
 		}		
 	}	
 }
-

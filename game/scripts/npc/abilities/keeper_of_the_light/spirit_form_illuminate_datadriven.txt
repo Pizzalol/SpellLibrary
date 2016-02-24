@@ -1,15 +1,22 @@
 // Rewrite of the Keeper of the Light Spirit Form Illuminate ability
 // Author: Pizzalol
-// Date: 25.01.2015.
-// NOTE: This ability REQUIRES the following abilities to work
-// 			keeper_of_the_light_spirit_form_datadriven
-// 			keeper_of_the_light_spirit_form_illuminate_end_datadriven
-// 
-// NOTE2: The horses are missing from the projectile visual
-// NOTE3: Uses the normal illuminate projectile instead of the spirit form one, as it is bugged
-// NOTE4: The charge up animation is just a horse with the energy gathering part, the rider is part of
-// the projectile that we are not using
-"keeper_of_the_light_spirit_form_illuminate_datadriven"
+// Date: February 24, 2016
+// Version: 6.86
+// Type: Datadriven
+// NOTES: #1 Projectile visual is missing horses
+// #2 Uses normal illuminate projectile
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua
+//
+// KV files:
+// scripts/npc/abilities/keeper_of_the_light/spirit_form_datadriven.txt
+// scripts/npc/abilities/keeper_of_the_light/spirit_form_illuminate_end_datadriven.txt
+//
+// Unit files:
+// scripts/npc/units/npc_dummy_unit.txt
+"spirit_form_illuminate_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -119,8 +126,8 @@
 		{
 			"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
 			"Function"		"SwapAbilities"
-			"main_ability_name"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
-			"sub_ability_name"	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
+			"main_ability_name"	"spirit_form_illuminate_datadriven"
+			"sub_ability_name"	"spirit_form_illuminate_end_datadriven"
 		}
 	}
 	
@@ -130,7 +137,7 @@
 		{
 			"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
 			"Function"		"LevelUpAbility"
-			"ability_name"	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
+			"ability_name"	"spirit_form_illuminate_end_datadriven"
 		}
 	}
 
@@ -207,8 +214,8 @@
 				{
 					"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
 					"Function"		"SwapAbilities"
-					"main_ability_name"	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
-					"sub_ability_name"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
+					"main_ability_name"	"spirit_form_illuminate_end_datadriven"
+					"sub_ability_name"	"spirit_form_illuminate_datadriven"
 				}
 			}			
 
@@ -265,4 +272,3 @@
 		}
 	}
 }
-

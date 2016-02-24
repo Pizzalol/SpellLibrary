@@ -1,6 +1,6 @@
 
 --[[Author: Pizzalol
-	Date: 25.01.2015.
+	Date: February 24, 2016
 	Initializes the dummy unit, channeling time and all the necessary positions and modifiers]]
 function SpiritFormIlluminateInitialize( keys )
 	local caster = keys.caster
@@ -14,15 +14,15 @@ function SpiritFormIlluminateInitialize( keys )
 
 	local dummy_modifier = keys.dummy_modifier
 
-	local max_channel_time = ability:GetLevelSpecialValueFor("max_channel_time", (ability:GetLevel() - 1)) + 0.03 -- Apply it for 1 frame longer than the duration
+	local max_channel_time = ability:GetLevelSpecialValueFor("max_channel_time", (ability:GetLevel() - 1)) + 1/30 -- Apply it for 1 frame longer than the duration
 
-	caster.spirit_form_illuminate_dummy = CreateUnitByName("npc_dummy_unit", caster_location, false, caster, caster, caster:GetTeam())
-	caster.spirit_form_illuminate_dummy:SetForwardVector(caster_direction)
-	caster.spirit_form_illuminate_dummy.spirit_form_illuminate_vision_position = caster_location
-	caster.spirit_form_illuminate_dummy.spirit_form_illuminate_position = caster_location
-	caster.spirit_form_illuminate_dummy.spirit_form_illuminate_direction = caster_direction
-	caster.spirit_form_illuminate_dummy.spirit_form_illuminate_start_time = GameRules:GetGameTime()
-	ability:ApplyDataDrivenModifier(caster, caster.spirit_form_illuminate_dummy, dummy_modifier, {duration = max_channel_time})
+	ability.spirit_form_illuminate_dummy = CreateUnitByName("npc_dummy_unit", caster_location, false, caster, caster, caster:GetTeam())
+	ability.spirit_form_illuminate_dummy:SetForwardVector(caster_direction)
+	ability.spirit_form_illuminate_dummy.spirit_form_illuminate_vision_position = caster_location
+	ability.spirit_form_illuminate_dummy.spirit_form_illuminate_position = caster_location
+	ability.spirit_form_illuminate_dummy.spirit_form_illuminate_direction = caster_direction
+	ability.spirit_form_illuminate_dummy.spirit_form_illuminate_start_time = GameRules:GetGameTime()
+	ability:ApplyDataDrivenModifier(caster, ability.spirit_form_illuminate_dummy, dummy_modifier, {duration = max_channel_time})
 end
 
 --[[
@@ -49,7 +49,7 @@ function LevelUpAbility( event )
 end
 
 --[[Author: Pizzalol
-	Date: 25.01.2015.
+	Date: February 24, 2016
 	Creates vision fields every tick interval on the set positions]]
 function SpiritFormIlluminateVisionFields( keys )
 	local target = keys.target
@@ -63,11 +63,11 @@ function SpiritFormIlluminateVisionFields( keys )
 	-- Calculating the position
 	target.spirit_form_illuminate_vision_position = target.spirit_form_illuminate_vision_position + target.spirit_form_illuminate_direction * channel_vision_step
 
-	ability:CreateVisibilityNode(target.spirit_form_illuminate_vision_position, channel_vision_radius, channel_vision_duration)
+	AddFOWViewer(target:GetTeamNumber(),target.spirit_form_illuminate_vision_position,channel_vision_radius, channel_vision_duration,false)
 end
 
 --[[Author: Pizzalol
-	Date: 25.01.2015.
+	Date: February 24, 2016
 	Calculates the channel time according to the modifiers on the dummy unit
 	Calculates the damage according to the channel time
 	Creates a projectile based on the casters starting channeling position]]
@@ -77,7 +77,7 @@ function SpiritFormIlluminateEnd( keys )
 	local ability = keys.ability
 
 	-- Ability variables
-	caster.spirit_form_illuminate_damage = 0
+	ability.spirit_form_illuminate_damage = 0
 	local damage_per_second = ability:GetLevelSpecialValueFor("damage_per_second", (ability:GetLevel() - 1))
 
 	-- Projectile variables
@@ -87,8 +87,8 @@ function SpiritFormIlluminateEnd( keys )
 	local projectile_radius = ability:GetLevelSpecialValueFor("radius", (ability:GetLevel() - 1))
 
 	-- Calculating the Illuminate channel time and damage
-	caster.spirit_form_illuminate_channel_time = GameRules:GetGameTime() - caster.spirit_form_illuminate_dummy.spirit_form_illuminate_start_time
-	caster.spirit_form_illuminate_damage = caster.spirit_form_illuminate_channel_time * damage_per_second
+	ability.spirit_form_illuminate_channel_time = GameRules:GetGameTime() - ability.spirit_form_illuminate_dummy.spirit_form_illuminate_start_time
+	ability.spirit_form_illuminate_damage = ability.spirit_form_illuminate_channel_time * damage_per_second
 
 	-- Create projectile
 	local projectileTable =
@@ -107,16 +107,16 @@ function SpiritFormIlluminateEnd( keys )
 		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
 		iUnitTargetType = ability:GetAbilityTargetType()
 	}
-	caster.spirit_form_illuminate_projectileID = ProjectileManager:CreateLinearProjectile( projectileTable )
+	ability.spirit_form_illuminate_projectileID = ProjectileManager:CreateLinearProjectile( projectileTable )
 
 	-- Kill the dummy
-	Timers:CreateTimer(0.03, function()
+	Timers:CreateTimer(1/30, function()
 		target:RemoveSelf()
 	end)
 end
 
 --[[Author: Pizzalol
-	Date: 25.01.2015.
+	Date: February 24, 2016
 	Deals damage according to the channel time]]
 function SpiritFormIlluminateProjectileHit( keys )
 	local caster = keys.caster
@@ -129,7 +129,7 @@ function SpiritFormIlluminateProjectileHit( keys )
 	damage_table.victim = target
 	damage_table.ability = ability
 	damage_table.damage_type = ability:GetAbilityDamageType()
-	damage_table.damage = caster.spirit_form_illuminate_damage
+	damage_table.damage = ability.spirit_form_illuminate_damage
 
 	ApplyDamage(damage_table)
 end
@@ -149,13 +149,13 @@ function SwapAbilities( keys )
 end
 
 --[[Author: Pizzalol
-	Date: 25.01.2015.
+	Date: February 24, 2016
 	Stops the dummy channeling]]
 function SpiritFormIlluminateStop( keys )
 	local caster = keys.caster
-	local ability = keys.ability
+	local ability = caster:FindAbilityByName(keys.spirit_form_illuminate_ability)
 
 	local dummy_modifier = keys.dummy_modifier
 
-	caster.spirit_form_illuminate_dummy:RemoveModifierByName(dummy_modifier)
+	ability.spirit_form_illuminate_dummy:RemoveModifierByName(dummy_modifier)
 end

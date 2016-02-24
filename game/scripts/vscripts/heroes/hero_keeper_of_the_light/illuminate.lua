@@ -1,14 +1,14 @@
 
---[[Author: Pizzalol/Noya
-	Date: 24.01.2015.
+--[[Author: Pizzalol,Noya
+	Date: February 24, 2016
 	Initializes the Illuminate and swaps the abilities]]
 function IlluminateStart( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	caster.illuminate_position = caster:GetAbsOrigin()
-	caster.illuminate_vision_position = caster.illuminate_position
-	caster.illuminate_direction = caster:GetForwardVector()
-	caster.illuminate_start_time = GameRules:GetGameTime()
+	ability.illuminate_position = caster:GetAbsOrigin()
+	ability.illuminate_vision_position = ability.illuminate_position
+	ability.illuminate_direction = caster:GetForwardVector()
+	ability.illuminate_start_time = GameRules:GetGameTime()
 
 	-- Swap sub_ability
 	local sub_ability_name = keys.sub_ability_name
@@ -18,7 +18,7 @@ function IlluminateStart( keys )
 end
 
 --[[Author: Pizzalol
-	Date: 24.01.2015.
+	Date: February 24, 2016
 	Creates vision fields every tick interval on the set positions]]
 function IlluminateVisionFields( keys )
 	local caster = keys.caster
@@ -30,13 +30,13 @@ function IlluminateVisionFields( keys )
 	local channel_vision_step = ability:GetLevelSpecialValueFor("channel_vision_step", (ability:GetLevel() - 1))
 
 	-- Calculating the position
-	caster.illuminate_vision_position = caster.illuminate_vision_position + caster.illuminate_direction * channel_vision_step
+	ability.illuminate_vision_position = ability.illuminate_vision_position + ability.illuminate_direction * channel_vision_step
 
-	ability:CreateVisibilityNode(caster.illuminate_vision_position, channel_vision_radius, channel_vision_duration)
+	AddFOWViewer(caster:GetTeamNumber(),ability.illuminate_vision_position,channel_vision_radius, channel_vision_duration,false)
 end
 
 --[[Author: Pizzalol
-	Date: 24.01.2015.
+	Date: February 24, 2016
 	Calculates the channel time according to the starting time and current time
 	Calculates the damage according to the channel time
 	Creates a projectile based on the casters starting channeling position]]
@@ -45,7 +45,7 @@ function IlluminateEnd( keys )
 	local ability = keys.ability
 
 	-- Ability variables	
-	caster.illuminate_damage = 0
+	ability.illuminate_damage = 0
 	local damage_per_second = ability:GetLevelSpecialValueFor("damage_per_second", (ability:GetLevel() - 1))
 
 	-- Projectile variables
@@ -56,8 +56,8 @@ function IlluminateEnd( keys )
 
 
 	-- Calculating the Illuminate channel time and damage
-	caster.illuminate_channel_time = GameRules:GetGameTime() - caster.illuminate_start_time
-	caster.illuminate_damage = caster.illuminate_channel_time * damage_per_second
+	ability.illuminate_channel_time = GameRules:GetGameTime() - ability.illuminate_start_time
+	ability.illuminate_damage = ability.illuminate_channel_time * damage_per_second
 
 
 	-- Create projectile
@@ -65,8 +65,8 @@ function IlluminateEnd( keys )
 	{
 		EffectName = projectile_name,
 		Ability = ability,
-		vSpawnOrigin = caster.illuminate_position,
-		vVelocity = caster.illuminate_direction * projectile_speed,
+		vSpawnOrigin = ability.illuminate_position,
+		vVelocity = ability.illuminate_direction * projectile_speed,
 		fDistance = projectile_distance,
 		fStartRadius = projectile_radius,
 		fEndRadius = projectile_radius,
@@ -77,11 +77,11 @@ function IlluminateEnd( keys )
 		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
 		iUnitTargetType = ability:GetAbilityTargetType()
 	}
-	caster.illuminate_projectileID = ProjectileManager:CreateLinearProjectile( projectileTable )
+	ability.illuminate_projectileID = ProjectileManager:CreateLinearProjectile( projectileTable )
 end
 
 --[[Author: Pizzalol
-	Date: 24.01.2015.
+	Date: February 24, 2016
 	Deals damage according to the channel time]]
 function IlluminateProjectileHit( keys )
 	local caster = keys.caster
@@ -94,7 +94,7 @@ function IlluminateProjectileHit( keys )
 	damage_table.victim = target
 	damage_table.ability = ability
 	damage_table.damage_type = ability:GetAbilityDamageType()
-	damage_table.damage = caster.illuminate_damage
+	damage_table.damage = ability.illuminate_damage
 
 	ApplyDamage(damage_table)
 end

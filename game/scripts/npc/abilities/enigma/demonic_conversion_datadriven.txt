@@ -3,17 +3,11 @@
 // Date: February 17, 2016
 // Version: 6.86
 // Type: Datadriven
+// Notes: Works on all creeps except for ancients
 //
 // ----- FILE REQUIREMENTS -----
 // Script files:
 // scripts/vscripts/heroes/hero_enigma/demonic_conversion.lua
-// Text files:
-// scripts/npc/units/eidelon_1_datadriven.txt
-// scripts/npc/units/eidelon_2_datadriven.txt
-// scripts/npc/units/eidelon_3_datadriven.txt
-// scripts/npc/units/eidelon_4_datadriven.txt
-//
-// Notes: Works on all creeps except for ancients
 "demonic_conversion_datadriven"
 {
 	// General

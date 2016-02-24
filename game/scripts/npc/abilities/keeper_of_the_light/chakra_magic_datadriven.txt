@@ -1,7 +1,13 @@
 // Rewrite of the Keeper of the Light Chakra Magic ability
 // Author: Pizzalol
-// Date: 19.01.2015.
-"keeper_of_the_light_chakra_magic_datadriven"
+// Date: February 24, 2016
+// Version: 6.83
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_keeper_of_the_light/chakra_magic.lua
+"chakra_magic_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -31,7 +37,7 @@
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"25 45 65 85"
+	"AbilityManaCost"				"25 35 45 55"
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
@@ -76,4 +82,3 @@
 		}
 	}
 }
-

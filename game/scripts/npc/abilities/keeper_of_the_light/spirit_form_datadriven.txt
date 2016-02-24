@@ -1,12 +1,21 @@
 // Rewrite of the Keeper of the Light Spirit Form ability
 // Author: Pizzalol
-// Date: 27.09.2015.
-// NOTE: This ability REQUIRES the following abilities and all of their sub abilities
-//		keeper_of_the_light_illuminate_datadriven
-//		keeper_of_the_light_recall_datadriven
-//		keeper_of_the_light_blinding_light_datadriven
-//		keeper_of_the_light_spirit_form_illuminate_datadriven
-"keeper_of_the_light_spirit_form_datadriven"
+// Date: February 24, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_keeper_of_the_light/spirit_form.lua
+//
+// KV files:
+// scripts/npc/abilities/keeper_of_the_light/illuminate_datadriven.txt
+// scripts/npc/abilities/keeper_of_the_light/illuminate_end_datadriven.txt
+// scripts/npc/abilities/keeper_of_the_light/recall_datadriven.txt
+// scripts/npc/abilities/keeper_of_the_light/blinding_light_datadriven.txt
+// scripts/npc/abilities/keeper_of_the_light/spirit_form_illuminate_datadriven.txt
+// scripts/npc/abilities/keeper_of_the_light/spirit_form_illuminate_end_datadriven.txt
+"spirit_form_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -77,7 +86,7 @@
 		{
 			"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
 			"Function"		"LevelUpAbility"
-			"ability_name"	"keeper_of_the_light_recall_datadriven"
+			"ability_name"	"recall_datadriven"
 			"modifier"		"modifier_spirit_form_datadriven"
 		}
 
@@ -85,7 +94,7 @@
 		{
 			"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
 			"Function"		"LevelUpAbility"
-			"ability_name"	"keeper_of_the_light_blinding_light_datadriven"
+			"ability_name"	"blinding_light_datadriven"
 			"modifier"		"modifier_spirit_form_datadriven"
 		}
 	}
@@ -111,18 +120,18 @@
 				{
 					"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
 					"Function"		"SwapAbilities"
-					"main_ability_name"	"keeper_of_the_light_illuminate_datadriven"
-					"sub_ability_name"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
+					"main_ability_name"	"illuminate_datadriven"
+					"sub_ability_name"	"spirit_form_illuminate_datadriven"
 				}
 
 				"RunScript"
 				{
 					"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
 					"Function"		"SpiritFormStart"
-					"illuminate"	"keeper_of_the_light_illuminate_datadriven"
-					"spirit_form_illuminate"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
-					"recall"		"keeper_of_the_light_recall_datadriven"
-					"blinding_light"	"keeper_of_the_light_blinding_light_datadriven"
+					"illuminate"	"illuminate_datadriven"
+					"spirit_form_illuminate"	"spirit_form_illuminate_datadriven"
+					"recall"		"recall_datadriven"
+					"blinding_light"	"blinding_light_datadriven"
 				}				
 			}
 
@@ -132,21 +141,20 @@
 				{
 					"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
 					"Function"		"SpiritFormEnd"
-					"illuminate"	"keeper_of_the_light_illuminate_datadriven"
-					"spirit_form_illuminate"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
-					"recall"		"keeper_of_the_light_recall_datadriven"
-					"blinding_light"	"keeper_of_the_light_blinding_light_datadriven"
+					"illuminate"	"illuminate_datadriven"
+					"spirit_form_illuminate"	"spirit_form_illuminate_datadriven"
+					"recall"		"recall_datadriven"
+					"blinding_light"	"blinding_light_datadriven"
 				}
 
 				"RunScript"
 				{
 					"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
 					"Function"		"SwapAbilities"
-					"main_ability_name"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
-					"sub_ability_name"	"keeper_of_the_light_illuminate_datadriven"
+					"main_ability_name"	"spirit_form_illuminate_datadriven"
+					"sub_ability_name"	"illuminate_datadriven"
 				}
 			}			
 		}
 	}	
 }
-

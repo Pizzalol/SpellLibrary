@@ -3268,253 +3268,6 @@
 		}
 	}
 	
-	"enigma_black_hole_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"enigma_black_hole"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"275"
-		"AbilityCastPoint"				"0.3 0.3 0.3"
-		"AbilityChannelTime"			"4.0 4.0 4.0"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"200.0 190.0 180.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"275 350 425"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pull_radius"			"400"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pull_speed"			"40 40 40"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"far_radius"			"400"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"near_radius"			"200"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"far_damage"			"25 50 75"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"near_damage"			"50 100 150"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_rate"				"0.1 0.1 0.1"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0 4.0 4.0"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"800 800 800"
-			}
-		}
-	}
-	
-	"enigma_demonic_conversion_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"35.0 35.0 35.0 35.0"
-		"AbilityDuration"				"35.0 35.0 35.0 35.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"170 170 170 170"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spawn_count"			"3 3 3 3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"split_attack_count"	"6 6 6 6"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"eidolon_hp_tooltip"	"180 200 220 240"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"life_extension"		"2.0 2.0 2.0 2.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"eidolon_dmg_tooltip"	"20 28 38 47"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_tooltip"		"35.0"
-			}
-		}
-	}
-	
-	"enigma_malefice_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"enigma_malefice"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15.0 15.0 15.0 15.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 130 150 160"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.33"	// Applies multiple modifiers
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_rate"				"2.0 2.0 2.0 2.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"0.25 0.5 0.75 1.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"25 40 55 70"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0 4.0 4.0 4.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tooltip_stuns"				"3 3 3 3"
-			}
-		}
-	}
-	
-	"enigma_midnight_pulse_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"enigma_midnight_pulse"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"35"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"95 110 125 140"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"600"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"damage_percent"			"3 3.75 4.5 5.25"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"11"
-			}
-		}
-	}
-	
 	"enraged_wildkin_tornado_datadriven"
 	{
 		// General
@@ -6606,1269 +6359,6 @@
 				"omni_slash_jumps_scepter"		"6 9 12"
 			}
 		}
-	}
-	
-	// Rewrite of the Keeper of the Light Blinding Light ability
-	// Author: Pizzalol
-	// Date: 20.01.2015.
-	// NOTE: This ability gets leveled up by KotL Spirit Form(datadriven version) and is also used by it
-	// NOTE2: If you wish to use it as a standalone ability then just remove the NOT LEARNABLE behavior
-	"keeper_of_the_light_blinding_light_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"MaxLevel"						"3"
-		"AbilityTextureName"			"keeper_of_the_light_blinding_light"
-		"AOERadius"						"%radius"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
-			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_aoe.vpcf"
-			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_debuff.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900 900 900"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20.0 16.0 12.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50 50 50"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"1.0"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"675 675 675"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"miss_duration"			"3.0 4.0 5.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"miss_rate"				"80 80 80"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"knockback_distance"	"400"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"knockback_height"		"50 50 50"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"knockback_duration"	"0.4 0.4 0.4"
-			}
-			// Extra
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tree_radius"			"150"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_KeeperOfTheLight.BlindingLight"
-				"Target" 		"CASTER"
-			}
-			
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_aoe.vpcf"
-				"EffectAttachType"  "start_at_customorigin"
-				"TargetPoint"		"POINT"
-	
-				"ControlPoints"
-				{
-					"01"	"POINT"
-					"02"	"%radius 0 0"
-				}
-				
-			}
-			
-	
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"  	"POINT"
-					"Radius" 	"%radius"
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-			
-				"Action"    
-				{
-					"Knockback"
-					{
-						"Target"            "TARGET"
-						"Center" 	        "POINT"
-						"Distance"	        "%knockback_distance"
-						"Duration"	        "%knockback_duration"
-						"Height"	        "%knockback_height"
-						"IsFixedDistance"	"1"
-						"ShouldStun"        "0"	
-					}
-	
-					"DelayedAction"
-					{
-						"Delay"     "%knockback_duration"
-						"Action"    
-						{
-							"DestroyTrees"
-							{
-								"Target" 		"TARGET"
-								"Radius"		"%tree_radius"
-							}
-							
-						}
-					}				
-					
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_blinding_light_datadriven"
-						"Target" 		"TARGET"
-						"Duration"		"%miss_duration"
-					}
-				}
-			}		
-		}
-	
-		"Modifiers"
-		{
-			"modifier_blinding_light_datadriven"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"1"
-		
-				"EffectName"		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_debuff.vpcf"
-				"EffectAttachType"	"follow_origin"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MISS_PERCENTAGE" "%miss_rate" 
-				}			
-			}
-		}	
-	}
-	
-	// Rewrite of the Keeper of the Light Chakra Magic ability
-	// Author: Pizzalol
-	// Date: 19.01.2015.
-	"keeper_of_the_light_chakra_magic_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
-		"AbilityTextureName"			"keeper_of_the_light_chakra_magic"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
-			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900 900 900 900"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"19.0 18.0 17.0 16.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25 45 65 85"
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"3.0"	// Value much higher than cost.
-	
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_restore"			"75 150 225 300"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_KeeperOfTheLight.ChakraMagic.Target"
-				"Target"		"TARGET"
-			}
-	
-			"FireEffect"
-			{
-				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
-				"EffectAttachType"	"start_at_customorigin"
-	
-				"ControlPointEntities"
-				{
-					"CASTER"	"follow_origin"
-					"TARGET"	"follow_origin"
-				}
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/chakra_magic.lua"
-				"Function"		"ChakraMagic"
-			}
-		}
-	}
-	
-	"keeper_of_the_light_empty1_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-	}
-	
-	"keeper_of_the_light_empty2_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-	}
-	
-	// Rewrite of the Keeper of the Light Illuminate ability
-	// Author: Pizzalol
-	// Date: 24.01.2015.
-	// NOTE: This ability is used together with the "keeper_of_the_light_illuminate_end_datadriven" ability
-	// NOTE2: The projectile visual is missing horses
-	"keeper_of_the_light_illuminate_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"keeper_of_the_light_illuminate"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
-			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
-			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge.vpcf"
-			"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1800"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
-		"AbilityChannelTime"			"2.0 3.0 4.0 5.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 160 170 180"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_per_second"		"100.0 100.0 100.0 100.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"350 350 350 350"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range"					"1550"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"speed"					"1050.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"max_channel_time"		"2.0 3.0 4.0 5.0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"800 800 800 800"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.34 3.34 3.34 3.34"
-			}
-			"08"
-			{	
-				"var_type"				"FIELD_INTEGER"
-				"channel_vision_radius"	"350"
-			}
-			"09"
-			{	
-				"var_type"					"FIELD_FLOAT"
-				"channel_vision_interval"	"0.5"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"channel_vision_duration"	"10.34"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"channel_vision_step"		"150"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Charge"
-				"Target" 		"CASTER"
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
-				"Function"		"IlluminateStart"
-				"sub_ability_name"	"keeper_of_the_light_illuminate_end_datadriven"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_illuminate_vision_field_timer_datadriven"
-				"Target" 		"CASTER"
-			}				
-		}
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
-				"Function"		"LevelUpAbility"
-				"ability_name"	"keeper_of_the_light_illuminate_end_datadriven"
-			}
-		}
-	
-		"OnChannelFinish"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Discharge"
-				"Target" 		"CASTER"
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
-				"Function"		"IlluminateEnd"
-				"projectile_name"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
-				"Function"		"IlluminateSwapEnd"
-				"sub_ability_name"	"keeper_of_the_light_illuminate_end_datadriven"
-			}
-	
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_illuminate_vision_field_timer_datadriven"
-				"Target" 		"CASTER"
-			}		
-		}
-	
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"	"0"
-			"FireSound"
-			{
-				"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Target"
-				"Target" 		"TARGET"
-			}
-			
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"            "TARGET"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
-				"Function"		"IlluminateProjectileHit"
-			}		
-		}
-		
-		
-		
-		"Modifiers"
-		{
-			"modifier_illuminate_vision_field_timer_datadriven"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
-				"IsPurgable"		"0"
-	
-				"EffectName"		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge.vpcf"
-				"EffectAttachType"	"attach_attack1"
-		
-				"ThinkInterval"  "%channel_vision_interval"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
-						"Function"		"IlluminateVisionFields"
-					}				
-				}			
-			}		
-		}	
-	}
-	
-	// Rewrite of the Keeper of the Illuminate end ability
-	// Author: Pizzalol
-	// Date: 24.01.2015.
-	// NOTE: This ability is used together with the "keeper_of_the_light_illuminate_datadriven" ability
-	"keeper_of_the_light_illuminate_end_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName"			"keeper_of_the_light_illuminate_end"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
-				"Function"		"IlluminateStop"
-			}
-		}
-		
-	}
-	
-	// Rewrite of the Keeper of the Light Mana Leak ability
-	// Author: Pizzalol
-	// Date: 20.01.2015.
-	"keeper_of_the_light_mana_leak_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"			"keeper_of_the_light_mana_leak"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
-			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf"
-			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf"
-			
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75 75 75 75"		
-	
-		// Cast Range
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550 700 850 1000"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"5.0 6.0 7.0 8.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"mana_leak_pct"				"5.0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.5 2.0 2.5 3.0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range_tooltip"		"550 700 850 1000"
-			}
-			// Extra
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"leash_range_check"			"300"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"check_interval"			"0.1"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_KeeperOfTheLight.ManaLeak.Cast"
-				"Target" 		"CASTER"
-			}
-	
-			"FireSound"
-			{
-				"EffectName"	"Hero_KeeperOfTheLight.ManaLeak.Target"
-				"Target" 		"TARGET"
-			}
-			
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf"
-				"EffectAttachType"  "start_at_customorigin"
-				
-				"ControlPointEntities"
-				{
-					"CASTER"	"attach_origin"
-					"TARGET"	"follow_origin"
-				}
-			}
-			
-			
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_mana_leak_datadriven"
-				"Target" 		"TARGET"
-				"Duration"		"%duration"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_mana_leak_datadriven"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"1"
-	
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/mana_leak.lua"
-						"Function"		"ManaLeakInit"
-						"sound"			"Hero_KeeperOfTheLight.ManaLeak.Stun"
-						"modifier"		"modifier_mana_leak_datadriven"
-					}
-				}
-	
-				"OnUnitMoved"
-				{
-					"Random"
-					{
-						"Chance"			"10"
-						"PseudoRandom" "DOTA_PSEUDO_RANDOM_JUGG_CRIT"					
-						"OnSuccess"
-						{
-							"FireEffect"
-							{
-								"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf"
-								"EffectAttachType"  "attach_origin"
-								"Target"            "UNIT"
-							}
-	
-							"FireSound"
-							{
-								"EffectName"	"Hero_KeeperOfTheLight.ManaLeak.Target"
-								"Target" 		"UNIT"
-							}						
-						}
-					}										
-				}			
-				
-		
-				"ThinkInterval"  "%check_interval"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/mana_leak.lua"
-						"Function"		"ManaLeak"
-						"sound"			"Hero_KeeperOfTheLight.ManaLeak.Stun"
-						"modifier"		"modifier_mana_leak_datadriven"
-					}
-				}			
-			}
-		}	
-	}	
-	
-	// Rewrite of the Keeper of the Light Recall ability
-	// Author: Pizzalol
-	// Date: 19.01.2015.
-	// NOTE: This ability gets leveled up by KotL Spirit Form(datadriven version) and is also used by it
-	// NOTE2: If you wish to use it as a standalone ability then just remove the NOT LEARNABLE behavior
-	"keeper_of_the_light_recall_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
-		"MaxLevel"						"3"
-		"AbilityTextureName"			"keeper_of_the_light_recall"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
-			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_cast.vpcf"
-			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
-		"AbilityCooldown"				"15.0 15.0 15.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 100 100"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"teleport_delay"		"5.0 4.0 3.0"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_KeeperOfTheLight.Recall.Cast"
-				"Target"		"CASTER"
-			}
-	
-			"FireEffect"
-			{
-				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_cast.vpcf"
-				"EffectAttachType"	"start_at_custom_origin"
-				
-				"ControlPointEntities"
-				{
-					"CASTER"	"attach_origin"
-					"CASTER"	"attach_origin"
-				}
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/recall.lua"
-				"Function"		"Recall"
-				"modifier"		"modifier_recall_datadriven"
-				"sound_caster"	"Hero_KeeperOfTheLight.Recall.Cast"
-				"sound_target"	"Hero_KeeperOfTheLight.Recall.Target"
-				"Target"		"POINT"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_recall_datadriven"
-			{
-				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall.vpcf"
-				"EffectAttachType"	"follow_origin"
-	
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-	
-				"ThinkInterval"		"%teleport_delay"
-	
-				"OnIntervalThink"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_KeeperOfTheLight.Recall.End"
-						"Target"		"TARGET"
-					}
-	
-					"MoveUnit"
-					{
-						"Target"	"TARGET"
-						"MoveToTarget"	"CASTER"
-					}
-				}
-	
-				"OnTakeDamage"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_KeeperOfTheLight.Recall.Fail"
-						"Target"		"UNIT"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/recall.lua"
-						"Function"		"RecallFail"
-						"sound_caster"	"Hero_KeeperOfTheLight.Recall.Cast"
-						"sound_target"	"Hero_KeeperOfTheLight.Recall.Target"
-					}
-	
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_recall_datadriven"
-						"Target"		"UNIT"
-					}
-				}
-			}
-		}
-	}
-	
-	// Rewrite of the Keeper of the Light Spirit Form ability
-	// Author: Pizzalol
-	// Date: 27.09.2015.
-	// NOTE: This ability REQUIRES the following abilities and all of their sub abilities
-	//		keeper_of_the_light_illuminate_datadriven
-	//		keeper_of_the_light_recall_datadriven
-	//		keeper_of_the_light_blinding_light_datadriven
-	//		keeper_of_the_light_spirit_form_illuminate_datadriven
-	"keeper_of_the_light_spirit_form_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityTextureName"			"keeper_of_the_light_spirit_form"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
-			"particle"			"particles/status_fx/status_effect_keeper_spirit_form.vpcf"
-			"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_cast.vpcf"
-			"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_ambient.vpcf"				
-		}
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"80.0 70.0 60.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 100 100"		
-	
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.35"	// Attacks are primarily about the damage
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"40.0 40.0 40.0"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_KeeperOfTheLight.SpiritForm"
-				"Target" 		"CASTER"
-			}
-	
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_cast.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"            "CASTER"
-			}		
-			
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_spirit_form_datadriven"
-				"Target" 		"CASTER"
-				"Duration"		"%duration"
-			}
-		}
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
-				"Function"		"LevelUpAbility"
-				"ability_name"	"keeper_of_the_light_recall_datadriven"
-				"modifier"		"modifier_spirit_form_datadriven"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
-				"Function"		"LevelUpAbility"
-				"ability_name"	"keeper_of_the_light_blinding_light_datadriven"
-				"modifier"		"modifier_spirit_form_datadriven"
-			}
-		}
-		
-		
-		"Modifiers"
-		{
-			"modifier_spirit_form_datadriven"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"0"
-	
-				"EffectName"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_ambient.vpcf"
-				"EffectAttachType"		"follow_origin"
-	
-				"StatusEffectName" 		"particles/status_fx/status_effect_keeper_spirit_form.vpcf" 	   
-				"StatusEffectPriority"  "10"
-				
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
-						"Function"		"SwapAbilities"
-						"main_ability_name"	"keeper_of_the_light_illuminate_datadriven"
-						"sub_ability_name"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
-						"Function"		"SpiritFormStart"
-						"illuminate"	"keeper_of_the_light_illuminate_datadriven"
-						"spirit_form_illuminate"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
-						"recall"		"keeper_of_the_light_recall_datadriven"
-						"blinding_light"	"keeper_of_the_light_blinding_light_datadriven"
-					}				
-				}
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
-						"Function"		"SpiritFormEnd"
-						"illuminate"	"keeper_of_the_light_illuminate_datadriven"
-						"spirit_form_illuminate"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
-						"recall"		"keeper_of_the_light_recall_datadriven"
-						"blinding_light"	"keeper_of_the_light_blinding_light_datadriven"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
-						"Function"		"SwapAbilities"
-						"main_ability_name"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
-						"sub_ability_name"	"keeper_of_the_light_illuminate_datadriven"
-					}
-				}			
-			}
-		}	
-	}
-	
-	// Rewrite of the Keeper of the Light Spirit Form Illuminate ability
-	// Author: Pizzalol
-	// Date: 25.01.2015.
-	// NOTE: This ability REQUIRES the following abilities to work
-	// 			keeper_of_the_light_spirit_form_datadriven
-	// 			keeper_of_the_light_spirit_form_illuminate_end_datadriven
-	// 
-	// NOTE2: The horses are missing from the projectile visual
-	// NOTE3: Uses the normal illuminate projectile instead of the spirit form one, as it is bugged
-	// NOTE4: The charge up animation is just a horse with the energy gathering part, the rider is part of
-	// the projectile that we are not using
-	"keeper_of_the_light_spirit_form_illuminate_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"keeper_of_the_light_spirit_form_illuminate"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
-			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
-			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge_spirit_form.vpcf"
-			"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"		
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1800"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 160 170 180"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_per_second"		"100.0 100.0 100.0 100.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"350 350 350 350"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range"					"1550"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"speed"					"1050.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"max_channel_time"		"2.0 3.0 4.0 5.0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"800 800 800 800"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.34 3.34 3.34 3.34"
-			}
-			"08"
-			{	
-				"var_type"				"FIELD_INTEGER"
-				"channel_vision_radius"	"350"
-			}
-			"09"
-			{	
-				"var_type"					"FIELD_FLOAT"
-				"channel_vision_interval"	"0.5"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"channel_vision_duration"	"10.34"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"channel_vision_step"		"150"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
-				"Function"		"SpiritFormIlluminateInitialize"
-				"dummy_modifier"	"modifier_spirit_form_illuminate_dummy_datadriven"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
-				"Function"		"SwapAbilities"
-				"main_ability_name"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
-				"sub_ability_name"	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
-			}
-		}
-		
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
-				"Function"		"LevelUpAbility"
-				"ability_name"	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
-			}
-		}
-	
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"	"0"
-			"FireSound"
-			{
-				"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Target"
-				"Target" 		"TARGET"
-			}
-			
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"            "TARGET"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
-				"Function"		"SpiritFormIlluminateProjectileHit"
-			}		
-		}
-	
-		"Modifiers"
-		{
-			"modifier_spirit_form_illuminate_dummy_datadriven"
-			{
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Charge"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-						}
-					}
-					
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_spirit_form_illuminate_vision_field_timer_datadriven"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-						}
-					}			
-				}
-	
-				"OnDestroy"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Discharge"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-						}
-					}
-					
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
-						"Function"		"SpiritFormIlluminateEnd"
-						"projectile_name" 			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
-					}
-	
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
-						"Function"		"SwapAbilities"
-						"main_ability_name"	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
-						"sub_ability_name"	"keeper_of_the_light_spirit_form_illuminate_datadriven"
-					}
-				}			
-	
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NOT_ON_MINIMAP"		"MODIFIER_STATE_VALUE_ENABLED"
-				}			
-			}
-	
-			"modifier_spirit_form_illuminate_vision_field_timer_datadriven"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"0"
-				"IsPurgable"		"0"
-	
-				"Attributes"		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-	
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge_spirit_form.vpcf"
-						"EffectAttachType"  "start_at_customorigin"
-						"Target"
-						{
-							"Center"	"CASTER"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-						}
-	
-						"ControlPointEntities"
-						{
-							"CASTER"	"attach_origin"
-							"CASTER"	"attach_origin"
-							"CASTER"	"attach_origin"
-							"CASTER"	"attach_origin"
-							"CASTER"	"attach_origin"
-						}
-					}	
-				}
-		
-				"ThinkInterval"  "%channel_vision_interval"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
-						"Function"		"SpiritFormIlluminateVisionFields"
-					}				
-				}			
-			}
-		}
-	}
-	
-	// Rewrite of the Keeper of the Light Spirit Form Illuminate End ability
-	// Author: Pizzalol
-	// Date: 25.01.2015.
-	// NOTE: This ability requires the "keeper_of_the_light_spirit_form_illuminate_datadriven" ability to work
-	"keeper_of_the_light_spirit_form_illuminate_end_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName"			"keeper_of_the_light_spirit_form_illuminate_end"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
-				"Function"		"SpiritFormIlluminateStop"
-				"dummy_modifier"	"modifier_spirit_form_illuminate_dummy_datadriven"
-			}
-		}	
 	}
 	
 	"kobold_taskmaster_speed_aura_datadriven"
@@ -59962,6 +58452,596 @@
 			}
 		}
 	}
+	// Rewrite of the Enigma Black Hole ability
+	// Author: YOLOSPAGHETTI
+	// Date: February 17, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_enigma/black_hole.lua
+	"black_hole_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"enigma_black_hole"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
+			"soundfile"		"sounds/weapons/hero/enigma/black_hole_loop.vsnd"
+			"soundfile"		"sounds/weapons/hero/enigma/black_hole_stop.vsnd"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"275"
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+		"AbilityChannelTime"			"4.0 4.0 4.0"
+		"AoERadius" 					"420"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"200.0 180.0 160.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"275 325 375"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pull_speed"			"40 40 40"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"far_radius"			"420"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"near_radius"			"160"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"55 110 165"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"move_tick_rate"		"0.1 0.1 0.1"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_tick_rate"		"1.0 1.0 1.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0 4.0 4.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"800 800 800"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"CreateThinker"
+			{
+				"ModifierName"	"modifier_black_hole_datadriven"
+				"Target" 		"POINT"
+			}
+			
+				"RunScript"
+			  {
+				  "ScriptFile"	"heroes/hero_enigma/black_hole.lua"
+				  "Function"		"GiveVision"
+			  }
+		}
+		
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_enigma/black_hole.lua"
+				"Function"		"ChannelEnd"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_black_hole_datadriven"
+			{
+				"Aura"					"modifier_black_hole_debuff"
+				"Aura_Radius"			"%far_radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+				"Duration"				"%duration"
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Enigma.Black_Hole"
+						"Target"		"CASTER"
+					}
+					
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+						"ControlPoints"
+						{
+							"00" "0 0 0"
+							"01" "%far_radius %far_radius %far_radius"
+						}
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_enigma/black_hole.lua"
+						"Function"		"MoveUnits"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Enigma.Black_Hole.Stop"
+						"Target"		"TARGET"
+					}
+				}
+				
+				"ThinkInterval"	"%move_tick_rate"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_enigma/black_hole.lua"
+						"Function"		"MoveUnits"
+					}
+				}
+			}
+			
+			"modifier_black_hole_debuff"
+			{
+				"IsPurgable"	"0"
+	
+				"OverrideAnimation"     "ACT_DOTA_FLAIL"
+	
+				"ThinkInterval"	"%damage_tick_rate"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%damage"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	// Rewrite of the Enigma Demonic Conversion ability
+	// Author: YOLOSPAGHETTI
+	// Date: February 17, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	// Notes: Works on all creeps except for ancients
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_enigma/demonic_conversion.lua
+	"demonic_conversion_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"AbilityTextureName"			"enigma_demonic_conversion"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"sounds/weapons/hero/enigma/demonic_conversion.vsnd"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"35.0 35.0 35.0 35.0"
+		"AbilityDuration"				"35.0 35.0 35.0 35.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"170 170 170 170"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spawn_count"			"3 3 3 3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"split_attack_count"	"6 6 6 6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"eidolon_hp_tooltip"	"180 200 220 240"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"life_extension"		"2.0 2.0 2.0 2.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"eidolon_dmg_tooltip"	"20 28 38 47"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_tooltip"		"35.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"xp_radius"				"1300"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Enigma.Demonic_Conversion"
+				"Target"		"TARGET"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_enigma/demonic_conversion.lua"
+				"Function"		"CreateEidelons"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_check_attacks"
+			{
+				"IsHidden"	"1"
+			
+				"OnAttack"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_enigma/demonic_conversion.lua"
+						"Function"		"CheckAttacks"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of the Enigma Malefice ability
+	// Author: YOLOSPAGHETTI
+	// Date: February 17, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	"malefice_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"enigma_malefice"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"		"particles/generic_gameplay/generic_stunned.vpcf"
+			"particle"		"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"
+			"soundfile"		"sounds/weapons/hero/enigma/malefice.vsnd"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"15.0 15.0 15.0 15.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110 130 150 160"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.33"	// Applies multiple modifiers
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_rate"				"2.0 2.0 2.0 2.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"0.25 0.5 0.75 1.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"30 50 70 90"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0 4.0 4.0 4.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_stuns"				"3 3 3 3"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_malefice_datadriven"
+				"Target"	"TARGET"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_malefice_datadriven"
+			{
+				"Duration"	"%duration"
+				"IsDebuff"	"1"
+				
+				"EffectName"		"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_malefice_stun"
+						"Target"	"TARGET"
+					}
+				}
+				
+				"ThinkInterval"	"%tick_rate"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_malefice_stun"
+						"Target"	"TARGET"
+					}
+				}
+			}
+			
+			"modifier_malefice_stun"
+			{
+				"Duration"	"%stun_duration"
+				"IsDebuff"	"1"
+				
+				"EffectName"	"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Enigma.Malefice"
+						"Target"		"TARGET"
+					}
+					
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%damage"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	// Rewrite of the Enigma Midnight Pulse ability
+	// Author: YOLOSPAGHETTI
+	// Date: February 17, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_engima/midnight_pulse.lua
+	"midnight_pulse_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AoERadius" 					"550"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"enigma_midnight_pulse"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf"
+			"soundfile"		"sounds/weapons/hero/enigma/midnight_pulse.vsnd"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.1 0.1 0.1 0.1"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"35"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"95 110 125 140"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"550"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_percent"			"3 3.75 4.5 5.25"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"11"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_rate"				"1.0 1.0 1.0 1.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+		 	"CreateThinker"
+		 	{
+		 		"ModifierName"	"modifier_midnight_pulse_datadriven"
+		 		"Target" 		"POINT"
+		 	}
+		} 
+	
+		"Modifiers"
+		{
+			"modifier_midnight_pulse_datadriven"
+			{
+				"Aura"					"modifier_midnight_pulse_debuff"
+				"Aura_Radius"			"%radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+				"Duration"				"%duration"
+	
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Enigma.Midnight_Pulse"
+						"Target"		"TARGET"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+						"ControlPoints"
+						{
+							"00" "0 0 0"
+							"01" "%radius %radius %radius"
+						}
+					}
+					
+					"DestroyTrees"
+					{
+						"Target"	"TARGET"
+						"Radius"	"%radius"
+					}
+				}
+			}
+	
+			"modifier_midnight_pulse_debuff"
+			{
+				"IsDebuff"		"1"
+				
+				"ThinkInterval"	"%tick_rate"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_engima/midnight_pulse.lua"
+						"Function"	"ApplyDPS"
+					}
+				}
+			}
+		}
+	}
 	// Rewrite of the Faceless Void Backtrack ability
 	// Author: Pizzalol
 	// Date: February 14, 2016
@@ -64456,6 +63536,1308 @@
 				}
 			}
 		}
+	}
+	// Rewrite of the Keeper of the Light Blinding Light ability
+	// Author: Pizzalol
+	// Date: February 24, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTES: If you wish to use it as a standalone ability then just remove the NOT LEARNABLE behavior
+	//
+	// ----- FILE REQUIREMENTS -----
+	// KV files:
+	// scripts/npc/abilities/keeper_of_the_light/spirit_form_datadriven.txt
+	"blinding_light_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"MaxLevel"						"3"
+		"AbilityTextureName"			"keeper_of_the_light_blinding_light"
+		"AOERadius"						"%radius"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_aoe.vpcf"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_debuff.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900 900 900"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20.0 16.0 12.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 50 50"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"1.0"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"675 675 675"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"miss_duration"			"4.0 5.0 6.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"miss_rate"				"80 80 80"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"knockback_distance"	"400"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"knockback_height"		"50 50 50"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockback_duration"	"0.4 0.4 0.4"
+			}
+			// Extra
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tree_radius"			"150"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.BlindingLight"
+				"Target" 		"CASTER"
+			}
+			
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_aoe.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				"TargetPoint"		"POINT"
+	
+				"ControlPoints"
+				{
+					"01"	"POINT"
+					"02"	"%radius 0 0"
+				}
+				
+			}
+			
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  	"POINT"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+			
+				"Action"    
+				{
+					"Knockback"
+					{
+						"Target"            "TARGET"
+						"Center" 	        "POINT"
+						"Distance"	        "%knockback_distance"
+						"Duration"	        "%knockback_duration"
+						"Height"	        "%knockback_height"
+						"IsFixedDistance"	"1"
+						"ShouldStun"        "0"	
+					}
+	
+					"DelayedAction"
+					{
+						"Delay"     "%knockback_duration"
+						"Action"    
+						{
+							"DestroyTrees"
+							{
+								"Target" 		"TARGET"
+								"Radius"		"%tree_radius"
+							}
+							
+						}
+					}				
+					
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_blinding_light_datadriven"
+						"Target" 		"TARGET"
+						"Duration"		"%miss_duration"
+					}
+				}
+			}		
+		}
+	
+		"Modifiers"
+		{
+			"modifier_blinding_light_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+		
+				"EffectName"		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE" "%miss_rate" 
+				}			
+			}
+		}	
+	}
+	// Rewrite of the Keeper of the Light Chakra Magic ability
+	// Author: Pizzalol
+	// Date: February 24, 2016
+	// Version: 6.83
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_keeper_of_the_light/chakra_magic.lua
+	"chakra_magic_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"AbilityTextureName"			"keeper_of_the_light_chakra_magic"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900 900 900 900"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"19.0 18.0 17.0 16.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"25 35 45 55"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"3.0"	// Value much higher than cost.
+	
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_restore"			"75 150 225 300"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.ChakraMagic.Target"
+				"Target"		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+	
+				"ControlPointEntities"
+				{
+					"CASTER"	"follow_origin"
+					"TARGET"	"follow_origin"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/chakra_magic.lua"
+				"Function"		"ChakraMagic"
+			}
+		}
+	}
+	// Rewrite of the Keeper of the Light Illuminate ability
+	// Author: Pizzalol
+	// Date: February 24, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTES: Projectile visual is missing horses
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_keeper_of_the_light/illuminate.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/keeper_of_the_light/illuminate_end_datadriven.txt
+	"illuminate_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"keeper_of_the_light_illuminate"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge.vpcf"
+			"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1800"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
+		"AbilityChannelTime"			"2.0 3.0 4.0 5.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 160 170 180"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_second"		"100.0 100.0 100.0 100.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"350 350 350 350"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"1550"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"speed"					"1050.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"max_channel_time"		"2.0 3.0 4.0 5.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"800 800 800 800"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"3.34 3.34 3.34 3.34"
+			}
+			"08"
+			{	
+				"var_type"				"FIELD_INTEGER"
+				"channel_vision_radius"	"350"
+			}
+			"09"
+			{	
+				"var_type"					"FIELD_FLOAT"
+				"channel_vision_interval"	"0.5"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"channel_vision_duration"	"10.34"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"channel_vision_step"		"150"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Charge"
+				"Target" 		"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+				"Function"		"IlluminateStart"
+				"sub_ability_name"	"illuminate_end_datadriven"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_illuminate_vision_field_timer_datadriven"
+				"Target" 		"CASTER"
+			}				
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"illuminate_end_datadriven"
+			}
+		}
+	
+		"OnChannelFinish"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Discharge"
+				"Target" 		"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+				"Function"		"IlluminateEnd"
+				"projectile_name"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+				"Function"		"IlluminateSwapEnd"
+				"sub_ability_name"	"illuminate_end_datadriven"
+			}
+	
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_illuminate_vision_field_timer_datadriven"
+				"Target" 		"CASTER"
+			}		
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Target"
+				"Target" 		"TARGET"
+			}
+			
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+				"Function"		"IlluminateProjectileHit"
+			}		
+		}
+		
+		
+		
+		"Modifiers"
+		{
+			"modifier_illuminate_vision_field_timer_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+	
+				"EffectName"		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge.vpcf"
+				"EffectAttachType"	"attach_attack1"
+		
+				"ThinkInterval"  "%channel_vision_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+						"Function"		"IlluminateVisionFields"
+					}				
+				}			
+			}		
+		}	
+	}
+	// Rewrite of the Keeper of the Illuminate end ability
+	// Author: Pizzalol
+	// Date: February 24, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_keeper_of_the_light/illuminate.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/keeper_of_the_light/illuminate_datadriven.txt
+	"illuminate_end_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName"			"keeper_of_the_light_illuminate_end"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/illuminate.lua"
+				"Function"		"IlluminateStop"
+			}
+		}	
+	}
+	// Rewrite of the Keeper of the Light Mana Leak ability
+	// Author: Pizzalol
+	// Date: February 24, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTES: Sound is inconsistent
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_keeper_of_the_light/mana_leak.lua
+	"mana_leak_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"keeper_of_the_light_mana_leak"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf"
+			
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16.0 14.0 12.0 10.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75 75 75 75"		
+	
+		// Cast Range
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"550 700 850 1000"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"5.0 6.0 7.0 8.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"mana_leak_pct"				"5.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.5 2.0 2.5 3.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_tooltip"		"550 700 850 1000"
+			}
+			// Extra
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"leash_range_check"			"300"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"check_interval"			"0.1"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.ManaLeak.Cast"
+				"Target" 		"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.ManaLeak.Target"
+				"Target" 		"TARGET"
+			}
+			
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_origin"
+					"TARGET"	"follow_origin"
+				}
+			}
+			
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mana_leak_datadriven"
+				"Target" 		"TARGET"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_mana_leak_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/mana_leak.lua"
+						"Function"		"ManaLeakInit"
+						"sound"			"Hero_KeeperOfTheLight.ManaLeak.Stun"
+						"modifier"		"modifier_mana_leak_datadriven"
+					}
+				}
+	
+				"OnUnitMoved"
+				{
+					"Random"
+					{
+						"Chance"			"10"
+						"PseudoRandom" "DOTA_PSEUDO_RANDOM_JUGG_CRIT"					
+						"OnSuccess"
+						{
+							"FireEffect"
+							{
+								"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf"
+								"EffectAttachType"  "attach_origin"
+								"Target"            "UNIT"
+							}
+	
+							"FireSound"
+							{
+								"EffectName"	"Hero_KeeperOfTheLight.ManaLeak.Target"
+								"Target" 		"UNIT"
+							}						
+						}
+					}										
+				}			
+				
+		
+				"ThinkInterval"  "%check_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/mana_leak.lua"
+						"Function"		"ManaLeak"
+						"sound"			"Hero_KeeperOfTheLight.ManaLeak.Stun"
+						"modifier"		"modifier_mana_leak_datadriven"
+					}
+				}			
+			}
+		}	
+	}
+	// Rewrite of the Keeper of the Light Recall ability
+	// Author: Pizzalol
+	// Date: February 24, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTES: If you wish to use it as a standalone ability then just remove the NOT LEARNABLE behavior
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_keeper_of_the_light/recall.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/keeper_of_the_light/spirit_form_datadriven.txt
+	"recall_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"MaxLevel"						"3"
+		"AbilityTextureName"			"keeper_of_the_light_recall"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_cast.vpcf"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCooldown"				"15.0 15.0 15.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 100 100"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"teleport_delay"		"5.0 4.0 3.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.Recall.Cast"
+				"Target"		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall_cast.vpcf"
+				"EffectAttachType"	"start_at_custom_origin"
+				
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_origin"
+					"CASTER"	"attach_origin"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/recall.lua"
+				"Function"		"Recall"
+				"modifier"		"modifier_recall_datadriven"
+				"sound_caster"	"Hero_KeeperOfTheLight.Recall.Cast"
+				"sound_target"	"Hero_KeeperOfTheLight.Recall.Target"
+				"Target"		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_recall_datadriven"
+			{
+				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_recall.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+	
+				"ThinkInterval"		"%teleport_delay"
+	
+				"OnIntervalThink"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_KeeperOfTheLight.Recall.End"
+						"Target"		"TARGET"
+					}
+	
+					"MoveUnit"
+					{
+						"Target"	"TARGET"
+						"MoveToTarget"	"CASTER"
+					}
+				}
+	
+				"OnTakeDamage"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_KeeperOfTheLight.Recall.Fail"
+						"Target"		"UNIT"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/recall.lua"
+						"Function"		"RecallFail"
+						"sound_caster"	"Hero_KeeperOfTheLight.Recall.Cast"
+						"sound_target"	"Hero_KeeperOfTheLight.Recall.Target"
+					}
+	
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_recall_datadriven"
+						"Target"		"UNIT"
+					}
+				}
+			}
+		}
+	}
+	// Rewrite of the Keeper of the Light Spirit Form ability
+	// Author: Pizzalol
+	// Date: February 24, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_keeper_of_the_light/spirit_form.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/keeper_of_the_light/illuminate_datadriven.txt
+	// scripts/npc/abilities/keeper_of_the_light/illuminate_end_datadriven.txt
+	// scripts/npc/abilities/keeper_of_the_light/recall_datadriven.txt
+	// scripts/npc/abilities/keeper_of_the_light/blinding_light_datadriven.txt
+	// scripts/npc/abilities/keeper_of_the_light/spirit_form_illuminate_datadriven.txt
+	// scripts/npc/abilities/keeper_of_the_light/spirit_form_illuminate_end_datadriven.txt
+	"spirit_form_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"			"keeper_of_the_light_spirit_form"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"particle"			"particles/status_fx/status_effect_keeper_spirit_form.vpcf"
+			"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_cast.vpcf"
+			"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_ambient.vpcf"				
+		}
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"80.0 70.0 60.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 100 100"		
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.35"	// Attacks are primarily about the damage
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"40.0 40.0 40.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.SpiritForm"
+				"Target" 		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_cast.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}		
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_spirit_form_datadriven"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+		}
+	
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"recall_datadriven"
+				"modifier"		"modifier_spirit_form_datadriven"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"blinding_light_datadriven"
+				"modifier"		"modifier_spirit_form_datadriven"
+			}
+		}
+		
+		
+		"Modifiers"
+		{
+			"modifier_spirit_form_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+	
+				"EffectName"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_ambient.vpcf"
+				"EffectAttachType"		"follow_origin"
+	
+				"StatusEffectName" 		"particles/status_fx/status_effect_keeper_spirit_form.vpcf" 	   
+				"StatusEffectPriority"  "10"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
+						"Function"		"SwapAbilities"
+						"main_ability_name"	"illuminate_datadriven"
+						"sub_ability_name"	"spirit_form_illuminate_datadriven"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
+						"Function"		"SpiritFormStart"
+						"illuminate"	"illuminate_datadriven"
+						"spirit_form_illuminate"	"spirit_form_illuminate_datadriven"
+						"recall"		"recall_datadriven"
+						"blinding_light"	"blinding_light_datadriven"
+					}				
+				}
+	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
+						"Function"		"SpiritFormEnd"
+						"illuminate"	"illuminate_datadriven"
+						"spirit_form_illuminate"	"spirit_form_illuminate_datadriven"
+						"recall"		"recall_datadriven"
+						"blinding_light"	"blinding_light_datadriven"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form.lua"
+						"Function"		"SwapAbilities"
+						"main_ability_name"	"spirit_form_illuminate_datadriven"
+						"sub_ability_name"	"illuminate_datadriven"
+					}
+				}			
+			}
+		}	
+	}
+	// Rewrite of the Keeper of the Light Spirit Form Illuminate ability
+	// Author: Pizzalol
+	// Date: February 24, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	// NOTES: #1 Projectile visual is missing horses
+	// #2 Uses normal illuminate projectile
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/keeper_of_the_light/spirit_form_datadriven.txt
+	// scripts/npc/abilities/keeper_of_the_light/spirit_form_illuminate_end_datadriven.txt
+	//
+	// Unit files:
+	// scripts/npc/units/npc_dummy_unit.txt
+	"spirit_form_illuminate_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"keeper_of_the_light_spirit_form_illuminate"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
+			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge_spirit_form.vpcf"
+			"particle"  		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"		
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1800"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 160 170 180"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_second"		"100.0 100.0 100.0 100.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"350 350 350 350"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"1550"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"speed"					"1050.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"max_channel_time"		"2.0 3.0 4.0 5.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"800 800 800 800"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"3.34 3.34 3.34 3.34"
+			}
+			"08"
+			{	
+				"var_type"				"FIELD_INTEGER"
+				"channel_vision_radius"	"350"
+			}
+			"09"
+			{	
+				"var_type"					"FIELD_FLOAT"
+				"channel_vision_interval"	"0.5"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"channel_vision_duration"	"10.34"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"channel_vision_step"		"150"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+				"Function"		"SpiritFormIlluminateInitialize"
+				"dummy_modifier"	"modifier_spirit_form_illuminate_dummy_datadriven"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+				"Function"		"SwapAbilities"
+				"main_ability_name"	"spirit_form_illuminate_datadriven"
+				"sub_ability_name"	"spirit_form_illuminate_end_datadriven"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+				"Function"		"LevelUpAbility"
+				"ability_name"	"spirit_form_illuminate_end_datadriven"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"FireSound"
+			{
+				"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Target"
+				"Target" 		"TARGET"
+			}
+			
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+				"Function"		"SpiritFormIlluminateProjectileHit"
+			}		
+		}
+	
+		"Modifiers"
+		{
+			"modifier_spirit_form_illuminate_dummy_datadriven"
+			{
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Charge"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+						}
+					}
+					
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_spirit_form_illuminate_vision_field_timer_datadriven"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+						}
+					}			
+				}
+	
+				"OnDestroy"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_KeeperOfTheLight.Illuminate.Discharge"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+						}
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+						"Function"		"SpiritFormIlluminateEnd"
+						"projectile_name" 			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+						"Function"		"SwapAbilities"
+						"main_ability_name"	"spirit_form_illuminate_end_datadriven"
+						"sub_ability_name"	"spirit_form_illuminate_datadriven"
+					}
+				}			
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"		"MODIFIER_STATE_VALUE_ENABLED"
+				}			
+			}
+	
+			"modifier_spirit_form_illuminate_vision_field_timer_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+				"IsPurgable"		"0"
+	
+				"Attributes"		"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_charge_spirit_form.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						"Target"
+						{
+							"Center"	"CASTER"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+						}
+	
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_origin"
+							"CASTER"	"attach_origin"
+							"CASTER"	"attach_origin"
+							"CASTER"	"attach_origin"
+							"CASTER"	"attach_origin"
+						}
+					}	
+				}
+		
+				"ThinkInterval"  "%channel_vision_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+						"Function"		"SpiritFormIlluminateVisionFields"
+					}				
+				}			
+			}
+		}
+	}
+	// Rewrite of the Keeper of the Light Spirit Form Illuminate End ability
+	// Author: Pizzalol
+	// Date: February 24, 2016
+	// Version: 6.86
+	// Type: Datadriven
+	//
+	// ----- FILE REQUIREMENTS -----
+	// Script files:
+	// scripts/vscripts/heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua
+	//
+	// KV files:
+	// scripts/npc/abilities/keeper_of_the_light/spirit_form_illuminate_datadriven.txt
+	"spirit_form_illuminate_end_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName"			"keeper_of_the_light_spirit_form_illuminate_end"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+	
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_keeper_of_the_light/spirit_form_illuminate.lua"
+				"Function"		"SpiritFormIlluminateStop"
+				"dummy_modifier"	"modifier_spirit_form_illuminate_dummy_datadriven"
+				"spirit_form_illuminate_ability"	"spirit_form_illuminate_datadriven"
+			}
+		}	
 	}
 	// Rewrite of the Phantom Lancer Doppelganger ability
 	// Author: YOLOSPAGHETTI
