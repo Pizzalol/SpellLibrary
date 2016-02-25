@@ -1,7 +1,13 @@
 // Rewrite of Lich Dark Ritual
 // Author: Noya
-// Date: 18.1.2015.
-"lich_dark_ritual_datadriven"
+// Date: February 25, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_lich/dark_ritual.lua
+"dark_ritual_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -77,10 +83,9 @@
 	        {
 	        	"Center"  		"TARGET"
 	        	"Radius" 		"%xp_radius"
-	        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	        	"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	        	"Types" 		"DOTA_UNIT_TARGET_HERO"
 		    }
 	    }
 	}
 }
-

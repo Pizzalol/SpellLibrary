@@ -1,9 +1,15 @@
 // Rewrite of Lich Frost Nova
 // Author: Noya
-// Date: 18.1.2015.
-// Notes: Includes autocast lua logic, to cast this spell on an allied hero who gets under attack within the autocast radius
+// Date: February 25, 2016
+// Version: 6.86
+// Type: Datadriven
+// NOTES: Includes autocast lua logic, to cast this spell on an allied hero who gets under attack within the autocast radius
 //		  Can only be autocast on heroes, but changing the aura type can modify this.
-"lich_frost_armor_datadriven"
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_lich/frost_armor.lua
+"frost_armor_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -16,7 +22,7 @@
 	
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastRange"				"800"
+	"AbilityCastRange"				"1000"
 	"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
 
 	// Time		
@@ -175,4 +181,3 @@
 		}
 	}
 }
-

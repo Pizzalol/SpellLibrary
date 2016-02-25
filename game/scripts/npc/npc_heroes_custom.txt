@@ -15,9 +15,9 @@
 	
 		"AbilityLayout"	"4"
 	
-		"Ability1"	"split_earth_datadriven"
-		"Ability2"	"diabolic_edict_datadriven"
-		"Ability3"	"lightning_storm_datadriven"
-		"Ability4"	"pulse_nova_datadriven"
+		"Ability1"	"frost_nova_datadriven"
+		"Ability2"	"frost_armor_datadriven"
+		"Ability3"	"dark_ritual_datadriven"
+		"Ability4"	"chain_frost_datadriven"
 	}
 }

@@ -1,8 +1,14 @@
 // Rewrite of Lich Chain Frost
 // Author: Noya
-// Date: 19.1.2015.
-// Note: Find a method to fix having many chain frosts flying at the same time.
-"lich_chain_frost_datadriven"
+// Date: February 25, 2016
+// Version: 6.86
+// Type: Datadriven
+// NOTES: Doesnt work with multiple casts at the same time
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_lich/chain_frost.lua
+"chain_frost_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -24,7 +30,7 @@
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"145.0 115.0 60.0"
+	"AbilityCooldown"				"120.0 90.0 60.0"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
@@ -56,7 +62,7 @@
 		"04"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"slow_attack_speed"		"-20 -20 -20"
+			"slow_attack_speed"		"-30 -30 -30"
 		}
 		"05"
 		{
@@ -66,7 +72,7 @@
 		"06"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"projectile_speed"		"675 675 675"
+			"projectile_speed"		"850 850 850"
 		}
 		"07"
 		{	
