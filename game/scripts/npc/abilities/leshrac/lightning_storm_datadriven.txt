@@ -1,7 +1,13 @@
 // Rewrite of the Leshrac Lightning Storm ability
 // Author: jacklarnes
-// Date: 05.04.2015
-"leshrac_lightning_storm_datadriven"
+// Date: February 25, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_leshrac/lightning_storm.lua
+"lightning_storm_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -24,8 +30,8 @@
 	}
 	// Casting
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastRange"				"700"
-	"AbilityCastPoint"				"0.7"
+	"AbilityCastRange"				"800"
+	"AbilityCastPoint"				"0.6"
 	
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
@@ -37,7 +43,7 @@
 	
 	// Damage.
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityDamage"					"80 140 200 260"
+	"AbilityDamage"					"50 100 150 200"
 		
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -52,7 +58,7 @@
 		"02"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"radius"			"650 650 650 650"
+			"radius"			"475 475 475 475"
 		}
 		"03"
 		{
@@ -62,7 +68,7 @@
 		"04"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"slow_duration"			"0.5"
+			"slow_duration"			"0.7 0.8 0.9 1.0"
 		}
 		"05"
 		{
@@ -101,4 +107,3 @@
 		}
 	}
 }
-

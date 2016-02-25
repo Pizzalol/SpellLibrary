@@ -4,9 +4,8 @@
 
 	"AbilityLayout"	"4"
 
-	"Ability1"	"torrent_datadriven"
-	"Ability2"	"tidebringer_datadriven"
-	"Ability3"	"x_marks_the_spot_datadriven"
-	"Ability4"	"ghostship_datadriven"
-    "Ability5"  "return_datadriven"
+	"Ability1"	"split_earth_datadriven"
+	"Ability2"	"diabolic_edict_datadriven"
+	"Ability3"	"lightning_storm_datadriven"
+	"Ability4"	"pulse_nova_datadriven"
 }

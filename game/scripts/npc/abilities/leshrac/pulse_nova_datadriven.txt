@@ -1,7 +1,13 @@
 // Rewrite of the Leshrac Pulse Nova ability
 // Author: jacklarnes
-// Date: 05.04.2015
-"leshrac_pulse_nova_datadriven"
+// Date: February 25, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_leshrac/pulse_nova.lua
+"pulse_nova_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -196,4 +202,3 @@
 		}
 	}
 }
-

@@ -1,7 +1,9 @@
 // Rewrite of the Leshrac Split Earth ability
 // Author: jacklarnes
-// Date: 05.04.2015
-"leshrac_split_earth_datadriven"
+// Date: February 25, 2016
+// Version: 6.86
+// Type: Datadriven
+"split_earth_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -124,4 +126,3 @@
 		}		
 	}
 }
-

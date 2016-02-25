@@ -1,7 +1,13 @@
 // Rewrite of the Leshrac Diabolic Edict ability
 // Author: jacklarnes
-// Date: 05.04.2015
-"leshrac_diabolic_edict_datadriven"
+// Date: February 25, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_leshrac/diabolic_edict.lua
+"diabolic_edict_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -35,7 +41,7 @@
 	// Damage.
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityDamage"					"9 18 27 36"
-	"AbilityDuration"				"8 8 8 8"
+	"AbilityDuration"				"10 10 10 10"
 	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
