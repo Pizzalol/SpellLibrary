@@ -8,7 +8,7 @@
 // Script files:
 // scripts/vscripts/heroes/hero_witch_doctor/paralyzing_cask.lua
 
-"witch_doctor_paralyzing_cask_datadriven"
+"paralyzing_cask_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
