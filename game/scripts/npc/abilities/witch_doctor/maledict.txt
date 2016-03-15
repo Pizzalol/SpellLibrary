@@ -1,0 +1,148 @@
+// Rewrite of Witch Doctor's Maledict
+// Author: YOLOSPAGHETTI
+// Date: March 15, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// Notes: The purple particle on the targets does not work
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_witch_doctor/maledict.lua
+
+"witch_doctor_maledict_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	"AoERadius"						"180"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"witch_doctor_maledict"
+	
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict.vpcf"
+		"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf"
+		"soundfile"		"sounds/weapons/hero/witch_doctor/maledict_cast.vsnd"
+		"soundfile"		"sounds/weapons/hero/witch_doctor/maledict_fail.vsnd"
+		"soundfile"		"sounds/weapons/hero/witch_doctor/maledict_loop.vsnd"
+		"soundfile"		"sounds/weapons/hero/witch_doctor/maledict_tick.vsnd"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"575"
+	"AbilityCastPoint"				"0.35 0.35 0.35 0.35"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20.0"
+	"AbilityDuration"				"12.0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"5 10 15 20"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"105 110 115 120"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"180"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"duration_tooltip"			"12"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_damage"				"16 24 32 40"
+		}		
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"burst_ticks"				"3"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"tick_time"					"1.0"
+		}	
+	}
+	
+	"OnSpellStart"
+	{
+		"FireEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf"
+			"EffectAttachType"  "start_at_customorigin"
+			"TargetPoint"       "POINT"
+			"ControlPoints"
+			{
+				"01"    "%radius %radius %radius"
+			}
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_witch_doctor/maledict.lua"
+			"Function"		"ApplyModifier"
+			"sound"			"Hero_WitchDoctor.Maledict_Cast"
+			"sound2"		"Hero_WitchDoctor.Maledict_CastFail"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_maledict_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration_tooltip"
+		
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_witch_doctor/maledict.lua"
+					"Function"		"CheckHealth"
+					"sound"			"Hero_WitchDoctor.Maledict_Loop"
+				}
+			}
+		
+			"ThinkInterval"		"%tick_time"
+			"OnIntervalThink"
+			{
+				"Damage"
+				{
+					"Target"  "TARGET"
+					"Type"    "DAMAGE_TYPE_MAGICAL"
+					"Damage"  "%AbilityDamage"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_witch_doctor/maledict.lua"
+					"Function"		"DealBurst"
+					"sound"			"Hero_WitchDoctor.Maledict_Tick"
+					"sound2"		"Hero_WitchDoctor.Maledict_Loop"
+					"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict.vpcf"
+				}
+			}
+		}
+	}
+}
