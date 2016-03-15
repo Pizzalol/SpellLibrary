@@ -1,0 +1,136 @@
+// Rewrite of Witch Doctor's Paralyzing Cask
+// Author: YOLOSPAGHETTI
+// Date: March 15, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_witch_doctor/paralyzing_cask.lua
+
+"witch_doctor_paralyzing_cask_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"witch_doctor_paralyzing_cask"
+	
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_cask.vpcf"
+		"soundfile"		"sounds/weapons/hero/witch_doctor/cask_cast.vsnd"
+		"soundfile"		"sounds/weapons/hero/witch_doctor/cask_bounce01.vsnd"
+		"soundfile"		"sounds/weapons/hero/witch_doctor/cask_bounce02.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.35 0.35 0.35 0.35"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20.0 18.0 16.0 14.0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"75 100 125 150"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"110 120 130 140"
+
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.5"	// Can have multiple bounces
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"hero_duration"			"1.0 1.0 1.0 1.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"creep_duration"		"5.0 5.0 5.0 5.0"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hero_damage"			"50 50 50 50"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bounce_range"			"575 575 575 575"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bounces"				"2 4 6 8"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"speed"					"1000"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"bounce_delay"			"0.3"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bounces_tooltip"				"2 4 6 8"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"TrackingProjectile"
+		{
+			"Target"           	"TARGET"
+			"EffectName"       	"particles/units/heroes/hero_witchdoctor/witchdoctor_cask.vpcf"
+			"Dodgeable"        	"1"
+			"ProvidesVision"   	"0"
+			"MoveSpeed"        	"%speed"
+			"SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+			"TargetTypes"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_WitchDoctor.Paralyzing_Cask_Cast"
+			"Target"		"CASTER"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_WitchDoctor.Paralyzing_Cask_Bounce"
+			"Target"		"TARGET"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_witch_doctor/paralyzing_cask.lua"
+			"Function"		"ParalyzingCask"
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_cask.vpcf"
+		}
+	}
+}
