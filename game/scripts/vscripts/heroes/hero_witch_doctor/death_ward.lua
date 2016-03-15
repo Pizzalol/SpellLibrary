@@ -7,7 +7,7 @@ function CreateWard(keys)
 	local position = ability:GetCursorPosition()
 	
 	-- Creates the death ward (There is no way to control the default ward, so this is a custom one)
-	caster.death_ward = CreateUnitByName("npc_dota_witch_doctor_death_ward_datadriven", position, true, caster, nil, caster:GetTeam())
+	caster.death_ward = CreateUnitByName("witch_doctor_death_ward_datadriven", position, true, caster, nil, caster:GetTeam())
 	caster.death_ward:SetControllableByPlayer(caster:GetPlayerID(), true)
 	caster.death_ward:SetOwner(caster)
 	
