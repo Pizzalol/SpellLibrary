@@ -4,7 +4,7 @@
 // Version: 6.86
 // Type: Datadriven
 
-"witch_doctor_voodoo_restoration_datadriven"
+"voodoo_restoration_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
