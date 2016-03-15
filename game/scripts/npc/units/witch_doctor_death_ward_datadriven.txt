@@ -1,0 +1,63 @@
+// Rewrite of Witch Doctor's Death Ward
+// Author: YOLOSPAGHETTI
+// Date: March 15, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// Notes: Some of the particles on the death ward do not appear
+
+"witch_doctor_death_ward_datadriven"
+{
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"             "npc_dota_creature"
+        "Model"                 "models/heroes/witchdoctor/witchdoctor_ward.vmdl"
+        "ModelScale"            "1.0"
+        "Level"                 "1"
+        "HasInventory"          "0"
+       
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"         "2"
+        "MagicalResistance"     "0"
+       
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"    "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageType"      "DAMAGE_TYPE_ArmorPhysical"
+        "AttackDamageMin"       "0.0"
+        "AttackDamageMax"       "0.0"
+        "AttackRate"            "0.22"
+        "AttackAnimationPoint"  "0.0"
+        "AttackAcquisitionRange" "700"
+        "AttackRange"           "700"
+		"ProjectileModel"            "particles/units/heroes/hero_witchdoctor/witchdoctor_ward_attack.vpcf"
+		"ProjectileSpeed"            "1000"
+       
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"        "DOTA_HULL_SIZE_HERO"
+        "RingRadius"            "70"
+       
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"  "DOTA_UNIT_CAP_MOVE_NONE"
+       
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"          "420"
+        "StatusHealthRegen"     "0.0"
+        "StatusMana"            "0"
+        "StatusManaRegen"       "0"
+       
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"    "1200"
+        "VisionNighttimeRange"  "800"
+       
+        // Team
+        //----------------------------------------------------------------
+        "CombatClassAttack"     "DOTA_COMBAT_CLASS_ATTACK_HERO"
+        "CombatClassDefend"     "DOTA_COMBAT_CLASS_DEFEND_STRONG"
+        "UnitRelationShipClass" "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+}
