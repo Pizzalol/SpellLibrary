@@ -9,8 +9,9 @@
 // ----- FILE REQUIREMENTS -----
 // Script files:
 // scripts/vscripts/heroes/hero_witch_doctor/death_ward.lua
+// scripts/npc/abilities/witch_doctor_death_ward_datadriven.txt
 
-"witch_doctor_death_ward_datadriven"
+"death_ward_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
