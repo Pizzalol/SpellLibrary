@@ -10,7 +10,7 @@
 // Script files:
 // scripts/vscripts/heroes/hero_witch_doctor/maledict.lua
 
-"witch_doctor_maledict_datadriven"
+"maledict_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
