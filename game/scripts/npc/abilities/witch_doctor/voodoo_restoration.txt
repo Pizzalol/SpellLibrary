@@ -1,0 +1,145 @@
+// Rewrite of Witch Doctor's Voodoo Restoration
+// Author: YOLOSPAGHETTI
+// Date: March 15, 2016
+// Version: 6.86
+// Type: Datadriven
+
+"witch_doctor_voodoo_restoration_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	"AbilityTextureName"			"witch_doctor_voodoo_restoration"
+	
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration.vpcf"
+		"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame.vpcf"
+		"soundfile"		"sounds/weapons/hero/witch_doctor/voodoo_restoration.vsnd"
+		"soundfile"		"sounds/weapons/hero/witch_doctor/voodoo_restoration_loop.vsnd"
+		"soundfile"		"sounds/weapons/hero/witch_doctor/voodoo_restoration_off.vsnd"
+	}
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"0.0 0.0 0.0 0.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"20 30 40 50"		
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"mana_per_second"			"8 12 16 20"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"500"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"heal"						"16 24 32 40"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"heal_interval"				"0.33 0.33 0.33 0.33"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"heal_linger"				"0.5"
+		}
+	}
+	
+	"OnToggleOn"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_voodoo_restoration_datadriven"
+			"Target"		"CASTER"
+		}
+	}
+	
+	"OnToggleOff"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_voodoo_restoration_datadriven"
+			"Target"		"CASTER"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_voodoo_restoration_datadriven"
+		{
+			"Aura"					"modifier_voodoo_restoration_buff"
+			"Aura_Radius"			"%radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+			
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame.vpcf"
+					"EffectAttachType"	"follow_origin"
+					"Target"			"CASTER"
+					"ControlPoints"
+					{
+						"00" "0 0 0"
+						"01" "%radius %radius %radius"
+					}
+				}
+				
+				"AttachEffect"
+				{
+					"Target"			"CASTER"
+					"EffectName"		"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame.vpcf"
+					"EffectAttachType"	"follow_hitloc"
+					 "ControlPointEntities"
+					{
+						"CASTER" "attach_staff"
+						"CASTER" "attach_staff"
+						"CASTER" "attach_staff"
+					}
+				}
+			}
+			
+			"ThinkInterval"		"%heal_interval"
+			"OnIntervalThink"
+			{
+				"SpendMana"
+				{
+					"Mana"	"%mana_per_second"
+				}
+			}
+		}
+		
+		"modifier_voodoo_restoration_buff"
+		{
+			"Duration"	"%heal_linger"
+		
+			"ThinkInterval"		"%heal_interval"
+			"OnIntervalThink"
+			{
+				"Heal"
+				{
+					"HealAmount"	"%heal"
+					"Target"		"TARGET"
+				}
+			}
+		}
+	}
+}
