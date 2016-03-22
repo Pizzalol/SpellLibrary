@@ -1,3 +1,12 @@
+// Rewrite of the Furion Sprout ability
+// Author: YOLOSPAGHETTI
+// Date: March 22, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_furion/sprout.lua
 "furion_sprout_datadriven"
 {
 	// General
@@ -15,10 +24,10 @@
 
 	// Stats
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastRange"				"600"
-	"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+	"AbilityCastRange"				"625 700 775 850"
+	"AbilityCastPoint"				"0.35 0.35 0.35 0.35"
 	"AbilityCooldown"				"11 10 9 8"
-	"AbilityManaCost"				"100 120 140 160"
+	"AbilityManaCost"				"70 90 110 130"
 	
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -32,7 +41,16 @@
 		"02"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"duration"				"3.0 3.75 4.5 5.25"
+			"duration"				"3.0 4.0 5.0 6.0"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_furion/sprout.lua"
+			"Function"		"CreateSprout"
 		}
 	}
 }
