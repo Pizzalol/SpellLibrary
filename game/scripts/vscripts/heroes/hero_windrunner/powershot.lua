@@ -106,8 +106,8 @@ function powershot_start_traverse( keys )
 			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false )
 	for k, v in pairs( units ) do
 		local index = v:entindex()
-		caster.powershot_units_array[ index ] = v
-		caster.powershot_units_hit[ index ] = false
+		ability.powershot_units_array[ index ] = v
+		ability.powershot_units_hit[ index ] = false
 	end
 	
 	-- Traverse
