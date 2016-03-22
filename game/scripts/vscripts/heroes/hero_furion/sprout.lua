@@ -11,7 +11,7 @@ function CreateSprout(keys)
 	local radius = 150
 	local angle = math.pi/4
 	
-	-- Creates 8 temporary trees at 45 degree angles from one another around the clicked point
+	-- Creates 8 temporary trees at each 45 degree interval around the clicked point
 	for i=1,trees do
 		local position = Vector(point.x+radius*math.sin(angle), point.y+radius*math.cos(angle), point.z)
 		CreateTempTree(position, duration)
