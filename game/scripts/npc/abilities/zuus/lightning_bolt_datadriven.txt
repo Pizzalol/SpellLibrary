@@ -68,9 +68,14 @@
 		"03"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"sight_duration"		"4.5"
+			"true_sight_duration"	"5.0"
 		}
 		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"sight_duration"		"4.5"
+		}
+		"05"
 		{
 			"var_type"				"FIELD_INTEGER"
 			"spread_aoe"	"375"
@@ -102,7 +107,7 @@
 				{
 					"ModifierName"	"modifier_truesight"
 					"Target"		"TARGET"
-					"Duration"		"%sight_duration"
+					"Duration"		"%true_sight_duration"
 				}
 			}
 		}
@@ -123,7 +128,7 @@
 				{
 					"ModifierName"	"modifier_truesight"
 					"Target"		"TARGET"
-					"Duration"		"%sight_duration"
+					"Duration"		"%true_sight_duration"
 				}
 			}
 		}
