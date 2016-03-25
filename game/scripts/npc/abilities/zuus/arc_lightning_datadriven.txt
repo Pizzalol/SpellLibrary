@@ -1,0 +1,107 @@
+// Rewrite of Zeus Arc Lightning
+// Author: YOLOSPAGHETTI
+// Date: March 24, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_zuus/arc_lightning.lua
+"arc_lightning_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_DEAD | DOTA_UNIT_TARGET_FLAG_NO_INVIS | DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"zuus_arc_lightning"
+	
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf"
+		"particle"		"particles/units/heroes/hero_zuus/zuus_arc_lightning_head.vpcf"
+		"soundfile"		"sounds/weapons/hero/zuus/arc_lightning.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"850"
+	"AbilityCastPoint"				"0.2"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"85 100 115 145"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"1.75 1.75 1.75 1.75"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"65 70 75 80"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"500 500 500 500"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"jump_count"			"5 7 9 15"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"jump_delay"			"0.25 0.25 0.25 0.25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_arc_lightning_datadriven"
+			"Target"		"TARGET"
+		}
+	
+		"FireSound"
+		{
+			"EffectName"	"Hero_Zuus.ArcLightning.Cast"
+			"Target"		"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"hero_zuus/arc_lightning.lua"
+			"Function"		"NewInstance"
+			"particle"		"particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_arc_lightning_datadriven"
+		{
+			"IsHidden"	"1"
+	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"arc_lightning.lua"
+					"Function"		"LightningJump"
+					"particle"		"particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf"
+				}
+			}
+		}
+	}
+}
