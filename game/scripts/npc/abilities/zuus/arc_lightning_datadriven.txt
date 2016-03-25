@@ -81,7 +81,7 @@
 		
 		"RunScript"
 		{
-			"ScriptFile"	"hero_zuus/arc_lightning.lua"
+			"ScriptFile"	"heroes/hero_zuus/arc_lightning.lua"
 			"Function"		"NewInstance"
 			"particle"		"particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf"
 		}
