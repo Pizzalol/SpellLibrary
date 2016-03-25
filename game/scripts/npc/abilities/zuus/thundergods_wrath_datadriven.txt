@@ -7,6 +7,8 @@
 // ----- FILE REQUIREMENTS -----
 // Script files:
 // scripts/vscripts/heroes/hero_zuus/thundergods_wrath.lua
+//
+// Notes: Does not reveal wards
 "thundergods_wrath_datadriven"
 {
 	// General
@@ -63,14 +65,19 @@
 		"03"
 		{
 			"var_type"				"FIELD_FLOAT"
-			"sight_duration"		"3.0 3.0 3.0 3.0"
+			"true_sight_duration"		"3.5 3.5 3.5 3.5"
 		}
 		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"sight_duration"		"3.0 3.0 3.0 3.0"
+		}
+		"05"
 		{
 			"var_type"				"FIELD_INTEGER"
 			"damage"				"225 350 475"
 		}
-		"05"
+		"06"
 		{
 			"var_type"				"FIELD_INTEGER"
 			"damage_scepter"		"440 540 640"
@@ -129,6 +136,27 @@
 					"Function"		"ThundergodsWrath"
 					"sound"			"Hero_Zuus.GodsWrath.Target"
 					"particle"		"particles/units/heroes/hero_zuus/zuus_thundergods_wrath.vpcf"
+				}
+				
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  				"TARGET"
+						"Radius" 				"%true_sight_radius"
+						"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_OTHER"
+					}
+	
+					"Action"
+					{
+						"ApplyModifier"
+						{
+							"ModifierName"	"modifier_truesight"
+							"Target"		"TARGET"
+							"Duration"		"%true_sight_duration"
+						}
+					}
 				}
 			}
 		}
