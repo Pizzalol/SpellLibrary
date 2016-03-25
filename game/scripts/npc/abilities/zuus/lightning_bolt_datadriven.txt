@@ -1,0 +1,104 @@
+// Rewrite of Zeus Lightning Bolt
+// Author: YOLOSPAGHETTI
+// Date: March 24, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_zuus/lightning_bolt.lua
+"lightning_bolt_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"zuus_lightning_bolt"
+	
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_zuus/zuus_lightning_bolt_start.vpcf"
+		"particle"		"particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf"
+		"soundfile"		"sounds/weapons/hero/zuus/lightning_bolt.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"700"
+	"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"100 175 275 350"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"6.0 6.0 6.0 6.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"75 95 115 135"
+
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.1"	// just a ministun
+
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"true_sight_radius"		"750"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"sight_radius"			"750"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"sight_duration"		"4.5"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"spread_aoe"	"375"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_zuus/lightning_bolt.lua"
+			"Function"		"SearchArea"
+			"particle"		"particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Zuus.LightningBolt"
+			"Target"		"CASTER"
+		}
+		
+		"AttachEffect"
+		{
+			"Target"					"CASTER"
+			"EffectName"				"particles/units/heroes/hero_zuus/zuus_lightning_bolt_start.vpcf"
+			"EffectAttachType"			"start_at_customorigin"
+			"ControlPointEntities"
+			{
+				"CASTER"				"attach_attack1"
+			}
+		}
+	}
+}
