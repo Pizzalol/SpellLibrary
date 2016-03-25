@@ -7,6 +7,8 @@
 // ----- FILE REQUIREMENTS -----
 // Script files:
 // scripts/vscripts/heroes/hero_zuus/lightning_bolt.lua
+//
+// Notes: Does not reveal wards
 "lightning_bolt_datadriven"
 {
 	// General
@@ -82,6 +84,48 @@
 			"ScriptFile"	"heroes/hero_zuus/lightning_bolt.lua"
 			"Function"		"SearchArea"
 			"particle"		"particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf"
+		}
+		
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"  				"TARGET"
+				"Radius" 				"%true_sight_radius"
+				"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_OTHER"
+			}
+	
+			"Action"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_truesight"
+					"Target"		"TARGET"
+					"Duration"		"%sight_duration"
+				}
+			}
+		}
+		
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"  				"POINT"
+				"Radius" 				"%true_sight_radius"
+				"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_OTHER"
+			}
+	
+			"Action"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_truesight"
+					"Target"		"TARGET"
+					"Duration"		"%sight_duration"
+				}
+			}
 		}
 		
 		"FireSound"
