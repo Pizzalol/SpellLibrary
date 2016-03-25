@@ -1,0 +1,74 @@
+// Rewrite of Zeus Static Field
+// Author: YOLOSPAGHETTI
+// Date: March 24, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_zuus/static_field.lua
+"static_field_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC	| DOTA_UNIT_TARGET_MECHANICAL"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"	
+	"AbilityTextureName"			"zuus_static_field"
+	
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_zuus/zuus_static_field.vpcf"
+		"soundfile"		"sounds/weapons/hero/zuus/static_field.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1200"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"1200"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage_health_pct"			"5 7 9 11"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"static_field_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+			
+			"OnAbilityExecuted"
+			{
+				"DelayedAction"
+                {
+                    "Delay" "0.01"
+                    "Action"
+                    {
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_zuus/static_field.lua"
+							"Function"		"StaticField"
+							"sound"			"Hero_Zuus.StaticField"
+							"particle"		"particles/units/heroes/hero_zuus/zuus_static_field.vpcf"
+						}
+					}
+				}
+			}
+		}
+	}
+}
