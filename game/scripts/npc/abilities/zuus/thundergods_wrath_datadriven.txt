@@ -8,7 +8,7 @@
 // Script files:
 // scripts/vscripts/heroes/hero_zuus/thundergods_wrath.lua
 //
-// Notes: Does not reveal wards
+// Notes: Does not reveal wards, wonky particles
 "thundergods_wrath_datadriven"
 {
 	// General
