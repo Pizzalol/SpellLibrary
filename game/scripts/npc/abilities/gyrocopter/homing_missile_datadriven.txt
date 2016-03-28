@@ -151,7 +151,7 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"homing_missile.lua"
+					"ScriptFile"	"heroes/hero_gyrocopter/homing_missile.lua"
 					"Function"		"MoveMissile"
 				}
 			}
