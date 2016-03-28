@@ -1,0 +1,141 @@
+// Rewrite of Gyrocopter Rocket Barrage
+// Author: YOLOSPAGHETTI
+// Date: March 28, 2016
+// Version: 6.86
+// Type: Datadriven
+"rocket_barrage_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE | DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"gyrocopter_rocket_barrage"
+	
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_gyrocopter/gyro_rocket_barrage.vpcf"
+		"soundfile"		"sounds/weapons/hero/gyrocopter/rocket_barrage_active.vsnd"
+		"soundfile"		"sounds/weapons/hero/gyrocopter/rocket_barrage_fire.vsnd"
+		"soundfile"		"sounds/weapons/hero/gyrocopter/rocket_barrage_target01.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"0"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"7.0 6.5 6 5.5"
+	"AbilityDuration"				"3 3 3 3"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"11 15 19 23"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"90 90 90 90"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"400"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"duration"					"3"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"rockets_per_second"		"10"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"interval"					"0.1"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_rocket_barrage_datadriven"
+			"Target"	"CASTER"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Gyrocopter.Rocket_Barrage"
+			"Target"		"CASTER"
+		}
+	}
+		
+	"Modifiers"
+	{
+		"modifier_rocket_barrage_datadriven"
+		{
+			"Duration"		"%duration"
+			
+			"ThinkInterval"		"%interval"
+			"OnIntervalThink"
+			{
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  				"CASTER"
+						"Radius" 				"%radius"
+						"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+						"MaxTargets" 			"1"
+						"Random" 				"1"
+					}
+
+					"Action"
+					{
+						"FireSound"
+						{
+							"EffectName"	"Hero_Gyrocopter.Rocket_Barrage.Launch"
+							"Target"		"CASTER"
+						}
+						
+						"FireSound"
+						{
+							"EffectName"	"Hero_Gyrocopter.Rocket_Barrage.Impact"
+							"Target"		"TARGET"
+						}
+						
+						"TrackingProjectile"
+						{
+							"Target"           	"TARGET"
+							"EffectName"       	"particles/units/heroes/hero_gyrocopter/gyro_rocket_barrage.vpcf"
+							"Dodgeable"        	"0"
+							"ProvidesVision"   	"0"
+							"MoveSpeed"        	"1000"
+							"SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+							"TargetTypes"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+						}
+						
+						"Damage"
+						{
+							"Target"  "TARGET"
+							"Type"    "DAMAGE_TYPE_MAGICAL"
+							"Damage"  "%AbilityDamage"
+						}
+					}
+				}
+			}	
+		}
+	}	
+}
