@@ -1,0 +1,128 @@
+// Rewrite of Gyrocopter Flak Cannon
+// Author: YOLOSPAGHETTI
+// Date: March 28, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_gyrocopter/flak_cannon.lua
+"flak_cannon_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"gyrocopter_flak_cannon"
+
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_gyrocopter/gyro_base_attack.vpcf"
+		"soundfile"		"sounds/weapons/hero/gyrocopter/flack_cannon.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0 0 0 0"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"30 30 30 30"
+	
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50 50 50 50"
+
+	//Duration
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDuration"				"15 15 15 15"
+					
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"radius"						"1000"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"max_attacks"					"3 4 5 6"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"projectile_speed"				"800"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_gyrocopter/flak_cannon.lua"
+			"Function"		"ApplyModifier"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_gyrocopter/flak_cannon.lua"
+			"Function"		"DealDamage"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_flak_cannon_datadriven"
+		{
+			"OnAttack"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Gyrocopter.FlackCannon"
+					"Target"		"TARGET"
+				}
+				
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_gyrocopter/flak_cannon.lua"
+					"Function"		"GetMainTarget"
+				}
+			
+				"ActOnTargets"
+				{
+					"Target"
+					{
+						"Center"  				"CASTER"
+						"Radius" 				"%radius"
+						"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+					}
+
+					"Action"
+					{
+						"TrackingProjectile"
+						{
+							"Target"           	"TARGET"
+							"EffectName"       	"particles/units/heroes/hero_gyrocopter/gyro_base_attack.vpcf"
+							"Dodgeable"        	"1"
+							"ProvidesVision"   	"0"
+							"MoveSpeed"        	"%projectile_speed"
+							"SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+							"TargetTypes"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+						}
+					}
+				}
+			}
+		}
+	}
+}
