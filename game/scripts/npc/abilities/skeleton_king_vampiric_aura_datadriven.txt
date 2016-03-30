@@ -51,7 +51,7 @@
    			{
    				"RunScript"
 				{
-					"ScriptFile"	"heroes/hero_skeleton_k/vampiric_aura.lua"
+					"ScriptFile"	"heroes/hero_skeleton_king/vampiric_aura.lua"
 					"Function"		"VampiricAuraApply"
 				}
 			}
