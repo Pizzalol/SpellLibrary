@@ -1,0 +1,171 @@
+// Rewrite of Disruptor Static Storm
+// Author: YOLOSPAGHETTI
+// Date: March 30, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_disruptor/static_storm.lua
+//
+// Notes: About two extra damage
+"static_storm_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AoERadius"						"450"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"disruptor_static_storm"
+	
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"
+		"particle"		"particles/generic_gameplay/generic_silence.vpcf"
+		"soundfile"		"sounds/weapons/hero/disruptor/static_storm.vsnd"
+		"soundfile"		"sounds/weapons/hero/disruptor/static_storm_end.vsnd"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.05 0.05 0.05 0.05"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"90.0 80.0 70.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"125 175 225"
+	
+	// Cast Range
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"800 800 800 800"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"450"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"pulses"					"20"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage_max"				"200 250 300"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"5.0"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"interval"					"0.25"
+		}
+		// The Wiki Lies
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"damage_increase"			"2.5 3.125 3.75"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"linger_duration"			"0.5"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration_scepter"			"7.0"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"pulses_scepter"			"28"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"CreateThinker"
+		{
+			"ModifierName"	"modifier_static_storm_datadriven"
+			"Target"		"POINT"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_static_storm_datadriven"
+		{	
+			"Aura"					"modifier_static_storm_debuff"
+			"Aura_Radius"			"%radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+			"Duration"				"%duration"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_disruptor/static_storm.lua"
+					"Function"		"RenderParticles"
+					"particle"		"particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"
+				}
+				
+				"FireSound"
+				{
+					"EffectName"	"Hero_Disruptor.StaticStorm"
+					"Target"		"TARGET"
+				}
+			}
+			
+			"ThinkInterval"		"%interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_disruptor/static_storm.lua"
+					"Function"		"DealDamage"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Disruptor.StaticStorm.End"
+					"Target"		"TARGET"
+				}
+			}
+		}
+		
+		"modifier_static_storm_debuff"
+		{
+			"IsDebuff"		"1"
+			"EffectName"	"particles/generic_gameplay/generic_silence.vpcf"
+			"EffectAttachType"	"follow_overhead"
+			"Duration"			"%linger_duration"
+			
+			"States"
+			{
+				"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}
