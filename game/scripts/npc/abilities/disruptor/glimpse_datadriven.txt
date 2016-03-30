@@ -1,0 +1,193 @@
+// Rewrite of Disruptor Glimpse
+// Author: YOLOSPAGHETTI
+// Date: March 30, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_disruptor/glimpse.lua
+//
+// Notes: No vision on projectile
+"glimpse_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_DEAD"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"disruptor_glimpse"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_disruptor/disruptor_glimpse_targetend.vpcf"
+		"particle"		"particles/units/heroes/hero_disruptor/disruptor_glimpse_targetstart.vpcf"
+		"particle"		"particles/units/heroes/hero_disruptor/disruptor_glimpse_travel.vpcf"
+		"soundfile"		"sounds/weapons/hero/disruptor/glimpse_begin.vsnd"
+		"soundfile"		"sounds/weapons/hero/disruptor/glimpse_end.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.05 0.05 0.05 0.05"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"60.0 46.0 32.0 18.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100"
+	
+	// Cast Range
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"600 1000 1400 1800"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"backtrack_time"			"4.0 4.0 4.0 4.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cast_range"				"600 1000 1400 1800"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"projectile_speed"			"600"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"delay"						"1.8"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"vision_radius"				"300"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"vision_duration"			"3.34"
+		}
+		"07"
+		{
+			"var_type" "FIELD_INTEGER"
+			"global_radius" "100000"
+		}
+	} 
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_projectile_control"
+			"Target"		"TARGET"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Disruptor.Glimpse.Target"
+			"Target"		"TARGET"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_disruptor/glimpse.lua"
+			"Function"		"MoveTarget"
+			"sound"			"Hero_Disruptor.Glimpse.End"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_movement_check_aura"
+		{
+			"IsHidden"	"1"
+			"Passive"	"1"
+			
+			"Aura"					"modifier_movement_check"
+			"Aura_Radius"			"%global_radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
+			"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		}
+		
+		"modifier_movement_check"
+		{
+			"IsHidden"	"1"
+			
+			"OnTeleported"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_disruptor/glimpse.lua"
+					"Function"		"MovementCheck"
+				}
+			}
+			
+			"OnUnitMoved"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_disruptor/glimpse.lua"
+					"Function"		"MovementCheck"
+				}
+			}
+		}
+		
+		"modifier_projectile_control"
+		{
+			"IsHidden"	"1"
+			"Duration"	"%delay"
+			
+			"EffectName"		"particles/units/heroes/hero_disruptor/disruptor_glimpse_targetstart.vpcf"
+			"EffectAttachType"	"attach_origin"
+		
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_disruptor/glimpse.lua"
+					"Function"			"ProjectileControl"
+					"particle"			"particles/units/heroes/hero_disruptor/disruptor_glimpse_travel.vpcf"
+					"particle2"			"particles/units/heroes/hero_disruptor/disruptor_glimpse_targetend.vpcf"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_disruptor/glimpse.lua"
+					"Function"		"MoveTarget"
+					"sound"			"Hero_Disruptor.Glimpse.End"
+				}
+			}
+		}
+		
+		"modifier_dummy"
+		{
+			"States"
+			{
+				"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}
