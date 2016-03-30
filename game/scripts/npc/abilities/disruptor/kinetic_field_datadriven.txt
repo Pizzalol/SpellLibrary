@@ -1,0 +1,171 @@
+// Rewrite of Disruptor Kinetic Field
+// Author: YOLOSPAGHETTI
+// Date: March 30, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_disruptor/kinetic_field.lua
+//
+// Notes: Field particle not rendering properly, sometimes no particles render
+"kinetic_field_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AoERadius"						"325"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"disruptor_kinetic_field"
+	
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_disruptor/disruptor_kineticfield.vpcf"
+		"particle"		"particles/units/heroes/hero_disruptor/disruptor_kineticfield_formation.vpcf"
+		"particle"		"particles/units/heroes/hero_disruptor/disruptor_kineticfield_formation_markers.vpcf"
+		"soundfile"		"sounds/weapons/hero/disruptor/kinetic_field.vsnd"
+		"soundfile"		"sounds/weapons/hero/disruptor/kinetic_field_end.vsnd"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.05 0.05 0.05 0.05"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"13 12 11 10"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"70 70 70 70"
+	
+	// Cast Range
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"900 900 900 900"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"325"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"formation_time"			"1.2 1.2 1.2 1.2"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"2.6 3.2 3.8 4.4"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"vision_radius"				"325"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_disruptor/kinetic_field.lua"
+			"Function"		"RenderParticles"
+			"particle"		"particles/units/heroes/hero_disruptor/disruptor_kineticfield_formation.vpcf"
+			"particle2"		"particles/units/heroes/hero_disruptor/disruptor_kineticfield_formation_markers.vpcf"
+			"sound"			"Hero_Disruptor.KineticField"
+		}
+	
+		"DelayedAction"
+		{
+			"Delay"	"%formation_time"
+			"Action"
+			{
+				"CreateThinker"
+				{
+					"ModifierName"	"modifier_kinetic_field_datadriven"
+					"Target"		"POINT"
+				}
+			}
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_kinetic_field_datadriven"
+		{
+			"Aura"					"modifier_check_position"
+			"Aura_Radius"			"350"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+			"Duration"				"%duration"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_disruptor/kinetic_field.lua"
+					"Function"		"GiveVision"
+					"particle"		"particles/units/heroes/hero_disruptor/disruptor_kineticfield.vpcf"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_disruptor/kinetic_field.lua"
+					"Function"		"DestroyParticles"
+					"sound"			"Hero_Disruptor.KineticField"
+				}
+				
+				"FireSound"
+				{
+					"EffectName"	"Hero_Disruptor.KineticField.End"
+					"Target"		"POINT"
+				}
+			}
+		}
+		
+		"modifier_check_position"
+		{
+			"IsHidden"	"1"
+			
+			"OnUnitMoved"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_disruptor/kinetic_field.lua"
+					"Function"		"CheckPosition"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_disruptor/kinetic_field.lua"
+					"Function"		"RemoveModifiers"
+				}
+			}
+		}
+		
+		"modifier_kinetic_field_debuff"
+		{
+			"IsHidden"	"1"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"0.1"
+			}
+		}
+	}
+}	
