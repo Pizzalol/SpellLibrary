@@ -1,0 +1,175 @@
+// Rewrite of Templar Assasssin Psionic Trap
+// Author: YOLOSPAGHETTI
+// Date: April 2, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_templar_assassin/psionic_trap.lua
+//
+// Notes: Traps have 100 hp but take less damage than default traps, and they spawn with a hole in their particle
+"psionic_trap_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"templar_assassin_psionic_trap"
+
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_trap_portrait.vpcf"
+		"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_trap_explode.vpcf"
+		"soundfile"			"sounds/weapons/hero/templar_assassin/trap_cast.vsnd"
+		"soundfile"			"sounds/weapons/hero/templar_assassin/trap_spawn.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"2000"
+	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"11.0 8.0 5.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"15 15 15"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"max_traps"					"5 8 11"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"trap_fade_time"			"2.0 2.0 2.0"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"movement_speed_min_tooltip"			"30"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"movement_speed_max_tooltip"			"50"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"tick_rate"					"0.1"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"total_tick_time"			"4.0"
+		}
+		"07"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"slow_per_tick"				"0.5"
+		}
+		"08"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"trap_duration_tooltip"			"5"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_templar_assassin/psionic_trap.lua"
+			"Function"		"CreateTrap"
+			"particle"		"particles/units/heroes/hero_templar_assassin/templar_assassin_trap_portrait.vpcf"
+			"sound"			"Hero_TemplarAssassin.Trap.Cast"
+			"sound2"		"Hero_TemplarAssassin.Trap"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_psionic_trap_datadriven"
+		{
+			"IsHidden"	"1"
+		
+			"OnCreated"
+			{		
+				"ApplyModifier"
+				{
+					"ModifierName"		"modifier_slow_increment"
+					"Target"			"TARGET"
+				}
+				
+				"ApplyModifier"
+				{
+					"ModifierName"		"modifier_invisibility_fade_datadriven"
+					"Target"			"TARGET"
+				}
+			}
+			
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_templar_assassin/psionic_trap.lua"
+					"Function"		"TrapDestroy"
+				}
+			}
+		}
+	
+		"modifier_slow_increment"
+		{
+			"IsHidden"	"1"
+			"Duration"	"%total_tick_time"
+			
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_templar_assassin/psionic_trap.lua"
+					"Function"		"IncrementSlow"
+				}
+			}
+			
+			"ThinkInterval"		"%tick_rate"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_templar_assassin/psionic_trap.lua"
+					"Function"		"IncrementSlow"
+				}
+			}
+		}
+		
+		"modifier_invisibility_fade_datadriven"
+		{
+			"IsHidden"	"1"
+			
+			"Duration"	"%trap_fade_time"
+			"EffectName"	"particles/generic_hero_status/status_invisibility_start.vpcf"
+			"EffectAttachType"	"follow_origin"
+			
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"Target"	"TARGET"
+					"ModifierName"	"modifier_invisible"
+				}
+			}
+		}
+	}
+}
