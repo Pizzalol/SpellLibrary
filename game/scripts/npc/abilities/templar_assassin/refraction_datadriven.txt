@@ -1,0 +1,135 @@
+// Rewrite of Templar Assasssin
+// Author: YOLOSPAGHETTI
+// Date: April 2, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_templar_assassin/refraction.lua
+//
+// Notes: Still plays default take damage sounds when refraction is on
+"refraction_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"templar_assassin_refraction"
+
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_refraction.vpcf"
+		"soundfile"			"sounds/weapons/hero/templar_assassin/refraction.vsnd"
+		"soundfile"			"sounds/weapons/hero/templar_assassin/refraction_absorb.vsnd"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"17.0 17.0 17.0 17.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"100"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"instances"					"3 4 5 6"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_damage"				"20 40 60 80"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage_threshold"			"5 5 5 5"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"17.0 17.0 17.0 17.0"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_TemplarAssassin.Refraction"
+			"Target"		"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_templar_assassin/refraction.lua"
+			"Function"		"ApplyModifiers"
+			"particle"		"particles/units/heroes/hero_templar_assassin/templar_assassin_refraction.vpcf"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_damage_absorb"
+		{
+			"Duration"	"%duration"
+			
+			"OnTakeDamage"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_templar_assassin/refraction.lua"
+					"Function"		"RemoveDamageAbsorbStack"
+					"damage"		"%attack_damage"
+					"sound"			"Hero_TemplarAssassin.Refraction.Absorb"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_templar_assassin/refraction.lua"
+					"Function"		"RemoveDamageAbsorbStack"
+				}
+			}
+		}
+		
+		"modifier_bonus_damage"
+		{
+			"Duration"	"%duration"
+			"IsHidden"	"1"
+		
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_templar_assassin/refraction.lua"
+					"Function"		"RemoveBonusDamageStack"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
+			}
+		}
+		
+		"modifier_bonus_damage_visual"
+		{
+			"Duration"	"%duration"
+		}
+	}
+}
