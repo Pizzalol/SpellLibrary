@@ -1,0 +1,82 @@
+// Rewrite of Templar Assasssin Refraction
+// Author: YOLOSPAGHETTI
+// Date: April 2, 2016
+// Version: 6.86
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_templar_assassin/psi_blades.lua
+"psi_blades_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"templar_assassin_psi_blades"
+	
+		"precache"
+	{
+		"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_base_attack.vpcf"
+	}
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_attack_range"		"60 120 180 240"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"attack_spill_range"		"590 630 670 710"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"attack_spill_width"				"68 68 68 68"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_templar_assassin/psi_blades.lua"
+			"Function"		"CheckAngles"
+			"particle"		"particles/units/heroes/hero_templar_assassin/templar_assassin_base_attack.vpcf"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_psi_blades"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+			
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_templar_assassin/psi_blades.lua"
+					"Function"		"CheckAngles"
+					"particle"		"particles/units/heroes/hero_templar_assassin/templar_assassin_base_attack.vpcf"
+					"damage"		"%attack_damage"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+			}
+		}
+	}
+}
