@@ -1,0 +1,233 @@
+// Rewrite of Templar Assasssin Meld
+// Author: YOLOSPAGHETTI
+// Date: April 2, 2016
+// Version: 6.86
+// Type: Datadriven
+"meld_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"templar_assassin_meld"
+	
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_meld_attack.vpcf"
+		"soundfile"			"sounds/weapons/hero/templar_assassin/meld.vsnd"
+		"soundfile"			"sounds/weapons/hero/templar_assassin/meld_attack.vsnd"
+		"soundfile"			"sounds/weapons/hero/templar_assassin/meld_end.vsnd"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"6.0 6.0 6.0 6.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50 50 50 50"
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_damage"				"50 100 150 200"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_armor"				"-2 -4 -6 -8"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"armor_reduction_duration_tooltip"				"10"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"projectile_speed"				"900"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_TemplarAssassin.Meld"
+			"Target"		"CASTER"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_meld_datadriven"
+			"Target"	"CASTER"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_invisibility_datadriven"
+			"Target"	"CASTER"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_invisible"
+			"Target"	"CASTER"
+		}
+		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_bonus_damage"
+			"Target"	"CASTER"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{		
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_meld_debuff"
+			"Target"		"TARGET"
+		}
+		
+		"Damage"
+		{
+			"Target"	"TARGET"
+			"Type"		"DAMAGE_TYPE_PHYSICAL"
+			"Damage"	"%bonus_damage"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_meld_datadriven"
+		{
+			"OnAttack"
+			{
+				"FireSound"
+				{
+					"EffectName"		"Hero_TemplarAssassin.Meld.Attack"
+					"Target"			"TARGET"
+				}
+				"TrackingProjectile"
+				{
+					"Target"           	"TARGET"
+					"EffectName"       	"particles/units/heroes/hero_templar_assassin/templar_assassin_meld_attack.vpcf"
+					"Dodgeable"        	"1"
+					"ProvidesVision"   	"0"
+					"MoveSpeed"        	"%projectile_speed"
+					"SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+					"TargetTypes"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				}
+				"RemoveModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_permanent_invisibility_datadriven"
+				}
+				"RemoveModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_invisible"
+				}
+				"RemoveModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_meld_datadriven"
+				}
+			}
+			
+			"OnUnitMoved"
+			{
+				"RemoveModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_invisibility_datadriven"
+				}
+				"RemoveModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_invisible"
+				}
+				"RemoveModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_meld_datadriven"
+				}
+			}
+			
+			"OnAbilityExecuted"
+			{
+				"RemoveModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_invisibility_datadriven"
+				}
+				"RemoveModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_invisible"
+				}
+				"RemoveModifier"
+				{
+					"Target"	"CASTER"
+					"ModifierName"	"modifier_meld_datadriven"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+
+		"modifier_invisibility_datadriven"	
+		{	
+			"IsHidden"	"1"
+			
+			"States"
+			{
+				"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED" 
+			}
+
+			"OnDestroy"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_TemplarAssassin.Meld.Move"
+					"Target"		"CASTER"
+				}
+				
+				"RemoveModifier"
+				{
+					"Target"
+					{
+						"Center"	"CASTER"
+						"Flags"	"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+					"ModifierName"	"modifier_invisible"
+				}
+			}
+		}
+		
+		"modifier_meld_debuff"
+		{
+			"Duration"	"%armor_reduction_duration_tooltip"
+			"IsDebuff"	"1"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
+			}
+		}
+	}
+}
