@@ -1,4 +1,4 @@
-// Rewrite of Templar Assasssin Refraction
+// Rewrite of Templar Assasssin Psi Blades
 // Author: YOLOSPAGHETTI
 // Date: April 2, 2016
 // Version: 6.86
