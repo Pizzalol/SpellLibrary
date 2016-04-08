@@ -7,7 +7,7 @@
 // ----- FILE REQUIREMENTS -----
 // Script files:
 // scripts/vscripts/heroes/hero_templar_assassin/psi_blades.lua
-"psi_blades_datadriven"
+"templar_assassin_psi_blades_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -21,7 +21,7 @@
 	
 		"precache"
 	{
-		"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_base_attack.vpcf"
+		"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_psi_blade.vpcf"
 	}
 	
 	// Special
@@ -50,8 +50,7 @@
 		"RunScript"
 		{
 			"ScriptFile"	"heroes/hero_templar_assassin/psi_blades.lua"
-			"Function"		"CheckAngles"
-			"particle"		"particles/units/heroes/hero_templar_assassin/templar_assassin_base_attack.vpcf"
+			"Function"		"DealDamage"
 		}
 	}
 	
@@ -68,7 +67,7 @@
 				{
 					"ScriptFile"	"heroes/hero_templar_assassin/psi_blades.lua"
 					"Function"		"CheckAngles"
-					"particle"		"particles/units/heroes/hero_templar_assassin/templar_assassin_base_attack.vpcf"
+					"particle"		"particles/units/heroes/hero_templar_assassin/templar_assassin_psi_blade.vpcf"
 					"damage"		"%attack_damage"
 				}
 			}
