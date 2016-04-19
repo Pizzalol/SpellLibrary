@@ -44,7 +44,7 @@
 		"03"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"bonus_hp"					"250 400 600"
+			"bonus_hp"					"300 600 900"
 		}
 		"04"
 		{
