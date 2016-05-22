@@ -28,8 +28,7 @@
 		"particle"		"particles/units/heroes/hero_doom_bringer/doom_infernal_blade.vpcf"
 		"particle"		"particles/units/heroes/hero_doom_bringer/doom_infernal_blade_debuff.vpcf"
 		"particle"		"particles/units/heroes/hero_doom_bringer/doom_infernal_blade_impact.vpcf"
-		"soundfile"		"sounds/weapons/hero/doom_bringer/infernal_blade_preattack.vsnd"
-		"soundfile"		"sounds/weapons/hero/doom_bringer/infernal_blade_target.vsnd"
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
 	}
 	
 	// Casting
@@ -95,8 +94,7 @@
 					"ScriptFile"	"heroes/hero_doom_bringer/infernal_blade.lua"
 					"Function"		"CheckCooldown"
 					"particle"		"particles/units/heroes/hero_doom_bringer/doom_infernal_blade.vpcf"
-					//Name?
-					"sound"			"Hero_DoomBringer.InfernalBlade"
+					"sound"			"Hero_DoomBringer.InfernalBlade.PreAttack"
 				}
 			}
 
@@ -127,10 +125,9 @@
 					"Target"			"TARGET"
 				}
 				
-				//Name?
 				"FireSound"
 				{
-					"EffectName"	"Hero_DoomBringer.InfernalBlade_Target"
+					"EffectName"	"Hero_DoomBringer.InfernalBlade.Target"
 					"Target"		"TARGET"
 				}
 			}
