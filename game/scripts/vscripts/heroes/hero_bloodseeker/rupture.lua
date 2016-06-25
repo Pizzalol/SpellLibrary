@@ -4,19 +4,22 @@
 function DistanceCheck(keys)
 	local caster = keys.caster
 	local target = keys.target
+	print(target)
 	local ability = keys.ability
 	local movement_damage_pct = ability:GetLevelSpecialValueFor( "movement_damage_pct", ability:GetLevel() - 1 )/100
 	local damage_cap_amount = ability:GetLevelSpecialValueFor( "damage_cap_amount", ability:GetLevel() - 1 )
-	local position = target:GetAbsOrigin()
+	local damage = 0
 	
-	if ability.origin ~= null then
-		local distance = math.sqrt((ability.origin.x - position.x)^2 + (ability.origin.y - position.y)^2)
-		if distance <= damage_cap_amount and distance > 0 then
-			damage = distance * movement_damage_pct
-		end
+	if target.position == nil then
+		target.position = target:GetAbsOrigin()
 	end
-	ability.origin = position
-	if damage ~= nil then
+	local vector_distance = target.position - target:GetAbsOrigin()
+	local distance = (vector_distance):Length2D()
+	if distance <= damage_cap_amount and distance > 0 then
+		damage = distance * movement_damage_pct
+	end
+	target.position = target:GetAbsOrigin()
+	if damage ~= 0 then
 		ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 	end
 end
