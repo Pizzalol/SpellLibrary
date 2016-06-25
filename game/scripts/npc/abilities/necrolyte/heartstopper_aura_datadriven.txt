@@ -2,7 +2,7 @@
 // Author: Pizzalol
 // Date: 11.07.2015.
 // Game version: 6.88
-"necrolyte_heartstopper_aura_datadriven"
+"heartstopper_aura_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
