@@ -1,0 +1,166 @@
+// Rewrite of Rubick Telekinesis
+// Author: YOLOSPAGHETTI
+// Date: July 12, 2016
+// Version: 6.88
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_rubick/telekinesis.lua
+//
+// Notes: Awkward animation
+"telekinesis_datadriven"
+{
+// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"rubick_telekinesis"
+	
+	// Prechache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_rubick/rubick_telekinesis.vpcf"
+		"particle"			"particles/units/heroes/hero_rubick/rubick_telekinesis_land.vpcf"
+		"particle"			"particles/units/heroes/hero_rubick/rubick_telekinesis_debuff.vpcf"
+		"soundfile"			"sounds/weapons/hero/rubick/telekinesis_cast.vsnd"
+		"soundfile"			"sounds/weapons/hero/rubick/telekinesis_target.vsnd"
+		"soundfile"			"sounds/weapons/hero/rubick/telekinesis_stun.vsnd"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.1 0.1 0.1 0.1"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"22"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"120 120 120 120"
+	
+	// Cast Range
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"550 575 600 625"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"lift_duration"				"1.5 1.75 2.0 2.25"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"stun_duration"				"1.0 1.25 1.5 1.75"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"325 325 325 325"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"in_air_duration"			"1.2 1.45 1.7 1.95"  // the portion of the lift that is static in the air
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"fall_duration"				"0.3 0.3 0.3 0.3"  // the portion of the lift that is falling
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cast_range_tooltip"		"550 575 600 625"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_rubick/telekinesis.lua"
+			"Function"		"Lift"
+			"particle"		"particles/units/heroes/hero_rubick/rubick_telekinesis.vpcf"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Rubick.Telekinesis.Cast"
+			"Target"		"CASTER"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Rubick.Telekinesis.Target"
+			"Target"		"TARGET"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_telekinesis_datadriven"
+		{
+			"Duration"			"%lift_duration"
+			"OverrideAnimation"	"ACT_DOTA_FLAIL"
+			
+			"EffectName"		"particles/units/heroes/hero_rubick/rubick_telekinesis_debuff.vpcf"
+			"EffecAttachType"	"follow_origin"
+			
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_telekinesis_fall"
+					"Target"		"TARGET"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		
+		"modifier_telekinesis_fall"
+		{
+			"Duration" "%fall_duration"
+			
+			"ThinkInterval"		"0.01"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_rubick/telekinesis.lua"
+					"Function"		"Fall"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_rubick/telekinesis.lua"
+					"Function"		"Impact"
+					"particle"		"particles/units/heroes/hero_rubick/rubick_telekinesis_land.vpcf"
+					"sound"			"Hero_Rubick.Telekinesis.Stun"
+				}
+			}
+			
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}	
