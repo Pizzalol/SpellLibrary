@@ -31,11 +31,11 @@ function CreateTrap(keys)
 		-- Removes the default trap ability and adds both new abilities
 		trap:RemoveAbility("templar_assassin_self_trap")
 		
-		caster:AddAbility("templar_assassin_trap_datadriven")
-		caster:FindAbilityByName("templar_assassin_trap_datadriven"):UpgradeAbility(true)
+		caster:AddAbility("trap_datadriven")
+		caster:FindAbilityByName("trap_datadriven"):UpgradeAbility(true)
 		
-		trap:AddAbility("templar_assassin_self_trap_datadriven")
-		trap:FindAbilityByName("templar_assassin_self_trap_datadriven"):UpgradeAbility(true)
+		trap:AddAbility("self_trap_datadriven")
+		trap:FindAbilityByName("self_trap_datadriven"):UpgradeAbility(true)
 	
 		-- Plays the sounds
 		EmitSoundOn(keys.sound, caster)
