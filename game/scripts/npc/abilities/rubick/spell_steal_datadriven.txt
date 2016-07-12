@@ -1,0 +1,180 @@
+// Rewrite of Rubick Spell Steal
+// Author: YOLOSPAGHETTI
+// Date: July 12, 2016
+// Version: 6.88
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_rubick/spell_steal.lua
+//
+// Notes: Stolen spells can be leveled up, but are readjusted automatically
+//        Some spells may be buggy
+"spell_steal_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"rubick_spell_steal"
+	
+	// Prechache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_rubick/rubick_spell_steal.vpcf"
+		"soundfile"			"sounds/weapons/hero/rubick/spell_steal_cast.vsnd"
+		"soundfile"			"sounds/weapons/hero/rubick/spell_steal_complete.vsnd"
+		"soundfile"			"sounds/weapons/hero/rubick/spell_steal_target.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.1 0.1 0.1 0.1"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20.0 18.0 16.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"25 25 25"
+	
+	// Cast Range
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1000 1000 1000"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"180.0 240.0 300.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"projectile_speed"			"900"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cast_range_scepter"			"1400"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cooldown_scepter"			"2"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"global_radius"				"100000"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_rubick/spell_steal.lua"
+			"Function"		"SpellCheck"
+			"particle"		"particles/units/heroes/hero_rubick/rubick_spell_steal.vpcf"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Rubick.SpellSteal.Cast"
+			"Target"		"CASTER"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Rubick.SpellSteal.Target"
+			"Target"		"TARGET"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_rubick/spell_steal.lua"
+			"Function"		"SpellSteal"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Rubick.SpellSteal.Complete"
+			"Target"		"CASTER"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_spell_steal_aura_datadriven"
+		{
+			"IsHidden"	"1"
+			"Passive"	"1"
+				
+			"Aura"					"modifier_check_spell_datadriven"
+			"Aura_Radius"			"%global_radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
+			"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		}
+		
+		"modifier_check_spell_datadriven"
+		{
+			"IsHidden"	"1"
+			
+			"OnAbilityExecuted"
+			{
+				"DelayedAction"
+                {
+                    "Delay" "0.01"
+                    "Action"
+                    {
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_rubick/spell_steal.lua"
+							"Function"		"GetLastSpell"
+						}
+					}
+				}
+			}
+		}
+		
+		"modifier_spell_steal_datadriven"
+		{
+			"Duration"	"%duration"
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_rubick/spell_steal.lua"
+					"Function"		"RemoveSpell"
+				}
+			}
+			
+			"OnOrder"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_rubick/spell_steal.lua"
+					"Function"		"FixLevels"
+				}
+			}
+		}
+	}
+}	
