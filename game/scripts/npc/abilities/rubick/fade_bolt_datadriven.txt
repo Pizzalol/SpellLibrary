@@ -1,0 +1,164 @@
+// Rewrite of Rubick Fade Bolt
+// Author: YOLOSPAGHETTI
+// Date: July 12, 2016
+// Version: 6.88
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_rubick/fade_bolt.lua
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"rubick_fade_bolt"
+
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_rubick/rubick_fade_bolt.vpcf"
+		"particle"		"particles/units/heroes/hero_rubick/rubick_fade_bolt_debuff.vpcf"
+		"soundfile"		"sounds/weapons/hero/rubick/fade_bolt_cast.vsnd"
+		"soundfile"		"sounds/weapons/hero/rubick/fade_bolt_target.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.1 0.1 0.1 0.1"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"16.0 14.0 12.0 10.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"120 130 140 150"
+	
+	// Cast Range
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"800 800 800 800"
+
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.35"	// can chain to multiple units
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage"					"75 150 225 300"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"jump_damage_reduction_pct"	"4 4 4 4"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"hero_attack_damage_reduction"	"-20 -25 -30 -35"
+		}
+		"04"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"creep_attack_damage_reduction"	"-10 -13 -15 -17"
+		}			
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"10.0 10.0 10.0 10.0"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"440"
+		}			
+		"07"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"jump_delay"				"0.25 0.25 0.25 0.25"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_fade_bolt_datadriven"
+			"Target"		"TARGET"
+		}
+	
+		"FireSound"
+		{
+			"EffectName"	"Hero_Rubick.FadeBolt.Cast"
+			"Target"		"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_rubick/fade_bolt.lua"
+			"Function"		"NewInstance"
+			"particle"		"particles/units/heroes/hero_rubick/rubick_fade_bolt.vpcf"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_fade_bolt_datadriven"
+		{
+			"IsHidden"	"1"
+	
+			"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Rubick.FadeBolt.Target"
+					"Target"		"TARGET"
+				}
+			
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_rubick/fade_bolt.lua"
+					"Function"		"BoltJump"
+					"particle"		"particles/units/heroes/hero_rubick/rubick_fade_bolt.vpcf"
+				}
+			}
+		}
+		
+		"modifier_fade_bolt_debuff_hero"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+			
+			"EffectName"		"particles/units/heroes/hero_rubick/rubick_fade_bolt_debuff.vpcf"
+			"EffecAttachType"	"follow_origin"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%hero_attack_damage_reduction"
+			}
+		}
+		
+		"modifier_fade_bolt_debuff_creep"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+			
+			"EffectName"		"particles/units/heroes/hero_rubick/rubick_fade_bolt_debuff.vpcf"
+			"EffecAttachType"	"follow_origin"
+	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%creep_attack_damage_reduction"
+			}
+		}
+	}
+}
