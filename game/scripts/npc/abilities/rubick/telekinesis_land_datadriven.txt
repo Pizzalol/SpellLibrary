@@ -1,0 +1,67 @@
+// Rewrite of Rubick Telekinesis Land
+// Author: YOLOSPAGHETTI
+// Date: July 12, 2016
+// Version: 6.88
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_rubick/telekinesis.lua
+"telekinesis_land_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_AOE"
+	"MaxLevel"						"1"
+	"AbilityTextureName"			"rubick_telekinesis_land"
+	"AoERadius"						"375"
+
+	// Prechache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_rubick/rubick_telekinesis_marker.vpcf"
+	}
+	
+	// Special	
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"lift_duration"				"1.5 1.75 2.0 2.25"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"stun_duration"				"1.0 1.25 1.5 1.75"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"325 325 325 325"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"max_land_distance"			"375 375 375 375"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"fall_duration"				"0.3 0.3 0.3 0.3"  // the portion of the lift that is falling
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_rubick/telekinesis.lua"
+			"Function"		"Drop"
+			"particle"		"particles/units/heroes/hero_rubick/rubick_telekinesis_marker.vpcf"
+		}
+	}
+}
