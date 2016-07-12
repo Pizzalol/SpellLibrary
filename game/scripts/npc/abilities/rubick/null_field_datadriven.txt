@@ -1,0 +1,53 @@
+// Rewrite of Rubick Null Field
+// Author: YOLOSPAGHETTI
+// Date: July 12, 2016
+// Version: 6.88
+// Type: Datadriven
+"null_field_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"rubick_null_field"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"magic_damage_reduction_pct"	"10 14 18 22"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"radius"						"900 900 900 900"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_null_field_aura"
+		{
+			"IsHidden"	"1"
+			"Passive"	"1"
+				
+			"Aura"					"modifier_null_field_datadriven"
+			"Aura_Radius"			"%radius"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		}
+		
+		"modifier_null_field_datadriven"
+		{
+			"Duration"	"0.5"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magic_damage_reduction_pct"
+			}
+		}
+	}
+}
