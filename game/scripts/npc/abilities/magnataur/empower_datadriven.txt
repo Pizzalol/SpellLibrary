@@ -1,0 +1,137 @@
+// Rewrite of Magnus Empower
+// Author: YOLOSPAGHETTI
+// Date: July 15, 2016
+// Version: 6.88
+// Type: Datadriven
+"empower_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
+	"AbilityTextureName"			"magnataur_empower"
+	
+	"precache"
+	{
+		"particle" 		"particles/units/heroes/hero_magnataur/magnataur_empower.vpcf"
+		"particle" 		"particles/units/heroes/hero_magnataur/magnataur_empower_cleave_effect.vpcf"
+		"soundfile" 	"sounds/weapons/hero/magnataur/empower_cast.vsnd"
+		"soundfile" 	"sounds/weapons/hero/magnataur/empower_target.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"800"
+	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"8.0 8.0 8.0 8.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"30 40 50 60"
+
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.3"	// Easy to spam 
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"empower_duration"		"40.0 40.0 40.0 40.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_damage_pct"		"20 30 40 50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"cleave_damage_pct"		"20 30 40 50"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"cleave_radius"			"240"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Magnataur.Empower.Cast"
+			"Target"		"CASTER"
+		}
+		
+		"FireSound"
+		{
+			"EffectName"	"Hero_Magnataur.Empower.Target"
+			"Target"		"TARGET"
+		}
+		
+		"ApplyModifier"
+		{
+			"Target"		"TARGET"
+			"ModifierName"	"modifier_empower_datadriven"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_empower_datadriven"
+		{
+			"Duration"	"%empower_duration"
+			
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"					"TARGET"
+					"EffectName"				"particles/units/heroes/hero_magnataur/magnataur_empower.vpcf"
+					"EffectAttachType"			"start_at_customorigin"
+					"ControlPointEntities"
+					{
+						"TARGET"				"attach_attack1"
+					}
+				}
+				
+				"AttachEffect"
+				{
+					"Target"					"TARGET"
+					"EffectName"				"particles/units/heroes/hero_magnataur/magnataur_empower.vpcf"
+					"EffectAttachType"			"start_at_customorigin"
+					"ControlPointEntities"
+					{
+						"TARGET"				"attach_attack2"
+					}
+				}
+			}
+			
+			"OnAttackLanded"
+			{
+				"CleaveAttack"
+				{
+					"CleavePercent"		"%cleave_damage_pct"
+					"CleaveRadius"		"%cleave_radius"
+					"CleaveEffect"		"particles/units/heroes/hero_magnataur/magnataur_empower_cleave_effect.vpcf"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_pct"
+			}
+		}
+	}
+}
