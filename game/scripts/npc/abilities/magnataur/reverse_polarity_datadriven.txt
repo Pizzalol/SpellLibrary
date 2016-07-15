@@ -1,0 +1,127 @@
+// Rewrite of Magnus Reverse Polarity
+// Author: YOLOSPAGHETTI
+// Date: July 15, 2016
+// Version: 6.88
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_magnus/reverse_polarity.lua
+//
+// Notes: No working particles
+"reverse_polarity_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"magnataur_reverse_polarity"
+	
+	"precache"
+	{
+		"particle" 		"particles/units/heroes/hero_magnataur/magnataur_reverse_polarity.vpcf"
+		"particle"		"particles/units/heroes/hero_magnataur/magnataur_reverse_polarity_pull.vpcf"
+		"soundfile" 	"sounds/weapons/hero/magnataur/reverse_polarity.vsnd"
+		"soundfile" 	"sounds/weapons/hero/magnataur/reverse_polarity_cast.vsnd"
+	}
+	
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.3 0.3 0.3"
+	"AbilityCooldown"				"120 110 100"
+	"AbilityManaCost"				"200 250 300"
+	"AbilityCastRange"				"410 410 410"
+
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.5"	// Applies multiple modifiers
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"pull_radius"					"410"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"polarity_damage"		"50 125 200"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"hero_stun_duration"	"2.25 3.0 3.75"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"creep_stun_duration"	"3.0 4.0 5.0"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"pull_offset"			"150"
+		}
+	}
+	
+	"OnAbilityPhaseStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Magnataur.ReversePolarity.Anim"
+			"Target"		"CASTER"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Magnataur.ReversePolarity.Cast"
+			"Target"		"CASTER"
+		}
+		
+		"AttachEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_magnataur/magnataur_reverse_polarity.vpcf"
+			"EffecAttachType"	"follow_origin"
+			"Target"			"CASTER"
+		}
+		
+		"ActOnTargets"
+		{		
+			"Target"
+			{
+				"Center"  				"CASTER"
+				"Radius" 				"%pull_radius"
+				"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			}
+
+			"Action"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%polarity_damage"
+				}
+			
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_magnataur/reverse_polarity.lua"
+					"Function"		"ReversePolarity"
+					"particle"		"particles/units/heroes/hero_magnataur/magnataur_reverse_polarity.vpcf"
+					"particle2"		"particles/units/heroes/hero_magnataur/magnataur_reverse_polarity_pull.vpcf"
+				}
+			}
+		}
+	}
+}
