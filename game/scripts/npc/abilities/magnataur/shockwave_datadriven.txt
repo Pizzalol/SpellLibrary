@@ -1,0 +1,113 @@
+// Rewrite of Magnus Shockwave
+// Author: YOLOSPAGHETTI
+// Date: July 15, 2016
+// Version: 6.88
+// Type: Datadriven
+"shockwave_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"magnataur_shockwave"
+	
+	"precache"
+	{
+		"particle" 		"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+		"soundfile" 	"sounds/weapons/hero/magnataur/shockwave_cast.vsnd"
+		"soundfile" 	"sounds/weapons/hero/magnataur/shockwave_particle.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1150"
+	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"10.0 9.0 8.0 7.0"
+	"AbilityDuration"				"0.6875 0.6875 0.6875 0.6875"
+
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"90 90 90 90"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"shock_speed"				"1050"
+		}
+		
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"shock_width"				"150"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"shock_distance"			"1150"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"shock_damage"				"75 150 225 300"
+		}
+	}
+	
+	"OnAbilityPhaseStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Magnataur.ShockWave.Cast"
+			"Target"		"CASTER"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Magnataur.ShockWave.Particle"
+			"Target"		"CASTER"
+		}
+	
+		"LinearProjectile"
+		{
+			"Target"      "POINT"
+			"EffectName"  "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"MoveSpeed"   "%shock_speed"
+			"StartRadius"   "%shock_width"
+			"StartPosition" "attach_origin"
+			"EndRadius"     "%shock_width"
+			"FixedDistance" "%shock_distance"
+			"TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			"TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
+			"HasFrontalCone"    "0"
+			"ProvidesVision" "0"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit" "0"
+	
+		"Damage"
+		{
+			"Target"	"TARGET"
+			"Type"		"DAMAGE_TYPE_MAGICAL"
+			"Damage"	"%shock_damage"
+		}
+	}
+}
