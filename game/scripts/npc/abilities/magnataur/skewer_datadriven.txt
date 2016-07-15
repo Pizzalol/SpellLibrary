@@ -99,13 +99,6 @@
 			"ScriptFile"	"heroes/hero_magnataur/skewer.lua"
 			"Function"		"Skewer"
 		}
-		
-		"ApplyMotionController"
-		{
-			"TARGET" 					"CASTER"
-			"ScriptFile"   				"heroes/hero_magnataur/skewer.lua"
-			"HorizontalControlFunction" "SkewerSelfMotion"       
-		}
 	}
 	
 	"Modifiers"
@@ -141,6 +134,16 @@
 			"EffectName"		"particles/units/heroes/hero_magnataur/magnataur_skewer.vpcf"
 			"EffecAttachType"	"follow_origin"
 			
+			"OnCreated"
+			{
+				"ApplyMotionController"
+				{
+					"TARGET" 					"CASTER"
+					"ScriptFile"   				"heroes/hero_magnataur/skewer.lua"
+					"HorizontalControlFunction" "SkewerMotion"       
+				}
+			}
+			
 			"ThinkInterval" "0.01"
 			"OnIntervalThink"
 			{
@@ -167,7 +170,7 @@
 				{
 					"TARGET" 					"TARGET"
 					"ScriptFile"   				"heroes/hero_magnataur/skewer.lua"
-					"HorizontalControlFunction" "SkewerTargetMotion"       
+					"HorizontalControlFunction" "SkewerMotion"       
 				}
 			}
 		
