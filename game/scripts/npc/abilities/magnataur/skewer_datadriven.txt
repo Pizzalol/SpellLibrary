@@ -1,0 +1,189 @@
+// Rewrite of Magnus Skewer
+// Author: YOLOSPAGHETTI
+// Date: July 15, 2016
+// Version: 6.88
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_magnus/skewer.lua
+//
+// Notes: No horn particle
+"skewer_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"magnataur_skewer"
+	
+	"precache"
+	{
+		"particle" 		"particles/units/heroes/hero_magnataur/magnataur_skewer.vpcf"
+		"particle" 		"particles/units/heroes/hero_magnataur/magnataur_skewer_debuff.vpcf"
+		"particle"		"particles/units/heroes/hero_magnataur/magnataur_skewer_horn.vpcf"
+		"soundfile" 	"sounds/weapons/hero/magnataur/skewer_cast.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"30.0 30.0 30.0 30.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"80 80 80 80"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"skewer_speed"					"950"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"range"					"887 982 1077 1172"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"slow_pct"				"-25 -30 -35 -40"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"skewer_radius"				"125"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"slow_duration"			"2.5 2.75 3 3.25"
+		}			
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"skewer_damage"			"70 140 210 280"
+		}
+		"07"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"hero_offset"				"200"
+		}
+		"08"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"tree_radius"				"200"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Magnataur.Skewer.Cast"
+			"Target"		"CASTER"
+		}
+		
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_magnataur/skewer.lua"
+			"Function"		"Skewer"
+		}
+		
+		"ApplyMotionController"
+		{
+			"TARGET" 					"CASTER"
+			"ScriptFile"   				"heroes/hero_magnataur/skewer.lua"
+			"HorizontalControlFunction" "SkewerSelfMotion"       
+		}
+	}
+	
+	"Modifiers"
+	{	
+		"modifier_skewer_datadriven"
+		{
+			"Duration"	"%slow_duration"
+			"IsDebuff"	"1"
+			
+			"EffectName"		"particles/units/heroes/hero_magnataur/magnataur_skewer_debuff.vpcf"
+			"EffecAttachType"	"follow_origin"
+			
+			"OnCreated"
+			{
+				"Damage"
+				{
+					"Target"	"TARGET"
+					"Type"		"DAMAGE_TYPE_MAGICAL"
+					"Damage"	"%skewer_damage"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_pct"
+			}
+		}
+		
+		"modifier_skewer_disable_caster"
+		{
+			"IsHidden"	"1"
+			
+			"EffectName"		"particles/units/heroes/hero_magnataur/magnataur_skewer.vpcf"
+			"EffecAttachType"	"follow_origin"
+			
+			"ThinkInterval" "0.01"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_magnataur/skewer.lua"
+					"Function"		"CheckTargets"
+				}
+			}
+		
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		
+		"modifier_skewer_disable_target"
+		{
+			"IsHidden"	"1"
+		
+			"OnCreated"
+			{
+				"ApplyMotionController"
+				{
+					"TARGET" 					"TARGET"
+					"ScriptFile"   				"heroes/hero_magnataur/skewer.lua"
+					"HorizontalControlFunction" "SkewerTargetMotion"       
+				}
+			}
+		
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_skewer_datadriven"
+					"Target"		"TARGET"
+				}
+			}
+		
+			"States"
+			{
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}
