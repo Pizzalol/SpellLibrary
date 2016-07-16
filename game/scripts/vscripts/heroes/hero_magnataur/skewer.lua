@@ -71,7 +71,7 @@ function SkewerMotion(keys)
 	local target = keys.target
 	local ability = keys.ability
 	-- Move the target while the distance traveled is less than the original distance upon cast
-	if ability.traveled_distance <= ability.distance then
+	if ability.traveled_distance < ability.distance then
 		target:SetAbsOrigin(target:GetAbsOrigin() + ability.direction * ability.speed)
 		-- If the target is the caster, calculate the new travel distance
 		if target == caster then
