@@ -78,7 +78,6 @@ function SkewerMotion(keys)
 			ability.traveled_distance = ability.traveled_distance + ability.speed
 		end
 	else
-		FindClearSpaceForUnit(target, target:GetAbsOrigin(), true)
 		-- Remove the motion controller once the distance has been traveled
 		target:InterruptMotionControllers(true)
 		-- Remove the appropriate disable modifier from the target
