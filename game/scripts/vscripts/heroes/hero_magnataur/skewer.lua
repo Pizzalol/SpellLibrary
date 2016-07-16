@@ -38,25 +38,6 @@ end
 
 --[[Author: YOLOSPAGHETTI
 	Date: July 15, 2016
-	Applies the motion to the caster]]
-function SkewerSelfMotion(keys)
-	local caster = keys.caster
-	local ability = keys.ability
-	
-	-- Move the caster while the distance traveled is less than the original distance upon cast
-	if ability.traveled_distance <= ability.distance then
-		caster:SetAbsOrigin(caster:GetAbsOrigin() + ability.direction * ability.speed)
-		ability.traveled_distance = ability.traveled_distance + ability.speed
-	else
-		-- Remove the motion controller once the distance has been traveled
-		caster:InterruptMotionControllers(false)
-		-- Removes the disable modifier
-		caster:RemoveModifierByName("modifier_skewer_disable_caster")
-	end
-end
-
---[[Author: YOLOSPAGHETTI
-	Date: July 15, 2016
 	Checks if targets are within range of the skewer]]
 function CheckTargets(keys)
 	local caster = keys.caster
