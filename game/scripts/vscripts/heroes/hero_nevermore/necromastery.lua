@@ -26,7 +26,8 @@ function NecromasteryStack( event )
 	local caster = event.caster
 	local target = event.target -- unit? The killed thing
 	local modifier = event.modifier
-
+	local ability = event.ability
+	
 	local souls_hero_bonus = ability:GetLevelSpecialValueFor( "necromastery_souls_hero_bonus", ability:GetLevel() - 1 )
 	local max_souls = ability:GetLevelSpecialValueFor( "necromastery_max_souls", ability:GetLevel() - 1 )
 
