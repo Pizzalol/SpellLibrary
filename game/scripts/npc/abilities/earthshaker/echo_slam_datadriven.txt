@@ -1,0 +1,107 @@
+// Rewrite of Earthshaker Echo Slam
+// Author: YOLOSPAGHETTI
+// Date: July 30, 2016
+// Version: 6.88
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_earthshaker/echo_slam.lua
+//
+// Notes: Particles look a little different
+
+"echo_slam_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"earthshaker_echo_slam"
+
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam.vpcf"
+		"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start.vpcf"
+		"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_fallback_mid.vpcf"
+		"soundfile"		"sounds/weapons/hero/earthshaker/echo_slam.vsnd"
+		"soundfile"		"sounds/weapons/hero/earthshaker/echo_slam_small.vsnd"
+		"soundfile"		"sounds/weapons/hero/earthshaker/echo01.vsnd"
+		"soundfile"		"sounds/weapons/hero/earthshaker/echo02.vsnd"
+		"soundfile"		"sounds/weapons/hero/earthshaker/echo03.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0 0 0 0"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"150.0 130.0 110.0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"160 210 270"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"145 205 265"		
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"echo_slam_damage_range"	"600"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"echo_slam_echo_search_range" "600"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"echo_slam_echo_range"		"600"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"echo_slam_echo_damage"		"40 55 70"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_EarthShaker.EchoSlam"
+			"Target"		"CASTER"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_earthshaker/echo_slam.lua"
+			"Function"		"EchoSlam"
+			"particle1"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam.vpcf"
+			"particle2"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start.vpcf"
+			"sound1"		"Hero_EarthShaker.EchoSlam"
+			"sound2"		"Hero_EarthShaker.IdleSlam"
+			"sound3"		"Hero_EarthShaker.EchoSlamEcho"
+		}
+	}
+	
+	"OnProjectileHitUnit"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_earthshaker/echo_slam.lua"
+			"Function"		"ApplyEchoDamage"
+		}
+	}
+}
