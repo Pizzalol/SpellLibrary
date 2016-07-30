@@ -1,0 +1,101 @@
+// Rewrite of Earthshaker Enchant Totem
+// Author: YOLOSPAGHETTI
+// Date: July 30, 2016
+// Version: 6.88
+// Type: Datadriven
+//
+// Notes: No attack blur
+"enchant_totem_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityTextureName"			"earthshaker_enchant_totem"
+	
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_totem_blur.vpcf"
+		"soundfile" 	"sounds/weapons/hero/earthshaker/enchant.vsnd"
+		"soundfile" 	"sounds/weapons/hero/earthshaker/enchant_attack.vsnd"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"0"
+	"AbilityCastPoint"				"0.69 0.69 0.69 0.69"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"earthshaker_enchant_totem"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"5.0"
+	"AbilityDuration"				"14.0 14.0 14.0 14.0"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"0 0 0 0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"20 30 40 50"		
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"totem_damage_percentage"	"100 200 300 400"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"tooltip_duration"			"14.0 14.0 14.0 14.0"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_EarthShaker.Totem"
+			"Target"		"CASTER"
+		}
+	
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_enchant_totem_datadriven"
+			"Target"		"CASTER"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_enchant_totem_datadriven"
+		{
+			"Duration"		"%tooltip_duration"
+			
+			"OnAttackLanded"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_enchant_totem_datadriven"
+					"Target"		"CASTER"
+				}
+				
+				"FireSound"
+				{
+					"EffectName"	"Hero_EarthShaker.Totem.Attack"
+					"Target"		"CASTER"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%totem_damage_percentage"
+			}
+		}
+	}
+}
