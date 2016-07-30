@@ -1,0 +1,165 @@
+// Rewrite of Earthshaker Fissure
+// Author: YOLOSPAGHETTI
+// Date: July 30, 2016
+// Version: 6.88
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_earthshaker/fissure.lua
+//
+// Notes: the sides are stickier than normal, there is no automatic pathing, and sometimes the front and back do not fully restrict movement
+"fissure_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"earthshaker_fissure"
+
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_fissure.vpcf"
+		"soundfile"		"sounds/weapons/hero/earthshaker/fissure.vsnd"
+		"soundfile"		"sounds/weapons/hero/earthshaker/fissure_destroy01.vsnd"
+		"soundfile"		"sounds/weapons/hero/earthshaker/fissure_destroy02.vsnd"
+		"soundfile"		"sounds/weapons/hero/earthshaker/fissure_destroy03.vsnd"
+		"soundfile"		"sounds/weapons/hero/earthshaker/fissure_destroy04.vsnd"
+		"soundfile"		"sounds/weapons/hero/earthshaker/fissure_destroy05.vsnd"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"1400"
+	"AbilityCastPoint"				"0.69 0.69 0.69 0.69"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"15.0 15.0 15.0 15.0"
+	"AbilityDuration"				"1.0 1.25 1.5 1.75"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"110 160 210 260"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"125 140 155 170"		
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"fissure_range"				"1350"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"fissure_duration"			"8.0"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"fissure_radius"				"225"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"stun_duration"				"1.0 1.25 1.5 1.75"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"width"						"48"
+		}
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"offset"					"1"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_EarthShaker.Fissure"
+			"Target"		"CASTER"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_earthshaker/fissure.lua"
+			"Function"		"CreateFissure"
+			"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_fissure.vpcf"
+		}
+		
+		"CreateThinker"
+		{
+			"ModifierName"	"modifier_fissure_datadriven"
+			"Target"		"POINT"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_fissure_datadriven"
+		{
+			"Aura"					"modifier_check_position"
+			"Aura_Radius"			"%fissure_range"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+			"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"Duration"				"%fissure_duration"
+			
+			"OnDestroy"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_EarthShaker.FissureDestroy"
+					"Target"		"TARGET"
+				}
+			}
+		}
+		
+		"modifier_check_position"
+		{
+			"IsHidden"	"1"
+		
+			"OnUnitMoved"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_earthshaker/fissure.lua"
+					"Function"		"CheckPosition"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_earthshaker/fissure.lua"
+					"Function"		"RemoveModifiers"
+				}
+			}
+		}
+		
+		"modifier_fissure_block"
+		{
+			"IsHidden"	"1"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"0.1"
+			}
+		}
+	}
+}
