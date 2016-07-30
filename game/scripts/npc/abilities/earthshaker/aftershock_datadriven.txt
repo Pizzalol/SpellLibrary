@@ -1,0 +1,81 @@
+// Rewrite of Earthshaker Aftershock
+// Author: YOLOSPAGHETTI
+// Date: July 30, 2016
+// Version: 6.88
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_earthshaker/aftershock.lua
+
+"aftershock_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"earthshaker_aftershock"
+
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_earthshaker/temp_eruption_dirt.vpcf"
+		"particle"		"particles/units/heroes/hero_earthshaker/temp_eruption_ripple_b.vpcf"
+	}
+	
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDuration"				"0.6 0.9 1.2 1.5"
+
+	// Damage.
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"50 75 100 125"
+	
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportBonus"	"100"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"aftershock_range"			"300"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"tooltip_duration"			"0.6 0.9 1.2 1.5"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_aftershock_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+			
+			"OnAbilityExecuted"
+			{
+				"DelayedAction"
+                {
+                    "Delay" "0.01"
+                    "Action"
+                    {
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_earthshaker/aftershock.lua"
+							"Function"		"Aftershock"
+							"particle1"		"particles/units/heroes/hero_earthshaker/temp_eruption_dirt.vpcf"
+							"particle2"		"particles/units/heroes/hero_earthshaker/temp_eruption_ripple_b.vpcf"
+						}
+					}
+				}
+			}
+		}
+	}
+}
