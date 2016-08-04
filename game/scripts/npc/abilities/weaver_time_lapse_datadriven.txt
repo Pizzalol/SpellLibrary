@@ -2,14 +2,96 @@
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
-	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-	"FightRecapLevel"				"2"
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	"AbilityTextureName"			"weaver_time_lapse"
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts"
+		"particle"			"particles/units/heroes/hero_weaver/weaver_timelapse.vpcf"
+	}
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"625"
+	"AbilityCastPoint"				"0.2 0.2 0.2 0.2"
 
-	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	"AbilityCooldown"				"60 50 40"
-	"AbilityManaCost"				"150 75 0"			
-}
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"12.0 10.0 8.0"
 
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"40"
+
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"0.25"	// mostly about the blink
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"backtrack_time"			"3.0"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"tooltip_range"		"625"
+		}
+		------------- special values ---------------------------
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"remember_interval"		"0.2"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Weaver.TimeLapse"
+			"Target"		"TARGET"
+		}
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_weaver/weaver_timelapse.vpcf"
+			"Target"		"TARGET"		
+		}
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_weaver/time_lapse.lua"
+			"Function"	"TimeLapseRewind"
+		}
+	}
+	"Modifiers"
+	{
+		"modifier_rewind_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"ThinkInterval"	"%remember_interval"
+			"OnIntervalThink"
+			{	
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_weaver/time_lapse.lua"
+					"Function"	"TimeLapseSave"
+					"DamageTaken"	"%attack_damage"
+					"BacktrackTime"	"%backtrack_time"
+					"Interval"	"%remember_interval"
+				}
+			}
+		}
+	}
+}		
