@@ -1,3 +1,14 @@
+// Rewrite of Weaver - Time Lapse
+// Author: Yahnich
+// Date: 5th August, 2016
+// Version: eg. 6.86
+// Type: Datadriven
+// Notes: Exact Scepter interactions requires lua ability
+//
+// List the file requirements if the ability requires other files to function
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_weaver/time_lapse.lua
 "weaver_time_lapse_datadriven"
 {
 	// General
