@@ -1,0 +1,23 @@
+// Author: Nightborn and KAL
+// Rewrite of Force Staff Recipe
+// Date: August 27, 2016
+"item_recipe_force_staff_datadriven"
+{
+
+	"BaseClass"   "item_datadriven"
+	"ID"              "1101"                  // Default ID by Valve is "101"                         
+	"Model"             "models/props_gameplay/recipe.vmdl"
+	"AbilityTextureName" "item_recipe"
+	
+
+	"ItemCost"            "900" 
+	"ItemShopTags"          ""
+	
+
+	"ItemRecipe"          "1"
+	"ItemResult"          "item_force_staff_datadriven"
+	"ItemRequirements"
+	{
+		"01"            "item_ring_of_regen_datadriven;item_staff_of_wizardry_datadriven"
+	}
+}
