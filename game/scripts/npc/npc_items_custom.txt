@@ -11315,50 +11315,50 @@
 
 		"Modifiers"
 		{
-				"modifier_item_force_staff_passive"
+			"modifier_item_force_staff_passive"
+			{
+					"Passive"  "1"
+					"IsHidden" "1" 
+
+					"Attributes" "MODIFIER_ATTRIBUTE_NONE"
+					"Properties"
+					{
+							"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" "%bonus_intellect"
+							"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%bonus_health_regen"
+					}
+			}
+			"modifier_item_force_staff_effect"
+			{ 
+
+				"Duration"  "%push_duration"
+
+				"OverrideAnimation" "ACT_DOTA_FLAIL"
+
+				"StatusEffectName"     "particles/status_fx/status_effect_forcestaff.vpcf"
+				"StatusEffectPriority"  "10"
+				
+				"OnCreated"
 				{
-						"Passive"  "1"
-						"IsHidden" "1" 
-
-						"Attributes" "MODIFIER_ATTRIBUTE_NONE"
-						"Properties"
-						{
-								"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" "%bonus_intellect"
-								"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%bonus_health_regen"
-						}
-				}
-				"modifier_item_force_staff_effect"
-				{ 
-
-					"Duration"  "%push_duration"
-
-					"OverrideAnimation" "ACT_DOTA_FLAIL"
-
-					"StatusEffectName"     "particles/status_fx/status_effect_forcestaff.vpcf"
-					"StatusEffectPriority"  "10"
-					
-					"OnCreated"
+					"AttachEffect"
 					{
-						"AttachEffect"
-						{
-							"EffectName"  "particles/items_fx/force_staff.vpcf"
-							"EffectAttachType" "follow_origin"
-							"Target"  "TARGET"
-						}
+						"EffectName"  "particles/items_fx/force_staff.vpcf"
+						"EffectAttachType" "follow_origin"
+						"Target"  "TARGET"
 					}
+				}
 
-					"ThinkInterval"  "0.03"
-					"OnIntervalThink"
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"DestroyTrees"
 					{
-						"DestroyTrees"
-						{
-							"Target"  "TARGET"
-							"Radius"  "%tree_radius"
-						}
-
+						"Target"  "TARGET"
+						"Radius"  "%tree_radius"
 					}
 
 				}
+
+			}
 		}
 	}
 }
