@@ -1,3 +1,7 @@
+//Author: Nightborn
+//Rewrite of Spectre Haunt
+//Date: August 27, 2016
+//This works with spectre_reality_datadriven if you want the complete spell
 "spectre_haunt_datadriven"
 {
 	// General
@@ -15,11 +19,16 @@
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"120.0 120.0 120.0"
+	"AbilityCooldown"				"140 130 120"
 
 	// Cost
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityManaCost"				"150 150 150"
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+	}
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -56,5 +65,73 @@
 			"attack_delay"				"1.0 1.0 1.0"
 		}			
 	}
-}
 
+	"OnCreated"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_spectre/haunt.lua"
+			"Function"		"LevelUpReality"
+		}
+	}
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Spectre.HauntCast"
+			"Target"		"CASTER"
+		}
+		"ApplyModifier"
+		{
+			"Target"
+			{
+				"Center"  	"CASTER"
+				"Radius" 	"GLOBAL"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO" 
+			}
+			"ModifierName" "modifier_spectre_haunt_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_spectre_haunt_datadriven"
+		{	
+			"Duration"	"%duration"
+			"IsDebuff"	"1"
+			"IsHidden"	"0"
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_spectre/haunt.lua"
+					"Function"		"HauntCast"
+					"sound"			"Hero_Spectre.Haunt"
+				}
+			}
+		}
+		"modifier_spectre_haunt_illusion_buff"
+		{
+			"Duration"	"%duration"
+			"IsBuff"	"1"
+			"Properties"
+			{
+			    "MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE" 				"400"
+			}
+			"States"
+			{
+				"MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		"modifier_spectre_haunt_illusion_debuff"
+		{
+			"Duration"	"%attack_delay"		//Illusions cant attack at first
+			"IsDebuff"	"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_DISABLE_AUTOATTACK"				"1"
+			}
+		}
+	}
+}
