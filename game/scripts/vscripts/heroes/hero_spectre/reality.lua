@@ -19,6 +19,8 @@ function RealityCast (keys)
 			target:SetAbsOrigin(caster.currentPosition)	
 			caster:SetAbsOrigin(target.currentPosition)
 
+			FindClearSpaceForUnit( caster, target.currentPosition, true )
+
 			EmitSoundOn("Hero_Spectre.Reality", caster)
 
 		end
