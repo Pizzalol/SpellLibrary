@@ -88,7 +88,8 @@
 				"Center"  	"CASTER"
 				"Radius" 	"GLOBAL"
 				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types" 	"DOTA_UNIT_TARGET_HERO" 
+				"Types" 	"DOTA_UNIT_TARGET_HERO"
+				"Flags"		"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
 			}
 			"ModifierName" "modifier_spectre_haunt_datadriven"
 		}
