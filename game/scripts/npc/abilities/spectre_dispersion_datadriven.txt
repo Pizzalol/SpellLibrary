@@ -1,11 +1,14 @@
+//Author: Nightborn
+//Rewrite of Spectre Haunt
+//Date: September 1, 2016
 "spectre_dispersion_datadriven"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"spectre_dispersion"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_NO"
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
@@ -13,19 +16,34 @@
 	{
 		"01"
 		{
-			"var_type"				"FIELD_INTEGER"
+			"var_type"			"FIELD_INTEGER"
 			"min_radius"			"300 300 300 300"
 		}
 		"02"
 		{
-			"var_type"				"FIELD_INTEGER"
+			"var_type"			"FIELD_INTEGER"
 			"max_radius"			"1000 1000 1000 1000"
 		}
 		"03"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"damage_reflection_pct"	"10 14 18 22"
+			"var_type"			"FIELD_INTEGER"
+			"damage_reflection_pct"		"10 14 18 22"
+		}
+	}
+
+	"precache"
+	{
+		"particle"	"particles/units/heroes/hero_spectre/spectre_dispersion.vpcf"
+		"particle"	"particles/units/heroes/hero_spectre/spectre_dispersion_fallback_mid.vpcf"
+		"particle"	"particles/units/heroes/hero_spectre/spectre_dispersion_b_fallback_low.vpcf"
+	}
+
+	"OnCreated"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_spectre/dispersion.lua"
+			"Function"		"ApplyModifier"
 		}
 	}
 }
-
