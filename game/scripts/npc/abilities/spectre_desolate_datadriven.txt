@@ -1,10 +1,14 @@
+//Author: Nightborn
+//Rewrite of Spectre Desolate
+//Date: September 1, 2016
 "spectre_desolate_datadriven"
 {
 	// General
-	//-------------------------------------------------------------------------------------------------------------
+	//-------------------------------------------------------------------------------------------------------------	
 	"BaseClass"				"ability_datadriven"
+	"AbilityTextureName"			"spectre_desolate"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+	"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"
 	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 	
 	// Special
@@ -14,13 +18,37 @@
 		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"bonus_damage"			"20 35 50 65"
+			"bonus_damage"				"20 35 50 65"
 		}
 		"02"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"radius"				"325 325 325 325"
+			"radius"				"325"
+		}
+	}
+
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_spectre/spectre_desolate.vpcf"
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+	}
+
+	"Modifiers"
+	{
+		"modifier_spectre_desolate_datadriven"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+
+			"OnAttack"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_spectre/desolate.lua"
+					"Function"		"Desolate"
+					"Target"		"TARGET"
+				}
+			}
 		}
 	}
 }
-
