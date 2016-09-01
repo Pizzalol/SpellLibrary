@@ -1,4 +1,3 @@
-
 --[[Author: Nightborn
 	Date: August 27, 2016
 ]]
