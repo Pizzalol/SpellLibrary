@@ -1,3 +1,7 @@
+--[[Author: Nightborn
+	Date: August 27, 2016
+]]
+
 modifier_spectre_dispersion_lua = class({})
 
 function modifier_spectre_dispersion_lua:DeclareFunctions()
