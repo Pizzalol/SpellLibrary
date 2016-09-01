@@ -1,5 +1,5 @@
 //Author: Nightborn
-//Rewrite of Spectre Haunt
+//Rewrite of Spectre Dispersion
 //Date: September 1, 2016
 "spectre_dispersion_datadriven"
 {
