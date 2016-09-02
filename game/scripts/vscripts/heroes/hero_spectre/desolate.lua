@@ -44,9 +44,6 @@ function Desolate (keys)
         --ParticleManager:SetParticleControl(particle, 4, Vector(1, 1, 0))
         ParticleManager:SetParticleControlForward(particle, 0, caster:GetForwardVector())
 
-
-
-
 		local damageTable = {
 		victim = target,
 		attacker = caster,
