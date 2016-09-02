@@ -1,0 +1,32 @@
+//Author: Nightborn
+//Rewrite of Spectre Haunt
+//Date: August 27, 2016
+//OBS! Requires "spectre_haunt_datadriven"!
+"spectre_reality_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_POINT"
+	"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+	"AbilityTextureName"			"spectre_reality"
+
+	"MaxLevel"						"1"
+
+	"FightRecapLevel"				"2"
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+	}
+
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_spectre/reality.lua"
+			"Function"		"RealityCast"
+		}
+	}
+
+}
