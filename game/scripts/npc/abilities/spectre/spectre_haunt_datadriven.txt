@@ -1,0 +1,138 @@
+//Author: Nightborn
+//Rewrite of Spectre Haunt
+//Date: August 27, 2016
+//This works with spectre_reality_datadriven if you want the complete spell
+"spectre_haunt_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"FightRecapLevel"				"2"
+	"AbilityTextureName"			"spectre_haunt"
+	
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.3 0.3 0.3"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"140 130 120"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"150 150 150"
+
+	"precache"
+	{
+		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+	}
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"5.0 6.0 7.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"illusion_damage_outgoing"	"-70"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"tooltip_outgoing"	"30"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"illusion_damage_incoming"	"100 100 100"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"tooltip_illusion_total_damage_incoming"	"200 200 200"
+		}			
+		"06"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"attack_delay"				"1.0 1.0 1.0"
+		}			
+	}
+
+	"OnCreated"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_spectre/haunt.lua"
+			"Function"		"LevelUpReality"
+		}
+	}
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Spectre.HauntCast"
+			"Target"		"CASTER"
+		}
+		"ApplyModifier"
+		{
+			"Target"
+			{
+				"Center"  	"CASTER"
+				"Radius" 	"GLOBAL"
+				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 	"DOTA_UNIT_TARGET_HERO"
+				"Flags"		"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
+			}
+			"ModifierName" "modifier_spectre_haunt_datadriven"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_spectre_haunt_datadriven"
+		{	
+			"Duration"	"%duration"
+			"IsDebuff"	"1"
+			"IsHidden"	"0"
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_spectre/haunt.lua"
+					"Function"		"HauntCast"
+					"sound"			"Hero_Spectre.Haunt"
+				}
+			}
+		}
+		"modifier_spectre_haunt_illusion_buff"
+		{
+			"Duration"	"%duration"
+			"IsBuff"	"1"
+			"Properties"
+			{
+			    "MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE" 				"400"
+			}
+			"States"
+			{
+				"MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY"	"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+		"modifier_spectre_haunt_illusion_debuff"
+		{
+			"Duration"	"%attack_delay"		//Illusions cant attack at first
+			"IsDebuff"	"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_DISABLE_AUTOATTACK"				"1"
+			}
+		}
+	}
+}
