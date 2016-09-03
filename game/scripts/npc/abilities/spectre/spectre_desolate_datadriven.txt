@@ -1,4 +1,4 @@
-//Author: Nightborn
+//Author: Nightborn and KAL
 //Rewrite of Spectre Desolate
 //Date: September 1, 2016
 "spectre_desolate_datadriven"
