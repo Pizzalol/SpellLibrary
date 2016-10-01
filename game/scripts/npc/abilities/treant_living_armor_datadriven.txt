@@ -1,50 +1,93 @@
+// Rewrite of Treant Protector Living Armor
+// Author: Yahnich
+// Date: October 13, 2015
+// Version: 6.88
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_treant/living_armor.lua
 "treant_living_armor_datadriven"
 {
-	// General
-	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_MECHANICAL"			
-	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-	"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
-	
-	"AbilityCastRange"				"0"
-	"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
-	"FightRecapLevel"				"1"
-	"AbilityTextureName"			"treant_living_armor"
-	
-	// Time		
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"32.0 26.0 20.0 14.0"
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"                "ability_datadriven"
+    "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+    "AbilityUnitTargetTeam"            "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"            "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_MECHANICAL"            
+    "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+    "SpellImmunityType"                "SPELL_IMMUNITY_ALLIES_NO"
+        
+    "AbilityCastRange"                "0"
+    "AbilityCastPoint"                "0.5 0.5 0.5 0.5"
+    "FightRecapLevel"                "1"
+    "AbilityTextureName"            "treant_living_armor"
+        
+    // Time        
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"                "32.0 26.0 20.0 14.0"
 
-	// Cost
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"50"
-
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"damage_count"		"4 5 6 7"
-		}
-		"02"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"health_regen"		"4 7 10 13"
-		}
-		"03"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"damage_block"		"20 40 60 80"
-		}
-		"04"
-		{
-			"var_type"			"FIELD_FLOAT"
-			"duration"			"15.0"
-		}
-
-	}
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"                "50"
+        
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"            "FIELD_INTEGER"
+            "damage_count"        "4 5 6 7"
+        }
+        "02"
+        {
+            "var_type"            "FIELD_INTEGER"
+            "health_regen"        "4 7 10 13"
+        }
+        "03"
+        {
+            "var_type"            "FIELD_INTEGER"
+            "damage_block"        "20 40 60 80"
+        }
+        "04"
+        {
+            "var_type"            "FIELD_FLOAT"
+            "duration"            "15.0"
+        }
+    }
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "scripts/vscripts/heroes/hero_treant/living_armor.lua"
+            "Function"        "ApplyLivingArmor"
+        }
+    }
+    "Modifiers"
+    {
+        "modifier_living_armor_datadriven_stacks"
+        {
+            "IsBuff" "1"
+        }
+        "modifier_living_armor_datadriven"
+        {
+            "IsHidden"    "1"
+            "OnTakeDamage"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "scripts/vscripts/heroes/hero_treant/living_armor.lua"
+                    "Function"        "HandleLivingArmor"
+                    "damage"        "%attack_damage"
+                }
+            }
+            "OnDestroy"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "lua_abilities/heroes/treant_protector.lua"
+                    "Function"        "RemoveParticle"
+                }    
+            }
+        }
+    }
 }
-
