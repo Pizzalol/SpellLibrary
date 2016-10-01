@@ -71,6 +71,10 @@
         "modifier_living_armor_datadriven"
         {
             "IsHidden"    "1"
+            "Properties"
+			{
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_regen"
+			}
             "OnTakeDamage"
             {
                 "RunScript"
