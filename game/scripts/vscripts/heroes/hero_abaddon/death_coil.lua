@@ -29,18 +29,10 @@ function DeathCoil( event )
 	ApplyDamage({ victim = caster, attacker = caster, damage = self_damage,	damage_type = DAMAGE_TYPE_PURE })
 
 	-- Create the projectile
-	local info = {
-		Target = target,
-		Source = caster,
-		Ability = ability,
-		EffectName = particle_name,
-		bDodgeable = false,
-			bProvidesVision = true,
-			iMoveSpeed = projectile_speed,
-        iVisionRadius = 0,
-        iVisionTeamNumber = caster:GetTeamNumber(),
-		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
-	}
-	ProjectileManager:CreateTrackingProjectile( info )
+	local mistCoil = ParticleManager:CreateParticle(particle_name, PATTACH_POINT_FOLLOW, target)
+			ParticleManager:SetParticleControlEnt(mistCoil, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(mistCoil, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(mistCoil, 3, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(mistCoil, 9, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 
 end
