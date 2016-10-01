@@ -1,6 +1,6 @@
 // Rewrite of Treant Protector Living Armor
 // Author: Yahnich
-// Date: October 13, 2015
+// Date: October 1, 2016
 // Version: 6.88
 // Type: Datadriven
 //
