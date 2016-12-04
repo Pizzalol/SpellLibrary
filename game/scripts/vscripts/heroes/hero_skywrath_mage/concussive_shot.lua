@@ -27,21 +27,23 @@ function concussive_shot_seek_target( keys )
 	
 	-- Seek out target
 	for k, v in pairs( units ) do
-		local projTable = {
-			EffectName = particle_name,
-			Ability = ability,
-			Target = v,
-			Source = caster,
-			bDodgeable = true,
-			bProvidesVision = true,
-			vSpawnOrigin = caster:GetAbsOrigin(),
-			iMoveSpeed = speed,
-			iVisionRadius = radius,
-			iVisionTeamNumber = caster:GetTeamNumber(),
-			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
-		}
-		ProjectileManager:CreateTrackingProjectile( projTable )
-		break
+		if caster:CanEntityBeSeenByMyTeam(v) then
+			local projTable = {
+				EffectName = particle_name,
+				Ability = ability,
+				Target = v,
+				Source = caster,
+				bDodgeable = true,
+				bProvidesVision = true,
+				vSpawnOrigin = caster:GetAbsOrigin(),
+				iMoveSpeed = speed,
+				iVisionRadius = radius,
+				iVisionTeamNumber = caster:GetTeamNumber(),
+				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
+			}
+			ProjectileManager:CreateTrackingProjectile( projTable )
+			break
+		end
 	end
 end
 
