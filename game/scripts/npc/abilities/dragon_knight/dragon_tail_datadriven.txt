@@ -79,7 +79,7 @@
 		"Damage"
 		{
 			"Target"	"TARGET"
-			"Type"		"DOTA_TYPE_MAGICAL"
+			"Type"		"DAMAGE_TYPE_MAGICAL"
 			"Damage"	"%AbilityDamage"
 		}
 	}
