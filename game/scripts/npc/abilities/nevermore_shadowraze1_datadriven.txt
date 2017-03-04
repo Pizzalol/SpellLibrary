@@ -1,84 +1,82 @@
-// Rewrite of Nevermore Shadowraze 1
-// Author: Noya
-// Date: April 5, 2015
-"nevermore_shadowraze1_datadriven"
-{
-	// General
-	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-	"FightRecapLevel"				"1"
-	"AbilityTextureName"			"nevermore_shadowraze1"
-	
-	// Casting
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastPoint"				"0.67 0.67 0.67 0.67"
-
-	// Time		
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"10.0 10.0 10.0 10.0"
-
-	// Damage.
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityDamage"					"75 150 225 300"
-
-	// Cost
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"75 75 75 75"
-
-	// Special
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilitySpecial"
+	// Rewrite of Nevermore Shadowraze 1
+	// Author: nc-dk
+	// Date: March 4, 2017
+	"nevermore_shadowraze1_datadriven"
 	{
-		"01"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"shadowraze_radius"	"250"		
-		}
-		"02"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"shadowraze_range"	"200"
-		}
-		"03"
-		{
-			"var_type"			"FIELD_INTEGER"
-			"shadowraze_cooldown"	"3"
-		}
-	}
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"nevermore_shadowraze1"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.55 0.55 0.55 0.55"
+		"AbilityCastAnimation"			"ACT_DOTA_RAZE_1"
+		"AOERadius"						"250"
 
-	"precache"
-	{
-		"particle"  "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
-		"soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
-	}
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
 
-	"OnSpellStart"
-	{
-		//TODO: FireSound and Particle
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"100 175 250 325"
 
-		"Damage"
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90 90 90 90"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"Target"
+			"01"
 			{
-				"Center"   "CASTER"
-				"Radius"	"%shadowraze_radius"
-				"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-
-				"ScriptSelectPoints"
-				{
-					"ScriptFile"    "heroes/hero_nevermore/shadowraze.lua"
-					"Function"      "ShadowrazePoint"
-					"Target"		"CASTER"
-					"Count"			"1"
-					"distance"		"%shadowraze_range"
-				}
+				"var_type"			"FIELD_INTEGER"
+				"shadowraze_radius"	"250"		
 			}
-			"Type"			"DAMAGE_TYPE_MAGICAL"
-			"Damage"		"%AbilityDamage"
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"shadowraze_range"	"200"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"shadowraze_cooldown"	"3"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"shadowraze_damage"	"100 175 250 325"
+			}
+		}
+
+		"precache"
+		{
+			"particle"  "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			    "ScriptFile"    "heroes/hero_nevermore/shadowraze.lua"
+			    "Function"      "Raze"
+			}
+		}
+
+		"OnUpgrade"
+		{
+		    "RunScript"
+		    {
+		        "ScriptFile"    "heroes/hero_nevermore/shadowraze.lua"
+		        "Function"      "LevelRaze"
+		    }
 		}
 	}
-}
