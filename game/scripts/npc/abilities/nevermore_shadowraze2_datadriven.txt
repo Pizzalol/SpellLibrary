@@ -5,7 +5,7 @@
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"			"ability_datadriven"
+	"BaseClass"				"ability_datadriven"
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 	"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_NO"
