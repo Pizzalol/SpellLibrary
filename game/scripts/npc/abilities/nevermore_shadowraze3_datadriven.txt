@@ -37,22 +37,22 @@
 		"01"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"shadowraze_radius"	"250"		
+			"shadowraze_radius"		"250"		
 		}
 		"02"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"shadowraze_range"	"700"
+			"shadowraze_range"		"700"
 		}
 		"03"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"shadowraze_cooldown"	"3"
+			"shadowraze_cooldown"		"3"
 		}
 		"04"
 		{
 			"var_type"			"FIELD_INTEGER"
-			"shadowraze_damage"	"100 175 250 325"
+			"shadowraze_damage"		"100 175 250 325"
 		}
 	}
 
