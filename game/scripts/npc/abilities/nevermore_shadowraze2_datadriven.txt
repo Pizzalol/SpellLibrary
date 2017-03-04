@@ -1,53 +1,82 @@
-// Rewrite of Nevermore Shadowraze 2
-// Author: Noya
-// Date: April 5, 2015
-"nevermore_shadowraze2_datadriven"
-{
-	// General
-	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-	"OnLearnbar"					"0"
-	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-	"FightRecapLevel"				"1"
-	"AbilityTextureName"			"nevermore_shadowraze2"
-	
-	// Casting
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastPoint"				"0.67 0.67 0.67 0.67"
-
-	// Time		
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCooldown"				"10.0 10.0 10.0 10.0"
-
-	// Damage.
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityDamage"					"75 150 225 300"
-
-	// Cost
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityManaCost"				"75 75 75 75"
-
-	// Special
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilitySpecial"
+	// Rewrite of Nevermore Shadowraze 2
+	// Author: nc-dk
+	// Date: March 4, 2017
+	"nevermore_shadowraze2_datadriven"
 	{
-		"01"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"nevermore_shadowraze2"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.55 0.55 0.55 0.55"
+		"AbilityCastAnimation"			"ACT_DOTA_RAZE_2"
+		"AOERadius"						"450"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0 10.0 10.0 10.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"100 175 250 325"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90 90 90 90"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"var_type"			"FIELD_INTEGER"
-			"shadowraze_radius"	"250"		
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"shadowraze_radius"	"250"		
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"shadowraze_range"	"450"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"shadowraze_cooldown"	"3"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"shadowraze_damage"	"100 175 250 325"
+			}
 		}
-		"02"
+
+		"precache"
 		{
-			"var_type"			"FIELD_INTEGER"
-			"shadowraze_range"	"450"
+			"particle"  "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
 		}
-		"03"
+
+		"OnSpellStart"
 		{
-			"var_type"			"FIELD_INTEGER"
-			"shadowraze_cooldown"	"3"
+			"RunScript"
+			{
+			    "ScriptFile"    "heroes/hero_nevermore/shadowraze.lua"
+			    "Function"      "Raze"
+			}
+		}
+
+		"OnUpgrade"
+		{
+		    "RunScript"
+		    {
+		        "ScriptFile"    "heroes/hero_nevermore/shadowraze.lua"
+		        "Function"      "LevelRaze"
+		    }
 		}
 	}
-}
-
