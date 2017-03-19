@@ -69,8 +69,8 @@ function modifier_morphling_morph_agi_datadriven_on_interval_think(keys)
 	if keys.caster:IsRealHero() and keys.caster:GetMana() >= mana_cost then  --If Morphling has the required mana.
 		if keys.caster:GetBaseStrength() >= keys.PointsPerTick then
 			keys.caster:SpendMana(mana_cost, keys.ability)  --Mana is not spent if Agility has bottomed out.
-			keys.caster:SetBaseStrength(keys.caster:GetBaseAgility() - keys.PointsPerTick)
-			keys.caster:SetBaseAgility(keys.caster:GetBaseStrength() + keys.PointsPerTick)
+			keys.caster:SetBaseStrength(keys.caster:GetBaseStrength() - keys.PointsPerTick)
+			keys.caster:SetBaseAgility(keys.caster:GetBaseAgility() + keys.PointsPerTick)
 			keys.caster:CalculateStatBonus()  --This is needed to update Morphling's maximum HP when his STR is changed, for example.
 		end
 	end
