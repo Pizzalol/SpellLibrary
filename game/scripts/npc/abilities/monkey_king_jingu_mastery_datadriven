@@ -1,0 +1,135 @@
+// Rewrite of the Monkey King Jingu Mastery
+// Author: Yahnich
+// Date: December 22th, 2016
+// Version: 7.00
+// Type: Datadriven
+//
+// ----- FILE REQUIREMENTS -----
+// Script files:
+// scripts/vscripts/heroes/hero_monkey_king/jingu_mastery.lua
+"monkey_king_jingu_mastery_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"             "ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"required_hits"				"4"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"counter_duration"			"10"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"charges"					"4"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"80 120 160 200"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"lifesteal"					"20 30 40 50"
+			}
+		}
+    "Modifiers"
+		{
+			"modifier_jingu_mastery_hit_registerer"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_monkey_king/jingu_mastery.lua"
+						"Function"		"CheckJingu"
+						"particle"		"particles/units/heroes/hero_monkey_king/monkey_king_quad_tap_stack.vpcf"
+					}
+				}
+			}
+			"modifier_jingu_mastery_activated_damage"
+			{
+				"IsHidden"	"1"
+				"IsPurgeable"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
+				}
+			}
+			"modifier_jingu_mastery_activated"
+			{
+				"IsBuff"	"1"
+				"IsPurgeable"	"1"
+				"EffectName"	"particles/units/heroes/hero_monkey_king/monkey_king_quad_tap_overhead.vpcf"
+				"EffectAttachType"	"follow_overhead"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_monkey_king/jingu_mastery.lua"
+						"Function"		"JinguHit"
+						"particle"		"particles/units/heroes/hero_monkey_king/monkey_king_quad_tap_hit.vpcf"
+					}
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_monkey_king/monkey_king_quad_tap_hit.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+						
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_hitloc"
+							"TARGET"	"attach_hitloc"
+						}
+					}
+					"Lifesteal"
+					{
+						"Target"				"ATTACKER"
+						"LifestealPercent"		"%lifesteal"
+					}
+				}
+			}
+			"modifier_jingu_mastery_hitcount"
+			{
+				"IsDebuff"		"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_monkey_king/jingu_mastery.lua"
+						"Function"		"JinguOverheadInit"
+						"particle"		"particles/units/heroes/hero_monkey_king/monkey_king_quad_tap_stack.vpcf"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_monkey_king/jingu_mastery.lua"
+						"Function"		"JinguOverheadDestroy"
+					}
+				}
+			}
+		}
+	}
+	}
