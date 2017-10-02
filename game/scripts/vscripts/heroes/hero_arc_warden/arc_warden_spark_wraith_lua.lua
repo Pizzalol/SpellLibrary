@@ -1,26 +1,38 @@
 LinkLuaModifier( "arc_warden_spark_wraith_thinker", "heroes/hero_arc_warden/arc_warden_spark_wraith_lua.lua", LUA_MODIFIER_MOTION_HORIZONTAL )
 
 
-arc_warden_spark_wraith = class({})
+arc_warden_spark_wraith_lua = class({})
 
-function arc_warden_spark_wraith:OnSpellStart()
+function arc_warden_spark_wraith_lua:GetAOERadius()
+	return self:GetSpecialValueFor( "search_radius" )
+end
+
+function arc_warden_spark_wraith_lua:OnSpellStart()
 	local caster = self:GetCaster()
 	local point = self:GetCursorPosition()
 	local team_id = caster:GetTeamNumber()
 	local thinker = CreateModifierThinker(caster, self, "arc_warden_spark_wraith_thinker", {}, point, team_id, false)
 end
 
-function arc_warden_spark_wraith:OnProjectileHit( target, location )
+function arc_warden_spark_wraith_lua:OnProjectileHit( target, location )
 	local thinker = self:GetCaster()
 	local modifier = thinker:FindModifierByName("arc_warden_spark_wraith_thinker")
 	local caster = modifier:GetCaster()
+	local spark_damage
+	if caster:HasAbility("special_bonus_unique_arc_warden") and (caster:FindAbilityByName("special_bonus_unique_arc_warden"):GetLevel() ~= 0) then
+		spark_damage = self:GetSpecialValueFor("spark_damage") + 250
+	else
+		spark_damage = self:GetSpecialValueFor("spark_damage")
+	end
 	if caster == nil then
 		caster = PlayerResource:GetSelectedHeroEntity(thinker.player_id)
 	end
-	ApplyDamage({ victim = target, attacker = caster, damage = self:GetAbilityDamage(), damage_type = self:GetAbilityDamageType(), ["ability"] = self})
-	local damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_base_attack_sparkles.vpcf", PATTACH_ROOTBONE_FOLLOW, target)
+	ApplyDamage({ victim = target, attacker = caster, damage = spark_damage, damage_type = self:GetAbilityDamageType(), ["ability"] = self})
+	target:AddNewModifier( caster, self, "modifier_arc_warden_spark_wraith_purge", { duration = self:GetSpecialValueFor("ministun_duration") } )
+	local damage_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_arc_warden/arc_warden_wraith_prj_hit.vpcf", PATTACH_ROOTBONE_FOLLOW, target)
 	ParticleManager:ReleaseParticleIndex(damage_particle)
-	AddFOWViewer(caster:GetTeamNumber(), target:GetAbsOrigin(), self:GetSpecialValueFor("vision_radius"), 3.34, true)
+	thinker:StopSound("Hero_ArcWarden.SparkWraith.Activate")
+	AddFOWViewer(caster:GetTeamNumber(), target:GetAbsOrigin(), self:GetSpecialValueFor("wraith_vision_radius"), self:GetSpecialValueFor("wraith_vision_duration"), true)
 	modifier:Destroy()
 end
 
@@ -30,21 +42,21 @@ function arc_warden_spark_wraith_thinker:OnCreated(event)
 	if IsServer() then
 		local thinker = self:GetParent()
 		local ability = self:GetAbility()
-		self.startup_time = ability:GetSpecialValueFor("startup_time")
+		self.activation_delay = ability:GetSpecialValueFor("activation_delay")
 		self.duration = ability:GetSpecialValueFor("duration")
-		self.speed = ability:GetSpecialValueFor("speed")
+		self.speed = ability:GetSpecialValueFor("wraith_speed")
 		self.search_radius = ability:GetSpecialValueFor("search_radius")
-		self.vision_radius = ability:GetSpecialValueFor("vision_radius")
+		self.vision_radius = ability:GetSpecialValueFor("wraith_vision_radius")
 		thinker:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
-		local startup_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_disruptor/disruptor_thunder_strike_buff_sphere3.vpcf", PATTACH_WORLDORIGIN, thinker)
 		local thinker_pos = thinker:GetAbsOrigin()
-		ParticleManager:SetParticleControl(startup_particle, 3, (thinker_pos + Vector(0, 0, 150)))
-		self:StartIntervalThink(self.startup_time)
-		self.startup_particle = startup_particle
+		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_arc_warden/arc_warden_wraith.vpcf", PATTACH_WORLDORIGIN, thinker)
+		ParticleManager:SetParticleControl(self.particle, 0, thinker_pos)
+		ParticleManager:SetParticleControl(self.particle, 1, Vector(self.search_radius,self.search_radius,0))
+		self:StartIntervalThink(self.activation_delay)
 		thinker:SetDayTimeVisionRange(self.vision_radius)
 		thinker:SetNightTimeVisionRange(self.vision_radius)
-		thinker:AddAbility("arc_warden_spark_wraith")
-		thinker:FindAbilityByName("arc_warden_spark_wraith"):SetLevel(ability:GetLevel())
+		thinker:AddAbility("arc_warden_spark_wraith_lua")
+		thinker:FindAbilityByName("arc_warden_spark_wraith_lua"):SetLevel(ability:GetLevel())
 		thinker.player_id = ability:GetCaster():GetPlayerOwnerID()
 	end
 end
@@ -52,11 +64,8 @@ end
 function arc_warden_spark_wraith_thinker:OnIntervalThink()
 	local thinker = self:GetParent()
 	local thinker_pos = thinker:GetAbsOrigin()
-	if self.startup_time ~= nil then
-		ParticleManager:DestroyParticle(self.startup_particle, false)
-		self.startup_time = nil
-		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_disruptor/disruptor_thunder_strike_buff_sphere.vpcf", PATTACH_WORLDORIGIN, thinker)
-		ParticleManager:SetParticleControl(self.particle, 3, (thinker_pos + Vector(0, 0, 150)))
+	if self.activation_delay ~= nil then
+		self.activation_delay = nil
 		self.expire = GameRules:GetGameTime() + self.duration
 		self:StartIntervalThink(0)
 	elseif self.duration ~= nil then
@@ -73,8 +82,8 @@ function arc_warden_spark_wraith_thinker:OnIntervalThink()
 					{
 					Target = enemies[1],
 					Source = thinker,
-					Ability = thinker:FindAbilityByName("arc_warden_spark_wraith"),	
-					EffectName = "particles/units/heroes/hero_zuus/zuus_base_attack.vpcf",
+					Ability = thinker:FindAbilityByName("arc_warden_spark_wraith_lua"),	
+					EffectName = "particles/units/heroes/hero_arc_warden/arc_warden_wraith_prj.vpcf",
 					vSourceLoc = (thinker_pos + Vector(0, 0, 150)),
 					bDrawsOnMinimap = false,
 					iSourceAttachment = 1,
@@ -88,6 +97,7 @@ function arc_warden_spark_wraith_thinker:OnIntervalThink()
 					bReplaceExisting = false
 					}
 				ProjectileManager:CreateTrackingProjectile(info)
+				thinker:EmitSound("Hero_ArcWarden.SparkWraith.Activate")
 				ParticleManager:DestroyParticle(self.particle, false)
 			end
 		end
