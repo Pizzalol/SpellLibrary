@@ -41,7 +41,7 @@ function CastSunRay( event )
 
 	-- Create particle FX
 	local particleName = "particles/units/heroes/hero_phoenix/phoenix_sunray.vpcf"
-	pfx = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN_FOLLOW, caster )
+	local pfx = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN_FOLLOW, caster )
 	ParticleManager:SetParticleControlEnt( pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true )
 
 	-- Attach a loop sound to the endcap
